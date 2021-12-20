@@ -1,4 +1,5 @@
 {
   "name": "@griffel/core",
+  "sideEffects": false,
   "version": "0.0.1"
 }

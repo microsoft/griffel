@@ -10,7 +10,11 @@
   "simple-git-hooks": {
     "pre-commit": "./node_modules/.bin/nano-staged"
   },
+  "scripts": {
+    "test": "nx affected:test"
+  },
   "devDependencies": {
+    "@fluentui/bundle-size": "^1.1.4",
     "@nrwl/cli": "13.4.4",
     "@nrwl/eslint-plugin-nx": "13.4.5",
     "@nrwl/jest": "13.4.5",
@@ -30,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "~5.3.0",
     "@typescript-eslint/parser": "~5.3.0",
     "babel-jest": "27.2.3",
+    "babel-plugin-annotate-pure-calls": "0.4.0",
     "eslint": "8.2.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "2.25.2",
