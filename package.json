@@ -1,0 +1,5 @@
+{
+  "name": "griffel-repository",
+  "private": true,
+  "packageManager": "yarn@3.1.1"
+}
