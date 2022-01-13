@@ -4,13 +4,21 @@
   "license": "MIT",
   "private": true,
   "packageManager": "yarn@3.1.1",
+  "nano-staged": {
+    "**/*.{js,json,ts,tsx}": "prettier --write"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "./node_modules/.bin/nano-staged"
+  },
   "devDependencies": {
     "@nrwl/cli": "13.4.4",
     "@nrwl/js": "13.4.4",
     "@nrwl/tao": "13.4.4",
     "@nrwl/workspace": "13.4.4",
     "@types/node": "14.14.33",
+    "nano-staged": "^0.5.0",
     "prettier": "^2.3.1",
+    "simple-git-hooks": "^2.7.0",
     "typescript": "~4.4.3"
   }
 }

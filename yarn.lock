@@ -2361,7 +2361,9 @@ __metadata:
     "@nrwl/tao": 13.4.4
     "@nrwl/workspace": 13.4.4
     "@types/node": 14.14.33
+    nano-staged: ^0.5.0
     prettier: ^2.3.1
+    simple-git-hooks: ^2.7.0
     typescript: ~4.4.3
   languageName: unknown
   linkType: soft
@@ -3595,6 +3597,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nano-staged@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "nano-staged@npm:0.5.0"
+  dependencies:
+    picocolors: ^1.0.0
+  bin:
+    nano-staged: lib/bin.js
+  checksum: 452a73347ddc72226293536a00ce03c9335541f484c99c382506f2daf919ea476d22902887ff3fa315944983f245b8f8c6defe7a26b363d673b374ce032c2e44
+  languageName: node
+  linkType: hard
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -4206,6 +4219,15 @@ __metadata:
   version: 3.0.6
   resolution: "signal-exit@npm:3.0.6"
   checksum: b819ac81ba757af559dad0804233ae31bf6f054591cd8a671e9cbcf09f21c72ec3076fe87d1e04861f5b33b47d63f0694b568de99c99cd733ee2060515beb6d5
+  languageName: node
+  linkType: hard
+
+"simple-git-hooks@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "simple-git-hooks@npm:2.7.0"
+  bin:
+    simple-git-hooks: cli.js
+  checksum: e7d15ec4c20d2f6c85139fb9dee2cb25be684a27ff32931459fd2e5b1ed205ab89f31fd2e0fc53fc964c1a576d33cbcfbf69611f3d694f11851152f4bc415145
   languageName: node
   linkType: hard
 
