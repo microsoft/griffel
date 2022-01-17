@@ -11,7 +11,7 @@ function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options)
       preserveModulesRoot: 'src',
     };
   }
-  console.log(options);
+
   return options;
 }
 
