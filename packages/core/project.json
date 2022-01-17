@@ -12,12 +12,17 @@
         "tsConfig": "packages/core/tsconfig.lib.json",
         "project": "packages/core/package.json",
         "entryFile": "packages/core/src/index.ts",
-        "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
+        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "packages/core/README.md",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "LICENSE.md",
             "input": ".",
             "output": "."
           }
