@@ -2,7 +2,7 @@ import hashString from '@emotion/hash';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { HASH_PREFIX } from '../constants';
-import { GriffelStylesStyle, CSSClassesMap, CSSRulesByBucket, StyleBucketName, GriffelStylesAnimation } from '../types';
+import { GriffelStyle, CSSClassesMap, CSSRulesByBucket, StyleBucketName, GriffelAnimation } from '../types';
 import { compileCSS, CompileCSSOptions } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
@@ -44,7 +44,7 @@ function pushToCSSRules(
  * @internal
  */
 export function resolveStyleRules(
-  styles: GriffelStylesStyle,
+  styles: GriffelStyle,
   pseudo = '',
   media = '',
   support = '',
@@ -54,7 +54,7 @@ export function resolveStyleRules(
 ): [CSSClassesMap, CSSRulesByBucket] {
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
-    const value = styles[property as keyof GriffelStylesStyle];
+    const value = styles[property as keyof GriffelStyle];
 
     // eslint-disable-next-line eqeqeq
     if (value == null) {
@@ -106,9 +106,7 @@ export function resolveStyleRules(
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
       pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
     } else if (property === 'animationName') {
-      const animationNameValue = Array.isArray(value)
-        ? (value as GriffelStylesAnimation[])
-        : [value as GriffelStylesAnimation];
+      const animationNameValue = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
 
       const animationNames: string[] = [];
       const rtlAnimationNames: string[] = [];
@@ -157,7 +155,7 @@ export function resolveStyleRules(
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(
-          value as GriffelStylesStyle,
+          value as GriffelStyle,
           pseudo + normalizeNestedProperty(property),
           media,
           support,
@@ -167,25 +165,11 @@ export function resolveStyleRules(
       } else if (isMediaQuerySelector(property)) {
         const combinedMediaQuery = generateCombinedQuery(media, property.slice(6).trim());
 
-        resolveStyleRules(
-          value as GriffelStylesStyle,
-          pseudo,
-          combinedMediaQuery,
-          support,
-          cssClassesMap,
-          cssRulesByBucket,
-        );
+        resolveStyleRules(value as GriffelStyle, pseudo, combinedMediaQuery, support, cssClassesMap, cssRulesByBucket);
       } else if (isSupportQuerySelector(property)) {
         const combinedSupportQuery = generateCombinedQuery(support, property.slice(9).trim());
 
-        resolveStyleRules(
-          value as GriffelStylesStyle,
-          pseudo,
-          media,
-          combinedSupportQuery,
-          cssClassesMap,
-          cssRulesByBucket,
-        );
+        resolveStyleRules(value as GriffelStyle, pseudo, media, combinedSupportQuery, cssClassesMap, cssRulesByBucket);
       } else {
         if (process.env.NODE_ENV !== 'production') {
           // eslint-disable-next-line no-console

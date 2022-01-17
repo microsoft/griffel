@@ -1,8 +1,8 @@
-import { GriffelStylesAnimation } from '../types';
+import { GriffelAnimation } from '../types';
 import { compile, middleware, serialize, rulesheet, stringify, prefixer } from 'stylis';
 import { cssifyObject } from './utils/cssifyObject';
 
-export function compileKeyframeRule(keyframeObject: GriffelStylesAnimation): string {
+export function compileKeyframeRule(keyframeObject: GriffelAnimation): string {
   let css = '';
 
   // eslint-disable-next-line guard-for-in

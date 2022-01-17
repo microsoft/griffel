@@ -56,7 +56,7 @@ type GriffelStylesCSSProperties = Omit<
 
 export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
   GriffelStylesCSSPseudos & {
-    animationName?: GriffelStylesAnimation | GriffelStylesAnimation[] | CSS.AnimationProperty;
+    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.AnimationProperty;
     fontWeight?: CSS.Properties['fontWeight'] | string;
   };
 
@@ -88,15 +88,15 @@ type GriffelStylesCSSObjectCustomL5 = {
   [Property: string]: GriffelStylesCSSValue | undefined;
 } & GriffelStylesStrictCSSObject;
 
-export type GriffelStylesAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
-export type GriffelStylesStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
+export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
+export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
 
-export interface GriffelStylesOptions {
+export interface MakeStylesOptions {
   dir: 'ltr' | 'rtl';
-  renderer: GriffelStylesRenderer;
+  renderer: GriffelRenderer;
 }
 
-export type GriffelStaticStylesStyle = {
+export type GriffelStaticStyle = {
   [key: string]: CSS.Properties &
     // TODO Questionable: how else would users target their own children?
     Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -115,13 +115,13 @@ export type GriffelStaticStylesStyle = {
     unicodeRange?: string;
   };
 };
-export type GriffelStaticStyles = GriffelStaticStylesStyle | string;
+export type GriffelStaticStyles = GriffelStaticStyle | string;
 
-export interface GriffelStaticStylesOptions {
-  renderer: GriffelStylesRenderer;
+export interface MakeStaticStylesOptions {
+  renderer: GriffelRenderer;
 }
 
-export interface GriffelStylesRenderer {
+export interface GriffelRenderer {
   id: string;
 
   /**
@@ -175,6 +175,6 @@ export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, C
 
 export type CSSRulesByBucket = Partial<Record<StyleBucketName, string[]>>;
 
-export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStylesStyle>;
+export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 
 export type LookupItem = [/* definitions */ CSSClassesMap, /* dir */ 'rtl' | 'ltr'];

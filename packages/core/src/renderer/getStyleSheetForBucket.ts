@@ -1,4 +1,4 @@
-import { GriffelStylesRenderer, StyleBucketName } from '../types';
+import { GriffelRenderer, StyleBucketName } from '../types';
 
 /**
  * Ordered style buckets using their short pseudo name.
@@ -34,7 +34,7 @@ export const styleBucketOrdering: StyleBucketName[] = [
 export function getStyleSheetForBucket(
   bucketName: StyleBucketName,
   target: Document,
-  renderer: GriffelStylesRenderer,
+  renderer: GriffelRenderer,
 ): CSSStyleSheet {
   if (!renderer.styleElements[bucketName]) {
     let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;

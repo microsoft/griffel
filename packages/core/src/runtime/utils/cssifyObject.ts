@@ -1,12 +1,12 @@
-import { GriffelStaticStylesStyle, GriffelStylesStyle } from '../../types';
+import { GriffelStaticStyle, GriffelStyle } from '../../types';
 import { hyphenateProperty } from './hyphenateProperty';
 
-export function cssifyObject(style: GriffelStylesStyle | GriffelStaticStylesStyle) {
+export function cssifyObject(style: GriffelStyle | GriffelStaticStyle) {
   let css = '';
 
   // eslint-disable-next-line guard-for-in
   for (const property in style) {
-    const value = style[property as keyof GriffelStylesStyle];
+    const value = style[property as keyof GriffelStyle];
 
     if (typeof value !== 'string' && typeof value !== 'number') {
       continue;

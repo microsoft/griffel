@@ -3,7 +3,7 @@
 import * as prettier from 'prettier';
 
 import { resolveStyleRules } from '../runtime/resolveStyleRules';
-import type { GriffelStylesRenderer } from '../types';
+import type { GriffelRenderer } from '../types';
 
 // eslint-disable-next-line eqeqeq
 const isObject = (value: unknown) => value != null && !Array.isArray(value) && typeof value === 'object';
@@ -16,7 +16,7 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
     /**
      * test function makes sure that value is the guarded type
      */
-    const _value = value as GriffelStylesRenderer;
+    const _value = value as GriffelRenderer;
 
     const styleElementsKeys = Object.keys(_value.styleElements) as (keyof typeof _value['styleElements'])[];
 

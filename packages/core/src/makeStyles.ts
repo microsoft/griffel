@@ -1,6 +1,6 @@
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
-import { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStylesOptions, StylesBySlots } from './types';
+import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
   const insertionCache: Record<string, boolean> = {};
@@ -11,7 +11,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;
   let rtlClassNamesForSlots: Record<Slots, string> | null = null;
 
-  function computeClasses(options: GriffelStylesOptions): Record<Slots, string> {
+  function computeClasses(options: MakeStylesOptions): Record<Slots, string> {
     const { dir, renderer } = options;
 
     if (classesMapBySlot === null) {

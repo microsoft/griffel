@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: rename types to proper names",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

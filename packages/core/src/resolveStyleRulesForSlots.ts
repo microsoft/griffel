@@ -1,5 +1,5 @@
 import { resolveStyleRules } from './runtime/resolveStyleRules';
-import { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStylesStyle, StyleBucketName, StylesBySlots } from './types';
+import { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStyle, StyleBucketName, StylesBySlots } from './types';
 
 /**
  * Calls resolveStyleRules() for each slot, is also used by build time transform.
@@ -16,7 +16,7 @@ export function resolveStyleRulesForSlots<Slots extends string | number>(
 
   // eslint-disable-next-line guard-for-in
   for (const slotName in stylesBySlots) {
-    const slotStyles: GriffelStylesStyle = stylesBySlots[slotName];
+    const slotStyles: GriffelStyle = stylesBySlots[slotName];
     const [cssClassMap, cssRulesByBucket] = resolveStyleRules(slotStyles);
 
     classesMapBySlot[slotName] = cssClassMap;
