@@ -1,19 +1,35 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Release pipeline
 
-trigger:
-- main
+pr: none
+trigger: none
 
-pool:
-  vmImage: ubuntu-latest
+pool: '1ES-Host-Ubuntu'
+
+workspace:
+  clean: all
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+      checkLatest: true
+    displayName: 'Install Node.js'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - script: yarn install --frozen-lockfile
+    displayName: Install dependencies
+
+  - script: yarn nx affected --target=build --parallel --max-parallel=3
+    displayName: Build artifacts
+
+  - script: |
+      git config user.name "Fluent UI Build"
+      git config user.email "fluentui-internal@service.microsoft.com"
+      git remote set-url origin https://$(githubUser):$(githubPAT)@github.com/microsoft/fluentui.git
+    displayName: Authenticate git for pushes
+
+  - script: |
+      beachball publish -b origin/main --access public -y -n $(npmToken)
+      git reset --hard origin/main
+    env:
+      GITHUB_PAT: $(githubPAT)
+    displayName: Publish to NPM & bump versions
