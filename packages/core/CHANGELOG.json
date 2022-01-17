@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 17 Jan 2022 17:45:09 GMT",
+      "tag": "@griffel/core_v1.0.3",
+      "version": "1.0.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "6c4130f9b2b9109edf04dbdd83ef8369619b57a3",
+            "comment": "fix broken publish"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jan 2022 17:20:58 GMT",
       "tag": "@griffel/core_v1.0.2",
       "version": "1.0.2",
