@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 17 Jan 2022 18:56:09 GMT",
+      "tag": "@griffel/core_v1.0.5",
+      "version": "1.0.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "bc30fac684d0a8f8a9d92f84847bf111b87b4f71",
+            "comment": "fix: rename types to proper names"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jan 2022 18:34:20 GMT",
       "tag": "@griffel/core_v1.0.4",
       "version": "1.0.4",

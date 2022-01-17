@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Mon, 17 Jan 2022 18:34:20 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jan 2022 18:56:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.5
+
+Mon, 17 Jan 2022 18:56:09 GMT
+
+### Patches
+
+- fix: rename types to proper names (olfedias@microsoft.com)
 
 ## 1.0.4
 
