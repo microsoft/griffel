@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix bundle size issues caused by bundling",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
