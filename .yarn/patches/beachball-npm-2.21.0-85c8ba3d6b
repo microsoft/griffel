@@ -1,5 +1,5 @@
 diff --git a/lib/packageManager/packagePublish.js b/lib/packageManager/packagePublish.js
-index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..fbae0aa2b196ed58bde8d086e9b5026f861e880c 100644
+index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..e30955b3fe915bce695ebda1c3e167f4e78b33ba 100644
 --- a/lib/packageManager/packagePublish.js
 +++ b/lib/packageManager/packagePublish.js
 @@ -9,6 +9,10 @@ const npm_1 = require("./npm");
@@ -7,8 +7,8 @@ index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..fbae0aa2b196ed58bde8d086e9b5026f
      const packageOptions = packageInfo.combinedOptions;
      const packagePath = path_1.default.dirname(packageInfo.packageJsonPath);
 +
-+    const packageDir = require('path').relative(packageInfo.combinedOptions.path, packagePath)
-+    const artifactsPath = require('path').resolve(packageInfo.combinedOptions.path, 'dist', packageDir)
++    const packageDir = require('path').relative(packageInfo.combinedOptions.path, packagePath);
++    const artifactsPath = require('path').resolve(packageInfo.combinedOptions.path, 'dist', packageDir);
 +
      const args = [
          'publish',
@@ -22,4 +22,3 @@ index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..fbae0aa2b196ed58bde8d086e9b5026f
  }
  exports.packagePublish = packagePublish;
  //# sourceMappingURL=packagePublish.js.map
-\ No newline at end of file

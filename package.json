@@ -61,6 +61,6 @@
     "tslib": "^2.1.0"
   },
   "resolutions": {
-    "beachball@2.20.0": "patch:beachball@npm:2.20.0#.yarn/patches/beachball-npm-2.20.0-a05e0aaaff"
+    "beachball@2.21.0": "patch:beachball@npm:2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b"
   }
 }
