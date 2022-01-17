@@ -18,7 +18,7 @@ steps:
   - script: yarn install --frozen-lockfile
     displayName: Install dependencies
 
-  - script: yarn nx affected --target=build --parallel --max-parallel=3
+  - script: yarn nx run-many --target=build --all --parallel --max-parallel=3
     displayName: Build artifacts
 
   - script: |
