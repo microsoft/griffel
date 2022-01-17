@@ -1,4 +1,4 @@
-import { GriffelStylesRenderer, StyleBucketName } from '../types';
+import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
 let lastIndex = 0;
@@ -23,9 +23,9 @@ export interface CreateDOMRendererOptions {
 export function createDOMRenderer(
   target: Document | undefined = typeof document === 'undefined' ? undefined : document,
   options: CreateDOMRendererOptions = {},
-): GriffelStylesRenderer {
+): GriffelRenderer {
   const { unstable_filterCSSRule } = options;
-  const renderer: GriffelStylesRenderer = {
+  const renderer: GriffelRenderer = {
     insertionCache: {},
     styleElements: {},
 

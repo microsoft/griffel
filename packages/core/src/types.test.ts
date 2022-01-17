@@ -1,6 +1,6 @@
-import { GriffelStylesStyle } from './types';
+import { GriffelStyle } from './types';
 
-function assertType(style: GriffelStylesStyle): GriffelStylesStyle {
+function assertType(style: GriffelStyle): GriffelStyle {
   return style;
 }
 

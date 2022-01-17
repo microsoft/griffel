@@ -1,5 +1,5 @@
 import { resolveStaticStyleRules } from './runtime/resolveStaticStyleRules';
-import { GriffelStaticStylesOptions, GriffelStaticStyles } from './types';
+import { MakeStaticStylesOptions, GriffelStaticStyles } from './types';
 
 /**
  * Register static css.
@@ -9,7 +9,7 @@ export function makeStaticStyles(styles: GriffelStaticStyles | GriffelStaticStyl
   const styleCache: Record<string, true> = {};
   const stylesSet: GriffelStaticStyles[] = Array.isArray(styles) ? styles : [styles];
 
-  function useStaticStyles(options: GriffelStaticStylesOptions): void {
+  function useStaticStyles(options: MakeStaticStylesOptions): void {
     const cacheKey = options.renderer.id;
     if (styleCache[cacheKey]) {
       return;

@@ -2,12 +2,12 @@ import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { griffelRendererSerializer } from './common/snapshotSerializers';
 import { makeStaticStyles } from './makeStaticStyles';
 import { makeStyles } from './makeStyles';
-import { GriffelStylesRenderer } from './types';
+import { GriffelRenderer } from './types';
 
 expect.addSnapshotSerializer(griffelRendererSerializer);
 
 describe('makeStaticStyles', () => {
-  let renderer: GriffelStylesRenderer;
+  let renderer: GriffelRenderer;
 
   beforeEach(() => {
     renderer = createDOMRenderer(document);

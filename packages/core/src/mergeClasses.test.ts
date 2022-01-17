@@ -1,10 +1,10 @@
 import { mergeClasses } from './mergeClasses';
 import { makeStyles } from './makeStyles';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
-import { GriffelStylesOptions } from './types';
+import { MakeStylesOptions } from './types';
 import { SEQUENCE_PREFIX } from './constants';
 
-const options: GriffelStylesOptions = {
+const options: MakeStylesOptions = {
   dir: 'ltr',
   renderer: createDOMRenderer(document),
 };

@@ -1,9 +1,9 @@
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
-import { GriffelStylesAnimation } from '../types';
+import { GriffelAnimation } from '../types';
 
 describe('compileKeyframeRule', () => {
   it('stringifies an object with keyframes', () => {
-    const keyframes: GriffelStylesAnimation = {
+    const keyframes: GriffelAnimation = {
       from: {
         transform: 'rotate(0deg)',
       },
@@ -19,7 +19,7 @@ describe('compileKeyframeRule', () => {
 
 describe('compileKeyframeCSS', () => {
   it('creates CSS from strings with keyframes', () => {
-    const keyframes: GriffelStylesAnimation = {
+    const keyframes: GriffelAnimation = {
       from: {
         height: '10px',
       },

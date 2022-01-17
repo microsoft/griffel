@@ -49,18 +49,18 @@ export { __styles } from './__styles';
 export * from './constants';
 export type {
   // Static styles
-  GriffelStaticStylesStyle,
+  GriffelStaticStyle,
   GriffelStaticStyles,
   // Styles
-  GriffelStylesAnimation,
-  GriffelStylesStyle,
+  GriffelAnimation,
+  GriffelStyle,
   // Internal types
   CSSClasses,
   CSSClassesMapBySlot,
   CSSRulesByBucket,
   StyleBucketName,
   // Util
-  GriffelStaticStylesOptions,
-  GriffelStylesOptions,
-  GriffelStylesRenderer,
+  MakeStaticStylesOptions,
+  MakeStylesOptions,
+  GriffelRenderer,
 } from './types';

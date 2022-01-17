@@ -1,5 +1,5 @@
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import { GriffelStylesOptions, CSSClassesMapBySlot, CSSRulesByBucket } from './types';
+import { MakeStylesOptions, CSSClassesMapBySlot, CSSRulesByBucket } from './types';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms.
@@ -15,7 +15,7 @@ export function __styles<Slots extends string>(
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;
   let rtlClassNamesForSlots: Record<Slots, string> | null = null;
 
-  function computeClasses(options: Pick<GriffelStylesOptions, 'dir' | 'renderer'>): Record<Slots, string> {
+  function computeClasses(options: Pick<MakeStylesOptions, 'dir' | 'renderer'>): Record<Slots, string> {
     const { dir, renderer } = options;
 
     const isLTR = dir === 'ltr';
