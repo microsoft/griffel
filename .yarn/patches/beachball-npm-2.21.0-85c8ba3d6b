@@ -1,8 +1,8 @@
 diff --git a/lib/packageManager/packagePublish.js b/lib/packageManager/packagePublish.js
-index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..e30955b3fe915bce695ebda1c3e167f4e78b33ba 100644
+index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..953962fa292cb7198495cf6035b7ed07629ba243 100644
 --- a/lib/packageManager/packagePublish.js
 +++ b/lib/packageManager/packagePublish.js
-@@ -9,6 +9,10 @@ const npm_1 = require("./npm");
+@@ -9,6 +9,15 @@ const npm_1 = require("./npm");
  function packagePublish(packageInfo, registry, token, access, authType, timeout) {
      const packageOptions = packageInfo.combinedOptions;
      const packagePath = path_1.default.dirname(packageInfo.packageJsonPath);
@@ -10,14 +10,21 @@ index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..e30955b3fe915bce695ebda1c3e167f4
 +    const packageDir = require('path').relative(packageInfo.combinedOptions.path, packagePath);
 +    const artifactsPath = require('path').resolve(packageInfo.combinedOptions.path, 'dist', packageDir);
 +
++    require('fs').copyFileSync(
++      packageInfo.packageJsonPath,
++      require('path').resolve(artifactsPath, 'package.json')
++    );
++
      const args = [
          'publish',
          '--registry',
-@@ -24,7 +28,7 @@ function packagePublish(packageInfo, registry, token, access, authType, timeout)
+@@ -24,7 +33,9 @@ function packagePublish(packageInfo, registry, token, access, authType, timeout)
          args.push(access);
      }
      console.log(`publish command: ${args.join(' ')}`);
 -    return npm_1.npm(args, { cwd: packagePath, timeout });
++    console.log(`cwd: ${artifactsPath}`);
++
 +    return npm_1.npm(args, { cwd: artifactsPath, timeout });
  }
  exports.packagePublish = packagePublish;
