@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@griffel/core": ["packages/core/src/index.ts"]
-    }
+    },
+    "typeRoots": ["node_modules/@types", "./typings"]
   },
   "exclude": ["node_modules", "tmp"]
 }
