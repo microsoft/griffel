@@ -28,7 +28,7 @@ steps:
     displayName: Authenticate git for pushes
 
   - script: |
-      beachball publish -b origin/main --access public -y -n $(npmToken)
+      beachball publish -b origin/main --access public -y -n $(npmTokenTmp)
       git reset --hard origin/main
     env:
       GITHUB_PAT: $(githubPAT)
