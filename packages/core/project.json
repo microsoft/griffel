@@ -43,6 +43,14 @@
         "jestConfig": "packages/core/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "bundle-size": {
+      "executor": "@nrwl/workspace:run-commands",
+      "dependsOn": [{ "target": "build", "projects": "self" }],
+      "options": {
+        "cwd": "packages/core",
+        "commands": [{ "command": "bundle-size measure" }]
+      }
     }
   }
 }

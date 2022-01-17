@@ -8,5 +8,5 @@
       }
     ]
   ],
-  "plugins": []
+  "plugins": ["annotate-pure-calls"]
 }
