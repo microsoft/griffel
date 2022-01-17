@@ -1,5 +1,5 @@
 diff --git a/lib/packageManager/packagePublish.js b/lib/packageManager/packagePublish.js
-index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..4453886c6350906891df73129203b040b3dd0b6c 100644
+index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..b32852f736d10a24cf8f1b663ccdcadbce739d49 100644
 --- a/lib/packageManager/packagePublish.js
 +++ b/lib/packageManager/packagePublish.js
 @@ -9,6 +9,21 @@ const npm_1 = require("./npm");
@@ -17,8 +17,8 @@ index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..4453886c6350906891df73129203b040
 +            ...JSON.parse(
 +                require('fs').readFileSync(artifactsPackageJsonPath, { encoding: 'utf8' }),
 +            ),
-+            version: packageOptions.version,
-+        })
++            version: packageInfo.version,
++        }, null, 2)
 +    );
 +
      const args = [
