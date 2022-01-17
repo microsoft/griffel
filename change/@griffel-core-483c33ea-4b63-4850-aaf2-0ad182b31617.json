@@ -1,5 +1,5 @@
 {
-  "type": "major",
+  "type": "patch",
   "comment": "initial release",
   "packageName": "@griffel/core",
   "email": "olfedias@microsoft.com",
