@@ -1,12 +1,3 @@
 {
-  "presets": [
-    [
-      "@nrwl/react/babel",
-      {
-        "runtime": "automatic",
-        "useBuiltIns": false
-      }
-    ]
-  ],
   "plugins": ["annotate-pure-calls"]
 }

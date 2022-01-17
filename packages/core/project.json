@@ -15,6 +15,7 @@
         "entryFile": "packages/core/src/index.ts",
         "rollupConfig": "tools/getRollupOptions.js",
         "compiler": "babel",
+        "external": ["tslib"],
         "format": ["esm", "cjs"],
         "assets": [
           {

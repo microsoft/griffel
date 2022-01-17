@@ -1,5 +1,11 @@
 {
   "name": "@griffel/core",
+  "description": "DOM implementation of Atomic CSS-in-JS",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
   "sideEffects": false,
   "version": "1.0.5"
 }
