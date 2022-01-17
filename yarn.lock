@@ -2352,6 +2352,98 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/web@patch:@nrwl/web@npm:13.4.5#.yarn/patches/@nrwl-web-npm-13.4.5-d7e9ea40d2::locator=griffel-repository%40workspace%3A.":
+  version: 13.4.5
+  resolution: "@nrwl/web@patch:@nrwl/web@npm%3A13.4.5#.yarn/patches/@nrwl-web-npm-13.4.5-d7e9ea40d2::version=13.4.5&hash=9c55c0&locator=griffel-repository%40workspace%3A."
+  dependencies:
+    "@babel/core": ^7.15.0
+    "@babel/plugin-proposal-class-properties": ^7.14.5
+    "@babel/plugin-proposal-decorators": ^7.14.5
+    "@babel/plugin-transform-regenerator": ^7.14.5
+    "@babel/plugin-transform-runtime": ^7.15.0
+    "@babel/preset-env": ^7.15.0
+    "@babel/preset-typescript": ^7.15.0
+    "@babel/runtime": ^7.14.8
+    "@nrwl/cypress": 13.4.5
+    "@nrwl/devkit": 13.4.5
+    "@nrwl/jest": 13.4.5
+    "@nrwl/js": 13.4.5
+    "@nrwl/linter": 13.4.5
+    "@nrwl/workspace": 13.4.5
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
+    "@rollup/plugin-babel": ^5.3.0
+    "@rollup/plugin-commonjs": ^20.0.0
+    "@rollup/plugin-image": ^2.1.0
+    "@rollup/plugin-json": ^4.1.0
+    "@rollup/plugin-node-resolve": ^13.0.4
+    autoprefixer: ^10.2.5
+    babel-loader: ^8.2.2
+    babel-plugin-const-enum: ^1.0.1
+    babel-plugin-macros: ^2.8.0
+    babel-plugin-transform-async-to-promises: ^0.8.15
+    babel-plugin-transform-typescript-metadata: ^0.3.1
+    browserslist: ^4.16.6
+    bytes: ^3.1.0
+    caniuse-lite: ^1.0.30001251
+    chalk: 4.1.0
+    chokidar: ^3.5.1
+    copy-webpack-plugin: ^9.0.1
+    core-js: ^3.6.5
+    css-loader: ^6.4.0
+    css-minimizer-webpack-plugin: ^3.1.1
+    enhanced-resolve: ^5.8.3
+    file-loader: ^6.2.0
+    fork-ts-checker-webpack-plugin: 6.2.10
+    fs-extra: ^9.1.0
+    http-server: 14.1.0
+    identity-obj-proxy: 3.0.0
+    ignore: ^5.0.4
+    less: 3.12.2
+    less-loader: ^10.1.0
+    license-webpack-plugin: 2.3.15
+    loader-utils: 1.2.3
+    mini-css-extract-plugin: ~2.4.7
+    open: ^7.4.2
+    parse5: 4.0.0
+    parse5-html-rewriting-stream: 6.0.1
+    postcss: 8.3.0
+    postcss-import: 14.0.2
+    postcss-loader: ^6.1.1
+    raw-loader: ^4.0.2
+    react-refresh: ^0.10.0
+    rimraf: ^3.0.2
+    rollup: ^2.56.2
+    rollup-plugin-copy: ^3.4.0
+    rollup-plugin-peer-deps-external: ^2.2.4
+    rollup-plugin-postcss: ^4.0.1
+    rollup-plugin-typescript2: ^0.31.1
+    rxjs: ^6.5.4
+    rxjs-for-await: 0.0.2
+    sass: ^1.42.1
+    sass-loader: ^12.2.0
+    semver: 7.3.4
+    source-map: 0.7.3
+    source-map-loader: ^3.0.0
+    style-loader: ^3.3.0
+    stylus: ^0.55.0
+    stylus-loader: ^6.2.0
+    terser: 4.3.8
+    terser-webpack-plugin: ^5.1.1
+    ts-loader: ^9.2.6
+    ts-node: ~9.1.1
+    tsconfig-paths: ^3.9.0
+    tsconfig-paths-webpack-plugin: 3.4.1
+    tslib: ^2.3.0
+    webpack: ^5.58.1
+    webpack-dev-server: ^4.3.1
+    webpack-merge: ^5.8.0
+    webpack-sources: ^3.0.2
+    webpack-subresource-integrity: ^1.5.2
+    worker-plugin: 3.2.0
+  checksum: 027c5782d533122ed447b2686766c33391315b12d18536d6bc386c94826ad7ec85072578ba3f27da026e63aeec4f4c7e1aa51971f1cd1022af5d0c8c8ddc32f2
+  languageName: node
+  linkType: hard
+
 "@nrwl/workspace@npm:13.4.4":
   version: 13.4.4
   resolution: "@nrwl/workspace@npm:13.4.4"
@@ -4393,7 +4485,7 @@ __metadata:
 
 "beachball@patch:beachball@npm:2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b::locator=griffel-repository%40workspace%3A.":
   version: 2.21.0
-  resolution: "beachball@patch:beachball@npm%3A2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b::version=2.21.0&hash=d00dfa&locator=griffel-repository%40workspace%3A."
+  resolution: "beachball@patch:beachball@npm%3A2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b::version=2.21.0&hash=0d9aa7&locator=griffel-repository%40workspace%3A."
   dependencies:
     cosmiconfig: ^6.0.0
     execa: ^4.0.3
@@ -4412,7 +4504,7 @@ __metadata:
     yargs-parser: ^20.2.4
   bin:
     beachball: bin/beachball.js
-  checksum: a3963076f40ef1022a57619f864b5eaffee4bbb07b778e8b54220f679187491b900fbaae882a29f10fdeb690ea85cfd258a1e53cca6ff9ae9b1801a63380acca
+  checksum: 277b908966a88fc33790133b61f7020f25e615a63d59b7488c949a4d7eaf965bbe1a1681f368f83df5e78e069d237e347b0c1507ff02a01e3e97abb0e3e837b1
   languageName: node
   linkType: hard
 

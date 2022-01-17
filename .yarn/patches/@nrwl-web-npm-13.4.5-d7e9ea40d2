@@ -1,0 +1,21 @@
+diff --git a/src/executors/rollup/rollup.impl.js b/src/executors/rollup/rollup.impl.js
+index b948c2e5f1228bb68fd820e396c332774322b13d..8d9f5d14aa57f8ec04d87394aa2c227533445d96 100644
+--- a/src/executors/rollup/rollup.impl.js
++++ b/src/executors/rollup/rollup.impl.js
+@@ -209,14 +209,14 @@ function createCompilerOptions(format, options, dependencies) {
+         paths: compilerOptionPaths,
+     };
+     if (format !== 'esm') {
+-        return Object.assign(Object.assign({}, compilerOptions), { target: 'es5' });
++        // return Object.assign(Object.assign({}, compilerOptions), { target: 'es5' });
+     }
+     return compilerOptions;
+ }
+ function updatePackageJson(options, context, target, dependencies, packageJson) {
+     const entryFileTmpl = `./index.<%= extension %>.js`;
+     const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
+-    packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
++    packageJson.main = entryFileTmpl.replace('<%= extension %>', 'cjs');
+     packageJson.module = entryFileTmpl.replace('<%= extension %>', 'esm');
+     packageJson.typings = `./${typingsFile}`;
+     (0, devkit_1.writeJsonFile)(`${options.outputPath}/package.json`, packageJson);

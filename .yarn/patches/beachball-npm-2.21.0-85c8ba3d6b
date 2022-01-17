@@ -1,24 +1,28 @@
 diff --git a/lib/packageManager/packagePublish.js b/lib/packageManager/packagePublish.js
-index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..953962fa292cb7198495cf6035b7ed07629ba243 100644
+index 6848f4d9fa070cd5262de8dc19a0a305b0dc4b6d..7af5b71668c8056c1ae111b276dc7fb5026f3e74 100644
 --- a/lib/packageManager/packagePublish.js
 +++ b/lib/packageManager/packagePublish.js
-@@ -9,6 +9,15 @@ const npm_1 = require("./npm");
+@@ -9,6 +9,19 @@ const npm_1 = require("./npm");
  function packagePublish(packageInfo, registry, token, access, authType, timeout) {
      const packageOptions = packageInfo.combinedOptions;
      const packagePath = path_1.default.dirname(packageInfo.packageJsonPath);
 +
 +    const packageDir = require('path').relative(packageInfo.combinedOptions.path, packagePath);
 +    const artifactsPath = require('path').resolve(packageInfo.combinedOptions.path, 'dist', packageDir);
++    const artifactsPackageJsonPath = require('path').resolve(artifactsPath, 'package.json');
 +
-+    require('fs').copyFileSync(
-+      packageInfo.packageJsonPath,
-+      require('path').resolve(artifactsPath, 'package.json')
++    require('fs').writeFileSync(
++      artifactsPackageJsonPath,
++      JSON.stringify({
++        ...require('fs').readFileSync(artifactsPackageJsonPath, { encoding: 'utf8' }),
++        version: packageOptions.version,
++      })
 +    );
 +
      const args = [
          'publish',
          '--registry',
-@@ -24,7 +33,9 @@ function packagePublish(packageInfo, registry, token, access, authType, timeout)
+@@ -24,7 +37,9 @@ function packagePublish(packageInfo, registry, token, access, authType, timeout)
          args.push(access);
      }
      console.log(`publish command: ${args.join(' ')}`);
