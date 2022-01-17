@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Mon, 17 Jan 2022 18:56:09 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jan 2022 22:27:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.6
+
+Mon, 17 Jan 2022 22:27:07 GMT
+
+### Patches
+
+- fixes to publish & build, added meta information to package.json (olfedias@microsoft.com)
 
 ## 1.0.5
 

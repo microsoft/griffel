@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 17 Jan 2022 22:27:07 GMT",
+      "tag": "@griffel/core_v1.0.6",
+      "version": "1.0.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "d45f5279268fdb781d3a6e7b97d1d06c6fa538df",
+            "comment": "fixes to publish & build, added meta information to package.json"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jan 2022 18:56:09 GMT",
       "tag": "@griffel/core_v1.0.5",
       "version": "1.0.5",

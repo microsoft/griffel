@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fixes to publish & build, added meta information to package.json",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
