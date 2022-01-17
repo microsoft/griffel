@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix broken publish",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
