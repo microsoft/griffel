@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix false positive warning in mergeClasses()",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
