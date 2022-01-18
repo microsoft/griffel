@@ -11,7 +11,7 @@ export function __styles<Slots extends string>(
   cssRules: CSSRulesByBucket,
 ) {
   const insertionCache: Record<string, boolean> = {};
-  console.log('test');
+
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;
   let rtlClassNamesForSlots: Record<Slots, string> | null = null;
 
