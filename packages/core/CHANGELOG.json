@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 18 Jan 2022 10:20:48 GMT",
+      "tag": "@griffel/core_v1.0.7",
+      "version": "1.0.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "73455b371662d1e21805176d8b2849e246a0573d",
+            "comment": "fix false positive warning in mergeClasses()"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jan 2022 22:27:07 GMT",
       "tag": "@griffel/core_v1.0.6",
       "version": "1.0.6",

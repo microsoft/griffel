@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Mon, 17 Jan 2022 22:27:07 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Jan 2022 10:20:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.7
+
+Tue, 18 Jan 2022 10:20:48 GMT
+
+### Patches
+
+- fix false positive warning in mergeClasses() (olfedias@microsoft.com)
 
 ## 1.0.6
 
