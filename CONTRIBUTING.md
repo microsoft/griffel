@@ -22,7 +22,7 @@ node -v
 v14.0.0
 ```
 
-Ee use `yarn` and advise you do while contributing. Get it [here](https://yarnpkg.com/).
+We use `yarn` and advise you to do so while contributing. Get it [here](https://yarnpkg.com/).
 
 ### Fork, Clone & Install
 
