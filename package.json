@@ -11,6 +11,7 @@
     "pre-commit": "./node_modules/.bin/nano-staged"
   },
   "scripts": {
+    "build": "nx affected:build",
     "change": "beachball change",
     "test": "nx affected:test"
   },
