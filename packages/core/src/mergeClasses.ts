@@ -98,30 +98,33 @@ export function mergeClasses(): string {
 
   for (let i = 0; i < arguments.length; i++) {
     const sequenceId = sequencesIds[i];
-    const sequenceMapping = sequenceId ? DEFINITION_LOOKUP_TABLE[sequenceId] : undefined;
 
-    if (sequenceMapping) {
-      sequenceMappings.push(sequenceMapping[LOOKUP_DEFINITIONS_INDEX]);
+    if (sequenceId) {
+      const sequenceMapping = DEFINITION_LOOKUP_TABLE[sequenceId];
 
-      if (process.env.NODE_ENV !== 'production') {
-        if (dir !== null && dir !== sequenceMapping[LOOKUP_DIR_INDEX]) {
+      if (sequenceMapping) {
+        sequenceMappings.push(sequenceMapping[LOOKUP_DEFINITIONS_INDEX]);
+
+        if (process.env.NODE_ENV !== 'production') {
+          if (dir !== null && dir !== sequenceMapping[LOOKUP_DIR_INDEX]) {
+            // eslint-disable-next-line no-console
+            console.error(
+              `mergeClasses(): a passed string contains an identifier (${sequenceId}) that has different direction ` +
+                `(dir="${sequenceMapping[1] ? 'rtl' : 'ltr'}") setting than other classes. This is not supported. ` +
+                `Source string: ${arguments[i]}`,
+            );
+          }
+        }
+
+        dir = sequenceMapping[LOOKUP_DIR_INDEX];
+      } else {
+        if (process.env.NODE_ENV !== 'production') {
           // eslint-disable-next-line no-console
           console.error(
-            `mergeClasses(): a passed string contains an identifier (${sequenceId}) that has different direction ` +
-              `(dir="${sequenceMapping[1] ? 'rtl' : 'ltr'}") setting than other classes. This is not supported. ` +
-              `Source string: ${arguments[i]}`,
+            `mergeClasses(): a passed string contains an identifier (${sequenceId}) that does not match any entry ` +
+              `in cache. Source string: ${arguments[i]}`,
           );
         }
-      }
-
-      dir = sequenceMapping[LOOKUP_DIR_INDEX];
-    } else {
-      if (process.env.NODE_ENV !== 'production') {
-        // eslint-disable-next-line no-console
-        console.error(
-          `mergeClasses(): a passed string contains an identifier (${sequenceId}) that does not match any entry ` +
-            `in cache. Source string: ${arguments[i]}`,
-        );
       }
     }
   }
