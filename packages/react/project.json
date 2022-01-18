@@ -1,0 +1,57 @@
+{
+  "root": "packages/react",
+  "sourceRoot": "packages/react/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/react",
+        "tsConfig": "packages/react/tsconfig.lib.json",
+        "project": "packages/react/package.json",
+        "entryFile": "packages/react/src/index.ts",
+        "compiler": "babel",
+        "rollupConfig": ["@nrwl/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
+        "external": ["tslib"],
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "packages/react/README.md",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/react/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/react"],
+      "options": {
+        "jestConfig": "packages/react/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "bundle-size": {
+      "executor": "@nrwl/workspace:run-commands",
+      "dependsOn": [{ "target": "build", "projects": "self" }],
+      "options": {
+        "cwd": "packages/react",
+        "commands": [{ "command": "bundle-size measure" }]
+      }
+    }
+  }
+}
