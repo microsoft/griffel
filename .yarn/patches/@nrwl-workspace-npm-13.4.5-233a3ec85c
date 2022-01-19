@@ -1,0 +1,13 @@
+diff --git a/src/utilities/buildable-libs-utils.js b/src/utilities/buildable-libs-utils.js
+index a3b897ae1a0f493f0d2a37598f988a6a78955f62..b22cddbcd84eca7d061b2396911b2f367307b951 100644
+--- a/src/utilities/buildable-libs-utils.js
++++ b/src/utilities/buildable-libs-utils.js
+@@ -60,7 +60,7 @@ function recursivelyCollectDependencies(project, projGraph, acc) {
+     (projGraph.dependencies[project] || []).forEach((dependency) => {
+         if (acc.indexOf(dependency.target) === -1) {
+             acc.push(dependency.target);
+-            recursivelyCollectDependencies(dependency.target, projGraph, acc);
++            // recursivelyCollectDependencies(dependency.target, projGraph, acc);
+         }
+     });
+     return acc;
