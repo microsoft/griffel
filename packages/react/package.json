@@ -1,4 +1,14 @@
 {
   "name": "@griffel/react",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "description": "React implementation of Atomic CSS-in-JS",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">=16.8.0 <18.0.0"
+  }
 }
