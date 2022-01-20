@@ -1,7 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "core": "packages/core",
-    "react": "packages/react"
+    "@griffel/core": "packages/core",
+    "@griffel/react": "packages/react"
   }
 }
