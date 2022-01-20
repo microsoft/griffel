@@ -1,0 +1,35 @@
+{
+  "root": "packages/jest-serializer",
+  "sourceRoot": "packages/jest-serializer/src",
+  "projectType": "library",
+  "implicitDependencies": ["!@griffel/react"],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/jest-serializer/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/jest-serializer"],
+      "options": {
+        "jestConfig": "packages/jest-serializer/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/jest-serializer",
+        "tsConfig": "packages/jest-serializer/tsconfig.lib.json",
+        "packageJson": "packages/jest-serializer/package.json",
+        "main": "packages/jest-serializer/src/index.ts",
+        "assets": ["packages/jest-serializer/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "@griffel/core": "packages/core",
-    "@griffel/react": "packages/react"
+    "@griffel/react": "packages/react",
+    "@griffel/jest-serializer": "packages/jest-serializer"
   }
 }
