@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "core": "packages/core"
+    "core": "packages/core",
+    "react": "packages/react"
   }
 }

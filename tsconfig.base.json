@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@griffel/core": ["packages/core/src/index.ts"]
+      "@griffel/core": ["packages/core/src/index.ts"],
+      "@griffel/react": ["packages/react/src/index.ts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]
   },
