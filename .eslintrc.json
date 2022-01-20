@@ -5,6 +5,7 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "excludedFiles": "*.fixture.js",
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
