@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
     "@griffel/react": "packages/react",
     "@griffel/jest-serializer": "packages/jest-serializer"

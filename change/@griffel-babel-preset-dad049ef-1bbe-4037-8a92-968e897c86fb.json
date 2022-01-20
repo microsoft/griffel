@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "initial release",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

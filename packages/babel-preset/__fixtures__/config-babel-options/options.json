@@ -1,0 +1,5 @@
+{
+  "babelOptions": {
+    "plugins": ["./packages/babel-preset/__fixtures__/config-babel-options/colorRenamePlugin"]
+  }
+}
