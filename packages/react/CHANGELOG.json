@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/react",
+  "entries": [
+    {
+      "date": "Thu, 20 Jan 2022 09:31:57 GMT",
+      "tag": "@griffel/react_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "3557c746fdd2c297aebfd6203bb3350a8f45bcf1",
+            "comment": "initial release"
+          }
+        ]
+      }
+    }
+  ]
+}
