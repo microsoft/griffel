@@ -2379,7 +2379,7 @@ __metadata:
 
 "@nrwl/workspace@patch:@nrwl/workspace@npm:13.4.5#.yarn/patches/@nrwl-workspace-npm-13.4.5-233a3ec85c::locator=griffel-repository%40workspace%3A.":
   version: 13.4.5
-  resolution: "@nrwl/workspace@patch:@nrwl/workspace@npm%3A13.4.5#.yarn/patches/@nrwl-workspace-npm-13.4.5-233a3ec85c::version=13.4.5&hash=4872e0&locator=griffel-repository%40workspace%3A."
+  resolution: "@nrwl/workspace@patch:@nrwl/workspace@npm%3A13.4.5#.yarn/patches/@nrwl-workspace-npm-13.4.5-233a3ec85c::version=13.4.5&hash=499941&locator=griffel-repository%40workspace%3A."
   dependencies:
     "@nrwl/cli": 13.4.5
     "@nrwl/devkit": 13.4.5
@@ -2412,7 +2412,7 @@ __metadata:
   peerDependenciesMeta:
     prettier:
       optional: true
-  checksum: 7c22cbfc206d51f0b2b41a835540211ca5ce2d8555a623a833397b9d81bdffa56bae6a0ae521d4f5a92413d068c19b73c3ae454d924618eab64c856ddfbe1265
+  checksum: 4e5b0cb5d4436c888d37a1163ab6568a747b95e4e0a418b1e5cd05787ed38e9c798d2bc6623d9d2d6bb4d3e2e2d32be0d94aba1bfe258b22fe518459e7e0b72f
   languageName: node
   linkType: hard
 
