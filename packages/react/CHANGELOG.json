@@ -2,6 +2,21 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 09:32:24 GMT",
+      "tag": "@griffel/react_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "0a94e833bbc3a68276a52774d1de14d39a33635c",
+            "comment": "fix lint issues"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Jan 2022 09:31:57 GMT",
       "tag": "@griffel/react_v1.0.0",
       "version": "1.0.0",

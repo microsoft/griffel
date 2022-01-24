@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/babel-preset",
+  "entries": [
+    {
+      "date": "Mon, 24 Jan 2022 09:32:24 GMT",
+      "tag": "@griffel/babel-preset_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "222a470836840b134075f231d19202aaea35b93f",
+            "comment": "initial release"
+          }
+        ]
+      }
+    }
+  ]
+}

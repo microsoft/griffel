@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/jest-serializer",
+  "entries": [
+    {
+      "date": "Mon, 24 Jan 2022 09:32:24 GMT",
+      "tag": "@griffel/jest-serializer_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "2f1b77e57086ef8268dd0c8e3f9b60dadfbcbd31",
+            "comment": "initial release"
+          }
+        ]
+      }
+    }
+  ]
+}
