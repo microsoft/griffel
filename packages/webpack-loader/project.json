@@ -1,0 +1,35 @@
+{
+  "root": "packages/webpack-loader",
+  "sourceRoot": "packages/webpack-loader/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/webpack-loader/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/webpack-loader"],
+      "options": {
+        "jestConfig": "packages/webpack-loader/jest.config.js",
+        "passWithNoTests": true
+      },
+      "dependsOn": [{ "target": "build", "projects": "dependencies" }]
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/webpack-loader",
+        "tsConfig": "packages/webpack-loader/tsconfig.lib.json",
+        "packageJson": "packages/webpack-loader/package.json",
+        "main": "packages/webpack-loader/src/index.ts",
+        "assets": ["packages/webpack-loader/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

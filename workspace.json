@@ -3,7 +3,8 @@
   "projects": {
     "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
+    "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/react": "packages/react",
-    "@griffel/jest-serializer": "packages/jest-serializer"
+    "@griffel/webpack-loader": "packages/webpack-loader"
   }
 }

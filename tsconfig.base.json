@@ -18,7 +18,8 @@
       "@griffel/babel-preset": ["packages/babel-preset/src/index.ts"],
       "@griffel/core": ["packages/core/src/index.ts"],
       "@griffel/jest-serializer": ["packages/jest-serializer/src/index.ts"],
-      "@griffel/react": ["packages/react/src/index.ts"]
+      "@griffel/react": ["packages/react/src/index.ts"],
+      "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]
   },
