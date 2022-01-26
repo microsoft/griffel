@@ -24,7 +24,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          editUrl: 'https://github.com/microsoft/griffel/tree/main/apps/docs/',
+          editUrl: 'https://github.com/microsoft/griffel/tree/main/apps/website/',
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/',
         },

@@ -1,10 +1,10 @@
 {
   "version": 2,
   "projects": {
-    "@griffel/docs": "apps/docs",
     "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
     "@griffel/jest-serializer": "packages/jest-serializer",
-    "@griffel/react": "packages/react"
+    "@griffel/react": "packages/react",
+    "@griffel/website": "apps/website"
   }
 }
