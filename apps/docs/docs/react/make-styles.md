@@ -129,6 +129,19 @@ const useClasses = makeStyles({
 });
 ```
 
+```css
+@media screen and (max-width: 992px) {
+  .f5d6c3d {
+    color: orange;
+  }
+}
+@supports (display: grid) {
+  .f1ofq0jl {
+    color: red;
+  }
+}
+```
+
 ### `@keyframes` (animations)
 
 `keyframes` are supported via `animationName` property that can be defined as an object:
