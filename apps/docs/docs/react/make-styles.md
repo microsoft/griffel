@@ -96,7 +96,7 @@ const useClasses = makeStyles({
 
 ### `:global()` selector
 
-Another useful feature is `:global()` selector, it allows connecting local styles with global selectors.
+Another useful feature is `:global()` selector, it associates local styles with global selectors.
 
 ```ts
 import { makeStyles } from '@griffel/react';
