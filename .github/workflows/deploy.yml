@@ -37,7 +37,7 @@ jobs:
             yarn-cache-folder-
 
       - run: yarn install --frozen-lockfile
-      - run: yarn nx run-many --target=build --all --parallel --max-parallel=3
+      - run: yarn nx run-many --target=build --projects=@griffel/website --parallel --max-parallel=3
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
