@@ -4,14 +4,11 @@ on:
   push:
     branches:
       - main
-  # REMOVE BEFORE MERGE
-  pull_request:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # UNCOMMENT BEFORE MERGE
-    # if: ${{ contains(github.event.head_commit.message, 'applying package updates') }}
+    if: ${{ contains(github.event.head_commit.message, 'applying package updates') }}
 
     steps:
       - uses: actions/checkout@v2
