@@ -14,8 +14,8 @@ const config = {
   title: 'Griffel',
   tagline: 'Dinosaurs are cool',
 
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  url: 'https://microsoft.github.io',
+  baseUrl: '/griffel/',
   // favicon: 'img/favicon.ico',
 
   presets: [
