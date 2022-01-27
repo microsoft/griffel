@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "initial release",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
