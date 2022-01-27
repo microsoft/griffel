@@ -28,6 +28,7 @@
 !.vscode/extensions.json
 
 # misc
+.docusaurus
 /.sass-cache
 /connect.lock
 /coverage

@@ -149,7 +149,7 @@ const useClasses = makeStyles({
     // :link, :focus, etc.
 
     '.foo': { color: 'black' },
-    ':nth-child(2n)': { background: '#fafafa' },
+    ':nth-child(2n)': { backgroundColor: '#fafafa' },
 
     '@media screen and (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
@@ -164,8 +164,8 @@ import { makeStyles } from '@griffel/react';
 
 const useClasses = makeStyles({
   root: {
-    ':global(html[data-whatintent="mouse"])': { background: 'yellow' },
-    // outputs: html[data-whatintent="mouse"] .abcd { background: yellow }
+    ':global(html[data-whatintent="mouse"])': { backgroundColor: 'yellow' },
+    // outputs: html[data-whatintent="mouse"] .abcd { background-color: yellow }
   },
 });
 ```

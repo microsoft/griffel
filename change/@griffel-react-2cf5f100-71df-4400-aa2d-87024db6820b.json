@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix typos in README",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

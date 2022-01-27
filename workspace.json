@@ -5,6 +5,7 @@
     "@griffel/core": "packages/core",
     "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/react": "packages/react",
-    "@griffel/webpack-loader": "packages/webpack-loader"
+    "@griffel/webpack-loader": "packages/webpack-loader",
+    "@griffel/website": "apps/website"
   }
 }

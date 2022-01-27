@@ -1,15 +1,15 @@
 # Jest serializer for Griffel
 
-Provides a Jest serializer for `@fluentui/make-styles` which removes class names.
+Provides a Jest serializer for `@griffel/react` which removes class names.
 
 ## Install
 
 Add it as a dependency:
 
 ```bash
-yarn add --dev @fluentui/jest-serializer-make-styles
+yarn add --dev @griffel/jest-serializer
 # or
-npm install --dev @fluentui/jest-serializer-make-styles
+npm install --dev @griffel/jest-serializer
 ```
 
 Update your `jest.config.js` (or appropriate config location) to include a `snapshotSerializers` array that references this package:
