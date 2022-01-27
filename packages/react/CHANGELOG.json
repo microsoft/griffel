@@ -2,6 +2,21 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 27 Jan 2022 13:47:55 GMT",
+      "tag": "@griffel/react_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "2d85e06323002984336d459bd36e0fa89cfa1b4e",
+            "comment": "fix typos in README"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 09:32:24 GMT",
       "tag": "@griffel/react_v1.0.0",
       "version": "1.0.0",

@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/webpack-loader",
+  "entries": [
+    {
+      "date": "Thu, 27 Jan 2022 13:47:55 GMT",
+      "tag": "@griffel/webpack-loader_v2.0.0",
+      "version": "2.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "577c9bdff22c0e499263d034a919d487db0592db",
+            "comment": "initial release"
+          }
+        ]
+      }
+    }
+  ]
+}

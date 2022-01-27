@@ -1,6 +1,6 @@
 {
   "name": "@griffel/webpack-loader",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Webpack loader that performs build time transforms for Griffel",
   "license": "MIT",
   "repository": {

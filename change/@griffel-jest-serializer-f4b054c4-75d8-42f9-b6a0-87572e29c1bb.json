@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix typo in README",
-  "packageName": "@griffel/jest-serializer",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

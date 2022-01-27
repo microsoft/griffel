@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix typo in README",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
