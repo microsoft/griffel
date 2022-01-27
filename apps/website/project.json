@@ -1,0 +1,22 @@
+{
+  "root": "apps/website",
+  "sourceRoot": "apps/website/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "apps/website",
+        "commands": [{ "command": "docusaurus build --out-dir ../../dist/apps/website" }]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "apps/website",
+        "commands": [{ "command": "docusaurus start" }]
+      }
+    }
+  },
+  "tags": []
+}
