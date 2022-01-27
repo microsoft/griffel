@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="a">
+      <path fill="#fff" d="M0 0h200v50H0z"/>
+    </mask>
+    <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="b">
+      <stop stop-color="rgba(47, 47, 49, 0.2)" offset="0"/>
+      <stop stop-opacity="0" stop-color="rgba(47, 47, 49, 0.2)" offset="0.66"/>
+    </linearGradient>
+    <linearGradient x1="100%" y1="100%" x2="0%" y2="0%" id="c">
+      <stop stop-color="rgba(47, 47, 49, 0.2)" offset="0"/>
+      <stop stop-opacity="0" stop-color="rgba(47, 47, 49, 0.2)" offset="0.66"/>
+    </linearGradient>
+  </defs>
+  <g mask="url(#a)" fill="none" transform="matrix(-1, 0, 0, -1, 200, 50)">
+    <path d="M6 50 56 0h42L48 50z" fill="url(#b)"/>
+    <path d="M38 50 88 0h34.5l-50 50z" fill="url(#b)"/>
+    <path d="m68 50 50-50h31.5l-50 50zM100 50l50-50h34.5l-50 50z" fill="url(#b)"/>
+    <path d="M199 50 149 0h-36l50 50z" fill="url(#c)"/>
+    <path d="M166 50 116 0H92l50 50zM130 50 80 0H68l50 50zM99 50 49 0H17.5l50 50z" fill="url(#c)"/>
+    <path d="M163.551 50 200 13.551V50z" fill="url(#b)"/>
+    <path d="M0 50h36.449L0 13.551z" fill="url(#c)"/>
+  </g>
+</svg>

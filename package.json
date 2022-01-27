@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.12.13",
-    "@docusaurus/core": "2.0.0-beta.14",
-    "@docusaurus/preset-classic": "2.0.0-beta.14",
+    "@docusaurus/core": "2.0.0-beta.15",
+    "@docusaurus/preset-classic": "2.0.0-beta.15",
     "@fluentui/bundle-size": "^1.1.4",
     "@nrwl/cli": "13.4.5",
     "@nrwl/eslint-plugin-nx": "13.4.5",

@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import OutputTitle from '@site/src/components/OutputTitle'
+
 # makeStyles
 
 Is used to define styles, returns [a React hook](https://reactjs.org/docs/hooks-intro.html) that should be called inside a component:
@@ -47,7 +49,7 @@ const useClasses = makeStyles({
 });
 ```
 
-Produces following CSS:
+<OutputTitle>Produces following CSS...</OutputTitle>
 
 ```css
 .f15f830o .foo {
@@ -82,6 +84,8 @@ const useClasses = makeStyles({
 });
 ```
 
+<OutputTitle>Produces following CSS...</OutputTitle>
+
 ```css
 .fqsesyh:active {
   color: pink;
@@ -108,6 +112,8 @@ const useClasses = makeStyles({
 });
 ```
 
+<OutputTitle>Produces following CSS...</OutputTitle>
+
 ```css
 html[data-whatintent='mouse'] .f1xz3i88 {
   background-color: yellow;
@@ -128,6 +134,8 @@ const useClasses = makeStyles({
   },
 });
 ```
+
+<OutputTitle>Produces following CSS...</OutputTitle>
 
 ```css
 @media screen and (max-width: 992px) {
@@ -160,6 +168,8 @@ const useClasses = makeStyles({
   },
 );
 ```
+
+<OutputTitle>Produces following CSS...</OutputTitle>
 
 ```css
 .f1cpbl36 {

@@ -1,0 +1,23 @@
+.container {
+  background-image: url(./background.svg);
+  background-position: right 30px bottom 12px;
+  background-repeat: repeat-x;
+
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-lw);
+  gap: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+
+  margin-bottom: var(--ifm-leading);
+}
+
+.container svg {
+  font-size: 20px;
+}
+
+.container span {
+  font-size: 0.8rem;
+}
