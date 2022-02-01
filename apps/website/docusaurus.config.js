@@ -1,7 +1,7 @@
 // @ts-check
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require('prism-react-renderer/themes/vsLight');
+const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -30,7 +30,11 @@ const config = {
         },
         blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [
+            require.resolve('./src/css/custom.css'),
+            require.resolve('./src/css/fonts.css'),
+            require.resolve('./src/css/theme.css'),
+          ],
         },
       }),
     ],
@@ -51,11 +55,6 @@ const config = {
             docId: 'react/install',
             position: 'left',
             label: 'for React.js',
-          },
-          {
-            href: 'https://github.com/microsoft/griffel',
-            label: 'GitHub',
-            position: 'right',
           },
         ],
       },

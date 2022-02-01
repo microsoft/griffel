@@ -1,0 +1,20 @@
+:root {
+  --ifm-color-primary: #5b5fc7;
+  --ifm-color-primary-dark: #3d3e78;
+  --ifm-color-primary-darker: #333357;
+  --ifm-color-primary-darkest: #2b2b40;
+  --ifm-color-primary-light: #7f85f5;
+  --ifm-color-primary-lighter: #aab1fa;
+  --ifm-color-primary-lightest: #c5cbfa;
+  --ifm-code-font-size: 95%;
+
+  --ifm-font-family-base: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto,
+    'Helvetica Neue', sans-serif;
+
+  --ifm-font-weight-light: 200;
+  --ifm-font-weight-semibold: 600;
+}
+
+html[data-theme='dark'] {
+  --ifm-color-primary: #7f85f5;
+}

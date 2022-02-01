@@ -1,0 +1,5 @@
+{
+  "name": "@griffel/website",
+  "description": "Docusaurus has update notifier that checks presence of package.json file, if it's missing it throws",
+  "private": true
+}
