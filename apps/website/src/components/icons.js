@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const CogsIcon = () => (
   <svg
     stroke="currentColor"
