@@ -47,10 +47,50 @@
     },
     "bundle-size": {
       "executor": "@nrwl/workspace:run-commands",
-      "dependsOn": [{ "target": "build", "projects": "self" }],
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ],
       "options": {
         "cwd": "packages/react",
-        "commands": [{ "command": "bundle-size measure" }]
+        "commands": [
+          {
+            "command": "bundle-size measure"
+          }
+        ]
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "packages/react/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/@griffel/react",
+        "config": {
+          "configFolder": "packages/react/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
       }
     }
   }
