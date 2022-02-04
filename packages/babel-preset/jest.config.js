@@ -16,3 +16,5 @@ module.exports = {
   },
   coverageDirectory: '../../coverage/packages/babel-preset',
 };
+
+console.log('foo');
