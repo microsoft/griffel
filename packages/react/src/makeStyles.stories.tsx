@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createDOMRenderer, RendererProvider, makeStyles } from '@griffel/react';
+import { createDOMRenderer, RendererProvider, makeStyles } from '../src';
 
 const useStyles = makeStyles({
   root: {
