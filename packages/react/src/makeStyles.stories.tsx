@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createDOMRenderer, RendererProvider, makeStyles } from '../src';
+import { makeStyles } from '../src';
 
 const useStyles = makeStyles({
   root: {
@@ -7,17 +7,13 @@ const useStyles = makeStyles({
   },
 });
 
-const domRenderer = createDOMRenderer();
-
 export const Default = () => {
   const classes = useStyles();
 
-  return (
-    <RendererProvider renderer={domRenderer}>
-      <div className={classes.root}>no stories yet</div>
-    </RendererProvider>
-  );
+  return <div className={classes.root}>no stories yet</div>;
 };
+
+export { ComponentStyles } from './ComponentStyles.stories';
 
 export default {
   title: 'makeStyles',
