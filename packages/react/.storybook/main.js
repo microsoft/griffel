@@ -7,11 +7,7 @@ module.exports = {
 
   stories: [...rootMain.stories, '../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: [...rootMain.addons, '@nrwl/react/plugins/storybook'],
-  // MX: requires tsconfig.json in repo root
-  // typescript: {
-  //   check: true,
-  //   configFile: 'tsconfig.base.json'
-  // },
+
   webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js
     if (rootMain.webpackFinal) {

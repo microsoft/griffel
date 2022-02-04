@@ -13,6 +13,7 @@
   "scripts": {
     "build": "nx affected:build",
     "change": "beachball change",
+    "lint": "nx affected:lint",
     "start": "nx run @griffel/website:serve",
     "storybook": "nx run @griffel/react:storybook",
     "test": "nx affected:test"

@@ -1,6 +1,6 @@
 {
   "plugins": ["annotate-pure-calls"],
-  "presets": ["@babel/preset-react", "@babel/typescript"],
+  "presets": ["@babel/preset-react"],
   "env": {
     "test": {
       "presets": ["@nrwl/react/babel"]
