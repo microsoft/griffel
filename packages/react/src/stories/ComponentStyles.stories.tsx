@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Story } from '@storybook/react';
-import { makeStyles, mergeClasses, shorthands } from '../src';
+import { makeStyles, mergeClasses, shorthands } from '../../src';
 
 const tokens = {
   brandBackground: '#106ebe',

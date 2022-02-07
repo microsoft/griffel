@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { makeStyles } from '../src';
+import { makeStyles } from '../../src';
 
 const useStyles = makeStyles({
   root: {
