@@ -43,6 +43,10 @@ export function webpackLoader(
   sourceCode: WebpackLoaderParams[0],
   inputSourceMap: WebpackLoaderParams[1],
 ) {
+  // Loaders are cacheable by default, but in there edge cases/bugs when caching does not work until it's specified:
+  // https://github.com/webpack/webpack/issues/14946
+  this.cacheable();
+
   const options = getOptions(this) as WebpackLoaderOptions;
 
   validate(configSchema, options, {
