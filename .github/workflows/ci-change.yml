@@ -8,9 +8,6 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
 
       - uses: actions/setup-node@v1
         with:

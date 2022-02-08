@@ -13,10 +13,13 @@
   "scripts": {
     "build": "nx affected:build",
     "change": "beachball change",
+    "lint": "nx affected:lint",
     "start": "nx run @griffel/website:serve",
+    "storybook": "nx run @griffel/react:storybook",
     "test": "nx affected:test"
   },
   "devDependencies": {
+    "@babel/core": "7.12.13",
     "@babel/preset-typescript": "^7.12.13",
     "@docusaurus/core": "2.0.0-beta.15",
     "@docusaurus/preset-classic": "2.0.0-beta.15",
@@ -28,9 +31,15 @@
     "@nrwl/linter": "13.4.5",
     "@nrwl/node": "13.4.5",
     "@nrwl/react": "13.4.5",
+    "@nrwl/storybook": "13.4.5",
     "@nrwl/tao": "13.4.5",
     "@nrwl/web": "13.4.5",
     "@nrwl/workspace": "13.4.5",
+    "@storybook/addon-essentials": "~6.4.5",
+    "@storybook/builder-webpack5": "~6.4.5",
+    "@storybook/manager-webpack5": "~6.4.5",
+    "@storybook/react": "~6.4.5",
+    "@svgr/webpack": "^5.4.0",
     "@testing-library/jest-dom": "5.16.1",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
@@ -44,6 +53,7 @@
     "@typescript-eslint/eslint-plugin": "~5.3.0",
     "@typescript-eslint/parser": "~5.3.0",
     "babel-jest": "27.2.3",
+    "babel-loader": "8.1.0",
     "babel-plugin-annotate-pure-calls": "0.4.0",
     "babel-plugin-tester": "10.0.0",
     "beachball": "^2.20.0",
@@ -62,7 +72,8 @@
     "react-test-renderer": "17.0.2",
     "simple-git-hooks": "2.7.0",
     "ts-jest": "27.0.5",
-    "typescript": "~4.4.3"
+    "typescript": "~4.4.3",
+    "url-loader": "^3.0.0"
   },
   "dependencies": {
     "@babel/core": "^7.12.13",
