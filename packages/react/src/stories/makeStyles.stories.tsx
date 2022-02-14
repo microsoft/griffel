@@ -12,9 +12,3 @@ export const Default = () => {
 
   return <div className={classes.root}>no stories yet</div>;
 };
-
-export { ComponentStyles } from './ComponentStyles.stories';
-
-export default {
-  title: 'makeStyles',
-};
