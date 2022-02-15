@@ -4,7 +4,7 @@
 
 [_Griffel (German): stylus, pen, slate pencil; an antiquated writing tool, used in ancient times, prior to the appearance of blackboards._](https://en.wiktionary.org/wiki/Griffel)
 
-Griffel is CSS-in-JS with near-zero runtime, SSR support and styles defined with JavaScript objects.
+Griffel ([_German_]((https://en.wiktionary.org/wiki/Griffel)) for stylus/pen) is CSS-in-JS with near-zero runtime, SSR support and styles defined with JavaScript objects.
 
 🚀 &nbsp; Zero config start: Griffel has both runtime & build time implementations
 
