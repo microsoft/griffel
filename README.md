@@ -2,7 +2,6 @@
 
 **CSS-in-JS with ahead-of-time compilation.**
 
-
 Griffel ([_German for stylus/pen_](https://en.wiktionary.org/wiki/Griffel)) is CSS-in-JS with near-zero runtime, SSR support and styles defined with JavaScript objects.
 
 🚀 &nbsp; Zero config start: Griffel has both runtime & build time implementations
