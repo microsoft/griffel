@@ -9,10 +9,11 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/vite-plugin"],
+      "executor": "nx:run-commands",
       "options": {
-        "jestConfig": "packages/vite-plugin/jest.config.ts"
+        "cwd": "packages/vite-plugin",
+        "commands": [{ "command": "node --test **/*.test.mjs" }],
+        "outputPath": []
       }
     },
     "build": {
