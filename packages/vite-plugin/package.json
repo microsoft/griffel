@@ -1,0 +1,17 @@
+{
+  "name": "@griffel/vite-plugin",
+  "version": "0.0.1",
+  "description": "Vite plugin for Griffel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "dependencies": {
+    "@wyw-in-js/vite": "^0.2.3"
+  },
+  "peerDependencies": {
+    "@griffel/tag-processor": "*",
+    "vite": ">=4"
+  }
+}

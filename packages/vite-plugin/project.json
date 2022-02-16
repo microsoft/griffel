@@ -1,0 +1,47 @@
+{
+  "name": "@griffel/vite-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/vite-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/vite-plugin"],
+      "options": {
+        "jestConfig": "packages/vite-plugin/jest.config.ts"
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/vite-plugin",
+        "tsConfig": "packages/vite-plugin/tsconfig.lib.json",
+        "skipTypeField": true,
+        "packageJson": "packages/vite-plugin/package.json",
+        "main": "packages/vite-plugin/src/index.ts",
+        "assets": [
+          "packages/vite-plugin/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/vite-plugin",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}
