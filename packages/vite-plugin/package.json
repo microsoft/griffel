@@ -1,0 +1,13 @@
+{
+  "name": "@griffel/vite-plugin",
+  "version": "0.0.1",
+  "description": "Vite plugin for Griffel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "peerDependencies": {
+    "@griffel/react": "^1.0.0"
+  }
+}

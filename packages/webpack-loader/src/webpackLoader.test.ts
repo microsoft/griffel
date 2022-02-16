@@ -201,7 +201,7 @@ describe('shouldTransformSourceCode', () => {
 });
 
 describe('webpackLoader', () => {
-  // Integration fixtures for base functionality, all scenarios are tested in "babel-make-styles"
+  // Integration fixtures for base functionality, all scenarios are tested in "@griffel/babel-preset"
   testFixture('object');
   testFixture('function');
 
