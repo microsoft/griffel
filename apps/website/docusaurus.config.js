@@ -34,6 +34,7 @@ const config = {
             require.resolve('./src/css/custom.css'),
             require.resolve('./src/css/fonts.css'),
             require.resolve('./src/css/theme.css'),
+            require.resolve('@codesandbox/sandpack-react/dist/index.css'),
           ],
         },
       }),
@@ -50,6 +51,12 @@ const config = {
         //   src: 'img/logo.svg',
         // },
         items: [
+          {
+            type: 'doc',
+            docId: 'try-it-out',
+            position: 'left',
+            label: 'Try it out',
+          },
           {
             type: 'doc',
             docId: 'react/install',
