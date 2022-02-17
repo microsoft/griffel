@@ -5,7 +5,6 @@ export default makeStyles({
     backgroundColor: 'red',
     paddingLeft: '10px',
     '@media(forced-colors: active):': {
-      color: 'red',
       borderColor: 'transparent',
     },
   },

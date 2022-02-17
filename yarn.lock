@@ -653,7 +653,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-validator-option@npm:^7.16.7":
+"@babel/helper-validator-option@npm:^7.12.11, @babel/helper-validator-option@npm:^7.16.7":
   version: 7.16.7
   resolution: "@babel/helper-validator-option@npm:7.16.7"
   checksum: c5ccc451911883cc9f12125d47be69434f28094475c1b9d2ada7c3452e6ac98a1ee8ddd364ca9e3f9855fcdee96cdeafa32543ebd9d17fee7a1062c202e80570
@@ -1640,7 +1640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-typescript@npm:^7.16.7":
+"@babel/plugin-transform-typescript@npm:^7.12.13, @babel/plugin-transform-typescript@npm:^7.16.7":
   version: 7.16.8
   resolution: "@babel/plugin-transform-typescript@npm:7.16.8"
   dependencies:
@@ -1804,7 +1804,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.12.13, @babel/preset-typescript@npm:^7.12.7, @babel/preset-typescript@npm:^7.15.0, @babel/preset-typescript@npm:^7.16.0":
+"@babel/preset-typescript@npm:7.12.13":
+  version: 7.12.13
+  resolution: "@babel/preset-typescript@npm:7.12.13"
+  dependencies:
+    "@babel/helper-plugin-utils": ^7.12.13
+    "@babel/helper-validator-option": ^7.12.11
+    "@babel/plugin-transform-typescript": ^7.12.13
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 5d172e560432df9364a2aad77d6f403504d28fda29d39620eeb90d1c38a40e5fae3bc94011624b6378f8ac4db0dd673e96ff1d962b6f6c134c556221b594cd14
+  languageName: node
+  linkType: hard
+
+"@babel/preset-typescript@npm:^7.12.7, @babel/preset-typescript@npm:^7.15.0, @babel/preset-typescript@npm:^7.16.0":
   version: 7.16.7
   resolution: "@babel/preset-typescript@npm:7.16.7"
   dependencies:
@@ -2164,7 +2177,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codesandbox/sandpack-react@npm:^0.13.15":
+"@codesandbox/sandpack-react@npm:0.13.15":
   version: 0.13.15
   resolution: "@codesandbox/sandpack-react@npm:0.13.15"
   dependencies:
@@ -13032,10 +13045,10 @@ __metadata:
     "@babel/core": 7.12.13
     "@babel/generator": ^7.12.13
     "@babel/helper-plugin-utils": ^7.12.13
-    "@babel/preset-typescript": ^7.12.13
+    "@babel/preset-typescript": 7.12.13
     "@babel/template": ^7.12.13
     "@babel/traverse": ^7.12.13
-    "@codesandbox/sandpack-react": ^0.13.15
+    "@codesandbox/sandpack-react": 0.13.15
     "@docusaurus/core": 2.0.0-beta.15
     "@docusaurus/preset-classic": 2.0.0-beta.15
     "@emotion/hash": ^0.8.0
@@ -13084,7 +13097,7 @@ __metadata:
     eslint-plugin-jsx-a11y: 6.5.1
     eslint-plugin-react: 7.27.0
     eslint-plugin-react-hooks: 4.2.0
-    highlight.js: ^11.4.0
+    highlight.js: 11.4.0
     jest: 27.2.3
     loader-utils: ^2.0.0
     nano-staged: 0.5.0
@@ -13388,17 +13401,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:11.4.0":
+  version: 11.4.0
+  resolution: "highlight.js@npm:11.4.0"
+  checksum: df57994d1e6d8d32a0c8826d9b3019b86b36bae570fd849f807b538f12a2188b1aa775e1653c2b591c24eacd736c262dfb193e2bd3b155800ea6f882a611989c
+  languageName: node
+  linkType: hard
+
 "highlight.js@npm:^10.1.1, highlight.js@npm:~10.7.0":
   version: 10.7.3
   resolution: "highlight.js@npm:10.7.3"
   checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
-  languageName: node
-  linkType: hard
-
-"highlight.js@npm:^11.4.0":
-  version: 11.4.0
-  resolution: "highlight.js@npm:11.4.0"
-  checksum: df57994d1e6d8d32a0c8826d9b3019b86b36bae570fd849f807b538f12a2188b1aa775e1653c2b591c24eacd736c262dfb193e2bd3b155800ea6f882a611989c
   languageName: node
   linkType: hard
 
