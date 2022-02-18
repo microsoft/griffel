@@ -1,6 +1,15 @@
 {
-  "extends": "@tsconfig/docusaurus/tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "."
-  }
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "types": ["environment", "static-assets"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }
