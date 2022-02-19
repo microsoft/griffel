@@ -14,7 +14,7 @@ export default function App() {
       id: 'playground',
       insertCSSRules(cssRules) {
         const raw = Object.values(cssRules).flat().join('\n');
-        const prettified = beautify.css_beautify(raw);
+        const prettified = beautify.css_beautify(raw, { indent_size: 2 });
         setRules(prettified);
       },
     };
