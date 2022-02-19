@@ -36,6 +36,4 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 
 ## License
 
-Copyright (c) Microsoft Corporation. All rights reserved.
-
-Licensed under the [MIT](LICENSE.md) license.
+This project is licensed under the MIT License, see the [MIT](LICENSE.md) file for details.
