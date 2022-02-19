@@ -12,9 +12,6 @@
   "references": [
     {
       "path": "./environment/tsconfig.json"
-    },
-    {
-      "path": "./static-assets/tsconfig.json"
     }
   ]
 }
