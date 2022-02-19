@@ -1,7 +1,6 @@
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/vs.css';
-import prettier from 'prettier/esm/standalone.mjs';
-import postcss from 'prettier/esm/parser-postcss.mjs';
+import beautify from 'js-beautify';
 import React from 'react';
 import css from 'highlight.js/lib/languages/css';
 import styles from './Styles';
@@ -15,7 +14,7 @@ export default function App() {
       id: 'playground',
       insertCSSRules(cssRules) {
         const raw = Object.values(cssRules).flat().join('\n');
-        const prettified = prettier.format(raw, { parser: 'css', plugins: [postcss] });
+        const prettified = beautify.css_beautify(raw);
         setRules(prettified);
       },
     };
