@@ -4,6 +4,8 @@ import { useColorMode } from '@docusaurus/theme-common';
 import AppCode from '!!raw-loader!./template/App.js';
 import StylesCode from '!!raw-loader!./template/Styles.js';
 
+const PLAYGROUND_HEIGHT = 400;
+
 export default function Playground() {
   const { isDarkTheme } = useColorMode();
   const sandpackTheme = isDarkTheme ? 'dark' : 'github-light';
@@ -16,8 +18,8 @@ export default function Playground() {
       }}
     >
       <SandpackLayout theme={sandpackTheme}>
-        <SandpackCodeEditor />
-        <SandpackPreview showOpenInCodeSandbox={false} />
+        <SandpackCodeEditor showLineNumbers customStyle={{ height: PLAYGROUND_HEIGHT }} />
+        <SandpackPreview customStyle={{ height: PLAYGROUND_HEIGHT }} showOpenInCodeSandbox={false} />
       </SandpackLayout>
     </SandpackProvider>
   );
