@@ -53,15 +53,15 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'try-it-out',
-            position: 'left',
-            label: 'Try it out',
-          },
-          {
-            type: 'doc',
             docId: 'react/install',
             position: 'left',
             label: 'for React.js',
+          },
+          {
+            type: 'doc',
+            docId: 'try-it-out',
+            position: 'left',
+            label: 'Try it out',
           },
         ],
       },
