@@ -36,4 +36,4 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 
 ## License
 
-This project is licensed under the MIT License, see the [MIT](LICENSE.md) file for details.
+This project is licensed under the MIT License, see the [LICENSE.md](LICENSE.md) file for details.
