@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add sourcemaps to dist files",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
