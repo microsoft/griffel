@@ -48,4 +48,3 @@ export const configSchema: JSONSchema7 = {
   },
   additionalProperties: false,
 };
-console.log('test');
