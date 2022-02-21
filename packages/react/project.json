@@ -98,7 +98,8 @@
       "options": {
         "cwd": "packages/react",
         "color": true,
-        "commands": [{ "command": "tsc -b" }]
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
       }
     }
   }

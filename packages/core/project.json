@@ -59,7 +59,8 @@
       "options": {
         "cwd": "packages/core",
         "color": true,
-        "commands": [{ "command": "tsc -b tsconfig.json" }]
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
       }
     }
   }

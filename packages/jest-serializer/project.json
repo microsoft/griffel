@@ -35,7 +35,8 @@
       "options": {
         "cwd": "packages/jest-serializer",
         "color": true,
-        "commands": [{ "command": "tsc -b" }]
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
       }
     }
   },

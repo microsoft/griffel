@@ -35,7 +35,8 @@
       "options": {
         "cwd": "packages/webpack-loader",
         "color": true,
-        "commands": [{ "command": "tsc -b" }]
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
       }
     }
   },

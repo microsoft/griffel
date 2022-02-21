@@ -7,7 +7,8 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "cwd": "apps/website",
-        "commands": [{ "command": "docusaurus build --out-dir ../../dist/apps/website" }]
+        "commands": [{ "command": "docusaurus build --out-dir ../../dist/apps/website" }],
+        "outputPath": ["dist/apps/website"]
       }
     },
     "serve": {

@@ -42,7 +42,8 @@
       "options": {
         "cwd": "packages/babel-preset",
         "color": true,
-        "commands": [{ "command": "tsc -b" }]
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
       }
     }
   },
