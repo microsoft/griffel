@@ -83,8 +83,8 @@ describe('types tests', () => {
     // Invalid values
     //
 
-    // @ts-expect-error "1" is invalid value for "flexShrink"
-    assertType({ flexShrink: '1' });
+    // @ts-expect-error "1" is invalid value for "overflow"
+    assertType({ overflow: '1' });
     // @ts-expect-error "paddingLeft" cannot be numeric value
     assertType({ paddingLeft: 5 });
     // @ts-expect-error "0" is invalid value for "color"
@@ -95,8 +95,8 @@ describe('types tests', () => {
 
     assertType({
       ':hover': {
-        // @ts-expect-error "1" is invalid value for "flexShrink"
-        flexShrink: '1',
+        // @ts-expect-error "1" is invalid value for "overflow"
+        overflow: '1',
         // @ts-expect-error "padding" is banned
         padding: 0,
         // @ts-expect-error "paddingLeft" cannot be numeric value
@@ -109,8 +109,8 @@ describe('types tests', () => {
 
     assertType({
       ':hover:focus': {
-        // @ts-expect-error "1" is invalid value for "flexShrink"
-        flexShrink: '1',
+        // @ts-expect-error "1" is invalid value for "overflow"
+        overflow: '1',
         // @ts-expect-error "padding" is banned
         padding: 0,
         // @ts-expect-error "paddingLeft" cannot be numeric value
@@ -124,8 +124,8 @@ describe('types tests', () => {
     assertType({
       '.foo': {
         '.baz': {
-          // @ts-expect-error "1" is invalid value for "flexShrink"
-          flexShrink: '1',
+          // @ts-expect-error "1" is invalid value for "overflow"
+          overflow: '1',
           // @ts-expect-error "padding" is banned
           padding: 0,
           // @ts-expect-error "paddingLeft" cannot be numeric value
