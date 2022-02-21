@@ -36,8 +36,10 @@ jobs:
             yarn-cache-folder-
 
       - run: yarn install --frozen-lockfile
+      - run: yarn nx affected --target=lint --parallel --max-parallel=3
       - run: yarn nx affected --target=build --parallel --max-parallel=3
       - run: yarn nx affected --target=test --parallel --max-parallel=2
+      - run: yarn nx affected --target=type-check --parallel --max-parallel=3
 
   pr:
     runs-on: ubuntu-latest
@@ -73,3 +75,4 @@ jobs:
       - run: yarn nx affected --target=lint --parallel --max-parallel=3
       - run: yarn nx affected --target=build --parallel --max-parallel=3
       - run: yarn nx affected --target=test --parallel --max-parallel=2
+      - run: yarn nx affected --target=type-check --parallel --max-parallel=3
