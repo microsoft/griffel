@@ -8,6 +8,7 @@ function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options)
       o.preserveModules = true;
       o.preserveModulesRoot = 'src';
       o.interop = false;
+      o.sourcemap = true;
     });
   } else {
     options.output = {
@@ -15,6 +16,7 @@ function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options)
       preserveModules: true,
       preserveModulesRoot: 'src',
       interop: false,
+      sourcemap: true,
     };
   }
 

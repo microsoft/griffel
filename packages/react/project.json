@@ -92,6 +92,15 @@
           "quiet": true
         }
       }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/react",
+        "color": true,
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
+      }
     }
   }
 }
