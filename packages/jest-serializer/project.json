@@ -29,6 +29,14 @@
         "main": "packages/jest-serializer/src/index.ts",
         "assets": ["packages/jest-serializer/*.md"]
       }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/jest-serializer",
+        "color": true,
+        "commands": [{ "command": "tsc -b" }]
+      }
     }
   },
   "tags": []

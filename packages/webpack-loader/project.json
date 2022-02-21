@@ -29,6 +29,14 @@
         "main": "packages/webpack-loader/src/index.ts",
         "assets": ["packages/webpack-loader/*.md"]
       }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/webpack-loader",
+        "color": true,
+        "commands": [{ "command": "tsc -b" }]
+      }
     }
   },
   "tags": []
