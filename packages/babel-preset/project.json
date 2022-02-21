@@ -36,6 +36,15 @@
           }
         ]
       }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/babel-preset",
+        "color": true,
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
+      }
     }
   },
   "tags": []

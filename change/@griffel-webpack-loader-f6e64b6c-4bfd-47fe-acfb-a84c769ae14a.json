@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "add \"type-check\" target to project.json ",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

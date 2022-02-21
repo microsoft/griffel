@@ -53,6 +53,15 @@
         "cwd": "packages/core",
         "commands": [{ "command": "bundle-size measure" }]
       }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/core",
+        "color": true,
+        "commands": [{ "command": "tsc -b" }],
+        "outputPath": []
+      }
     }
   }
 }
