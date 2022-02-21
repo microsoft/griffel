@@ -56,7 +56,7 @@ type GriffelStylesCSSProperties = Omit<
 
 export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
   GriffelStylesCSSPseudos & {
-    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.AnimationProperty;
+    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.Property.Animation;
     fontWeight?: CSS.Properties['fontWeight'] | string;
   };
 
