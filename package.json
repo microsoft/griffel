@@ -16,7 +16,8 @@
     "lint": "nx affected:lint",
     "start": "nx run @griffel/website:serve",
     "storybook": "nx run @griffel/react:storybook",
-    "test": "nx affected:test"
+    "test": "nx affected:test",
+    "type-check": "nx affected --target=type-check"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",
