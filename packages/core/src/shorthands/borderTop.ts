@@ -1,17 +1,17 @@
-import type { BorderColorProperty, BorderStyleProperty, BorderWidthProperty } from 'csstype';
+import * as CSS from 'csstype';
 import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
 
 type BorderTopStyle = Pick<GriffelStylesStrictCSSObject, 'borderTopWidth' | 'borderTopStyle' | 'borderTopColor'>;
 
-export function borderTop(width: BorderWidthProperty<GriffelStylesCSSValue>): BorderTopStyle;
+export function borderTop(width: CSS.Property.BorderWidth<GriffelStylesCSSValue>): BorderTopStyle;
 export function borderTop(
-  width: BorderWidthProperty<GriffelStylesCSSValue>,
-  style: BorderStyleProperty,
+  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
+  style: CSS.Property.BorderStyle,
 ): BorderTopStyle;
 export function borderTop(
-  width: BorderWidthProperty<GriffelStylesCSSValue>,
-  style: BorderStyleProperty,
-  color: BorderColorProperty,
+  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
+  style: CSS.Property.BorderStyle,
+  color: CSS.Property.BorderColor,
 ): BorderTopStyle;
 
 /**
@@ -25,7 +25,7 @@ export function borderTop(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-top
  */
 export function borderTop(
-  ...values: [BorderWidthProperty<GriffelStylesCSSValue>, BorderStyleProperty?, BorderColorProperty?]
+  ...values: [CSS.Property.BorderWidth<GriffelStylesCSSValue>, CSS.Property.BorderStyle?, CSS.Property.BorderColor?]
 ): BorderTopStyle {
   return {
     borderTopWidth: values[0],

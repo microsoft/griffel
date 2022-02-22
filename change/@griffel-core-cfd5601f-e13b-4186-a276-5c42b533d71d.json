@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: update csstype to 3.0.10",
+  "packageName": "@griffel/core",
+  "email": "rahulsunil2@gmail.com",
+  "dependentChangeType": "patch"
+}

@@ -2,7 +2,7 @@ import * as CSS from 'csstype';
 
 export type GriffelStylesCSSValue = string | 0;
 
-type GriffeltylesUnsupportedCSSProperties = {
+type GriffelStylesUnsupportedCSSProperties = {
   // We don't support expansion of CSS shorthands
   animation?: never;
   background?: never;
@@ -52,11 +52,11 @@ type GriffelStylesCSSProperties = Omit<
   // We have custom definition for "animationName" and "fontWeight"
   'animationName' | 'fontWeight'
 > &
-  GriffeltylesUnsupportedCSSProperties;
+  GriffelStylesUnsupportedCSSProperties;
 
 export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
   GriffelStylesCSSPseudos & {
-    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.AnimationProperty;
+    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.Property.Animation;
     fontWeight?: CSS.Properties['fontWeight'] | string;
   };
 
