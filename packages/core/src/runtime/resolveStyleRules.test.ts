@@ -1,6 +1,7 @@
 import { griffelRulesSerializer } from '../common/snapshotSerializers';
 import { resolveStyleRules } from './resolveStyleRules';
 import { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
+import { UNSUPPORTED_CSS_PROPERTIES } from '..';
 
 expect.addSnapshotSerializer(griffelRulesSerializer);
 
@@ -11,6 +12,19 @@ function getFirstClassName([resolvedClassesForSlot]: [CSSClassesMap, CSSRulesByB
 }
 
 describe('resolveStyleRules', () => {
+  describe('unsupported css properties', () => {
+    it.each(Object.keys(UNSUPPORTED_CSS_PROPERTIES))(
+      'strips unsupported `%s` css property when not in production',
+      property => {
+        // Doesn't matter what the value is, just that the resulting objects are empty
+        const res = resolveStyleRules({ [property]: 'dummy' as unknown as undefined });
+        expect(res).toHaveLength(2);
+        expect(res[0]).toEqual({});
+        expect(res[1]).toEqual({});
+      },
+    );
+  });
+
   describe('classnames', () => {
     it('generates unique classnames for pseudo selectors', () => {
       const classnamesSet = new Set<string>();

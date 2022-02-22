@@ -14,6 +14,7 @@ import { isObject } from './utils/isObject';
 import { getStyleBucketName } from './getStyleBucketName';
 import { hashClassName } from './utils/hashClassName';
 import { hashPropertyKey } from './utils/hashPropertyKey';
+import { UNSUPPORTED_CSS_PROPERTIES } from '..';
 
 function pushToClassesMap(
   classesMap: CSSClassesMap,
@@ -54,6 +55,14 @@ export function resolveStyleRules(
 ): [CSSClassesMap, CSSRulesByBucket] {
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (process.env.NODE_ENV !== 'production' && UNSUPPORTED_CSS_PROPERTIES.hasOwnProperty(property)) {
+      if (process.env.NODE_ENV !== 'test') {
+        console.error('Unsupported CSS property', property, 'will not be resolved');
+      }
+      continue;
+    }
+
     const value = styles[property as keyof GriffelStyle];
 
     // eslint-disable-next-line eqeqeq
