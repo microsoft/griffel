@@ -1,11 +1,11 @@
-import { makeStyles } from '@griffel/core';
+import { makeStyles, shorthands } from '@griffel/core';
 
 export default makeStyles({
   root: {
     backgroundColor: 'red',
     paddingLeft: '10px',
     '@media(forced-colors: active):': {
-      borderColor: 'transparent',
+      ...shorthands.borderColor('transparent'),
     },
   },
 });

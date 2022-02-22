@@ -1,6 +1,16 @@
 {
-  "extends": "@tsconfig/docusaurus/tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "."
-  }
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "types": ["environment", "static-assets", "@docusaurus/module-type-aliases"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

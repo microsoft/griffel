@@ -1,7 +1,7 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
-import useIsBrowser from '@docusaurus/useIsBrowser';
 
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import { GithubIcon, MoonIcon, SunIcon } from '../../components/icons';
 import styles from './styles.module.css';
 
@@ -23,7 +23,7 @@ function ThemeToggle() {
   return (
     <button
       aria-label={ariaLabel}
-      className={styles.toggleButton}
+      className={styles['toggelButton']}
       disabled={disabled}
       onClick={handleClick}
       type="button"
@@ -37,7 +37,7 @@ function GithubLink() {
   return (
     <a
       aria-label="Go to Griffel GitHub page"
-      className={styles.githubLink}
+      className={styles['githubLink']}
       href="https://github.com/microsoft/griffel"
       target="_blank"
       rel="noopener noreferrer"
@@ -49,7 +49,7 @@ function GithubLink() {
 
 export default function () {
   return (
-    <div className={styles.container}>
+    <div className={styles['container']}>
       {/* Docusaurus does not support declaring JSX elements in Navbar configuration. */}
       {/* This is a hack to re-order Github link & Theme switcher. */}
       {/* The folder cannot be renamed as it's how swizzling works in Docusaurus: */}
