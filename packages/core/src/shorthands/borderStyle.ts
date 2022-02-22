@@ -34,5 +34,5 @@ export function borderStyle(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-style
  */
 export function borderStyle(...values: CSS.Property.BorderStyle[]): BorderStyleStyle {
-  return generateStyles('border', 'Style', ...values);
+  return generateStyles<BorderStyleStyle>('border', 'Style', ...values);
 }

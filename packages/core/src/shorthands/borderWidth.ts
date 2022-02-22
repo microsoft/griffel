@@ -37,5 +37,5 @@ export function borderWidth(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-width
  */
 export function borderWidth(...values: CSS.Property.BorderWidth<GriffelStylesCSSValue>[]): BorderWidthStyle {
-  return generateStyles('border', 'Width', ...values);
+  return generateStyles<BorderWidthStyle>('border', 'Width', ...values);
 }

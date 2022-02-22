@@ -28,6 +28,6 @@ export function padding(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/padding
  */
-export function padding(...values: GriffelStylesCSSValue[]): PaddingStyle {
-  return generateStyles('padding', '', ...values);
+export function padding(...values: GriffelStylesCSSValue[]) {
+  return generateStyles<PaddingStyle>('padding', '', ...values);
 }

@@ -29,5 +29,5 @@ export function margin(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/margin
  */
 export function margin(...values: GriffelStylesCSSValue[]): MarginStyle {
-  return generateStyles('margin', '', ...values);
+  return generateStyles<MarginStyle>('margin', '', ...values);
 }

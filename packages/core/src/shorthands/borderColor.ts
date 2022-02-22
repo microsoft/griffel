@@ -34,5 +34,5 @@ export function borderColor(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-color
  */
 export function borderColor(...values: CSS.Property.BorderColor[]): BorderColorStyle {
-  return generateStyles('border', 'Color', ...values);
+  return generateStyles<BorderColorStyle>('border', 'Color', ...values);
 }
