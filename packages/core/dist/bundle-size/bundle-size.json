@@ -1,0 +1,14 @@
+[
+  {
+    "name": "makeStyles + mergeClasses (build time)",
+    "path": "bundle-size/makeStyles.fixture.js",
+    "minifiedSize": 1790,
+    "gzippedSize": 856
+  },
+  {
+    "name": "makeStyles + mergeClasses (runtime)",
+    "path": "bundle-size/makeStylesRuntime.fixture.js",
+    "minifiedSize": 18545,
+    "gzippedSize": 7038
+  }
+]
