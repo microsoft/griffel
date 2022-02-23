@@ -4,7 +4,7 @@ module.exports = {
   babel: async options => {
     return {
       ...options,
-      presets: [...options.presets, '@nrwl/react/babel'],
+      presets: [...options.presets, '@babel/typescript'],
     };
   },
 };
