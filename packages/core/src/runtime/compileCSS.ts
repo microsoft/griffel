@@ -11,7 +11,7 @@ export interface CompileCSSOptions {
   support: string;
 
   property: string;
-  value: number | string;
+  value: number | string | Array<number | string>;
 
   rtlClassName?: string;
   rtlProperty?: string;
@@ -63,7 +63,10 @@ export function compileCSS(options: CompileCSSOptions): [string /* ltr definitio
   const { className, media, pseudo, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
 
   const classNameSelector = `.${className}`;
-  const cssDeclaration = `{ ${hyphenateProperty(property)}: ${value}; }`;
+  const cssDeclaration =
+    typeof value === 'string' || typeof value === 'number'
+      ? `{ ${hyphenateProperty(property)}: ${value}; }`
+      : `{ ${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')}; }`;
 
   let rtlClassNameSelector: string | null = null;
   let rtlCSSDeclaration: string | null = null;

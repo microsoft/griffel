@@ -1,6 +1,6 @@
 import * as CSS from 'csstype';
 
-import type { GriffelStylesStrictCSSObject } from '../types';
+import type { GriffelStylesStrictCSSObject, ValueOrArray } from '../types';
 import { generateStyles } from './generateStyles';
 
 type BorderColorStyle = Pick<
@@ -8,18 +8,21 @@ type BorderColorStyle = Pick<
   'borderTopColor' | 'borderRightColor' | 'borderBottomColor' | 'borderLeftColor'
 >;
 
-export function borderColor(all: CSS.Property.BorderColor): BorderColorStyle;
-export function borderColor(vertical: CSS.Property.BorderColor, horizontal: CSS.Property.BorderColor): BorderColorStyle;
+export function borderColor(all: ValueOrArray<CSS.Property.BorderColor>): BorderColorStyle;
 export function borderColor(
-  top: CSS.Property.BorderColor,
-  horizontal: CSS.Property.BorderColor,
-  bottom: CSS.Property.BorderColor,
+  vertical: ValueOrArray<CSS.Property.BorderColor>,
+  horizontal: ValueOrArray<CSS.Property.BorderColor>,
 ): BorderColorStyle;
 export function borderColor(
-  top: CSS.Property.BorderColor,
-  right: CSS.Property.BorderColor,
-  bottom: CSS.Property.BorderColor,
-  left: CSS.Property.BorderColor,
+  top: ValueOrArray<CSS.Property.BorderColor>,
+  horizontal: ValueOrArray<CSS.Property.BorderColor>,
+  bottom: ValueOrArray<CSS.Property.BorderColor>,
+): BorderColorStyle;
+export function borderColor(
+  top: ValueOrArray<CSS.Property.BorderColor>,
+  right: ValueOrArray<CSS.Property.BorderColor>,
+  bottom: ValueOrArray<CSS.Property.BorderColor>,
+  left: ValueOrArray<CSS.Property.BorderColor>,
 ): BorderColorStyle;
 
 /**
@@ -33,6 +36,6 @@ export function borderColor(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-color
  */
-export function borderColor(...values: CSS.Property.BorderColor[]): BorderColorStyle {
+export function borderColor(...values: ValueOrArray<CSS.Property.BorderColor>[]): BorderColorStyle {
   return generateStyles<BorderColorStyle>('border', 'Color', ...values);
 }

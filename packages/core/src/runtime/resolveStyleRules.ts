@@ -152,6 +152,34 @@ export function resolveStyleRules(
         cssRulesByBucket,
         rtlAnimationNames.join(', '),
       );
+    } else if (Array.isArray(value)) {
+      const key = hashPropertyKey(pseudo, media, support, property);
+      const className = hashClassName({
+        media,
+        value: value.map(v => (v ?? '').toString()).join(';'),
+        support,
+        pseudo,
+        property,
+      });
+
+      // TODO: rtl
+      const rtlClassName = undefined;
+
+      const styleBucketName = getStyleBucketName(pseudo, media, support);
+      const [ltrCSS, rtlCSS] = compileCSS({
+        className,
+        media,
+        pseudo,
+        property,
+        support,
+        value: value as unknown as Array<string | number>,
+        // ...rtlCompileOptions,
+      });
+
+      console.log({ key, className, ltrCSS });
+
+      pushToClassesMap(cssClassesMap, key, className, rtlClassName);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(

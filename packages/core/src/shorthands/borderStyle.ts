@@ -1,6 +1,6 @@
 import * as CSS from 'csstype';
 
-import type { GriffelStylesStrictCSSObject } from '../types';
+import type { GriffelStylesStrictCSSObject, ValueOrArray } from '../types';
 import { generateStyles } from './generateStyles';
 
 type BorderStyleStyle = Pick<
@@ -8,18 +8,21 @@ type BorderStyleStyle = Pick<
   'borderTopStyle' | 'borderRightStyle' | 'borderBottomStyle' | 'borderLeftStyle'
 >;
 
-export function borderStyle(all: CSS.Property.BorderStyle): BorderStyleStyle;
-export function borderStyle(vertical: CSS.Property.BorderStyle, horizontal: CSS.Property.BorderStyle): BorderStyleStyle;
+export function borderStyle(all: ValueOrArray<CSS.Property.BorderStyle>): BorderStyleStyle;
 export function borderStyle(
-  top: CSS.Property.BorderStyle,
-  horizontal: CSS.Property.BorderStyle,
-  bottom: CSS.Property.BorderStyle,
+  vertical: ValueOrArray<CSS.Property.BorderStyle>,
+  horizontal: ValueOrArray<CSS.Property.BorderStyle>,
 ): BorderStyleStyle;
 export function borderStyle(
-  top: CSS.Property.BorderStyle,
-  right: CSS.Property.BorderStyle,
-  bottom: CSS.Property.BorderStyle,
-  left: CSS.Property.BorderStyle,
+  top: ValueOrArray<CSS.Property.BorderStyle>,
+  horizontal: ValueOrArray<CSS.Property.BorderStyle>,
+  bottom: ValueOrArray<CSS.Property.BorderStyle>,
+): BorderStyleStyle;
+export function borderStyle(
+  top: ValueOrArray<CSS.Property.BorderStyle>,
+  right: ValueOrArray<CSS.Property.BorderStyle>,
+  bottom: ValueOrArray<CSS.Property.BorderStyle>,
+  left: ValueOrArray<CSS.Property.BorderStyle>,
 ): BorderStyleStyle;
 
 /**
@@ -33,6 +36,6 @@ export function borderStyle(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-style
  */
-export function borderStyle(...values: CSS.Property.BorderStyle[]): BorderStyleStyle {
+export function borderStyle(...values: ValueOrArray<CSS.Property.BorderStyle>[]): BorderStyleStyle {
   return generateStyles<BorderStyleStyle>('border', 'Style', ...values);
 }

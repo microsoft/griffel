@@ -1,6 +1,6 @@
 import * as CSS from 'csstype';
 
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue, ValueOrArray } from '../types';
 import { borderWidth } from './borderWidth';
 import { borderStyle } from './borderStyle';
 import { borderColor } from './borderColor';
@@ -21,15 +21,15 @@ type BorderStyle = Pick<
   | 'borderLeftWidth'
 >;
 
-export function border(width: CSS.Property.BorderWidth<GriffelStylesCSSValue>): BorderStyle;
+export function border(width: ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>): BorderStyle;
 export function border(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
+  width: ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>,
+  style: ValueOrArray<CSS.Property.BorderStyle>,
 ): BorderStyle;
 export function border(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
-  color: CSS.Property.BorderColor,
+  width: ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>,
+  style: ValueOrArray<CSS.Property.BorderStyle>,
+  color: ValueOrArray<CSS.Property.BorderColor>,
 ): BorderStyle;
 
 /**
@@ -43,7 +43,11 @@ export function border(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border
  */
 export function border(
-  ...values: [CSS.Property.BorderWidth<GriffelStylesCSSValue>, CSS.Property.BorderStyle?, CSS.Property.BorderColor?]
+  ...values: [
+    ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>,
+    ValueOrArray<CSS.Property.BorderStyle>?,
+    ValueOrArray<CSS.Property.BorderColor>?,
+  ]
 ): BorderStyle {
   return {
     ...borderWidth(values[0]),

@@ -47,8 +47,15 @@ type GriffelStylesUnsupportedCSSProperties = {
   textEmphasis?: never;
   transition?: never;
 };
+
+export type ValueOrArray<T> = T | Array<T>;
+
+export type AllowArray<T> = {
+  [P in keyof T]: ValueOrArray<T[P]>;
+};
+
 type GriffelStylesCSSProperties = Omit<
-  CSS.Properties<GriffelStylesCSSValue>,
+  AllowArray<CSS.Properties<GriffelStylesCSSValue>>,
   // We have custom definition for "animationName" and "fontWeight"
   'animationName' | 'fontWeight'
 > &
@@ -65,6 +72,8 @@ type GriffelStylesCSSPseudos = {
     | (GriffelStylesStrictCSSObject & { content?: string })
     | (GriffelStylesCSSObjectCustomL1 & { content?: string });
 };
+
+export type Test = Pick<GriffelStylesStrictCSSObject, 'borderTopColor'>;
 
 //
 // "GriffelStylesCSSObjectCustom*" is a workaround to avoid circular references in types that are breaking TS <4.
