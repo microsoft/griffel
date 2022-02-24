@@ -5,12 +5,13 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
+    "outDir": "../../dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "types": ["environment", "static-assets", "@docusaurus/module-type-aliases"],
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+  "types": ["environment", "static-assets", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"]
 }

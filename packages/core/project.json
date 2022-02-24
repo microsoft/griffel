@@ -58,8 +58,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "cwd": "packages/core",
-        "color": true,
-        "commands": [{ "command": "tsc -b" }],
+        "commands": [{ "command": "tsc -b --pretty" }],
         "outputPath": []
       }
     }

@@ -1,17 +1,19 @@
+//@ts-check
+
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/vs.css';
 import beautify from 'js-beautify';
 import React from 'react';
 import css from 'highlight.js/lib/languages/css';
 import styles from './Styles';
-import type { GriffelRenderer } from '@griffel/core';
 hljs.registerLanguage('css', css);
 
 export default function App() {
   const [rules, setRules] = React.useState('');
   const ref = React.useRef(null);
   React.useEffect(() => {
-    const playgroundRenderer: GriffelRenderer = {
+    /** @type import('@griffel/core').GriffelRenderer */
+    const playgroundRenderer = {
       id: 'playground',
       insertCSSRules(cssRules) {
         const raw = Object.values(cssRules)
