@@ -56,8 +56,8 @@ export function resolveStyleRules(
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
     // eslint-disable-next-line no-prototype-builtins
-    if (process.env.NODE_ENV !== 'production' && UNSUPPORTED_CSS_PROPERTIES.hasOwnProperty(property)) {
-      if (process.env.NODE_ENV !== 'test') {
+    if (UNSUPPORTED_CSS_PROPERTIES.hasOwnProperty(property)) {
+      if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'production') {
         console.error('Unsupported CSS property', property, 'will not be resolved');
       }
       continue;
