@@ -13,6 +13,15 @@ function getFirstClassName([resolvedClassesForSlot]: [CSSClassesMap, CSSRulesByB
 
 describe('resolveStyleRules', () => {
   describe('unsupported css properties', () => {
+    let consoleSpy: jest.SpyInstance;
+    beforeAll(() => {
+      consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+    });
+
+    afterAll(() => {
+      consoleSpy.mockRestore();
+    });
+
     it.each(Object.keys(UNSUPPORTED_CSS_PROPERTIES))(
       'strips unsupported `%s` css property when not in production',
       property => {
