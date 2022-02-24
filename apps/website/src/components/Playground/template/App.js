@@ -1,3 +1,5 @@
+//@ts-check
+
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/vs.css';
 import beautify from 'js-beautify';
@@ -10,13 +12,18 @@ export default function App() {
   const [rules, setRules] = React.useState('');
   const ref = React.useRef(null);
   React.useEffect(() => {
+    /** @type import('@griffel/core').GriffelRenderer */
     const playgroundRenderer = {
       id: 'playground',
       insertCSSRules(cssRules) {
-        const raw = Object.values(cssRules).flat().join('\n');
+        const raw = Object.values(cssRules)
+          .reduce((acc, val) => acc.concat(val), [])
+          .join('\n');
         const prettified = beautify.css_beautify(raw, { indent_size: 2 });
         setRules(prettified);
       },
+      insertionCache: {},
+      styleElements: {},
     };
 
     styles({

@@ -17,6 +17,14 @@
         "cwd": "apps/website",
         "commands": [{ "command": "docusaurus start" }]
       }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "apps/website",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
     }
   },
   "tags": []
