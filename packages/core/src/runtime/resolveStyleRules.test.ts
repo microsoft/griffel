@@ -113,7 +113,6 @@ describe('resolveStyleRules', () => {
           '--fooBar': 'var(--barBaz)',
 
           backgroundColor: 'red',
-          MozAnimation: 'initial',
         }),
       ).toMatchInlineSnapshot(`
         .f1qux40 {
@@ -124,9 +123,6 @@ describe('resolveStyleRules', () => {
         }
         .f3xbvq9 {
           background-color: red;
-        }
-        .fr90kjk {
-          -moz-animation: initial;
         }
       `);
     });
