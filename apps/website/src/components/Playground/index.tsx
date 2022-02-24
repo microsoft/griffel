@@ -14,7 +14,11 @@ export default function Playground() {
       template="react"
       customSetup={{
         dependencies: { '@griffel/core': 'latest', 'highlight.js': 'latest', 'js-beautify': 'latest' },
-        files: { '/App.js': { code: AppCode, hidden: true }, '/Styles.js': { code: StylesCode, active: true } },
+        files: {
+          '/App.js': { code: AppCode, hidden: true },
+          // Template files are in JS but type checked, don't want unnecessary comments leaking into docs
+          '/Styles.js': { code: StylesCode.replace('//@ts-check\n', ''), active: true },
+        },
       }}
     >
       <SandpackLayout theme={sandpackTheme}>

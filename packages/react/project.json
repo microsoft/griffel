@@ -97,8 +97,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "cwd": "packages/react",
-        "color": true,
-        "commands": [{ "command": "tsc -b" }],
+        "commands": [{ "command": "tsc -b --pretty" }],
         "outputPath": []
       }
     }

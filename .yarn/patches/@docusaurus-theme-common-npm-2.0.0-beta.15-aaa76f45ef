@@ -1,0 +1,117 @@
+diff --git a/lib/components/Collapsible/index.d.ts b/lib/components/Collapsible/index.d.ts
+index 048360eabdca9e50289ee886c7debc21ba05949a..1df99e04a6ce5c7dec39e0b198d82e9612e5388d 100644
+--- a/lib/components/Collapsible/index.d.ts
++++ b/lib/components/Collapsible/index.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import React, { type Dispatch, type SetStateAction, type ReactNode } from 'react';
++import React, {  Dispatch,  SetStateAction,  ReactNode } from 'react';
+ export declare type UseCollapsibleConfig = {
+     initialState: boolean | (() => boolean);
+ };
+diff --git a/lib/components/Details/index.d.ts b/lib/components/Details/index.d.ts
+index 36a1a482ccd3dd311e02eedb0656ac19e3957bdf..944a3c453bf51aa79b3e6c5cf06d8009680d12f3 100644
+--- a/lib/components/Details/index.d.ts
++++ b/lib/components/Details/index.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import { type ComponentProps, type ReactElement } from 'react';
++import {  ComponentProps,  ReactElement } from 'react';
+ export declare type DetailsProps = {
+     summary?: ReactElement;
+ } & ComponentProps<'details'>;
+diff --git a/lib/utils/announcementBarUtils.d.ts b/lib/utils/announcementBarUtils.d.ts
+index eece3b5f6bc71d0e96fb040f0264677e38e5d916..d24b6fc301644820cd471e308917d8ebca109687 100644
+--- a/lib/utils/announcementBarUtils.d.ts
++++ b/lib/utils/announcementBarUtils.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import { type ReactNode } from 'react';
++import { ReactNode } from 'react';
+ export declare const AnnouncementBarDismissStorageKey = "docusaurus.announcement.dismiss";
+ declare type AnnouncementBarAPI = {
+     readonly isActive: boolean;
+diff --git a/lib/utils/docSidebarItemsExpandedState.d.ts b/lib/utils/docSidebarItemsExpandedState.d.ts
+index c159b3c5a462dd3abc19d06a6d4cfe20dbb93b84..271174b4bb8d9908fcef6b4d94cf13e833bc7664 100644
+--- a/lib/utils/docSidebarItemsExpandedState.d.ts
++++ b/lib/utils/docSidebarItemsExpandedState.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import { type ReactNode } from 'react';
++import { ReactNode } from 'react';
+ declare type DocSidebarItemsExpandedState = {
+     expandedItem: number | null;
+     setExpandedItem: (a: number | null) => void;
+diff --git a/lib/utils/docsPreferredVersion/useDocsPreferredVersion.d.ts b/lib/utils/docsPreferredVersion/useDocsPreferredVersion.d.ts
+index e8dd2309f014ddd57a1ddb4c8e9d55a4354ae725..7cf7282de02630a4a69f39359aa671c9ffb78417 100644
+--- a/lib/utils/docsPreferredVersion/useDocsPreferredVersion.d.ts
++++ b/lib/utils/docsPreferredVersion/useDocsPreferredVersion.d.ts
+@@ -5,7 +5,7 @@
+  * LICENSE file in the root directory of this source tree.
+  */
+ /// <reference types="@docusaurus/plugin-content-docs" />
+-import { type GlobalVersion } from '@docusaurus/plugin-content-docs/client';
++import { GlobalVersion } from '@docusaurus/plugin-content-docs/client';
+ export declare function useDocsPreferredVersion(pluginId?: string | undefined): {
+     preferredVersion: GlobalVersion | null | undefined;
+     savePreferredVersionName: (versionName: string) => void;
+diff --git a/lib/utils/docsUtils.d.ts b/lib/utils/docsUtils.d.ts
+index c495b505d4cbac92e63e7bbf4b05d121370a7ffb..7a39a31a8c06de9af804e6d49f868da9e2ce1aeb 100644
+--- a/lib/utils/docsUtils.d.ts
++++ b/lib/utils/docsUtils.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import { type ReactNode } from 'react';
++import { ReactNode } from 'react';
+ import type { PropSidebar, PropSidebarItem, PropSidebarItemCategory, PropVersionDoc, PropVersionMetadata } from '@docusaurus/plugin-content-docs';
+ export declare const isDocsPluginEnabled: boolean;
+ declare const EmptyContextValue: unique symbol;
+diff --git a/lib/utils/mobileSecondaryMenu.d.ts b/lib/utils/mobileSecondaryMenu.d.ts
+index a2b62f353a1b5db60109ddc8de72ebd46bbd09d6..8bb9677c51181239dbb9c4fee63da4c7510aef2c 100644
+--- a/lib/utils/mobileSecondaryMenu.d.ts
++++ b/lib/utils/mobileSecondaryMenu.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import { type ReactNode, type ComponentType } from 'react';
++import { ReactNode, ComponentType } from 'react';
+ declare type ExtraProps = {
+     toggleSidebar: () => void;
+ };
+diff --git a/lib/utils/scrollUtils.d.ts b/lib/utils/scrollUtils.d.ts
+index 09f34f928666b813e863c08150b31105d988c55a..e081b4c8b8f340aab3a554807a6675876de90ba7 100644
+--- a/lib/utils/scrollUtils.d.ts
++++ b/lib/utils/scrollUtils.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import React, { type ReactNode } from 'react';
++import React, { ReactNode } from 'react';
+ /**
+  * We need a way to update the scroll position while ignoring scroll events
+  * without affecting Navbar/BackToTop visibility
+diff --git a/lib/utils/tabGroupChoiceUtils.d.ts b/lib/utils/tabGroupChoiceUtils.d.ts
+index 31046d523f4a759749d97c4fbc422f61d4ea9336..9271b79b8e748531bc6ff87a37d5e89643270da7 100644
+--- a/lib/utils/tabGroupChoiceUtils.d.ts
++++ b/lib/utils/tabGroupChoiceUtils.d.ts
+@@ -4,7 +4,7 @@
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+  */
+-import { type ReactNode } from 'react';
++import { ReactNode } from 'react';
+ declare type TabGroupChoiceContextValue = {
+     readonly tabGroupChoices: {
+         readonly [groupId: string]: string;
