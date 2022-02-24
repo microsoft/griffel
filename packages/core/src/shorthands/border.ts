@@ -1,9 +1,8 @@
-import * as CSS from 'csstype';
-
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue, ValueOrArray } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
 import { borderWidth } from './borderWidth';
 import { borderStyle } from './borderStyle';
 import { borderColor } from './borderColor';
+import { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 
 type BorderStyle = Pick<
   GriffelStylesStrictCSSObject,
@@ -21,16 +20,9 @@ type BorderStyle = Pick<
   | 'borderLeftWidth'
 >;
 
-export function border(width: ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>): BorderStyle;
-export function border(
-  width: ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>,
-  style: ValueOrArray<CSS.Property.BorderStyle>,
-): BorderStyle;
-export function border(
-  width: ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>,
-  style: ValueOrArray<CSS.Property.BorderStyle>,
-  color: ValueOrArray<CSS.Property.BorderColor>,
-): BorderStyle;
+export function border(width: BorderWidthInput): BorderStyle;
+export function border(width: BorderWidthInput, style: BorderStyleInput): BorderStyle;
+export function border(width: BorderWidthInput, style: BorderStyleInput, color: BorderColorInput): BorderStyle;
 
 /**
  * A function that implements expansion for "border" to all sides of an element, it's simplified - check usage examples.
@@ -42,13 +34,7 @@ export function border(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border
  */
-export function border(
-  ...values: [
-    ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>,
-    ValueOrArray<CSS.Property.BorderStyle>?,
-    ValueOrArray<CSS.Property.BorderColor>?,
-  ]
-): BorderStyle {
+export function border(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderStyle {
   return {
     ...borderWidth(values[0]),
     ...(values[1] && borderStyle(values[1])),

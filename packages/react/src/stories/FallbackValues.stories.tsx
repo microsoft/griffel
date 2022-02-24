@@ -9,12 +9,12 @@ const useStyles = makeStyles({
     color: ['red', 'invalid'],
     borderTopStyle: ['dashed', 'double'],
     ...shorthands.border(['1px'], 'solid', ['red', 'invalid']),
-    // ...shorthands.borderRight('40px', 'solid', ['green', 'invalid']),
+    ...shorthands.borderRight('40px', 'solid', ['green', 'invalid']),
   },
   shouldBeBlue: {
     color: ['red', 'blue'] as any,
     ...shorthands.border('1px', 'solid', ['red', 'blue']),
-    // ...shorthands.borderRight('40px', 'solid', ['green', 'grey']),
+    ...shorthands.borderRight('40px', 'solid', ['green', 'grey']),
     borderRightWidth: '100px',
   },
 });

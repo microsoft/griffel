@@ -1,18 +1,11 @@
-import * as CSS from 'csstype';
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
+import { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 
 type BorderLeftStyle = Pick<GriffelStylesStrictCSSObject, 'borderLeftColor' | 'borderLeftStyle' | 'borderLeftWidth'>;
 
-export function borderLeft(width: CSS.Property.BorderWidth<GriffelStylesCSSValue>): BorderLeftStyle;
-export function borderLeft(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
-): BorderLeftStyle;
-export function borderLeft(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
-  color: CSS.Property.BorderColor,
-): BorderLeftStyle;
+export function borderLeft(width: BorderWidthInput): BorderLeftStyle;
+export function borderLeft(width: BorderWidthInput, style: BorderStyleInput): BorderLeftStyle;
+export function borderLeft(width: BorderWidthInput, style: BorderStyleInput, color: BorderColorInput): BorderLeftStyle;
 
 /**
  * A function that implements expansion for "border-left", it's simplified - check usage examples.
@@ -24,9 +17,7 @@ export function borderLeft(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-left
  */
-export function borderLeft(
-  ...values: [CSS.Property.BorderWidth<GriffelStylesCSSValue>, CSS.Property.BorderStyle?, CSS.Property.BorderColor?]
-): BorderLeftStyle {
+export function borderLeft(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderLeftStyle {
   return {
     borderLeftWidth: values[0],
     ...(values[1] && ({ borderLeftStyle: values[1] } as GriffelStylesStrictCSSObject)),

@@ -21,4 +21,12 @@ describe('borderRight', () => {
       borderRightColor: 'red',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(borderRight(['2px', '4px'], ['solid', 'dashed'], ['red', 'green'])).toEqual({
+      borderRightColor: ['red', 'green'],
+      borderRightStyle: ['solid', 'dashed'],
+      borderRightWidth: ['2px', '4px'],
+    });
+  });
 });
