@@ -58,7 +58,17 @@ export function resolveStyleRules(
     // eslint-disable-next-line no-prototype-builtins
     if (UNSUPPORTED_CSS_PROPERTIES.hasOwnProperty(property)) {
       if (process.env.NODE_ENV !== 'production') {
-        console.error('Unsupported CSS property', property, 'will not be resolved');
+        console.error(
+          [
+            `@griffel/react: You are using unsupported shorthand CSS property "${property}". ` +
+              `Please check your "makeStyles" calls, there *should not* be following:`,
+            ' '.repeat(2) + `makeStyles({`,
+            ' '.repeat(4) + `[slot]: { ${property}: "${styles[property as keyof GriffelStyle]}" }`,
+            ' '.repeat(2) + `})`,
+            '',
+            'Learn why CSS shorthands are not supported: https://aka.ms/griffel-css-shorthands',
+          ].join('\n'),
+        );
       }
       continue;
     }
