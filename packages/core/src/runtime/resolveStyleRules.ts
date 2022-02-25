@@ -14,6 +14,7 @@ import { isObject } from './utils/isObject';
 import { getStyleBucketName } from './getStyleBucketName';
 import { hashClassName } from './utils/hashClassName';
 import { hashPropertyKey } from './utils/hashPropertyKey';
+import { UNSUPPORTED_CSS_PROPERTIES } from '..';
 
 function pushToClassesMap(
   classesMap: CSSClassesMap,
@@ -54,6 +55,24 @@ export function resolveStyleRules(
 ): [CSSClassesMap, CSSRulesByBucket] {
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (UNSUPPORTED_CSS_PROPERTIES.hasOwnProperty(property)) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(
+          [
+            `@griffel/react: You are using unsupported shorthand CSS property "${property}". ` +
+              `Please check your "makeStyles" calls, there *should not* be following:`,
+            ' '.repeat(2) + `makeStyles({`,
+            ' '.repeat(4) + `[slot]: { ${property}: "${styles[property as keyof GriffelStyle]}" }`,
+            ' '.repeat(2) + `})`,
+            '',
+            'Learn why CSS shorthands are not supported: https://aka.ms/griffel-css-shorthands',
+          ].join('\n'),
+        );
+      }
+      continue;
+    }
+
     const value = styles[property as keyof GriffelStyle];
 
     // eslint-disable-next-line eqeqeq

@@ -8,6 +8,7 @@
   },
   "include": [
     "__fixtures__/**/code.ts",
+    "__fixtures__/**/fixture.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/*.test.tsx",
