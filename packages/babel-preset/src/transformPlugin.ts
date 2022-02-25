@@ -99,9 +99,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
   api.assertVersion(7);
 
   const pluginOptions: Required<BabelPluginOptions> = {
-    babelOptions: {
-      presets: ['@babel/preset-typescript'],
-    },
+    babelOptions: {},
     modules: [{ moduleSource: '@griffel/react', importName: 'makeStyles' }],
     evaluationRules: [
       { action: shakerEvaluator },
