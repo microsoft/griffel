@@ -22,10 +22,7 @@ export const LOOKUP_DEFINITIONS_INDEX = 0;
 export const LOOKUP_DIR_INDEX = 1;
 
 /** @internal */
-export const UNSUPPORTED_CSS_PROPERTIES: Record<
-  keyof CSS.StandardShorthandProperties | keyof CSS.VendorShorthandProperties,
-  number
-> = {
+export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, number> = {
   all: 1,
   animation: 1,
   background: 1,
@@ -73,31 +70,4 @@ export const UNSUPPORTED_CSS_PROPERTIES: Record<
   textDecoration: 1,
   textEmphasis: 1,
   transition: 1,
-
-  // Vendor shorthands
-  MozAnimation: 1,
-  MozBorderImage: 1,
-  MozColumnRule: 1,
-  MozColumns: 1,
-  MozTransition: 1,
-  WebkitAnimation: 1,
-  WebkitBorderBefore: 1,
-  WebkitBorderImage: 1,
-  WebkitBorderRadius: 1,
-  WebkitColumnRule: 1,
-  WebkitColumns: 1,
-  WebkitFlex: 1,
-  WebkitFlexFlow: 1,
-  WebkitMask: 1,
-  WebkitMaskBoxImage: 1,
-  WebkitTextEmphasis: 1,
-  WebkitTextStroke: 1,
-  WebkitTransition: 1,
-  msContentZoomLimit: 1,
-  msContentZoomSnap: 1,
-  msFlex: 1,
-  msScrollLimit: 1,
-  msScrollSnapX: 1,
-  msScrollSnapY: 1,
-  msTransition: 1,
 } as const;

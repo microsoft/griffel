@@ -122,6 +122,7 @@ describe('resolveStyleRules', () => {
           '--fooBar': 'var(--barBaz)',
 
           backgroundColor: 'red',
+          MozBorderLeftColors: 'red',
         }),
       ).toMatchInlineSnapshot(`
         .f1qux40 {
@@ -132,6 +133,9 @@ describe('resolveStyleRules', () => {
         }
         .f3xbvq9 {
           background-color: red;
+        }
+        .f1qq0qht {
+          -moz-border-left-colors: red;
         }
       `);
     });
