@@ -21,8 +21,9 @@ export const LOOKUP_DEFINITIONS_INDEX = 0;
 /** @internal */
 export const LOOKUP_DIR_INDEX = 1;
 
+// This collection is a map simply for faster access when checking if a CSS property is unsupported
 /** @internal */
-export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, number> = {
+export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, 1> = {
   all: 1,
   animation: 1,
   background: 1,
