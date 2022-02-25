@@ -26,6 +26,18 @@ pluginTester({
   fixtures: fixturesDir,
   tests: [
     {
+      title: 'Unsupported shorthand CSS properties',
+      fixture: path.resolve(fixturesDir, 'unsupported-css-properties', 'fixture.ts'),
+      outputFixture: path.resolve(fixturesDir, 'unsupported-css-properties', 'output.ts'),
+      setup() {
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+
+        return function teardown() {
+          consoleSpy.mockRestore();
+        };
+      },
+    },
+    {
       title: 'errors: throws on invalid argument type',
       fixture: path.resolve(fixturesDir, 'error-argument-type', 'fixture.js'),
       error: /function accepts only an object as a param/,
