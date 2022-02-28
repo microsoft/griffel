@@ -9,7 +9,7 @@ const config = {
   projectName: 'griffel',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
 
   title: 'Griffel',
   tagline: 'Dinosaurs are cool',
@@ -44,6 +44,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      autoCollapseSidebarCategories: false,
       navbar: {
         title: 'Griffel',
         // logo: {
@@ -55,7 +56,7 @@ const config = {
             type: 'doc',
             docId: 'react/install',
             position: 'left',
-            label: 'for React.js',
+            label: 'For React.js',
           },
           {
             type: 'doc',
