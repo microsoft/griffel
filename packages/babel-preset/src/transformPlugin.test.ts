@@ -15,6 +15,11 @@ pluginTester({
       plugins: ['typescript'],
     },
   },
+  pluginOptions: {
+    babelOptions: {
+      presets: ['@babel/typescript'],
+    },
+  },
   formatResult: code =>
     prettierFormatter(code, {
       config: {

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: remove implicit dependency on TypeScript preset",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
