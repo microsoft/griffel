@@ -4,13 +4,13 @@ sidebar_position: 4
 
 # Server-Side Rendering
 
-Griffel fully supports Server-Side Rendering.
+Griffel provides first class support for Server-Side Rendering.
 
 ## Next.js
 
 ### Base setup
 
-For basic instructions on getting Next.js set up, see [Getting Started](https://nextjs.org/docs/getting-started). Please complete following steps:
+For basic instructions to setup Next.js, see [Getting Started](https://nextjs.org/docs/getting-started). Please complete following steps:
 
 1. Get a basic Next.js setup running, rendering a page from the `pages` folder, as guided by the tutorial.
 2. Add the Griffel to dependencies (`@griffel/react` package`), check [Install](/react/install) page.
@@ -33,7 +33,6 @@ class MyDocument extends Document {
 
     ctx.renderPage = () =>
       originalRenderPage({
-        // 👇 this is required by pass the same instance to <App />
         enhanceApp: App => props => <App {...props} renderer={renderer} />,
       });
 
@@ -63,14 +62,14 @@ class MyDocument extends Document {
 export default MyDocument;
 ```
 
-2. Create or modify a `_app.js` file under your `pages` folder with the following content:
+2. Create or modify an `_app.js` file under your `pages` folder with the following content:
 
 ```js
 import { createDOMRenderer, RendererProvider } from '@griffel/react';
 
 function MyApp({ Component, pageProps, renderer }) {
   return (
-    // 👇 accepts a renderer passed from <Document /> component or creates a default one
+    // 👇 accepts a renderer passed from the <Document /> component or creates a default one
     <RendererProvider renderer={renderer || createDOMRenderer()}>
       <Component {...pageProps} />
     </RendererProvider>

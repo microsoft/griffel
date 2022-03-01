@@ -6,7 +6,7 @@ import OutputTitle from '@site/src/components/OutputTitle'
 
 # makeStaticStyles
 
-Creates styles attached to a global selector. This is especially useful for CSS resets, for example [normalize.css](https://github.com/necolas/normalize.css/).
+Creates styles with a global selector. This is especially useful for CSS resets, for example [normalize.css](https://github.com/necolas/normalize.css/).
 
 ## Defining styles with objects
 
