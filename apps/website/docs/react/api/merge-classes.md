@@ -74,7 +74,7 @@ function App(props) {
 
 ### Order of arguments matters
 
-There might be an issue with incorrect order of classes - as the latest wins. In the example below `props.className` should be last to override the component styles:
+The order of classes is important - if two classes apply the same style, the latest class wins. In the example below the background color will be red:
 
 ```jsx
 const useClasses = makeStyles({
