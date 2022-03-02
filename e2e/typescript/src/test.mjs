@@ -85,17 +85,16 @@ async function performTest(tsVersion) {
     );
     console.log(logSymbols.success, 'A fixture and configs were copied');
 
-    await sh(`yarn --non-interactive --no-progress --silent add ./${packFile} typescript@${tsVersion}`, tempDir);
+    console.log(logSymbols.info, 'Using Yarn', (await sh('yarn --version', tempDir, true)).trim());
+    await sh(`yarn add --silent ./${packFile} typescript@${tsVersion}`, tempDir);
     console.log(logSymbols.success, 'Packages were installed');
 
     tscBin = path.resolve(tempDir, 'node_modules', 'typescript', 'bin', 'tsc');
-
-    const yarnVersion = (await sh('yarn --version', tempDir, true)).trim();
-    const tscVersion = (await sh(`${tscBin} --version`, tempDir, true)).replace('Version', '').trim();
-
-    console.log(logSymbols.info, 'Using:');
-    console.log(' '.repeat(2) + '- Yarn', yarnVersion);
-    console.log(' '.repeat(2) + '- TypeScript', tscVersion);
+    console.log(
+      logSymbols.info,
+      'Using TypeScript',
+      (await sh(`${tscBin} --version`, tempDir, true)).replace('Version', '').trim(),
+    );
   } catch (e) {
     console.error(logSymbols.error, 'Something went wrong setting up the test:');
     console.error(/** @type {Error} */ e?.stack || e);
