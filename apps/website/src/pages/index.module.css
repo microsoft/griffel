@@ -1,0 +1,63 @@
+.container {
+  position: relative;
+}
+
+.containerLayer {
+  background: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 72px;
+  z-index: -1;
+}
+
+.hero {
+  background: transparent;
+  padding-bottom: 0;
+}
+
+.heroContainer {
+  padding: 0 32px;
+}
+
+.heroTitle {
+  font-size: 60px;
+}
+
+.heroTitle b {
+  color: var(--ifm-color-primary);
+}
+
+.ctaContainer {
+  align-items: center;
+  display: flex;
+  gap: 18px;
+  margin-top: 48px;
+}
+
+.githubButton {
+  height: 32px;
+}
+
+.codeContainer {
+  margin-top: 48px;
+}
+
+.codeContainer > div {
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .heroTitle {
+    font-size: 48px;
+  }
+
+  .ctaContainer {
+    flex-direction: column;
+  }
+
+  .githubButton {
+    display: none;
+  }
+}
