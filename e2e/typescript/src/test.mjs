@@ -38,7 +38,7 @@ function sh(command, cwd, pipeOutputToResult = false) {
         resolve(stdoutData);
       }
 
-      reject(new Error(`child process exited with code ${code}`));
+      reject(new Error([`child process exited with code ${code}`, stdoutData].join('\n')));
     });
   });
 }
@@ -79,14 +79,21 @@ async function performTest(tsVersion) {
     await fs.promises.copyFile(path.resolve(assetsPath, 'fixture.ts'), path.join(tempDir, 'fixture.ts'));
     await fs.promises.copyFile(path.resolve(assetsPath, 'tsconfig.fixture.json'), path.join(tempDir, 'tsconfig.json'));
 
+    // Reuse the same cache directory to speed up install and avoid network requests
+    const yarnCacheDir = tmp.dirSync({ prefix: 'yarn-cache', unsafeCleanup: true }).name;
+    const yarnPath = await sh('yarn config get yarnPath', dirname, true);
+
     await fs.promises.writeFile(
-      path.resolve(tempDir, '.yarnrc'),
-      `cache-folder "${path.resolve(tempDir, '.yarn-cache')}"`,
+      path.resolve(tempDir, '.yarnrc.yml'),
+      [`cacheFolder: ${yarnCacheDir}`, 'nodeLinker: node-modules', `yarnPath: ${yarnPath}`].join('\n'),
     );
     console.log(logSymbols.success, 'A fixture and configs were copied');
 
     console.log(logSymbols.info, 'Using Yarn', (await sh('yarn --version', tempDir, true)).trim());
-    await sh(`yarn add --silent ./${packFile} typescript@${tsVersion}`, tempDir);
+
+    await sh('yarn init -p', tempDir, true);
+    await sh(`yarn add ./${packFile} typescript@${tsVersion}`, tempDir, true);
+
     console.log(logSymbols.success, 'Packages were installed');
 
     tscBin = path.resolve(tempDir, 'node_modules', 'typescript', 'bin', 'tsc');
