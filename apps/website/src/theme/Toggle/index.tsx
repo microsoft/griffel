@@ -23,7 +23,7 @@ function ThemeToggle() {
   return (
     <button
       aria-label={ariaLabel}
-      className={styles['toggelButton']}
+      className={styles['toggleButton']}
       disabled={disabled}
       onClick={handleClick}
       type="button"
