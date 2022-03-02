@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "@griffel/e2e-typescript": "e2e/typescript",
     "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
     "@griffel/jest-serializer": "packages/jest-serializer",

@@ -1,0 +1,25 @@
+{
+  "root": "e2e/typescript3.8",
+  "sourceRoot": "e2e/typescript3.8/src",
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "e2e/typescript",
+        "dependsOn": [{ "target": "build", "projects": "dependencies" }],
+        "commands": [{ "command": "node src/test.mjs" }],
+        "outputPath": []
+      }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "e2e/typescript",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}
