@@ -4,11 +4,14 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.head_commit.message, 'applying package updates') }}
+    if: ${{ contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch' }}
 
     steps:
       - uses: actions/checkout@v2
