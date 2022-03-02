@@ -104,7 +104,7 @@ async function performTest(tsVersion) {
     );
   } catch (e) {
     console.error(logSymbols.error, 'Something went wrong setting up the test:');
-    console.error(/** @type {Error} */ e?.stack || e);
+    console.error(/** @type {Error} */ e?.stack ?? e);
     process.exit(1);
   }
 
