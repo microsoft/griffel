@@ -55,7 +55,7 @@ This section shows and describes anti-patterns which should never be used.
 
 :::caution
 
-It is not possible to simply concatenate classes returned by `useClasses()` hooks. Always use `mergeClasses()` to merge classes.
+It is not possible to simply concatenate classes returned by `useClasses()` hooks. Always use `mergeClasses()` to merge classes as results of concatenation can contain duplicated classes and lead to non-deterministic results.
 
 :::
 
@@ -67,7 +67,10 @@ const useClasses = makeStyles({
 
 function App(props) {
   const classes = useClasses();
-  // ⚠️ Never concatenate class strings, always use mergeClasses()
+
+  // ✅ Returns "class-color-blue"
+  const correctClasses = mergeClasses(classes.rootA, classes.rootB);
+  // 🔴 Never concatenate class strings, returns "class-color-red class-color-blue"
   const wrongClasses = classes.rootA + ' ' + classes.rootB;
 }
 ```
