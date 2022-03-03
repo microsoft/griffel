@@ -14,8 +14,8 @@ const config = {
   title: 'Griffel',
   tagline: 'Dinosaurs are cool',
 
-  url: 'https://microsoft.github.io',
-  baseUrl: '/griffel/',
+  url: 'https://griffel.js.org',
+  baseUrl: '/',
   // favicon: 'img/favicon.ico',
 
   presets: [
