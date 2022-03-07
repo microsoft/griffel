@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: add \"type-check\" target to project.json",
-  "packageName": "@griffel/jest-serializer",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

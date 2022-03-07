@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: add DOMRenderer filter story",
-  "packageName": "@griffel/react",
-  "email": "miroslav.stastny@microsoft.com",
-  "dependentChangeType": "none"
-}

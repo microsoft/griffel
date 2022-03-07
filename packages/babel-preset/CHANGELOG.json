@@ -2,6 +2,49 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Mon, 07 Mar 2022 09:08:07 GMT",
+      "tag": "@griffel/babel-preset_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/babel-preset",
+            "commit": "ff6078d3d9dac9a1d5310a027d41e7d6a75ce959",
+            "comment": "chore: enable pretty type-check output"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "35ec68e5db45f33511b6091ad43eb2b3a316fa7b",
+            "comment": "chore: add \"type-check\" target to project.json"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "cfee239c4fd6f2b5bfe075187d72dfd2635e9dda",
+            "comment": "fix: remove implicit dependency on TypeScript preset"
+          }
+        ],
+        "minor": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/babel-preset",
+            "commit": "3e2437be42f81565b874e0e0b6f41f7dfc1d432b",
+            "comment": "feat: strip unsupported CSS properties in output"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.1.0",
+            "commit": "b97c0adca3e602259f7d930ffa8886eafa7e3870"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Jan 2022 13:47:55 GMT",
       "tag": "@griffel/babel-preset_v1.0.0",
       "version": "1.0.0",

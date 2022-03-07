@@ -1,8 +1,22 @@
 # Change Log - @griffel/core
 
-This log was last generated on Tue, 18 Jan 2022 10:20:48 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Mar 2022 09:08:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Mon, 07 Mar 2022 09:08:07 GMT
+
+### Minor changes
+
+- feat: do not add unsupported CSS properties to DOM (lingfangao@hotmail.com)
+
+### Patches
+
+- chore: add sourcemaps to dist files (olfedias@microsoft.com)
+- fix: improve typings to solve TS issues (olfedias@microsoft.com)
+- chore: update csstype to 3.0.10 (rahulsunil2@gmail.com)
 
 ## 1.0.7
 
