@@ -109,7 +109,7 @@ async function performTest(tsVersion) {
   }
 
   try {
-    await sh(`${tscBin} --noEmit`, tempDir);
+    await sh(`${tscBin} --noEmit --pretty`, tempDir);
 
     console.log(logSymbols.success, `Example project was successfully built with typescript@${tsVersion}`);
     console.log('');

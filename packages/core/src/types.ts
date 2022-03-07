@@ -30,21 +30,31 @@ type GriffelStylesCSSPseudos = {
 // updated or removed.
 //
 
-type GriffelStylesCSSObjectCustomL1 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL2;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL2 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL3;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL3 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL4;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL4 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL5;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL5 = {
-  [Property: string]: GriffelStylesCSSValue | undefined;
-} & GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL1 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL2;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL2 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL3;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL3 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL4;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL4 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL5;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL5 =
+  | ({
+      [Property: string]: string | undefined;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
 
 export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;

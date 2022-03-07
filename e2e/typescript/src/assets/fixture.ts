@@ -9,6 +9,13 @@ function assertType(style: GriffelStyle): GriffelStyle {
 
 assertType({ flexShrink: 0 });
 assertType({ flexShrink: 1 });
+assertType({ zIndex: 0 });
+assertType({ zIndex: 1 });
+
+assertType({ fontWeight: 'var(--foo)' });
+assertType({ flexShrink: 'var(--bar)' });
+assertType({ opacity: 'var(--baz)' });
+assertType({ zIndex: 'var(--qux)' });
 
 assertType({ color: 'beige' });
 assertType({ paddingLeft: '5px' });
@@ -21,6 +28,15 @@ assertType({ '--color': 'red' });
 assertType({
   ':hover': { flexShrink: 0 },
   ':focus': { flexShrink: 'initial' },
+  ':active': { zIndex: 0 },
+  ':visited': { zIndex: 1 },
+});
+
+assertType({
+  ':hover': { fontWeight: 'var(--foo)' },
+  ':focus': { flexShrink: 'var(--bar)' },
+  ':active': { opacity: 'var(--bar)' },
+  ':visited': { zIndex: 'var(--qux)' },
 });
 
 assertType({
@@ -36,8 +52,17 @@ assertType({
 //
 
 assertType({
-  ':hover:focus': { flexShrink: 0 as const },
+  ':hover:focus': { flexShrink: 0 },
   ':hover:active': { flexShrink: 'initial' },
+  ':hover:visited': { zIndex: 0 },
+  ':hover:focus-visible': { zIndex: 1 },
+});
+
+assertType({
+  ':link:hover': { fontWeight: 'var(--foo)' },
+  ':link:focus': { flexShrink: 'var(--bar)' },
+  ':link:active': { opacity: 'var(--bar)' },
+  ':link:visited': { zIndex: 'var(--qux)' },
 });
 
 assertType({
@@ -54,8 +79,11 @@ assertType({
 
 assertType({
   '.foo': {
-    '.bar': { flexShrink: 0 as const },
+    '.bar': { flexShrink: 0 },
     '.baz': { flexShrink: 'initial' },
+    '.qux': { opacity: 0 },
+    '.fred': { zIndex: 0 },
+    '.thud': { zIndex: 1 },
   },
   '.bar': {
     '.baz': { color: 'beige' },
@@ -65,6 +93,10 @@ assertType({
     '.qux': {
       '--color': 'red',
     },
+  },
+  '.qux': {
+    '.bar': { flexShrink: 'var(--bar)' },
+    '.baz': { opacity: 'var(--baz)' },
   },
 });
 
