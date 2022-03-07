@@ -153,6 +153,8 @@ export function resolveStyleRules(
         rtlAnimationNames.join(', '),
       );
     } else if (Array.isArray(value)) {
+      // not animationName property but array in the value => fallback values
+
       const key = hashPropertyKey(pseudo, media, support, property);
       const className = hashClassName({
         media,
@@ -162,8 +164,41 @@ export function resolveStyleRules(
         property,
       });
 
-      // TODO: rtl
-      const rtlClassName = undefined;
+      const rtlDefinitions =
+        (rtlValue && [{ key: property, value: rtlValue }]) || value.map(v => convertProperty(property, v!)); // FIXME
+
+      if (process.env.NODE_ENV !== 'production') {
+        const rtlPropertyConsistent =
+          rtlDefinitions.length === 0 || !rtlDefinitions.some(v => v.key !== rtlDefinitions[0].key);
+
+        if (!rtlPropertyConsistent) {
+          throw new Error(
+            'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
+          );
+        }
+      }
+
+      const flippedInRtl =
+        rtlDefinitions.length > 0 &&
+        (rtlDefinitions[0].key !== property || rtlDefinitions.some((v, i) => v.value !== value[i]));
+
+      const rtlClassName = flippedInRtl
+        ? hashClassName({
+            value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
+            property: rtlDefinitions[0].key,
+            pseudo,
+            media,
+            support,
+          })
+        : undefined;
+
+      const rtlCompileOptions: Partial<CompileCSSOptions> | undefined = flippedInRtl
+        ? {
+            rtlClassName,
+            rtlProperty: rtlDefinitions[0].key,
+            rtlValue: rtlDefinitions.map(d => d.value) as unknown as Array<string | number>, // FIXME
+          }
+        : undefined;
 
       const styleBucketName = getStyleBucketName(pseudo, media, support);
       const [ltrCSS, rtlCSS] = compileCSS({
@@ -172,11 +207,9 @@ export function resolveStyleRules(
         pseudo,
         property,
         support,
-        value: value as unknown as Array<string | number>,
-        // ...rtlCompileOptions,
+        value: value as unknown as Array<string | number>, // FIXME
+        ...rtlCompileOptions,
       });
-
-      console.log({ key, className, ltrCSS });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
       pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);

@@ -142,6 +142,21 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles fallback values', () => {
+      // debugger;
+      // const test = resolveStyleRules({ left: '--var(unknown) /* @noflip */' });
+      // const test = resolveStyleRules({ left: ['10px', '20px'] });
+      // console.log('test', test);
+
+      const actual = resolveStyleRules({ color: ['red', 'blue'] });
+      expect(actual).toMatchInlineSnapshot(`
+        .f15e90lz {
+          color: red;
+          color: blue;
+        }
+      `);
+    });
+
     it('handles RTL', () => {
       expect(resolveStyleRules({ left: '5px' })).toMatchInlineSnapshot(`
         .f5b3q4t {
@@ -170,6 +185,42 @@ describe('resolveStyleRules', () => {
       classnamesSet.add(getFirstClassName(resolveStyleRules({ left: '5px /* @noflip */' })));
 
       expect(classnamesSet.size).toBe(2);
+    });
+
+    it('handles fallback values in RTL', () => {
+      expect(
+        resolveStyleRules({
+          left: ['5px', '10px'],
+          float: ['initial', 'left'],
+        }),
+      ).toMatchInlineSnapshot(`
+        .f14hk0f5 {
+          left: 5px;
+          left: 10px;
+        }
+        .f18hwu1w {
+          right: 5px;
+          right: 10px;
+        }
+        .f8ngpof {
+          float: initial;
+          float: left;
+        }
+        .fhsnlhg {
+          float: initial;
+          float: right;
+        }
+      `);
+    });
+
+    it('throws if fallback values result in multiple properties in RTL', () => {
+      expect(() =>
+        resolveStyleRules({
+          left: ['5px /* @noflip */', '10px'],
+        }),
+      ).toThrow(
+        'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
+      );
     });
 
     it('handles nested selectors', () => {

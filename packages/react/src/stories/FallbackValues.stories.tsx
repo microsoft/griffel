@@ -5,14 +5,13 @@ import { makeStyles, shorthands, TextDirectionProvider } from '../';
 
 const useStyles = makeStyles({
   shouldFallbackToRed: {
-    all: 'initial',
     color: ['red', 'invalid'],
-    borderTopStyle: ['dashed', 'double'],
     ...shorthands.border(['1px'], 'solid', ['red', 'invalid']),
     ...shorthands.borderRight('40px', 'solid', ['green', 'invalid']),
+    borderTopStyle: ['hidden', 'dashed'],
   },
   shouldBeBlue: {
-    color: ['red', 'blue'] as any,
+    color: ['red', 'blue'],
     ...shorthands.border('1px', 'solid', ['red', 'blue']),
     ...shorthands.borderRight('40px', 'solid', ['green', 'grey']),
     borderRightWidth: '100px',
