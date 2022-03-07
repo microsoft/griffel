@@ -1,5 +1,6 @@
 {
   "name": "@griffel/core",
+  "version": "1.1.0",
   "description": "DOM implementation of Atomic CSS-in-JS",
   "license": "MIT",
   "repository": {
@@ -7,5 +8,11 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
-  "version": "1.1.0"
+  "dependencies": {
+    "@emotion/hash": "^0.8.0",
+    "csstype": "^3.0.10",
+    "rtl-css-js": "^1.15.0",
+    "stylis": "^4.0.13",
+    "tslib": "^2.1.0"
+  }
 }
