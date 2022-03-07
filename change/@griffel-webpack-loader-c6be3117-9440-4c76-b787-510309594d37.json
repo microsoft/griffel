@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "CSS fallback values",
+  "packageName": "@griffel/webpack-loader",
+  "email": "miroslav.stastny@microsoft.com",
+  "dependentChangeType": "patch"
+}
