@@ -20,7 +20,6 @@
     "type-check": "nx affected --target=type-check"
   },
   "devDependencies": {
-    "@babel/core": "7.12.13",
     "@babel/preset-typescript": "7.12.13",
     "@codesandbox/sandpack-react": "0.13.15",
     "@docusaurus/core": "2.0.0-beta.15",
