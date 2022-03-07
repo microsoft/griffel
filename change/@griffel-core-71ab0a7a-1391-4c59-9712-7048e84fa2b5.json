@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: add sourcemaps to dist files",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

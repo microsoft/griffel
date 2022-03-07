@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import OutputTitle from '@site/src/components/OutputTitle'
@@ -166,7 +166,7 @@ const useClasses = makeStyles({
       to: { transform: 'rotate(360deg)' },
     },
   },
-);
+});
 ```
 
 <OutputTitle>Produces following CSS...</OutputTitle>

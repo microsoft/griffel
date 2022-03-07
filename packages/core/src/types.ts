@@ -1,52 +1,9 @@
 import * as CSS from 'csstype';
+import { UNSUPPORTED_CSS_PROPERTIES } from './constants';
 
 export type GriffelStylesCSSValue = string | 0;
 
-type GriffelStylesUnsupportedCSSProperties = {
-  // We don't support expansion of CSS shorthands
-  animation?: never;
-  background?: never;
-  border?: never;
-  borderBlock?: never;
-  borderBlockEnd?: never;
-  borderBlockStart?: never;
-  borderBottom?: never;
-  borderColor?: never;
-  borderImage?: never;
-  borderInline?: never;
-  borderInlineEnd?: never;
-  borderInlineStart?: never;
-  borderLeft?: never;
-  borderRadius?: never;
-  borderRight?: never;
-  borderStyle?: never;
-  borderTop?: never;
-  borderWidth?: never;
-  columnRule?: never;
-  flex?: never;
-  flexFlow?: never;
-  font?: never;
-  gap?: never;
-  grid?: never;
-  gridArea?: never;
-  gridColumn?: never;
-  gridGap?: never;
-  gridRow?: never;
-  gridTemplate?: never;
-  listStyle?: never;
-  margin?: never;
-  mask?: never;
-  maskBorder?: never;
-  offset?: never;
-  outline?: never;
-  overflow?: never;
-  padding?: never;
-  placeItems?: never;
-  placeSelf?: never;
-  textDecoration?: never;
-  textEmphasis?: never;
-  transition?: never;
-};
+export type GriffelStylesUnsupportedCSSProperties = Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, never>;
 
 export type ValueOrArray<T> = T | Array<T>;
 
@@ -59,7 +16,7 @@ type GriffelStylesCSSProperties = Omit<
   // We have custom definition for "animationName" and "fontWeight"
   'animationName' | 'fontWeight'
 > &
-  GriffelStylesUnsupportedCSSProperties;
+  Partial<GriffelStylesUnsupportedCSSProperties>;
 
 export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
   GriffelStylesCSSPseudos & {
@@ -81,21 +38,31 @@ export type Test = Pick<GriffelStylesStrictCSSObject, 'borderTopColor'>;
 // updated or removed.
 //
 
-type GriffelStylesCSSObjectCustomL1 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL2;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL2 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL3;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL3 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL4;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL4 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL5;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL5 = {
-  [Property: string]: GriffelStylesCSSValue | undefined;
-} & GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL1 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL2;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL2 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL3;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL3 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL4;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL4 =
+  | ({
+      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL5;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
+type GriffelStylesCSSObjectCustomL5 =
+  | ({
+      [Property: string]: string | undefined;
+    } & Partial<GriffelStylesUnsupportedCSSProperties>)
+  | GriffelStylesStrictCSSObject;
 
 export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;

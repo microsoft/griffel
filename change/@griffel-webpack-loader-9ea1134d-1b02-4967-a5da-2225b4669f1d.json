@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: use this.cacheable() to improve performance",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

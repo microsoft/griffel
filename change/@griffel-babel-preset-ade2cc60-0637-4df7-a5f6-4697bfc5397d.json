@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "add \"type-check\" target to project.json ",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
