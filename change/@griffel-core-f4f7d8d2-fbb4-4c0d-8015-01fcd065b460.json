@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Enable pretty type-check output",
+  "comment": "chore: enable pretty type-check output",
   "packageName": "@griffel/core",
   "email": "lingfangao@hotmail.com",
   "dependentChangeType": "none"

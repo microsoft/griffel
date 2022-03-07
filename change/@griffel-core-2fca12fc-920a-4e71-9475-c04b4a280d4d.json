@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "feat: Strip unsupported CSS properties",
+  "comment": "feat: do not add unsupported CSS properties to DOM",
   "packageName": "@griffel/core",
   "email": "lingfangao@hotmail.com",
   "dependentChangeType": "patch"

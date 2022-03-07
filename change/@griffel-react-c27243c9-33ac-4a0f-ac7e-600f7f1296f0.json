@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "chore: Add storybook to @griffel/react",
+  "comment": "chore: add storybook to @griffel/react",
   "packageName": "@griffel/react",
   "email": "miroslav.stastny@microsoft.com",
   "dependentChangeType": "none"

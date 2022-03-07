@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "feat: Strip unsupported CSS properties",
+  "comment": "feat: strip unsupported CSS properties in output",
   "packageName": "@griffel/babel-preset",
   "email": "lingfangao@hotmail.com",
   "dependentChangeType": "patch"
