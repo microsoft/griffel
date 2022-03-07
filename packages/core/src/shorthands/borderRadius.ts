@@ -1,4 +1,4 @@
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
 import { BorderRadiusInput } from './types';
 
 type BorderRadiusStyle = Pick<
