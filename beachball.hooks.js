@@ -38,7 +38,7 @@ function sh(command) {
   });
 }
 
-let completedPostBump = false;
+let completedPrepublish = false;
 
 /**
  * @type {import('beachball').BeachballConfig['hooks']}
@@ -49,9 +49,9 @@ module.exports = {
   // old (without bump) versions.
   async prepublish() {
     // `beachball` runs this hook for every package, we want to run it only once.
-    if (!completedPostBump) {
+    if (!completedPrepublish) {
       await sh('yarn build --skip-nx-cache');
-      completedPostBump = true;
+      completedPrepublish = true;
     }
   },
 };
