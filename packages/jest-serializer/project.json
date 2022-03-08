@@ -27,7 +27,14 @@
         "tsConfig": "packages/jest-serializer/tsconfig.lib.json",
         "packageJson": "packages/jest-serializer/package.json",
         "main": "packages/jest-serializer/src/index.ts",
-        "assets": ["packages/jest-serializer/*.md"]
+        "assets": [
+          "packages/jest-serializer/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "type-check": {

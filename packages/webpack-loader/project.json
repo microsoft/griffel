@@ -27,7 +27,14 @@
         "tsConfig": "packages/webpack-loader/tsconfig.lib.json",
         "packageJson": "packages/webpack-loader/package.json",
         "main": "packages/webpack-loader/src/index.ts",
-        "assets": ["packages/webpack-loader/*.md"]
+        "assets": [
+          "packages/webpack-loader/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "type-check": {
