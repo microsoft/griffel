@@ -44,10 +44,11 @@ let completedPostBump = false;
  * @type {import('beachball').BeachballConfig['hooks']}
  */
 module.exports = {
-  // `beachball` runs this hook for every package, we want to run it once.
-  // If we will run build before `beachball publish` artifacts will have
+  // Executed after all package versions were bumped -> run build
+  // If we run build before `beachball publish`, artifacts would have
   // old (without bump) versions.
   async prepublish() {
+    // `beachball` runs this hook for every package, we want to run it only once.
     if (!completedPostBump) {
       await sh('yarn build --skip-nx-cache');
       completedPostBump = true;
