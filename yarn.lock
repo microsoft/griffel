@@ -8356,7 +8356,7 @@ __metadata:
 
 "beachball@patch:beachball@npm:2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b::locator=griffel-repository%40workspace%3A.":
   version: 2.21.0
-  resolution: "beachball@patch:beachball@npm%3A2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b::version=2.21.0&hash=4db5a8&locator=griffel-repository%40workspace%3A."
+  resolution: "beachball@patch:beachball@npm%3A2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b::version=2.21.0&hash=a06160&locator=griffel-repository%40workspace%3A."
   dependencies:
     cosmiconfig: ^6.0.0
     execa: ^4.0.3
@@ -8375,7 +8375,7 @@ __metadata:
     yargs-parser: ^20.2.4
   bin:
     beachball: bin/beachball.js
-  checksum: f85fe4c3c286630a4f87aec3202bd3b7be091d4afe65febbc9b3defefc734a0d1559942ac04339def59540d94894fac1a4dd9dfc5c42d3d37d1e4cf659ff41b6
+  checksum: 3a5077fb0f31d6270e4a51c10a86ad9e8e92a6f16052ddd48b8e30053cd619135feb2eb1689c219e83438a2f65d030d8f5aa247708faf542769d9ba7c39e082c
   languageName: node
   linkType: hard
 

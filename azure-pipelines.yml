@@ -27,9 +27,6 @@ steps:
   - script: yarn install --frozen-lockfile
     displayName: Install dependencies
 
-  - script: yarn nx run-many --target=build --all --parallel --max-parallel=3
-    displayName: Build artifacts
-
   - script: |
       git config user.name "Fluent UI Build"
       git config user.email "fluentui-internal@service.microsoft.com"
