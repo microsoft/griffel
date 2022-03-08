@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
+  "dependencies": {
+    "tslib": "^2.1.0"
+  },
   "peerDependencies": {
     "@griffel/core": "^1.1.0"
   }

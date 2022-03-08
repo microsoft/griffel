@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add dependencies explicitly to package.json",
+  "packageName": "@griffel/jest-serializer",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

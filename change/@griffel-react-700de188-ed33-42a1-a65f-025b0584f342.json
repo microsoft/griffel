@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add dependencies explicitly to package.json",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

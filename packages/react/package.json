@@ -8,6 +8,10 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
+  "dependencies": {
+    "@griffel/core": "^1.1.0",
+    "tslib": "^2.1.0"
+  },
   "peerDependencies": {
     "react": ">=16.8.0 <18.0.0"
   }
