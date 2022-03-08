@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * @type {import('beachball').BeachballConfig}
  */
