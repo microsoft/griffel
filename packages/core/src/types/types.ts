@@ -1,63 +1,18 @@
 import * as CSS from 'csstype';
-import { UNSUPPORTED_CSS_PROPERTIES } from './constants';
+
+import { UNSUPPORTED_CSS_PROPERTIES } from '../constants';
+import type { GriffelStyle } from './index';
 
 export type GriffelStylesCSSValue = string | 0;
 
 export type GriffelStylesUnsupportedCSSProperties = Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, never>;
 
-type GriffelStylesCSSProperties = Omit<
+export type GriffelStylesCSSProperties = Omit<
   CSS.Properties<GriffelStylesCSSValue>,
   // We have custom definition for "animationName" and "fontWeight"
   'animationName' | 'fontWeight'
 > &
   Partial<GriffelStylesUnsupportedCSSProperties>;
-
-export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
-  GriffelStylesCSSPseudos & {
-    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.Property.Animation;
-    fontWeight?: CSS.Properties['fontWeight'] | string;
-  };
-
-type GriffelStylesCSSPseudos = {
-  [Property in CSS.Pseudos]?:
-    | (GriffelStylesStrictCSSObject & { content?: string })
-    | (GriffelStylesCSSObjectCustomL1 & { content?: string });
-};
-
-//
-// "GriffelStylesCSSObjectCustom*" is a workaround to avoid circular references in types that are breaking TS <4.
-// Once we will support "typesVersions" (types downleleving) or update our requirements for TS this should be
-// updated or removed.
-//
-
-type GriffelStylesCSSObjectCustomL1 =
-  | ({
-      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL2;
-    } & Partial<GriffelStylesUnsupportedCSSProperties>)
-  | GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL2 =
-  | ({
-      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL3;
-    } & Partial<GriffelStylesUnsupportedCSSProperties>)
-  | GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL3 =
-  | ({
-      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL4;
-    } & Partial<GriffelStylesUnsupportedCSSProperties>)
-  | GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL4 =
-  | ({
-      [Property: string]: string | undefined | GriffelStylesCSSObjectCustomL5;
-    } & Partial<GriffelStylesUnsupportedCSSProperties>)
-  | GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL5 =
-  | ({
-      [Property: string]: string | undefined;
-    } & Partial<GriffelStylesUnsupportedCSSProperties>)
-  | GriffelStylesStrictCSSObject;
-
-export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
-export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
 
 export interface MakeStylesOptions {
   dir: 'ltr' | 'rtl';
