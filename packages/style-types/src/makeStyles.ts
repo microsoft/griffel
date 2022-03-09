@@ -12,43 +12,17 @@ type GriffelStylesCSSProperties = Omit<
   CSS.PropertiesFallback<GriffelStylesCSSValue>,
   // We have custom definition for "animationName"
   'animationName'
-> &
-  Partial<GriffelStylesUnsupportedCSSProperties>;
+> & { animationName?: GriffelAnimation | GriffelAnimation[] | string } & Partial<GriffelStylesUnsupportedCSSProperties>;
 
-export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
-  GriffelStylesCSSPseudos & {
-    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.Property.Animation;
-  };
+export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties & GriffelCSSPseudos;
 
-type GriffelStylesCSSPseudos = {
-  [Property in CSS.Pseudos]?:
-    | (GriffelStylesStrictCSSObject & { content?: string | string[] })
-    | (GriffelStylesCSSObjectCustomL1 & { content?: string | string[] });
+type GriffelCSSObjectCustom = {
+  [Property: string]: GriffelStyle | GriffelStylesCSSValue;
+} & GriffelStylesStrictCSSObject;
+
+type GriffelCSSPseudos = {
+  [Property in CSS.Pseudos]?: GriffelStylesStrictCSSObject | GriffelCSSObjectCustom;
 };
 
-//
-// "GriffelStylesCSSObjectCustom*" is a workaround to avoid circular references in types that are breaking TS <4.
-//
-
-type GriffelStylesCSSObjectCustomL1 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL2;
-} & GriffelStylesStrictCSSObject;
-
-type GriffelStylesCSSObjectCustomL2 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL3;
-} & GriffelStylesStrictCSSObject;
-
-type GriffelStylesCSSObjectCustomL3 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL4;
-} & GriffelStylesStrictCSSObject;
-
-type GriffelStylesCSSObjectCustomL4 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL5;
-} & GriffelStylesStrictCSSObject;
-
-type GriffelStylesCSSObjectCustomL5 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesStrictCSSObject;
-} & GriffelStylesStrictCSSObject;
-
-export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
-export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
+export type GriffelAnimation = Record<'from' | 'to' | string, GriffelCSSObjectCustom>;
+export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelCSSObjectCustom;

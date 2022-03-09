@@ -65,13 +65,6 @@ assertType({
   ':hover': { '--color': 'red' },
 });
 
-assertType({
-  ':hover': { content: "'foo'" },
-});
-assertType({
-  ':hover': { animationName: { from: {}, to: {} } },
-});
-
 // Custom selectors
 //
 
@@ -97,9 +90,6 @@ assertType({
 
 assertType({
   '.bar': { '--color': 'red' },
-});
-assertType({
-  '.bar': { animationName: { from: {}, to: {} } },
 });
 
 // Nested custom selectors
@@ -199,24 +189,6 @@ assertType({
   '@media screen and (max-width: 992px)': {
     ...typedMixin,
   },
-  '@media(forced-colors: active)': {
-    ...typedMixin,
-    color: 'var(--customColor)',
-  },
-  ':after': {
-    ...typedMixin,
-  },
-  ':before': {
-    ...typedMixin,
-    color: 'var(--customColor)',
-  },
-  '& .foo': {
-    ...typedMixin,
-  },
-  '& .bar': {
-    ...typedMixin,
-    color: 'var(--customColor)',
-  },
 });
 
 // Strict selectors
@@ -242,25 +214,24 @@ assertType({
 //
 
 assertType({
+  // @ts-expect-error "1" is invalid value for "overflowX"
   ':hover:focus': {
-    // @ts-expect-error "1" is invalid value for "overflowX"
     overflowX: '1',
   },
 });
 
 assertType({
+  // @ts-expect-error "paddingLeft" cannot be numeric value
   ':hover:focus': {
-    // @ts-expect-error "paddingLeft" cannot be numeric value
     paddingLeft: 5,
   },
 });
 
 assertType({
+  // @ts-expect-error "1" is invalid value for "overflowX", padding is banned, paddingLeft cannot be a numeric value
   ':hover:focus': {
-    // @ts-expect-error "1" is invalid value for "overflowX"
-    overflowX: '1',
+    overflowX: 'scroll',
     padding: 0,
-    // @ts-expect-error paddingLeft cannot be a numeric value
     paddingLeft: 5,
   },
 });
@@ -269,14 +240,12 @@ assertType({
   ':hover:focus': {
     // @ts-expect-error Object is not assignable to CSS property
     zIndex: { color: 'red' },
-    // @ts-expect-error Object is not assignable to CSS property
-    opacity: { color: 'red' },
+    opacity: { color: 'red' }, // < no error here, TS only reports the first error in this case
   },
   ':hover:active': {
     // @ts-expect-error Object is not assignable to CSS property
     opacity: { color: 'red' },
-    // @ts-expect-error Object is not assignable to CSS property
-    zIndex: { color: 'red' },
+    zIndex: { color: 'red' }, // < no error here, TS only reports the first error in this case
   },
 });
 
@@ -284,36 +253,33 @@ assertType({
 //
 
 assertType({
+  // @ts-expect-error "1" is invalid value for "overflowX", padding is banned, paddingLeft cannot be a numeric value
   '.foo': {
     '.baz': {
-      // @ts-expect-error "1" is invalid value for "overflowX"
       overflowX: '1',
       padding: 0,
-      // @ts-expect-error paddingLeft cannot be a numeric value
       paddingLeft: 5,
     },
   },
 });
 assertType({
+  // @ts-expect-error outline-box is an invalid value for box-sizing
   '.foo': {
-    // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
 
     '.bar': {
-      // @ts-expect-error outline-box is an invalid value for box-sizing
       boxSizing: 'outline-box', // < no error here, TS only reports the error for the whole object
     },
   },
 });
 assertType({
+  // @ts-expect-error outline-box is an invalid value for box-sizing
   '.foo': {
-    // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
     zIndex: 1,
 
     '.bar': {
-      // @ts-expect-error outline-box is an invalid value for box-sizing
-      boxSizing: 'outline-box',
+      boxSizing: 'outline-box', // < no error here, TS only reports the error for the whole object
       zIndex: 1,
     },
   },
@@ -322,14 +288,11 @@ assertType({
   '.foo': {
     // @ts-expect-error Object is not assignable to CSS property
     zIndex: { color: 'red' },
-    // @ts-expect-error Object is not assignable to CSS property
-    opacity: { color: 'red' },
+    opacity: { color: 'red' }, // < no error here, TS only reports the first error in this case
 
     '.bar': {
-      // @ts-expect-error Object is not assignable to CSS property
-      zIndex: { color: 'red' },
-      // @ts-expect-error Object is not assignable to CSS property
-      opacity: { color: 'red' },
+      zIndex: { color: 'red' }, // < no error here, TS only reports the first error in this case
+      opacity: { color: 'red' }, // < no error here, TS only reports the first error in this case
     },
   },
 });
@@ -356,11 +319,8 @@ assertType({
     2,
     '2px',
   ],
+  // @ts-expect-error "paddingLeft" cannot be numeric value
   ':hover:active': {
-    paddingLeft: [
-      '2px',
-      // @ts-expect-error "paddingLeft" cannot be numeric value
-      2,
-    ],
+    paddingLeft: ['2px', 2],
   },
 });

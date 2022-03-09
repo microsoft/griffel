@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: resolve recursive typings issue",
+  "packageName": "@griffel/style-types",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
