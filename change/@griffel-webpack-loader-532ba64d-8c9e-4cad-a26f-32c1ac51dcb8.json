@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: add missing dependency on Webpack loader",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

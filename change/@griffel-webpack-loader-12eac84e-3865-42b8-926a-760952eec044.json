@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: do not bundle changelog files",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

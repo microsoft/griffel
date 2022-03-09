@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: add dependencies explicitly to package.json",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

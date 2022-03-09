@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: do not bundle changelog files",
-  "packageName": "@griffel/jest-serializer",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
