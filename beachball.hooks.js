@@ -50,7 +50,7 @@ module.exports = {
   async prepublish() {
     // `beachball` runs this hook for every package, we want to run it only once.
     if (!completedPrepublish) {
-      await sh('yarn build --skip-nx-cache');
+      await sh('yarn nx run-many --target=build --all --parallel --max-parallel=3');
       completedPrepublish = true;
     }
   },
