@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "chore: initial release",
+  "packageName": "@griffel/style-types",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
