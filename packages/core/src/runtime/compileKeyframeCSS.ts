@@ -1,4 +1,4 @@
-import { GriffelAnimation } from '../types';
+import type { GriffelAnimation } from '@griffel/style-types';
 import { compile, middleware, serialize, rulesheet, stringify } from 'stylis';
 import { prefixer } from './prefixer';
 import { cssifyObject } from './utils/cssifyObject';

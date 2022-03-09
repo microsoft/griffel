@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { OutlineColorInput, OutlineStyleInput, OutlineWidthInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { OutlineColorInput, OutlineStyleInput, OutlineWidthInput } from './types';
 
-type OutlineStyle = Pick<GriffelStylesStrictCSSObject, 'outlineColor' | 'outlineStyle' | 'outlineWidth'>;
+type OutlineStyle = Pick<GriffelStyle, 'outlineColor' | 'outlineStyle' | 'outlineWidth'>;
 
 export function outline(width: OutlineWidthInput): OutlineStyle;
 export function outline(width: OutlineWidthInput, style: OutlineStyleInput): OutlineStyle;

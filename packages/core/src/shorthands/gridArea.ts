@@ -1,10 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { GridAreaInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { GridAreaInput } from './types';
 
-type GridAreaStyle = Pick<
-  GriffelStylesStrictCSSObject,
-  'gridRowStart' | 'gridRowEnd' | 'gridColumnStart' | 'gridColumnEnd'
->;
+type GridAreaStyle = Pick<GriffelStyle, 'gridRowStart' | 'gridRowEnd' | 'gridColumnStart' | 'gridColumnEnd'>;
 
 const cssVarRegEx = /var\(.*\)/gi;
 

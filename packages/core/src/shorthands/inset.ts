@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { InsetInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { InsetInput } from './types';
 
-type InsetStyle = Pick<GriffelStylesStrictCSSObject, 'top' | 'right' | 'bottom' | 'left'>;
+type InsetStyle = Pick<GriffelStyle, 'top' | 'right' | 'bottom' | 'left'>;
 
 export function inset(all: InsetInput): InsetStyle;
 export function inset(vertical: InsetInput, horizontal: InsetInput): InsetStyle;

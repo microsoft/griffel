@@ -1,11 +1,10 @@
-import type { GriffelStylesCSSValue, ValueOrArray } from '../types';
-import { GriffelStylesStrictCSSObject } from '../types';
+import type { GriffelStylesCSSValue, ValueOrArray, GriffelStyle } from '@griffel/style-types';
 
 type DirectionalProperties = 'border' | 'padding' | 'margin';
 
 const positionMap = ['Top', 'Right', 'Bottom', 'Left'];
 
-export function generateStyles<Styles extends GriffelStylesStrictCSSObject>(
+export function generateStyles<Styles extends GriffelStyle>(
   property: DirectionalProperties,
   suffix: '' | 'Color' | 'Style' | 'Width',
   ...values: ValueOrArray<GriffelStylesCSSValue>[]

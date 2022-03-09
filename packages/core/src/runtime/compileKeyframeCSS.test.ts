@@ -1,5 +1,5 @@
+import type { GriffelAnimation } from '@griffel/style-types';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
-import { GriffelAnimation } from '../types';
 
 describe('compileKeyframeRule', () => {
   it('stringifies an object with keyframes', () => {

@@ -1,6 +1,13 @@
+import type { GriffelResetStyle } from '@griffel/style-types';
+
 import { DEBUG_RESET_CLASSES } from './constants';
 import { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
-import type { GriffelResetStyle, MakeStylesOptions } from './types';
+import type { GriffelRenderer } from './types';
+
+export interface MakeResetStylesOptions {
+  dir: 'ltr' | 'rtl';
+  renderer: GriffelRenderer;
+}
 
 export function makeResetStyles(styles: GriffelResetStyle) {
   const insertionCache: Record<string, boolean> = {};
@@ -10,7 +17,7 @@ export function makeResetStyles(styles: GriffelResetStyle) {
 
   let cssRules: string[] | null = null;
 
-  function computeClassName(options: MakeStylesOptions): string {
+  function computeClassName(options: MakeResetStylesOptions): string {
     const { dir, renderer } = options;
 
     if (ltrClassName === null) {

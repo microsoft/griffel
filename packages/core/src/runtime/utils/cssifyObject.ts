@@ -1,4 +1,4 @@
-import { GriffelStaticStyle, GriffelStyle } from '../../types';
+import { GriffelStaticStyle, GriffelStyle } from '@griffel/style-types';
 import { hyphenateProperty } from './hyphenateProperty';
 
 export function cssifyObject(style: GriffelStyle | GriffelStaticStyle) {

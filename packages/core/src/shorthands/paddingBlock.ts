@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { PaddingBlockInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { PaddingBlockInput } from './types';
 
-type PaddingBlockStyle = Pick<GriffelStylesStrictCSSObject, 'paddingBlockStart' | 'paddingBlockEnd'>;
+type PaddingBlockStyle = Pick<GriffelStyle, 'paddingBlockStart' | 'paddingBlockEnd'>;
 
 /**
  * A function that implements CSS spec conformant expansion for "padding-block"

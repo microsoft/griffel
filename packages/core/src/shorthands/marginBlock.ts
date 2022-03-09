@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { MarginBlockInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { MarginBlockInput } from './types';
 
-type MarginBlockStyle = Pick<GriffelStylesStrictCSSObject, 'marginBlockStart' | 'marginBlockEnd'>;
+type MarginBlockStyle = Pick<GriffelStyle, 'marginBlockStart' | 'marginBlockEnd'>;
 
 /**
  * A function that implements CSS spec conformant expansion for "margin-block"

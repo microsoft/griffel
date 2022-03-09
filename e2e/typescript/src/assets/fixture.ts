@@ -1,4 +1,4 @@
-import { GriffelStyle } from '@griffel/core';
+import type { GriffelStyle } from '@griffel/style-types';
 
 function assertType(style: GriffelStyle): GriffelStyle {
   return style;

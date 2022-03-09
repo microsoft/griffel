@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { MarginInlineInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { MarginInlineInput } from './types';
 
-type MarginInlineStyle = Pick<GriffelStylesStrictCSSObject, 'marginInlineStart' | 'marginInlineEnd'>;
+type MarginInlineStyle = Pick<GriffelStyle, 'marginInlineStart' | 'marginInlineEnd'>;
 
 /**
  * A function that implements CSS spec conformant expansion for "margin-inline"

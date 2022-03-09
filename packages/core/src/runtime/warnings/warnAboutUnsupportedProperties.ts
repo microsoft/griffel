@@ -1,4 +1,4 @@
-import type { GriffelStyle } from '../../types';
+import type { GriffelStyle } from '@griffel/style-types';
 import { logError } from './logError';
 
 export function warnAboutUnsupportedProperties(property: string, value: GriffelStyle[keyof GriffelStyle]) {

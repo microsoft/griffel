@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { GapInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { GapInput } from './types';
 
-type GapStyle = Pick<GriffelStylesStrictCSSObject, 'columnGap' | 'rowGap'>;
+type GapStyle = Pick<GriffelStyle, 'columnGap' | 'rowGap'>;
 
 /**
  * A function that implements CSS spec conformant expansion for "gap"

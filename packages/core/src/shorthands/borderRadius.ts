@@ -1,8 +1,8 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { BorderRadiusInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { BorderRadiusInput } from './types';
 
 type BorderRadiusStyle = Pick<
-  GriffelStylesStrictCSSObject,
+  GriffelStyle,
   'borderBottomRightRadius' | 'borderBottomLeftRadius' | 'borderTopRightRadius' | 'borderTopLeftRadius'
 >;
 

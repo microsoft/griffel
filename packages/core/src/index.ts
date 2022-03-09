@@ -24,7 +24,7 @@ import {
   outline,
   transition,
   textDecoration,
-} from './shorthands/index';
+} from './shorthands';
 
 export const shorthands = {
   border,
@@ -59,7 +59,9 @@ export { safeInsertRule } from './renderer/safeInsertRule';
 
 export { mergeClasses } from './mergeClasses';
 export { makeStyles } from './makeStyles';
+export type { MakeStylesOptions } from './makeStyles';
 export { makeStaticStyles } from './makeStaticStyles';
+export type { MakeStaticStylesOptions } from './makeStaticStyles';
 export { makeResetStyles } from './makeResetStyles';
 
 export { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
@@ -79,6 +81,7 @@ export { resolveStyleRules } from './runtime/resolveStyleRules';
 export { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
 
 export * from './constants';
+
 export type {
   // Static styles
   GriffelStaticStyle,
@@ -89,14 +92,15 @@ export type {
   // Reset styles
   GriffelResetStyle,
   // Internal types
+} from '@griffel/style-types';
+
+export {
   CSSClasses,
   CSSClassesMapBySlot,
   CSSBucketEntry,
   CSSRulesByBucket,
   StyleBucketName,
   // Util
-  MakeStaticStylesOptions,
-  MakeStylesOptions,
   GriffelRenderer,
 } from './types';
 

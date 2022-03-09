@@ -1,7 +1,7 @@
 import { mergeClasses } from './mergeClasses';
 import { makeStyles } from './makeStyles';
+import type { MakeStylesOptions } from './makeStyles';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
-import { MakeStylesOptions } from './types';
 import { SEQUENCE_PREFIX, SEQUENCE_SIZE } from './constants';
 import { makeResetStyles } from './makeResetStyles';
 

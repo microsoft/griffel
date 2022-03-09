@@ -1,9 +1,9 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
+import type { GriffelStyle } from '@griffel/style-types';
 import { generateStyles } from './generateStyles';
-import { BorderColorInput } from './types';
+import type { BorderColorInput } from './types';
 
 type BorderColorStyle = Pick<
-  GriffelStylesStrictCSSObject,
+  GriffelStyle,
   'borderTopColor' | 'borderRightColor' | 'borderBottomColor' | 'borderLeftColor'
 >;
 

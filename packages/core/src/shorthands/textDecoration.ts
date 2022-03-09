@@ -1,4 +1,4 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
+import type { GriffelStyle } from '@griffel/style-types';
 import {
   TextDecorationColorInput,
   TextDecorationLineInput,
@@ -7,7 +7,7 @@ import {
 } from './types';
 
 type TextDecorationStyle = Pick<
-  GriffelStylesStrictCSSObject,
+  GriffelStyle,
   'textDecorationStyle' | 'textDecorationLine' | 'textDecorationColor' | 'textDecorationThickness'
 >;
 
@@ -45,18 +45,20 @@ export function textDecoration(
 ): TextDecorationStyle {
   if (values.length === 0) {
     return isTextDecorationStyleInput(value) ? { textDecorationStyle: value } : { textDecorationLine: value };
-  } else {
-    const [textDecorationStyle, textDecorationColor, textDecorationThickness] = values;
-    return {
-      textDecorationLine: value,
-      ...(textDecorationStyle && { textDecorationStyle }),
-      ...(textDecorationColor && { textDecorationColor }),
-      ...(textDecorationThickness && { textDecorationThickness }),
-    };
   }
+
+  const [textDecorationStyle, textDecorationColor, textDecorationThickness] = values;
+
+  return {
+    textDecorationLine: value,
+    ...(textDecorationStyle && { textDecorationStyle }),
+    ...(textDecorationColor && { textDecorationColor }),
+    ...(textDecorationThickness && { textDecorationThickness }),
+  };
 }
 
 const textDecorationStyleInputs: TextDecorationStyleInput[] = ['dashed', 'dotted', 'double', 'solid', 'wavy'];
+
 function isTextDecorationStyleInput(
   value: TextDecorationLineInput | TextDecorationStyleInput,
 ): value is TextDecorationStyleInput {
