@@ -1,15 +1,20 @@
 import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools';
+import { insertionFactory } from './insertionFactory';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelRenderer, StylesBySlots } from './types';
+import type { GriffelInsertionFactory } from './types';
 
 export interface MakeStylesOptions {
   dir: 'ltr' | 'rtl';
   renderer: GriffelRenderer;
 }
 
-export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
-  const insertionCache: Record<string, boolean> = {};
+export function makeStyles<Slots extends string | number>(
+  stylesBySlots: StylesBySlots<Slots>,
+  factory: GriffelInsertionFactory = insertionFactory,
+) {
+  const insertStyles = factory();
 
   let classesMapBySlot: CSSClassesMapBySlot<Slots> | null = null;
   let cssRules: CSSRulesByBucket | null = null;
@@ -30,8 +35,6 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
     }
 
     const isLTR = dir === 'ltr';
-    // As RTL classes are different they should have a different cache key for insertion
-    const rendererId = isLTR ? renderer.id : renderer.id + 'r';
 
     if (isLTR) {
       if (ltrClassNamesForSlots === null) {
@@ -43,10 +46,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
       }
     }
 
-    if (insertionCache[rendererId] === undefined) {
-      renderer.insertCSSRules(cssRules!);
-      insertionCache[rendererId] = true;
-    }
+    insertStyles(renderer, cssRules!);
 
     const classNamesForSlots = isLTR
       ? (ltrClassNamesForSlots as Record<Slots, string>)
