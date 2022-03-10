@@ -1,6 +1,8 @@
 import { createDOMRenderer, rehydrateRendererCache } from '@griffel/core';
-import * as React from 'react';
 import type { GriffelRenderer } from '@griffel/core';
+import * as React from 'react';
+
+import { canUseDOM } from './utils/canUseDOM';
 
 export interface RendererProviderProps {
   /** An instance of Griffel renderer. */
@@ -15,13 +17,6 @@ export interface RendererProviderProps {
    * Content wrapped by the RendererProvider
    */
   children: React.ReactNode;
-}
-
-/**
- * Verifies if an application can use DOM.
- */
-function canUseDOM(): boolean {
-  return typeof window !== 'undefined' && !!(window.document && window.document.createElement);
 }
 
 /**

@@ -1,6 +1,7 @@
 import { __styles as vanillaStyles } from '@griffel/core';
 import type { CSSClassesMapBySlot, CSSRulesByBucket } from '@griffel/core';
 
+import { insertionFactory } from './insertionFactory';
 import { useRenderer } from './RendererContext';
 import { useTextDirection } from './TextDirectionContext';
 
@@ -14,7 +15,7 @@ export function __styles<Slots extends string>(
   classesMapBySlot: CSSClassesMapBySlot<Slots>,
   cssRules: CSSRulesByBucket,
 ) {
-  const getStyles = vanillaStyles(classesMapBySlot, cssRules);
+  const getStyles = vanillaStyles(classesMapBySlot, cssRules, insertionFactory);
 
   return function useClasses(): Record<Slots, string> {
     const dir = useTextDirection();
