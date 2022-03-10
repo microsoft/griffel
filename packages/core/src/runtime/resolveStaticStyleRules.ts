@@ -1,30 +1,29 @@
 import type { GriffelStaticStyles } from '@griffel/style-types';
-import type { CSSRulesByBucket } from '../types';
+
+import type { CSSBucketEntry } from '../types';
 import { compileCSSRules } from './compileCSSRules';
 import { compileStaticCSS } from './compileStaticCSS';
 
-export function resolveStaticStyleRules(styles: GriffelStaticStyles, result: CSSRulesByBucket = {}): CSSRulesByBucket {
-  if (typeof styles === 'string') {
-    const cssRules = compileCSSRules(styles, false);
+export function resolveStaticStyleRules(stylesSet: GriffelStaticStyles[]): CSSBucketEntry[] {
+  return stylesSet.reduce((acc, styles) => {
+    if (typeof styles === 'string') {
+      const cssRules = compileCSSRules(styles, false);
 
-    for (const rule of cssRules) {
-      addResolvedStyles(rule, result);
+      for (const rule of cssRules) {
+        acc.push(rule);
+      }
+
+      return acc;
     }
-  } else {
+
     // eslint-disable-next-line guard-for-in
     for (const property in styles) {
       const value = styles[property];
       const staticCSS = compileStaticCSS(property, value);
 
-      addResolvedStyles(staticCSS, result);
+      acc.push(staticCSS);
     }
-  }
 
-  return result;
-}
-
-function addResolvedStyles(cssRule: string, result: CSSRulesByBucket = {}): void {
-  // 👇 static rules should be inserted into default bucket
-  result.d = result.d || [];
-  result.d.push(cssRule);
+    return acc;
+  }, [] as CSSBucketEntry[]);
 }
