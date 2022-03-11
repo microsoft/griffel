@@ -7,15 +7,14 @@ export type GriffelStylesUnsupportedCSSProperties = Record<keyof typeof UNSUPPOR
 
 type GriffelStylesCSSProperties = Omit<
   CSS.Properties<GriffelStylesCSSValue>,
-  // We have custom definition for "animationName" and "fontWeight"
-  'animationName' | 'fontWeight'
+  // We have custom definition for "animationName"
+  'animationName'
 > &
   Partial<GriffelStylesUnsupportedCSSProperties>;
 
 export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
   GriffelStylesCSSPseudos & {
     animationName?: GriffelAnimation | GriffelAnimation[] | CSS.Property.Animation;
-    fontWeight?: CSS.Properties['fontWeight'] | string;
   };
 
 type GriffelStylesCSSPseudos = {
