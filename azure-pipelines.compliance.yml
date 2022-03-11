@@ -9,8 +9,7 @@ parameters:
 jobs:
   - job: Compliance
     displayName: Compliance checks
-    pool:
-      name: 1ES-Teams-Win2019-Security
+    pool: uifabric-windows-2019-small
     steps:
       - task: UseDotNet@2
         condition: succeededOrFailed()
