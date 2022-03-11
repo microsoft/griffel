@@ -173,6 +173,21 @@ assertType({
   ...{ color: 'red' },
 });
 
+// Just a type check, deep objects are not expected to be used as style mixins?
+const typedMixin: GriffelStyle = {
+  marginLeft: '5px',
+  ':hover': {
+    marginLeft: '6px',
+    '--customColor': 'blue',
+  },
+  '--customColor': 'silver',
+};
+
+assertType({
+  ...typedMixin,
+  color: 'var(--customColor)',
+});
+
 // Strict selectors
 //
 
