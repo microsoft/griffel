@@ -30,8 +30,6 @@ type GriffelStylesCSSPseudos = {
     | (GriffelStylesCSSObjectCustomL1 & { content?: string });
 };
 
-export type Test = Pick<GriffelStylesStrictCSSObject, 'borderTopColor'>;
-
 //
 // "GriffelStylesCSSObjectCustom*" is a workaround to avoid circular references in types that are breaking TS <4.
 // Once we will support "typesVersions" (types downleleving) or update our requirements for TS this should be

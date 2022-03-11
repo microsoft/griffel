@@ -166,11 +166,6 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles fallback values', () => {
-      // debugger;
-      // const test = resolveStyleRules({ left: '--var(unknown) /* @noflip */' });
-      // const test = resolveStyleRules({ left: ['10px', '20px'] });
-      // console.log('test', test);
-
       const actual = resolveStyleRules({ color: ['red', 'blue'] });
       expect(actual).toMatchInlineSnapshot(`
         .f15e90lz {
