@@ -3,6 +3,7 @@ import fs from 'fs';
 import logSymbols from 'log-symbols';
 import path from 'path';
 import tmp from 'tmp';
+import semver from 'semver';
 
 /**
  * @param {String} command
@@ -76,6 +77,14 @@ async function performTest(tsVersion) {
     const packFile = (await sh(`npm pack --quiet ${packagePath}`, tempDir, true)).trim();
     console.log(logSymbols.success, 'Package files were packed');
 
+    if (semver.satisfies(semver.coerce(tsVersion), '>=4')) {
+      await fs.promises.copyFile(
+        path.resolve(assetsPath, 'fixture-modern.ts'),
+        path.join(tempDir, 'fixture-modern.ts'),
+      );
+      console.log(logSymbols.success, 'A "fixture-modern.ts" was copied');
+    }
+
     await fs.promises.copyFile(path.resolve(assetsPath, 'fixture.ts'), path.join(tempDir, 'fixture.ts'));
     await fs.promises.copyFile(path.resolve(assetsPath, 'tsconfig.fixture.json'), path.join(tempDir, 'tsconfig.json'));
 
@@ -132,6 +141,7 @@ async function performTest(tsVersion) {
 
 (async () => {
   await performTest('3.9');
+  await performTest('4.0');
   await performTest('4.1');
   await performTest('4.4');
 })();

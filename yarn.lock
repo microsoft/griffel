@@ -6090,7 +6090,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/glob@npm:*, @types/glob@npm:^7.1.1":
+"@types/fs-extra@npm:^9.0.13":
+  version: 9.0.13
+  resolution: "@types/fs-extra@npm:9.0.13"
+  dependencies:
+    "@types/node": "*"
+  checksum: add79e212acd5ac76b97b9045834e03a7996aef60a814185e0459088fd290519a3c1620865d588fa36c4498bf614210d2a703af5cf80aa1dbc125db78f6edac3
+  languageName: node
+  linkType: hard
+
+"@types/glob@npm:*, @types/glob@npm:7.2.0, @types/glob@npm:^7.1.1":
   version: 7.2.0
   resolution: "@types/glob@npm:7.2.0"
   dependencies:
@@ -12615,7 +12624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:10.0.0, fs-extra@npm:^10.0.0":
+"fs-extra@npm:10.0.0":
   version: 10.0.0
   resolution: "fs-extra@npm:10.0.0"
   dependencies:
@@ -12647,6 +12656,17 @@ __metadata:
     path-is-absolute: ^1.0.0
     rimraf: ^2.2.8
   checksum: 6edfd65fc813baa27f1603778c0f5ec11f8c5006a20b920437813ee2023eba18aeec8bef1c89b2e6c84f9fc90fdc7c916f4a700466c8c69d22a35d018f2570f0
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^10.0.0, fs-extra@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "fs-extra@npm:10.0.1"
+  dependencies:
+    graceful-fs: ^4.2.0
+    jsonfile: ^6.0.1
+    universalify: ^2.0.0
+  checksum: c1faaa5eb9e1c5c7c7ff09f966e93922ecb068ae1b04801cfc983ef05fcc1f66bfbb8d8d0b745c910014c7a2e7317fb6cf3bfe7390450c1157e3cc1a218f221d
   languageName: node
   linkType: hard
 
@@ -13236,12 +13256,15 @@ __metadata:
     "@testing-library/react-hooks": 7.0.2
     "@tsconfig/docusaurus": ^1.0.4
     "@types/babel__helper-plugin-utils": 7.10.0
+    "@types/fs-extra": ^9.0.13
+    "@types/glob": 7.2.0
     "@types/jest": 27.0.2
     "@types/js-beautify": ^1.13.3
     "@types/loader-utils": 2.0.3
     "@types/node": 14.14.33
     "@types/react": 17.0.30
     "@types/react-dom": 17.0.9
+    "@types/semver": ^7.3.9
     "@types/stylis": 4.0.2
     "@types/tmp": 0.2.3
     "@typescript-eslint/eslint-plugin": ~5.3.0
@@ -13261,6 +13284,8 @@ __metadata:
     eslint-plugin-jsx-a11y: 6.5.1
     eslint-plugin-react: 7.27.0
     eslint-plugin-react-hooks: 4.2.0
+    fs-extra: ^10.0.1
+    glob: 7.2.0
     highlight.js: 11.4.0
     jest: 27.2.3
     js-beautify: ^1.14.0
@@ -13274,6 +13299,7 @@ __metadata:
     react-test-renderer: 17.0.2
     rtl-css-js: ^1.15.0
     schema-utils: ^3.1.1
+    semver: ^7.3.5
     simple-git-hooks: 2.7.0
     stylis: ^4.0.13
     syncpack: 6.2.0

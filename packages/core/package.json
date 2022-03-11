@@ -14,5 +14,12 @@
     "rtl-css-js": "^1.15.0",
     "stylis": "^4.0.13",
     "tslib": "^2.1.0"
+  },
+  "typesVersions": {
+    "<4": {
+      "*": [
+        "types-legacy/*"
+      ]
+    }
   }
 }

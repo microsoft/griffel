@@ -4,6 +4,12 @@ function assertType(style: GriffelStyle): GriffelStyle {
   return style;
 }
 
+/* Fixtures for types that work properly with any TS version. */
+
+// Animation
+
+assertType({ animationName: 'foo' });
+
 // Basic styles
 //
 
@@ -103,20 +109,30 @@ assertType({
 // Banned shorthand properties
 //
 
-// @ts-expect-error "padding" is banned
-assertType({ padding: 0 });
-// @ts-expect-error "borderLeft" is banned
-assertType({ borderLeft: '5px' });
+assertType({
+  // @ts-expect-error "padding" is banned
+  padding: 0,
+});
+assertType({
+  // @ts-expect-error "borderLeft" is banned
+  borderLeft: '5px',
+});
 
 // Invalid values
 //
 
-// @ts-expect-error "1" is invalid value for "overflow"
-assertType({ overflow: '1' });
-// @ts-expect-error "paddingLeft" cannot be numeric value
-assertType({ paddingLeft: 5 });
-// @ts-expect-error "0" is invalid value for "color"
-assertType({ color: 0 });
+assertType({
+  // @ts-expect-error "1" is invalid value for "overflow"
+  overflow: '1',
+});
+assertType({
+  // @ts-expect-error "paddingLeft" cannot be numeric value
+  paddingLeft: 5,
+});
+assertType({
+  // @ts-expect-error "0" is invalid value for "color"
+  color: 0,
+});
 
 // Strict selectors
 //

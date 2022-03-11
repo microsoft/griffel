@@ -4,7 +4,7 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
+    "prebuild": {
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -29,6 +29,14 @@
             "output": "."
           }
         ]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "dependsOn": [{ "target": "prebuild", "projects": "self" }],
+      "options": {
+        "commands": [{ "command": "node tools/createLegacyTypesForCore.mjs" }],
+        "outputPath": ["dist/packages/core/types-legacy"]
       }
     },
     "lint": {
