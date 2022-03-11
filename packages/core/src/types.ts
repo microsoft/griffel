@@ -55,7 +55,7 @@ type GriffelStylesCSSObjectCustomL5 = {
 } & Partial<GriffelStylesUnsupportedCSSProperties> &
   GriffelStylesStrictCSSObject;
 
-export type GriffelStyle = GriffelStylesCSSObjectCustomL1;
+export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
 
 export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
 
