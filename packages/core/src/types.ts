@@ -32,28 +32,23 @@ type GriffelStylesCSSPseudos = {
 
 type GriffelStylesCSSObjectCustomL1 = {
   [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL2;
-} & Partial<GriffelStylesUnsupportedCSSProperties> &
-  GriffelStylesStrictCSSObject;
+} & GriffelStylesStrictCSSObject;
 
 type GriffelStylesCSSObjectCustomL2 = {
   [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL3;
-} & Partial<GriffelStylesUnsupportedCSSProperties> &
-  GriffelStylesStrictCSSObject;
+} & GriffelStylesStrictCSSObject;
 
-type GriffelStylesCSSObjectCustomL3 = ({
+type GriffelStylesCSSObjectCustomL3 = {
   [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL4;
-} & Partial<GriffelStylesUnsupportedCSSProperties>) &
-  GriffelStylesStrictCSSObject;
+} & GriffelStylesStrictCSSObject;
 
 type GriffelStylesCSSObjectCustomL4 = {
   [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL5;
-} & Partial<GriffelStylesUnsupportedCSSProperties> &
-  GriffelStylesStrictCSSObject;
+} & GriffelStylesStrictCSSObject;
 
 type GriffelStylesCSSObjectCustomL5 = {
-  [Property: string]: string | number | undefined;
-} & Partial<GriffelStylesUnsupportedCSSProperties> &
-  GriffelStylesStrictCSSObject;
+  [Property: string]: string | number | undefined | GriffelStylesStrictCSSObject;
+} & GriffelStylesStrictCSSObject;
 
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
 
