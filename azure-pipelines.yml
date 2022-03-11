@@ -3,6 +3,12 @@
 pr: none
 trigger: none
 
+variables:
+  - group: 'Github and NPM secrets'
+  - group: InfoSec-SecurityResults
+  - name: tags
+    value: production,externalfacing
+
 jobs:
   # These steps have to run on a windows machine,
   # and therefore unfortunately can't be integrated in the regular steps
