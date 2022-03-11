@@ -4,6 +4,9 @@ function assertType(style: GriffelStyle): GriffelStyle {
   return style;
 }
 
+// Animation
+assertType({ animationName: 'foo' });
+
 // Basic styles
 //
 
@@ -11,6 +14,33 @@ assertType({ flexShrink: 0 });
 assertType({ flexShrink: 1 });
 assertType({ zIndex: 0 });
 assertType({ zIndex: 1 });
+
+assertType({
+  // @ts-expect-error outline-box is an invalid value for box-sizing
+  boxSizing: 'outline-box',
+});
+assertType({
+  // @ts-expect-error type check still fails on outline-box, not on any other line
+  boxSizing: 'outline-box',
+  zIndex: 1,
+});
+assertType({
+  // @ts-expect-error Object is not assignable to CSS property
+  zIndex: { color: 'red' },
+});
+assertType({
+  display: 'flex',
+  '& .foo': { ':hover': { color: 'green' } },
+});
+
+assertType({
+  ':after': {
+    // @ts-expect-error outline-box is an invalid value for box-sizing
+    boxSizing: 'outline-box',
+    borderRightStyle: 'solid',
+    zIndex: 1,
+  },
+});
 
 assertType({ fontWeight: 'var(--foo)' });
 assertType({ flexShrink: 'var(--bar)' });
