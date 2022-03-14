@@ -4,6 +4,9 @@ function assertType(style: GriffelStyle): GriffelStyle {
   return style;
 }
 
+// Animation
+assertType({ animationName: 'foo' });
+
 // Basic styles
 //
 
@@ -12,15 +15,26 @@ assertType({ flexShrink: 1 });
 assertType({ zIndex: 0 });
 assertType({ zIndex: 1 });
 
+assertType({ paddingLeft: '5px' });
+assertType({ color: 'beige' });
+
+// CSS variables
+//
+
 assertType({ fontWeight: 'var(--foo)' });
 assertType({ flexShrink: 'var(--bar)' });
 assertType({ opacity: 'var(--baz)' });
 assertType({ zIndex: 'var(--qux)' });
 
-assertType({ color: 'beige' });
-assertType({ paddingLeft: '5px' });
-
 assertType({ '--color': 'red' });
+
+// Mixins
+//
+
+assertType({
+  ...{ paddingLeft: '5px' },
+  ...{ color: 'red' },
+});
 
 // Strict selector defined via "CSS.Pseudos"
 //
@@ -103,20 +117,76 @@ assertType({
 // Banned shorthand properties
 //
 
-// @ts-expect-error "padding" is banned
-assertType({ padding: 0 });
-// @ts-expect-error "borderLeft" is banned
-assertType({ borderLeft: '5px' });
+assertType({
+  // @ts-expect-error "padding" is banned
+  padding: 0,
+});
+assertType({
+  // @ts-expect-error "borderLeft" is banned
+  borderLeft: '5px',
+});
 
 // Invalid values
 //
 
-// @ts-expect-error "1" is invalid value for "overflow"
-assertType({ overflow: '1' });
-// @ts-expect-error "paddingLeft" cannot be numeric value
-assertType({ paddingLeft: 5 });
-// @ts-expect-error "0" is invalid value for "color"
-assertType({ color: 0 });
+assertType({
+  // @ts-expect-error "outline-box" is an invalid value for "box-sizing"
+  boxSizing: 'outline-box',
+});
+assertType({
+  // @ts-expect-error "1" is invalid value for "overflow"
+  overflow: '1',
+});
+assertType({
+  // @ts-expect-error "paddingLeft" cannot be numeric value
+  paddingLeft: 5,
+});
+assertType({
+  // @ts-expect-error "0" is invalid value for "color"
+  color: 0,
+});
+
+assertType({
+  // @ts-expect-error type check still fails on outline-box, not on any other line
+  boxSizing: 'outline-box',
+  zIndex: 1,
+});
+
+assertType({
+  // @ts-expect-error Object is not assignable to CSS property
+  zIndex: { color: 'red' },
+  // @ts-expect-error Object is not assignable to CSS property
+  opacity: { color: 'red' },
+});
+
+// Mixins with invalid values
+//
+
+// @ts-expect-error Object in "zIndex" is not assignable to CSS property
+assertType({
+  ...{ zIndex: { color: 'red' } },
+  ...{ color: 'red' },
+});
+// @ts-expect-error "outline-box" in "boxSizing" is an invalid value for "box-sizing"
+assertType({
+  ...{ boxSizing: 'outline-box' },
+  ...{ color: 'red' },
+});
+
+// Just a type check, deep objects are not expected to be used as style mixins?
+const typedMixin: GriffelStyle = {
+  marginLeft: '5px',
+  ':hover': {
+    marginLeft: '6px',
+    '--customColor': 'blue',
+  },
+  '--customColor': 'silver',
+};
+
+assertType({
+  ...typedMixin,
+  color: 'var(--customColor)',
+});
 
 // Strict selectors
 //
@@ -129,6 +199,13 @@ assertType({
     padding: 0,
     // @ts-expect-error "paddingLeft" cannot be numeric value
     paddingLeft: 5,
+  },
+});
+assertType({
+  ':hover': {
+    // @ts-expect-error outline-box is an invalid value for box-sizing
+    boxSizing: 'outline-box',
+    zIndex: 1,
   },
 });
 
@@ -145,6 +222,14 @@ assertType({
     paddingLeft: 5,
   },
 });
+assertType({
+  ':hover:focus': {
+    // @ts-expect-error Object is not assignable to CSS property
+    zIndex: { color: 'red' },
+    // @ts-expect-error Object is not assignable to CSS property
+    opacity: { color: 'red' },
+  },
+});
 
 // Nested custom selectors
 //
@@ -158,6 +243,45 @@ assertType({
       padding: 0,
       // @ts-expect-error "paddingLeft" cannot be numeric value
       paddingLeft: 5,
+    },
+  },
+});
+assertType({
+  '.foo': {
+    // @ts-expect-error outline-box is an invalid value for box-sizing
+    boxSizing: 'outline-box',
+
+    '.bar': {
+      // @ts-expect-error outline-box is an invalid value for box-sizing
+      boxSizing: 'outline-box',
+    },
+  },
+});
+assertType({
+  '.foo': {
+    // @ts-expect-error type check still fails on outline-box, not on any other line
+    boxSizing: 'outline-box',
+    zIndex: 1,
+
+    '.bar': {
+      // @ts-expect-error type check still fails on outline-box, not on any other line
+      boxSizing: 'outline-box',
+      zIndex: 1,
+    },
+  },
+});
+assertType({
+  '.foo': {
+    // @ts-expect-error Object is not assignable to CSS property
+    zIndex: { color: 'red' },
+    // @ts-expect-error Object is not assignable to CSS property
+    opacity: { color: 'red' },
+
+    '.bar': {
+      // @ts-expect-error Object is not assignable to CSS property
+      zIndex: { color: 'red' },
+      // @ts-expect-error Object is not assignable to CSS property
+      opacity: { color: 'red' },
     },
   },
 });

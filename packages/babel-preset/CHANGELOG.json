@@ -2,6 +2,27 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Wed, 09 Mar 2022 13:56:06 GMT",
+      "tag": "@griffel/babel-preset_v1.1.1",
+      "version": "1.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "de373b3e85d3987a0b52b38df5f60d40ba9e6f22",
+            "comment": "chore: add dependencies explicitly to package.json"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.1.1",
+            "commit": "7e1846070ad96b71b2789fe76e37dcac4f6155e7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Mar 2022 09:08:07 GMT",
       "tag": "@griffel/babel-preset_v1.1.0",
       "version": "1.1.0",
