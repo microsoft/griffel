@@ -171,7 +171,7 @@ export function resolveStyleRules(
         cssRulesByBucket,
         rtlAnimationNames.join(', '),
       );
-    } else if (Array.isArray(value)) {
+    } else if (Array.isArray(value) && value.length > 0) {
       // not animationName property but array in the value => fallback values
 
       const key = hashPropertyKey(pseudo, media, support, property);
@@ -184,22 +184,20 @@ export function resolveStyleRules(
       });
 
       const rtlDefinitions =
-        (rtlValue && [{ key: property, value: rtlValue }]) || value.map(v => convertProperty(property, v!)); // FIXME
+        (rtlValue && [{ key: property, value: rtlValue }]) || value.map(v => convertProperty(property, v!));
 
       if (process.env.NODE_ENV !== 'production') {
-        const rtlPropertyConsistent =
-          rtlDefinitions.length === 0 || !rtlDefinitions.some(v => v.key !== rtlDefinitions[0].key);
+        const rtlPropertyConsistent = !rtlDefinitions.some(v => v.key !== rtlDefinitions[0].key);
 
         if (!rtlPropertyConsistent) {
-          throw new Error(
+          console.error(
             'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
           );
+          continue;
         }
       }
 
-      const flippedInRtl =
-        rtlDefinitions.length > 0 &&
-        (rtlDefinitions[0].key !== property || rtlDefinitions.some((v, i) => v.value !== value[i]));
+      const flippedInRtl = rtlDefinitions[0].key !== property || rtlDefinitions.some((v, i) => v.value !== value[i]);
 
       const rtlClassName = flippedInRtl
         ? hashClassName({
@@ -215,7 +213,7 @@ export function resolveStyleRules(
         ? {
             rtlClassName,
             rtlProperty: rtlDefinitions[0].key,
-            rtlValue: rtlDefinitions.map(d => d.value) as unknown as Array<string | number>, // FIXME
+            rtlValue: rtlDefinitions.map(d => d.value) as Array<string | number>,
           }
         : undefined;
 
@@ -226,7 +224,7 @@ export function resolveStyleRules(
         pseudo,
         property,
         support,
-        value: value as unknown as Array<string | number>, // FIXME
+        value: value as Array<string | number>,
         ...rtlCompileOptions,
       });
 

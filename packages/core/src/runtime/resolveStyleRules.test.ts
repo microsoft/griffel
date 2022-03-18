@@ -1,7 +1,7 @@
 import { griffelRulesSerializer } from '../common/snapshotSerializers';
 import { resolveStyleRules } from './resolveStyleRules';
 import { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
-import { UNSUPPORTED_CSS_PROPERTIES } from '..';
+import { makeStyles, mergeClasses, UNSUPPORTED_CSS_PROPERTIES } from '..';
 
 expect.addSnapshotSerializer(griffelRulesSerializer);
 
@@ -175,6 +175,11 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles empty array of fallback values', () => {
+      const actual = resolveStyleRules({ color: [] });
+      expect(actual).toMatchInlineSnapshot(``); /* empty result */
+    });
+
     it('handles RTL', () => {
       expect(resolveStyleRules({ left: '5px' })).toMatchInlineSnapshot(`
         .f5b3q4t {
@@ -231,13 +236,25 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('throws if fallback values result in multiple properties in RTL', () => {
-      expect(() =>
+    it('warns if fallback values result in multiple properties in RTL', () => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+
+      expect(
         resolveStyleRules({
           left: ['5px /* @noflip */', '10px'],
+          color: 'red',
         }),
-      ).toThrow(
-        'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
+      ).toMatchInlineSnapshot(`
+        .fe3e8s9 {
+          color: red;
+        }
+      `); /* only color */
+
+      expect(error).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /mixing CSS fallback values which result in multiple CSS properties in RTL is not supported/,
+        ),
       );
     });
 
