@@ -63,20 +63,18 @@ export function compileCSS(options: CompileCSSOptions): [string /* ltr definitio
   const { className, media, pseudo, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
 
   const classNameSelector = `.${className}`;
-  const cssDeclaration =
-    typeof value === 'string' || typeof value === 'number'
-      ? `{ ${hyphenateProperty(property)}: ${value}; }`
-      : `{ ${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')}; }`;
+  const cssDeclaration = Array.isArray(value)
+    ? `{ ${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')}; }`
+    : `{ ${hyphenateProperty(property)}: ${value}; }`;
 
   let rtlClassNameSelector: string | null = null;
   let rtlCSSDeclaration: string | null = null;
 
   if (rtlProperty && rtlClassName) {
     rtlClassNameSelector = `.${rtlClassName}`;
-    rtlCSSDeclaration =
-      typeof rtlValue === 'string' || typeof rtlValue === 'number'
-        ? `{ ${hyphenateProperty(rtlProperty)}: ${rtlValue}; }`
-        : `{ ${rtlValue?.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')}; }`;
+    rtlCSSDeclaration = Array.isArray(rtlValue)
+      ? `{ ${rtlValue?.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')}; }`
+      : `{ ${hyphenateProperty(rtlProperty)}: ${rtlValue}; }`;
   }
 
   let cssRule = '';

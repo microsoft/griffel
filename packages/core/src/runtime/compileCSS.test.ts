@@ -36,6 +36,20 @@ describe('compileCSS', () => {
     `);
   });
 
+  it('handles array of values', () => {
+    expect(
+      compileCSS({
+        ...defaultOptions,
+        property: 'color',
+        value: ['red', 'blue'],
+      }),
+    ).toMatchInlineSnapshot(`
+      Array [
+        ".foo{color:red;color:blue;}",
+      ]
+    `);
+  });
+
   it('handles at-rules', () => {
     expect(
       compileCSS({
@@ -102,6 +116,23 @@ describe('compileCSS', () => {
     `);
   });
 
+  it('handles rtl properties with fallback values', () => {
+    expect(
+      compileCSS({
+        ...defaultOptions,
+        property: 'paddingLeft',
+        value: [0, '10px'],
+        rtlProperty: 'paddingRight',
+        rtlValue: [0, '10px'],
+      }),
+    ).toMatchInlineSnapshot(`
+      Array [
+        ".foo{padding-left:0;padding-left:10px;}",
+        ".rtl-foo{padding-right:0;padding-right:10px;}",
+      ]
+    `);
+  });
+
   describe('global', () => {
     it('compiles global rules', () => {
       expect(
@@ -112,10 +143,10 @@ describe('compileCSS', () => {
           value: 'red',
         }),
       ).toMatchInlineSnapshot(`
-      Array [
-        "body .foo{color:red;}",
-      ]
-    `);
+              Array [
+                "body .foo{color:red;}",
+              ]
+          `);
       expect(
         compileCSS({
           ...defaultOptions,
@@ -124,10 +155,10 @@ describe('compileCSS', () => {
           value: 'red',
         }),
       ).toMatchInlineSnapshot(`
-      Array [
-        "body .foo{color:red;}",
-      ]
-    `);
+              Array [
+                "body .foo{color:red;}",
+              ]
+          `);
     });
 
     it('compiles global rules with RTL', () => {
@@ -142,11 +173,11 @@ describe('compileCSS', () => {
           rtlValue: '10px',
         }),
       ).toMatchInlineSnapshot(`
-      Array [
-        "body .foo{padding-left:10px;}",
-        "body .rtl-foo{padding-right:10px;}",
-      ]
-    `);
+              Array [
+                "body .foo{padding-left:10px;}",
+                "body .rtl-foo{padding-right:10px;}",
+              ]
+          `);
     });
   });
 });
