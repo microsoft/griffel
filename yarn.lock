@@ -6262,6 +6262,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mini-css-extract-plugin@npm:2.5.1":
+  version: 2.5.1
+  resolution: "@types/mini-css-extract-plugin@npm:2.5.1"
+  dependencies:
+    mini-css-extract-plugin: "*"
+  checksum: 047a8600d49e765e793c009a03af6cb5dcf5c4aa9ee37826d5a37a46bc7d986fd236b7c5eb03089c23462b5c20ee8b97fdb9e126a82312090f33f1e2a22a505f
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:*, @types/minimatch@npm:^3.0.3":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
@@ -13676,6 +13685,7 @@ __metadata:
     "@types/jest": 27.0.2
     "@types/js-beautify": ^1.13.3
     "@types/loader-utils": 2.0.3
+    "@types/mini-css-extract-plugin": 2.5.1
     "@types/node": 14.14.33
     "@types/react": 17.0.30
     "@types/react-dom": 17.0.9
@@ -13711,6 +13721,7 @@ __metadata:
     js-beautify: ^1.14.0
     loader-utils: ^2.0.0
     log-symbols: 5.1.0
+    mini-css-extract-plugin: 2.6.0
     monosize: 0.0.3
     monosize-storage-upstash: 0.0.2
     nano-staged: 0.5.0
@@ -17385,6 +17396,17 @@ __metadata:
     prop-types: ^15.0.0
     react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
   checksum: f8cb2c7738aac355fe9ce7e8425f371b7fa90daddd5133edda4ccfdc18c49043b2ec04be6f3abf09b60a0f52549d54f158d5bfd81cdfb1a658531e5b9fe7bc6a
+  languageName: node
+  linkType: hard
+
+"mini-css-extract-plugin@npm:*, mini-css-extract-plugin@npm:2.6.0":
+  version: 2.6.0
+  resolution: "mini-css-extract-plugin@npm:2.6.0"
+  dependencies:
+    schema-utils: ^4.0.0
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: ea73bd66558de7a37db094fe68fa130e7a725ab15f880ff8467a75d9c4c2f1576d20720088ea22af9922a94b8600bbfef0c6acaf10d12a32a9bd20a90ba3c35f
   languageName: node
   linkType: hard
 
