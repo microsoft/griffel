@@ -1,0 +1,40 @@
+.color-red {
+  color: red;
+}
+.animation-name {
+  animation-name: foo;
+}
+.color-orange:link {
+  color: orange;
+}
+.color-purple:visited {
+  color: purple;
+}
+.color-pink:focus-within {
+  color: pink;
+}
+.color-blue:focus {
+  color: blue;
+}
+.color-light-blue:focus-visible {
+  color: salmon;
+}
+.color-yellow:hover {
+  color: yellow;
+}
+.color-black:active {
+  color: black;
+}
+@keyframes foo {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (forced-colors: active) {
+  .color-magenta {
+    color: magenta;
+  }
+}

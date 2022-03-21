@@ -39,6 +39,8 @@ const pseudosMap: Record<string, StyleBucketName | undefined> = {
  * "h"
  * "f"
  * ```
+ *
+ * @internal
  */
 export function getStyleBucketName(pseudo: string, layer: string, media: string, support: string): StyleBucketName {
   if (media) {

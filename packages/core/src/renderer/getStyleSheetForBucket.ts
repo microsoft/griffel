@@ -5,7 +5,7 @@ import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 /**
  * Ordered style buckets using their short pseudo name.
  *
- * @private
+ * @internal
  */
 export const styleBucketOrdering: StyleBucketName[] = [
   // catch-all
