@@ -50,7 +50,7 @@ export function webpackLoader(
   const options = getOptions(this) as WebpackLoaderOptions;
 
   validate(configSchema, options, {
-    name: '@fluentui/make-styles-webpack-loader',
+    name: '@griffel/webpack-loader',
     baseDataPath: 'options',
   });
 

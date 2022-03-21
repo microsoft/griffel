@@ -30,7 +30,7 @@ const TestComponent: React.FC<{ id?: string }> = ({ id }) => {
 
 const RtlWrapper: React.FC = ({ children }) => <TextDirectionProvider dir="rtl">{children}</TextDirectionProvider>;
 
-describe('jest-serializer-make-styles', () => {
+describe('serializer', () => {
   it('should check styles', () => {
     expect(render(<TestComponent id="test" />).getByTestId('test')).toHaveStyle({
       display: 'none',
