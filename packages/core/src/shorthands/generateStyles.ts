@@ -1,10 +1,11 @@
-import { GriffelStylesCSSValue, ValueOrArray } from '../types';
+import type { GriffelStylesCSSValue, ValueOrArray } from '../types';
+import { GriffelStylesStrictCSSObject } from '../types';
 
 type DirectionalProperties = 'border' | 'padding' | 'margin';
 
 const positionMap = ['Top', 'Right', 'Bottom', 'Left'];
 
-export function generateStyles<Styles extends Record<string, any>>( // FIXME
+export function generateStyles<Styles extends GriffelStylesStrictCSSObject>(
   property: DirectionalProperties,
   suffix: '' | 'Color' | 'Style' | 'Width',
   ...values: ValueOrArray<GriffelStylesCSSValue>[]
@@ -18,7 +19,7 @@ export function generateStyles<Styles extends Record<string, any>>( // FIXME
     if (valuesWithDefaults[i] || valuesWithDefaults[i] === 0) {
       const newKey = (property + positionMap[i] + suffix) as keyof Styles;
 
-      styles[newKey] = valuesWithDefaults[i] as Styles[keyof Styles];
+      styles[newKey] = valuesWithDefaults[i] as unknown as Styles[keyof Styles];
     }
   }
 
