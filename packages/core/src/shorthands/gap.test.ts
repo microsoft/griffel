@@ -14,4 +14,11 @@ describe('gap', () => {
       rowGap: '24px',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(gap(['12px', 0], ['normal', 'var(--customGap)'])).toEqual({
+      columnGap: ['12px', 0],
+      rowGap: ['normal', 'var(--customGap)'],
+    });
+  });
 });
