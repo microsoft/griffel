@@ -1,12 +1,14 @@
 import { compileCSS, CompileCSSOptions, normalizePseudoSelector } from './compileCSS';
 
-const defaultOptions: Pick<CompileCSSOptions, 'rtlClassName' | 'className' | 'media' | 'pseudo' | 'support'> = {
-  className: 'foo',
-  rtlClassName: 'rtl-foo',
-  media: '',
-  pseudo: '',
-  support: '',
-};
+const defaultOptions: Pick<CompileCSSOptions, 'rtlClassName' | 'className' | 'media' | 'pseudo' | 'support' | 'layer'> =
+  {
+    className: 'foo',
+    rtlClassName: 'rtl-foo',
+    media: '',
+    pseudo: '',
+    support: '',
+    layer: '',
+  };
 
 describe('compileCSS', () => {
   it('handles pseudo', () => {
