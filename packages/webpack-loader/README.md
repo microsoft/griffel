@@ -63,7 +63,7 @@ import { makeStyles } from 'custom-package';
 import { createStyles } from 'custom-package';
 ```
 
-By default, preset handles imports from `@griffel/react`, to handle imports from custom packages settings should be tweaked:
+By default, the Webpack loader handles imports from `@griffel/react`, to handle imports from custom packages settings should be tweaked:
 
 ```js
 module.exports = {
@@ -88,7 +88,7 @@ module.exports = {
 
 ### Configuring Babel settings
 
-If you need to specify custom Babel configuration, you can pass them to `babelOptions`. These options will be used by the preset when parsing and evaluating modules.
+If you need to specify custom Babel configuration, you can pass them to `babelOptions`. These options will be used by the Webpack loader when parsing and evaluating modules.
 
 ```js
 module.exports = {
