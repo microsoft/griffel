@@ -35,10 +35,6 @@ function generateTryItOutSidebar() {
         },
       });
 
-      if (meta.noSidebar) {
-        return null;
-      }
-
       /** @type { {type: 'link'; label: string; href: string }} */
       const sidebarItem = {
         type: 'link',

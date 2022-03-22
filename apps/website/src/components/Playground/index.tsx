@@ -3,7 +3,7 @@ import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview }
 import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
 import AppCode from '!!raw-loader!./code/app.js';
-import StylesCode from '!!raw-loader!./code/templates/styles.js';
+import DefaultStylesCode from '!!raw-loader!./code/styles.js';
 import path from 'path-browserify';
 
 const ctx = require.context('!!raw-loader!./code/templates', false, /\.js$/);
@@ -24,7 +24,7 @@ export default function Playground() {
   const { isDarkTheme } = useColorMode();
   const sandpackTheme = isDarkTheme ? 'dark' : 'github-light';
   const location = useLocation();
-  const template = templates[location.hash.slice(1)] ?? StylesCode;
+  const template = templates[location.hash.slice(1)] ?? DefaultStylesCode;
   return (
     <SandpackProvider
       template="react"
