@@ -2,6 +2,64 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Wed, 09 Mar 2022 13:56:06 GMT",
+      "tag": "@griffel/jest-serializer_v1.0.2",
+      "version": "1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "de373b3e85d3987a0b52b38df5f60d40ba9e6f22",
+            "comment": "chore: add dependencies explicitly to package.json"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.1.1",
+            "commit": "7e1846070ad96b71b2789fe76e37dcac4f6155e7"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "9ec31fd5cf2fd944c9620454543d4031d49e9c70",
+            "comment": "chore: do not bundle changelog files"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Mar 2022 09:08:08 GMT",
+      "tag": "@griffel/jest-serializer_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "ff6078d3d9dac9a1d5310a027d41e7d6a75ce959",
+            "comment": "chore: enable pretty type-check output"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "35ec68e5db45f33511b6091ad43eb2b3a316fa7b",
+            "comment": "chore: add \"type-check\" target to project.json"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.1.0",
+            "commit": "b97c0adca3e602259f7d930ffa8886eafa7e3870"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Jan 2022 13:47:55 GMT",
       "tag": "@griffel/jest-serializer_v1.0.0",
       "version": "1.0.0",

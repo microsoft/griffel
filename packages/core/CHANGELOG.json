@@ -2,6 +2,70 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 09 Mar 2022 13:56:06 GMT",
+      "tag": "@griffel/core_v1.1.1",
+      "version": "1.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "de373b3e85d3987a0b52b38df5f60d40ba9e6f22",
+            "comment": "chore: add dependencies explicitly to package.json"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Mar 2022 09:08:07 GMT",
+      "tag": "@griffel/core_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/core",
+            "commit": "3e2437be42f81565b874e0e0b6f41f7dfc1d432b",
+            "comment": "feat: do not add unsupported CSS properties to DOM"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "225b54cb0f9ebcf2294e5a66b47dc45bfa13e813",
+            "comment": "chore: add sourcemaps to dist files"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "44868f83e95fe16d682fff0dbebf9ea81c9e9189",
+            "comment": "fix: improve typings to solve TS issues"
+          },
+          {
+            "author": "rahulsunil2@gmail.com",
+            "package": "@griffel/core",
+            "commit": "e62b24f5696d4ad119d3675c507b30a0d7dfb108",
+            "comment": "chore: update csstype to 3.0.10"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "35ec68e5db45f33511b6091ad43eb2b3a316fa7b",
+            "comment": "chore: add \"type-check\" target to project.json"
+          },
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/core",
+            "commit": "ff6078d3d9dac9a1d5310a027d41e7d6a75ce959",
+            "comment": "chore: enable pretty type-check output"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 18 Jan 2022 10:20:48 GMT",
       "tag": "@griffel/core_v1.0.7",
       "version": "1.0.7",

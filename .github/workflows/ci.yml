@@ -36,6 +36,7 @@ jobs:
             yarn-cache-folder-
 
       - run: yarn install --frozen-lockfile
+      - run: yarn check-dependencies
       - run: yarn nx affected --target=lint --parallel --max-parallel=3
       - run: yarn nx affected --target=type-check --parallel --max-parallel=3
       - run: yarn nx affected --target=build --parallel --max-parallel=3
@@ -47,8 +48,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
           fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
@@ -72,6 +71,7 @@ jobs:
             yarn-cache-folder-
 
       - run: yarn install --frozen-lockfile
+      - run: yarn check-dependencies
       - run: yarn nx affected --target=lint --parallel --max-parallel=3
       - run: yarn nx affected --target=type-check --parallel --max-parallel=3
       - run: yarn nx affected --target=build --parallel --max-parallel=3

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Enable pretty type-check output",
-  "packageName": "@griffel/babel-preset",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "none"
-}

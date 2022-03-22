@@ -1,8 +1,25 @@
 # Change Log - @griffel/jest-serializer
 
-This log was last generated on Mon, 24 Jan 2022 09:32:24 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Mar 2022 13:56:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.2
+
+Wed, 09 Mar 2022 13:56:06 GMT
+
+### Patches
+
+- chore: add dependencies explicitly to package.json (olfedias@microsoft.com)
+- Bump @griffel/core to v1.1.1
+
+## 1.0.1
+
+Mon, 07 Mar 2022 09:08:08 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.1.0
 
 ## 1.0.0
 

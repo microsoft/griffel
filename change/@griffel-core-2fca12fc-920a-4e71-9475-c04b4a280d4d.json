@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: Strip unsupported CSS properties",
-  "packageName": "@griffel/core",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}

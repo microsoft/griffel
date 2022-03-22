@@ -7,15 +7,14 @@ export type GriffelStylesUnsupportedCSSProperties = Record<keyof typeof UNSUPPOR
 
 type GriffelStylesCSSProperties = Omit<
   CSS.Properties<GriffelStylesCSSValue>,
-  // We have custom definition for "animationName" and "fontWeight"
-  'animationName' | 'fontWeight'
+  // We have custom definition for "animationName"
+  'animationName'
 > &
   Partial<GriffelStylesUnsupportedCSSProperties>;
 
 export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
   GriffelStylesCSSPseudos & {
     animationName?: GriffelAnimation | GriffelAnimation[] | CSS.Property.Animation;
-    fontWeight?: CSS.Properties['fontWeight'] | string;
   };
 
 type GriffelStylesCSSPseudos = {
@@ -31,23 +30,28 @@ type GriffelStylesCSSPseudos = {
 //
 
 type GriffelStylesCSSObjectCustomL1 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL2;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL2 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL3;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL3 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL4;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL4 = {
-  [Property: string]: GriffelStylesCSSValue | undefined | GriffelStylesCSSObjectCustomL5;
-} & GriffelStylesStrictCSSObject;
-type GriffelStylesCSSObjectCustomL5 = {
-  [Property: string]: GriffelStylesCSSValue | undefined;
+  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL2;
 } & GriffelStylesStrictCSSObject;
 
-export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
+type GriffelStylesCSSObjectCustomL2 = {
+  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL3;
+} & GriffelStylesStrictCSSObject;
+
+type GriffelStylesCSSObjectCustomL3 = {
+  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL4;
+} & GriffelStylesStrictCSSObject;
+
+type GriffelStylesCSSObjectCustomL4 = {
+  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL5;
+} & GriffelStylesStrictCSSObject;
+
+type GriffelStylesCSSObjectCustomL5 = {
+  [Property: string]: string | number | undefined | GriffelStylesStrictCSSObject;
+} & GriffelStylesStrictCSSObject;
+
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
+
+export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
 
 export interface MakeStylesOptions {
   dir: 'ltr' | 'rtl';

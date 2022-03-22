@@ -3,42 +3,97 @@
 pr: none
 trigger: none
 
-pool: '1ES-Host-Ubuntu'
+variables:
+  - group: 'Github and NPM secrets'
+  - group: InfoSec-SecurityResults
+  - name: tags
+    value: production,externalfacing
 
-workspace:
-  clean: all
+jobs:
+  # These steps have to run on a windows machine,
+  # and therefore unfortunately can't be integrated in the regular steps
+  - job: Compliance
+    displayName: Compliance checks
+    pool: uifabric-windows-2019-small
+    workspace:
+      clean: all
+    steps:
+      - task: UseDotNet@2
+        condition: succeededOrFailed()
+        displayName: 'Use .NET Core sdk 3.x'
+        inputs:
+          version: 3.x
+          steps:
 
-steps:
-  # For multiline scripts, we want the whole task to fail if any line of the script fails.
-  # ADO doesn't have bash configured this way by default. To fix we override the SHELLOPTS built-in variable.
-  # https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
-  # The options below include ADO defaults (braceexpand:hashall:interactive-comments) plus
-  # errexit:errtrace for better error behavior.
-  - script: |
-      echo "##vso[task.setvariable variable=shellopts]braceexpand:hashall:interactive-comments:errexit:errtrace"
-    displayName: Force exit on error (bash)
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+        condition: succeededOrFailed()
+        displayName: '🧭 Run Credential Scanner'
+        inputs:
+          debugMode: false
 
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '14.x'
-      checkLatest: true
-    displayName: 'Install Node.js'
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-eslint.ESLint@1
+        condition: succeededOrFailed()
+        displayName: '🧭 Run ESLint'
 
-  - script: yarn install --frozen-lockfile
-    displayName: Install dependencies
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+        displayName: '🧭 Publish Guardian Artifacts - All Tools'
+        inputs:
+          ArtifactType: M365
+        condition: succeededOrFailed()
 
-  - script: yarn nx run-many --target=build --all --parallel --max-parallel=3
-    displayName: Build artifacts
+      - task: AssetRetention@3
+        displayName: 🧭 Arrow Retention
+        inputs:
+          ArrowServiceConnection: 'Arrow_uifabric_uifabric_PROD'
+          AssetGroupName: '$(System.TeamProject)_$(Build.DefinitionName)'
+          AssetNumber: '$(Build.BuildId)'
+          IsShipped: false
+          DropsToRetain: 'CodeAnalysisLogs'
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
-  - script: |
-      git config user.name "Fluent UI Build"
-      git config user.email "fluentui-internal@service.microsoft.com"
-      git remote set-url origin https://$(githubUser):$(githubPAT)@github.com/microsoft/griffel.git
-    displayName: Authenticate git for pushes
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+        displayName: '🧭 Guardian Break'
+        inputs:
+          GdnBreakPolicyMinSev: Warning
+          GdnBreakAllTools: true
+          GdnBreakGdnToolESLint: true
+          GdnBreakGdnToolESLintSeverity: Warning
+          GdnBreakPolicy: M365
+        condition: succeededOrFailed()
 
-  - script: |
-      yarn beachball publish -b origin/main --access public -y -n $(npmTokenTmp)
-      git reset --hard origin/main
-    env:
-      GITHUB_PAT: $(githubPAT)
-    displayName: Publish to NPM & bump versions
+  - job: Release
+    dependsOn: Compliance
+    pool: '1ES-Host-Ubuntu'
+    workspace:
+      clean: all
+    steps:
+      # For multiline scripts, we want the whole task to fail if any line of the script fails.
+      # ADO doesn't have bash configured this way by default. To fix we override the SHELLOPTS built-in variable.
+      # https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
+      # The options below include ADO defaults (braceexpand:hashall:interactive-comments) plus
+      # errexit:errtrace for better error behavior.
+      - script: |
+          echo "##vso[task.setvariable variable=shellopts]braceexpand:hashall:interactive-comments:errexit:errtrace"
+        displayName: Force exit on error (bash)
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+          checkLatest: true
+        displayName: 'Install Node.js'
+
+      - script: yarn install --frozen-lockfile
+        displayName: Install dependencies
+
+      - script: |
+          git config user.name "Fluent UI Build"
+          git config user.email "fluentui-internal@service.microsoft.com"
+          git remote set-url origin https://$(githubUser):$(githubPAT)@github.com/microsoft/griffel.git
+        displayName: Authenticate git for pushes
+
+      - script: |
+          yarn beachball publish -b origin/main --access public -y -n $(npmTokenTmp)
+          git reset --hard origin/main
+        env:
+          GITHUB_PAT: $(githubPAT)
+        displayName: Publish to NPM & bump versions
