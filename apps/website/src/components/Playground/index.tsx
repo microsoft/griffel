@@ -31,7 +31,11 @@ export default function Playground() {
     <SandpackProvider
       template="react"
       customSetup={{
-        dependencies: { '@griffel/core': 'latest', 'highlight.js': 'latest', 'js-beautify': 'latest' },
+        dependencies: {
+          '@griffel/core': 'latest',
+          'highlight.js': 'latest',
+          'js-beautify': 'latest',
+        },
         files: {
           '/App.js': {
             // "AppCode" is a string as it's processed by "raw-loader", see "webpackLoader.js"
