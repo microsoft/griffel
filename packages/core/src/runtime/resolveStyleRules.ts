@@ -7,6 +7,7 @@ import { compileCSS, CompileCSSOptions } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
+import { isLayerSelector } from './utils/isLayerSelector';
 import { isNestedSelector } from './utils/isNestedSelector';
 import { isSupportQuerySelector } from './utils/isSupportQuerySelector';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
@@ -48,6 +49,7 @@ export function resolveStyleRules(
   styles: GriffelStyle,
   pseudo = '',
   media = '',
+  layer = '',
   support = '',
   cssClassesMap: CSSClassesMap = {},
   cssRulesByBucket: CSSRulesByBucket = {},
@@ -85,6 +87,7 @@ export function resolveStyleRules(
       const key = hashPropertyKey(pseudo, media, support, property);
       const className = hashClassName({
         media,
+        layer,
         value: value.toString(),
         support,
         pseudo,
@@ -100,6 +103,7 @@ export function resolveStyleRules(
             property: rtlDefinition.key,
             pseudo,
             media,
+            layer,
             support,
           })
         : undefined;
@@ -115,6 +119,7 @@ export function resolveStyleRules(
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
+        layer,
         pseudo,
         property,
         support,
@@ -166,6 +171,7 @@ export function resolveStyleRules(
         { animationName: animationNames.join(', ') },
         pseudo,
         media,
+        layer,
         support,
         cssClassesMap,
         cssRulesByBucket,
@@ -177,6 +183,7 @@ export function resolveStyleRules(
           value as GriffelStyle,
           pseudo + normalizeNestedProperty(property),
           media,
+          layer,
           support,
           cssClassesMap,
           cssRulesByBucket,
@@ -184,11 +191,39 @@ export function resolveStyleRules(
       } else if (isMediaQuerySelector(property)) {
         const combinedMediaQuery = generateCombinedQuery(media, property.slice(6).trim());
 
-        resolveStyleRules(value as GriffelStyle, pseudo, combinedMediaQuery, support, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          combinedMediaQuery,
+          layer,
+          support,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      } else if (isLayerSelector(property)) {
+        const combinedLayerQuery = (layer ? `${layer}.` : '') + property.slice(6).trim();
+
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          media,
+          combinedLayerQuery,
+          support,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       } else if (isSupportQuerySelector(property)) {
         const combinedSupportQuery = generateCombinedQuery(support, property.slice(9).trim());
 
-        resolveStyleRules(value as GriffelStyle, pseudo, media, combinedSupportQuery, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          media,
+          layer,
+          combinedSupportQuery,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       } else {
         if (process.env.NODE_ENV !== 'production') {
           // eslint-disable-next-line no-console

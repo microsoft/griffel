@@ -153,6 +153,7 @@ const useClasses = makeStyles({
 
     '@media screen and (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
+    '@layer utility': { marginBottom: '1em' }
   },
 });
 ```

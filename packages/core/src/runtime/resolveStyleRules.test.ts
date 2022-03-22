@@ -273,7 +273,7 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('handles media queries with preudo selectors', () => {
+    it('handles media queries with pseudo selectors', () => {
       expect(
         resolveStyleRules({
           color: 'green',
@@ -315,6 +315,72 @@ describe('resolveStyleRules', () => {
         }
         @media screen and (max-width: 992px) and (min-width: 100px) {
           .f19a6424 {
+            color: red;
+          }
+        }
+      `);
+    });
+
+    it('handles layer queries', () => {
+      expect(
+        resolveStyleRules({
+          color: 'green',
+          '@layer color': { color: 'red' },
+        }),
+      ).toMatchInlineSnapshot(`
+        .fka9v86 {
+          color: green;
+        }
+        @layer color {
+          .fe3e8s9 {
+            color: red;
+          }
+        }
+      `);
+    });
+
+    it('handles layer queries with pseudo selectors', () => {
+      expect(
+        resolveStyleRules({
+          color: 'green',
+          '@layer color': {
+            ':hover': {
+              color: 'red ',
+            },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        .fka9v86 {
+          color: green;
+        }
+        @layer color {
+          .faf35ka:hover {
+            color: red;
+          }
+        }
+      `);
+    });
+
+    it('handles nested layer queries', () => {
+      expect(
+        resolveStyleRules({
+          color: 'red',
+          '@layer color': {
+            color: 'red',
+            '@layer theme': { color: 'red' },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        .fe3e8s9 {
+          color: red;
+        }
+        @layer color {
+          .fe3e8s9 {
+            color: red;
+          }
+        }
+        @layer color.theme {
+          .fe3e8s9 {
             color: red;
           }
         }

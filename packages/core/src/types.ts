@@ -124,7 +124,7 @@ export type StyleBucketName =
   | 'a'
   // @keyframes definitions
   | 'k'
-  // at-rules (@media, @support)
+  // at-rules (@media, @support, @layer)
   | 't';
 
 export type SequenceHash = string;

@@ -8,6 +8,7 @@ export interface CompileCSSOptions {
 
   pseudo: string;
   media: string;
+  layer: string;
   support: string;
 
   property: string;
@@ -60,7 +61,7 @@ export function compileCSSRules(cssRules: string): string[] {
 }
 
 export function compileCSS(options: CompileCSSOptions): [string /* ltr definition */, string? /* rtl definition */] {
-  const { className, media, pseudo, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
+  const { className, media, layer, pseudo, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = `{ ${hyphenateProperty(property)}: ${value}; }`;
@@ -103,6 +104,10 @@ export function compileCSS(options: CompileCSSOptions): [string /* ltr definitio
 
   if (media) {
     cssRule = `@media ${media} { ${cssRule} }`;
+  }
+
+  if (layer) {
+    cssRule = `@layer ${layer} { ${cssRule} }`;
   }
 
   if (support) {
