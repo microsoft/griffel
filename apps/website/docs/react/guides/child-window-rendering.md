@@ -9,7 +9,7 @@ When rendering in the main browser window, many components will need access to w
 
 ## Configure rendering
 
-We need to configure a renderer for makeStyles() and pass a targetDocument to FluentProvider:
+We need to configure a renderer for `makeStyles()` and pass a `targetDocument` to `FluentProvider`:
 
 ```jsx
 import { createDOMRenderer, RendererProvider } from '@griffel/react';
