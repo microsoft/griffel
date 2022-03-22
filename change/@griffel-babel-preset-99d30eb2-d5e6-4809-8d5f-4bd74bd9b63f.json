@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "docs: add \"when to use it\" section",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

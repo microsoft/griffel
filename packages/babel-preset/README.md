@@ -10,6 +10,11 @@ yarn add --dev @griffel/babel-preset
 npm install --dev @griffel/babel-preset
 ```
 
+## When to use it?
+
+- If you are building a reusable library, please use Babel preset (this package)
+- If you are building an application please use [`@griffel/webpack-loader`](../webpack-loader)
+
 ## Usage
 
 `.babelrc`
@@ -116,7 +121,7 @@ module.exports = {
 
 ## Transforms
 
-This preset is designed to perform build time transforms for `@griffel/react`, it supports both ES modules and CommonJS thus can be used in post processing after TypeScript, for example.
+This preset is designed to perform build time transforms for `@griffel/react`, it supports both ES modules and CommonJS thus can be used in post-processing after TypeScript, for example.
 
 Transforms applied by this preset allow stripping runtime part of `makeStyles()` and improve performance.
 
