@@ -8,3 +8,7 @@ export default makeStyles({
     },
   },
 });
+
+export const meta = {
+  name: 'Global styles',
+};

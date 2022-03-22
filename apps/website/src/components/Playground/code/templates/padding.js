@@ -17,3 +17,7 @@ export default makeStyles({
     ...shorthands.padding('4px', '4px', '5px'),
   },
 });
+
+export const meta = {
+  name: 'Padding',
+};

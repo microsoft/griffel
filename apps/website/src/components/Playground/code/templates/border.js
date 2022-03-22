@@ -15,3 +15,7 @@ export default makeStyles({
     ...shorthands.borderRadius('5px'),
   },
 });
+
+export const meta = {
+  name: 'Border',
+};

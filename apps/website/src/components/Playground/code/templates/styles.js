@@ -10,3 +10,8 @@ export default makeStyles({
     },
   },
 });
+
+export const meta = {
+  name: 'Default',
+  noSidebar: true,
+};

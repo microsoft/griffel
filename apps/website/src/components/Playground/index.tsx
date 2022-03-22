@@ -2,38 +2,29 @@ import React from 'react';
 import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from '@codesandbox/sandpack-react';
 import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
-import AppCode from '!!raw-loader!./template/app.js';
-import StylesCode from '!!raw-loader!./template/styles.js';
-import PaddingCode from '!!raw-loader!./template/padding.js';
-import MediaCode from '!!raw-loader!./template/media.js';
-import BorderCode from '!!raw-loader!./template/border.js';
-import MarginCode from '!!raw-loader!./template/margin.js';
-import GlobalCode from '!!raw-loader!./template/global.js';
-import PsedoSelectorsCode from '!!raw-loader!./template/pseudo-selectors.js';
-import PsedoElementsCode from '!!raw-loader!./template/pseudo-elements.js';
-import SelectorsCode from '!!raw-loader!./template/selectors.js';
-import NestedCode from '!!raw-loader!./template/nested.js';
+import AppCode from '!!raw-loader!./code/app.js';
+import StylesCode from '!!raw-loader!./code/templates/styles.js';
+import path from 'path-browserify';
+
+const ctx = require.context('!!raw-loader!./code/templates', false, /\.js$/);
+
+const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) => {
+  if (modulePath.includes('app')) {
+    return acc;
+  }
+
+  const templateName = path.parse(modulePath).name;
+  acc[templateName] = ctx(modulePath).default;
+  return acc;
+}, {} as Record<string, string>);
 
 const PLAYGROUND_HEIGHT = 400;
-
-const examples: Record<string, string> = {
-  padding: PaddingCode,
-  media: MediaCode,
-  border: BorderCode,
-  margin: MarginCode,
-  global: GlobalCode,
-  'pseudo-selectors': PsedoSelectorsCode,
-  'pseudo-elements': PsedoElementsCode,
-  selectors: SelectorsCode,
-  nested: NestedCode,
-};
 
 export default function Playground() {
   const { isDarkTheme } = useColorMode();
   const sandpackTheme = isDarkTheme ? 'dark' : 'github-light';
   const location = useLocation();
-  const example = examples[location.pathname.split('/').slice(-1)[0]] ?? StylesCode;
-
+  const template = templates[location.hash.slice(1)] ?? StylesCode;
   return (
     <SandpackProvider
       template="react"
@@ -42,7 +33,7 @@ export default function Playground() {
         files: {
           '/App.js': { code: AppCode, hidden: true },
           // Template files are in JS but type checked, don't want unnecessary comments leaking into docs
-          '/styles.js': { code: example.replace('//@ts-check\n', ''), active: true },
+          '/styles.js': { code: template.replace('//@ts-check\n', ''), active: true },
         },
       }}
     >
