@@ -21,3 +21,17 @@ function App(props) {
   );
 }
 ```
+
+### styleElementAttributes
+
+A map of attributes that's passed to the generated style elements. For example, is useful to set ["nonce" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce).
+
+```js
+import { createDOMRenderer } from '@griffel/react';
+
+const renderer = createDOMRenderer(targetDocument, {
+  styleElementAttributes: {
+    nonce: 'random',
+  },
+});
+```
