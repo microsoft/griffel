@@ -13,7 +13,7 @@ Griffel provides first class support for Server-Side Rendering.
 For basic instructions to setup Next.js, see [Getting Started](https://nextjs.org/docs/getting-started). Please complete following steps:
 
 1. Get a basic Next.js setup running, rendering a page from the `pages` folder, as guided by the tutorial.
-2. Add the Griffel to dependencies (`@griffel/react` package`), check [Install](/react/install) page.
+2. Add the Griffel to dependencies (`@griffel/react` package), check [Install](/react/install) page.
 
 A complete demo project is available on [CodeSandbox](https://codesandbox.io/s/next-js-project-with-griffel-react-f22mwn).
 

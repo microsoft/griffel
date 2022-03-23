@@ -34,7 +34,7 @@ By default, preset handles imports from `@griffel/react`, to handle imports from
 {
   "presets": [
     [
-      "@griffel/babel",
+      "@griffel",
       {
         "modules": [{ "moduleSource": "custom-package", "importName": "makeStyles" }]
       }
@@ -53,7 +53,7 @@ If you need to specify custom Babel configuration, you can pass them to `babelOp
 {
   "presets": [
     [
-      "@griffel/babel",
+      "@griffel",
       {
         "babelOptions": {
           "plugins": ["@babel/plugin-proposal-class-static-block"],
@@ -71,7 +71,7 @@ If you need to specify custom Babel configuration, you can pass them to `babelOp
 {
   "presets": [
     [
-      "@griffel/babel",
+      "@griffel",
       {
         "evaluationRules": []
       }
@@ -97,7 +97,7 @@ The default setup is:
 module.exports = {
   presets: [
     [
-      '@griffel/babel',
+      '@griffel',
       {
         evaluationRules: [
           {
