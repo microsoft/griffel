@@ -181,120 +181,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/abort-controller@npm:^1.0.0":
-  version: 1.0.4
-  resolution: "@azure/abort-controller@npm:1.0.4"
-  dependencies:
-    tslib: ^2.0.0
-  checksum: 3bdb4d13505e91813729f053b5e50573aabcbb88cd7b187e8fd09aaf7a3ea8e2907ab6d6ee9bbe016060d312aecf189b2e1273e9fcc15bd93699632dcebafc06
-  languageName: node
-  linkType: hard
-
-"@azure/core-asynciterator-polyfill@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@azure/core-asynciterator-polyfill@npm:1.0.0"
-  checksum: b6d3ab3f0ffc0a9f426a1d2cc90b81778730b14d81af7dcab9760c9e241f7c0f6843d45fad572dcd1379232b3fb2cacd76d110a0d54a999ceb1bf0fd9ed39e99
-  languageName: node
-  linkType: hard
-
-"@azure/core-auth@npm:^1.3.0":
-  version: 1.3.2
-  resolution: "@azure/core-auth@npm:1.3.2"
-  dependencies:
-    "@azure/abort-controller": ^1.0.0
-    tslib: ^2.2.0
-  checksum: 8b27de6f8a82a63643524757ef774b1637b0d5c7769b387c73bebeb918717e7193ad1d2413638fb02b28de8199f261c1a902e3d04f75d1ef684af33529d9e98d
-  languageName: node
-  linkType: hard
-
-"@azure/core-client@npm:^1.0.0":
-  version: 1.4.0
-  resolution: "@azure/core-client@npm:1.4.0"
-  dependencies:
-    "@azure/abort-controller": ^1.0.0
-    "@azure/core-asynciterator-polyfill": ^1.0.0
-    "@azure/core-auth": ^1.3.0
-    "@azure/core-rest-pipeline": ^1.4.0
-    "@azure/core-tracing": 1.0.0-preview.13
-    "@azure/logger": ^1.0.0
-    tslib: ^2.2.0
-  checksum: 4639baffbbf6ff483ed2a3990af4444cd06ab6833acec70e75df8c86f4fdcbba8871b3eb9e57aa4bbeb0b9297c3de1acc3f84220c3ea91e05e75b4fdf6e0ac15
-  languageName: node
-  linkType: hard
-
-"@azure/core-paging@npm:^1.1.1":
-  version: 1.2.1
-  resolution: "@azure/core-paging@npm:1.2.1"
-  dependencies:
-    "@azure/core-asynciterator-polyfill": ^1.0.0
-    tslib: ^2.2.0
-  checksum: b4e07b1d9eb986f902f4a4741aac7e31b96373e0611aea74771c1eb25e1d38e9047a88af2643a17413e0304139337a457f03a465f1666b9affc5510cdf20fa2e
-  languageName: node
-  linkType: hard
-
-"@azure/core-rest-pipeline@npm:^1.1.0, @azure/core-rest-pipeline@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@azure/core-rest-pipeline@npm:1.4.0"
-  dependencies:
-    "@azure/abort-controller": ^1.0.0
-    "@azure/core-auth": ^1.3.0
-    "@azure/core-tracing": 1.0.0-preview.13
-    "@azure/logger": ^1.0.0
-    form-data: ^4.0.0
-    http-proxy-agent: ^4.0.1
-    https-proxy-agent: ^5.0.0
-    tslib: ^2.2.0
-    uuid: ^8.3.0
-  checksum: 63addce249281a11c23c3a22d2a7eb0cae8d7d89b5ee16a49cc6d85b5d3e9293e6d8051cf20c15ee1150af5b4295dc162d6a911f064f3f56d6122f2727145a24
-  languageName: node
-  linkType: hard
-
-"@azure/core-tracing@npm:1.0.0-preview.13":
-  version: 1.0.0-preview.13
-  resolution: "@azure/core-tracing@npm:1.0.0-preview.13"
-  dependencies:
-    "@opentelemetry/api": ^1.0.1
-    tslib: ^2.2.0
-  checksum: bc3ea8dce1fc6bb6e4cb2e82ec0c361b3e6f6e18e162f352eb347e6991c6461ebc249f5d1b36402cc0d295e2a6bcbaa68014445d7f4293c0792a698c430f145e
-  languageName: node
-  linkType: hard
-
-"@azure/core-xml@npm:^1.0.0":
-  version: 1.1.0
-  resolution: "@azure/core-xml@npm:1.1.0"
-  dependencies:
-    fast-xml-parser: ^3.20.0
-    tslib: ^2.2.0
-  checksum: 9e6e2f3c0ee6e46b3a2b46740a1c7756da4f4513f83e56b955f03d4c667968d1e095346c4f73a6bde14a62a25e46fb77b67db8a59d7d2c0c8788cfe79fe4e5ef
-  languageName: node
-  linkType: hard
-
-"@azure/data-tables@npm:^13.0.0":
-  version: 13.0.1
-  resolution: "@azure/data-tables@npm:13.0.1"
-  dependencies:
-    "@azure/core-auth": ^1.3.0
-    "@azure/core-client": ^1.0.0
-    "@azure/core-paging": ^1.1.1
-    "@azure/core-rest-pipeline": ^1.1.0
-    "@azure/core-tracing": 1.0.0-preview.13
-    "@azure/core-xml": ^1.0.0
-    "@azure/logger": ^1.0.0
-    tslib: ^2.2.0
-    uuid: ^8.3.0
-  checksum: 16cca1c2d0ecf36dd71730ae2a8e97cb0fae4ba0409984518fbcabbcad0bdb773f3087019f5d1e59b100b13b6ccf2c2772768e1399df062fca83afb7dd443900
-  languageName: node
-  linkType: hard
-
-"@azure/logger@npm:^1.0.0":
-  version: 1.0.3
-  resolution: "@azure/logger@npm:1.0.3"
-  dependencies:
-    tslib: ^2.2.0
-  checksum: f3443c70c678a7449a5f3be09488a0a15711c506c9da6a81fa9e43178128ddf5db3abc02c99359d188e4ef47d703c5e5f206df71b0e01884245de3220ab1205b
-  languageName: node
-  linkType: hard
-
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.16.0, @babel/code-frame@npm:^7.16.7, @babel/code-frame@npm:^7.5.5, @babel/code-frame@npm:^7.8.3":
   version: 7.16.7
   resolution: "@babel/code-frame@npm:7.16.7"
@@ -2870,33 +2756,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/bundle-size@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@fluentui/bundle-size@npm:1.1.4"
-  dependencies:
-    "@azure/data-tables": ^13.0.0
-    "@babel/core": ^7.10.4
-    ajv: ^8.4.0
-    chalk: ^4.1.0
-    ci-info: ^3.2.0
-    cli-table3: ^0.6.0
-    del: ^6.0.0
-    find-up: ^5.0.0
-    glob: ^7.1.2
-    gzip-size: ^6.0.0
-    node-fetch: ^2.6.1
-    prettier: ^2.2.1
-    pretty-bytes: ^5.6.0
-    terser: ^5.5.1
-    webpack: ^5.21.2
-    workspace-tools: ^0.16.2
-    yargs: ^13.3.2
-  bin:
-    bundle-size: bin/bundle-size.js
-  checksum: 90c28509ea19565f96aab68369ff45f2518de324b3c0eea0c9ba4e458dc2b5b21c6b2791cbbd3ee6e97ae8e30e0aca3a6e16e8ed678d491bcdd819c7be17cba5
-  languageName: node
-  linkType: hard
-
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
@@ -4004,13 +3863,6 @@ __metadata:
     prettier:
       optional: true
   checksum: 4e5b0cb5d4436c888d37a1163ab6568a747b95e4e0a418b1e5cd05787ed38e9c798d2bc6623d9d2d6bb4d3e2e2d32be0d94aba1bfe258b22fe518459e7e0b72f
-  languageName: node
-  linkType: hard
-
-"@opentelemetry/api@npm:^1.0.1":
-  version: 1.0.4
-  resolution: "@opentelemetry/api@npm:1.0.4"
-  checksum: 793e9b5c21666b647a60c58c46c3e00ad1dac38505102b026ad0ef617571d637aca54a18533a73c1e288c95b5ac77e2db17f96467f11833ac1165338e1184260
   languageName: node
   linkType: hard
 
@@ -6780,6 +6632,15 @@ __metadata:
     "@typescript-eslint/types": 5.3.1
     eslint-visitor-keys: ^3.0.0
   checksum: e2a2fb9dfa77d1db685540dd65c7fc8477ad910459cfdfe3600fff4ed27105f5a976cf1cfddc588f9231d74287e722b038ea17ba7b3ccff672642b492222f303
+  languageName: node
+  linkType: hard
+
+"@upstash/redis@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@upstash/redis@npm:1.0.3"
+  dependencies:
+    isomorphic-fetch: ^3.0.0
+  checksum: c47443fd68e86aa32ebb606f77432f43d92da86b4f0eae9debac88481ce7f11eeac9d66f157d2f7894285f73f70fdbc18d075aacab7fca7548e1a595b4cd58e7
   languageName: node
   linkType: hard
 
@@ -12119,17 +11980,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^3.20.0":
-  version: 3.21.1
-  resolution: "fast-xml-parser@npm:3.21.1"
-  dependencies:
-    strnum: ^1.0.4
-  bin:
-    xml2js: cli.js
-  checksum: 73b9c907a424cc2f9b11a8a2f1b7448d936f1db6fa574b85cbe4be9739c2f77d99a827bb27d738a0db0047b20c71a5d663f64937fbdb9c38977fc6cd145221d2
-  languageName: node
-  linkType: hard
-
 "fastq@npm:^1.6.0":
   version: 1.13.0
   resolution: "fastq@npm:1.13.0"
@@ -12547,17 +12397,6 @@ __metadata:
     combined-stream: ^1.0.8
     mime-types: ^2.1.12
   checksum: b019e8d35c8afc14a2bd8a7a92fa4f525a4726b6d5a9740e8d2623c30e308fbb58dc8469f90415a856698933c8479b01646a9dff33c87cc4e76d72aedbbf860d
-  languageName: node
-  linkType: hard
-
-"form-data@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "form-data@npm:4.0.0"
-  dependencies:
-    asynckit: ^0.4.0
-    combined-stream: ^1.0.8
-    mime-types: ^2.1.12
-  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
   languageName: node
   linkType: hard
 
@@ -13212,7 +13051,6 @@ __metadata:
     "@docusaurus/module-type-aliases": ^2.0.0-beta.15
     "@docusaurus/preset-classic": 2.0.0-beta.15
     "@emotion/hash": ^0.8.0
-    "@fluentui/bundle-size": ^1.1.4
     "@linaria/babel-preset": ^3.0.0-beta.14
     "@linaria/shaker": ^3.0.0-beta.14
     "@nrwl/cli": 13.4.5
@@ -13266,6 +13104,8 @@ __metadata:
     js-beautify: ^1.14.0
     loader-utils: ^2.0.0
     log-symbols: 5.1.0
+    monosize: 0.0.3
+    monosize-storage-upstash: 0.0.2
     nano-staged: 0.5.0
     prettier: 2.3.1
     prism-react-renderer: 1.2.1
@@ -14932,6 +14772,16 @@ __metadata:
   version: 4.0.0
   resolution: "isobject@npm:4.0.0"
   checksum: bbcb522e46d54fb22418ba49fb9a82057ffa201c8401fb6e018c042e2c98cf7d9c7b185aff88e035ec8adea0814506dc2aeff2d08891bbc158e1671a49e99c06
+  languageName: node
+  linkType: hard
+
+"isomorphic-fetch@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "isomorphic-fetch@npm:3.0.0"
+  dependencies:
+    node-fetch: ^2.6.1
+    whatwg-fetch: ^3.4.1
+  checksum: e5ab79a56ce5af6ddd21265f59312ad9a4bc5a72cebc98b54797b42cb30441d5c5f8d17c5cd84a99e18101c8af6f90c081ecb8d12fd79e332be1778d58486d75
   languageName: node
   linkType: hard
 
@@ -17081,6 +16931,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"monosize-storage-upstash@npm:0.0.2":
+  version: 0.0.2
+  resolution: "monosize-storage-upstash@npm:0.0.2"
+  dependencies:
+    "@upstash/redis": ^1.0.3
+    monosize: ^0.0.3
+  checksum: 0eb4ba1824ba956aa68ab0b1caf307175944710ccbaa51c0bb15593cef1d48b1ca1bb1442314c44c319fc54102be987f3a5851acc4470794c4ff5e177b5e10a0
+  languageName: node
+  linkType: hard
+
+"monosize@npm:0.0.3, monosize@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "monosize@npm:0.0.3"
+  dependencies:
+    "@babel/core": ^7.10.4
+    ajv: ^8.4.0
+    chalk: ^4.1.0
+    ci-info: ^3.2.0
+    cli-table3: ^0.6.0
+    del: ^6.0.0
+    find-up: ^5.0.0
+    glob: ^7.1.2
+    gzip-size: ^6.0.0
+    prettier: ^2.5.1
+    pretty-bytes: ^5.6.0
+    terser: ^5.5.1
+    tslib: ^2.3.1
+    webpack: ^5.21.2
+    workspace-tools: ^0.16.2
+    yargs: ^13.3.2
+  bin:
+    monosize: bin/monosize.js
+  checksum: dcebc72dce530145c3c72a6e9e8445e2a2f544210c58b4db348cc672d7cd1a6171923eb6d8f6c7a8e9eac1e09ad9c2d8787ae46b3c6406f08ba3d89f0e6e6128
+  languageName: node
+  linkType: hard
+
 "move-concurrently@npm:^1.0.1":
   version: 1.0.1
   resolution: "move-concurrently@npm:1.0.1"
@@ -19075,12 +18961,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.0.1, prettier@npm:^2.2.1":
-  version: 2.5.1
-  resolution: "prettier@npm:2.5.1"
+"prettier@npm:^2.0.1, prettier@npm:^2.5.1":
+  version: 2.6.0
+  resolution: "prettier@npm:2.6.0"
   bin:
     prettier: bin-prettier.js
-  checksum: 21b9408476ea1c544b0e45d51ceb94a84789ff92095abb710942d780c862d0daebdb29972d47f6b4d0f7ebbfb0ffbf56cc2cfa3e3e9d1cca54864af185b15b66
+  checksum: 3e527ad62279676778a8404d18174d7ca2365ada4caba6eebbcdd9907d1187afd3bc6ade5b4e5f5d4549bb9fb71e45ca8930d71500017635524f8fc05bc52e93
   languageName: node
   linkType: hard
 
@@ -22051,13 +21937,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strnum@npm:^1.0.4":
-  version: 1.0.5
-  resolution: "strnum@npm:1.0.5"
-  checksum: 651b2031db5da1bf4a77fdd2f116a8ac8055157c5420f5569f64879133825915ad461513e7202a16d7fec63c54fd822410d0962f8ca12385c4334891b9ae6dd2
-  languageName: node
-  linkType: hard
-
 "style-inject@npm:^0.3.0":
   version: 0.3.0
   resolution: "style-inject@npm:0.3.0"
@@ -23528,7 +23407,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.0, uuid@npm:^8.3.1, uuid@npm:^8.3.2":
+"uuid@npm:^8.3.1, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
@@ -24073,6 +23952,13 @@ __metadata:
   dependencies:
     iconv-lite: 0.6.3
   checksum: 7087810c410aa9b689cbd6af8773341a53cdc1f3aae2a882c163bd5522ec8ca4cdfc269aef417a5792f411807d5d77d50df4c24e3abb00bb60192858a40cc675
+  languageName: node
+  linkType: hard
+
+"whatwg-fetch@npm:^3.4.1":
+  version: 3.6.2
+  resolution: "whatwg-fetch@npm:3.6.2"
+  checksum: ee976b7249e7791edb0d0a62cd806b29006ad7ec3a3d89145921ad8c00a3a67e4be8f3fb3ec6bc7b58498724fd568d11aeeeea1f7827e7e1e5eae6c8a275afed
   languageName: node
   linkType: hard
 
