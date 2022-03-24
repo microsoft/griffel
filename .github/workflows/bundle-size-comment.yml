@@ -1,0 +1,25 @@
+name: Bundle size | Comment on PR
+on:
+  workflow_run:
+    workflows: ['Bundle size']
+    types:
+      - completed
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: 'Download artifact'
+        uses: actions/download-artifact@v3
+        with:
+          name: monosize-report
+
+      - name: 'Comment on PR'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
+            const body = require('fs').readFileSync('monosize.md');
+            github.issues.createComment({ issue_number, owner, repo, body });
