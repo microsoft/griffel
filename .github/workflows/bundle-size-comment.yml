@@ -11,15 +11,21 @@ jobs:
     if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: 'Download artifact'
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: monosize-report
+          path: ./results
+          run_id: ${{ github.event.workflow_run.id }}
+          workflow: ${{ github.event.workflow.id }}
+          workflow_conclusion: success
+
+      - name: Load PR number
+        id: pr_number
+        run: echo "::set-output name=id::$(cat pr.txt)"
+        working-directory: ./results
 
       - name: 'Comment on PR'
-        uses: actions/github-script@v3
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
-            const body = require('fs').readFileSync('monosize.md');
-            github.issues.createComment({ issue_number, owner, repo, body });
+          number: ${{ steps.pr_number.outputs.id }}
+          path: ./results/monosize.md
