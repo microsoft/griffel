@@ -92,7 +92,7 @@ jobs:
         displayName: Authenticate git for pushes
 
       - script: |
-          yarn beachball publish -b origin/main --access public -y -n $(npmTokenTmp)
+          yarn beachball publish -b origin/main --access public -y -n $(npmToken)
           git reset --hard origin/main
         env:
           GITHUB_PAT: $(githubPAT)
