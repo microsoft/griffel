@@ -12,8 +12,8 @@ npm install --dev @griffel/webpack-loader
 
 ## When to use it?
 
-- If you are building a reusable library, please use [`@griffel/babel-preset`](../babel-preset)
-- If you are building an application please use Webpack loader (this package)
+- For library developers, please use [`@griffel/babel-preset`](../babel-preset)
+- For application developers, please use Webpack loader (this package)
 
 ## Usage
 
@@ -55,7 +55,7 @@ module.exports = {
 };
 ```
 
-### Importing Griffel from custom packages
+### Handling Griffel re-exports
 
 ```js
 import { makeStyles } from 'custom-package';
@@ -63,7 +63,7 @@ import { makeStyles } from 'custom-package';
 import { createStyles } from 'custom-package';
 ```
 
-By default, the Webpack loader handles imports from `@griffel/react`, to handle imports from custom packages settings should be tweaked:
+By default, the Webpack loader handles imports from `@griffel/react`. The webpack loader can be re-configured to handle re-exports of Griffel from custom packages. The `makeStyles` function itself can also be renamed in this case.
 
 ```js
 module.exports = {
