@@ -35,6 +35,8 @@ const SEQUENCE_SIZE = SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH;
 export function mergeClasses(...classNames: (string | false | undefined)[]): string;
 
 export function mergeClasses(): string {
+  console.log('------------- mergeClasses -------------');
+
   // arguments are parsed manually to avoid double loops as TS & Babel transforms rest via an additional loop
   // @see https://babeljs.io/docs/en/babel-plugin-transform-parameters
   /* eslint-disable prefer-rest-params */
@@ -97,7 +99,12 @@ export function mergeClasses(): string {
   const mergeClassesResult = mergeClassesCachedResults[sequenceMatch];
 
   if (mergeClassesResult !== undefined) {
-    return resultClassName + mergeClassesResult;
+    const debug_newDebugSequenceHash = MK_DEBUG.getCachedDebugSequenceHash(sequenceMatch) ?? mergeClassesResult;
+    console.log('cached debug_newDebugSequenceHash', debug_newDebugSequenceHash);
+    console.log('----------------------------------------');
+    // TODO control via process.env
+    return resultClassName + debug_newDebugSequenceHash + ' ' + mergeClassesResult.split(' ').slice(1).join(' ');
+    // return resultClassName + mergeClassesResult;
   }
 
   const sequenceMappings: CSSClassesMap[] = [];
@@ -147,7 +154,6 @@ export function mergeClasses(): string {
   // Each merge of classes generates a new sequence of atomic classes that needs to be registered
   const newSequenceHash = hashSequence(atomicClassNames, dir!);
 
-  //  const debug_mergeOrderSequenceHash = hashSequence(sequenceMappings.join(' '), dir!);
   console.log('sequencesIds', sequencesIds);
   console.log('sequenceMappings', sequenceMappings);
   console.log('resultDefinitions', resultDefinitions);
@@ -157,7 +163,10 @@ export function mergeClasses(): string {
     newSequenceHash,
     sequencesIds,
     debug_mergeOrderSequences,
+    sequenceMatch,
   );
+  console.log('debug_newDebugSequenceHash', debug_newDebugSequenceHash);
+  console.log('----------------------------------------');
   const debug_atomicClassNames = debug_newDebugSequenceHash + ' ' + atomicClassNames;
   atomicClassNames = newSequenceHash + ' ' + atomicClassNames;
 

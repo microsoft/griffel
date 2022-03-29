@@ -87,16 +87,28 @@ const Button: React.FunctionComponent<{ className?: string; primary?: boolean; d
   // const mergedClasses2 = mergeClasses(mergedClasses1, darkHover && classes.darkHover);
 
   const classes = usePinkButtonStyles();
+
+  console.log('---> ygbp:');
   const ygbp = mergeClasses(classes.yellow, classes.green, classes.blue, classes.pink);
+
+  console.log('---> ybp:');
   const ybp = mergeClasses(classes.yellow, classes.blue, classes.pink);
+
+  console.log('---> yp:');
   const yp = mergeClasses(classes.yellow, classes.pink);
+
+  console.log('---> ypp:');
   const ypp = mergeClasses(yp, classes.pink);
+
+  console.log('---> ypp again:');
+  const ypp2 = mergeClasses(yp, classes.pink);
   return (
     <>
       <button {...props} id={'button-ygbp'} className={ygbp} />
       <button {...props} id={'button-ybp'} className={ybp} />
       <button {...props} id={'button-yp'} className={yp} />
       <button {...props} id={'button-ypp'} className={ypp} />
+      <button {...props} id={'button-ypp2'} className={ypp2} />
     </>
   );
 };

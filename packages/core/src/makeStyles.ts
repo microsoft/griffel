@@ -18,9 +18,12 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
   function computeClasses(options: MakeStylesOptions): Record<Slots, string> {
     const { dir, renderer } = options;
 
+    console.log('************** makeStyles **************');
     if (classesMapBySlot === null) {
       [classesMapBySlot, cssRules] = resolveStyleRulesForSlots(stylesBySlots);
     }
+    console.log('classesMapBySlot', classesMapBySlot);
+    console.log('****************************************');
 
     const isLTR = dir === 'ltr';
     // As RTL classes are different they should have a different cache key for insertion
