@@ -12,6 +12,7 @@ export const SEQUENCE_PREFIX = '___';
 
 /** @internal */
 export const DEFINITION_LOOKUP_TABLE: Record<SequenceHash, LookupItem> = {};
+(window as any).DEFINITION_LOOKUP_TABLE = DEFINITION_LOOKUP_TABLE;
 
 // indexes for values in LookupItem tuple
 

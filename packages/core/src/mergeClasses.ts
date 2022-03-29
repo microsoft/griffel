@@ -8,6 +8,7 @@ import {
 import { hashSequence } from './runtime/utils/hashSequence';
 import { reduceToClassName } from './runtime/reduceToClassNameForSlots';
 import { CSSClassesMap, SequenceHash } from './types';
+import { MK_DEBUG } from './devtools/store';
 
 // Contains a mapping of previously resolved sequences of atomic classnames
 const mergeClassesCachedResults: Record<string, string> = {};
@@ -44,6 +45,7 @@ export function mergeClasses(): string {
   // Is used as a cache key to avoid object merging
   let sequenceMatch = '';
   const sequencesIds: (SequenceHash | undefined)[] = new Array(arguments.length);
+  const debugSequencesIds: SequenceHash[] = [];
 
   for (let i = 0; i < arguments.length; i++) {
     const className = arguments[i];
@@ -104,6 +106,7 @@ export function mergeClasses(): string {
 
       if (sequenceMapping) {
         sequenceMappings.push(sequenceMapping[LOOKUP_DEFINITIONS_INDEX]);
+        debugSequencesIds.push(sequenceId);
 
         if (process.env.NODE_ENV !== 'production') {
           if (dir !== null && dir !== sequenceMapping[LOOKUP_DIR_INDEX]) {
@@ -144,6 +147,8 @@ export function mergeClasses(): string {
 
   mergeClassesCachedResults[sequenceMatch] = atomicClassNames;
   DEFINITION_LOOKUP_TABLE[newSequenceHash] = [resultDefinitions, dir!];
+
+  MK_DEBUG.addSequenceMapping(newSequenceHash, debugSequencesIds);
 
   return resultClassName + atomicClassNames;
 }

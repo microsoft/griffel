@@ -1,3 +1,4 @@
+import { MK_DEBUG } from '../devtools/store';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
@@ -46,6 +47,7 @@ export function createDOMRenderer(
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
+          MK_DEBUG.addCSSRule(ruleCSS);
 
           if (sheet) {
             try {

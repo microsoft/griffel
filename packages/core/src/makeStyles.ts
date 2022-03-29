@@ -1,6 +1,10 @@
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
-import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
+import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, SequenceHash, StylesBySlots } from './types';
+import { injectDevTools } from './devtools/injectDevTools';
+import { MK_DEBUG } from './devtools/store';
+
+injectDevTools();
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
   const insertionCache: Record<string, boolean> = {};
@@ -25,10 +29,18 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
     if (isLTR) {
       if (ltrClassNamesForSlots === null) {
         ltrClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
+
+        Object.entries(ltrClassNamesForSlots!).forEach(([slotName, sequenceHash]) => {
+          MK_DEBUG.addSequenceDetails(sequenceHash as SequenceHash, slotName);
+        });
       }
     } else {
       if (rtlClassNamesForSlots === null) {
         rtlClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
+
+        Object.entries(rtlClassNamesForSlots!).forEach(([slotName, sequenceHash]) => {
+          MK_DEBUG.addSequenceDetails(sequenceHash as SequenceHash, slotName);
+        });
       }
     }
 
