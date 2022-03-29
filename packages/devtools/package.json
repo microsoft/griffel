@@ -1,0 +1,11 @@
+{
+  "name": "@griffel/devtools",
+  "version": "0.0.1",
+  "description": "devtools",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "sideEffects": false
+}
