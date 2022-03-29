@@ -61,8 +61,8 @@ export function mergeClasses(): string {
         const sequenceId = className.substr(sequenceIndex, SEQUENCE_SIZE);
 
         // when enabling debugging, sequence hash generated from mergeClasses has a suffix - hashing of the merged sequences in order
-        // example: ___<hash1>_d___<hash2>
-        debug_mergeOrderSequences[i] = MK_DEBUG.getMergeOrderSequenceHash(className, sequenceIndex);
+        // example: ___<hash1>_d_<hash2>
+        debug_mergeOrderSequences[i] = MK_DEBUG.extractMergeOrderSequenceHash(className, sequenceIndex);
 
         // Handles a case with mixed classnames, i.e. "ui-button ATOMIC_CLASSES"
         if (sequenceIndex > 0) {

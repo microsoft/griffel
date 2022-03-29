@@ -8,16 +8,6 @@ const SEQUENCE_SIZE = SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH;
 const createDebugSequenceHash = (sequenceHash: SequenceHash, mergeOrderSequenceHash?: SequenceHash) =>
   mergeOrderSequenceHash ? sequenceHash + mergeOrderSequenceHash : sequenceHash;
 
-const getMergeOrderSequenceHash = (className: string, sequenceIndex: number) => {
-  const mergeOrderSequenceHash = className.substr(
-    sequenceIndex + SEQUENCE_SIZE,
-    DEBUG_MERGE_ORDER_SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH,
-  );
-  return mergeOrderSequenceHash.startsWith(DEBUG_MERGE_ORDER_SEQUENCE_PREFIX) ? mergeOrderSequenceHash : undefined;
-};
-
-const extractSequenceHash = (debugSequenceHash: SequenceHash) => debugSequenceHash.substr(0, SEQUENCE_SIZE);
-
 // sequenceMapping:
 // ___8vm58t0_d_1b1j85c: ['___12tn0cb', '___8vm58t0']
 // ___8vm58t0_d_1bugyi3: ['___8vm58t0_d_1b1j85c', '___8vm58t0']
@@ -32,20 +22,18 @@ const sequenceMapping: Record<SequenceHash, SequenceHash[]> = {};
 // contains only makeStyles result
 const sequenceDetails: Record<SequenceHash, { slotName: string }> = {};
 
-// [
-//   '.f1oou7ox{margin-left:10px;}',
-//   '.f1pxv85q{margin-right:10px;}',
-//   '.fcg4t7g{color:pink;}',
-//   '.f163i14w{color:blue;}',
-//   '.faf35ka:hover{color:red;}',
-//   '.f1ja742n:hover{color:darkblue;}',
-// ];
 const cssRules: string[] = [];
 
 export const MK_DEBUG = {
-  getMergeOrderSequenceHash,
-  createDebugSequenceHash,
-  extractSequenceHash,
+  extractMergeOrderSequenceHash: (className: string, sequenceIndex: number) => {
+    const mergeOrderSequenceHash = className.substr(
+      sequenceIndex + SEQUENCE_SIZE,
+      DEBUG_MERGE_ORDER_SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH,
+    );
+    return mergeOrderSequenceHash.startsWith(DEBUG_MERGE_ORDER_SEQUENCE_PREFIX) ? mergeOrderSequenceHash : undefined;
+  },
+
+  extractSequenceHash: (debugSequenceHash: SequenceHash) => debugSequenceHash.substr(0, SEQUENCE_SIZE),
 
   /**
    *
