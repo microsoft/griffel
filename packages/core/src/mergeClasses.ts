@@ -159,7 +159,7 @@ export function mergeClasses(): string {
   console.log('resultDefinitions', resultDefinitions);
   console.log('atomicClassNames', atomicClassNames);
 
-  const debug_newDebugSequenceHash = MK_DEBUG.addSequenceMapping(
+  const debug_newDebugSequenceHash = MK_DEBUG.addMergeMapping(
     newSequenceHash,
     sequencesIds,
     debug_mergeOrderSequences,

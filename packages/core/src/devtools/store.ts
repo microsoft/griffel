@@ -9,11 +9,11 @@ const SEQUENCE_SIZE = SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH;
 const createDebugSequenceHash = (sequenceHash: SequenceHash, mergeOrderSequenceHash?: SequenceHash) =>
   mergeOrderSequenceHash ? sequenceHash + mergeOrderSequenceHash : sequenceHash;
 
-// sequenceMapping:
+// mergeMapping:
 // ___8vm58t0_d_1b1j85c: ['___12tn0cb', '___8vm58t0']
 // ___8vm58t0_d_1bugyi3: ['___8vm58t0_d_1b1j85c', '___8vm58t0']
 // contains only the merged result
-const sequenceMapping: Record<SequenceHash, DebugMergedSequences> = {};
+const mergeMapping: Record<SequenceHash, DebugMergedSequences> = {};
 
 // {
 //   ___6itd4x0: { slotName: 'root' },
@@ -37,8 +37,8 @@ export const MK_DEBUG = {
   extractSequenceHash: (debugSequenceHash: SequenceHash) => debugSequenceHash.substr(0, SEQUENCE_SIZE),
 
   getCachedDebugSequenceHash: (mergeCacheKey: string) => {
-    for (const key in sequenceMapping) {
-      if (mergeCacheKey === sequenceMapping[key].mergeCacheKey) {
+    for (const key in mergeMapping) {
+      if (mergeCacheKey === mergeMapping[key].mergeCacheKey) {
         return key;
       }
     }
@@ -52,7 +52,7 @@ export const MK_DEBUG = {
    * @param mergeCacheKey key used in mergeClasses cache
    * @returns new debug sequence, should be used as element's class name
    */
-  addSequenceMapping: (
+  addMergeMapping: (
     newSequenceHash: SequenceHash,
     sequences: (SequenceHash | undefined)[],
     mergeOrderSequences: (SequenceHash | undefined)[],
@@ -68,7 +68,7 @@ export const MK_DEBUG = {
       ? DEBUG_MERGE_ORDER_SEQUENCE_PREFIX + hash(debugSequences.join(' '))
       : undefined;
     const newDebugSequenceHash = createDebugSequenceHash(newSequenceHash, newMergeOrderSequenceHash);
-    sequenceMapping[newDebugSequenceHash] = { debugSequences, mergeCacheKey };
+    mergeMapping[newDebugSequenceHash] = { debugSequences, mergeCacheKey };
 
     return newDebugSequenceHash;
   },
@@ -79,8 +79,8 @@ export const MK_DEBUG = {
     sequenceDetails[sequenceHash.substring(0, SEQUENCE_SIZE)] = { slotName };
   },
 
-  getSequenceMapping: (hash: SequenceHash): SequenceHash[] | undefined => {
-    return sequenceMapping[hash]?.debugSequences;
+  getMergeMapping: (hash: SequenceHash): SequenceHash[] | undefined => {
+    return mergeMapping[hash]?.debugSequences;
   },
   getCSSRules: (): string[] => {
     return cssRules;
@@ -91,7 +91,7 @@ export const MK_DEBUG = {
 };
 
 window.__MAKESTYLES_DEBUG_DATA__ = {
-  sequenceMapping,
+  mergeMapping,
   sequenceDetails,
   cssRules,
 };

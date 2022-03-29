@@ -6,7 +6,7 @@ declare global {
       getInfo: (el: HTMLElement) => DebugResult | undefined;
     };
     __MAKESTYLES_DEBUG_DATA__: {
-      sequenceMapping: Record<SequenceHash, DebugMergedSequences>;
+      mergeMapping: Record<SequenceHash, DebugMergedSequences>;
       sequenceDetails: Record<SequenceHash, { slotName: string }>;
       cssRules: string[];
     };

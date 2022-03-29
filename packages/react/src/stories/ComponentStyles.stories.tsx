@@ -76,6 +76,13 @@ const usePinkButtonStyles = makeStyles({
   },
 });
 
+const useButtonBGStyles = makeStyles({
+  yellow: {
+    backgroundColor: 'yellow',
+    zIndex: 99,
+  },
+});
+
 const Button: React.FunctionComponent<{ className?: string; primary?: boolean; darkHover?: boolean }> = ({
   className,
   primary = false,
@@ -87,6 +94,7 @@ const Button: React.FunctionComponent<{ className?: string; primary?: boolean; d
   // const mergedClasses2 = mergeClasses(mergedClasses1, darkHover && classes.darkHover);
 
   const classes = usePinkButtonStyles();
+  const bgClasses = useButtonBGStyles();
 
   console.log('---> ygbp:');
   const ygbp = mergeClasses(classes.yellow, classes.green, classes.blue, classes.pink);
@@ -102,6 +110,9 @@ const Button: React.FunctionComponent<{ className?: string; primary?: boolean; d
 
   console.log('---> ypp again:');
   const ypp2 = mergeClasses(yp, classes.pink);
+
+  console.log('---> ypp again with bg:');
+  const ypp2_bg = mergeClasses(yp, classes.pink, bgClasses.yellow);
   return (
     <>
       <button {...props} id={'button-ygbp'} className={ygbp} />
@@ -109,6 +120,7 @@ const Button: React.FunctionComponent<{ className?: string; primary?: boolean; d
       <button {...props} id={'button-yp'} className={yp} />
       <button {...props} id={'button-ypp'} className={ypp} />
       <button {...props} id={'button-ypp2'} className={ypp2} />
+      <button {...props} id={'button-ypp2_bg'} className={ypp2_bg} />
     </>
   );
 };

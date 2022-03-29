@@ -19,7 +19,7 @@ const getDebugTree = (debugSequenceHash: SequenceHash) => {
   };
 
   // get children
-  const childrenDebugSequenceHashes = MK_DEBUG.getSequenceMapping(node.sequenceHash);
+  const childrenDebugSequenceHashes = MK_DEBUG.getMergeMapping(node.sequenceHash);
   if (childrenDebugSequenceHashes) {
     childrenDebugSequenceHashes.forEach((childSequence: SequenceHash) => {
       const child = getDebugTree(childSequence);
