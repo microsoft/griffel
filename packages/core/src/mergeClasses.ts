@@ -99,11 +99,11 @@ export function mergeClasses(): string {
   const mergeClassesResult = mergeClassesCachedResults[sequenceMatch];
 
   if (mergeClassesResult !== undefined) {
-    const debug_newDebugSequenceHash = MK_DEBUG.getCachedDebugSequenceHash(sequenceMatch) ?? mergeClassesResult;
-    console.log('cached debug_newDebugSequenceHash', debug_newDebugSequenceHash);
+    const debug_cachedDebugSequenceHash = MK_DEBUG.getCachedDebugSequenceHash(sequenceMatch) ?? mergeClassesResult;
+    console.log('cached debug_cachedDebugSequenceHash', debug_cachedDebugSequenceHash);
     console.log('----------------------------------------');
     // TODO control via process.env
-    return resultClassName + debug_newDebugSequenceHash + ' ' + mergeClassesResult.split(' ').slice(1).join(' ');
+    return resultClassName + debug_cachedDebugSequenceHash + ' ' + mergeClassesResult.split(' ').slice(1).join(' ');
     // return resultClassName + mergeClassesResult;
   }
 
