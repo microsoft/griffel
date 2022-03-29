@@ -11,6 +11,9 @@ export const SEQUENCE_HASH_LENGTH = 7;
 export const SEQUENCE_PREFIX = '___';
 
 /** @internal */
+export const DEBUG_MERGE_ORDER_SEQUENCE_PREFIX = '_d_';
+
+/** @internal */
 export const DEFINITION_LOOKUP_TABLE: Record<SequenceHash, LookupItem> = {};
 (window as any).DEFINITION_LOOKUP_TABLE = DEFINITION_LOOKUP_TABLE;
 

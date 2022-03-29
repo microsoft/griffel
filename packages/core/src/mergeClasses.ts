@@ -45,7 +45,7 @@ export function mergeClasses(): string {
   // Is used as a cache key to avoid object merging
   let sequenceMatch = '';
   const sequencesIds: (SequenceHash | undefined)[] = new Array(arguments.length);
-  const debugSequencesIds: SequenceHash[] = [];
+  const debug_mergeOrderSequences: (SequenceHash | undefined)[] = new Array(arguments.length);
 
   for (let i = 0; i < arguments.length; i++) {
     const className = arguments[i];
@@ -59,6 +59,10 @@ export function mergeClasses(): string {
         resultClassName += className + ' ';
       } else {
         const sequenceId = className.substr(sequenceIndex, SEQUENCE_SIZE);
+
+        // when enabling debugging, sequence hash generated from mergeClasses has a suffix - hashing of the merged sequences in order
+        // example: ___<hash1>_d___<hash2>
+        debug_mergeOrderSequences[i] = MK_DEBUG.getMergeOrderSequenceHash(className, sequenceIndex);
 
         // Handles a case with mixed classnames, i.e. "ui-button ATOMIC_CLASSES"
         if (sequenceIndex > 0) {
@@ -106,7 +110,6 @@ export function mergeClasses(): string {
 
       if (sequenceMapping) {
         sequenceMappings.push(sequenceMapping[LOOKUP_DEFINITIONS_INDEX]);
-        debugSequencesIds.push(sequenceId);
 
         if (process.env.NODE_ENV !== 'production') {
           if (dir !== null && dir !== sequenceMapping[LOOKUP_DIR_INDEX]) {
@@ -143,12 +146,25 @@ export function mergeClasses(): string {
 
   // Each merge of classes generates a new sequence of atomic classes that needs to be registered
   const newSequenceHash = hashSequence(atomicClassNames, dir!);
+
+  //  const debug_mergeOrderSequenceHash = hashSequence(sequenceMappings.join(' '), dir!);
+  console.log('sequencesIds', sequencesIds);
+  console.log('sequenceMappings', sequenceMappings);
+  console.log('resultDefinitions', resultDefinitions);
+  console.log('atomicClassNames', atomicClassNames);
+
+  const debug_newDebugSequenceHash = MK_DEBUG.addSequenceMapping(
+    newSequenceHash,
+    sequencesIds,
+    debug_mergeOrderSequences,
+  );
+  const debug_atomicClassNames = debug_newDebugSequenceHash + ' ' + atomicClassNames;
   atomicClassNames = newSequenceHash + ' ' + atomicClassNames;
 
   mergeClassesCachedResults[sequenceMatch] = atomicClassNames;
   DEFINITION_LOOKUP_TABLE[newSequenceHash] = [resultDefinitions, dir!];
 
-  MK_DEBUG.addSequenceMapping(newSequenceHash, debugSequencesIds);
-
-  return resultClassName + atomicClassNames;
+  // TODO control via process.env
+  return resultClassName + debug_atomicClassNames;
+  // return resultClassName + atomicClassNames;
 }

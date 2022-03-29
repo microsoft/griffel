@@ -1,19 +1,26 @@
 import { SequenceHash } from '../types';
-import { SEQUENCE_PREFIX, SEQUENCE_HASH_LENGTH } from '../constants';
+import { SEQUENCE_PREFIX, SEQUENCE_HASH_LENGTH, DEBUG_MERGE_ORDER_SEQUENCE_PREFIX } from '../constants';
+import hash from '@emotion/hash';
 
 // TODO copied from mergeClasses.ts
 const SEQUENCE_SIZE = SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH;
 
-// {
-//   ___181ajrl: [
-//     ___6itd4x0,
-//     ___1jbu1wa,
-//   ],
-//   ___wlm69a0: [
-//     ___181ajrl,
-//     ___9yjdox0,
-//   ],
-// };
+const createDebugSequenceHash = (sequenceHash: SequenceHash, mergeOrderSequenceHash?: SequenceHash) =>
+  mergeOrderSequenceHash ? sequenceHash + mergeOrderSequenceHash : sequenceHash;
+
+const getMergeOrderSequenceHash = (className: string, sequenceIndex: number) => {
+  const mergeOrderSequenceHash = className.substr(
+    sequenceIndex + SEQUENCE_SIZE,
+    DEBUG_MERGE_ORDER_SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH,
+  );
+  return mergeOrderSequenceHash.startsWith(DEBUG_MERGE_ORDER_SEQUENCE_PREFIX) ? mergeOrderSequenceHash : undefined;
+};
+
+const extractSequenceHash = (debugSequenceHash: SequenceHash) => debugSequenceHash.substr(0, SEQUENCE_SIZE);
+
+// sequenceMapping:
+// ___8vm58t0_d_1b1j85c: ['___12tn0cb', '___8vm58t0']
+// ___8vm58t0_d_1bugyi3: ['___8vm58t0_d_1b1j85c', '___8vm58t0']
 // contains only the merged result
 const sequenceMapping: Record<SequenceHash, SequenceHash[]> = {};
 
@@ -36,8 +43,35 @@ const sequenceDetails: Record<SequenceHash, { slotName: string }> = {};
 const cssRules: string[] = [];
 
 export const MK_DEBUG = {
-  addSequenceMapping: (hash: SequenceHash, debugSequencesIds: SequenceHash[]) => {
-    sequenceMapping[hash] = debugSequencesIds;
+  getMergeOrderSequenceHash,
+  createDebugSequenceHash,
+  extractSequenceHash,
+
+  /**
+   *
+   * @param newSequenceHash new sequence result from merging
+   * @param sequences sequences being merged
+   * @param mergeOrderSequences merge order hash for each sequence in `sequences`
+   * @returns
+   */
+  addSequenceMapping: (
+    newSequenceHash: SequenceHash,
+    sequences: (SequenceHash | undefined)[],
+    mergeOrderSequences: (SequenceHash | undefined)[],
+  ) => {
+    const debugSequences = [];
+    for (let i = 0; i < sequences.length; i++) {
+      if (sequences[i]) {
+        debugSequences.push(createDebugSequenceHash(sequences[i]!, mergeOrderSequences[i]));
+      }
+    }
+    const newMergeOrderSequenceHash = debugSequences.length
+      ? DEBUG_MERGE_ORDER_SEQUENCE_PREFIX + hash(debugSequences.join(' '))
+      : undefined;
+    const newDebugSequenceHash = createDebugSequenceHash(newSequenceHash, newMergeOrderSequenceHash);
+    sequenceMapping[newDebugSequenceHash] = debugSequences;
+
+    return newDebugSequenceHash;
   },
   addCSSRule: (rule: string) => {
     cssRules.push(rule);

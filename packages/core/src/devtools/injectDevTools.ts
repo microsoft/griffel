@@ -4,8 +4,8 @@ import { MK_DEBUG } from './store';
 import { DebugSequence } from './types';
 import { getDirectionalClassName } from './utils';
 
-const getDebugSequence = (sequenceHash: SequenceHash) => {
-  const lookupItem: LookupItem | undefined = DEFINITION_LOOKUP_TABLE[sequenceHash];
+const getDebugTree = (debugSequenceHash: SequenceHash) => {
+  const lookupItem: LookupItem | undefined = DEFINITION_LOOKUP_TABLE[MK_DEBUG.extractSequenceHash(debugSequenceHash)];
   if (lookupItem === undefined) {
     return undefined;
   }
@@ -13,16 +13,16 @@ const getDebugSequence = (sequenceHash: SequenceHash) => {
   const direction = lookupItem[1];
 
   const node: DebugSequence = {
-    sequenceHash,
+    sequenceHash: debugSequenceHash,
     direction,
     children: [],
   };
 
   // get children
-  const childrenSequenceHashes = MK_DEBUG.getSequenceMapping(node.sequenceHash);
-  if (childrenSequenceHashes) {
-    childrenSequenceHashes.forEach((childHashSequence: SequenceHash) => {
-      const child = getDebugSequence(childHashSequence);
+  const childrenDebugSequenceHashes = MK_DEBUG.getSequenceMapping(node.sequenceHash);
+  if (childrenDebugSequenceHashes) {
+    childrenDebugSequenceHashes.forEach((childSequence: SequenceHash) => {
+      const child = getDebugTree(childSequence);
       if (child) {
         node.children.push(child);
       }
@@ -35,7 +35,7 @@ const getDebugSequence = (sequenceHash: SequenceHash) => {
     Object.values(classesMapping).forEach(classes => {
       const atomicClassName = getDirectionalClassName(classes, direction);
 
-      const mapData = MK_DEBUG.getSequenceDetails(sequenceHash);
+      const mapData = MK_DEBUG.getSequenceDetails(debugSequenceHash);
       if (mapData) {
         node.slot = mapData.slotName;
       }
@@ -62,12 +62,14 @@ export function injectDevTools() {
 
   window.__MAKESTYLES_DEVTOOLS__ = {
     getInfo: element => {
-      const rootSequenceHash = Array.from(element.classList).find(className => className.startsWith(SEQUENCE_PREFIX));
-      if (rootSequenceHash === undefined) {
+      const rootDebugSequenceHash = Array.from(element.classList).find(className =>
+        className.startsWith(SEQUENCE_PREFIX),
+      );
+      if (rootDebugSequenceHash === undefined) {
         return undefined;
       }
 
-      return getDebugSequence(rootSequenceHash);
+      return getDebugTree(rootDebugSequenceHash);
     },
   };
 }

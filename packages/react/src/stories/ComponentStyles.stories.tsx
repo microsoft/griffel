@@ -2,31 +2,6 @@ import * as React from 'react';
 import { Story } from '@storybook/react';
 import { makeStyles, mergeClasses, shorthands } from '../';
 
-// const tokens = {
-//   brandBackground: '#106ebe',
-//   brandBackgroundHover: '#2899f5',
-// };
-
-const useButtonStyles = makeStyles({
-  root: {
-    marginLeft: '10px', //  Frg6f3: ['f1oou7ox', 'f1pxv85q']
-    color: 'pink', // sj55zd: 'fcg4t7g',
-    ':hover': {
-      color: 'red', // Bi91k9c: 'faf35ka'
-    },
-  },
-
-  primary: {
-    color: 'blue', // sj55zd: 'f163i14w'
-  },
-
-  darkHover: {
-    ':hover': {
-      color: 'darkblue', // Bi91k9c: 'f1ja742n'
-    },
-  },
-});
-
 // classesMapBySlot
 // {
 //   root: { Frg6f3: ['f1oou7ox', 'f1pxv85q'], sj55zd: 'fcg4t7g', Bi91k9c: 'faf35ka' },
@@ -66,16 +41,64 @@ const useButtonStyles = makeStyles({
 //   ___wlm69a0: [{ Frg6f3: ['f1oou7ox', 'f1pxv85q'], sj55zd: 'f163i14w', Bi91k9c: 'f1ja742n' }, 'ltr'],
 // };
 
+// const useButtonStyles = makeStyles({
+//   root: {
+//     marginLeft: '10px', //  Frg6f3: ['f1oou7ox', 'f1pxv85q']
+//     color: 'pink', // sj55zd: 'fcg4t7g',
+//     ':hover': {
+//       color: 'red', // Bi91k9c: 'faf35ka'
+//     },
+//   },
+
+//   primary: {
+//     color: 'blue', // sj55zd: 'f163i14w'
+//   },
+
+//   darkHover: {
+//     ':hover': {
+//       color: 'darkblue', // Bi91k9c: 'f1ja742n'
+//     },
+//   },
+// });
+
+const usePinkButtonStyles = makeStyles({
+  yellow: {
+    color: 'yellow',
+  },
+  green: {
+    color: 'green',
+  },
+  blue: {
+    color: 'blue',
+  },
+  pink: {
+    color: 'pink',
+  },
+});
+
 const Button: React.FunctionComponent<{ className?: string; primary?: boolean; darkHover?: boolean }> = ({
   className,
   primary = false,
   darkHover = false,
   ...props
 }) => {
-  const classes = useButtonStyles();
-  const mergedClasses1 = mergeClasses(classes.root, primary && classes.primary, className);
-  const mergedClasses2 = mergeClasses(mergedClasses1, darkHover && classes.darkHover);
-  return <button {...props} className={mergedClasses2} />;
+  // const classes = useButtonStyles();
+  // const mergedClasses1 = mergeClasses(classes.root, primary && classes.primary, className);
+  // const mergedClasses2 = mergeClasses(mergedClasses1, darkHover && classes.darkHover);
+
+  const classes = usePinkButtonStyles();
+  const ygbp = mergeClasses(classes.yellow, classes.green, classes.blue, classes.pink);
+  const ybp = mergeClasses(classes.yellow, classes.blue, classes.pink);
+  const yp = mergeClasses(classes.yellow, classes.pink);
+  const ypp = mergeClasses(yp, classes.pink);
+  return (
+    <>
+      <button {...props} id={'button-ygbp'} className={ygbp} />
+      <button {...props} id={'button-ybp'} className={ybp} />
+      <button {...props} id={'button-yp'} className={yp} />
+      <button {...props} id={'button-ypp'} className={ypp} />
+    </>
+  );
 };
 
 export const ComponentStyles: Story<{ primary: boolean; darkHover?: boolean }> = args => {
