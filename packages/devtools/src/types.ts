@@ -1,3 +1,19 @@
+export type BrowserTheme = 'dark' | 'light';
+
+export type ColorTokens = {
+  foreground: string;
+  background: string;
+
+  slotNameBackground: string;
+  slotNameBorder: string;
+
+  /** tokens for css hightlighting */
+  cssAtRule: string;
+  cssProperty: string;
+  cssPunctuation: string;
+  cssSelector: string;
+};
+
 export type SlotInfo = { slot: string; rules: AtomicRules[] };
 
 export type AtomicRules = { cssRule: string; overriddenBy?: string };

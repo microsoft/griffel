@@ -2,6 +2,7 @@ import beautify from 'js-beautify';
 import * as React from 'react';
 import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 
+import { HighlightedCSS } from './HighlightedCSS';
 import { useViewContext } from './ViewContext';
 import type { MonolithicRules, RuleDetail } from './types';
 
@@ -47,7 +48,7 @@ const SingleRuleView: React.FC<{ rule: RuleDetail; indent?: boolean }> = ({ rule
 
   return (
     <div onClick={handleClick} className={className}>
-      <pre>{formatCSS(rule.css)}</pre>
+      <HighlightedCSS code={formatCSS(rule.css)} />
     </div>
   );
 };
@@ -79,7 +80,7 @@ export const MonolithicRulesView: React.FC<MonolithicRulesViewProps> = props => 
       {Object.entries(rules).map(([selector, rules]) => {
         return (
           <div key={selector} className={noLineSpacing ? classes.noLineSpacing : classes.lineSpacing}>
-            {selector && <pre>{`${selector} {`} </pre>}
+            {selector && <HighlightedCSS code={`${selector} {`} />}
             {Array.isArray(rules) ? (
               rules.map(rule => <SingleRuleView key={rule.css} rule={rule} indent={!!selector} />)
             ) : (
@@ -87,7 +88,7 @@ export const MonolithicRulesView: React.FC<MonolithicRulesViewProps> = props => 
                 <MonolithicRulesView rules={rules} noLineSpacing />
               </div>
             )}
-            {selector && <pre>{`}`} </pre>}
+            {selector && <HighlightedCSS code={`}`} />}
           </div>
         );
       })}
