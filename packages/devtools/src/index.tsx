@@ -2,13 +2,14 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { DefaultMessage } from './DefaultMessage';
+import { FlattenView } from './FlattenView';
 import { useMakeStylesState } from './useMakeStylesState';
 
 const DevTools: React.FC = () => {
   const state = useMakeStylesState();
 
   if (state) {
-    console.log(state);
+    return <FlattenView debugResultRoot={state} />;
   }
 
   return <DefaultMessage />;
