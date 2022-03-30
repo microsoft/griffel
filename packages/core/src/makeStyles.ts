@@ -1,9 +1,6 @@
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
-import { injectDevTools } from './devtools/injectDevTools';
-
-injectDevTools();
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
   const insertionCache: Record<string, boolean> = {};

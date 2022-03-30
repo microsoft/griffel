@@ -48,7 +48,7 @@ const getDebugTree = (debugSequenceHash: SequenceHash) => {
   return node;
 };
 
-export function injectDevTools() {
+export function injectDevTools(window: Window) {
   if (process.env.NODE_ENV === 'production') {
     return;
   }

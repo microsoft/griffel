@@ -1,3 +1,4 @@
+import { injectDevTools } from '../devtools/injectDevTools';
 import { MK_DEBUG } from '../devtools/store';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
@@ -70,6 +71,8 @@ export function createDOMRenderer(
       }
     },
   };
+
+  process.env.NODE_ENV !== 'production' && injectDevTools(window);
 
   return renderer;
 }
