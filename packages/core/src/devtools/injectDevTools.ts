@@ -5,7 +5,7 @@ import { DebugSequence } from './types';
 import { getDirectionalClassName } from './utils';
 
 const getDebugTree = (debugSequenceHash: SequenceHash) => {
-  const lookupItem: LookupItem | undefined = DEFINITION_LOOKUP_TABLE[MK_DEBUG.extractSequenceHash(debugSequenceHash)];
+  const lookupItem: LookupItem | undefined = DEFINITION_LOOKUP_TABLE[debugSequenceHash];
   if (lookupItem === undefined) {
     return undefined;
   }
@@ -18,16 +18,13 @@ const getDebugTree = (debugSequenceHash: SequenceHash) => {
     children: [],
   };
 
-  // get children
-  const childrenDebugSequenceHashes = MK_DEBUG.getMergeMapping(node.sequenceHash);
-  if (childrenDebugSequenceHashes) {
-    childrenDebugSequenceHashes.forEach((childSequence: SequenceHash) => {
-      const child = getDebugTree(childSequence);
-      if (child) {
-        node.children.push(child);
-      }
-    });
-  }
+  const childrenSequences = MK_DEBUG.getChildrenSequences(node.sequenceHash);
+  childrenSequences.forEach((sequence: SequenceHash) => {
+    const child = getDebugTree(sequence);
+    if (child) {
+      node.children.push(child);
+    }
+  });
 
   // if it's leaf (makeStyle node), get css rules
   if (!node.children.length) {

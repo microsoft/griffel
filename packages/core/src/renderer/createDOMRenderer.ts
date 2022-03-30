@@ -47,7 +47,7 @@ export function createDOMRenderer(
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
-          MK_DEBUG.addCSSRule(ruleCSS);
+          process.env.NODE_ENV !== 'production' && MK_DEBUG.addCSSRule(ruleCSS);
 
           if (sheet) {
             try {

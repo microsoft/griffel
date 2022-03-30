@@ -11,11 +11,16 @@ export const SEQUENCE_HASH_LENGTH = 7;
 export const SEQUENCE_PREFIX = '___';
 
 /** @internal */
-export const DEBUG_MERGE_ORDER_SEQUENCE_PREFIX = '_d_';
+export const DEBUG_SEQUENCE_SEPARATOR = '_';
+
+/** @internal */
+export const SEQUENCE_SIZE =
+  process.env.NODE_ENV === 'production'
+    ? SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH
+    : SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH + DEBUG_SEQUENCE_SEPARATOR.length + SEQUENCE_HASH_LENGTH;
 
 /** @internal */
 export const DEFINITION_LOOKUP_TABLE: Record<SequenceHash, LookupItem> = {};
-(window as any).DEFINITION_LOOKUP_TABLE = DEFINITION_LOOKUP_TABLE;
 
 // indexes for values in LookupItem tuple
 

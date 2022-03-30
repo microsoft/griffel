@@ -1,6 +1,6 @@
 import hash from '@emotion/hash';
 
-import { SEQUENCE_HASH_LENGTH, SEQUENCE_PREFIX } from '../../constants';
+import { DEBUG_SEQUENCE_SEPARATOR, SEQUENCE_HASH_LENGTH, SEQUENCE_PREFIX } from '../../constants';
 import { SequenceHash } from '../../types';
 
 function padEndHash(value: string): string {
@@ -17,6 +17,15 @@ function padEndHash(value: string): string {
   return value;
 }
 
-export function hashSequence(classes: string, dir: 'ltr' | 'rtl'): SequenceHash {
-  return SEQUENCE_PREFIX + padEndHash(hash(classes + dir));
+export function hashSequence(
+  classes: string,
+  dir: 'ltr' | 'rtl',
+  sequenceIds: (SequenceHash | undefined)[] = [],
+): SequenceHash {
+  return process.env.NODE_ENV === 'production'
+    ? SEQUENCE_PREFIX + padEndHash(hash(classes + dir))
+    : SEQUENCE_PREFIX +
+        padEndHash(hash(classes + dir)) +
+        DEBUG_SEQUENCE_SEPARATOR +
+        padEndHash(hash(sequenceIds.join('')));
 }
