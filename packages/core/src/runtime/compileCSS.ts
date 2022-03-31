@@ -73,7 +73,7 @@ export function compileCSS(options: CompileCSSOptions): [string /* ltr definitio
   if (rtlProperty && rtlClassName) {
     rtlClassNameSelector = `.${rtlClassName}`;
     rtlCSSDeclaration = Array.isArray(rtlValue)
-      ? `{ ${rtlValue?.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')}; }`
+      ? `{ ${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')}; }`
       : `{ ${hyphenateProperty(rtlProperty)}: ${rtlValue}; }`;
   }
 
