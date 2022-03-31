@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "CSS fallback values",
-  "packageName": "@griffel/react",
-  "email": "miroslav.stastny@microsoft.com",
-  "dependentChangeType": "patch"
-}
