@@ -8,16 +8,18 @@ const cssRules: string[] = [];
 
 export const MK_DEBUG = {
   getChildrenSequences: (debugSequenceHash: SequenceHash): SequenceHash[] => {
-    for (const key in mergeClassesCachedResults) {
-      const sequenceClassName = mergeClassesCachedResults[key].split(' ')?.[0];
-      if (sequenceClassName === debugSequenceHash) {
-        // key of the mergeClasses cache contains merge order
-        return key
-          .split(SEQUENCE_PREFIX)
-          .filter(sequence => sequence.length)
-          .map(sequence => SEQUENCE_PREFIX + sequence);
-      }
+    const key = Object.keys(mergeClassesCachedResults).find(key =>
+      mergeClassesCachedResults[key].startsWith(debugSequenceHash),
+    );
+
+    if (key) {
+      // key of the mergeClasses cache contains merge order
+      return key
+        .split(SEQUENCE_PREFIX)
+        .filter(sequence => sequence.length)
+        .map(sequence => SEQUENCE_PREFIX + sequence);
     }
+
     return [];
   },
 

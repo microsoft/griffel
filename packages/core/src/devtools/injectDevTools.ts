@@ -48,16 +48,16 @@ const getDebugTree = (debugSequenceHash: SequenceHash) => {
   return node;
 };
 
-export function injectDevTools(window: Window) {
+export function injectDevTools(window: (Window & typeof globalThis) | null) {
   if (process.env.NODE_ENV === 'production') {
     return;
   }
 
-  if (typeof window === 'undefined') {
+  if (!window || typeof window === 'undefined') {
     return;
   }
 
-  window.__MAKESTYLES_DEVTOOLS__ = {
+  window.__GRIFFEL_DEVTOOLS__ = {
     getInfo: element => {
       const rootDebugSequenceHash = Array.from(element.classList).find(className =>
         className.startsWith(SEQUENCE_PREFIX),

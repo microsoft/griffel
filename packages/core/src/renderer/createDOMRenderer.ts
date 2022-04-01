@@ -72,7 +72,7 @@ export function createDOMRenderer(
     },
   };
 
-  process.env.NODE_ENV !== 'production' && injectDevTools(window);
+  process.env.NODE_ENV !== 'production' && document && injectDevTools(document.defaultView);
 
   return renderer;
 }

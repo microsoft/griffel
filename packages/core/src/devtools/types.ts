@@ -2,7 +2,7 @@ import { SequenceHash } from '../types';
 
 declare global {
   interface Window {
-    __MAKESTYLES_DEVTOOLS__: {
+    __GRIFFEL_DEVTOOLS__: {
       getInfo: (el: HTMLElement) => DebugResult | undefined;
     };
   }
