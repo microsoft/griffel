@@ -236,3 +236,18 @@ const useClasses = makeStyles({
   },
 });
 ```
+
+### CSS Fallback Properties
+
+Any CSS property accepts an array of values which are all added to the styles.
+Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser):
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    overflowY: ['scroll', 'overlay'],
+  },
+});
+```

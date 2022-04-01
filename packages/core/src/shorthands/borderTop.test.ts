@@ -21,4 +21,12 @@ describe('borderTop', () => {
       borderTopColor: 'red',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(borderTop(['2px', '4px'], ['solid', 'dashed'], ['red', 'green'])).toEqual({
+      borderTopColor: ['red', 'green'],
+      borderTopStyle: ['solid', 'dashed'],
+      borderTopWidth: ['2px', '4px'],
+    });
+  });
 });

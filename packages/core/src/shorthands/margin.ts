@@ -1,21 +1,13 @@
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
 import { generateStyles } from './generateStyles';
+import { MarginInput } from './types';
 
 type MarginStyle = Pick<GriffelStylesStrictCSSObject, 'marginTop' | 'marginRight' | 'marginBottom' | 'marginLeft'>;
 
-export function margin(all: GriffelStylesCSSValue): MarginStyle;
-export function margin(vertical: GriffelStylesCSSValue, horizontal: GriffelStylesCSSValue): MarginStyle;
-export function margin(
-  top: GriffelStylesCSSValue,
-  horizontal: GriffelStylesCSSValue,
-  bottom: GriffelStylesCSSValue,
-): MarginStyle;
-export function margin(
-  top: GriffelStylesCSSValue,
-  right: GriffelStylesCSSValue,
-  bottom: GriffelStylesCSSValue,
-  left: GriffelStylesCSSValue,
-): MarginStyle;
+export function margin(all: MarginInput): MarginStyle;
+export function margin(vertical: MarginInput, horizontal: MarginInput): MarginStyle;
+export function margin(top: MarginInput, horizontal: MarginInput, bottom: MarginInput): MarginStyle;
+export function margin(top: MarginInput, right: MarginInput, bottom: MarginInput, left: MarginInput): MarginStyle;
 
 /**
  * A function that implements CSS spec conformant expansion for "margin"
@@ -28,6 +20,6 @@ export function margin(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/margin
  */
-export function margin(...values: GriffelStylesCSSValue[]): MarginStyle {
+export function margin(...values: MarginInput[]): MarginStyle {
   return generateStyles<MarginStyle>('margin', '', ...values);
 }

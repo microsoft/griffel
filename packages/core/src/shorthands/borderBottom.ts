@@ -1,20 +1,17 @@
-import * as CSS from 'csstype';
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
+import { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 
 type BorderBottomStyle = Pick<
   GriffelStylesStrictCSSObject,
   'borderBottomWidth' | 'borderBottomStyle' | 'borderBottomColor'
 >;
 
-export function borderBottom(width: CSS.Property.BorderWidth<GriffelStylesCSSValue>): BorderBottomStyle;
+export function borderBottom(width: BorderWidthInput): BorderBottomStyle;
+export function borderBottom(width: BorderWidthInput, style: BorderStyleInput): BorderBottomStyle;
 export function borderBottom(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
-): BorderBottomStyle;
-export function borderBottom(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
-  color: CSS.Property.BorderColor,
+  width: BorderWidthInput,
+  style: BorderStyleInput,
+  color: BorderColorInput,
 ): BorderBottomStyle;
 
 /**
@@ -27,9 +24,7 @@ export function borderBottom(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom
  */
-export function borderBottom(
-  ...values: [CSS.Property.BorderWidth<GriffelStylesCSSValue>, CSS.Property.BorderStyle?, CSS.Property.BorderColor?]
-): BorderBottomStyle {
+export function borderBottom(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderBottomStyle {
   return {
     borderBottomWidth: values[0],
     ...(values[1] && ({ borderBottomStyle: values[1] } as BorderBottomStyle)),

@@ -11,11 +11,11 @@ export interface CompileCSSOptions {
   support: string;
 
   property: string;
-  value: number | string;
+  value: number | string | Array<number | string>;
 
   rtlClassName?: string;
   rtlProperty?: string;
-  rtlValue?: number | string;
+  rtlValue?: number | string | Array<number | string>;
 }
 
 const PSEUDO_SELECTOR_REGEX = /,( *[^ &])/g;
@@ -63,14 +63,18 @@ export function compileCSS(options: CompileCSSOptions): [string /* ltr definitio
   const { className, media, pseudo, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
 
   const classNameSelector = `.${className}`;
-  const cssDeclaration = `{ ${hyphenateProperty(property)}: ${value}; }`;
+  const cssDeclaration = Array.isArray(value)
+    ? `{ ${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')}; }`
+    : `{ ${hyphenateProperty(property)}: ${value}; }`;
 
   let rtlClassNameSelector: string | null = null;
   let rtlCSSDeclaration: string | null = null;
 
   if (rtlProperty && rtlClassName) {
     rtlClassNameSelector = `.${rtlClassName}`;
-    rtlCSSDeclaration = `{ ${hyphenateProperty(rtlProperty)}: ${rtlValue}; }`;
+    rtlCSSDeclaration = Array.isArray(rtlValue)
+      ? `{ ${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')}; }`
+      : `{ ${hyphenateProperty(rtlProperty)}: ${rtlValue}; }`;
   }
 
   let cssRule = '';

@@ -36,4 +36,13 @@ describe('borderStyle', () => {
       borderTopStyle: 'solid',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(borderStyle(['solid', 'groove'], ['dashed', 'hidden'], ['dotted', 'none'], ['double', 'outset'])).toEqual({
+      borderBottomStyle: ['dotted', 'none'],
+      borderLeftStyle: ['double', 'outset'],
+      borderRightStyle: ['dashed', 'hidden'],
+      borderTopStyle: ['solid', 'groove'],
+    });
+  });
 });

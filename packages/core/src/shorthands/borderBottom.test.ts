@@ -21,4 +21,12 @@ describe('borderBottom', () => {
       borderBottomColor: 'red',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(borderBottom(['2px', '4px'], ['solid', 'dashed'], ['red', 'green'])).toEqual({
+      borderBottomColor: ['red', 'green'],
+      borderBottomStyle: ['solid', 'dashed'],
+      borderBottomWidth: ['2px', '4px'],
+    });
+  });
 });

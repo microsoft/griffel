@@ -36,4 +36,13 @@ describe('borderColor', () => {
       borderTopColor: 'red',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(borderColor(['red', '#f00'], ['blue', '#00f'], ['green', '#0f0'], ['yellow', '#ff0'])).toEqual({
+      borderBottomColor: ['green', '#0f0'],
+      borderLeftColor: ['yellow', '#ff0'],
+      borderRightColor: ['blue', '#00f'],
+      borderTopColor: ['red', '#f00'],
+    });
+  });
 });

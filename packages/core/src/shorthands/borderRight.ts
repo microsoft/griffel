@@ -1,20 +1,17 @@
-import * as CSS from 'csstype';
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
+import { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 
 type BorderRightStyle = Pick<
   GriffelStylesStrictCSSObject,
   'borderRightWidth' | 'borderRightStyle' | 'borderRightColor'
 >;
 
-export function borderRight(width: CSS.Property.BorderWidth<GriffelStylesCSSValue>): BorderRightStyle;
+export function borderRight(width: BorderWidthInput): BorderRightStyle;
+export function borderRight(width: BorderWidthInput, style: BorderStyleInput): BorderRightStyle;
 export function borderRight(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
-): BorderRightStyle;
-export function borderRight(
-  width: CSS.Property.BorderWidth<GriffelStylesCSSValue>,
-  style: CSS.Property.BorderStyle,
-  color: CSS.Property.BorderColor,
+  width: BorderWidthInput,
+  style: BorderStyleInput,
+  color: BorderColorInput,
 ): BorderRightStyle;
 
 /**
@@ -27,9 +24,7 @@ export function borderRight(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-right
  */
-export function borderRight(
-  ...values: [CSS.Property.BorderWidth<GriffelStylesCSSValue>, CSS.Property.BorderStyle?, CSS.Property.BorderColor?]
-): BorderRightStyle {
+export function borderRight(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderRightStyle {
   return {
     borderRightWidth: values[0],
     ...(values[1] && ({ borderRightStyle: values[1] } as BorderRightStyle)),

@@ -1,25 +1,24 @@
-import * as CSS from 'csstype';
-
 import type { GriffelStylesStrictCSSObject } from '../types';
 import { generateStyles } from './generateStyles';
+import { BorderColorInput } from './types';
 
 type BorderColorStyle = Pick<
   GriffelStylesStrictCSSObject,
   'borderTopColor' | 'borderRightColor' | 'borderBottomColor' | 'borderLeftColor'
 >;
 
-export function borderColor(all: CSS.Property.BorderColor): BorderColorStyle;
-export function borderColor(vertical: CSS.Property.BorderColor, horizontal: CSS.Property.BorderColor): BorderColorStyle;
+export function borderColor(all: BorderColorInput): BorderColorStyle;
+export function borderColor(vertical: BorderColorInput, horizontal: BorderColorInput): BorderColorStyle;
 export function borderColor(
-  top: CSS.Property.BorderColor,
-  horizontal: CSS.Property.BorderColor,
-  bottom: CSS.Property.BorderColor,
+  top: BorderColorInput,
+  horizontal: BorderColorInput,
+  bottom: BorderColorInput,
 ): BorderColorStyle;
 export function borderColor(
-  top: CSS.Property.BorderColor,
-  right: CSS.Property.BorderColor,
-  bottom: CSS.Property.BorderColor,
-  left: CSS.Property.BorderColor,
+  top: BorderColorInput,
+  right: BorderColorInput,
+  bottom: BorderColorInput,
+  left: BorderColorInput,
 ): BorderColorStyle;
 
 /**
@@ -33,6 +32,6 @@ export function borderColor(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-color
  */
-export function borderColor(...values: CSS.Property.BorderColor[]): BorderColorStyle {
+export function borderColor(...values: BorderColorInput[]): BorderColorStyle {
   return generateStyles<BorderColorStyle>('border', 'Color', ...values);
 }
