@@ -12,7 +12,7 @@ export interface HashedClassNameParts {
 
 export function hashClassName({ media, layer, property, pseudo, support, value }: HashedClassNameParts): string {
   // Trimming of value is required to generate consistent hashes
-  const classNameHash = hashString(pseudo + media + support + property + value.trim());
+  const classNameHash = hashString(pseudo + media + layer + support + property + value.trim());
 
   return HASH_PREFIX + classNameHash;
 }
