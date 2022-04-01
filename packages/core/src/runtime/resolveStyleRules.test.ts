@@ -176,8 +176,17 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles empty array of fallback values', () => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      const warn = jest.spyOn(console, 'warn').mockImplementationOnce(() => {});
+
       const actual = resolveStyleRules({ color: [] });
       expect(actual).toMatchInlineSnapshot(``); /* empty result */
+
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /makeStyles\(\): An empty array was passed as input to "color", the property will be omitted in the styles./,
+        ),
+      );
     });
 
     it('handles RTL', () => {
@@ -236,7 +245,7 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('warns if fallback values result in multiple properties in RTL', () => {
+    it('errors if fallback values result in multiple properties in RTL, skips the property', () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
 
