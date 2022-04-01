@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "none",
   "comment": "add support for @layer",
   "packageName": "@griffel/react",
   "email": "mgodbolt@microsoft.com",
