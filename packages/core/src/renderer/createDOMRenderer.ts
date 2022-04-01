@@ -1,4 +1,5 @@
 import { injectDevTools } from '../devtools/injectDevTools';
+import { isDevToolsEnabled } from '../devtools/isDevToolsEnabled';
 import { MK_DEBUG } from '../devtools/store';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
@@ -48,7 +49,7 @@ export function createDOMRenderer(
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
-          process.env.NODE_ENV !== 'production' && MK_DEBUG.addCSSRule(ruleCSS);
+          process.env.NODE_ENV !== 'production' && isDevToolsEnabled && MK_DEBUG.addCSSRule(ruleCSS);
 
           if (sheet) {
             try {
@@ -72,7 +73,7 @@ export function createDOMRenderer(
     },
   };
 
-  process.env.NODE_ENV !== 'production' && document && injectDevTools(document.defaultView);
+  process.env.NODE_ENV !== 'production' && document && isDevToolsEnabled && injectDevTools(document.defaultView);
 
   return renderer;
 }
