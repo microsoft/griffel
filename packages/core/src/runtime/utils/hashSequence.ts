@@ -23,10 +23,10 @@ export function hashSequence(
   dir: 'ltr' | 'rtl',
   sequenceIds: (SequenceHash | undefined)[] = [],
 ): SequenceHash {
-  return process.env.NODE_ENV === 'production' && !isDevToolsEnabled
-    ? SEQUENCE_PREFIX + padEndHash(hash(classes + dir))
-    : SEQUENCE_PREFIX +
+  return process.env.NODE_ENV !== 'production' && isDevToolsEnabled
+    ? SEQUENCE_PREFIX +
         padEndHash(hash(classes + dir)) +
         DEBUG_SEQUENCE_SEPARATOR +
-        padEndHash(hash(sequenceIds.join('')));
+        padEndHash(hash(sequenceIds.join('')))
+    : SEQUENCE_PREFIX + padEndHash(hash(classes + dir));
 }
