@@ -8,7 +8,6 @@ import {
 import { hashSequence } from './runtime/utils/hashSequence';
 import { reduceToClassName } from './runtime/reduceToClassNameForSlots';
 import { CSSClassesMap, SequenceHash } from './types';
-import { isDevToolsEnabled } from './devtools/isDevToolsEnabled';
 
 // Contains a mapping of previously resolved sequences of atomic classnames
 export const mergeClassesCachedResults: Record<string, string> = {};
@@ -141,7 +140,7 @@ export function mergeClasses(): string {
   const newSequenceHash = hashSequence(
     atomicClassNames,
     dir!,
-    process.env.NODE_ENV !== 'production' && isDevToolsEnabled ? sequencesIds : [],
+    process.env.NODE_ENV !== 'production' ? sequencesIds : [],
   );
   atomicClassNames = newSequenceHash + ' ' + atomicClassNames;
 

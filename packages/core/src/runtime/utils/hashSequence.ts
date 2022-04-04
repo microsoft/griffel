@@ -1,7 +1,6 @@
 import hash from '@emotion/hash';
 
 import { DEBUG_SEQUENCE_SEPARATOR, SEQUENCE_HASH_LENGTH, SEQUENCE_PREFIX } from '../../constants';
-import { isDevToolsEnabled } from '../../devtools/isDevToolsEnabled';
 import { SequenceHash } from '../../types';
 
 function padEndHash(value: string): string {
@@ -23,7 +22,7 @@ export function hashSequence(
   dir: 'ltr' | 'rtl',
   sequenceIds: (SequenceHash | undefined)[] = [],
 ): SequenceHash {
-  return process.env.NODE_ENV !== 'production' && isDevToolsEnabled
+  return process.env.NODE_ENV !== 'production'
     ? SEQUENCE_PREFIX +
         padEndHash(hash(classes + dir)) +
         DEBUG_SEQUENCE_SEPARATOR +

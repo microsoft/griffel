@@ -1,5 +1,4 @@
 import * as CSS from 'csstype';
-import { isDevToolsEnabled } from './devtools/isDevToolsEnabled';
 import { LookupItem, SequenceHash } from './types';
 
 /** @internal */
@@ -16,7 +15,7 @@ export const DEBUG_SEQUENCE_SEPARATOR = '_';
 
 /** @internal */
 export const SEQUENCE_SIZE =
-  process.env.NODE_ENV !== 'production' && isDevToolsEnabled
+  process.env.NODE_ENV !== 'production'
     ? SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH + DEBUG_SEQUENCE_SEPARATOR.length + SEQUENCE_HASH_LENGTH
     : SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH;
 
