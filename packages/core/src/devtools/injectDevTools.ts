@@ -57,8 +57,13 @@ export function injectDevTools(window: (Window & typeof globalThis) | null) {
     return;
   }
 
-  window.__GRIFFEL_DEVTOOLS__ = {
-    getInfo: element => {
+  // eslint-disable-next-line no-prototype-builtins
+  if (window.hasOwnProperty('__GRIFFEL_DEVTOOLS__')) {
+    return;
+  }
+
+  const devtools = {
+    getInfo: (element: HTMLElement) => {
       const rootDebugSequenceHash = Array.from(element.classList).find(className =>
         className.startsWith(SEQUENCE_PREFIX),
       );
@@ -69,4 +74,11 @@ export function injectDevTools(window: (Window & typeof globalThis) | null) {
       return getDebugTree(rootDebugSequenceHash);
     },
   };
+
+  Object.defineProperty(window, '__GRIFFEL_DEVTOOLS__', {
+    configurable: true,
+    get() {
+      return devtools;
+    },
+  });
 }
