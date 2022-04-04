@@ -5,6 +5,10 @@ import { createDOMRenderer } from '../renderer/createDOMRenderer';
 import { MakeStylesOptions } from '../types';
 import { MK_DEBUG } from './store';
 
+jest.mock('./isDevToolsEnabled.ts', () => ({
+  isDevToolsEnabled: true,
+}));
+
 const options: MakeStylesOptions = {
   dir: 'ltr',
   renderer: createDOMRenderer(document),
@@ -18,7 +22,7 @@ describe('MK_DEBUG', () => {
     const classes = makeStyles({
       block: { display: 'block' },
       grid: { display: 'grid' },
-    })({ ...options, dir: 'rtl' });
+    })(options);
 
     const sequenceBlock = findSequenceHash(classes.block);
     const sequenceGrid = findSequenceHash(classes.grid);
@@ -32,5 +36,31 @@ describe('MK_DEBUG', () => {
 
     expect(MK_DEBUG.getChildrenSequences(sequence1!)).toEqual([sequenceBlock]);
     expect(MK_DEBUG.getChildrenSequences(sequence2!)).toEqual([sequence1, sequenceGrid]);
+  });
+
+  it('getCSSRules returns cssRules', () => {
+    makeStyles({
+      block: { display: 'block', marginLeft: '10px' },
+    })(options);
+
+    expect(MK_DEBUG.getCSSRules()).toEqual([
+      '.ftgm304{display:block;}',
+      '.f13qh94s{display:grid;}',
+      '.f1oou7ox{margin-left:10px;}',
+      '.f1pxv85q{margin-right:10px;}',
+    ]);
+  });
+
+  it.each<'ltr' | 'rtl'>(['rtl', 'ltr'])('getSequenceDetails returns slotName when dir=%p', dir => {
+    const classes = makeStyles({
+      block: { display: 'block' },
+      grid: { display: 'grid' },
+    })({ ...options, dir });
+
+    const sequenceBlock = findSequenceHash(classes.block);
+    const sequenceGrid = findSequenceHash(classes.grid);
+
+    expect(MK_DEBUG.getSequenceDetails(sequenceBlock!)).toEqual({ slotName: 'block' });
+    expect(MK_DEBUG.getSequenceDetails(sequenceGrid!)).toEqual({ slotName: 'grid' });
   });
 });
