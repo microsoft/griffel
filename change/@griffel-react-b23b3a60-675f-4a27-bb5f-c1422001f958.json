@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Generate debug hash sequence for devtools",
+  "packageName": "@griffel/react",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
