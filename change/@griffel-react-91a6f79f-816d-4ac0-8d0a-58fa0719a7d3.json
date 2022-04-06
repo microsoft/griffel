@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "docs: add docs for createDOMRenderer",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

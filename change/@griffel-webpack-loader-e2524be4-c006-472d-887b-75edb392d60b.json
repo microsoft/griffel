@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "docs: update README to include configuration guide",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

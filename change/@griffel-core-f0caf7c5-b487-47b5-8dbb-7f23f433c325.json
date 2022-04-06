@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add \"styleElementAttributes\" to createDOMRenderer",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

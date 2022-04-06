@@ -1,8 +1,17 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 09 Mar 2022 13:56:06 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Apr 2022 13:28:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.0
+
+Wed, 06 Apr 2022 13:28:28 GMT
+
+### Minor changes
+
+- feat: CSS fallback values (miroslav.stastny@microsoft.com)
+- feat: add "styleElementAttributes" to createDOMRenderer (olfedias@microsoft.com)
 
 ## 1.1.1
 

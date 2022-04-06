@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: CSS fallback values",
-  "packageName": "@griffel/core",
-  "email": "miroslav.stastny@microsoft.com",
-  "dependentChangeType": "patch"
-}

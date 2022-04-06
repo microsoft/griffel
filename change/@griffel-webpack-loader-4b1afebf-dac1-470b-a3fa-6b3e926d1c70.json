@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update README, fix caller & plugin names",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
