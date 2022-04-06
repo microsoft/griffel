@@ -1,11 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+
+import { DefaultMessage } from './DefaultMessage';
 import { useMakeStylesState } from './useMakeStylesState';
 
 const DevTools: React.FC = () => {
   const state = useMakeStylesState();
 
-  return <div>{JSON.stringify(state)}</div>;
+  if (state) {
+    console.log(state);
+  }
+
+  return <DefaultMessage />;
 };
 
 ReactDOM.render(
