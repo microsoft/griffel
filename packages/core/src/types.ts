@@ -140,5 +140,3 @@ export type CSSRulesByBucket = Partial<Record<StyleBucketName, string[]>>;
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 
 export type LookupItem = [/* definitions */ CSSClassesMap, /* dir */ 'rtl' | 'ltr'];
-
-export type { DebugStyleRule, DebugSequence, DebugResult } from './devtools/types';
