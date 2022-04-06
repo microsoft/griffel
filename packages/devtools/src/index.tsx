@@ -1,8 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { useMakeStylesState } from './useMakeStylesState';
 
 const DevTools: React.FC = () => {
-  return <div>hi amber</div>;
+  const state = useMakeStylesState();
+
+  return <div>{JSON.stringify(state)}</div>;
 };
 
 ReactDOM.render(

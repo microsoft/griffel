@@ -24,7 +24,8 @@
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false
-        }
+        },
+        "development": {}
       }
     },
     "pack-extension": {
