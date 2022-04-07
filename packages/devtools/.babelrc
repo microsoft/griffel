@@ -3,7 +3,7 @@
     [
       "@nrwl/react/babel",
       {
-        "runtime": "automatic",
+        "runtime": "classic",
         "useBuiltIns": "usage"
       }
     ]
