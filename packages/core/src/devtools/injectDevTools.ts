@@ -16,6 +16,7 @@ const getDebugTree = (debugSequenceHash: SequenceHash) => {
     sequenceHash: debugSequenceHash,
     direction,
     children: [],
+    atomicClassNames: Object.values(classesMapping).map(classes => getDirectionalClassName(classes, direction)),
   };
 
   const childrenSequences = MK_DEBUG.getChildrenSequences(node.sequenceHash);
@@ -29,9 +30,7 @@ const getDebugTree = (debugSequenceHash: SequenceHash) => {
   // if it's leaf (makeStyle node), get css rules
   if (!node.children.length) {
     node.rules = [];
-    Object.values(classesMapping).forEach(classes => {
-      const atomicClassName = getDirectionalClassName(classes, direction);
-
+    node.atomicClassNames.forEach(atomicClassName => {
       const mapData = MK_DEBUG.getSequenceDetails(debugSequenceHash);
       if (mapData) {
         node.slot = mapData.slotName;

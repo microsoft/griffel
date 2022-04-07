@@ -41,10 +41,13 @@ describe('injectDevTools', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((windowMock as any).__GRIFFEL_DEVTOOLS__.getInfo(testElement)).toEqual({
+      atomicClassNames: ['f13qh94s'],
       children: [
         {
+          atomicClassNames: ['ftgm304'],
           children: [
             {
+              atomicClassNames: ['ftgm304'],
               children: [],
               direction: dir,
               rules: [
@@ -61,6 +64,7 @@ describe('injectDevTools', () => {
           sequenceHash: sequence1,
         },
         {
+          atomicClassNames: ['f13qh94s'],
           children: [],
           direction: dir,
           rules: [

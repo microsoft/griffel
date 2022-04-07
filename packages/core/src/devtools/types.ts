@@ -13,6 +13,7 @@ export type DebugSequence = {
   sequenceHash: SequenceHash;
   direction: 'ltr' | 'rtl';
   children: DebugSequence[];
+  atomicClassNames: string[];
 
   slot?: string;
   rules?: DebugStyleRule[];
