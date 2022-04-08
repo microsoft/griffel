@@ -21,7 +21,7 @@ export function getDebugClassNames(
       const matching = parentDebugClassNames.find(({ className: parentClassName }) => parentClassName === className);
 
       if (!matching && parentLookupItem[0][propertyHash]) {
-        // style is overriden in current merging
+        // style is overriden in current merging, by rules in parent debug node
         overriddenBy = getDirectionalClassName(parentLookupItem[0][propertyHash], parentLookupItem[1]);
       } else {
         // overridden status come from higher level of merging
