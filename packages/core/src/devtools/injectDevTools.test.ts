@@ -41,40 +41,54 @@ describe('injectDevTools', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((windowMock as any).__GRIFFEL_DEVTOOLS__.getInfo(testElement)).toEqual({
-      atomicClassNames: ['f13qh94s'],
       children: [
         {
-          atomicClassNames: ['ftgm304'],
           children: [
             {
-              atomicClassNames: ['ftgm304'],
               children: [],
-              direction: dir,
-              rules: [
+              debugClassNames: [
                 {
                   className: 'ftgm304',
-                  cssRule: '.ftgm304{display:block;}',
+                  overriddenBy: 'f13qh94s',
                 },
               ],
+              direction: dir,
+              rules: {
+                ftgm304: '.ftgm304{display:block;}',
+              },
               sequenceHash: sequenceBlock,
               slot: 'block',
+            },
+          ],
+          debugClassNames: [
+            {
+              className: 'ftgm304',
+              overriddenBy: 'f13qh94s',
             },
           ],
           direction: dir,
           sequenceHash: sequence1,
         },
         {
-          atomicClassNames: ['f13qh94s'],
           children: [],
-          direction: dir,
-          rules: [
+          debugClassNames: [
             {
               className: 'f13qh94s',
-              cssRule: '.f13qh94s{display:grid;}',
+              overriddenBy: undefined,
             },
           ],
+          direction: dir,
+          rules: {
+            f13qh94s: '.f13qh94s{display:grid;}',
+          },
           sequenceHash: sequenceGrid,
           slot: 'grid',
+        },
+      ],
+      debugClassNames: [
+        {
+          className: 'f13qh94s',
+          overriddenBy: undefined,
         },
       ],
       direction: dir,

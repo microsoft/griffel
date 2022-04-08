@@ -2,26 +2,27 @@ import { DEFINITION_LOOKUP_TABLE, SEQUENCE_PREFIX } from '../constants';
 import { LookupItem, SequenceHash } from '../types';
 import { MK_DEBUG } from './store';
 import { DebugSequence } from './types';
-import { getDirectionalClassName } from './utils';
+import { getDebugClassNames } from './utils';
 
-const getDebugTree = (debugSequenceHash: SequenceHash) => {
+const getDebugTree = (debugSequenceHash: SequenceHash, parentNode?: DebugSequence) => {
   const lookupItem: LookupItem | undefined = DEFINITION_LOOKUP_TABLE[debugSequenceHash];
   if (lookupItem === undefined) {
     return undefined;
   }
-  const classesMapping = lookupItem[0];
-  const direction = lookupItem[1];
+
+  const parentLookupItem = parentNode ? DEFINITION_LOOKUP_TABLE[parentNode.sequenceHash] : undefined;
+  const debugClassNames = getDebugClassNames(lookupItem, parentLookupItem, parentNode?.debugClassNames);
 
   const node: DebugSequence = {
     sequenceHash: debugSequenceHash,
-    direction,
+    direction: lookupItem[1],
     children: [],
-    atomicClassNames: Object.values(classesMapping).map(classes => getDirectionalClassName(classes, direction)),
+    debugClassNames,
   };
 
   const childrenSequences = MK_DEBUG.getChildrenSequences(node.sequenceHash);
   childrenSequences.forEach((sequence: SequenceHash) => {
-    const child = getDebugTree(sequence);
+    const child = getDebugTree(sequence, node);
     if (child) {
       node.children.push(child);
     }
@@ -29,18 +30,18 @@ const getDebugTree = (debugSequenceHash: SequenceHash) => {
 
   // if it's leaf (makeStyle node), get css rules
   if (!node.children.length) {
-    node.rules = [];
-    node.atomicClassNames.forEach(atomicClassName => {
+    node.rules = {};
+    node.debugClassNames.forEach(({ className }) => {
       const mapData = MK_DEBUG.getSequenceDetails(debugSequenceHash);
       if (mapData) {
         node.slot = mapData.slotName;
       }
 
       const cssRule = MK_DEBUG.getCSSRules().find(cssRule => {
-        return cssRule.includes(atomicClassName);
+        return cssRule.includes(className);
       });
 
-      node.rules!.push({ cssRule: cssRule!, className: atomicClassName });
+      node.rules![className] = cssRule!;
     });
   }
 

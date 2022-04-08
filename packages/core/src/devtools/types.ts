@@ -8,15 +8,16 @@ declare global {
   }
 }
 
-export type DebugStyleRule = { className: string; cssRule: string };
+export type DebugAtomicClassName = { className: string; overriddenBy?: string };
+export type DebugCSSRules = Record<string, string>; // className -> cssRule
 export type DebugSequence = {
   sequenceHash: SequenceHash;
   direction: 'ltr' | 'rtl';
   children: DebugSequence[];
-  atomicClassNames: string[];
+  debugClassNames: DebugAtomicClassName[];
 
   slot?: string;
-  rules?: DebugStyleRule[];
+  rules?: DebugCSSRules;
 };
 
 export type DebugResult = DebugSequence;
