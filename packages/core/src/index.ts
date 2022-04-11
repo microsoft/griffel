@@ -65,4 +65,4 @@ export type {
   GriffelRenderer,
 } from './types';
 
-export type { DebugCSSRules, DebugSequence, DebugResult } from './devtools/types';
+export type { DebugCSSRules, DebugSequence, DebugResult } from './devtools';
