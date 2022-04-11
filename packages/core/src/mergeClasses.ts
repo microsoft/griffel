@@ -140,7 +140,7 @@ export function mergeClasses(): string {
   const newSequenceHash = hashSequence(
     atomicClassNames,
     dir!,
-    process.env.NODE_ENV !== 'production' ? sequencesIds : [],
+    process.env.NODE_ENV === 'production' ? [] : sequencesIds,
   );
   atomicClassNames = newSequenceHash + ' ' + atomicClassNames;
 
