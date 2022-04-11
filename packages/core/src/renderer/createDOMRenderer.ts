@@ -73,8 +73,8 @@ export function createDOMRenderer(
     },
   };
 
-  if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled && target?.defaultView) {
-    injectDevTools(target.defaultView);
+  if (target && process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+    injectDevTools(target);
   }
 
   return renderer;

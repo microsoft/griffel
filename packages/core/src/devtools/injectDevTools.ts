@@ -1,7 +1,8 @@
 import { SEQUENCE_PREFIX } from '../constants';
 import { getDebugTree } from './getDebugTree';
 
-export function injectDevTools(window: (Window & typeof globalThis) | null) {
+export function injectDevTools(document: Document) {
+  const window = document.defaultView;
   if (!window || window.hasOwnProperty('__GRIFFEL_DEVTOOLS__')) {
     return;
   }
