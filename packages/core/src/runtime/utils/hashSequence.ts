@@ -22,10 +22,14 @@ export function hashSequence(
   dir: 'ltr' | 'rtl',
   sequenceIds: (SequenceHash | undefined)[] = [],
 ): SequenceHash {
-  return process.env.NODE_ENV !== 'production'
-    ? SEQUENCE_PREFIX +
-        padEndHash(hash(classes + dir)) +
-        DEBUG_SEQUENCE_SEPARATOR +
-        padEndHash(hash(sequenceIds.join('')))
-    : SEQUENCE_PREFIX + padEndHash(hash(classes + dir));
+  if (process.env.NODE_ENV === 'production') {
+    return SEQUENCE_PREFIX + padEndHash(hash(classes + dir));
+  }
+
+  return (
+    SEQUENCE_PREFIX +
+    padEndHash(hash(classes + dir)) +
+    DEBUG_SEQUENCE_SEPARATOR +
+    padEndHash(hash(sequenceIds.join('')))
+  );
 }
