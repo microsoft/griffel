@@ -66,3 +66,5 @@ jobs:
       - name: Upload results
         if: ${{ github.event_name != 'pull_request' }}
         run: yarn monosize upload-report --branch main --commit-sha $GITHUB_SHA
+        env:
+          UPSTASH_WRITE_TOKEN: ${{ secrets.UPSTASH_WRITE_TOKEN }}
