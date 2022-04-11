@@ -9,6 +9,7 @@ describe('makeStyles', () => {
   let renderer: GriffelRenderer;
 
   beforeEach(() => {
+    process.env.NODE_ENV = 'production';
     renderer = createDOMRenderer(document);
   });
 
@@ -22,7 +23,7 @@ describe('makeStyles', () => {
         color: 'red',
       },
     });
-    expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___afhpfp0_0000000 fe3e8s9');
+    expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___afhpfp0 fe3e8s9');
 
     expect(renderer).toMatchInlineSnapshot(`
       .fe3e8s9 {
@@ -38,7 +39,7 @@ describe('makeStyles', () => {
         position: 'absolute',
       },
     });
-    expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___1jgns8t_0000000 fe3e8s9 f1euv43f');
+    expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___1jgns8t fe3e8s9 f1euv43f');
 
     expect(renderer).toMatchInlineSnapshot(`
       .fe3e8s9 {
@@ -61,8 +62,8 @@ describe('makeStyles', () => {
     const ltrClasses = computeClasses({ dir: 'ltr', renderer }).root;
     const rtlClasses = computeClasses({ dir: 'rtl', renderer }).root;
 
-    expect(ltrClasses).toEqual('___a0zqzs0_0000000 frdkuqy f1c8chgj');
-    expect(rtlClasses).toEqual('___7x57i00_0000000 f81rol6 f19krssl');
+    expect(ltrClasses).toEqual('___a0zqzs0 frdkuqy f1c8chgj');
+    expect(rtlClasses).toEqual('___7x57i00 f81rol6 f19krssl');
 
     expect(renderer).toMatchInlineSnapshot(`
       .frdkuqy {
@@ -95,7 +96,7 @@ describe('makeStyles', () => {
         animationDuration: '5s',
       },
     });
-    expect(computeClasses({ dir: 'rtl', renderer }).root).toBe('___3kh5ri0_0000000 f1fp4ujf f1cpbl36 f1t9cprh');
+    expect(computeClasses({ dir: 'rtl', renderer }).root).toBe('___3kh5ri0 f1fp4ujf f1cpbl36 f1t9cprh');
 
     expect(renderer).toMatchInlineSnapshot(`
       @-webkit-keyframes f1q8eu9e {
@@ -219,7 +220,7 @@ describe('makeStyles', () => {
         color: 'red',
       },
     });
-    expect(computeClasses({ dir: 'ltr', renderer })[42]).toEqual('___afhpfp0_0000000 fe3e8s9');
+    expect(computeClasses({ dir: 'ltr', renderer })[42]).toEqual('___afhpfp0 fe3e8s9');
 
     expect(renderer).toMatchInlineSnapshot(`
       .fe3e8s9 {
@@ -227,4 +228,16 @@ describe('makeStyles', () => {
       }
     `);
   });
+
+  it.each<'test' | 'development'>(['test', 'development'])(
+    'in non-production mode, hashes include debug information',
+    env => {
+      process.env.NODE_ENV = env;
+      const computeClasses = makeStyles({
+        root: { color: 'red' },
+      });
+
+      expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___afhpfp0_0000000 fe3e8s9');
+    },
+  );
 });
