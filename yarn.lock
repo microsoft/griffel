@@ -16967,6 +16967,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"monosize@patch:monosize@npm:0.0.3#.yarn/patches/monosize-npm-0.0.3-9b650c3f51::locator=griffel-repository%40workspace%3A.":
+  version: 0.0.3
+  resolution: "monosize@patch:monosize@npm%3A0.0.3#.yarn/patches/monosize-npm-0.0.3-9b650c3f51::version=0.0.3&hash=9d24b1&locator=griffel-repository%40workspace%3A."
+  dependencies:
+    "@babel/core": ^7.10.4
+    ajv: ^8.4.0
+    chalk: ^4.1.0
+    ci-info: ^3.2.0
+    cli-table3: ^0.6.0
+    del: ^6.0.0
+    find-up: ^5.0.0
+    glob: ^7.1.2
+    gzip-size: ^6.0.0
+    prettier: ^2.5.1
+    pretty-bytes: ^5.6.0
+    terser: ^5.5.1
+    tslib: ^2.3.1
+    webpack: ^5.21.2
+    workspace-tools: ^0.16.2
+    yargs: ^13.3.2
+  bin:
+    monosize: bin/monosize.js
+  checksum: 0f3b74aa270907c0a870d02a2bd508d906f2c7531ef162bbffb37df75e4a041f13f54e3456fce08eeb23156440f29c3d54ea7d9f4adda9a1a2f0e21bb70c774d
+  languageName: node
+  linkType: hard
+
 "move-concurrently@npm:^1.0.1":
   version: 1.0.1
   resolution: "move-concurrently@npm:1.0.1"
