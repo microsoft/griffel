@@ -76,7 +76,8 @@ export function injectDevTools(window: (Window & typeof globalThis) | null) {
   };
 
   Object.defineProperty(window, '__GRIFFEL_DEVTOOLS__', {
-    configurable: true,
+    enumerable: false,
+    configurable: false,
     get() {
       return devtools;
     },
