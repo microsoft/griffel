@@ -49,12 +49,7 @@ const getDebugTree = (debugSequenceHash: SequenceHash, parentNode?: DebugSequenc
 };
 
 export function injectDevTools(window: (Window & typeof globalThis) | null) {
-  if (!window || typeof window === 'undefined') {
-    return;
-  }
-
-  // eslint-disable-next-line no-prototype-builtins
-  if (window.hasOwnProperty('__GRIFFEL_DEVTOOLS__')) {
+    if (!window || window.hasOwnProperty('__GRIFFEL_DEVTOOLS__')) {
     return;
   }
 
