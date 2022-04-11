@@ -2,7 +2,7 @@ import { isDevToolsEnabled } from './devtools/isDevToolsEnabled';
 import { debugData } from './devtools/store';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, SequenceHash, StylesBySlots } from './types';
+import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
   const insertionCache: Record<string, boolean> = {};
@@ -27,23 +27,16 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
     if (isLTR) {
       if (ltrClassNamesForSlots === null) {
         ltrClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
-
-        process.env.NODE_ENV !== 'production' &&
-          isDevToolsEnabled &&
-          Object.entries(ltrClassNamesForSlots!).forEach(([slotName, sequenceHash]) => {
-            debugData.addSequenceDetails(sequenceHash as SequenceHash, slotName);
-          });
       }
     } else {
       if (rtlClassNamesForSlots === null) {
         rtlClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
-
-        process.env.NODE_ENV !== 'production' &&
-          isDevToolsEnabled &&
-          Object.entries(rtlClassNamesForSlots!).forEach(([slotName, sequenceHash]) => {
-            debugData.addSequenceDetails(sequenceHash as SequenceHash, slotName);
-          });
       }
+    }
+
+    if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+      const classNamesForSlots = isLTR ? ltrClassNamesForSlots : rtlClassNamesForSlots;
+      debugData.addSequenceDetails(classNamesForSlots!);
     }
 
     if (insertionCache[rendererId] === undefined) {

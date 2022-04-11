@@ -26,8 +26,10 @@ export const debugData = {
   addCSSRule: (rule: string) => {
     cssRules.push(rule);
   },
-  addSequenceDetails: (sequenceHash: SequenceHash, slotName: string) => {
-    sequenceDetails[sequenceHash.substring(0, SEQUENCE_SIZE)] = { slotName };
+  addSequenceDetails: <Slots extends string | number>(classNamesForSlots: Record<Slots, string>) => {
+    Object.entries<string>(classNamesForSlots).forEach(([slotName, sequenceHash]) => {
+      sequenceDetails[sequenceHash.substring(0, SEQUENCE_SIZE)] = { slotName };
+    });
   },
 
   getCSSRules: (): string[] => {
