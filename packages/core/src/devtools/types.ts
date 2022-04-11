@@ -9,7 +9,7 @@ declare global {
 }
 
 export type DebugAtomicClassName = { className: string; overriddenBy?: string };
-export type DebugCSSRules = Record<string, string>; // className -> cssRule
+export type DebugCSSRules = Record<string /* className */, string /* cssRule */>;
 export type DebugSequence = {
   sequenceHash: SequenceHash;
   direction: 'ltr' | 'rtl';
