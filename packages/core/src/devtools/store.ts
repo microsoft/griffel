@@ -6,7 +6,7 @@ const sequenceDetails: Record<SequenceHash, { slotName: string }> = {};
 
 const cssRules: string[] = [];
 
-export const MK_DEBUG = {
+export const debugData = {
   getChildrenSequences: (debugSequenceHash: SequenceHash): SequenceHash[] => {
     const key = Object.keys(mergeClassesCachedResults).find(key =>
       mergeClassesCachedResults[key].startsWith(debugSequenceHash),

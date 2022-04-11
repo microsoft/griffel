@@ -1,6 +1,6 @@
 import { DEFINITION_LOOKUP_TABLE, SEQUENCE_PREFIX } from '../constants';
 import { LookupItem, SequenceHash } from '../types';
-import { MK_DEBUG } from './store';
+import { debugData } from './store';
 import { DebugSequence } from './types';
 import { getDebugClassNames } from './utils';
 
@@ -20,7 +20,7 @@ const getDebugTree = (debugSequenceHash: SequenceHash, parentNode?: DebugSequenc
     debugClassNames,
   };
 
-  const childrenSequences = MK_DEBUG.getChildrenSequences(node.sequenceHash);
+  const childrenSequences = debugData.getChildrenSequences(node.sequenceHash);
   childrenSequences.forEach((sequence: SequenceHash) => {
     const child = getDebugTree(sequence, node);
     if (child) {
@@ -32,12 +32,12 @@ const getDebugTree = (debugSequenceHash: SequenceHash, parentNode?: DebugSequenc
   if (!node.children.length) {
     node.rules = {};
     node.debugClassNames.forEach(({ className }) => {
-      const mapData = MK_DEBUG.getSequenceDetails(debugSequenceHash);
+      const mapData = debugData.getSequenceDetails(debugSequenceHash);
       if (mapData) {
         node.slot = mapData.slotName;
       }
 
-      const cssRule = MK_DEBUG.getCSSRules().find(cssRule => {
+      const cssRule = debugData.getCSSRules().find(cssRule => {
         return cssRule.includes(className);
       });
 
@@ -49,7 +49,7 @@ const getDebugTree = (debugSequenceHash: SequenceHash, parentNode?: DebugSequenc
 };
 
 export function injectDevTools(window: (Window & typeof globalThis) | null) {
-    if (!window || window.hasOwnProperty('__GRIFFEL_DEVTOOLS__')) {
+  if (!window || window.hasOwnProperty('__GRIFFEL_DEVTOOLS__')) {
     return;
   }
 

@@ -1,5 +1,5 @@
 import { isDevToolsEnabled } from './devtools/isDevToolsEnabled';
-import { MK_DEBUG } from './devtools/store';
+import { debugData } from './devtools/store';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, SequenceHash, StylesBySlots } from './types';
@@ -31,7 +31,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
         process.env.NODE_ENV !== 'production' &&
           isDevToolsEnabled &&
           Object.entries(ltrClassNamesForSlots!).forEach(([slotName, sequenceHash]) => {
-            MK_DEBUG.addSequenceDetails(sequenceHash as SequenceHash, slotName);
+            debugData.addSequenceDetails(sequenceHash as SequenceHash, slotName);
           });
       }
     } else {
@@ -41,7 +41,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
         process.env.NODE_ENV !== 'production' &&
           isDevToolsEnabled &&
           Object.entries(rtlClassNamesForSlots!).forEach(([slotName, sequenceHash]) => {
-            MK_DEBUG.addSequenceDetails(sequenceHash as SequenceHash, slotName);
+            debugData.addSequenceDetails(sequenceHash as SequenceHash, slotName);
           });
       }
     }

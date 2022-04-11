@@ -3,7 +3,7 @@ import { makeStyles } from '../makeStyles';
 import { mergeClasses } from '../mergeClasses';
 import { createDOMRenderer } from '../renderer/createDOMRenderer';
 import { MakeStylesOptions } from '../types';
-import { MK_DEBUG } from './store';
+import { debugData } from './store';
 
 jest.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
@@ -17,7 +17,7 @@ const options: MakeStylesOptions = {
 const findSequenceHash = (classNames: string) =>
   classNames.split(' ').find(className => className.startsWith(SEQUENCE_PREFIX));
 
-describe('MK_DEBUG', () => {
+describe('debugData', () => {
   it('getChildrenSequences returns children sequences for multi-level merge', () => {
     const classes = makeStyles({
       block: { display: 'block' },
@@ -26,7 +26,7 @@ describe('MK_DEBUG', () => {
 
     const sequenceBlock = findSequenceHash(classes.block);
     const sequenceGrid = findSequenceHash(classes.grid);
-    expect(MK_DEBUG.getChildrenSequences(sequenceGrid!)).toEqual([]);
+    expect(debugData.getChildrenSequences(sequenceGrid!)).toEqual([]);
 
     const className1 = mergeClasses('ui-button', classes.block);
     const className2 = mergeClasses(className1, classes.grid);
@@ -34,8 +34,8 @@ describe('MK_DEBUG', () => {
     const sequence1 = findSequenceHash(className1);
     const sequence2 = findSequenceHash(className2);
 
-    expect(MK_DEBUG.getChildrenSequences(sequence1!)).toEqual([sequenceBlock]);
-    expect(MK_DEBUG.getChildrenSequences(sequence2!)).toEqual([sequence1, sequenceGrid]);
+    expect(debugData.getChildrenSequences(sequence1!)).toEqual([sequenceBlock]);
+    expect(debugData.getChildrenSequences(sequence2!)).toEqual([sequence1, sequenceGrid]);
   });
 
   it('getCSSRules returns cssRules', () => {
@@ -43,7 +43,7 @@ describe('MK_DEBUG', () => {
       block: { display: 'block', marginLeft: '10px' },
     })(options);
 
-    expect(MK_DEBUG.getCSSRules()).toEqual([
+    expect(debugData.getCSSRules()).toEqual([
       '.ftgm304{display:block;}',
       '.f13qh94s{display:grid;}',
       '.f1oou7ox{margin-left:10px;}',
@@ -60,7 +60,7 @@ describe('MK_DEBUG', () => {
     const sequenceBlock = findSequenceHash(classes.block);
     const sequenceGrid = findSequenceHash(classes.grid);
 
-    expect(MK_DEBUG.getSequenceDetails(sequenceBlock!)).toEqual({ slotName: 'block' });
-    expect(MK_DEBUG.getSequenceDetails(sequenceGrid!)).toEqual({ slotName: 'grid' });
+    expect(debugData.getSequenceDetails(sequenceBlock!)).toEqual({ slotName: 'block' });
+    expect(debugData.getSequenceDetails(sequenceGrid!)).toEqual({ slotName: 'grid' });
   });
 });
