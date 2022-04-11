@@ -62,7 +62,7 @@ export function injectDevTools(window: (Window & typeof globalThis) | null) {
     return;
   }
 
-  const devtools = {
+  const devtools: typeof window['__GRIFFEL_DEVTOOLS__'] = {
     getInfo: (element: HTMLElement) => {
       const rootDebugSequenceHash = Array.from(element.classList).find(className =>
         className.startsWith(SEQUENCE_PREFIX),
