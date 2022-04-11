@@ -5,7 +5,7 @@ import { createDOMRenderer } from '../renderer/createDOMRenderer';
 import { MakeStylesOptions } from '../types';
 import { MK_DEBUG } from './store';
 
-jest.mock('./isDevToolsEnabled.ts', () => ({
+jest.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
 }));
 
