@@ -1,5 +1,5 @@
-import { isDevToolsEnabled } from './devtools/isDevToolsEnabled';
-import { debugData } from './devtools/store';
+import { isDevToolsEnabled } from './devtools';
+import { debugData } from './devtools';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
