@@ -21,8 +21,8 @@ export function injectDevTools(document: Document) {
   };
 
   Object.defineProperty(window, '__GRIFFEL_DEVTOOLS__', {
-    enumerable: false,
     configurable: false,
+    enumerable: false,
     get() {
       return devtools;
     },
