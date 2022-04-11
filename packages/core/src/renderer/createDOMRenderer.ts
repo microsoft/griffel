@@ -1,6 +1,4 @@
-import { injectDevTools } from '../devtools/injectDevTools';
-import { isDevToolsEnabled } from '../devtools/isDevToolsEnabled';
-import { MK_DEBUG } from '../devtools/store';
+import { injectDevTools, isDevToolsEnabled, MK_DEBUG } from '../devtools';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
