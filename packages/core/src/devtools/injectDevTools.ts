@@ -3,7 +3,7 @@ import { getDebugTree } from './getDebugTree';
 
 export function injectDevTools(document: Document) {
   const window = document.defaultView;
-  if (!window || window.hasOwnProperty('__GRIFFEL_DEVTOOLS__')) {
+  if (!window || Object.prototype.hasOwnProperty.call(window, '__GRIFFEL_DEVTOOLS__')) {
     return;
   }
 
