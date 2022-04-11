@@ -3,9 +3,9 @@ import { makeStyles } from '../makeStyles';
 import { mergeClasses } from '../mergeClasses';
 import { createDOMRenderer } from '../renderer/createDOMRenderer';
 import { MakeStylesOptions } from '../types';
-import { injectDevTools } from './injectDevTools';
+import { getDebugTree } from './getDebugTree';
 
-jest.mock('./isDevToolsEnabled.ts', () => ({
+jest.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
 }));
 
@@ -17,11 +17,8 @@ const options: MakeStylesOptions = {
 const findSequenceHash = (classNames: string) =>
   classNames.split(' ').find(className => className.startsWith(SEQUENCE_PREFIX));
 
-describe('injectDevTools', () => {
-  it.each<'ltr' | 'rtl'>(['rtl', 'ltr'])('getInfo returns styles merge tree when dir=%p', dir => {
-    const windowMock = {};
-    injectDevTools(windowMock as (Window & typeof globalThis) | null);
-
+describe('getDebugTree', () => {
+  it.each<'ltr' | 'rtl'>(['ltr', 'rtl'])('returns styles merge tree when dir=%p', dir => {
     const classes = makeStyles({
       block: { display: 'block' },
       grid: { display: 'grid' },
@@ -36,11 +33,7 @@ describe('injectDevTools', () => {
     const sequence1 = findSequenceHash(className1);
     const sequence2 = findSequenceHash(className2);
 
-    const testElement = document.createElement('div');
-    testElement.className = className2;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((windowMock as any).__GRIFFEL_DEVTOOLS__.getInfo(testElement)).toEqual({
+    expect(getDebugTree(sequence2!)).toEqual({
       children: [
         {
           children: [
