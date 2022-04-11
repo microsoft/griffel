@@ -57,7 +57,7 @@
         "cwd": "packages/react",
         "commands": [
           {
-            "command": "bundle-size measure"
+            "command": "monosize measure"
           }
         ]
       }

@@ -51,7 +51,7 @@
       "dependsOn": [{ "target": "build", "projects": "self" }],
       "options": {
         "cwd": "packages/core",
-        "commands": [{ "command": "bundle-size measure" }]
+        "commands": [{ "command": "monosize measure" }]
       }
     },
     "type-check": {
