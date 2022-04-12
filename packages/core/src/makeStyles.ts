@@ -33,17 +33,19 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
       }
     }
 
-    if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-      const classNamesForSlots = isLTR ? ltrClassNamesForSlots : rtlClassNamesForSlots;
-      debugData.addSequenceDetails(classNamesForSlots!);
-    }
-
     if (insertionCache[rendererId] === undefined) {
       renderer.insertCSSRules(cssRules!);
       insertionCache[rendererId] = true;
     }
+    const classNamesForSlots = isLTR
+      ? (ltrClassNamesForSlots as Record<Slots, string>)
+      : (rtlClassNamesForSlots as Record<Slots, string>);
 
-    return isLTR ? (ltrClassNamesForSlots as Record<Slots, string>) : (rtlClassNamesForSlots as Record<Slots, string>);
+    if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+      debugData.addSequenceDetails(classNamesForSlots!);
+    }
+
+    return classNamesForSlots;
   }
 
   return computeClasses;
