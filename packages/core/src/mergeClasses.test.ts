@@ -193,3 +193,30 @@ describe('mergeClasses', () => {
     });
   });
 });
+
+describe('merges classes and generates sequence hashes', () => {
+  it('development', () => {
+    jest.isolateModules(() => {
+      process.env.NODE_ENV = 'development';
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { mergeClasses } = require('./mergeClasses');
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { makeStyles } = require('./makeStyles');
+      const className1 = makeStyles({ root: { display: 'block' } })(options).root;
+      const className2 = makeStyles({ root: { display: 'flex' } })(options).root;
+      expect(mergeClasses(className1, className2)).toBe('___1gzszts_39qb7g0 f22iagw');
+    });
+  });
+  it('production', async () => {
+    jest.isolateModules(() => {
+      process.env.NODE_ENV = 'production';
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { mergeClasses } = require('./mergeClasses');
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { makeStyles } = require('./makeStyles');
+      const className1 = makeStyles({ root: { display: 'block' } })(options).root;
+      const className2 = makeStyles({ root: { display: 'flex' } })(options).root;
+      expect(mergeClasses(className1, className2)).toBe('___1gzszts f22iagw');
+    });
+  });
+});
