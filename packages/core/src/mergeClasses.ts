@@ -137,11 +137,7 @@ export function mergeClasses(): string {
   let atomicClassNames = reduceToClassName(resultDefinitions, dir!);
 
   // Each merge of classes generates a new sequence of atomic classes that needs to be registered
-  const newSequenceHash = hashSequence(
-    atomicClassNames,
-    dir!,
-    sequencesIds,
-  );
+  const newSequenceHash = hashSequence(atomicClassNames, dir!, sequencesIds);
   atomicClassNames = newSequenceHash + ' ' + atomicClassNames;
 
   mergeClassesCachedResults[sequenceMatch] = atomicClassNames;
