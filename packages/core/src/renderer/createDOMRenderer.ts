@@ -1,3 +1,4 @@
+import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
@@ -55,6 +56,9 @@ export function createDOMRenderer(
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
+          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+            debugData.addCSSRule(ruleCSS);
+          }
 
           if (sheet) {
             try {
@@ -77,6 +81,10 @@ export function createDOMRenderer(
       }
     },
   };
+
+  if (target && process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+    injectDevTools(target);
+  }
 
   return renderer;
 }

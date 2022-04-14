@@ -64,3 +64,5 @@ export type {
   MakeStylesOptions,
   GriffelRenderer,
 } from './types';
+
+export type { DebugCSSRules, DebugSequence, DebugResult } from './devtools';

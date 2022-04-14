@@ -1,5 +1,6 @@
-import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
+import { debugData, isDevToolsEnabled } from './devtools';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
+import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
@@ -36,8 +37,15 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
       renderer.insertCSSRules(cssRules!);
       insertionCache[rendererId] = true;
     }
+    const classNamesForSlots = isLTR
+      ? (ltrClassNamesForSlots as Record<Slots, string>)
+      : (rtlClassNamesForSlots as Record<Slots, string>);
 
-    return isLTR ? (ltrClassNamesForSlots as Record<Slots, string>) : (rtlClassNamesForSlots as Record<Slots, string>);
+    if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+      debugData.addSequenceDetails(classNamesForSlots!);
+    }
+
+    return classNamesForSlots;
   }
 
   return computeClasses;
