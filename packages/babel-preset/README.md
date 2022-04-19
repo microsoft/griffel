@@ -33,7 +33,7 @@ import { makeStyles } from 'custom-package';
 import { createStyles } from 'custom-package';
 ```
 
-By default, preset handles imports from `@griffel/react`, to handle imports from custom packages settings should be tweaked:
+By default, preset handles imports from `@griffel/react` & `@fluentui/react-components`, to handle imports from custom packages settings should be tweaked:
 
 ```json
 {
