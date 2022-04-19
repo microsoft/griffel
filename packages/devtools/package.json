@@ -7,5 +7,12 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "@griffel/react": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.30",
+    "@types/react-dom": "17.0.9"
+  }
 }

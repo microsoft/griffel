@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DebugResult } from '@griffel/core';
+import type { DebugResult } from '@griffel/core';
 
 function getDebugInfo(callback: (result: DebugResult | undefined) => void): void {
   chrome.devtools.inspectedWindow.eval<DebugResult>(

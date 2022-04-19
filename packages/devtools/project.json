@@ -14,7 +14,8 @@
         "index": "packages/devtools/src/index.html",
         "main": "packages/devtools/src/index.tsx",
         "tsConfig": "packages/devtools/tsconfig.lib.json",
-        "webpackConfig": "packages/devtools/webpack.config.js"
+        "webpackConfig": "packages/devtools/webpack.config.js",
+        "packageJson": "packages/devtools/package.json"
       },
       "configurations": {
         "production": {
