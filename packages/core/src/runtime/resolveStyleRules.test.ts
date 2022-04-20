@@ -411,6 +411,19 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles layer queries with dots', () => {
+      expect(
+        resolveStyleRules({
+          '@layer framework.utilities': { color: 'red' },
+        }),
+      ).toMatchInlineSnapshot(`
+        @layer framework.utilities {
+          .faxdetk {
+            color: red;
+          }
+        }
+      `);
+    });
     it('handles layer queries with pseudo selectors', () => {
       expect(
         resolveStyleRules({
