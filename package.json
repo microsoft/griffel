@@ -64,7 +64,6 @@
     "babel-plugin-tester": "10.0.0",
     "beachball": "^2.20.0",
     "bestzip": "2.2.0",
-    "copy-webpack-plugin": "^10.2.4",
     "eslint": "8.2.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-import-resolver-typescript": "2.5.0",
