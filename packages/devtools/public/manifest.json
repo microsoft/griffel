@@ -3,5 +3,5 @@
   "manifest_version": 3,
   "name": "griffel-devtools",
   "version": "1.0",
-  "devtools_page": "devtools/devtools-page.html"
+  "devtools_page": "devtools-page.html"
 }
