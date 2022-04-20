@@ -14,8 +14,14 @@
         "index": "packages/devtools/src/index.html",
         "main": "packages/devtools/src/index.tsx",
         "tsConfig": "packages/devtools/tsconfig.lib.json",
-        "webpackConfig": "packages/devtools/webpack.config.js",
-        "packageJson": "packages/devtools/package.json"
+        "packageJson": "packages/devtools/package.json",
+        "assets": [
+          {
+            "glob": "packages/devtools/public",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {
         "production": {
@@ -66,6 +72,14 @@
         "cwd": "packages/devtools",
         "commands": [{ "command": "tsc -b --pretty" }],
         "outputPath": []
+      }
+    },
+    "watch": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": ".",
+        "parallel": false,
+        "commands": [{ "command": " nx build @griffel/devtools --skip-nx-cache --configuration=development --watch" }]
       }
     }
   }
