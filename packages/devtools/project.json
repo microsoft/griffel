@@ -25,6 +25,7 @@
       },
       "configurations": {
         "production": {
+          "buildLibsFromSource": false,
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,
