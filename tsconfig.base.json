@@ -18,6 +18,7 @@
       "@griffel/e2e-typescript": ["e2e/typescript/src/index.ts"],
       "@griffel/babel-preset": ["packages/babel-preset/src/index.ts"],
       "@griffel/core": ["packages/core/src/index.ts"],
+      "@griffel/devtools": ["packages/devtools/src/index.ts"],
       "@griffel/jest-serializer": ["packages/jest-serializer/src/index.ts"],
       "@griffel/react": ["packages/react/src/index.ts"],
       "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"]
