@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
   "packageManager": "yarn@3.1.1",
   "nano-staged": {
     "**/*.{js,json,ts,tsx}": "prettier --write"
@@ -26,7 +30,6 @@
     "@docusaurus/core": "2.0.0-beta.15",
     "@docusaurus/module-type-aliases": "^2.0.0-beta.15",
     "@docusaurus/preset-classic": "2.0.0-beta.15",
-    "@fluentui/bundle-size": "^1.1.4",
     "@nrwl/cli": "13.4.5",
     "@nrwl/eslint-plugin-nx": "13.4.5",
     "@nrwl/jest": "13.4.5",
@@ -48,6 +51,7 @@
     "@testing-library/react-hooks": "7.0.2",
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/babel__helper-plugin-utils": "7.10.0",
+    "@types/chrome": "0.0.180",
     "@types/jest": "27.0.2",
     "@types/js-beautify": "^1.13.3",
     "@types/loader-utils": "2.0.3",
@@ -63,6 +67,7 @@
     "babel-plugin-annotate-pure-calls": "0.4.0",
     "babel-plugin-tester": "10.0.0",
     "beachball": "^2.20.0",
+    "bestzip": "2.2.0",
     "eslint": "8.2.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-import-resolver-typescript": "2.5.0",
@@ -74,6 +79,8 @@
     "jest": "27.2.3",
     "js-beautify": "^1.14.0",
     "log-symbols": "5.1.0",
+    "monosize": "0.0.3",
+    "monosize-storage-upstash": "0.0.2",
     "nano-staged": "0.5.0",
     "prettier": "2.3.1",
     "prism-react-renderer": "1.2.1",
@@ -109,6 +116,7 @@
     "@nrwl/web": "patch:@nrwl/web@npm:13.4.5#.yarn/patches/@nrwl-web-npm-13.4.5-d7e9ea40d2",
     "@nrwl/workspace": "patch:@nrwl/workspace@npm:13.4.5#.yarn/patches/@nrwl-workspace-npm-13.4.5-233a3ec85c",
     "beachball": "patch:beachball@npm:2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b",
-    "@docusaurus/theme-common@2.0.0-beta.15": "patch:@docusaurus/theme-common@npm:2.0.0-beta.15#.yarn/patches/@docusaurus-theme-common-npm-2.0.0-beta.15-aaa76f45ef"
+    "@docusaurus/theme-common@2.0.0-beta.15": "patch:@docusaurus/theme-common@npm:2.0.0-beta.15#.yarn/patches/@docusaurus-theme-common-npm-2.0.0-beta.15-aaa76f45ef",
+    "monosize@0.0.3": "patch:monosize@npm:0.0.3#.yarn/patches/monosize-npm-0.0.3-9b650c3f51"
   }
 }

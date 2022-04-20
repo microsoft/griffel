@@ -177,6 +177,72 @@ export function resolveStyleRules(
         cssRulesByBucket,
         rtlAnimationNames.join(', '),
       );
+    } else if (Array.isArray(value)) {
+      // not animationName property but array in the value => fallback values
+      if (value.length === 0) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn(
+            `makeStyles(): An empty array was passed as input to "${property}", the property will be omitted in the styles.`,
+          );
+        }
+        continue;
+      }
+
+      const key = hashPropertyKey(pseudo, media, support, property);
+      const className = hashClassName({
+        media,
+        value: value.map(v => (v ?? '').toString()).join(';'),
+        support,
+        pseudo,
+        property,
+      });
+
+      const rtlDefinitions = value.map(v => convertProperty(property, v!));
+
+      const rtlPropertyConsistent = !rtlDefinitions.some(v => v.key !== rtlDefinitions[0].key);
+
+      if (!rtlPropertyConsistent) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(
+            'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
+          );
+        }
+        continue;
+      }
+
+      const flippedInRtl = rtlDefinitions[0].key !== property || rtlDefinitions.some((v, i) => v.value !== value[i]);
+
+      const rtlClassName = flippedInRtl
+        ? hashClassName({
+            value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
+            property: rtlDefinitions[0].key,
+            pseudo,
+            media,
+            support,
+          })
+        : undefined;
+
+      const rtlCompileOptions: Partial<CompileCSSOptions> | undefined = flippedInRtl
+        ? {
+            rtlClassName,
+            rtlProperty: rtlDefinitions[0].key,
+            rtlValue: rtlDefinitions.map(d => d.value) as Array<string | number>,
+          }
+        : undefined;
+
+      const styleBucketName = getStyleBucketName(pseudo, media, support);
+      const [ltrCSS, rtlCSS] = compileCSS({
+        className,
+        media,
+        pseudo,
+        property,
+        support,
+        value: value as Array<string | number>,
+        ...rtlCompileOptions,
+      });
+
+      pushToClassesMap(cssClassesMap, key, className, rtlClassName);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(

@@ -49,4 +49,36 @@ describe('createDOMRenderer', () => {
       }
     `);
   });
+
+  it('applies custom attributes to elements', () => {
+    const renderer = createDOMRenderer(document, {
+      styleElementAttributes: {
+        'foo-bar': 'baz',
+        nonce: 'random',
+      },
+    });
+
+    // CSS rules are redundant for this test, but they are necessary as they trigger style nodes creation
+    const cssRules: CSSRulesByBucket = {
+      d: ['.foo { color: red; }'],
+      h: ['.foo:hover { color: blue; }'],
+    };
+
+    renderer.insertCSSRules(cssRules);
+
+    expect(document.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-make-styles-bucket="d"
+          foo-bar="baz"
+          nonce="random"
+        />,
+        <style
+          data-make-styles-bucket="h"
+          foo-bar="baz"
+          nonce="random"
+        />,
+      ]
+    `);
+  });
 });

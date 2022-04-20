@@ -1,4 +1,5 @@
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
+import { GapInput } from './types';
 
 type GapStyle = Pick<GriffelStylesStrictCSSObject, 'columnGap' | 'rowGap'>;
 
@@ -11,7 +12,7 @@ type GapStyle = Pick<GriffelStylesStrictCSSObject, 'columnGap' | 'rowGap'>;
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/gap
  */
-export function gap(columnGap: GriffelStylesCSSValue, rowGap: GriffelStylesCSSValue = columnGap): GapStyle {
+export function gap(columnGap: GapInput, rowGap: GapInput = columnGap): GapStyle {
   return {
     columnGap,
     rowGap,

@@ -35,6 +35,7 @@ export function getStyleSheetForBucket(
   bucketName: StyleBucketName,
   target: Document,
   renderer: GriffelRenderer,
+  elementAttributes: Record<string, string> = {},
 ): CSSStyleSheet {
   if (!renderer.styleElements[bucketName]) {
     let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
@@ -52,8 +53,12 @@ export function getStyleSheetForBucket(
     const tag = target.createElement('style');
 
     tag.dataset['makeStylesBucket'] = bucketName;
-    renderer.styleElements[bucketName] = tag;
 
+    for (const attribute in elementAttributes) {
+      tag.setAttribute(attribute, elementAttributes[attribute]);
+    }
+
+    renderer.styleElements[bucketName] = tag;
     target.head.insertBefore(tag, nextBucketFromCache);
   }
 

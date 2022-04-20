@@ -2,6 +2,41 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Wed, 06 Apr 2022 13:28:28 GMT",
+      "tag": "@griffel/webpack-loader_v2.0.3",
+      "version": "2.0.3",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "cbfd3045dadcce6f2f8348d56eaf882c5e408482",
+            "comment": "update README, fix caller & plugin names"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "594f3264239c1c138eeae969713ed09498e95b6c",
+            "comment": "docs: update README to include configuration guide"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.2.0",
+            "commit": "995c356bc77272f6fe69a604db6485d57a9ba7c4"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/react to v1.0.3",
+            "commit": "995c356bc77272f6fe69a604db6485d57a9ba7c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 13:56:06 GMT",
       "tag": "@griffel/webpack-loader_v2.0.2",
       "version": "2.0.2",

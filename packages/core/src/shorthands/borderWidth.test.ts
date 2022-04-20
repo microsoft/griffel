@@ -45,4 +45,13 @@ describe('borderWidth', () => {
       borderTopWidth: 0,
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(borderWidth(['12px', 'initial'], ['24px', 0], ['36px', 'thin'], ['48px', '2em'])).toEqual({
+      borderBottomWidth: ['36px', 'thin'],
+      borderLeftWidth: ['48px', '2em'],
+      borderRightWidth: ['24px', 0],
+      borderTopWidth: ['12px', 'initial'],
+    });
+  });
 });

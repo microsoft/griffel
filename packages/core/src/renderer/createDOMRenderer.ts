@@ -1,3 +1,4 @@
+import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
@@ -5,7 +6,14 @@ let lastIndex = 0;
 
 export interface CreateDOMRendererOptions {
   /**
-   * A filter run before css rule insertion to systematically remove css rules at render time.
+   * A map of attributes that's passed to the generated style elements. Is useful to set "nonce" attribute.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
+   */
+  styleElementAttributes?: Record<string, string>;
+
+  /**
+   * A filter run before CSS rule insertion to systematically remove CSS rules at render time.
    * This can be used to forbid specific rules from being written to the style sheet at run time without
    * affecting build time styles.
    *
@@ -35,7 +43,9 @@ export function createDOMRenderer(
       // eslint-disable-next-line guard-for-in
       for (const styleBucketName in cssRules) {
         const cssRulesForBucket = cssRules[styleBucketName as StyleBucketName]!;
-        const sheet = target && getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer);
+        const sheet =
+          target &&
+          getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer, options.styleElementAttributes);
 
         // This is a hot path in rendering styles: ".length" is cached in "l" var to avoid accesses the property
         for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
@@ -46,6 +56,9 @@ export function createDOMRenderer(
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
+          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+            debugData.addCSSRule(ruleCSS);
+          }
 
           if (sheet) {
             try {
@@ -68,6 +81,10 @@ export function createDOMRenderer(
       }
     },
   };
+
+  if (target && process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+    injectDevTools(target);
+  }
 
   return renderer;
 }

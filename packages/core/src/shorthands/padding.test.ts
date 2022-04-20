@@ -45,4 +45,13 @@ describe('padding', () => {
       paddingTop: 0,
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(padding([0, '12px'], ['2em', '2px'], 'auto')).toEqual({
+      paddingBottom: 'auto',
+      paddingLeft: ['2em', '2px'],
+      paddingRight: ['2em', '2px'],
+      paddingTop: [0, '12px'],
+    });
+  });
 });

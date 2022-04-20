@@ -133,6 +133,40 @@ function App() {
 }
 ```
 
+## `createDOMRenderer()`, `RendererProvider`
+
+`createDOMRenderer` is paired with `RendererProvider` component and is useful for child window rendering and SSR scenarios. This is the default renderer for web, and will make sure that styles are injected to a document.
+
+```jsx
+import { createDOMRenderer, RendererProvider } from '@griffel/react';
+
+function App(props) {
+  const { targetDocument } = props;
+  const renderer = React.useMemo(() => createDOMRenderer(targetDocument), [targetDocument]);
+
+  return (
+    <RendererProvider renderer={renderer} targetDocument={targetDocument}>
+      {/* Children components */}
+      {/* ... */}
+    </RendererProvider>
+  );
+}
+```
+
+### styleElementAttributes
+
+A map of attributes that's passed to the generated style elements. For example, is useful to set ["nonce" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce).
+
+```js
+import { createDOMRenderer } from '@griffel/react';
+
+const renderer = createDOMRenderer(targetDocument, {
+  styleElementAttributes: {
+    nonce: 'random',
+  },
+});
+```
+
 ## Features support
 
 ### 📃 pseudo & class selectors, at-rules, global styles
@@ -200,6 +234,21 @@ const useClasses = makeStyles({
         to: { height: '200px' },
       },
     ],
+  },
+});
+```
+
+### CSS Fallback Properties
+
+Any CSS property accepts an array of values which are all added to the styles.
+Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser):
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    overflowY: ['scroll', 'overlay'],
   },
 });
 ```

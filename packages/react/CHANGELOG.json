@@ -2,6 +2,35 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Wed, 06 Apr 2022 13:28:28 GMT",
+      "tag": "@griffel/react_v1.0.3",
+      "version": "1.0.3",
+      "comments": {
+        "none": [
+          {
+            "author": "miroslav.stastny@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "05635e139c200e609ddb531f40e144b65f9cdcf3",
+            "comment": "Fallback values stories"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "2bda4e578a4fcdd1751a3e7496ea9a6df7916012",
+            "comment": "docs: add docs for createDOMRenderer"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.2.0",
+            "commit": "995c356bc77272f6fe69a604db6485d57a9ba7c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 13:56:06 GMT",
       "tag": "@griffel/react_v1.0.2",
       "version": "1.0.2",

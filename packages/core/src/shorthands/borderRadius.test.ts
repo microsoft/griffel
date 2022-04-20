@@ -36,4 +36,13 @@ describe('borderRadius', () => {
       borderBottomLeftRadius: '4px',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(borderRadius(['1px', '10px'], [0, '5px'], ['3px', '30px'], ['4px', 0])).toEqual({
+      borderBottomLeftRadius: ['4px', 0],
+      borderBottomRightRadius: ['3px', '30px'],
+      borderTopLeftRadius: ['1px', '10px'],
+      borderTopRightRadius: [0, '5px'],
+    });
+  });
 });

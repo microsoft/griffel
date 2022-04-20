@@ -45,4 +45,13 @@ describe('margin', () => {
       marginTop: 0,
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(margin([0, '12px'], ['auto', '-2px'])).toEqual({
+      marginBottom: [0, '12px'],
+      marginLeft: ['auto', '-2px'],
+      marginRight: ['auto', '-2px'],
+      marginTop: [0, '12px'],
+    });
+  });
 });

@@ -2,6 +2,41 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Wed, 06 Apr 2022 13:28:28 GMT",
+      "tag": "@griffel/babel-preset_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "cbfd3045dadcce6f2f8348d56eaf882c5e408482",
+            "comment": "update README"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "594f3264239c1c138eeae969713ed09498e95b6c",
+            "comment": "docs: add \"when to use it\" section"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "699ec126fd85b0b2f8fc924390b5cfa611ffb025",
+            "comment": "feat: export shaker evaluator"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.2.0",
+            "commit": "995c356bc77272f6fe69a604db6485d57a9ba7c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 13:56:06 GMT",
       "tag": "@griffel/babel-preset_v1.1.1",
       "version": "1.1.1",
