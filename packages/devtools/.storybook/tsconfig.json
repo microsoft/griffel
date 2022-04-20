@@ -3,7 +3,6 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "noEmit": true,
-    "noImplicitReturns": false,
     "outDir": ""
   },
   "files": [
