@@ -2,6 +2,7 @@
   "name": "@griffel/devtools",
   "version": "0.0.1",
   "description": "Griffel chrome devtools extension",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",

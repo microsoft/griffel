@@ -5841,7 +5841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chrome@npm:^0.0.180":
+"@types/chrome@npm:0.0.180":
   version: 0.0.180
   resolution: "@types/chrome@npm:0.0.180"
   dependencies:
@@ -7473,17 +7473,17 @@ __metadata:
   linkType: hard
 
 "archiver@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "archiver@npm:5.3.0"
+  version: 5.3.1
+  resolution: "archiver@npm:5.3.1"
   dependencies:
     archiver-utils: ^2.1.0
-    async: ^3.2.0
+    async: ^3.2.3
     buffer-crc32: ^0.2.1
     readable-stream: ^3.6.0
     readdir-glob: ^1.0.0
     tar-stream: ^2.2.0
     zip-stream: ^4.1.0
-  checksum: 878b275390dbab4a32dc2010fb68447d2750297226002002b27d790058d0e04c7d1566f20cf6f9c5abcca33e946cd36ed11b659c59408dabd852db005c84dfed
+  checksum: 905b198ed04d26c951b80545d45c7f2e0432ef89977a93af8a762501d659886e39dda0fbffb0d517ff3fa450a3d09a29146e4273c2170624e1988f889fb5302c
   languageName: node
   linkType: hard
 
@@ -7763,7 +7763,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.2.0":
+"async@npm:^3.2.0, async@npm:^3.2.3":
   version: 3.2.3
   resolution: "async@npm:3.2.3"
   checksum: c4bee57ab2249af3dc83ca3ef9acfa8e822c0d5e5aa41bae3eaf7f673648343cd64ecd7d26091ffd357f3f044428b17b5f00098494b6cf8b6b3e9681f0636ca1
@@ -8313,7 +8313,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bestzip@npm:^2.2.0":
+"bestzip@npm:2.2.0":
   version: 2.2.0
   resolution: "bestzip@npm:2.2.0"
   dependencies:
@@ -9770,22 +9770,6 @@ __metadata:
   peerDependencies:
     webpack: ^5.1.0
   checksum: 59b4fc10aaa81658fa1b6164fc9985ef0e4b54ba2734c07e0da5fdbc6828a5954fe822e2c383beac1e247dd26e669b2c86fa0d7d5495dfb1cbf562196d005ec2
-  languageName: node
-  linkType: hard
-
-"copy-webpack-plugin@npm:^10.2.4":
-  version: 10.2.4
-  resolution: "copy-webpack-plugin@npm:10.2.4"
-  dependencies:
-    fast-glob: ^3.2.7
-    glob-parent: ^6.0.1
-    globby: ^12.0.2
-    normalize-path: ^3.0.0
-    schema-utils: ^4.0.0
-    serialize-javascript: ^6.0.0
-  peerDependencies:
-    webpack: ^5.1.0
-  checksum: 87f0f4530ab3e58ec06a7c3182028dfd8cc85b045a0d18c4464caafeae1ed1141c2aad6eae37e100a74a72b69dc48c93af358c07038b7a22f490a678c0ab142e
   languageName: node
   linkType: hard
 
@@ -13244,7 +13228,7 @@ __metadata:
     "@testing-library/react-hooks": 7.0.2
     "@tsconfig/docusaurus": ^1.0.4
     "@types/babel__helper-plugin-utils": 7.10.0
-    "@types/chrome": ^0.0.180
+    "@types/chrome": 0.0.180
     "@types/jest": 27.0.2
     "@types/js-beautify": ^1.13.3
     "@types/loader-utils": 2.0.3
@@ -13261,8 +13245,7 @@ __metadata:
     babel-plugin-annotate-pure-calls: 0.4.0
     babel-plugin-tester: 10.0.0
     beachball: ^2.20.0
-    bestzip: ^2.2.0
-    copy-webpack-plugin: ^10.2.4
+    bestzip: 2.2.0
     csstype: ^3.0.10
     enhanced-resolve: ^5.8.2
     eslint: 8.2.0
