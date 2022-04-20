@@ -14,7 +14,6 @@
     "build": "nx affected:build",
     "change": "beachball change",
     "check-dependencies": "syncpack list-mismatches --prod --peer",
-    "devtools:watch": "nx run @griffel/devtools:build  --configuration=development --watch",
     "lint": "nx affected:lint",
     "start": "nx run @griffel/website:serve",
     "storybook": "nx run @griffel/react:storybook",
