@@ -59,6 +59,14 @@
         "jestConfig": "packages/devtools/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/devtools",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
     }
   }
 }
