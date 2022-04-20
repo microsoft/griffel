@@ -18,12 +18,6 @@
     {
       "files": ["*.js", "*.jsx"],
       "rules": {}
-    },
-    {
-      "files": ["webpack.config.js"],
-      "rules": {
-        "import/no-extraneous-dependencies": "off"
-      }
     }
   ]
 }
