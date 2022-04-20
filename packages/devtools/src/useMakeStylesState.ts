@@ -20,12 +20,14 @@ export function useMakeStylesState(): DebugResult | undefined {
     if (chrome.devtools) {
       chrome.devtools.panels.elements.onSelectionChanged.addListener(listener);
       window.addEventListener('message', listener);
+    }
 
-      return () => {
+    return () => {
+      if (chrome.devtools) {
         chrome.devtools.panels.elements.onSelectionChanged.removeListener(listener);
         window.removeEventListener('message', listener);
-      };
-    }
+      }
+    };
   }, []);
 
   return result;
