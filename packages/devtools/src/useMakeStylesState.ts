@@ -1,5 +1,3 @@
-/// <reference types="chrome"/>
-
 import * as React from 'react';
 import type { DebugResult } from '@griffel/core';
 
