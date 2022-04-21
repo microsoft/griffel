@@ -2,14 +2,17 @@ import * as stylis from 'stylis';
 import type { AtomicRules, MonolithicAtRules, MonolithicRules, RuleDetail } from './types';
 
 function parseRuleElement(monolithicRules: MonolithicRules, element: stylis.Element, overriddenBy?: string) {
-  const { value, children } = element;
-  const selector = stylis.tokenize(value).slice(1).join('');
-  monolithicRules[selector] = monolithicRules[selector] ?? [];
+  // example of `value`: `.f3xbvq9:hover`
+  // `children` contains all css under the `value` selector
+  const { value: classNameSelector, children } = element;
+
+  const nestedSelector = stylis.tokenize(classNameSelector).slice(1).join('');
+  monolithicRules[nestedSelector] = monolithicRules[nestedSelector] ?? [];
 
   (children as stylis.Element[]).forEach(child => {
-    (monolithicRules[selector] as RuleDetail[]).push({
+    (monolithicRules[nestedSelector] as RuleDetail[]).push({
       css: child.value,
-      className: stylis.tokenize(value)[0].slice(1),
+      className: stylis.tokenize(classNameSelector)[0].slice(1),
       overriddenBy,
     });
   });
@@ -17,15 +20,16 @@ function parseRuleElement(monolithicRules: MonolithicRules, element: stylis.Elem
 
 function parseAtElement(monolithicRules: MonolithicRules, element: stylis.Element, overriddenBy?: string) {
   const { value: atSelector, children } = element;
+
   monolithicRules[atSelector] = monolithicRules[atSelector] ?? {};
 
   (children as stylis.Element[]).forEach(child => {
-    const childResult = {};
+    const childResult: MonolithicAtRules = {};
     parseStylisElement(childResult, child, overriddenBy);
 
-    Object.entries<RuleDetail[]>(childResult).forEach(([selector, ruleDetails]) => {
-      const atResult = monolithicRules[atSelector] as MonolithicAtRules;
-      atResult[selector] = [...(atResult[selector] ?? []), ...ruleDetails];
+    const atResult = monolithicRules[atSelector] as MonolithicAtRules;
+    Object.keys(childResult).forEach(selector => {
+      atResult[selector] = [...(atResult[selector] ?? []), ...childResult[selector]];
     });
   });
 }
