@@ -8,7 +8,7 @@ import { useMakeStylesState } from './useMakeStylesState';
 const DevTools: React.FC = () => {
   const state = useMakeStylesState();
 
-  if (state) {
+  if (state && Object.keys(state).length > 0) {
     return <FlattenView debugResultRoot={state} />;
   }
 
