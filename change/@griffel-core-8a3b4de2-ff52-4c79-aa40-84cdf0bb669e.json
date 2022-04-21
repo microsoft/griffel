@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "add a comment to exports",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

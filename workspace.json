@@ -1,13 +1,14 @@
 {
   "version": 2,
   "projects": {
-    "@griffel/e2e-typescript": "e2e/typescript",
     "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
+    "@griffel/devtools": "packages/devtools",
+    "@griffel/e2e-typescript": "e2e/typescript",
+    "@griffel/eslint-plugin": "packages/eslint-plugin",
     "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/react": "packages/react",
     "@griffel/webpack-loader": "packages/webpack-loader",
-    "@griffel/website": "apps/website",
-    "@griffel/devtools": "packages/devtools"
+    "@griffel/website": "apps/website"
   }
 }
