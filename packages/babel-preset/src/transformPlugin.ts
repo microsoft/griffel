@@ -65,7 +65,10 @@ function hasMakeStylesImport(
  *
  * @example react_make_styles_1 = require('@griffel/react')
  */
-function isRequireDeclarator(path: NodePath<t.VariableDeclarator>): boolean {
+function isRequireDeclarator(
+  path: NodePath<t.VariableDeclarator>,
+  modules: NonNullable<BabelPluginOptions['modules']>,
+): boolean {
   const initPath = path.get('init');
 
   if (!initPath.isCallExpression()) {
@@ -75,7 +78,13 @@ function isRequireDeclarator(path: NodePath<t.VariableDeclarator>): boolean {
   if (initPath.get('callee').isIdentifier({ name: 'require' })) {
     const args = initPath.get('arguments');
 
-    return Array.isArray(args) && args.length === 1 && args[0].isStringLiteral({ value: '@griffel/react' });
+    if (Array.isArray(args) && args.length === 1) {
+      const moduleNamePath = args[0];
+
+      if (moduleNamePath.isStringLiteral()) {
+        return Boolean(modules.find(module => moduleNamePath.node.value === module.moduleSource));
+      }
+    }
   }
 
   return false;
@@ -100,7 +109,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
   const pluginOptions: Required<BabelPluginOptions> = {
     babelOptions: {},
-    modules: [{ moduleSource: '@griffel/react', importName: 'makeStyles' }],
+    modules: [
+      { moduleSource: '@griffel/react', importName: 'makeStyles' },
+      { moduleSource: '@fluentui/react-components', importName: 'makeStyles' },
+    ],
     evaluationRules: [
       { action: shakerEvaluator },
       {
@@ -201,7 +213,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
       // eslint-disable-next-line @typescript-eslint/naming-convention
       VariableDeclarator(path, state) {
-        if (isRequireDeclarator(path)) {
+        if (isRequireDeclarator(path, pluginOptions.modules)) {
           state.requireDeclarationPath = path;
         }
       },
