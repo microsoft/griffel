@@ -115,7 +115,7 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(pseudo, media, support);
+      const styleBucketName = getStyleBucketName(pseudo, layer, media, support);
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
@@ -191,6 +191,7 @@ export function resolveStyleRules(
       const key = hashPropertyKey(pseudo, media, support, property);
       const className = hashClassName({
         media,
+        layer,
         value: value.map(v => (v ?? '').toString()).join(';'),
         support,
         pseudo,
@@ -217,6 +218,7 @@ export function resolveStyleRules(
             value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
             property: rtlDefinitions[0].key,
             pseudo,
+            layer,
             media,
             support,
           })
@@ -230,10 +232,11 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(pseudo, media, support);
+      const styleBucketName = getStyleBucketName(pseudo, layer, media, support);
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
+        layer,
         pseudo,
         property,
         support,
