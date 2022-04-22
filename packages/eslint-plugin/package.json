@@ -10,5 +10,8 @@
   "dependencies": {
     "csstype": "^3.0.10",
     "@typescript-eslint/utils": "^5.20.0"
+  },
+  "peerDependencies": {
+    "eslint": "^7.5.0 || ^8.0.0"
   }
 }
