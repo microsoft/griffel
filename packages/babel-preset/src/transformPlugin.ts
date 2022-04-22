@@ -10,7 +10,7 @@ import { BabelPluginOptions } from './types';
 import { validateOptions } from './validateOptions';
 
 type BabelPluginState = PluginPass & {
-  importDeclarationPath?: NodePath<t.ImportDeclaration>;
+  importDeclarationPaths?: NodePath<t.ImportDeclaration>[];
   requireDeclarationPath?: NodePath<t.VariableDeclarator>;
 
   definitionPaths?: NodePath<t.ObjectExpression>[];
@@ -130,6 +130,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
     name: '@griffel/babel-plugin-transform',
 
     pre() {
+      this.importDeclarationPaths = [];
       this.definitionPaths = [];
       this.calleePaths = [];
     },
@@ -142,7 +143,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         },
 
         exit(path, state) {
-          if (!state.importDeclarationPath && !state.requireDeclarationPath) {
+          if (state.importDeclarationPaths!.length === 0 && !state.requireDeclarationPath) {
             return;
           }
 
@@ -172,9 +173,9 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
             });
           }
 
-          if (state.importDeclarationPath) {
-            const specifiers = state.importDeclarationPath.get('specifiers');
-            const source = state.importDeclarationPath.get('source');
+          state.importDeclarationPaths!.forEach(importDeclarationPath => {
+            const specifiers = importDeclarationPath.get('specifiers');
+            const source = importDeclarationPath.get('source');
 
             specifiers.forEach(specifier => {
               if (specifier.isImportSpecifier()) {
@@ -194,7 +195,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 }
               }
             });
-          }
+          });
 
           if (state.calleePaths) {
             state.calleePaths.forEach(calleePath => {
@@ -207,7 +208,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
       // eslint-disable-next-line @typescript-eslint/naming-convention
       ImportDeclaration(path, state) {
         if (hasMakeStylesImport(path, pluginOptions.modules)) {
-          state.importDeclarationPath = path;
+          state.importDeclarationPaths!.push(path);
         }
       },
 
@@ -225,7 +226,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
          *
          * @example makeStyles({})
          */
-        if (!state.importDeclarationPath) {
+        if (state.importDeclarationPaths!.length === 0) {
           return;
         }
 

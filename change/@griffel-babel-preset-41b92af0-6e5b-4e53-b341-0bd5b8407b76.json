@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix makeStyles transform plugin so it can handle duplicated import sources",
+  "packageName": "@griffel/babel-preset",
+  "email": "rezha@microsoft.com",
+  "dependentChangeType": "patch"
+}
