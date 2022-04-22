@@ -14,3 +14,5 @@ export type MarginInput = ValueOrArray<CSS.Property.Margin<GriffelStylesCSSValue
 export type OverflowInput = ValueOrArray<CSS.Property.Overflow>;
 
 export type PaddingInput = ValueOrArray<CSS.Property.Padding<GriffelStylesCSSValue>>;
+
+export type InsetInput = ValueOrArray<CSS.Property.Inset<GriffelStylesCSSValue>>;

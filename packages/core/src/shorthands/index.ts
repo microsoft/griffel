@@ -11,3 +11,4 @@ export { gap } from './gap';
 export { margin } from './margin';
 export { padding } from './padding';
 export { overflow } from './overflow';
+export { inset } from './inset';
