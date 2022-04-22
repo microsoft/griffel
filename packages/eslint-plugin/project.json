@@ -1,0 +1,49 @@
+{
+  "root": "packages/eslint-plugin",
+  "sourceRoot": "packages/eslint-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/eslint-plugin/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/eslint-plugin"],
+      "options": {
+        "jestConfig": "packages/eslint-plugin/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/eslint-plugin",
+        "tsConfig": "packages/eslint-plugin/tsconfig.lib.json",
+        "packageJson": "packages/eslint-plugin/package.json",
+        "main": "packages/eslint-plugin/src/index.ts",
+        "assets": [
+          "packages/eslint-plugin/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/babel-preset",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}
