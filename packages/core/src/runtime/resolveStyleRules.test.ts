@@ -404,7 +404,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @layer color {
-          .fe3e8s9 {
+          .f1hjcal7 {
             color: red;
           }
         }
@@ -439,7 +439,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @layer color {
-          .faf35ka:hover {
+          .f1jv0g3z:hover {
             color: red;
           }
         }
@@ -460,12 +460,12 @@ describe('resolveStyleRules', () => {
           color: red;
         }
         @layer color {
-          .fe3e8s9 {
+          .f1hjcal7 {
             color: red;
           }
         }
         @layer color.theme {
-          .fe3e8s9 {
+          .f132c7g3 {
             color: red;
           }
         }
