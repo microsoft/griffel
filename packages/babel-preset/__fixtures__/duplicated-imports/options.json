@@ -1,6 +1,3 @@
 {
-  "modules": [
-    { "moduleSource": "custom-package", "importName": "createStyles" },
-    { "moduleSource": "another-custom-package", "importName": "createMyStyles" }
-  ]
+  "modules": [{ "moduleSource": "custom-package", "importName": "createStylesA" }]
 }
