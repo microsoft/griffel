@@ -1,12 +1,13 @@
 import type { DebugResult } from '@griffel/core';
 import { SlotInfo } from './types';
 
-export function getRulesBySlots(root: DebugResult) {
-  const result: SlotInfo[] = [];
-  const traverse = (node: DebugResult) => {
-    if (!node.children.length && node.slot) {
-      const { debugClassNames, rules, slot } = node;
-      result.push({
+export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): SlotInfo[] {
+  if (node.children.length === 0 && node.slot) {
+    const { debugClassNames, rules, slot } = node;
+
+    return [
+      ...result,
+      {
         slot,
         rules: debugClassNames.map(({ className, overriddenBy }) => {
           return {
@@ -14,14 +15,11 @@ export function getRulesBySlots(root: DebugResult) {
             overriddenBy,
           };
         }),
-      });
-      return;
-    }
+      },
+    ];
+  }
 
-    node.children.reverse().forEach(child => {
-      traverse(child);
-    });
-  };
-  traverse(root);
-  return result;
+  return node.children.reverse().reduce((acc, child) => {
+    return [...acc, ...getRulesBySlots(child)];
+  }, result);
 }
