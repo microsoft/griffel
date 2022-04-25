@@ -6,20 +6,6 @@ import { getRulesBySlots } from './utils';
 import { ViewContext } from './ViewContext';
 
 import type { DebugResult } from '@griffel/core';
-import type { SlotInfo } from './types';
-
-const View: React.FC<{ slots: SlotInfo[] }> = ({ slots }) => {
-  const [highlightedClass, setHighlightedClass] = React.useState('');
-  const contextValue = React.useMemo(() => ({ highlightedClass, setHighlightedClass }), [highlightedClass]);
-
-  return (
-    <ViewContext.Provider value={contextValue}>
-      {slots.map(({ slot, rules }) => (
-        <SlotCSSRules key={slot} slot={slot} atomicRules={rules} />
-      ))}
-    </ViewContext.Provider>
-  );
-};
 
 const useStyles = makeStyles({
   root: {
@@ -49,10 +35,17 @@ export const FlattenView: React.FC<FlattenViewProps> = props => {
   useStaticStyles();
   const classes = useStyles();
 
+  const [highlightedClass, setHighlightedClass] = React.useState('');
+  const contextValue = React.useMemo(() => ({ highlightedClass, setHighlightedClass }), [highlightedClass]);
+
   return (
     <div className={classes.root}>
       <div className={classes.info}>direction: {debugResultRoot.direction}</div>
-      <View slots={slots} />
+      <ViewContext.Provider value={contextValue}>
+        {slots.map(({ slot, rules }) => (
+          <SlotCSSRules key={slot} slot={slot} atomicRules={rules} />
+        ))}
+      </ViewContext.Provider>
     </div>
   );
 };
