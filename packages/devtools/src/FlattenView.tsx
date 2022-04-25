@@ -40,7 +40,10 @@ const useStaticStyles = makeStaticStyles({
   },
 });
 
-export const FlattenView = ({ debugResultRoot }: { debugResultRoot: DebugResult }) => {
+type FlattenViewProps = { debugResultRoot: DebugResult };
+
+export const FlattenView: React.FC<FlattenViewProps> = props => {
+  const { debugResultRoot } = props;
   const slots = React.useMemo(() => getRulesBySlots(debugResultRoot), [debugResultRoot]);
 
   useStaticStyles();
