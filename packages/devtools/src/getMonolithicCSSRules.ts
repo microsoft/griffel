@@ -44,6 +44,8 @@ function parseStylisElement(monolithicRules: MonolithicRules, element: stylis.El
     parseAtElement(monolithicRules, element, overriddenBy);
   } else if (type === 'rule') {
     parseRuleElement(monolithicRules, element, overriddenBy);
+  } else {
+    throw new Error('Unsupported type of entries');
   }
 }
 
