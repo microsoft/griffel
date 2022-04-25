@@ -70,8 +70,8 @@ type MonolithicRulesViewProps = {
   noLineSpacing?: boolean;
 };
 
-export const MonolithicRulesView: React.FC<MonolithicRulesViewProps> = (props) => {
-  const { rules, noLineSpacing } = props
+export const MonolithicRulesView: React.FC<MonolithicRulesViewProps> = props => {
+  const { rules, noLineSpacing } = props;
   const classes = useMonolithicRulesStyles();
 
   return (

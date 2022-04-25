@@ -2,7 +2,7 @@ import * as React from 'react';
 import { makeStyles, shorthands } from '@griffel/react';
 
 import { getMonolithicCSSRules } from './getMonolithicCSSRules';
-import { MonolithicRulesView } from './RulesView';
+import { MonolithicRulesView } from './MonolithicRulesView';
 import { useViewContext } from './ViewContext';
 
 import type { AtomicRules } from './types';
