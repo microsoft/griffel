@@ -122,7 +122,7 @@ html[data-whatintent='mouse'] .f1xz3i88 {
 
 ### At-rules
 
-`@media` & `@supports` queries are also supported:
+`@media`, `@supports` & `@layer` queries are also supported:
 
 ```js
 import { makeStyles } from '@griffel/react';
@@ -131,6 +131,7 @@ const useClasses = makeStyles({
   root: {
     '@media screen and (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
+    '@layer utility': { marginBottom: '1em' }
   },
 });
 ```
@@ -146,6 +147,12 @@ const useClasses = makeStyles({
 @supports (display: grid) {
   .f1ofq0jl {
     color: red;
+  }
+}
+
+@layer utility {
+  .f2d3jla {
+    margin-bottom: 1em;
   }
 }
 ```
