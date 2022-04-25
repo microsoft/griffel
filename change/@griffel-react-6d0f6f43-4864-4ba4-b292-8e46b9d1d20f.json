@@ -3,5 +3,5 @@
   "comment": "docs: add support for @layer",
   "packageName": "@griffel/react",
   "email": "mgodbolt@microsoft.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
