@@ -10,10 +10,10 @@ import type { SlotInfo } from './types';
 
 const View: React.FC<{ slots: SlotInfo[] }> = ({ slots }) => {
   const [highlightedClass, setHighlightedClass] = React.useState('');
-  const contextDefault = React.useMemo(() => ({ highlightedClass, setHighlightedClass }), [highlightedClass]);
+  const contextValue = React.useMemo(() => ({ highlightedClass, setHighlightedClass }), [highlightedClass]);
 
   return (
-    <ViewContext.Provider value={contextDefault}>
+    <ViewContext.Provider value={contextValue}>
       {slots.map(({ slot, rules }) => (
         <SlotCSSRules key={slot} slot={slot} atomicRules={rules} />
       ))}
