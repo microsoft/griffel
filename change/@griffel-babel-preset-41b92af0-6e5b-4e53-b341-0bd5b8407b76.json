@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: handle duplicated import sources properly",
+  "packageName": "@griffel/babel-preset",
+  "email": "rezha@microsoft.com",
+  "dependentChangeType": "patch"
+}
