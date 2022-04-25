@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "add support for @layer",
+  "comment": "feat: add support for @layer",
   "packageName": "@griffel/core",
   "email": "mgodbolt@microsoft.com",
   "dependentChangeType": "patch"
