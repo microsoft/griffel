@@ -9,13 +9,17 @@ function parseRuleElement(monolithicRules: MonolithicRules, element: stylis.Elem
   const nestedSelector = stylis.tokenize(classNameSelector).slice(1).join('');
   monolithicRules[nestedSelector] = monolithicRules[nestedSelector] ?? [];
 
-  (children as stylis.Element[]).forEach(child => {
-    (monolithicRules[nestedSelector] as RuleDetail[]).push({
-      css: child.value,
-      className: stylis.tokenize(classNameSelector)[0].slice(1),
-      overriddenBy,
+  if (Array.isArray(children)) {
+    children.forEach(child => {
+      (monolithicRules[nestedSelector] as RuleDetail[]).push({
+        css: child.value,
+        className: stylis.tokenize(classNameSelector)[0].slice(1),
+        overriddenBy,
+      });
     });
-  });
+  } else {
+    throw new Error('Unsupported input from "element.children"');
+  }
 }
 
 function parseAtElement(monolithicRules: MonolithicRules, element: stylis.Element, overriddenBy?: string) {
