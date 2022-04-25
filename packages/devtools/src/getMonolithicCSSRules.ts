@@ -1,61 +1,76 @@
 import * as stylis from 'stylis';
 import type { AtomicRules, MonolithicAtRules, MonolithicRules, RuleDetail } from './types';
 
-function parseRuleElement(monolithicRules: MonolithicRules, element: stylis.Element, overriddenBy?: string) {
+function parseRuleElement(element: stylis.Element, overriddenBy?: string) {
   // example of `value`: `.f3xbvq9:hover`
-  // `children` contains all css under the `value` selector
+  // `children` contains all CSS rules under the `value` selector
   const { value: classNameSelector, children } = element;
 
-  const nestedSelector = stylis.tokenize(classNameSelector).slice(1).join('');
-  monolithicRules[nestedSelector] = monolithicRules[nestedSelector] ?? [];
-
   if (Array.isArray(children)) {
-    children.forEach(child => {
-      (monolithicRules[nestedSelector] as RuleDetail[]).push({
-        css: child.value,
-        className: stylis.tokenize(classNameSelector)[0].slice(1),
-        overriddenBy,
-      });
-    });
-  } else {
-    throw new Error('Unsupported input from "element.children"');
+    const selector = stylis.tokenize(classNameSelector).slice(1).join('');
+    const rules: RuleDetail[] = children.map(child => ({
+      css: child.value,
+      className: stylis.tokenize(classNameSelector)[0].slice(1),
+      overriddenBy,
+    }));
+    return {
+      selector,
+      rules,
+    };
   }
+  throw new Error('Unsupported input from "element.children"');
 }
 
-function parseAtElement(monolithicRules: MonolithicRules, element: stylis.Element, overriddenBy?: string) {
+function parseAtElement(element: stylis.Element, overriddenBy?: string) {
   const { value: atSelector, children } = element;
 
-  monolithicRules[atSelector] = monolithicRules[atSelector] ?? {};
-
-  (children as stylis.Element[]).forEach(child => {
-    const childResult: MonolithicAtRules = {};
-    parseStylisElement(childResult, child, overriddenBy);
-
-    const atResult = monolithicRules[atSelector] as MonolithicAtRules;
-    Object.keys(childResult).forEach(selector => {
-      atResult[selector] = [...(atResult[selector] ?? []), ...childResult[selector]];
+  if (Array.isArray(children)) {
+    const rules: MonolithicAtRules = {};
+    children.forEach(child => {
+      const { selector: childSelector, rules: childRules } = parseRuleElement(child, overriddenBy);
+      rules[childSelector] = [...(rules[childSelector] || []), ...childRules];
     });
-  });
+
+    return {
+      selector: atSelector,
+      rules,
+    };
+  }
+  throw new Error('Unsupported input from "element.children"');
 }
 
-function parseStylisElement(monolithicRules: MonolithicRules, element: stylis.Element, overriddenBy?: string) {
+function parseElement(element: stylis.Element, overriddenBy?: string) {
   const { type } = element;
+
   if (type.startsWith('@')) {
-    parseAtElement(monolithicRules, element, overriddenBy);
-  } else if (type === 'rule') {
-    parseRuleElement(monolithicRules, element, overriddenBy);
-  } else {
-    throw new Error('Unsupported type of entries');
+    return parseAtElement(element, overriddenBy);
   }
+
+  if (type === 'rule') {
+    return parseRuleElement(element, overriddenBy);
+  }
+
+  throw new Error('Unsupported type of entries');
 }
 
 export function getMonolithicCSSRules(rules: AtomicRules[]): MonolithicRules {
-  const monolithicRules = {};
-  rules.forEach(entry => {
+  return rules.reduce((acc, entry) => {
     const compiled = stylis.compile(entry.cssRule);
+
     compiled.forEach(element => {
-      parseStylisElement(monolithicRules, element, entry.overriddenBy);
+      const { selector, rules } = parseElement(element, entry.overriddenBy);
+
+      if (Array.isArray(rules)) {
+        acc[selector] = [...((acc[selector] as RuleDetail[]) || []), ...rules];
+      } else {
+        acc[selector] = acc[selector] ?? {};
+        const childRules = acc[selector] as MonolithicAtRules;
+        Object.entries(rules).forEach(([nestedSelector, nestedRules]) => {
+          childRules[nestedSelector] = [...(childRules[nestedSelector] || []), ...nestedRules];
+        });
+      }
     });
-  });
-  return monolithicRules;
+
+    return acc;
+  }, {} as MonolithicRules);
 }
