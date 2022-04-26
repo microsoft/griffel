@@ -102,7 +102,7 @@ export function compileCSS(options: CompileCSSOptions): [string /* ltr definitio
     cssRule = `${classNameSelector}{${normalizedPseudo} ${cssDeclaration}};`;
 
     if (rtlProperty) {
-      cssRule = `${cssRule}; ${rtlClassNameSelector}${normalizedPseudo} ${rtlCSSDeclaration};`;
+      cssRule = `${cssRule}; ${rtlClassNameSelector}{${normalizedPseudo} ${rtlCSSDeclaration}};`;
     }
   }
 
