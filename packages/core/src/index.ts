@@ -15,6 +15,7 @@ import {
   padding,
   overflow,
   inset,
+  outline,
 } from './shorthands/index';
 
 export const shorthands = {
@@ -32,6 +33,7 @@ export const shorthands = {
   padding,
   overflow,
   inset,
+  outline,
 };
 
 export { createDOMRenderer } from './renderer/createDOMRenderer';
