@@ -27,13 +27,17 @@ const DevTools: React.FC = () => {
 
   const classes = useStyles();
 
-  React.useLayoutEffect(() => {
-    if (browserTheme === 'dark') {
-      document.body.classList.add(...classes.rootDark.split(' '));
-    } else {
-      document.body.classList.add(...classes.root.split(' '));
-    }
-  }, []);
+  React.useLayoutEffect(
+    () => {
+      if (browserTheme === 'dark') {
+        document.body.classList.add(...classes.rootDark.split(' '));
+      } else {
+        document.body.classList.add(...classes.root.split(' '));
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [], // theme only needs to be applied when devtools open
+  );
 
   let children = <DefaultMessage />;
   if (state && Object.keys(state).length > 0) {
