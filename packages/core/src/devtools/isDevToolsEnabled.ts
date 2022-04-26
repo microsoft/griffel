@@ -1,1 +1,3 @@
-export const isDevToolsEnabled = window?.sessionStorage?.getItem('__GRIFFEL_DEVTOOLS__');
+export const isDevToolsEnabled = Boolean(
+  typeof window !== 'undefined' && window?.sessionStorage?.getItem('__GRIFFEL_DEVTOOLS__'),
+);
