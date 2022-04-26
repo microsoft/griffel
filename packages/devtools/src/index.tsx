@@ -20,11 +20,12 @@ const useStyles = makeStyles({
   },
 });
 
+const browserTheme = chrome.devtools?.panels?.themeName === 'dark' ? 'dark' : 'light';
+
 const DevTools: React.FC = () => {
   const state = useMakeStylesState();
 
   const classes = useStyles();
-  const browserTheme = chrome.devtools?.panels?.themeName === 'dark' ? 'dark' : 'light';
 
   React.useLayoutEffect(() => {
     if (browserTheme === 'dark') {
