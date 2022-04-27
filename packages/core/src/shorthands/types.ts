@@ -5,6 +5,10 @@ export type BorderWidthInput = ValueOrArray<CSS.Property.BorderWidth<GriffelStyl
 export type BorderStyleInput = ValueOrArray<CSS.Property.BorderStyle>;
 export type BorderColorInput = ValueOrArray<CSS.Property.BorderColor>;
 
+export type OutlineWidthInput = ValueOrArray<CSS.Property.OutlineWidth<GriffelStylesCSSValue>>;
+export type OutlineStyleInput = ValueOrArray<CSS.Property.OutlineStyle>;
+export type OutlineColorInput = ValueOrArray<CSS.Property.OutlineColor>;
+
 export type BorderRadiusInput = ValueOrArray<CSS.Property.BorderRadius<GriffelStylesCSSValue>>;
 
 export type GapInput = ValueOrArray<CSS.Property.Gap<GriffelStylesCSSValue>>;
