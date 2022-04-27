@@ -327,6 +327,25 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles comma-separated selectors', () => {
+      expect(
+        resolveStyleRules({
+          ':active,:focus-within': {
+            paddingLeft: '10px',
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        .f14f5aie:active,
+        .f14f5aie:focus-within {
+          padding-left: 10px;
+        }
+        .f1sheuf0:active,
+        .f1sheuf0:focus-within {
+          padding-right: 10px;
+        }
+      `);
+    });
+
     it('handles media queries', () => {
       expect(
         resolveStyleRules({

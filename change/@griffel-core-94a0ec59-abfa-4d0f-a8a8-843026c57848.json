@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix issue with comma-separated selectors and RTL",
+  "packageName": "@griffel/core",
+  "email": "seanmonahan@microsoft.com",
+  "dependentChangeType": "patch"
+}
