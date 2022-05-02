@@ -1,5 +1,3 @@
-export type BrowserTheme = 'dark' | 'light';
-
 export type ColorTokens = {
   foreground: string;
   background: string;
@@ -7,7 +5,7 @@ export type ColorTokens = {
   slotNameBackground: string;
   slotNameBorder: string;
 
-  /** tokens for css hightlighting */
+  /** tokens for css highlighting */
   cssAtRule: string;
   cssProperty: string;
   cssPunctuation: string;

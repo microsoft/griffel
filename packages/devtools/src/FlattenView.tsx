@@ -3,12 +3,15 @@ import { makeStaticStyles, makeStyles, shorthands } from '@griffel/react';
 
 import { SlotCSSRules } from './SlotCSSRules';
 import { getRulesBySlots } from './utils';
+import { tokens } from './themes';
 import { ViewContext } from './ViewContext';
 
 import type { DebugResult } from '@griffel/core';
 
 const useStyles = makeStyles({
   root: {
+    backgroundColor: tokens.background,
+    color: tokens.foreground,
     paddingBottom: '10px',
   },
   info: {

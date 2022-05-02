@@ -1,71 +1,61 @@
+import { makeStyles, shorthands } from '@griffel/react';
 import Highlight, { defaultProps, PrismTheme } from 'prism-react-renderer';
-import { default as themeDark } from 'prism-react-renderer/themes/vsDark';
-import { default as themeLight } from 'prism-react-renderer/themes/vsLight';
 import * as React from 'react';
 
-import { makeStyles, shorthands } from '@griffel/react';
+import { tokens } from './themes';
 
-import { DARK_THEME_COLOR_TOKENS, LIGHT_THEME_COLOR_TOKENS } from './colorTokens';
-import { useThemeContext } from './ThemeContext';
-import type { BrowserTheme } from './types';
-
-function getCustomTheme(theme?: BrowserTheme): PrismTheme {
-  const colortokens = theme === 'dark' ? DARK_THEME_COLOR_TOKENS : LIGHT_THEME_COLOR_TOKENS;
-  return {
-    plain: {
-      color: colortokens.foreground,
+const customTheme: PrismTheme = {
+  plain: {
+    color: tokens.foreground,
+  },
+  styles: [
+    {
+      types: ['keyword', 'atrule'],
+      style: {
+        color: tokens.foreground,
+      },
     },
-    styles: [
-      ...(theme === 'dark' ? themeDark.styles : themeLight.styles),
-      {
-        types: ['keyword', 'atrule'],
-        style: {
-          color: colortokens.foreground,
-        },
+    {
+      types: ['rule'],
+      style: {
+        color: tokens.cssAtRule,
       },
-      {
-        types: ['rule'],
-        style: {
-          color: colortokens.cssAtRule,
-        },
+    },
+    {
+      types: ['property'],
+      style: {
+        color: tokens.cssProperty,
       },
-      {
-        types: ['property'],
-        style: {
-          color: colortokens.cssProperty,
-        },
+    },
+    {
+      types: ['punctuation'],
+      style: {
+        color: tokens.cssPunctuation,
       },
-      {
-        types: ['punctuation'],
-        style: {
-          color: colortokens.cssPunctuation,
-        },
+    },
+    {
+      types: ['selector'],
+      style: {
+        color: tokens.cssSelector,
       },
-      {
-        types: ['selector'],
-        style: {
-          color: colortokens.cssSelector,
-        },
-      },
-    ],
-  };
-}
+    },
+  ],
+};
 
 const useColorIndicatorStyles = makeStyles({
   colorIndicator: {
-    height: '10px',
-    width: '10px',
+    boxSizing: 'border-box',
+    height: '12px',
+    width: '12px',
     display: 'inline-block',
     marginLeft: '2px',
     marginRight: '2px',
+    verticalAlign: 'text-top',
     ...shorthands.border('1px', 'dotted', 'grey'),
   },
 });
 
 export const HighlightedCSS: React.FC<{ code: string }> = ({ code }) => {
-  const theme = useThemeContext();
-  const customTheme = React.useMemo(() => getCustomTheme(theme), [theme]);
-
   const { colorIndicator } = useColorIndicatorStyles();
 
   return (
@@ -82,12 +72,8 @@ export const HighlightedCSS: React.FC<{ code: string }> = ({ code }) => {
                     children={
                       <>
                         {/* show a square color indicator for colors in css */}
-                        <span
-                          key={`${i}-color`}
-                          className={colorIndicator}
-                          style={{ backgroundColor: token.content }}
-                        />
-                        {tokenProps.children}
+                        <span className={colorIndicator} style={{ backgroundColor: token.content }} />
+                        <span>{tokenProps.children}</span>
                       </>
                     }
                   />

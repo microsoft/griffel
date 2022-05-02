@@ -2,11 +2,8 @@ import * as React from 'react';
 import { Story } from '@storybook/react';
 import type { DebugResult } from '@griffel/core';
 
-import { DARK_THEME_COLOR_TOKENS, LIGHT_THEME_COLOR_TOKENS } from '../colorTokens';
 import { FlattenView } from '../FlattenView';
-import { ThemeContext } from '../ThemeContext';
-
-import type { BrowserTheme } from '../types';
+import { darkTheme, lightTheme } from '../themes';
 
 const debugResultRoot: DebugResult = {
   sequenceHash: '___29aowz0_1rg0tlg',
@@ -99,20 +96,21 @@ const debugResultRoot: DebugResult = {
   ],
 };
 
-export const Default: Story<{ theme: BrowserTheme }> = ({ theme }) => (
-  <ThemeContext.Provider value={theme}>
+export const Default: Story<{ theme: 'dark' | 'light' }> = ({ theme }) => {
+  const tokens = theme === 'dark' ? darkTheme : lightTheme;
+
+  return (
     <div
       style={{
+        ...tokens,
         border: '3px solid gray',
         width: 400,
-        color: theme === 'dark' ? DARK_THEME_COLOR_TOKENS.foreground : LIGHT_THEME_COLOR_TOKENS.foreground,
-        backgroundColor: theme === 'dark' ? DARK_THEME_COLOR_TOKENS.background : LIGHT_THEME_COLOR_TOKENS.background,
       }}
     >
       <FlattenView debugResultRoot={debugResultRoot} />
     </div>
-  </ThemeContext.Provider>
-);
+  );
+};
 
 Default.args = {
   theme: 'light',
