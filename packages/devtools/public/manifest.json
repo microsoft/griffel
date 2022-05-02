@@ -3,5 +3,13 @@
   "manifest_version": 3,
   "name": "griffel-devtools",
   "version": "1.0",
-  "devtools_page": "devtools-page.html"
+  "devtools_page": "devtools-page.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ]
 }
