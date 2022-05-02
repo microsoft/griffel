@@ -46,7 +46,7 @@ Griffel relies on [Atomic CSS](/react/guides/atomic-css) and produces atomic cla
 <div class="b c">Hello world!</div>
 ```
 
-- In "Case 1" both classes are applied to an element: it's wrong as result is **not deterministic** and depends on classes order in CSS definitions (i.e. [order of appearance](https://www.w3.org/TR/css-cascade-3/#cascade-order)), [demo on CodeSandbox](https://codesandbox.io/s/css-insertion-order-matters-mgt6y)
+- In "Case 1" both classes are applied to an element: it's wrong as result is **nondeterministic** and depends on classes order in CSS definitions (i.e. [order of appearance](https://www.w3.org/TR/css-cascade-3/#cascade-order)), [demo on CodeSandbox](https://codesandbox.io/s/css-insertion-order-matters-mgt6y)
 - In "Case 2" only single classname per CSS property is applied, result will be deterministic
 
 This problem is solved by [`mergeClasses()`](https://github.com/microsoft/griffel/blob/main/packages/core/src/mergeClasses.ts) function: it de-duplicates classes based on property name.
@@ -81,10 +81,10 @@ const useClasses2 = makeStyles({
 
 :::caution
 
-In this example the problem is the same: both classes will be applied, result depends on order of appearance.
+In this example the problem is the same: both classes will be applied, result depends on the order of appearance.
 
 :::
 
-There is an option to expand CSS shorthands to longhands, but it's not reliable and does not with static rules i.e. you can't expand rules with CSS variables without knowing their value. The single predictable solution is disallow usage of CSS shorthands.
+There is an option to expand CSS shorthands to longhands, but it's not reliable and does not work with static rules i.e. you can't expand rules with CSS variables without knowing their value. The single predictable solution is to disallow the usage of CSS shorthands.
 
 You can get more information on the original RFC, [microsoft/fluentui#20573](https://github.com/microsoft/fluentui/pull/20573).
