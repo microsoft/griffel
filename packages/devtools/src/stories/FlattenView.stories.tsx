@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { FlattenView } from '../FlattenView';
+import { Story } from '@storybook/react';
 import type { DebugResult } from '@griffel/core';
+
+import { FlattenView } from '../FlattenView';
+import { darkTheme, lightTheme } from '../themes';
 
 const debugResultRoot: DebugResult = {
   sequenceHash: '___29aowz0_1rg0tlg',
@@ -93,12 +96,32 @@ const debugResultRoot: DebugResult = {
   ],
 };
 
-export const Default = () => (
-  <div style={{ border: '3px solid gray', width: 400 }}>
-    <FlattenView debugResultRoot={debugResultRoot} />
-  </div>
-);
+export const Default: Story<{ theme: 'dark' | 'light' }> = ({ theme }) => {
+  const tokens = theme === 'dark' ? darkTheme : lightTheme;
+
+  return (
+    <div
+      style={{
+        ...tokens,
+        border: '3px solid gray',
+        width: 400,
+      }}
+    >
+      <FlattenView debugResultRoot={debugResultRoot} />
+    </div>
+  );
+};
+
+Default.args = {
+  theme: 'light',
+};
 
 export default {
   title: 'FlattenView',
+  argTypes: {
+    theme: {
+      options: ['light', 'dark'],
+      control: { type: 'radio' },
+    },
+  },
 };

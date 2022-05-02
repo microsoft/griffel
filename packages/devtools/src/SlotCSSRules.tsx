@@ -3,6 +3,7 @@ import { makeStyles, shorthands } from '@griffel/react';
 
 import { getMonolithicCSSRules } from './getMonolithicCSSRules';
 import { MonolithicRulesView } from './MonolithicRulesView';
+import { tokens } from './themes';
 import { useViewContext } from './ViewContext';
 
 import type { AtomicRules } from './types';
@@ -11,8 +12,9 @@ const useStyles = makeStyles({
   slotName: {
     ...shorthands.padding('2px', '5px'),
     ...shorthands.margin('5px', 0),
-    ...shorthands.borderTop('1px', 'solid', 'grey'),
-    ...shorthands.borderBottom('1px', 'solid', 'grey'),
+    ...shorthands.borderTop('1px', 'solid', tokens.slotNameBorder),
+    ...shorthands.borderBottom('1px', 'solid', tokens.slotNameBorder),
+    backgroundColor: tokens.slotNameBackground,
   },
   rules: {
     ...shorthands.padding(0, '5px'),
@@ -21,7 +23,6 @@ const useStyles = makeStyles({
 
 export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }> = ({ slot, atomicRules }) => {
   const rules = React.useMemo(() => getMonolithicCSSRules(atomicRules), [atomicRules]);
-
   const classes = useStyles();
 
   const { setHighlightedClass } = useViewContext();

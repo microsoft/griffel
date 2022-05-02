@@ -11616,16 +11616,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:4.2.0":
-  version: 4.2.0
-  resolution: "eslint-plugin-react-hooks@npm:4.2.0"
-  peerDependencies:
-    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
-  checksum: ead5c5be3ded82a0cf295b064376adb1998a43e2262b605eecc0efc88283dec4e159ca39307fafb3d8e661dd08e5a4c8cdfed97eea78f923954f72bad6e20397
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-react-hooks@npm:^4.2.0":
+"eslint-plugin-react-hooks@npm:4.3.0, eslint-plugin-react-hooks@npm:^4.2.0":
   version: 4.3.0
   resolution: "eslint-plugin-react-hooks@npm:4.3.0"
   peerDependencies:
@@ -13316,7 +13307,7 @@ __metadata:
     eslint-plugin-import: 2.25.2
     eslint-plugin-jsx-a11y: 6.5.1
     eslint-plugin-react: 7.27.0
-    eslint-plugin-react-hooks: 4.2.0
+    eslint-plugin-react-hooks: 4.3.0
     highlight.js: 11.4.0
     jest: 27.2.3
     js-beautify: ^1.14.0
