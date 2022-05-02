@@ -1,10 +1,11 @@
-import { ColorTokens } from './types';
+import type { ColorTokens } from './types';
 
 export const tokens: Record<keyof ColorTokens, `var(--griffel-${keyof ColorTokens})`> = {
   foreground: 'var(--griffel-foreground)',
   background: 'var(--griffel-background)',
 
   cssAtRule: 'var(--griffel-cssAtRule)',
+  cssNumber: 'var(--griffel-cssNumber)',
   cssProperty: 'var(--griffel-cssProperty)',
   cssPunctuation: 'var(--griffel-cssPunctuation)',
   cssSelector: 'var(--griffel-cssSelector)',
@@ -26,6 +27,7 @@ export const lightTheme = themeToVariables({
   background: 'white',
 
   cssAtRule: 'rgb(128, 134, 139)',
+  cssNumber: 'rgb(9, 134, 88)',
   cssProperty: 'rgb(19, 44, 121)',
   cssPunctuation: 'rgb(102, 102, 102)',
   cssSelector: 'rgb(158, 51, 121)',
@@ -39,6 +41,7 @@ export const darkTheme = themeToVariables({
   foreground: 'rgb(213, 213, 213)',
 
   cssAtRule: 'rgb(128, 134, 139)',
+  cssNumber: 'rgb(181, 206, 168)',
   cssProperty: 'rgb(156, 220, 254)',
   cssPunctuation: 'rgb(167, 167, 167)',
   cssSelector: 'rgb(175, 165, 143)',

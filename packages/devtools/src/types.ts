@@ -7,6 +7,7 @@ export type ColorTokens = {
 
   /** tokens for css highlighting */
   cssAtRule: string;
+  cssNumber: string;
   cssProperty: string;
   cssPunctuation: string;
   cssSelector: string;

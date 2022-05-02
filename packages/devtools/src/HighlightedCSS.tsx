@@ -39,6 +39,12 @@ const customTheme: PrismTheme = {
         color: tokens.cssSelector,
       },
     },
+    {
+      types: ['number'],
+      style: {
+        color: tokens.cssNumber,
+      },
+    },
   ],
 };
 
