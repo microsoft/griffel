@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import { DefaultMessage } from './DefaultMessage';
 import { FlattenView } from './FlattenView';
-import { darkTheme, lightTheme } from './themes';
+import { darkTheme, lightTheme, tokens } from './themes';
 import { useMakeStylesState } from './useMakeStylesState';
 
 const DevTools: React.FC = () => {
@@ -20,6 +20,8 @@ const DevTools: React.FC = () => {
     <div
       style={{
         ...(theme as React.CSSProperties),
+        color: tokens.foreground,
+        backgroundColor: tokens.background,
         height: 'inherit',
         width: 'inherit',
       }}

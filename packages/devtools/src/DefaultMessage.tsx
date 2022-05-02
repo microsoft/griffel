@@ -6,12 +6,13 @@ const useStyles = makeStyles({
     display: 'grid',
     gridTemplateColumns: 'auto 1fr',
     gridGap: '3px',
-    ...shorthands.margin('5px'),
+    ...shorthands.padding('5px'),
   },
   icon: {
     textDecorationLine: 'none',
     position: 'relative',
     top: '-5px',
+    zIndex: 1,
   },
   text: {
     '::after': {
@@ -24,7 +25,6 @@ const useStyles = makeStyles({
       position: 'relative',
       top: 'calc(-100%)',
       left: '-10px',
-      zIndex: -1,
       ...shorthands.border('1px', 'dotted', 'deepskyblue'),
     },
   },
