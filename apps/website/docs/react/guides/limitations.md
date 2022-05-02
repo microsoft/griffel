@@ -87,4 +87,4 @@ In this example the problem is the same: both classes will be applied, result de
 
 There is an option to expand CSS shorthands to longhands, but it's not reliable and does not work with static rules i.e. you can't expand rules with CSS variables without knowing their value. The single predictable solution is to disallow the usage of CSS shorthands.
 
-You can get more information on the original RFC, [microsoft/fluentui#20573](https://github.com/microsoft/fluentui/pull/20573).
+You can get more information on the original RFC, [microsoft/fluentui#20573](https://github.com/microsoft/fluentui/pull/20573). For this reason Griffel disallows CSS shorthand properties in the input style object. Instead of shorthand properties, use [shorthands helper functions](/react/api/shorthands) which do the shorthand to longhand expansion statically.

@@ -4,6 +4,12 @@ sidebar_position: 3
 
 # shorthands
 
+:::note
+
+Check [limitations](/react/guides/limitations) to understand why these helpers are needed.
+
+:::
+
 `shorthands` provides a set of functions to mimic [CSS shorthands](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) and improve developer experience as [CSS shorthands are not supported](/react/guides/limitations#css-shorthands-are-not-supported) by Griffel. For example:
 
 ```tsx
