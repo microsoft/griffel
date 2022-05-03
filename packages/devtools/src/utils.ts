@@ -23,3 +23,15 @@ export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): Slo
     return [...acc, ...getRulesBySlots(child)];
   }, result);
 }
+
+export function filterSlots(slots: SlotInfo[], searchTerm: string) {
+  if (!searchTerm.length) {
+    return slots;
+  }
+
+  const clone = JSON.parse(JSON.stringify(slots)) as SlotInfo[];
+  return clone.filter(slot => {
+    slot.rules = slot.rules.filter(rule => rule.cssRule.includes(searchTerm));
+    return slot.rules.length;
+  });
+}

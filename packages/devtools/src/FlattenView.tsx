@@ -2,7 +2,7 @@ import * as React from 'react';
 import { makeStaticStyles, makeStyles, shorthands } from '@griffel/react';
 
 import { SlotCSSRules } from './SlotCSSRules';
-import { getRulesBySlots } from './utils';
+import { filterSlots, getRulesBySlots } from './utils';
 import { tokens } from './themes';
 import { ViewContext } from './ViewContext';
 
@@ -13,6 +13,15 @@ const useStyles = makeStyles({
     backgroundColor: tokens.background,
     color: tokens.foreground,
     paddingBottom: '10px',
+  },
+  input: {
+    width: 'calc(100% - 20px)',
+    color: 'inherit',
+    backgroundColor: 'inherit',
+    ...shorthands.margin('5px'),
+    ...shorthands.padding('2px'),
+    ...shorthands.borderRadius('2px'),
+    ...shorthands.border('1px', 'solid'),
   },
   info: {
     ...shorthands.margin(0, '5px'),
@@ -41,11 +50,25 @@ export const FlattenView: React.FC<FlattenViewProps> = props => {
   const [highlightedClass, setHighlightedClass] = React.useState('');
   const contextValue = React.useMemo(() => ({ highlightedClass, setHighlightedClass }), [highlightedClass]);
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredSlots = React.useMemo(() => filterSlots(slots, searchTerm), [slots, searchTerm]);
+
   return (
     <div className={classes.root}>
+      <input
+        type="text"
+        placeholder="filter"
+        className={classes.input}
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
       <div className={classes.info}>direction: {debugResultRoot.direction}</div>
       <ViewContext.Provider value={contextValue}>
-        {slots.map(({ slot, rules }) => (
+        {filteredSlots.map(({ slot, rules }) => (
           <SlotCSSRules key={slot} slot={slot} atomicRules={rules} />
         ))}
       </ViewContext.Provider>

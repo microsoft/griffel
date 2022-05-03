@@ -1,5 +1,6 @@
-import { getRulesBySlots } from './utils';
+import { filterSlots, getRulesBySlots } from './utils';
 import type { DebugResult } from '@griffel/core';
+import type { SlotInfo } from './types';
 
 describe('getRulesBySlots', () => {
   it('traverse debug result, gather and return all makeStyles slot name and rules', () => {
@@ -70,5 +71,40 @@ describe('getRulesBySlots', () => {
         ],
       },
     ]);
+  });
+});
+
+describe('filterSlots', () => {
+  it('returns filter results without modifying the searched object', () => {
+    const slots: SlotInfo[] = [
+      {
+        slot: 'slot2',
+        rules: [
+          {
+            cssRule: '.fabcde2{display:none;}',
+          },
+        ],
+      },
+      {
+        slot: 'slot1',
+        rules: [
+          {
+            cssRule: '.fabcde1{display:block;}',
+            overriddenBy: 'fabcde2',
+          },
+        ],
+      },
+      {
+        slot: 'root',
+        rules: [
+          {
+            cssRule: '.fabcde0{background-color:transparent;}',
+          },
+        ],
+      },
+    ];
+    const slotsString = JSON.stringify(slots);
+    expect(filterSlots(slots, 'display')).toEqual([slots[0], slots[1]]);
+    expect(JSON.stringify(slots)).toEqual(slotsString); // slots itself is not modified
   });
 });
