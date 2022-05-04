@@ -92,6 +92,10 @@ describe('filterSlots', () => {
             cssRule: '.fabcde1{display:block;}',
             overriddenBy: 'fabcde2',
           },
+          {
+            cssRule: '.fabcd11{color:blue;}',
+            overriddenBy: 'fabcd11',
+          },
         ],
       },
       {
@@ -104,7 +108,13 @@ describe('filterSlots', () => {
       },
     ];
     const slotsString = JSON.stringify(slots);
-    expect(filterSlots(slots, 'display')).toEqual([slots[0], slots[1]]);
+    expect(filterSlots(slots, 'display')).toEqual([
+      slots[0],
+      {
+        slot: 'slot1',
+        rules: [slots[1].rules[0]],
+      },
+    ]);
     expect(JSON.stringify(slots)).toEqual(slotsString); // slots itself is not modified
   });
 });
