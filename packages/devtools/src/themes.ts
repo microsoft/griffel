@@ -12,6 +12,8 @@ export const tokens: Record<keyof ColorTokens, `var(--griffel-${keyof ColorToken
 
   slotNameBackground: 'var(--griffel-slotNameBackground)',
   slotNameBorder: 'var(--griffel-slotNameBorder)',
+
+  tooltipBackground: 'var(--griffel-tooltipBackground)',
 };
 
 function themeToVariables(theme: ColorTokens) {
@@ -34,6 +36,8 @@ export const lightTheme = themeToVariables({
 
   slotNameBackground: 'rgb(247, 247, 247)',
   slotNameBorder: 'rgb(202, 205, 209)',
+
+  tooltipBackground: 'rgb(233, 233, 233)',
 });
 
 export const darkTheme = themeToVariables({
@@ -48,4 +52,6 @@ export const darkTheme = themeToVariables({
 
   slotNameBackground: 'rgb(51, 51, 51)',
   slotNameBorder: 'rgb(73, 76, 80)',
+
+  tooltipBackground: 'rgb(69, 69, 69)',
 });

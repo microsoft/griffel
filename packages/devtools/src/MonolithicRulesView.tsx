@@ -1,10 +1,12 @@
 import beautify from 'js-beautify';
 import * as React from 'react';
 import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
+import { useFloating, flip, shift } from '@floating-ui/react-dom';
 
 import { HighlightedCSS } from './HighlightedCSS';
 import { useViewContext } from './ViewContext';
 import type { MonolithicRules, RuleDetail } from './types';
+import { tokens } from './themes';
 
 const formatCSS = (css: string) => {
   const formatted = beautify.css_beautify(`{${css}}`); // add {} for formatting
@@ -14,6 +16,12 @@ const formatCSS = (css: string) => {
 const INDENT = '10px';
 
 const useSingleRuleStyles = makeStyles({
+  root: {
+    position: 'relative',
+    ':hover pre': {
+      visibility: 'visible',
+    },
+  },
   overriden: {
     textDecorationLine: 'line-through',
   },
@@ -24,6 +32,17 @@ const useSingleRuleStyles = makeStyles({
     outlineColor: 'orangered',
     outlineStyle: 'dashed',
     outlineWidth: '1px',
+  },
+  tooltip: {
+    visibility: 'hidden',
+    display: 'inline-block',
+    textDecorationLine: 'none',
+    color: tokens.cssSelector,
+    backgroundColor: tokens.tooltipBackground,
+    textAlign: 'center',
+    ...shorthands.borderRadius('6px'),
+    ...shorthands.padding('5px'),
+    zIndex: 1,
   },
 });
 
@@ -40,15 +59,34 @@ const SingleRuleView: React.FC<{ rule: RuleDetail; indent?: boolean }> = ({ rule
   };
 
   const classes = useSingleRuleStyles();
-  const className = mergeClasses(
+  const rootClassName = mergeClasses(
+    classes.root,
     rule.overriddenBy && classes.overriden,
     indent && classes.indent,
     highlightedClass === rule.className && classes.highlighted,
   );
 
+  const { x, y, reference, floating, strategy } = useFloating({
+    placement: 'right',
+    middleware: [
+      flip({
+        fallbackPlacements: ['top', 'bottom'],
+      }),
+      shift(),
+    ],
+  });
+  const tooltipInlineStyle = {
+    position: strategy,
+    top: y ?? '',
+    left: x ?? '',
+  };
+
   return (
-    <div onClick={handleClick} className={className}>
-      <HighlightedCSS code={formatCSS(rule.css)} />
+    <div onClick={handleClick} className={rootClassName}>
+      <HighlightedCSS ref={reference} code={formatCSS(rule.css)} />
+      <pre ref={floating} className={classes.tooltip} style={tooltipInlineStyle}>
+        {rule.className}
+      </pre>
     </div>
   );
 };
