@@ -53,5 +53,5 @@ export const darkTheme = themeToVariables({
   slotNameBackground: 'rgb(51, 51, 51)',
   slotNameBorder: 'rgb(73, 76, 80)',
 
-  tooltipBackground: 'rgb(69, 69, 69)',
+  tooltipBackground: 'black',
 });
