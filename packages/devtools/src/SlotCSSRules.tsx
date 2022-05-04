@@ -12,7 +12,6 @@ const useStyles = makeStyles({
   slotName: {
     cursor: 'pointer',
     ...shorthands.padding('2px', '5px'),
-    ...shorthands.margin('5px', 0),
     ...shorthands.borderTop('1px', 'solid', tokens.slotNameBorder),
     ...shorthands.borderBottom('1px', 'solid', tokens.slotNameBorder),
     backgroundColor: tokens.slotNameBackground,
@@ -33,7 +32,7 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }
   const undoHighlight = () => setHighlightedClass('');
 
   return (
-    <>
+    <div>
       <pre className={classes.slotName} onClick={toggleExpanded}>
         {slot}
       </pre>
@@ -42,6 +41,6 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }
           <MonolithicRulesView rules={rules} />
         </div>
       )}
-    </>
+    </div>
   );
 };
