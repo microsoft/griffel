@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "Inject devtools when session storage contains __GRIFFEL_DEVTOOLS__",
+  "comment": "feat: inject devtools when session storage contains __GRIFFEL_DEVTOOLS__",
   "packageName": "@griffel/core",
   "email": "yuanboxue@microsoft.com",
   "dependentChangeType": "patch"
