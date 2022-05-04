@@ -19,5 +19,8 @@ describe('makeStyles', () => {
     const container = document.createElement('div');
 
     expect(() => ReactDOM.render(<Example />, container)).toThrow(/All makeStyles\(\) calls should be top level/);
+
+    // Should not throw outside React components after rendering
+    expect(() => makeStyles({ root: { color: 'red' } })).not.toThrow();
   });
 });
