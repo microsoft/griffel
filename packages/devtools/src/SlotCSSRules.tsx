@@ -27,7 +27,7 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(true);
-  const handleSlotNameClick = () => setExpanded(v => !v);
+  const toggleExpanded= () => setExpanded(v => !v);
 
   const { setHighlightedClass } = useViewContext();
   const undoHighlight = () => setHighlightedClass('');
