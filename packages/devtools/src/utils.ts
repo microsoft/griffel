@@ -1,5 +1,5 @@
 import type { DebugResult } from '@griffel/core';
-import { SlotInfo } from './types';
+import { AtomicRules, SlotInfo } from './types';
 
 export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): SlotInfo[] {
   if (node.children.length === 0 && node.slot) {
@@ -29,9 +29,18 @@ export function filterSlots(slots: SlotInfo[], searchTerm: string) {
     return slots;
   }
 
-  const clone = JSON.parse(JSON.stringify(slots)) as SlotInfo[];
-  return clone.filter(slot => {
-    slot.rules = slot.rules.filter(rule => rule.cssRule.includes(searchTerm));
-    return slot.rules.length;
+  const result: SlotInfo[] = [];
+
+  slots.forEach(({ slot, rules }) => {
+    const filteredRules: AtomicRules[] = [];
+    rules.forEach(rule => {
+      if (rule.cssRule.includes(searchTerm)) {
+        filteredRules.push(rule);
+      }
+    });
+    if (filteredRules.length) {
+      result.push({ slot, rules: filteredRules });
+    }
   });
+  return result;
 }
