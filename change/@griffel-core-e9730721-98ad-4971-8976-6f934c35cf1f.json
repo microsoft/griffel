@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add shorthand function for inset",
-  "packageName": "@griffel/core",
-  "email": "bsunderhus@microsoft.com",
-  "dependentChangeType": "patch"
-}

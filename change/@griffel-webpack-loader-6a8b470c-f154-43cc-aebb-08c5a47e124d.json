@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: remove dependency on @linaria/babel-preset",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

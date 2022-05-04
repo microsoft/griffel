@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Wed, 04 May 2022 16:15:22 GMT",
+      "tag": "@griffel/webpack-loader_v2.0.4",
+      "version": "2.0.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "7cbdfc73945ae85da7b0d35a1fa808559a9aa5af",
+            "comment": "chore: remove dependency on @linaria/babel-preset"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.3.0",
+            "commit": "dbf9adc8acedba645ee95f469353836d1ae5fa6a"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/react to v1.0.4",
+            "commit": "dbf9adc8acedba645ee95f469353836d1ae5fa6a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Apr 2022 13:28:28 GMT",
       "tag": "@griffel/webpack-loader_v2.0.3",
       "version": "2.0.3",

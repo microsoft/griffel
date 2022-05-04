@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: avoid errors with React 18",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

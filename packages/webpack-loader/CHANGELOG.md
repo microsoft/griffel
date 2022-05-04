@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-loader
 
-This log was last generated on Wed, 06 Apr 2022 13:28:28 GMT and should not be manually modified.
+This log was last generated on Wed, 04 May 2022 16:15:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.4
+
+Wed, 04 May 2022 16:15:22 GMT
+
+### Patches
+
+- chore: remove dependency on @linaria/babel-preset (olfedias@microsoft.com)
+- Bump @griffel/babel-preset to v1.3.0
+- Bump @griffel/react to v1.0.4
 
 ## 2.0.3
 

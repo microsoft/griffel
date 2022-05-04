@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update babelrc with dev env presets",
-  "packageName": "@griffel/core",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "none"
-}

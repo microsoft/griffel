@@ -10,9 +10,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@griffel/react": "^1.0.3",
+    "@griffel/react": "^1.0.4",
     "js-beautify": "^1.14.0",
-    "prism-react-renderer": "1.2.1", 
+    "prism-react-renderer": "1.2.1",
     "react-dom": ">=16.8.0 <18.0.0",
     "react": ">=16.8.0 <18.0.0",
     "stylis": "^4.0.13"

@@ -1,8 +1,18 @@
 # Change Log - @griffel/react
 
-This log was last generated on Wed, 06 Apr 2022 13:28:28 GMT and should not be manually modified.
+This log was last generated on Wed, 04 May 2022 16:15:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.4
+
+Wed, 04 May 2022 16:15:22 GMT
+
+### Patches
+
+- fix: avoid errors with React 18 (olfedias@microsoft.com)
+- fix: update isInsideComponent() check (olfedias@microsoft.com)
+- Bump @griffel/core to v1.3.0
 
 ## 1.0.3
 
