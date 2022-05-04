@@ -10,23 +10,33 @@ import type { AtomicRules } from './types';
 
 const useStyles = makeStyles({
   slotName: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+
     cursor: 'pointer',
     ...shorthands.padding('2px', '5px'),
     ...shorthands.borderTop('1px', 'solid', tokens.slotNameBorder),
     ...shorthands.borderBottom('1px', 'solid', tokens.slotNameBorder),
     backgroundColor: tokens.slotNameBackground,
-  },
-  slotNameCollapsed: {
+
     ':before': {
       content: "''",
+      position: 'absolute',
+      right: '5px',
       width: 0,
       height: 0,
       fontSize: 0,
-      verticalAlign: 'text-top',
-      ...shorthands.borderTop('3px', 'solid', 'transparent'),
+      ...shorthands.borderTop('3px', 'solid', tokens.foreground),
       ...shorthands.borderRight('3px', 'solid', 'transparent'),
+      ...shorthands.borderLeft('3px', 'solid', 'transparent'),
       ...shorthands.borderBottom('3px', 'solid', 'transparent'),
-      ...shorthands.borderLeft('3px', 'solid', tokens.foreground),
+    },
+  },
+  slotNameCollapsed: {
+    ':before': {
+      ...shorthands.borderTop('3px', 'solid', 'transparent'),
+      ...shorthands.borderRight('3px', 'solid', tokens.foreground),
     },
   },
   rules: {
