@@ -5,6 +5,8 @@ export type ColorTokens = {
   slotNameBackground: string;
   slotNameBorder: string;
 
+  tooltipBackground: string;
+
   /** tokens for css highlighting */
   cssAtRule: string;
   cssNumber: string;

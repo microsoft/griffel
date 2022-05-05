@@ -61,13 +61,17 @@ const useColorIndicatorStyles = makeStyles({
   },
 });
 
-export const HighlightedCSS: React.FC<{ code: string }> = ({ code }) => {
+export const HighlightedCSS = React.forwardRef<HTMLPreElement, { code: string }>(({ code }, ref) => {
   const { colorIndicator } = useColorIndicatorStyles();
 
   return (
     <Highlight {...defaultProps} code={code} language="css" theme={customTheme}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={{ ...style, display: 'inline-block', textDecorationLine: 'inherit' }}>
+        <pre
+          ref={ref}
+          className={className}
+          style={{ ...style, display: 'inline-block', textDecorationLine: 'inherit' }}
+        >
           {tokens.map((line, i) => (
             <div {...getLineProps({ line, key: i })}>
               {line.map((token, key) => {
@@ -93,4 +97,4 @@ export const HighlightedCSS: React.FC<{ code: string }> = ({ code }) => {
       )}
     </Highlight>
   );
-};
+});
