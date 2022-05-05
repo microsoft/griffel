@@ -9,9 +9,9 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
-  "dependencies": {
+  "dependencies": { 
     "@floating-ui/react-dom": "^0.6.3",
-    "@griffel/react": "^1.0.3",
+    "@griffel/react": "^1.0.4",
     "js-beautify": "^1.14.0",
     "prism-react-renderer": "1.2.1",
     "react-dom": ">=16.8.0 <18.0.0",

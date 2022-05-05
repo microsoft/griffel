@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "initial release",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

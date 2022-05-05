@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: integrate bundle size tooling",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

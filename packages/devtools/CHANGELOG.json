@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/devtools",
+  "entries": [
+    {
+      "date": "Wed, 04 May 2022 16:15:22 GMT",
+      "tag": "@griffel/devtools_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.0.4",
+            "commit": "dbf9adc8acedba645ee95f469353836d1ae5fa6a"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -23,3 +23,19 @@ export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): Slo
     return [...acc, ...getRulesBySlots(child)];
   }, result);
 }
+
+export function filterSlots(slots: SlotInfo[], searchTerm: string) {
+  if (!searchTerm.length) {
+    return slots;
+  }
+
+  return slots.reduce<SlotInfo[]>((acc, { slot, rules }) => {
+    const filteredRules = rules.filter(rule => rule.cssRule.includes(searchTerm));
+
+    if (filteredRules.length) {
+      return [...acc, { slot, rules: filteredRules }];
+    }
+
+    return acc;
+  }, []);
+}

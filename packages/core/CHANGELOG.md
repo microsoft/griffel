@@ -1,8 +1,24 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 06 Apr 2022 13:28:28 GMT and should not be manually modified.
+This log was last generated on Wed, 04 May 2022 16:15:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Wed, 04 May 2022 16:15:22 GMT
+
+### Minor changes
+
+- feat: inject devtools when session storage contains __GRIFFEL_DEVTOOLS__ (yuanboxue@microsoft.com)
+- feat: add support for @layer (mgodbolt@microsoft.com)
+- feat: add shorthand function for outline (bsunderhus@microsoft.com)
+- feat: add shorthand function for inset (bsunderhus@microsoft.com)
+- feat: generate debug hash sequence for devtools (yuanboxue@microsoft.com)
+
+### Patches
+
+- fix: fix issue with comma-separated selectors and RTL (seanmonahan@microsoft.com)
 
 ## 1.2.0
 

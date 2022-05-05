@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add @fluentui/react-components to handled imports by default",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

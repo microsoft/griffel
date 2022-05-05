@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: re-export Module & EvalCache from Linaria",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

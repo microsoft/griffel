@@ -2,7 +2,7 @@ import * as React from 'react';
 import { makeStaticStyles, makeStyles, shorthands } from '@griffel/react';
 
 import { SlotCSSRules } from './SlotCSSRules';
-import { getRulesBySlots } from './utils';
+import { filterSlots, getRulesBySlots } from './utils';
 import { tokens } from './themes';
 import { ViewContext } from './ViewContext';
 
@@ -12,10 +12,38 @@ const useStyles = makeStyles({
   root: {
     backgroundColor: tokens.background,
     color: tokens.foreground,
-    paddingBottom: '10px',
+  },
+  bar: {
+    alignItems: 'center',
+    display: 'flex',
+    columnGap: '4px',
+    fontFamily: 'system-ui',
+    fontSize: '12px',
+  },
+  input: {
+    color: 'inherit',
+    flexGrow: 1,
+    backgroundColor: tokens.slotNameBackground,
+    ...shorthands.margin('2px'),
+    ...shorthands.padding('2px'),
+    ...shorthands.border('1px', 'solid', tokens.slotNameBorder),
+
+    ':focus-visible': {
+      backgroundColor: 'inherit',
+      outlineStyle: 'solid',
+      outlineWidth: 'thin',
+    },
   },
   info: {
-    ...shorthands.margin(0, '5px'),
+    cursor: 'help',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dotted',
+    marginRight: '4px',
+  },
+  rules: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '5px',
   },
 });
 
@@ -41,14 +69,34 @@ export const FlattenView: React.FC<FlattenViewProps> = props => {
   const [highlightedClass, setHighlightedClass] = React.useState('');
   const contextValue = React.useMemo(() => ({ highlightedClass, setHighlightedClass }), [highlightedClass]);
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredSlots = React.useMemo(() => filterSlots(slots, searchTerm), [slots, searchTerm]);
+
   return (
     <div className={classes.root}>
-      <div className={classes.info}>direction: {debugResultRoot.direction}</div>
-      <ViewContext.Provider value={contextValue}>
-        {slots.map(({ slot, rules }) => (
-          <SlotCSSRules key={slot} slot={slot} atomicRules={rules} />
-        ))}
-      </ViewContext.Provider>
+      <div className={classes.bar}>
+        <input
+          type="text"
+          placeholder="Filter"
+          className={classes.input}
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <div className={classes.info} title={`"dir"=${debugResultRoot.direction}`}>
+          {debugResultRoot.direction.toLocaleUpperCase()}
+        </div>
+      </div>
+      <div className={classes.rules}>
+        <ViewContext.Provider value={contextValue}>
+          {filteredSlots.map(({ slot, rules }) => (
+            <SlotCSSRules key={slot} slot={slot} atomicRules={rules} />
+          ))}
+        </ViewContext.Provider>
+      </div>
     </div>
   );
 };
