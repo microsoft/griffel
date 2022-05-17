@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 04 May 2022 16:15:22 GMT and should not be manually modified.
+This log was last generated on Tue, 17 May 2022 08:34:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.1
+
+Tue, 17 May 2022 08:34:48 GMT
+
+### Patches
+
+- fix: update isDevToolsEnabled check (olfedias@microsoft.com)
 
 ## 1.3.0
 

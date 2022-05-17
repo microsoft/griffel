@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: update isDevToolsEnabled check",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
