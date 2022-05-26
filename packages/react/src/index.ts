@@ -5,7 +5,7 @@ export { makeStyles } from './makeStyles';
 export { makeStaticStyles } from './makeStaticStyles';
 export { renderToStyleElements } from './renderToStyleElements';
 
-export { RendererProvider } from './RendererContext';
+export { RendererProvider, useRenderer as useRenderer_unstable } from './RendererContext';
 export { TextDirectionProvider } from './TextDirectionContext';
 
 // Private exports, are used by build time transforms

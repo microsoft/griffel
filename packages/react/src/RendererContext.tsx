@@ -45,7 +45,7 @@ export const RendererProvider: React.FC<RendererProviderProps> = ({ children, re
 /**
  * Returns an instance of current makeStyles() renderer.
  *
- * @private
+ * @private Exported as "useRenderer_unstable" use it on own risk. Can be changed or removed without a notice.
  */
 export function useRenderer(): GriffelRenderer {
   return React.useContext(RendererContext);
