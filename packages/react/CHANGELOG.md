@@ -1,8 +1,16 @@
 # Change Log - @griffel/react
 
-This log was last generated on Tue, 17 May 2022 08:34:48 GMT and should not be manually modified.
+This log was last generated on Thu, 26 May 2022 15:06:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Thu, 26 May 2022 15:06:34 GMT
+
+### Minor changes
+
+- feat: export useRenderer_unstable (olfedias@microsoft.com)
 
 ## 1.0.5
 

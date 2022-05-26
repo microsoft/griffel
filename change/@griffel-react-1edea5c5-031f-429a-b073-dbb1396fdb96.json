@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: export useRenderer_unstable",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
