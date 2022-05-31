@@ -137,6 +137,7 @@ const mergeFallbacks = (fallbackArray: FlexInput[]) =>
   fallbackArray.reduce((acc, current, arr, index) => {
     const nextFallback = generateFlex(...current);
     for (const key in acc) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore TypeScript fails to correctly type the return value due to ValueOrArray. Tests confirm that this
       // scenario works as expected.
       acc[key as keyof FlexStyle] = mergeValue(acc[key as keyof FlexStyle], nextFallback[key as keyof FlexStyle]);
