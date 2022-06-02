@@ -13,7 +13,11 @@ export default function Playground() {
     <SandpackProvider
       template="react"
       customSetup={{
-        dependencies: { '@griffel/core': 'latest', 'highlight.js': 'latest', 'js-beautify': 'latest' },
+        dependencies: {
+          '@griffel/core': 'latest',
+          'highlight.js': 'latest',
+          'js-beautify': 'latest',
+        },
         files: {
           '/App.js': { code: AppCode, hidden: true },
           // Template files are in JS but type checked, don't want unnecessary comments leaking into docs

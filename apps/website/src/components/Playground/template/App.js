@@ -12,12 +12,30 @@ export default function App() {
   const [rules, setRules] = React.useState('');
   const ref = React.useRef(null);
   React.useEffect(() => {
+    const styleTag = document.createElement('style');
+    styleTag.id = 'playground';
+    document.head.append(styleTag);
+
     /** @type import('@griffel/core').GriffelRenderer */
     const playgroundRenderer = {
       id: 'playground',
-      insertCSSRules(cssRules) {
-        const raw = Object.values(cssRules)
-          .reduce((acc, val) => acc.concat(val), [])
+      insertCSSRules(cssRuleBuckets) {
+        const cssRules = Object.values(cssRuleBuckets)
+          .reduce((acc, val) => {
+            return acc.concat(val);
+          }, [])
+          .filter(Boolean);
+
+        cssRules.forEach(cssRule => {
+          styleTag.sheet?.insertRule(cssRule);
+        });
+
+        if (!styleTag.sheet) {
+          return;
+        }
+
+        const raw = Array.from(styleTag.sheet.cssRules)
+          .map(cssRule => cssRule.cssText)
           .join('\n');
         const prettified = beautify.css_beautify(raw, { indent_size: 2 });
         setRules(prettified);
@@ -30,6 +48,10 @@ export default function App() {
       dir: 'ltr',
       renderer: playgroundRenderer,
     });
+
+    return () => {
+      styleTag.remove();
+    };
   }, []);
 
   React.useEffect(() => {

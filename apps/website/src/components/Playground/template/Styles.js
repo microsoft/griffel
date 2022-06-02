@@ -5,7 +5,7 @@ export default makeStyles({
   root: {
     backgroundColor: 'red',
     paddingLeft: '10px',
-    '@media(forced-colors: active):': {
+    '@media(forced-colors: active)': {
       ...shorthands.borderColor('transparent'),
     },
   },
