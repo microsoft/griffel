@@ -96,28 +96,4 @@ describe('flex', () => {
       flexBasis: '10rem',
     });
   });
-
-  it('for fallback value arrays', () => {
-    expect(flex([1, 1, '10rem'], [1, 1, 'auto'])).toEqual({
-      flexGrow: 1,
-      flexShrink: 1,
-      flexBasis: ['10rem', 'auto'],
-    });
-  });
-
-  it('for fallback value arrays with mixed values', () => {
-    expect(flex(['auto'], [1, '30px'], [0, 0, 'auto'])).toEqual({
-      flexGrow: [1, 0],
-      flexShrink: [1, 0],
-      flexBasis: ['auto', '30px', 'auto'],
-    });
-  });
-
-  it('for fallback value arrays with repeated values', () => {
-    expect(flex([0, 0, 'auto'], [0, 0, 'auto'], [0, 0, 'auto'])).toEqual({
-      flexGrow: 0,
-      flexShrink: 0,
-      flexBasis: 'auto',
-    });
-  });
 });

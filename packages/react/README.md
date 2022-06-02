@@ -158,7 +158,6 @@ const useClasses = makeStyles({
     ...shorthands.flex('auto'),
     ...shorthands.flex(1, '2.5rem'),
     ...shorthands.flex(0, 0, 'auto'),
-    ...shorthands.flex([0, 0, 'auto'], [0, 0, '100vw']),
   },
 });
 ```
