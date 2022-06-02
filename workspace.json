@@ -8,6 +8,7 @@
     "@griffel/eslint-plugin": "packages/eslint-plugin",
     "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/react": "packages/react",
+    "@griffel/vite-plugin": "packages/vite-plugin",
     "@griffel/webpack-loader": "packages/webpack-loader",
     "@griffel/website": "apps/website"
   }

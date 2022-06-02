@@ -1,0 +1,34 @@
+{
+  "root": "packages/vite-plugin",
+  "sourceRoot": "packages/vite-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/vite-plugin/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/vite-plugin"],
+      "options": {
+        "jestConfig": "packages/vite-plugin/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/vite-plugin",
+        "tsConfig": "packages/vite-plugin/tsconfig.lib.json",
+        "packageJson": "packages/vite-plugin/package.json",
+        "main": "packages/vite-plugin/src/index.ts",
+        "assets": ["packages/vite-plugin/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

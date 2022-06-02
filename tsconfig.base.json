@@ -22,6 +22,7 @@
       "@griffel/eslint-plugin": ["packages/eslint-plugin/src/index.ts"],
       "@griffel/jest-serializer": ["packages/jest-serializer/src/index.ts"],
       "@griffel/react": ["packages/react/src/index.ts"],
+      "@griffel/vite-plugin": ["packages/vite-plugin/src/index.ts"],
       "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]
