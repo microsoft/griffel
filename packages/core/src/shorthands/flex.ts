@@ -79,8 +79,6 @@ export function flex(...values: FlexInput): FlexStyle {
           flexBasis: firstValue as Width,
         };
       }
-    } else {
-      // Fallback array
     }
   }
 
