@@ -38,47 +38,44 @@ export function flex(...values: FlexInput): FlexStyle {
   if (isOneValueSyntax) {
     const [firstValue] = values;
 
-    if (!Array.isArray(firstValue)) {
-      // Single value
-      if (isInitial(firstValue)) {
-        return {
-          flexGrow: 0,
-          flexShrink: 1,
-          flexBasis: 'auto',
-        };
-      }
+    if (isInitial(firstValue)) {
+      return {
+        flexGrow: 0,
+        flexShrink: 1,
+        flexBasis: 'auto',
+      };
+    }
 
-      if (isAuto(firstValue)) {
-        return {
-          flexGrow: 1,
-          flexShrink: 1,
-          flexBasis: 'auto',
-        };
-      }
+    if (isAuto(firstValue)) {
+      return {
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: 'auto',
+      };
+    }
 
-      if (isNone(firstValue)) {
-        return {
-          flexGrow: 0,
-          flexShrink: 0,
-          flexBasis: 'auto',
-        };
-      }
+    if (isNone(firstValue)) {
+      return {
+        flexGrow: 0,
+        flexShrink: 0,
+        flexBasis: 'auto',
+      };
+    }
 
-      if (isUnitless(firstValue)) {
-        return {
-          flexGrow: firstValue as number,
-          flexShrink: 1,
-          flexBasis: 0,
-        };
-      }
+    if (isUnitless(firstValue)) {
+      return {
+        flexGrow: firstValue as number,
+        flexShrink: 1,
+        flexBasis: 0,
+      };
+    }
 
-      if (isWidth(firstValue)) {
-        return {
-          flexGrow: 1,
-          flexShrink: 1,
-          flexBasis: firstValue as Width,
-        };
-      }
+    if (isWidth(firstValue)) {
+      return {
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: firstValue as Width,
+      };
     }
   }
 
@@ -104,6 +101,7 @@ export function flex(...values: FlexInput): FlexStyle {
 
   if (isThreeValueSyntax) {
     const [firstValue, secondValue, thirdValue] = values;
+
     if (isUnitless(firstValue) && isUnitless(secondValue) && (isAuto(thirdValue) || isWidth(thirdValue))) {
       return {
         flexGrow: firstValue,
