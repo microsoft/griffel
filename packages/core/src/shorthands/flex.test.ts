@@ -69,7 +69,7 @@ describe('flex', () => {
     expect(flex(2, 2)).toEqual({
       flexGrow: 2,
       flexShrink: 2,
-      flexBasis: 'auto',
+      flexBasis: 0,
     });
   });
 
