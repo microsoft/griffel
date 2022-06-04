@@ -96,4 +96,8 @@ describe('flex', () => {
       flexBasis: '10rem',
     });
   });
+
+  it('for incorrect input', () => {
+    expect(flex('hello', 'oh', 'no')).toEqual({});
+  });
 });

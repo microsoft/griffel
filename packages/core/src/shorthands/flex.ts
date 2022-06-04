@@ -34,7 +34,6 @@ export function flex(...values: FlexInput): FlexStyle {
   const isTwoValueSyntax = values.length === 2;
   const isThreeValueSyntax = values.length === 3;
 
-  // One Value Syntax
   if (isOneValueSyntax) {
     const [firstValue] = values;
 
@@ -111,9 +110,11 @@ export function flex(...values: FlexInput): FlexStyle {
     }
   }
 
-  return {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 'auto',
-  } as FlexStyle;
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line no-console
+    console.error(
+      `The value passed to shorthands.flex did not match any flex property specs. The CSS styles were not generated. Please, check the flex documentation.`,
+    );
+  }
+  return {};
 }
