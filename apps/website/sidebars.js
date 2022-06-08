@@ -4,7 +4,7 @@ const babel = require('@babel/core');
 
 function generateTryItOutSidebar() {
   const playgroundTemplatePath = path.join(__dirname, '/src/components/Playground/code/templates');
-  const templateFiles = fs.readdirSync(playgroundTemplatePath).filter(filename => filename !== 'app.js');
+  const templateFiles = fs.readdirSync(playgroundTemplatePath);
   return templateFiles
     .map(templateFile => {
       const id = path.parse(templateFile).name;
