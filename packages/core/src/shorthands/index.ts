@@ -7,6 +7,7 @@ export { borderColor } from './borderColor';
 export { borderStyle } from './borderStyle';
 export { borderRadius } from './borderRadius';
 export { borderWidth } from './borderWidth';
+export { flex } from './flex';
 export { gap } from './gap';
 export { margin } from './margin';
 export { padding } from './padding';

@@ -148,6 +148,20 @@ const useClasses = makeStyles({
 });
 ```
 
+### `shorthands.flex`
+
+```js
+import { makeStyles, shorthands } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    ...shorthands.flex('auto'),
+    ...shorthands.flex(1, '2.5rem'),
+    ...shorthands.flex(0, 0, 'auto'),
+  },
+});
+```
+
 ### `shorthands.gap`
 
 ```js
