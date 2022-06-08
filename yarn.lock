@@ -6214,13 +6214,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/path-browserify@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@types/path-browserify@npm:1.0.0"
-  checksum: e3f98ef9638fb75dc7547c3cde5fa86bc5986e38403ec91234abcc7b911e30711af7c6abc674d617d27c4a6c09e7f8e9d77662b1cc45d00d4708d94764202b61
-  languageName: node
-  linkType: hard
-
 "@types/prettier@npm:*, @types/prettier@npm:^2.1.5":
   version: 2.4.3
   resolution: "@types/prettier@npm:2.4.3"
@@ -13292,7 +13285,6 @@ __metadata:
     "@types/js-beautify": ^1.13.3
     "@types/loader-utils": 2.0.3
     "@types/node": 14.14.33
-    "@types/path-browserify": ^1.0.0
     "@types/react": 17.0.30
     "@types/react-dom": 17.0.9
     "@types/stylis": 4.0.2
@@ -13324,7 +13316,6 @@ __metadata:
     monosize: 0.0.3
     monosize-storage-upstash: 0.0.2
     nano-staged: 0.5.0
-    path-browserify: ^1.0.1
     prettier: 2.3.1
     prism-react-renderer: 1.2.1
     react: 17.0.2
