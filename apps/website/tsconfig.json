@@ -12,7 +12,13 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["environment", "static-assets", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic"]
+    "types": [
+      "environment",
+      "static-assets",
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic",
+      "webpack-env"
+    ]
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"]
 }
