@@ -1,5 +1,3 @@
-// @ts-check
-
 const path = require('path');
 const fs = require('fs');
 const babel = require('@babel/core');
@@ -16,20 +14,23 @@ function generateTryItOutSidebar() {
       const meta = { name: id };
       babel.traverse(res, {
         VariableDeclarator(path) {
-          if (
-            babel.types.isIdentifier(path.node.id, { name: 'meta' }) &&
-            path.node.init &&
-            babel.types.isObjectExpression(path.node.init)
-          ) {
-            path.node.init.properties.forEach(property => {
-              if (
-                babel.types.isProperty(property) &&
-                babel.types.isIdentifier(property.key) &&
-                (babel.types.isStringLiteral(property.value) || babel.types.isBooleanLiteral(property.value))
-              ) {
-                meta[property.key.name] = property.value.value;
-              }
-            });
+          const idPath = path.get('id');
+          const initPath = path.get('init');
+
+          if (idPath.isIdentifier({ name: 'meta' }) && initPath.isObjectExpression) {
+            const properties = initPath.get('properties');
+            if (Array.isArray(properties)) {
+              properties.forEach(propertyPath => {
+                if (propertyPath.isObjectProperty()) {
+                  const keyPath = propertyPath.get('key');
+                  const valuePath = propertyPath.get('value');
+
+                  if (keyPath.isIdentifier() && (valuePath.isStringLiteral() || valuePath.isBooleanLiteral())) {
+                    meta[keyPath.node.name] = valuePath.node.value;
+                  }
+                }
+              });
+            }
           }
         },
       });
