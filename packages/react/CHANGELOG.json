@@ -2,6 +2,118 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 26 May 2022 15:06:34 GMT",
+      "tag": "@griffel/react_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "ef665ab8dbc42c4db6625144357041f55e78c46e",
+            "comment": "feat: export useRenderer_unstable"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 May 2022 08:34:48 GMT",
+      "tag": "@griffel/react_v1.0.5",
+      "version": "1.0.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.3.1",
+            "commit": "ca92d20c52389ce51f089c39b03f2838c8329a60"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 May 2022 16:15:22 GMT",
+      "tag": "@griffel/react_v1.0.4",
+      "version": "1.0.4",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "6a0f6e24af80afedf7b47c73f72c71a439b43aca",
+            "comment": "chore: integrate bundle size tooling"
+          },
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "726ddd4397c6991fe1e4df61940e77f3da9f0c83",
+            "comment": "update babelrc with dev env presets"
+          },
+          {
+            "author": "mgodbolt@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "addc2c3922ef8b45d4a9028e84808b9a3eee6f9a",
+            "comment": "docs: add support for @layer"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "5b6cdf3ede6983eba5997b26f5696f2ea459606d",
+            "comment": "README update"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "2391de2b83ac11647fda47d71c6843df90890d25",
+            "comment": "fix: avoid errors with React 18"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "dbf9adc8acedba645ee95f469353836d1ae5fa6a",
+            "comment": "fix: update isInsideComponent() check"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.3.0",
+            "commit": "dbf9adc8acedba645ee95f469353836d1ae5fa6a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Apr 2022 13:28:28 GMT",
+      "tag": "@griffel/react_v1.0.3",
+      "version": "1.0.3",
+      "comments": {
+        "none": [
+          {
+            "author": "miroslav.stastny@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "05635e139c200e609ddb531f40e144b65f9cdcf3",
+            "comment": "Fallback values stories"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "2bda4e578a4fcdd1751a3e7496ea9a6df7916012",
+            "comment": "docs: add docs for createDOMRenderer"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.2.0",
+            "commit": "995c356bc77272f6fe69a604db6485d57a9ba7c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 13:56:06 GMT",
       "tag": "@griffel/react_v1.0.2",
       "version": "1.0.2",

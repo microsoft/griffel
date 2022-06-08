@@ -7,6 +7,7 @@ import { compileCSS, CompileCSSOptions } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
+import { isLayerSelector } from './utils/isLayerSelector';
 import { isNestedSelector } from './utils/isNestedSelector';
 import { isSupportQuerySelector } from './utils/isSupportQuerySelector';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
@@ -48,6 +49,7 @@ export function resolveStyleRules(
   styles: GriffelStyle,
   pseudo = '',
   media = '',
+  layer = '',
   support = '',
   cssClassesMap: CSSClassesMap = {},
   cssRulesByBucket: CSSRulesByBucket = {},
@@ -85,6 +87,7 @@ export function resolveStyleRules(
       const key = hashPropertyKey(pseudo, media, support, property);
       const className = hashClassName({
         media,
+        layer,
         value: value.toString(),
         support,
         pseudo,
@@ -100,6 +103,7 @@ export function resolveStyleRules(
             property: rtlDefinition.key,
             pseudo,
             media,
+            layer,
             support,
           })
         : undefined;
@@ -111,10 +115,11 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(pseudo, media, support);
+      const styleBucketName = getStyleBucketName(pseudo, layer, media, support);
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
+        layer,
         pseudo,
         property,
         support,
@@ -166,17 +171,88 @@ export function resolveStyleRules(
         { animationName: animationNames.join(', ') },
         pseudo,
         media,
+        layer,
         support,
         cssClassesMap,
         cssRulesByBucket,
         rtlAnimationNames.join(', '),
       );
+    } else if (Array.isArray(value)) {
+      // not animationName property but array in the value => fallback values
+      if (value.length === 0) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn(
+            `makeStyles(): An empty array was passed as input to "${property}", the property will be omitted in the styles.`,
+          );
+        }
+        continue;
+      }
+
+      const key = hashPropertyKey(pseudo, media, support, property);
+      const className = hashClassName({
+        media,
+        layer,
+        value: value.map(v => (v ?? '').toString()).join(';'),
+        support,
+        pseudo,
+        property,
+      });
+
+      const rtlDefinitions = value.map(v => convertProperty(property, v!));
+
+      const rtlPropertyConsistent = !rtlDefinitions.some(v => v.key !== rtlDefinitions[0].key);
+
+      if (!rtlPropertyConsistent) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(
+            'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
+          );
+        }
+        continue;
+      }
+
+      const flippedInRtl = rtlDefinitions[0].key !== property || rtlDefinitions.some((v, i) => v.value !== value[i]);
+
+      const rtlClassName = flippedInRtl
+        ? hashClassName({
+            value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
+            property: rtlDefinitions[0].key,
+            pseudo,
+            layer,
+            media,
+            support,
+          })
+        : undefined;
+
+      const rtlCompileOptions: Partial<CompileCSSOptions> | undefined = flippedInRtl
+        ? {
+            rtlClassName,
+            rtlProperty: rtlDefinitions[0].key,
+            rtlValue: rtlDefinitions.map(d => d.value) as Array<string | number>,
+          }
+        : undefined;
+
+      const styleBucketName = getStyleBucketName(pseudo, layer, media, support);
+      const [ltrCSS, rtlCSS] = compileCSS({
+        className,
+        media,
+        layer,
+        pseudo,
+        property,
+        support,
+        value: value as Array<string | number>,
+        ...rtlCompileOptions,
+      });
+
+      pushToClassesMap(cssClassesMap, key, className, rtlClassName);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(
           value as GriffelStyle,
           pseudo + normalizeNestedProperty(property),
           media,
+          layer,
           support,
           cssClassesMap,
           cssRulesByBucket,
@@ -184,11 +260,39 @@ export function resolveStyleRules(
       } else if (isMediaQuerySelector(property)) {
         const combinedMediaQuery = generateCombinedQuery(media, property.slice(6).trim());
 
-        resolveStyleRules(value as GriffelStyle, pseudo, combinedMediaQuery, support, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          combinedMediaQuery,
+          layer,
+          support,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      } else if (isLayerSelector(property)) {
+        const combinedLayerQuery = (layer ? `${layer}.` : '') + property.slice(6).trim();
+
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          media,
+          combinedLayerQuery,
+          support,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       } else if (isSupportQuerySelector(property)) {
         const combinedSupportQuery = generateCombinedQuery(support, property.slice(9).trim());
 
-        resolveStyleRules(value as GriffelStyle, pseudo, media, combinedSupportQuery, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          media,
+          layer,
+          combinedSupportQuery,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       } else {
         if (process.env.NODE_ENV !== 'production') {
           // eslint-disable-next-line no-console

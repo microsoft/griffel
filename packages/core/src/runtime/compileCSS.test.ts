@@ -1,12 +1,14 @@
 import { compileCSS, CompileCSSOptions, normalizePseudoSelector } from './compileCSS';
 
-const defaultOptions: Pick<CompileCSSOptions, 'rtlClassName' | 'className' | 'media' | 'pseudo' | 'support'> = {
-  className: 'foo',
-  rtlClassName: 'rtl-foo',
-  media: '',
-  pseudo: '',
-  support: '',
-};
+const defaultOptions: Pick<CompileCSSOptions, 'rtlClassName' | 'className' | 'media' | 'pseudo' | 'support' | 'layer'> =
+  {
+    className: 'foo',
+    rtlClassName: 'rtl-foo',
+    media: '',
+    pseudo: '',
+    support: '',
+    layer: '',
+  };
 
 describe('compileCSS', () => {
   it('handles pseudo', () => {
@@ -32,6 +34,20 @@ describe('compileCSS', () => {
     ).toMatchInlineSnapshot(`
       Array [
         ".foo:focus:hover{color:red;}",
+      ]
+    `);
+  });
+
+  it('handles array of values', () => {
+    expect(
+      compileCSS({
+        ...defaultOptions,
+        property: 'color',
+        value: ['red', 'blue'],
+      }),
+    ).toMatchInlineSnapshot(`
+      Array [
+        ".foo{color:red;color:blue;}",
       ]
     `);
   });
@@ -98,6 +114,23 @@ describe('compileCSS', () => {
       Array [
         ".foo:before{padding-left:10px;}",
         ".rtl-foo:before{padding-right:10px;}",
+      ]
+    `);
+  });
+
+  it('handles rtl properties with fallback values', () => {
+    expect(
+      compileCSS({
+        ...defaultOptions,
+        property: 'paddingLeft',
+        value: [0, '10px'],
+        rtlProperty: 'paddingRight',
+        rtlValue: [0, '10px'],
+      }),
+    ).toMatchInlineSnapshot(`
+      Array [
+        ".foo{padding-left:0;padding-left:10px;}",
+        ".rtl-foo{padding-right:0;padding-right:10px;}",
       ]
     `);
   });

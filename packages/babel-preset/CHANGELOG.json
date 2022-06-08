@@ -2,6 +2,91 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Tue, 17 May 2022 08:34:48 GMT",
+      "tag": "@griffel/babel-preset_v1.3.1",
+      "version": "1.3.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.3.1",
+            "commit": "ca92d20c52389ce51f089c39b03f2838c8329a60"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 May 2022 16:15:22 GMT",
+      "tag": "@griffel/babel-preset_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "rezha@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "7d4c9b6c390d1e0597be50f335c456eb74c67492",
+            "comment": "fix: handle duplicated import sources properly"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "09eb2760eabcb6abc3d21b7333d0ec14f6c4b5d2",
+            "comment": "feat: add @fluentui/react-components to handled imports by default"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "7cbdfc73945ae85da7b0d35a1fa808559a9aa5af",
+            "comment": "feat: re-export Module & EvalCache from Linaria"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.3.0",
+            "commit": "dbf9adc8acedba645ee95f469353836d1ae5fa6a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Apr 2022 13:28:28 GMT",
+      "tag": "@griffel/babel-preset_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "cbfd3045dadcce6f2f8348d56eaf882c5e408482",
+            "comment": "update README"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "594f3264239c1c138eeae969713ed09498e95b6c",
+            "comment": "docs: add \"when to use it\" section"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "699ec126fd85b0b2f8fc924390b5cfa611ffb025",
+            "comment": "feat: export shaker evaluator"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.2.0",
+            "commit": "995c356bc77272f6fe69a604db6485d57a9ba7c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 13:56:06 GMT",
       "tag": "@griffel/babel-preset_v1.1.1",
       "version": "1.1.1",

@@ -1,5 +1,4 @@
-import { configSchema, BabelPluginOptions } from '@griffel/babel-preset';
-import { EvalCache, Module } from '@linaria/babel-preset';
+import { configSchema, BabelPluginOptions, EvalCache, Module } from '@griffel/babel-preset';
 import * as enhancedResolve from 'enhanced-resolve';
 import { getOptions } from 'loader-utils';
 import * as path from 'path';
@@ -50,7 +49,7 @@ export function webpackLoader(
   const options = getOptions(this) as WebpackLoaderOptions;
 
   validate(configSchema, options, {
-    name: '@fluentui/make-styles-webpack-loader',
+    name: '@griffel/webpack-loader',
     baseDataPath: 'options',
   });
 

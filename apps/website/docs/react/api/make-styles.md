@@ -122,7 +122,7 @@ html[data-whatintent='mouse'] .f1xz3i88 {
 
 ### At-rules
 
-`@media` & `@supports` queries are also supported:
+`@media`, `@supports` & `@layer` queries are also supported:
 
 ```js
 import { makeStyles } from '@griffel/react';
@@ -131,6 +131,7 @@ const useClasses = makeStyles({
   root: {
     '@media screen and (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
+    '@layer utility': { marginBottom: '1em' }
   },
 });
 ```
@@ -146,6 +147,12 @@ const useClasses = makeStyles({
 @supports (display: grid) {
   .f1ofq0jl {
     color: red;
+  }
+}
+
+@layer utility {
+  .f2d3jla {
+    margin-bottom: 1em;
   }
 }
 ```
@@ -212,4 +219,30 @@ const useClasses = makeStyles({
     ],
   },
 });
+```
+
+### CSS Fallback Properties
+
+Griffel supports CSS fallback properties in order to support older browsers.
+
+Any CSS property accepts an array of values which are all added to the styles.
+Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser): 
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    overflowY: ['scroll', 'overlay'],
+  },
+});
+```
+
+<OutputTitle>Produces following CSS...</OutputTitle>
+
+```css
+.f1qdoogn{
+  overflow-y: scroll;  /* Fallback for browsers which do not support overflow: overlay */
+  overflow-y: overlay; /* Used by browsers which support overflow: overlay */
+}
 ```

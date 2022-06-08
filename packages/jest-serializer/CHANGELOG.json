@@ -2,6 +2,59 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Tue, 17 May 2022 08:34:48 GMT",
+      "tag": "@griffel/jest-serializer_v1.0.5",
+      "version": "1.0.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.3.1",
+            "commit": "ca92d20c52389ce51f089c39b03f2838c8329a60"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 May 2022 16:15:22 GMT",
+      "tag": "@griffel/jest-serializer_v1.0.4",
+      "version": "1.0.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.3.0",
+            "commit": "dbf9adc8acedba645ee95f469353836d1ae5fa6a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Apr 2022 13:28:28 GMT",
+      "tag": "@griffel/jest-serializer_v1.0.3",
+      "version": "1.0.3",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "cbfd3045dadcce6f2f8348d56eaf882c5e408482",
+            "comment": "update README, fix comments"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.2.0",
+            "commit": "995c356bc77272f6fe69a604db6485d57a9ba7c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 13:56:06 GMT",
       "tag": "@griffel/jest-serializer_v1.0.2",
       "version": "1.0.2",

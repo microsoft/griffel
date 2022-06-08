@@ -14,4 +14,11 @@ describe('overflow', () => {
       overflowY: 'hidden',
     });
   });
+
+  it('for fallback value arrays', () => {
+    expect(overflow('visible', ['hidden', 'scroll'])).toEqual({
+      overflowX: 'visible',
+      overflowY: ['hidden', 'scroll'],
+    });
+  });
 });

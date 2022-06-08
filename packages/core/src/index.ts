@@ -10,10 +10,13 @@ import {
   borderStyle,
   borderRadius,
   borderWidth,
+  flex,
   gap,
   margin,
   padding,
   overflow,
+  inset,
+  outline,
 } from './shorthands/index';
 
 export const shorthands = {
@@ -26,10 +29,13 @@ export const shorthands = {
   borderStyle,
   borderRadius,
   borderWidth,
+  flex,
   gap,
   margin,
   padding,
   overflow,
+  inset,
+  outline,
 };
 
 export { createDOMRenderer } from './renderer/createDOMRenderer';
@@ -64,3 +70,6 @@ export type {
   MakeStylesOptions,
   GriffelRenderer,
 } from './types';
+
+// Private exports, are used by devtools
+export type { DebugCSSRules, DebugSequence, DebugResult } from './devtools';

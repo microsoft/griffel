@@ -13,7 +13,7 @@ Griffel provides first class support for Server-Side Rendering.
 For basic instructions to setup Next.js, see [Getting Started](https://nextjs.org/docs/getting-started). Please complete following steps:
 
 1. Get a basic Next.js setup running, rendering a page from the `pages` folder, as guided by the tutorial.
-2. Add the Griffel to dependencies (`@griffel/react` package`), check [Install](/react/install) page.
+2. Add the Griffel to dependencies (`@griffel/react` package), check [Install](/react/install) page.
 
 A complete demo project is available on [CodeSandbox](https://codesandbox.io/s/next-js-project-with-griffel-react-f22mwn).
 
@@ -21,12 +21,14 @@ A complete demo project is available on [CodeSandbox](https://codesandbox.io/s/n
 
 1. Create a `_document.js` file under your `pages` folder with the following content:
 
-```tsx
+```jsx
+// highlight-next-line
 import { createDOMRenderer, renderToStyleElements } from '@griffel/react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
+    // highlight-start
     // 👇 creates a renderer
     const renderer = createDOMRenderer();
     const originalRenderPage = ctx.renderPage;
@@ -35,8 +37,10 @@ class MyDocument extends Document {
       originalRenderPage({
         enhanceApp: App => props => <App {...props} renderer={renderer} />,
       });
+    // highlight-end
 
     const initialProps = await Document.getInitialProps(ctx);
+    // highlight-start
     const styles = renderToStyleElements(renderer);
 
     return {
@@ -44,6 +48,7 @@ class MyDocument extends Document {
       // 👇 adding our styles elements to output
       styles: [...initialProps.styles, ...styles],
     };
+    // highlight-end
   }
 
   render() {

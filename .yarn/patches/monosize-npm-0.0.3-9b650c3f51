@@ -1,0 +1,13 @@
+diff --git a/src/commands/uploadReport.js b/src/commands/uploadReport.js
+index 99b501ec71b2d491ff69f88efe49b14d0e495ac1..3e5b333bbb501c20f43c821870979cedd67f8e51 100644
+--- a/src/commands/uploadReport.js
++++ b/src/commands/uploadReport.js
+@@ -25,7 +25,7 @@ function uploadReport(options) {
+             yield config.storage.uploadReportToRemote(branch, commitSHA, localReport);
+         }
+         catch (e) {
+-            console.log( /* TODO: proper reporting */);
++            console.log(e /* TODO: proper reporting */);
+             process.exit(1);
+         }
+         if (!quiet) {

@@ -165,6 +165,30 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles fallback values', () => {
+      const actual = resolveStyleRules({ color: ['red', 'blue'] });
+      expect(actual).toMatchInlineSnapshot(`
+        .f15e90lz {
+          color: red;
+          color: blue;
+        }
+      `);
+    });
+
+    it('handles empty array of fallback values', () => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      const warn = jest.spyOn(console, 'warn').mockImplementationOnce(() => {});
+
+      const actual = resolveStyleRules({ color: [] });
+      expect(actual).toMatchInlineSnapshot(``); /* empty result */
+
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /makeStyles\(\): An empty array was passed as input to "color", the property will be omitted in the styles./,
+        ),
+      );
+    });
+
     it('handles RTL', () => {
       expect(resolveStyleRules({ left: '5px' })).toMatchInlineSnapshot(`
         .f5b3q4t {
@@ -193,6 +217,54 @@ describe('resolveStyleRules', () => {
       classnamesSet.add(getFirstClassName(resolveStyleRules({ left: '5px /* @noflip */' })));
 
       expect(classnamesSet.size).toBe(2);
+    });
+
+    it('handles fallback values in RTL', () => {
+      expect(
+        resolveStyleRules({
+          left: ['5px', '10px'],
+          float: ['initial', 'left'],
+        }),
+      ).toMatchInlineSnapshot(`
+        .f14hk0f5 {
+          left: 5px;
+          left: 10px;
+        }
+        .f18hwu1w {
+          right: 5px;
+          right: 10px;
+        }
+        .f8ngpof {
+          float: initial;
+          float: left;
+        }
+        .fhsnlhg {
+          float: initial;
+          float: right;
+        }
+      `);
+    });
+
+    it('errors if fallback values result in multiple properties in RTL, skips the property', () => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+
+      expect(
+        resolveStyleRules({
+          left: ['5px /* @noflip */', '10px'],
+          color: 'red',
+        }),
+      ).toMatchInlineSnapshot(`
+        .fe3e8s9 {
+          color: red;
+        }
+      `); /* only color */
+
+      expect(error).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /mixing CSS fallback values which result in multiple CSS properties in RTL is not supported/,
+        ),
+      );
     });
 
     it('handles nested selectors', () => {
@@ -255,6 +327,25 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles comma-separated selectors', () => {
+      expect(
+        resolveStyleRules({
+          ':active,:focus-within': {
+            paddingLeft: '10px',
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        .f14f5aie:active,
+        .f14f5aie:focus-within {
+          padding-left: 10px;
+        }
+        .f1sheuf0:active,
+        .f1sheuf0:focus-within {
+          padding-right: 10px;
+        }
+      `);
+    });
+
     it('handles media queries', () => {
       expect(
         resolveStyleRules({
@@ -273,7 +364,7 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('handles media queries with preudo selectors', () => {
+    it('handles media queries with pseudo selectors', () => {
       expect(
         resolveStyleRules({
           color: 'green',
@@ -315,6 +406,85 @@ describe('resolveStyleRules', () => {
         }
         @media screen and (max-width: 992px) and (min-width: 100px) {
           .f19a6424 {
+            color: red;
+          }
+        }
+      `);
+    });
+
+    it('handles layer queries', () => {
+      expect(
+        resolveStyleRules({
+          color: 'green',
+          '@layer color': { color: 'red' },
+        }),
+      ).toMatchInlineSnapshot(`
+        .fka9v86 {
+          color: green;
+        }
+        @layer color {
+          .f1hjcal7 {
+            color: red;
+          }
+        }
+      `);
+    });
+
+    it('handles layer queries with dots', () => {
+      expect(
+        resolveStyleRules({
+          '@layer framework.utilities': { color: 'red' },
+        }),
+      ).toMatchInlineSnapshot(`
+        @layer framework.utilities {
+          .faxdetk {
+            color: red;
+          }
+        }
+      `);
+    });
+    it('handles layer queries with pseudo selectors', () => {
+      expect(
+        resolveStyleRules({
+          color: 'green',
+          '@layer color': {
+            ':hover': {
+              color: 'red ',
+            },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        .fka9v86 {
+          color: green;
+        }
+        @layer color {
+          .f1jv0g3z:hover {
+            color: red;
+          }
+        }
+      `);
+    });
+
+    it('handles nested layer queries', () => {
+      expect(
+        resolveStyleRules({
+          color: 'red',
+          '@layer color': {
+            color: 'red',
+            '@layer theme': { color: 'red' },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        .fe3e8s9 {
+          color: red;
+        }
+        @layer color {
+          .f1hjcal7 {
+            color: red;
+          }
+        }
+        @layer color.theme {
+          .f132c7g3 {
             color: red;
           }
         }

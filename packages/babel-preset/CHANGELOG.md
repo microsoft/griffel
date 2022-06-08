@@ -1,8 +1,39 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Wed, 09 Mar 2022 13:56:06 GMT and should not be manually modified.
+This log was last generated on Tue, 17 May 2022 08:34:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.1
+
+Tue, 17 May 2022 08:34:48 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.3.1
+
+## 1.3.0
+
+Wed, 04 May 2022 16:15:22 GMT
+
+### Minor changes
+
+- feat: add @fluentui/react-components to handled imports by default (olfedias@microsoft.com)
+- feat: re-export Module & EvalCache from Linaria (olfedias@microsoft.com)
+- Bump @griffel/core to v1.3.0
+
+### Patches
+
+- fix: handle duplicated import sources properly (rezha@microsoft.com)
+
+## 1.2.0
+
+Wed, 06 Apr 2022 13:28:28 GMT
+
+### Minor changes
+
+- feat: export shaker evaluator (olfedias@microsoft.com)
+- Bump @griffel/core to v1.2.0
 
 ## 1.1.1
 

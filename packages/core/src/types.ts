@@ -5,8 +5,10 @@ export type GriffelStylesCSSValue = string | 0;
 
 export type GriffelStylesUnsupportedCSSProperties = Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, never>;
 
+export type ValueOrArray<T> = T | Array<T>;
+
 type GriffelStylesCSSProperties = Omit<
-  CSS.Properties<GriffelStylesCSSValue>,
+  CSS.PropertiesFallback<GriffelStylesCSSValue>,
   // We have custom definition for "animationName"
   'animationName'
 > &
@@ -19,8 +21,8 @@ export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties &
 
 type GriffelStylesCSSPseudos = {
   [Property in CSS.Pseudos]?:
-    | (GriffelStylesStrictCSSObject & { content?: string })
-    | (GriffelStylesCSSObjectCustomL1 & { content?: string });
+    | (GriffelStylesStrictCSSObject & { content?: string | string[] })
+    | (GriffelStylesCSSObjectCustomL1 & { content?: string | string[] });
 };
 
 //
@@ -30,23 +32,23 @@ type GriffelStylesCSSPseudos = {
 //
 
 type GriffelStylesCSSObjectCustomL1 = {
-  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL2;
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL2;
 } & GriffelStylesStrictCSSObject;
 
 type GriffelStylesCSSObjectCustomL2 = {
-  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL3;
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL3;
 } & GriffelStylesStrictCSSObject;
 
 type GriffelStylesCSSObjectCustomL3 = {
-  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL4;
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL4;
 } & GriffelStylesStrictCSSObject;
 
 type GriffelStylesCSSObjectCustomL4 = {
-  [Property: string]: string | number | undefined | GriffelStylesCSSObjectCustomL5;
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesCSSObjectCustomL5;
 } & GriffelStylesStrictCSSObject;
 
 type GriffelStylesCSSObjectCustomL5 = {
-  [Property: string]: string | number | undefined | GriffelStylesStrictCSSObject;
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelStylesStrictCSSObject;
 } & GriffelStylesStrictCSSObject;
 
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
@@ -124,7 +126,7 @@ export type StyleBucketName =
   | 'a'
   // @keyframes definitions
   | 'k'
-  // at-rules (@media, @support)
+  // at-rules (@media, @support, @layer)
   | 't';
 
 export type SequenceHash = string;

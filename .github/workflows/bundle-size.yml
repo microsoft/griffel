@@ -1,0 +1,70 @@
+name: Bundle size
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  bundle-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Get Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - name: Restore Yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            yarn-cache-folder-
+
+      - run: yarn install --immutable
+
+      # Steps for PRs
+      - name: Measure affected packages
+        if: ${{ github.event_name == 'pull_request' }}
+        run: yarn nx affected --target=bundle-size --parallel --max-parallel=2
+
+      - name: Compare results with "main" branch
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          yarn monosize compare-reports --branch main --output markdown
+          cp node_modules/monosize/dist/monosize.md monosize.md
+
+      - name: Save PR number
+        run: echo ${{ github.event.number }} > pr.txt
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          name: monosize-report
+          if-no-files-found: error
+          path: |
+            monosize.md
+            pr.txt
+
+      # Steps for "main" branch
+      - name: Measure all packages
+        if: ${{ github.event_name != 'pull_request' }}
+        run: yarn nx run-many --all --target=bundle-size --parallel --max-parallel=2
+
+      - name: Upload results
+        if: ${{ github.event_name != 'pull_request' }}
+        run: yarn monosize upload-report --branch main --commit-sha $GITHUB_SHA
+        env:
+          UPSTASH_WRITE_TOKEN: ${{ secrets.UPSTASH_WRITE_TOKEN }}

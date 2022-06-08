@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/eslint-plugin",
+  "entries": [
+    {
+      "date": "Wed, 04 May 2022 16:15:22 GMT",
+      "tag": "@griffel/eslint-plugin_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "2d46633c5a0db31f55fd20c5bce653855ce7b75b",
+            "comment": "initial release"
+          }
+        ]
+      }
+    }
+  ]
+}

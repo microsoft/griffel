@@ -22,7 +22,7 @@ module.exports = {
 
 ## Overview
 
-When using Jest snapshot testing with components that use `@fluentui/make-styles`, classes will be
+When using Jest snapshot testing with components that use `@griffel/react`, classes will be
 rendered as such:
 
 ```html

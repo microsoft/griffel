@@ -9,6 +9,7 @@ describe('makeStyles', () => {
   let renderer: GriffelRenderer;
 
   beforeEach(() => {
+    process.env.NODE_ENV = 'production';
     renderer = createDOMRenderer(document);
   });
 
@@ -227,4 +228,16 @@ describe('makeStyles', () => {
       }
     `);
   });
+
+  it.each<'test' | 'development'>(['test', 'development'])(
+    'in non-production mode, hashes include debug information',
+    env => {
+      process.env.NODE_ENV = env;
+      const computeClasses = makeStyles({
+        root: { color: 'red' },
+      });
+
+      expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___afhpfp0_0000000 fe3e8s9');
+    },
+  );
 });

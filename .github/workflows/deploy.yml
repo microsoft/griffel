@@ -36,7 +36,7 @@ jobs:
           restore-keys: |
             yarn-cache-folder-
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
       - run: yarn nx run-many --target=build --projects=@griffel/website --parallel --max-parallel=3
 
       - name: Deploy

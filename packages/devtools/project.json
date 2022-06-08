@@ -1,0 +1,118 @@
+{
+  "root": "packages/devtools",
+  "sourceRoot": "packages/devtools/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/packages/devtools",
+        "index": "packages/devtools/src/index.html",
+        "main": "packages/devtools/src/index.tsx",
+        "tsConfig": "packages/devtools/tsconfig.lib.json",
+        "packageJson": "packages/devtools/package.json",
+        "assets": [
+          {
+            "glob": "packages/devtools/public",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {
+        "production": {
+          "buildLibsFromSource": false,
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "development": {}
+      }
+    },
+    "pack-extension": {
+      "executor": "@nrwl/workspace:run-commands",
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ],
+      "options": {
+        "commands": [
+          {
+            "command": "cd dist/packages/devtools/ && bestzip ../ext.zip *"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/devtools/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/devtools"],
+      "options": {
+        "jestConfig": "packages/devtools/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/devtools",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    },
+    "watch": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": ".",
+        "parallel": false,
+        "commands": [{ "command": " nx build @griffel/devtools --skip-nx-cache --configuration=development --watch" }]
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "packages/devtools/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/@griffel/devtools",
+        "config": {
+          "configFolder": "packages/devtools/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  }
+}

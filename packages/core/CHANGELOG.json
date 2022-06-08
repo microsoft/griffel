@@ -2,6 +2,115 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 17 May 2022 08:34:48 GMT",
+      "tag": "@griffel/core_v1.3.1",
+      "version": "1.3.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "ca92d20c52389ce51f089c39b03f2838c8329a60",
+            "comment": "fix: update isDevToolsEnabled check"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 May 2022 16:15:22 GMT",
+      "tag": "@griffel/core_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "none": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "726ddd4397c6991fe1e4df61940e77f3da9f0c83",
+            "comment": "update babelrc with dev env presets"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "2d46633c5a0db31f55fd20c5bce653855ce7b75b",
+            "comment": "add a comment to exports"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "6a0f6e24af80afedf7b47c73f72c71a439b43aca",
+            "comment": "chore: integrate bundle size tooling"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "5b6cdf3ede6983eba5997b26f5696f2ea459606d",
+            "comment": "README update"
+          }
+        ],
+        "minor": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "d7c691201b45f410f1ab34a5aa941175cf12a49d",
+            "comment": "feat: inject devtools when session storage contains __GRIFFEL_DEVTOOLS__"
+          },
+          {
+            "author": "mgodbolt@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "addc2c3922ef8b45d4a9028e84808b9a3eee6f9a",
+            "comment": "feat: add support for @layer"
+          },
+          {
+            "author": "bsunderhus@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "ea2cde17b426ff4d95f36ff4e71fd070fd5dbff0",
+            "comment": "feat: add shorthand function for outline"
+          },
+          {
+            "author": "bsunderhus@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "8a6d1802e2c7a2070abd0213bf14585bbf446e4d",
+            "comment": "feat: add shorthand function for inset"
+          },
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "01e52783012cb38d91b474858419d417b6c46410",
+            "comment": "feat: generate debug hash sequence for devtools"
+          }
+        ],
+        "patch": [
+          {
+            "author": "seanmonahan@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "7540e722795eea0b027207343c74b1cf8eaec1d8",
+            "comment": "fix: fix issue with comma-separated selectors and RTL"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Apr 2022 13:28:28 GMT",
+      "tag": "@griffel/core_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "miroslav.stastny@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "05635e139c200e609ddb531f40e144b65f9cdcf3",
+            "comment": "feat: CSS fallback values"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "2bda4e578a4fcdd1751a3e7496ea9a6df7916012",
+            "comment": "feat: add \"styleElementAttributes\" to createDOMRenderer"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 13:56:06 GMT",
       "tag": "@griffel/core_v1.1.1",
       "version": "1.1.1",

@@ -1,21 +1,13 @@
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
 import { generateStyles } from './generateStyles';
+import { PaddingInput } from './types';
 
 type PaddingStyle = Pick<GriffelStylesStrictCSSObject, 'paddingTop' | 'paddingRight' | 'paddingBottom' | 'paddingLeft'>;
 
-export function padding(all: GriffelStylesCSSValue): PaddingStyle;
-export function padding(vertical: GriffelStylesCSSValue, horizontal: GriffelStylesCSSValue): PaddingStyle;
-export function padding(
-  top: GriffelStylesCSSValue,
-  horizontal: GriffelStylesCSSValue,
-  bottom: GriffelStylesCSSValue,
-): PaddingStyle;
-export function padding(
-  top: GriffelStylesCSSValue,
-  right: GriffelStylesCSSValue,
-  bottom: GriffelStylesCSSValue,
-  left: GriffelStylesCSSValue,
-): PaddingStyle;
+export function padding(all: PaddingInput): PaddingStyle;
+export function padding(vertical: PaddingInput, horizontal: PaddingInput): PaddingStyle;
+export function padding(top: PaddingInput, horizontal: PaddingInput, bottom: PaddingInput): PaddingStyle;
+export function padding(top: PaddingInput, right: PaddingInput, bottom: PaddingInput, left: PaddingInput): PaddingStyle;
 
 /**
  * A function that implements CSS spec conformant expansion for "padding"
@@ -28,6 +20,6 @@ export function padding(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/padding
  */
-export function padding(...values: GriffelStylesCSSValue[]) {
+export function padding(...values: PaddingInput[]) {
   return generateStyles<PaddingStyle>('padding', '', ...values);
 }

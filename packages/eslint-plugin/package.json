@@ -1,0 +1,17 @@
+{
+  "name": "@griffel/eslint-plugin",
+  "version": "1.0.0",
+  "description": "ESLint plugin with lint rules for Griffel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "dependencies": {
+    "csstype": "^3.0.10",
+    "@typescript-eslint/utils": "^5.20.0"
+  },
+  "peerDependencies": {
+    "eslint": "^7.5.0 || ^8.0.0"
+  }
+}

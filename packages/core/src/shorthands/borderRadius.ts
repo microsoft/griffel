@@ -1,4 +1,5 @@
-import type { GriffelStylesStrictCSSObject, GriffelStylesCSSValue } from '../types';
+import type { GriffelStylesStrictCSSObject } from '../types';
+import { BorderRadiusInput } from './types';
 
 type BorderRadiusStyle = Pick<
   GriffelStylesStrictCSSObject,
@@ -18,10 +19,10 @@ type BorderRadiusStyle = Pick<
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
  */
 export function borderRadius(
-  value1: GriffelStylesCSSValue,
-  value2: GriffelStylesCSSValue = value1,
-  value3: GriffelStylesCSSValue = value1,
-  value4: GriffelStylesCSSValue = value2,
+  value1: BorderRadiusInput,
+  value2: BorderRadiusInput = value1,
+  value3: BorderRadiusInput = value1,
+  value4: BorderRadiusInput = value2,
 ): BorderRadiusStyle {
   return {
     borderBottomRightRadius: value3,

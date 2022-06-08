@@ -1,8 +1,42 @@
 # Change Log - @griffel/react
 
-This log was last generated on Wed, 09 Mar 2022 13:56:06 GMT and should not be manually modified.
+This log was last generated on Thu, 26 May 2022 15:06:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Thu, 26 May 2022 15:06:34 GMT
+
+### Minor changes
+
+- feat: export useRenderer_unstable (olfedias@microsoft.com)
+
+## 1.0.5
+
+Tue, 17 May 2022 08:34:48 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.3.1
+
+## 1.0.4
+
+Wed, 04 May 2022 16:15:22 GMT
+
+### Patches
+
+- fix: avoid errors with React 18 (olfedias@microsoft.com)
+- fix: update isInsideComponent() check (olfedias@microsoft.com)
+- Bump @griffel/core to v1.3.0
+
+## 1.0.3
+
+Wed, 06 Apr 2022 13:28:28 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.2.0
 
 ## 1.0.2
 
