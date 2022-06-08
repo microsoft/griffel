@@ -72,7 +72,7 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 
    > Note: A change file tells beachball how to increment each package's semantic version (semver) upon publish. The message in the change file will be included in the package release notes, so make it brief but informative.
 
-5. Push the branch for your new feature 
+4. Push the branch for your new feature
 
    ```bash
    git push origin fix/bug
