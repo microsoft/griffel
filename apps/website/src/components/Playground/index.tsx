@@ -13,7 +13,6 @@ const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) =>
   }
 
   const templateName = modulePath.split('/').slice(-1)[0].split('.')[0];
-  console.log(templateName);
   acc[templateName] = ctx(modulePath).default;
   return acc;
 }, {} as Record<string, string>);
