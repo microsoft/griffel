@@ -11,14 +11,13 @@ function generateTryItOutSidebar() {
     .map(templateFile => {
       const id = path.parse(templateFile).name;
       const templatePath = path.join(playgroundTemplatePath, templateFile);
-      const code = fs.readFileSync(templatePath).toString();
+      const code = fs.readFileSync(templatePath, { encoding: 'utf-8' });
       const res = babel.parseSync(code, { filename: templateFile });
       const meta = { name: id };
       babel.traverse(res, {
         VariableDeclarator(path) {
           if (
-            babel.types.isIdentifier(path.node.id) &&
-            path.node.id.name === 'meta' &&
+            babel.types.isIdentifier(path.node.id, { name: 'meta' }) &&
             path.node.init &&
             babel.types.isObjectExpression(path.node.init)
           ) {

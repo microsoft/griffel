@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "checkJs": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "outDir": "../../dist/out-tsc",
@@ -10,8 +11,8 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": ["environment", "static-assets", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic"]
   },
-  "types": ["environment", "static-assets", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic"],
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"]
 }

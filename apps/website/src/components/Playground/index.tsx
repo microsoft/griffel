@@ -4,7 +4,6 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
 import AppCode from '!!raw-loader!./code/app.js';
 import DefaultStylesCode from '!!raw-loader!./code/styles.js';
-import path from 'path-browserify';
 
 const ctx = require.context('!!raw-loader!./code/templates', false, /\.js$/);
 
@@ -13,7 +12,8 @@ const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) =>
     return acc;
   }
 
-  const templateName = path.parse(modulePath).name;
+  const templateName = modulePath.split('/').slice(-1)[0].split('.')[0];
+  console.log(templateName);
   acc[templateName] = ctx(modulePath).default;
   return acc;
 }, {} as Record<string, string>);

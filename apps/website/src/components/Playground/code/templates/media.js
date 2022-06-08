@@ -1,4 +1,3 @@
-//@ts-check
 import { makeStyles, shorthands } from '@griffel/core';
 
 export default makeStyles({
