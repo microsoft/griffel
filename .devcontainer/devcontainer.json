@@ -1,0 +1,17 @@
+{
+  "name": "Griffel Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "VARIANT": "18-bullseye"
+    }
+  },
+  "settings": {},
+  "extensions": [
+    "nrwl.angular-console",
+    "esbenp.prettier-vscode",
+    "firsttris.vscode-jest-runner",
+    "dbaeumer.vscode-eslint"
+  ],
+  "remoteUser": "node"
+}

@@ -5,7 +5,7 @@ import 'highlight.js/styles/vs.css';
 import beautify from 'js-beautify';
 import React from 'react';
 import css from 'highlight.js/lib/languages/css';
-import styles from './Styles';
+import styles from './styles';
 hljs.registerLanguage('css', css);
 
 export default function App() {

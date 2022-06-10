@@ -60,7 +60,7 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'try-it-out',
+            docId: 'try-it-out/try-it-out',
             position: 'left',
             label: 'Try it out',
           },

@@ -1,14 +1,29 @@
 import React from 'react';
 import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from '@codesandbox/sandpack-react';
 import { useColorMode } from '@docusaurus/theme-common';
-import AppCode from '!!raw-loader!./template/App.js';
-import StylesCode from '!!raw-loader!./template/Styles.js';
+import { useLocation } from '@docusaurus/router';
+import AppCode from '!!raw-loader!./code/app.js';
+import DefaultStylesCode from '!!raw-loader!./code/styles.js';
+
+const ctx = require.context('!!raw-loader!./code/templates', false, /\.js$/);
+
+const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) => {
+  if (modulePath.includes('app')) {
+    return acc;
+  }
+
+  const templateName = modulePath.split('/').slice(-1)[0].split('.')[0];
+  acc[templateName] = ctx(modulePath).default;
+  return acc;
+}, {} as Record<string, string>);
 
 const PLAYGROUND_HEIGHT = 400;
 
 export default function Playground() {
   const { isDarkTheme } = useColorMode();
   const sandpackTheme = isDarkTheme ? 'dark' : 'github-light';
+  const location = useLocation();
+  const template = templates[location.hash.slice(1)] ?? DefaultStylesCode;
   return (
     <SandpackProvider
       template="react"
@@ -17,7 +32,7 @@ export default function Playground() {
         files: {
           '/App.js': { code: AppCode, hidden: true },
           // Template files are in JS but type checked, don't want unnecessary comments leaking into docs
-          '/Styles.js': { code: StylesCode.replace('//@ts-check\n', ''), active: true },
+          '/styles.js': { code: template.replace('//@ts-check\n', ''), active: true },
         },
       }}
     >
