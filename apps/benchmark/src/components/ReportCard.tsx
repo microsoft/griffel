@@ -27,9 +27,9 @@ const useStyles = makeStyles({
 
 const fmt = (time: number) => {
   console.log(time);
-  const secs = Number(Math.round(time * 100) / 100);
-  const str = secs.toFixed(2);
-  return 10 / secs > 1 ? `0${str}` : str;
+  const milliSecs = Number(Math.round(time * 100) / 100);
+  const str = milliSecs.toFixed(2);
+  return 10 / milliSecs > 1 ? `0${str}` : str;
 };
 
 const ReportCard: React.FC<ReportCardProps> = ({ library, version, benchmark, analysis }) => {
