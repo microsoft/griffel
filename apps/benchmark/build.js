@@ -1,6 +1,6 @@
 const esbuild = require('esbuild');
 const ImportGlobPlugin = require('esbuild-plugin-import-glob').default;
-const TSAliasPlugin = require('esbuild-plugin-alias');
+const AliasPlugin = require('esbuild-plugin-alias');
 const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
@@ -16,7 +16,7 @@ esbuild
     minify: true,
     bundle: true,
     plugins: [
-      TSAliasPlugin({
+      AliasPlugin({
         '@griffel/core': path.resolve(__dirname, '../../packages/core/src/index.ts'),
         '@griffel/react': path.resolve(__dirname, '../../packages/react/src/index.ts'),
       }),
