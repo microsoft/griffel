@@ -6,6 +6,16 @@ type GridAreaStyle = Pick<
   'gridRowStart' | 'gridRowEnd' | 'gridColumnStart' | 'gridColumnEnd'
 >;
 
+function containsCssVar(value: GridAreaInput) {
+  return typeof value === 'string' && value.match(/var\(.*\)/g);
+}
+
+const cssVarRegEx = /var\(.*\)/gi;
+
+function isValidGridAreaInput(value: GridAreaInput) {
+  return value === undefined || typeof value === 'number' || (typeof value === 'string' && !cssVarRegEx.test(value));
+}
+
 // A custom-ident can be an alpha-numeric string including dash (-), underscore, escaped (\) characters, and escaped unicode
 const customIdentRegEx = /^[a-zA-Z0-9\-_\\#;]+$/;
 const nonCustomIdentRegEx = /^-moz-initial$|^auto$|^initial$|^inherit$|^revert$|^unset$|^span \d+$|\d.*/;
@@ -39,6 +49,17 @@ export function gridArea(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area
  */
 export function gridArea(...values: GridAreaInput[]): GridAreaStyle {
+  // if any value is not valid, then do not apply the CSS.
+  if (values.some(value => !isValidGridAreaInput(value))) {
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.error(
+        `The value passed to shorthands.gridArea did not match any gridArea property specs. The CSS styles were not generated. Please, check the gridArea documentation.`,
+      );
+    }
+
+    return {};
+  }
   const gridRowStart = values[0] !== undefined ? values[0] : 'auto';
 
   // When grid-column-start is omitted, if grid-row-start is a <custom-ident>,
