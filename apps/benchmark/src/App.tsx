@@ -119,6 +119,9 @@ export const App: React.FC = () => {
   }, [inProgress]);
 
   const benchmarkToRun = tests[benchmark][library];
+  const {
+    components: { Provider },
+  } = implementations[library];
 
   return (
     <div className={styles.root}>
@@ -171,18 +174,20 @@ export const App: React.FC = () => {
         </div>
       </div>
       <div className={styles.benchmarkContainer}>
-        {inProgress ? (
-          <Benchmark
-            forceLayout
-            // TODO benchmark code uses legacy refs that can't be typed - refactor it to be functional
-            // @ts-expect-error
-            ref={imperativeRef}
-            {...benchmarkToRun}
-            onComplete={res => dispatch({ type: 'BENCHMARK_COMPLETED', payload: res })}
-          />
-        ) : (
-          <benchmarkToRun.Component {...benchmarkToRun.getComponentProps({ cycle: 10 })} />
-        )}
+        <Provider>
+          {inProgress ? (
+            <Benchmark
+              forceLayout
+              // TODO benchmark code uses legacy refs that can't be typed - refactor it to be functional
+              // @ts-expect-error
+              ref={imperativeRef}
+              {...benchmarkToRun}
+              onComplete={res => dispatch({ type: 'BENCHMARK_COMPLETED', payload: res })}
+            />
+          ) : (
+            <benchmarkToRun.Component {...benchmarkToRun.getComponentProps({ cycle: 10 })} />
+          )}
+        </Provider>
       </div>
     </div>
   );

@@ -44,11 +44,10 @@ export type FullSampleTimingType = {
 };
 
 export interface ComponentsType {
-  Box: React.Component;
-  Dot: React.Component;
-  Provider: React.Component;
-  TextBox: React.Component;
-  View: React.Component;
+  Box: React.ElementType;
+  Dot: React.ElementType;
+  Provider: React.ElementType;
+  View: React.ElementType;
 }
 
 export type BenchmarkType = 'mount' | 'update' | 'unmount';
