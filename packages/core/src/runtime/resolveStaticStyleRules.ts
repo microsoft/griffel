@@ -23,5 +23,5 @@ export function resolveStaticStyleRules(styles: GriffelStaticStyles, result: CSS
 }
 
 function addResolvedStyles(cssRule: string, result: CSSRuleData[] = []): void {
-  result.push({ cssRule, bucket: 'd' });
+  result.push([cssRule, 'd']);
 }
