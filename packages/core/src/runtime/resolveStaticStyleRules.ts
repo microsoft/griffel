@@ -1,8 +1,8 @@
-import { GriffelStaticStyles, CSSRulesByBucket } from '../types';
+import { GriffelStaticStyles, CSSRuleData } from '../types';
 import { compileStaticCSS } from './compileStaticCSS';
 import { compileCSSRules } from './compileCSS';
 
-export function resolveStaticStyleRules(styles: GriffelStaticStyles, result: CSSRulesByBucket = {}): CSSRulesByBucket {
+export function resolveStaticStyleRules(styles: GriffelStaticStyles, result: CSSRuleData[] = []): CSSRuleData[] {
   if (typeof styles === 'string') {
     const cssRules = compileCSSRules(styles);
 
@@ -22,8 +22,6 @@ export function resolveStaticStyleRules(styles: GriffelStaticStyles, result: CSS
   return result;
 }
 
-function addResolvedStyles(cssRule: string, result: CSSRulesByBucket = {}): void {
-  // 👇 static rules should be inserted into default bucket
-  result.d = result.d || [];
-  result.d.push(cssRule);
+function addResolvedStyles(cssRule: string, result: CSSRuleData[] = []): void {
+  result.push({ cssRule, bucket: 'd' });
 }

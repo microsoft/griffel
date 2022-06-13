@@ -63,7 +63,6 @@ export type {
   // Internal types
   CSSClasses,
   CSSClassesMapBySlot,
-  CSSRulesByBucket,
   StyleBucketName,
   // Util
   MakeStaticStylesOptions,

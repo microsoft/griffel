@@ -40,41 +40,33 @@ export function createDOMRenderer(
     id: `d${lastIndex++}`,
 
     insertCSSRules(cssRules) {
-      // eslint-disable-next-line guard-for-in
-      for (const styleBucketName in cssRules) {
-        const cssRulesForBucket = cssRules[styleBucketName as StyleBucketName]!;
+      for (let i = 0, l = cssRules.length; i < l; i++) {
+        const { cssRule: ruleCSS, bucket: styleBucketName } = cssRules[i];
+        if (renderer.insertionCache[ruleCSS]) {
+          continue;
+        }
+
         const sheet =
-          target &&
-          getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer, options.styleElementAttributes);
+          target && getStyleSheetForBucket(styleBucketName, target, renderer, options.styleElementAttributes);
+        renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
+        if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+          debugData.addCSSRule(ruleCSS);
+        }
 
-        // This is a hot path in rendering styles: ".length" is cached in "l" var to avoid accesses the property
-        for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
-          const ruleCSS = cssRulesForBucket[i];
-
-          if (renderer.insertionCache[ruleCSS]) {
-            continue;
-          }
-
-          renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
-          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-            debugData.addCSSRule(ruleCSS);
-          }
-
-          if (sheet) {
-            try {
-              if (unstable_filterCSSRule) {
-                if (unstable_filterCSSRule(ruleCSS)) {
-                  sheet.insertRule(ruleCSS, sheet.cssRules.length);
-                }
-              } else {
+        if (sheet) {
+          try {
+            if (unstable_filterCSSRule) {
+              if (unstable_filterCSSRule(ruleCSS)) {
                 sheet.insertRule(ruleCSS, sheet.cssRules.length);
               }
-            } catch (e) {
-              // We've disabled these warnings due to false-positive errors with browser prefixes
-              if (process.env.NODE_ENV !== 'production' && !ignoreSuffixesRegex.test(ruleCSS)) {
-                // eslint-disable-next-line no-console
-                console.error(`There was a problem inserting the following rule: "${ruleCSS}"`, e);
-              }
+            } else {
+              sheet.insertRule(ruleCSS, sheet.cssRules.length);
+            }
+          } catch (e) {
+            // We've disabled these warnings due to false-positive errors with browser prefixes
+            if (process.env.NODE_ENV !== 'production' && !ignoreSuffixesRegex.test(ruleCSS)) {
+              // eslint-disable-next-line no-console
+              console.error(`There was a problem inserting the following rule: "${ruleCSS}"`, e);
             }
           }
         }

@@ -1,5 +1,5 @@
 import { resolveStyleRules } from './runtime/resolveStyleRules';
-import { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStyle, StyleBucketName, StylesBySlots } from './types';
+import { CSSClassesMapBySlot, CSSRuleData, GriffelStyle, StylesBySlots } from './types';
 
 /**
  * Calls resolveStyleRules() for each slot, is also used by build time transform.
@@ -10,20 +10,17 @@ import { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStyle, StyleBucketName, S
  */
 export function resolveStyleRulesForSlots<Slots extends string | number>(
   stylesBySlots: StylesBySlots<Slots>,
-): [CSSClassesMapBySlot<Slots>, CSSRulesByBucket] {
+): [CSSClassesMapBySlot<Slots>, CSSRuleData[]] {
   const classesMapBySlot = {} as CSSClassesMapBySlot<Slots>;
-  const cssRules: CSSRulesByBucket = {};
+  const cssRules: CSSRuleData[] = [];
 
   // eslint-disable-next-line guard-for-in
   for (const slotName in stylesBySlots) {
     const slotStyles: GriffelStyle = stylesBySlots[slotName];
-    const [cssClassMap, cssRulesByBucket] = resolveStyleRules(slotStyles);
+    const [cssClassMap, cssRultsFoSlot] = resolveStyleRules(slotStyles);
 
     classesMapBySlot[slotName] = cssClassMap;
-
-    (Object.keys(cssRulesByBucket) as StyleBucketName[]).forEach(styleBucketName => {
-      cssRules[styleBucketName] = (cssRules[styleBucketName] || []).concat(cssRulesByBucket[styleBucketName]!);
-    });
+    cssRules.push(...cssRultsFoSlot);
   }
 
   return [classesMapBySlot, cssRules];

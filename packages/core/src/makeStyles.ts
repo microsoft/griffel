@@ -1,13 +1,13 @@
 import { debugData, isDevToolsEnabled } from './devtools';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
+import { CSSClassesMapBySlot, CSSRuleData, MakeStylesOptions, StylesBySlots } from './types';
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
   const insertionCache: Record<string, boolean> = {};
 
   let classesMapBySlot: CSSClassesMapBySlot<Slots> | null = null;
-  let cssRules: CSSRulesByBucket | null = null;
+  let cssRules: CSSRuleData[] = [];
 
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;
   let rtlClassNamesForSlots: Record<Slots, string> | null = null;

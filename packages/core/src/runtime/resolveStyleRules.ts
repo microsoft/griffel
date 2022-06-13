@@ -2,7 +2,7 @@ import hashString from '@emotion/hash';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { HASH_PREFIX } from '../constants';
-import { GriffelStyle, CSSClassesMap, CSSRulesByBucket, StyleBucketName, GriffelAnimation } from '../types';
+import { GriffelStyle, CSSClassesMap, StyleBucketName, GriffelAnimation, CSSRuleData } from '../types';
 import { compileCSS, CompileCSSOptions } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
@@ -27,16 +27,14 @@ function pushToClassesMap(
 }
 
 function pushToCSSRules(
-  cssRulesByBucket: CSSRulesByBucket,
+  cssRules: CSSRuleData[],
   styleBucketName: StyleBucketName,
   ltrCSS: string,
   rtlCSS: string | undefined,
 ) {
-  cssRulesByBucket[styleBucketName] = cssRulesByBucket[styleBucketName] || [];
-  cssRulesByBucket[styleBucketName]!.push(ltrCSS);
-
+  cssRules.push({ cssRule: ltrCSS, bucket: styleBucketName });
   if (rtlCSS) {
-    cssRulesByBucket[styleBucketName]!.push(rtlCSS);
+    cssRules.push({ cssRule: rtlCSS, bucket: styleBucketName });
   }
 }
 
@@ -52,9 +50,9 @@ export function resolveStyleRules(
   layer = '',
   support = '',
   cssClassesMap: CSSClassesMap = {},
-  cssRulesByBucket: CSSRulesByBucket = {},
+  cssRules: CSSRuleData[] = [],
   rtlValue?: string,
-): [CSSClassesMap, CSSRulesByBucket] {
+): [CSSClassesMap, CSSRuleData[]] {
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
     // eslint-disable-next-line no-prototype-builtins
@@ -128,7 +126,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
+      pushToCSSRules(cssRules, styleBucketName, ltrCSS, rtlCSS);
     } else if (property === 'animationName') {
       const animationNameValue = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
 
@@ -155,7 +153,7 @@ export function resolveStyleRules(
 
         for (let i = 0; i < keyframeRules.length; i++) {
           pushToCSSRules(
-            cssRulesByBucket,
+            cssRules,
             // keyframes styles should be inserted into own bucket
             'k',
             keyframeRules[i],
@@ -174,7 +172,7 @@ export function resolveStyleRules(
         layer,
         support,
         cssClassesMap,
-        cssRulesByBucket,
+        cssRules,
         rtlAnimationNames.join(', '),
       );
     } else if (Array.isArray(value)) {
@@ -245,7 +243,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
+      pushToCSSRules(cssRules, styleBucketName, ltrCSS, rtlCSS);
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(
@@ -255,44 +253,20 @@ export function resolveStyleRules(
           layer,
           support,
           cssClassesMap,
-          cssRulesByBucket,
+          cssRules,
         );
       } else if (isMediaQuerySelector(property)) {
         const combinedMediaQuery = generateCombinedQuery(media, property.slice(6).trim());
 
-        resolveStyleRules(
-          value as GriffelStyle,
-          pseudo,
-          combinedMediaQuery,
-          layer,
-          support,
-          cssClassesMap,
-          cssRulesByBucket,
-        );
+        resolveStyleRules(value as GriffelStyle, pseudo, combinedMediaQuery, layer, support, cssClassesMap, cssRules);
       } else if (isLayerSelector(property)) {
         const combinedLayerQuery = (layer ? `${layer}.` : '') + property.slice(6).trim();
 
-        resolveStyleRules(
-          value as GriffelStyle,
-          pseudo,
-          media,
-          combinedLayerQuery,
-          support,
-          cssClassesMap,
-          cssRulesByBucket,
-        );
+        resolveStyleRules(value as GriffelStyle, pseudo, media, combinedLayerQuery, support, cssClassesMap, cssRules);
       } else if (isSupportQuerySelector(property)) {
         const combinedSupportQuery = generateCombinedQuery(support, property.slice(9).trim());
 
-        resolveStyleRules(
-          value as GriffelStyle,
-          pseudo,
-          media,
-          layer,
-          combinedSupportQuery,
-          cssClassesMap,
-          cssRulesByBucket,
-        );
+        resolveStyleRules(value as GriffelStyle, pseudo, media, layer, combinedSupportQuery, cssClassesMap, cssRules);
       } else {
         if (process.env.NODE_ENV !== 'production') {
           // eslint-disable-next-line no-console
@@ -302,5 +276,5 @@ export function resolveStyleRules(
     }
   }
 
-  return [cssClassesMap, cssRulesByBucket];
+  return [cssClassesMap, cssRules];
 }
