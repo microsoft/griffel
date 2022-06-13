@@ -68,6 +68,7 @@ export type {
   MakeStaticStylesOptions,
   MakeStylesOptions,
   GriffelRenderer,
+  CSSRuleData,
 } from './types';
 
 // Private exports, are used by devtools
