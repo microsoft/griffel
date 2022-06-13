@@ -49,6 +49,7 @@ export { makeStyles } from './makeStyles';
 export { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 
 // Private exports, are used by build time transforms
+export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 export { resolveStyleRules } from './runtime/resolveStyleRules';
 export { __styles } from './__styles';
 

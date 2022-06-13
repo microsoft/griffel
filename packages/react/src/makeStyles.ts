@@ -1,9 +1,10 @@
-import { makeStyles as vanillaMakeStyles } from '@griffel/core';
+import { reduceToClassNameForSlots, resolveStyleRulesForSlots } from '@griffel/core';
 import * as React from 'react';
-import type { GriffelStyle } from '@griffel/core';
+import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStyle } from '@griffel/core';
 
 import { useRenderer } from './RendererContext';
 import { useTextDirection } from './TextDirectionContext';
+import { useInsertionEffect } from './useInsertionEffect';
 
 function isInsideComponent() {
   // React 18 always logs errors if a dispatcher is not present:
@@ -27,8 +28,6 @@ function isInsideComponent() {
 }
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: Record<Slots, GriffelStyle>) {
-  const getStyles = vanillaMakeStyles(stylesBySlots);
-
   if (process.env.NODE_ENV !== 'production') {
     if (isInsideComponent()) {
       throw new Error(
@@ -40,10 +39,38 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: Record<
     }
   }
 
-  return function useClasses(): Record<Slots, string> {
+  let classesMapBySlot: CSSClassesMapBySlot<Slots> | null = null;
+  let cssRules: CSSRulesByBucket | null = null;
+
+  let ltrClassNamesForSlots: Record<Slots, string> | null = null;
+  let rtlClassNamesForSlots: Record<Slots, string> | null = null;
+
+  function computeClasses(): Record<Slots, string> {
     const dir = useTextDirection();
     const renderer = useRenderer();
 
-    return getStyles({ dir, renderer });
-  };
+    const isLTR = dir === 'ltr';
+
+    if (classesMapBySlot === null) {
+      [classesMapBySlot, cssRules] = resolveStyleRulesForSlots(stylesBySlots);
+    }
+
+    if (isLTR) {
+      if (ltrClassNamesForSlots === null) {
+        ltrClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
+      }
+    } else {
+      if (rtlClassNamesForSlots === null) {
+        rtlClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
+      }
+    }
+
+    useInsertionEffect(() => {
+      renderer.insertCSSRules(cssRules!);
+    }, [isLTR, renderer]);
+
+    return isLTR ? (ltrClassNamesForSlots as Record<Slots, string>) : (rtlClassNamesForSlots as Record<Slots, string>);
+  }
+
+  return computeClasses;
 }
