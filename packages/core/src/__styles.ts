@@ -1,3 +1,4 @@
+import { debugData, isDevToolsEnabled } from './devtools';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { MakeStylesOptions, CSSClassesMapBySlot, CSSRulesByBucket } from './types';
 
@@ -37,7 +38,15 @@ export function __styles<Slots extends string>(
       insertionCache[rendererId] = true;
     }
 
-    return isLTR ? (ltrClassNamesForSlots as Record<Slots, string>) : (rtlClassNamesForSlots as Record<Slots, string>);
+    const classNamesForSlots = isLTR
+      ? (ltrClassNamesForSlots as Record<Slots, string>)
+      : (rtlClassNamesForSlots as Record<Slots, string>);
+
+    if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+      debugData.addSequenceDetails(classNamesForSlots!);
+    }
+
+    return classNamesForSlots;
   }
 
   return computeClasses;
