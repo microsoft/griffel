@@ -137,10 +137,10 @@ export type CSSClasses = /* ltrClassName */ string | [/* ltrClassName */ string,
 export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
 
-export type CSSRuleData = {
-  cssRule: string;
-  bucket: StyleBucketName;
-};
+export type CSSRuleData = [
+  string, // css rule
+  string, // bucket name
+];
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 

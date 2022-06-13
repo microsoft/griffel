@@ -98,11 +98,11 @@ function dedupeCSSRules(cssRules: CSSRuleData[]): CSSRuleData[] {
   const lookup: Record<string, true> = {};
   return cssRules
     .map(cssRule => {
-      if (lookup[cssRule.cssRule]) {
+      if (lookup[cssRule[0]]) {
         return false;
       }
 
-      lookup[cssRule.cssRule] = true;
+      lookup[cssRule[0]] = true;
       return cssRule;
     })
     .filter(Boolean) as CSSRuleData[];

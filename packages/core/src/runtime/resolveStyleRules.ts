@@ -32,9 +32,9 @@ function pushToCSSRules(
   ltrCSS: string,
   rtlCSS: string | undefined,
 ) {
-  cssRules.push({ cssRule: ltrCSS, bucket: styleBucketName });
+  cssRules.push([ltrCSS, styleBucketName]);
   if (rtlCSS) {
-    cssRules.push({ cssRule: rtlCSS, bucket: styleBucketName });
+    cssRules.push([rtlCSS, styleBucketName]);
   }
 }
 

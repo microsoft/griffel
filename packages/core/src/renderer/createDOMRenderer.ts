@@ -41,13 +41,14 @@ export function createDOMRenderer(
 
     insertCSSRules(cssRules) {
       for (let i = 0, l = cssRules.length; i < l; i++) {
-        const { cssRule: ruleCSS, bucket: styleBucketName } = cssRules[i];
+        const [ruleCSS, styleBucketName] = cssRules[i];
         if (renderer.insertionCache[ruleCSS]) {
           continue;
         }
 
         const sheet =
-          target && getStyleSheetForBucket(styleBucketName, target, renderer, options.styleElementAttributes);
+          target &&
+          getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer, options.styleElementAttributes);
         renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
         if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
           debugData.addCSSRule(ruleCSS);
