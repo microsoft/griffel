@@ -128,8 +128,6 @@ export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
 
 export type StyleBucketName = keyof CSSRulesByBucket;
-export type NestedCSSBucket = Record<string, string[]>;
-export type CSSRulesByBucket2 = Record<string, string[] | NestedCSSBucket>;
 export type CSSRulesByBucket = {
   // default
   d?: string[];
