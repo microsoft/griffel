@@ -52,7 +52,6 @@
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/babel__helper-plugin-utils": "7.10.0",
     "@types/chrome": "0.0.180",
-    "@types/d3-scale-chromatic": "^3.0.0",
     "@types/jest": "27.0.2",
     "@types/js-beautify": "^1.13.3",
     "@types/loader-utils": "2.0.3",
@@ -62,7 +61,6 @@
     "@types/stylis": "4.0.2",
     "@types/tmp": "0.2.3",
     "@types/webpack-env": "^1.17.0",
-    "@types/yargs": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "~5.3.0",
     "@typescript-eslint/parser": "~5.3.0",
     "babel-jest": "27.2.3",
@@ -71,10 +69,6 @@
     "babel-plugin-tester": "10.0.0",
     "beachball": "^2.20.0",
     "bestzip": "2.2.0",
-    "d3-scale-chromatic": "^3.0.0",
-    "esbuild": "^0.14.43",
-    "esbuild-plugin-alias": "^0.2.1",
-    "esbuild-plugin-import-glob": "^0.1.1",
     "eslint": "8.2.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-import-resolver-typescript": "2.5.0",
@@ -99,8 +93,7 @@
     "tmp": "0.2.1",
     "ts-jest": "27.0.5",
     "typescript": "~4.5.2",
-    "url-loader": "^3.0.0",
-    "yargs": "^17.5.1"
+    "url-loader": "^3.0.0"
   },
   "dependencies": {
     "@babel/core": "^7.12.13",
