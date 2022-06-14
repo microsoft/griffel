@@ -9,6 +9,7 @@
     "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/react": "packages/react",
     "@griffel/webpack-loader": "packages/webpack-loader",
+    "@griffel/webpack-extraction-plugin": "packages/webpack-extraction-plugin",
     "@griffel/website": "apps/website"
   }
 }
