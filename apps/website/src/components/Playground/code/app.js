@@ -15,15 +15,27 @@ export default function App() {
     /** @type import('@griffel/core').GriffelRenderer */
     const playgroundRenderer = {
       id: 'playground',
+      insertCSSRulesToDOM: () => null,
+      compareMediaQuery: () => 1,
       insertCSSRules(cssRules) {
-        const raw = Object.values(cssRules)
-          .reduce((acc, val) => acc.concat(val), [])
-          .join('\n');
-        const prettified = beautify.css_beautify(raw, { indent_size: 2 });
+        /** @type {string[]} */
+        const rules = [];
+        for (const bucket of Object.values(cssRules)) {
+          if (Array.isArray(bucket)) {
+            bucket.forEach(rule => rules.push(rule));
+          } else {
+            for (const mediaBucket of Object.values(bucket)) {
+              mediaBucket.forEach(mediaRule => rules.push(mediaRule));
+            }
+          }
+        }
+
+        const prettified = beautify.css_beautify(rules.join('\n'), { indent_size: 2 });
         setRules(prettified);
       },
       insertionCache: {},
       styleElements: {},
+      mediaElements: {},
     };
 
     styles({
