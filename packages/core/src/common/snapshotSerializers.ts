@@ -53,7 +53,15 @@ export const griffelRulesSerializer: jest.SnapshotSerializerPlugin = {
     const keys = Object.keys(cssRulesByBucket) as (keyof typeof cssRulesByBucket)[];
 
     return keys.reduce((acc, styleBucketName) => {
-      const rules = cssRulesByBucket[styleBucketName]!;
+      let rules: string[] = [];
+      if (styleBucketName === 'm') {
+        rules = Object.keys(cssRulesByBucket[styleBucketName]!).reduce((mediaRules, mediaQuery) => {
+          mediaRules.push(...cssRulesByBucket[styleBucketName]![mediaQuery]);
+          return mediaRules;
+        }, [] as string[]);
+      } else {
+        rules = cssRulesByBucket[styleBucketName]!;
+      }
 
       return prettier.format(acc + rules.join(''), { parser: 'css' }).trim();
     }, '');

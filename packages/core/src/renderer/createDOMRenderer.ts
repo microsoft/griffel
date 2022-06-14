@@ -1,6 +1,7 @@
 import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
+import { getStyleSheetForMedia } from './getStyleSheetForMedia';
 
 let lastIndex = 0;
 
@@ -11,6 +12,8 @@ export interface CreateDOMRendererOptions {
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
    */
   styleElementAttributes?: Record<string, string>;
+
+  compareMediaQuery?: (a: string, b: string) => number;
 
   /**
    * A filter run before CSS rule insertion to systematically remove CSS rules at render time.
@@ -32,23 +35,23 @@ export function createDOMRenderer(
   target: Document | undefined = typeof document === 'undefined' ? undefined : document,
   options: CreateDOMRendererOptions = {},
 ): GriffelRenderer {
-  const { unstable_filterCSSRule } = options;
+  const { unstable_filterCSSRule, compareMediaQuery = () => 1 } = options;
   const renderer: GriffelRenderer = {
     insertionCache: {},
     styleElements: {},
+    mediaElements: {},
+    compareMediaQuery,
 
     id: `d${lastIndex++}`,
 
-    insertCSSRules(cssRules) {
+    insertCSSRulesToDOM(cssRules: string[], styleBucketName: string, sheet: CSSStyleSheet | undefined) {
       for (let i = 0, l = cssRules.length; i < l; i++) {
-        const [ruleCSS, styleBucketName] = cssRules[i];
+        const ruleCSS = cssRules[i];
+
         if (renderer.insertionCache[ruleCSS]) {
           continue;
         }
 
-        const sheet =
-          target &&
-          getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer, options.styleElementAttributes);
         renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
         if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
           debugData.addCSSRule(ruleCSS);
@@ -70,6 +73,31 @@ export function createDOMRenderer(
               console.error(`There was a problem inserting the following rule: "${ruleCSS}"`, e);
             }
           }
+        }
+      }
+    },
+
+    insertCSSRules(cssRulesByBucket) {
+      // eslint-disable-next-line guard-for-in
+      for (const bucketName in cssRulesByBucket) {
+        const styleBucketName = bucketName as StyleBucketName;
+        const cssRulesForBucket = cssRulesByBucket[styleBucketName]!;
+
+        if (styleBucketName === 'm') {
+          for (const mediaQuery in cssRulesByBucket['m']) {
+            const sheet = target && getStyleSheetForMedia(mediaQuery, target, renderer, options.styleElementAttributes);
+            renderer.insertCSSRulesToDOM(cssRulesByBucket['m'][mediaQuery], mediaQuery, sheet);
+          }
+        } else {
+          const sheet =
+            target &&
+            getStyleSheetForBucket(
+              styleBucketName as StyleBucketName,
+              target,
+              renderer,
+              options.styleElementAttributes,
+            );
+          renderer.insertCSSRulesToDOM(cssRulesForBucket as string[], styleBucketName, sheet);
         }
       }
     },

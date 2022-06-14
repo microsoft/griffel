@@ -94,18 +94,22 @@ function isRequireDeclarator(
  * Rules that are returned by `resolveStyles()` are not deduplicated.
  * It's critical to filter out duplicates for build-time transform to avoid duplicated rules in a bundle.
  */
-function dedupeCSSRules(cssRules: CSSRuleData[]): CSSRuleData[] {
-  const lookup: Record<string, true> = {};
-  return cssRules
-    .map(cssRule => {
-      if (lookup[cssRule[0]]) {
-        return false;
-      }
+function dedupeCSSRules(cssRules: CSSRulesByBucket): CSSRulesByBucket {
+  (Object.keys(cssRules) as StyleBucketName[]).forEach(styleBucketName => {
+    if (styleBucketName === 'm') {
+      Object.keys(cssRules[styleBucketName]!).forEach(mediaQuery => {
+        cssRules[styleBucketName]![mediaQuery] = cssRules[styleBucketName]![mediaQuery].filter(
+          (rule, index, rules) => rules.indexOf(rule) === index,
+        );
+      });
+    } else {
+      cssRules[styleBucketName] = cssRules[styleBucketName]!.filter(
+        (rule, index, rules) => rules.indexOf(rule) === index,
+      );
+    }
+  });
 
-      lookup[cssRule[0]] = true;
-      return cssRule;
-    })
-    .filter(Boolean) as CSSRuleData[];
+  return cssRules;
 }
 
 export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<BabelPluginState>>((api, options) => {

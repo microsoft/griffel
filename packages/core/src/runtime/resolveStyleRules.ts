@@ -2,7 +2,7 @@ import hashString from '@emotion/hash';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { HASH_PREFIX } from '../constants';
-import { GriffelStyle, CSSClassesMap, StyleBucketName, GriffelAnimation, CSSRuleData } from '../types';
+import { GriffelStyle, CSSClassesMap, CSSRulesByBucket, StyleBucketName, GriffelAnimation } from '../types';
 import { compileCSS, CompileCSSOptions } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
@@ -26,15 +26,30 @@ function pushToClassesMap(
   classesMap[propertyKey] = rtlClassname ? [ltrClassname!, rtlClassname] : ltrClassname;
 }
 
+function pushCSSRuleToBucket(ltrCSS: string, rtlCSS: string | undefined, cssRuleBucket: string[]) {
+  cssRuleBucket.push(ltrCSS);
+
+  if (rtlCSS) {
+    cssRuleBucket.push(rtlCSS);
+  }
+}
+
 function pushToCSSRules(
-  cssRules: CSSRuleData[],
+  cssRulesByBucket: CSSRulesByBucket,
   styleBucketName: StyleBucketName,
   ltrCSS: string,
   rtlCSS: string | undefined,
+  media: string | undefined,
 ) {
-  cssRules.push([ltrCSS, styleBucketName]);
-  if (rtlCSS) {
-    cssRules.push([rtlCSS, styleBucketName]);
+  if (styleBucketName === 'm') {
+    if (media) {
+      cssRulesByBucket[styleBucketName] ??= {};
+      cssRulesByBucket[styleBucketName]![media] ??= [];
+      pushCSSRuleToBucket(ltrCSS, rtlCSS, cssRulesByBucket[styleBucketName]![media]);
+    }
+  } else {
+    cssRulesByBucket[styleBucketName] ??= [];
+    pushCSSRuleToBucket(ltrCSS, rtlCSS, cssRulesByBucket[styleBucketName]!);
   }
 }
 
@@ -50,9 +65,9 @@ export function resolveStyleRules(
   layer = '',
   support = '',
   cssClassesMap: CSSClassesMap = {},
-  cssRules: CSSRuleData[] = [],
+  cssRulesByBucket: CSSRulesByBucket = {},
   rtlValue?: string,
-): [CSSClassesMap, CSSRuleData[]] {
+): [CSSClassesMap, CSSRulesByBucket] {
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
     // eslint-disable-next-line no-prototype-builtins
@@ -126,7 +141,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRules, styleBucketName, ltrCSS, rtlCSS);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
     } else if (property === 'animationName') {
       const animationNameValue = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
 
@@ -153,11 +168,12 @@ export function resolveStyleRules(
 
         for (let i = 0; i < keyframeRules.length; i++) {
           pushToCSSRules(
-            cssRules,
+            cssRulesByBucket,
             // keyframes styles should be inserted into own bucket
             'k',
             keyframeRules[i],
             rtlKeyframeRules[i],
+            media,
           );
         }
 
@@ -172,7 +188,7 @@ export function resolveStyleRules(
         layer,
         support,
         cssClassesMap,
-        cssRules,
+        cssRulesByBucket,
         rtlAnimationNames.join(', '),
       );
     } else if (Array.isArray(value)) {
@@ -243,7 +259,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRules, styleBucketName, ltrCSS, rtlCSS);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(
@@ -253,20 +269,44 @@ export function resolveStyleRules(
           layer,
           support,
           cssClassesMap,
-          cssRules,
+          cssRulesByBucket,
         );
       } else if (isMediaQuerySelector(property)) {
         const combinedMediaQuery = generateCombinedQuery(media, property.slice(6).trim());
 
-        resolveStyleRules(value as GriffelStyle, pseudo, combinedMediaQuery, layer, support, cssClassesMap, cssRules);
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          combinedMediaQuery,
+          layer,
+          support,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       } else if (isLayerSelector(property)) {
         const combinedLayerQuery = (layer ? `${layer}.` : '') + property.slice(6).trim();
 
-        resolveStyleRules(value as GriffelStyle, pseudo, media, combinedLayerQuery, support, cssClassesMap, cssRules);
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          media,
+          combinedLayerQuery,
+          support,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       } else if (isSupportQuerySelector(property)) {
         const combinedSupportQuery = generateCombinedQuery(support, property.slice(9).trim());
 
-        resolveStyleRules(value as GriffelStyle, pseudo, media, layer, combinedSupportQuery, cssClassesMap, cssRules);
+        resolveStyleRules(
+          value as GriffelStyle,
+          pseudo,
+          media,
+          layer,
+          combinedSupportQuery,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       } else {
         if (process.env.NODE_ENV !== 'production') {
           // eslint-disable-next-line no-console
@@ -276,5 +316,5 @@ export function resolveStyleRules(
     }
   }
 
-  return [cssClassesMap, cssRules];
+  return [cssClassesMap, cssRulesByBucket];
 }

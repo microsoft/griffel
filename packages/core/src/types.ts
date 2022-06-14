@@ -101,33 +101,23 @@ export interface GriffelRenderer {
   /**
    * @private
    */
-  insertCSSRules(cssRules: CSSRuleData[]): void;
-}
+  mediaElements: Partial<Record<string, HTMLStyleElement>>;
 
-/**
- * Buckets under which we will group our stylesheets.
- */
-export type StyleBucketName =
-  // default
-  | 'd'
-  // link
-  | 'l'
-  // visited
-  | 'v'
-  // focus-within
-  | 'w'
-  // focus
-  | 'f'
-  // focus-visible
-  | 'i'
-  // hover
-  | 'h'
-  // active
-  | 'a'
-  // @keyframes definitions
-  | 'k'
-  // at-rules (@media, @support, @layer)
-  | 't';
+  /**
+   * @private
+   */
+  insertCSSRules(cssRules: CSSRulesByBucket): void;
+
+  /**
+   * @private
+   */
+  compareMediaQuery(a: string, b: string): number;
+
+  /**
+   * @private
+   */
+  insertCSSRulesToDOM(cssRules: string[], styleBucketName: string, sheet: CSSStyleSheet | undefined): void;
+}
 
 export type SequenceHash = string;
 export type PropertyHash = string;
@@ -137,10 +127,33 @@ export type CSSClasses = /* ltrClassName */ string | [/* ltrClassName */ string,
 export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
 
-export type CSSRuleData = [
-  string, // css rule
-  string, // bucket name
-];
+export type StyleBucketName = keyof CSSRulesByBucket;
+export type NestedCSSBucket = Record<string, string[]>;
+export type CSSRulesByBucket2 = Record<string, string[] | NestedCSSBucket>;
+export type CSSRulesByBucket = {
+  // default
+  d?: string[];
+  //  link
+  l?: string[];
+  //  visited
+  v?: string[];
+  //  focus-within
+  w?: string[];
+  //  focus
+  f?: string[];
+  //  focus-visible
+  i?: string[];
+  //  hover
+  h?: string[];
+  //  active
+  a?: string[];
+  //  @keyframes definitions
+  k?: string[];
+  //  @media rules
+  m?: Record<string, string[]>;
+  //  at-rules (@support, @layer)
+  t?: string[];
+};
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 

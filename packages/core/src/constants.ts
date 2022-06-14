@@ -81,6 +81,3 @@ export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandPrope
   textEmphasis: 1,
   transition: 1,
 } as const;
-
-export const CSS_DATA_CSS_RULE = 0;
-export const CSS_DATA_BUCKET = 1;
