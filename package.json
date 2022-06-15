@@ -30,6 +30,7 @@
     "@docusaurus/core": "2.0.0-beta.15",
     "@docusaurus/module-type-aliases": "^2.0.0-beta.15",
     "@docusaurus/preset-classic": "2.0.0-beta.15",
+    "@emotion/css": "^11.9.0",
     "@nrwl/cli": "13.4.5",
     "@nrwl/eslint-plugin-nx": "13.4.5",
     "@nrwl/jest": "13.4.5",
