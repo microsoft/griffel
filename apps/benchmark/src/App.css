@@ -1,0 +1,73 @@
+.app-root {
+  display: flex;
+  height: 100%;
+}
+
+.benchmark-container {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+}
+
+.benchmark-actions {
+  display: flex;
+}
+
+.benchmark-action {
+  min-height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.results-list {
+  margin-top: 10px;
+  border-top: 1px solid black;
+  padding: 10px 0;
+}
+
+.render-container {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+}
+
+.report-card {
+  margin: 10px 0;
+  padding: 4px 10px;
+  border-bottom: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-card .main {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.report-card .column {
+ display: flex;
+ flex-direction: column;
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.select select {
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0 1em;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box;
+  font-size: 20px;
+}
+

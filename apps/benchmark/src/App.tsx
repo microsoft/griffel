@@ -1,47 +1,9 @@
 import React from 'react';
-import { makeStyles, shorthands } from '@griffel/react';
 import implementations from './implementations';
 import { ReportCard, Select } from './components';
 import tests from './tests';
 import { Benchmark } from './Benchmark';
 import type { BenchDisplayResults, BenchmarkName, BenchResultsType, LibraryName } from './types';
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    height: '100%',
-  },
-  button: {
-    minHeight: '40px',
-    fontSize: ' 20px',
-    cursor: 'pointer',
-  },
-  results: {
-    marginTop: '10px',
-    ...shorthands.borderTop('1px', 'solid', 'black'),
-    ...shorthands.padding('10px', '0'),
-  },
-  runContainer: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: '0%',
-  },
-  runActions: {
-    display: 'flex',
-    '& button': {
-      flexGrow: 1,
-    },
-  },
-  benchmarkContainer: {
-    backgroundColor: 'black',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: '0%',
-  },
-});
 
 type AppAction =
   | { type: 'SELECT_BENCHMARK'; payload: BenchmarkName }
@@ -108,7 +70,6 @@ function appReducer(state: AppState, action: AppAction): AppState {
 }
 
 export const App: React.FC = () => {
-  const styles = useStyles();
   const [state, dispatch] = React.useReducer(appReducer, appInitialState);
   const { library, benchmark, results, inProgress } = state;
   const imperativeRef = React.useRef({ start: () => null });
@@ -124,11 +85,11 @@ export const App: React.FC = () => {
   } = implementations[library];
 
   return (
-    <div className={styles.root}>
-      <div className={styles.runContainer}>
-        <div className={styles.runActions}>
+    <div className="app-root">
+      <div className="benchmark-container">
+        <div className="benchmark-actions">
           <button
-            className={styles.button}
+            className="benchmark-action"
             disabled={inProgress}
             onClick={() => {
               dispatch({ type: 'START_BENCHMARK' });
@@ -136,7 +97,7 @@ export const App: React.FC = () => {
           >
             {inProgress ? 'Running...' : 'Run'}
           </button>
-          <button className={styles.button} onClick={() => dispatch({ type: 'CLEAR_RESULTS' })}>
+          <button className="benchmark-action" onClick={() => dispatch({ type: 'CLEAR_RESULTS' })}>
             Clear results
           </button>
         </div>
@@ -167,13 +128,13 @@ export const App: React.FC = () => {
             </option>
           ))}
         </Select>
-        <div className={styles.results}>
+        <div className="results-list">
           {results.map(result => (
             <ReportCard {...result} version={result.version} />
           ))}
         </div>
       </div>
-      <div className={styles.benchmarkContainer}>
+      <div className="render-container">
         <Provider>
           {inProgress ? (
             <Benchmark
