@@ -40,7 +40,7 @@ const tests = {
   'Mount wide tree': createTestBlock(components => ({
     type: 'mount',
     Component: Tree,
-    getComponentProps: () => ({ breadth: 7, components, depth: 3, id: 0, wrap: 2 }),
+    getComponentProps: () => ({ breadth: 6, components, depth: 3, id: 0, wrap: 2 }),
     Provider: components.Provider,
     sampleCount: 50,
   })),
