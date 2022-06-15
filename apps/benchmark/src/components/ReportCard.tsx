@@ -6,7 +6,6 @@ interface ReportCardProps extends Partial<BenchDisplayResults> {
 }
 
 const fmt = (time: number) => {
-  console.log(time);
   const milliSecs = Number(Math.round(time * 100) / 100);
   const str = milliSecs.toFixed(2);
   return 10 / milliSecs > 1 ? `0${str}` : str;
