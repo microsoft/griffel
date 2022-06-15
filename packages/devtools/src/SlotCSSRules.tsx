@@ -7,6 +7,8 @@ import { tokens } from './themes';
 import { useViewContext } from './ViewContext';
 
 import type { AtomicRules } from './types';
+import { parseSourceMap } from './sourceMap';
+import type { DebugSourceMap } from '@griffel/core';
 
 const useStyles = makeStyles({
   slotName: {
@@ -39,12 +41,23 @@ const useStyles = makeStyles({
       ...shorthands.borderRight('3px', 'solid', tokens.foreground),
     },
   },
+  toSourceCode: {
+    cursor: 'help',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dotted',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+  },
   rules: {
     ...shorthands.padding(0, '5px'),
   },
 });
 
-export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }> = ({ slot, atomicRules }) => {
+export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; sourceMap?: DebugSourceMap }> = ({
+  slot,
+  atomicRules,
+  sourceMap,
+}) => {
   const rules = React.useMemo(() => getMonolithicCSSRules(atomicRules), [atomicRules]);
 
   const [expanded, setExpanded] = React.useState(true);
@@ -56,10 +69,28 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }
   const { setHighlightedClass } = useViewContext();
   const undoHighlight = () => setHighlightedClass('');
 
+  const jumpToSourceHandler = sourceMap
+    ? (e: React.SyntheticEvent) => {
+        e.stopPropagation();
+        chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async locationOrigin => {
+          const { lineNumber, sourceURL } = await parseSourceMap({
+            locationOrigin,
+            sourceURL: sourceMap.sourceURL,
+            lineNumber: sourceMap.lineNumber,
+            columnNumber: sourceMap.lineNumber,
+          });
+          chrome.devtools.panels.openResource(sourceURL, lineNumber - 1, () => ({}));
+        });
+      }
+    : undefined;
+
   return (
     <div>
       <pre className={slotClassName} onClick={toggleExpanded}>
         {slot}
+        <div className={classes.toSourceCode} onClick={jumpToSourceHandler} title={`inspect source`}>
+          {`</>`}
+        </div>
       </pre>
       {expanded && (
         <div className={classes.rules} onClick={undoHighlight}>

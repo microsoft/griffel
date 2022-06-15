@@ -4,6 +4,7 @@ import type { GriffelStyle } from '@griffel/core';
 
 import { useRenderer } from './RendererContext';
 import { useTextDirection } from './TextDirectionContext';
+import ErrorStackParser from 'error-stack-parser';
 
 function isInsideComponent() {
   // React 18 always logs errors if a dispatcher is not present:
@@ -27,6 +28,11 @@ function isInsideComponent() {
 }
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: Record<Slots, GriffelStyle>) {
+  try {
+    const error = new Error();
+    console.log('amber react', ErrorStackParser.parse(error));
+  } catch (error) {}
+
   const getStyles = vanillaMakeStyles(stylesBySlots);
 
   if (process.env.NODE_ENV !== 'production') {
