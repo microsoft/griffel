@@ -1,11 +1,14 @@
 const esbuild = require('esbuild');
 const ImportGlobPlugin = require('esbuild-plugin-import-glob').default;
-const AliasPlugin = require('esbuild-plugin-alias');
 const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
 
-const shouldWatch = yargs.argv.watch;
+const argv = yargs(process.argv)
+  .options({
+    watch: { type: 'boolean', default: false },
+  })
+  .parseSync();
 
 const outDir = path.resolve(__dirname, '../../dist/apps/benchmark/');
 
@@ -15,14 +18,8 @@ esbuild
     outfile: path.join(outDir, 'bundle.js'),
     minify: true,
     bundle: true,
-    plugins: [
-      AliasPlugin({
-        '@griffel/core': path.resolve(__dirname, '../../packages/core/src/index.ts'),
-        '@griffel/react': path.resolve(__dirname, '../../packages/react/src/index.ts'),
-      }),
-      ImportGlobPlugin(),
-    ],
-    ...(shouldWatch && {
+    plugins: [ImportGlobPlugin()],
+    ...(argv.watch && {
       watch: {
         onRebuild(error, result) {
           if (error) console.error('watch build failed:', error);
@@ -32,7 +29,7 @@ esbuild
     }),
   })
   .then(() => {
-    if (shouldWatch) {
+    if (argv.watch) {
       console.log('watching');
     }
     fs.copyFileSync(path.resolve(__dirname, './index.html'), path.join(outDir, 'index.html'));
