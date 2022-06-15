@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
@@ -12,6 +13,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "types": ["environment", "static-assets", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic"],
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"]
+  "types": ["environment", "static-assets"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./*.js"]
 }
