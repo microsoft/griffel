@@ -1,8 +1,7 @@
-import { debugData, DebugSourceMap, isDevToolsEnabled } from './devtools';
+import { debugData, DebugSourceLoc, isDevToolsEnabled, getSourceLocation } from './devtools';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
-import ErrorStackParser from 'error-stack-parser';
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: StylesBySlots<Slots>) {
   const insertionCache: Record<string, boolean> = {};
@@ -13,19 +12,9 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;
   let rtlClassNamesForSlots: Record<Slots, string> | null = null;
 
-  let sourceMap: DebugSourceMap | undefined;
+  let sourceLocation: DebugSourceLoc | undefined;
   if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-    const error = new Error();
-    const result = ErrorStackParser.parse(error)[2];
-    const { lineNumber, columnNumber, fileName } = result;
-    if (lineNumber !== undefined && columnNumber !== undefined && fileName !== undefined) {
-      sourceMap = {
-        columnNumber,
-        lineNumber,
-        sourceURL: fileName,
-      };
-    }
-    // console.log('amber core', result);
+    sourceLocation = getSourceLocation();
   }
 
   function computeClasses(options: MakeStylesOptions): Record<Slots, string> {
@@ -58,7 +47,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
       : (rtlClassNamesForSlots as Record<Slots, string>);
 
     if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-      debugData.addSequenceDetails(classNamesForSlots!, sourceMap);
+      debugData.addSequenceDetails(classNamesForSlots!, sourceLocation);
     }
 
     return classNamesForSlots;

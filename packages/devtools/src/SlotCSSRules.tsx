@@ -7,8 +7,8 @@ import { tokens } from './themes';
 import { useViewContext } from './ViewContext';
 
 import type { AtomicRules } from './types';
-import { parseSourceMap } from './sourceMap';
-import type { DebugSourceMap } from '@griffel/core';
+import { loadOriginalSourceLoc } from './sourceMap';
+import type { DebugSourceLoc } from '@griffel/core';
 
 const useStyles = makeStyles({
   slotName: {
@@ -53,10 +53,10 @@ const useStyles = makeStyles({
   },
 });
 
-export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; sourceMap?: DebugSourceMap }> = ({
+export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; sourceLoc?: DebugSourceLoc }> = ({
   slot,
   atomicRules,
-  sourceMap,
+  sourceLoc,
 }) => {
   const rules = React.useMemo(() => getMonolithicCSSRules(atomicRules), [atomicRules]);
 
@@ -69,16 +69,11 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
   const { setHighlightedClass } = useViewContext();
   const undoHighlight = () => setHighlightedClass('');
 
-  const jumpToSourceHandler = sourceMap
+  const jumpToSourceHandler = sourceLoc
     ? (e: React.SyntheticEvent) => {
         e.stopPropagation();
-        chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async locationOrigin => {
-          const { lineNumber, sourceURL } = await parseSourceMap({
-            locationOrigin,
-            sourceURL: sourceMap.sourceURL,
-            lineNumber: sourceMap.lineNumber,
-            columnNumber: sourceMap.lineNumber,
-          });
+        chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
+          const { lineNumber, sourceURL } = await loadOriginalSourceLoc(sourceLoc);
           chrome.devtools.panels.openResource(sourceURL, lineNumber - 1, () => ({}));
         });
       }

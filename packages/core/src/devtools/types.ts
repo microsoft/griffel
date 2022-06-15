@@ -10,7 +10,7 @@ declare global {
 
 export type DebugAtomicClassName = { className: string; overriddenBy?: string };
 export type DebugCSSRules = Record<string /* className */, string /* cssRule */>;
-export type DebugSourceMap = {
+export type DebugSourceLoc = {
   sourceURL: string;
   lineNumber: number;
   columnNumber: number;
@@ -25,7 +25,7 @@ export type DebugSequence = {
   slot?: string;
   rules?: DebugCSSRules;
 
-  sourceMap?: DebugSourceMap;
+  sourceLoc?: DebugSourceLoc;
 };
 
 export type DebugResult = DebugSequence;

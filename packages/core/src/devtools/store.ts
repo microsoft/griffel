@@ -1,9 +1,9 @@
 import type { SequenceHash } from '../types';
 import { SEQUENCE_PREFIX, SEQUENCE_SIZE } from '../constants';
 import { mergeClassesCachedResults } from '../mergeClasses';
-import type { DebugSourceMap } from './types';
+import type { DebugSourceLoc } from './types';
 
-const sequenceDetails: Record<SequenceHash, { slotName: string; sourceMap?: DebugSourceMap }> = {};
+const sequenceDetails: Record<SequenceHash, { slotName: string; sourceLoc?: DebugSourceLoc }> = {};
 
 const cssRules: string[] = [];
 
@@ -29,10 +29,10 @@ export const debugData = {
   },
   addSequenceDetails: <Slots extends string | number>(
     classNamesForSlots: Record<Slots, string>,
-    sourceMap?: DebugSourceMap,
+    sourceLoc?: DebugSourceLoc,
   ) => {
     Object.entries<string>(classNamesForSlots).forEach(([slotName, sequenceHash]) => {
-      sequenceDetails[sequenceHash.substring(0, SEQUENCE_SIZE)] = { slotName, sourceMap };
+      sequenceDetails[sequenceHash.substring(0, SEQUENCE_SIZE)] = { slotName, sourceLoc };
     });
   },
 
