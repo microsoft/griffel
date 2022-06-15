@@ -8,9 +8,11 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     width: 0,
     height: 0,
-    ...shorthands.borderColor('transparent'),
+    ...shorthands.borderColor('transparent', 'transparent', 'var(--border-color)'),
     ...shorthands.borderStyle('solid'),
-    borderTopWidth: 0,
+    ...shorthands.borderWidth('0px', 'var(--border-width)', 'var(--border-width)', 'var(--border-width)'),
+    marginLeft: 'var(--margin-left)',
+    marginTop: 'var(--margin-top)',
     transform: 'translate(50%, 50%)',
   },
 });
@@ -20,16 +22,14 @@ const Dot: React.FC<DotProps> = ({ size, x, y, children, color }) => {
   return (
     <div
       className={styles.root}
-      style={{
-        ...{
-          borderBottomColor: color,
-          borderRightWidth: `${size / 2}px`,
-          borderBottomWidth: `${size / 2}px`,
-          borderLeftWidth: `${size / 2}px`,
-          marginLeft: `${x}px`,
-          marginTop: `${y}px`,
-        },
-      }}
+      style={
+        {
+          '--border-width': `${size / 2}px`,
+          '--border-color': color,
+          '--margin-left': `${x}px`,
+          '--margin-top': `${y}px`,
+        } as any
+      }
     >
       {children}
     </div>

@@ -8,12 +8,9 @@ const compose = (s1: React.CSSProperties, s2: React.CSSProperties) => {
   }
 };
 
-class View extends React.Component<{ style: React.CSSProperties }> {
-  override render() {
-    const { style, ...other } = this.props;
-    return <div {...other} style={compose(viewStyle, style)} />;
-  }
-}
+const View: React.FC<{ style: React.CSSProperties }> = ({ style, ...other }) => {
+  return <div {...other} style={compose(viewStyle, style)} />;
+};
 
 const viewStyle = {
   alignItems: 'stretch',

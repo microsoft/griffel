@@ -5,14 +5,12 @@ const Dot: React.FC<DotProps> = ({ size, x, y, children, color }) => (
   <div
     style={{
       ...styles.root,
-      ...{
-        borderBottomColor: color,
-        borderRightWidth: `${size / 2}px`,
-        borderBottomWidth: `${size / 2}px`,
-        borderLeftWidth: `${size / 2}px`,
-        marginLeft: `${x}px`,
-        marginTop: `${y}px`,
-      },
+      borderBottomColor: color,
+      borderRightWidth: `${size / 2}px`,
+      borderBottomWidth: `${size / 2}px`,
+      borderLeftWidth: `${size / 2}px`,
+      marginLeft: `${x}px`,
+      marginTop: `${y}px`,
     }}
   >
     {children}
