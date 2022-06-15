@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "@griffel/benchmark": "apps/benchmark",
     "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
     "@griffel/devtools": "packages/devtools",

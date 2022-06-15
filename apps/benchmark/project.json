@@ -1,0 +1,39 @@
+{
+  "root": "apps/benchmark",
+  "sourceRoot": "apps/benchmark/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "apps/benchmark",
+        "commands": [{ "command": "node ./build.js" }],
+        "outputPath": ["dist/apps/benchmark"]
+      }
+    },
+    "watch": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "apps/benchmark",
+        "commands": [{ "command": "node ./build.js --watch" }],
+        "outputPath": ["dist/apps/benchmark"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "apps/benchmark",
+        "commands": [{ "command": "npx http-serve ../../dist/apps/benchmark" }]
+      }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "apps/benchmark",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}
