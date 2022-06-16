@@ -43,23 +43,21 @@ export function getStyleSheetForBucket(
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
     renderer.stylesheets[bucketName] = stylesheet;
 
-    if (!target || !tag) {
-      return stylesheet;
-    }
+    if (target && tag) {
+      let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
+      let nextBucketFromCache = null;
 
-    let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
-    let nextBucketFromCache = null;
-
-    // Find the next bucket which we will add our new style bucket before.
-    for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
-      const nextBucket = renderer.stylesheets[styleBucketOrdering[currentBucketIndex]];
-      if (nextBucket) {
-        nextBucketFromCache = nextBucket;
-        break;
+      // Find the next bucket which we will add our new style bucket before.
+      for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
+        const nextBucket = renderer.stylesheets[styleBucketOrdering[currentBucketIndex]];
+        if (nextBucket) {
+          nextBucketFromCache = nextBucket;
+          break;
+        }
       }
-    }
 
-    target.head.insertBefore(tag, nextBucketFromCache?.element || null);
+      target.head.insertBefore(tag, nextBucketFromCache?.element || null);
+    }
   }
 
   return renderer.stylesheets[bucketName]!;
