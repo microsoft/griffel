@@ -35,7 +35,7 @@ export function createDOMRenderer(
   const { unstable_filterCSSRule } = options;
   const renderer: GriffelRenderer = {
     insertionCache: {},
-    styleElements: {},
+    stylesheets: {},
 
     id: `d${lastIndex++}`,
 

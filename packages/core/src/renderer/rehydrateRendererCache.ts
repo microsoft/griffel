@@ -30,8 +30,8 @@ export function rehydrateRendererCache(
       const regex = regexps[bucketName] || STYLES_HYDRATOR;
 
       // 👇 If some elements are not created yet, we will register them in renderer
-      if (!renderer.styleElements[bucketName]) {
-        renderer.styleElements[bucketName] = createIsomorphicStyleSheetFromElement(styleElement);
+      if (!renderer.stylesheets[bucketName]) {
+        renderer.stylesheets[bucketName] = createIsomorphicStyleSheetFromElement(styleElement);
       }
 
       let match;

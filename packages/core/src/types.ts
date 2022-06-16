@@ -113,7 +113,7 @@ export interface GriffelRenderer {
   /**
    * @private
    */
-  styleElements: Partial<Record<StyleBucketName, IsomorphicStyleSheet>>;
+  stylesheets: Partial<Record<StyleBucketName, IsomorphicStyleSheet>>;
 
   /**
    * @private

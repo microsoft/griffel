@@ -18,10 +18,10 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
      */
     const _value = value as GriffelRenderer;
 
-    const styleElementsKeys = Object.keys(_value.styleElements) as (keyof typeof _value['styleElements'])[];
+    const styleElementsKeys = Object.keys(_value.stylesheets) as (keyof typeof _value['stylesheets'])[];
 
     const rules = styleElementsKeys.reduce((acc, styleEl) => {
-      const styleElement = _value.styleElements[styleEl]?.element;
+      const styleElement = _value.stylesheets[styleEl]?.element;
 
       if (styleElement) {
         const cssRules = styleElement.sheet ? Array.from(styleElement.sheet.cssRules) : [];

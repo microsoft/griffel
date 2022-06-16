@@ -38,10 +38,10 @@ export function getStyleSheetForBucket(
   renderer: GriffelRenderer,
   elementAttributes: Record<string, string> = {},
 ): IsomorphicStyleSheet {
-  if (!renderer.styleElements[bucketName]) {
+  if (!renderer.stylesheets[bucketName]) {
     const tag: HTMLStyleElement | undefined = target && target.createElement('style');
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
-    renderer.styleElements[bucketName] = stylesheet;
+    renderer.stylesheets[bucketName] = stylesheet;
 
     if (!target || !tag) {
       return stylesheet;
@@ -52,7 +52,7 @@ export function getStyleSheetForBucket(
 
     // Find the next bucket which we will add our new style bucket before.
     for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
-      const nextBucket = renderer.styleElements[styleBucketOrdering[currentBucketIndex]];
+      const nextBucket = renderer.stylesheets[styleBucketOrdering[currentBucketIndex]];
       if (nextBucket) {
         nextBucketFromCache = nextBucket;
         break;
@@ -62,5 +62,5 @@ export function getStyleSheetForBucket(
     target.head.insertBefore(tag, nextBucketFromCache?.element || null);
   }
 
-  return renderer.styleElements[bucketName]!;
+  return renderer.stylesheets[bucketName]!;
 }
