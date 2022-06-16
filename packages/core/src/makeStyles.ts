@@ -14,7 +14,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
 
   let sourceLocation: DebugSourceLoc | undefined;
   if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-    sourceLocation = getSourceLocation();
+    sourceLocation = getSourceLocation(true);
   }
 
   function computeClasses(options: MakeStylesOptions): Record<Slots, string> {

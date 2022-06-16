@@ -83,9 +83,11 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
     <div>
       <pre className={slotClassName} onClick={toggleExpanded}>
         {slot}
-        <div className={classes.toSourceCode} onClick={jumpToSourceHandler} title={`inspect source`}>
-          {`</>`}
-        </div>
+        {jumpToSourceHandler && (
+          <div className={classes.toSourceCode} onClick={jumpToSourceHandler} title={`inspect source`}>
+            {`</>`}
+          </div>
+        )}
       </pre>
       {expanded && (
         <div className={classes.rules} onClick={undoHighlight}>
