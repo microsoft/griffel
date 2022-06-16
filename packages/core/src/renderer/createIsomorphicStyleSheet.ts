@@ -44,6 +44,10 @@ export function createIsomorphicStyleSheetFromElement(element: HTMLStyleElement)
     acc[attr.name] = attr.value;
     return acc;
   }, {} as Record<string, string>);
-  const stylesheet = createIsomorphicStyleSheet(element, elementAttributes[DATA_BUCKET_ATTR], elementAttributes);
+  const stylesheet = createIsomorphicStyleSheet(
+    element,
+    elementAttributes[DATA_BUCKET_ATTR] as StyleBucketName,
+    elementAttributes,
+  );
   return stylesheet;
 }
