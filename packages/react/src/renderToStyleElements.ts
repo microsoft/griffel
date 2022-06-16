@@ -10,28 +10,29 @@ import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
   const styleElements = Object.values(renderer.styleElements).sort((a, b) => {
     return (
-      styleBucketOrdering.indexOf(a.__attributes!['data-make-styles-bucket'] as StyleBucketName) -
-      styleBucketOrdering.indexOf(b.__attributes!['data-make-styles-bucket'] as StyleBucketName)
+      styleBucketOrdering.indexOf(a.bucketName as StyleBucketName) -
+      styleBucketOrdering.indexOf(b.bucketName as StyleBucketName)
     );
   });
 
   return styleElements
     .map((styleElement, i) => {
+      const cssRules = styleElement.cssRules();
       // don't want to create any empty style elements
-      if (!styleElement.sheet.__cssRules?.length) {
+      if (!cssRules.length) {
         return null;
       }
 
       return React.createElement('style', {
-        key: styleElement.__attributes!['data-make-styles-bucket'],
+        key: styleElement.bucketName,
 
         // TODO: support "nonce"
         // ...renderer.styleNodeAttributes,
-        ...styleElement.__attributes,
+        ...styleElement.elementAttributes,
         'data-make-styles-rehydration': 'true',
 
         dangerouslySetInnerHTML: {
-          __html: styleElement.sheet.__cssRules.join(''),
+          __html: cssRules.join(''),
         },
       });
     })

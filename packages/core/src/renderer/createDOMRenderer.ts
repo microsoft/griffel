@@ -66,10 +66,10 @@ export function createDOMRenderer(
           try {
             if (unstable_filterCSSRule) {
               if (unstable_filterCSSRule(ruleCSS)) {
-                sheet.insertRule(ruleCSS, sheet.cssRules.length);
+                sheet.insertRule(ruleCSS);
               }
             } else {
-              sheet.insertRule(ruleCSS, sheet.cssRules.length);
+              sheet.insertRule(ruleCSS);
             }
           } catch (e) {
             // We've disabled these warnings due to false-positive errors with browser prefixes

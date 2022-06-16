@@ -100,6 +100,14 @@ export interface IsomorphicCSSStyleSheet extends Pick<CSSStyleSheet, 'insertRule
   __cssRules?: string[];
 }
 
+export interface IsomorphicStyleSheet {
+  elementAttributes: Record<string, string>;
+  insertRule(rule: string): number | undefined;
+  element: HTMLStyleElement | undefined;
+  bucketName: string;
+  cssRules(): string[];
+}
+
 export interface GriffelRenderer {
   id: string;
 
@@ -111,7 +119,7 @@ export interface GriffelRenderer {
   /**
    * @private
    */
-  styleElements: Partial<Record<StyleBucketName, IsomorphicStyleElement>>;
+  styleElements: Partial<Record<StyleBucketName, IsomorphicStyleSheet>>;
 
   /**
    * @private

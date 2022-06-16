@@ -1,6 +1,6 @@
 import { DATA_BUCKET_ATTR } from '../constants';
-import { GriffelRenderer, IsomorphicCSSStyleSheet, StyleBucketName } from '../types';
-import { createIsomorphicStyleElement } from './createIsomorphicStyleElement';
+import { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
+import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
 /**
  * Ordered style buckets using their short pseudo name.
@@ -38,32 +38,25 @@ export function getStyleSheetForBucket(
   target: Document | undefined,
   renderer: GriffelRenderer,
   elementAttributes: Record<string, string> = {},
-  metadata?: Record<string, unknown>,
-): IsomorphicCSSStyleSheet {
+): IsomorphicStyleSheet {
   if (!renderer.styleElements[bucketName]) {
-    const tag = createIsomorphicStyleElement(target);
-
-    tag.setAttribute(DATA_BUCKET_ATTR, bucketName);
-
-    for (const attribute in elementAttributes) {
-      tag.setAttribute(attribute, elementAttributes[attribute]);
-    }
-
-    renderer.styleElements[bucketName] = tag;
+    const stylesheet = createIsomorphicStyleSheet(target, bucketName, elementAttributes);
+    renderer.styleElements[bucketName] = stylesheet;
 
     if (target) {
       const tags = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
+      const styleElement = stylesheet.element;
       const sibling = getStyleElementSibling(bucketName, Array.from(tags));
 
       if (sibling) {
-        target.head.insertBefore(tag as unknown as HTMLStyleElement, sibling);
+        target.head.insertBefore(styleElement!, sibling);
       } else {
-        target.head.appendChild(tag as unknown as HTMLStyleElement);
+        target.head.appendChild(styleElement!);
       }
     }
   }
 
-  return renderer.styleElements[bucketName]!.sheet;
+  return renderer.styleElements[bucketName]!;
 }
 
 export function getStyleElementSibling(targetBucketName: string, styleElements: HTMLStyleElement[]) {
