@@ -6,7 +6,7 @@ import { IsomorphicStyleElement } from '../types';
  */
 export function createIsomorphicStyleElement(target: Document | undefined): IsomorphicStyleElement {
   if (target) {
-    return target.createElement('style') as unknown as IsomorphicStyleElement;
+    return target.createElement('style') as IsomorphicStyleElement;
   }
 
   return {
@@ -21,7 +21,7 @@ export function createIsomorphicStyleElement(target: Document | undefined): Isom
           console.error('sheet.item(index) is not supported in SSR');
           return null;
         },
-        length: 0,
+        length: -1,
       },
       insertRule(rule: string) {
         return this.__cssRules!.push(rule);
