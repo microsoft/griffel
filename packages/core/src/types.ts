@@ -85,21 +85,6 @@ export interface MakeStaticStylesOptions {
   renderer: GriffelRenderer;
 }
 
-export interface IsomorphicStyleElement extends Pick<HTMLStyleElement, 'dataset' | 'setAttribute' | 'media'> {
-  /**
-   * Only defined in SSR avoids creating a polyfill for NamedNodeList
-   */
-  __attributes?: Record<string, string>;
-  sheet: IsomorphicCSSStyleSheet;
-}
-
-export interface IsomorphicCSSStyleSheet extends Pick<CSSStyleSheet, 'insertRule' | 'cssRules'> {
-  /**
-   * Only defined in SSR avoids creating a polyfill for CSSRuleList
-   */
-  __cssRules?: string[];
-}
-
 export interface IsomorphicStyleSheet {
   elementAttributes: Record<string, string>;
   insertRule(rule: string): number | undefined;
