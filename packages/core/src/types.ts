@@ -86,9 +86,18 @@ export interface MakeStaticStylesOptions {
 }
 
 export interface IsomorphicStyleSheet {
+  /**
+   * Attributes applied to the underlying HTMLStyleElement
+   */
   elementAttributes: Record<string, string>;
+  /**
+   * Underlying HTMLStyleElement
+   */
   element: HTMLStyleElement | undefined;
   bucketName: StyleBucketName;
+  /**
+   * Returns all CSS rules on the stylesheet
+   */
   cssRules(): string[];
   insertRule(rule: string): number | undefined;
 }
