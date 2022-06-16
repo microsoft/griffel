@@ -88,7 +88,7 @@ export interface MakeStaticStylesOptions {
 export interface IsomorphicStyleSheet {
   elementAttributes: Record<string, string>;
   element: HTMLStyleElement | undefined;
-  bucketName: string;
+  bucketName: StyleBucketName;
   cssRules(): string[];
   insertRule(rule: string): number | undefined;
 }

@@ -1,6 +1,6 @@
 import { styleBucketOrdering } from '@griffel/core';
 import * as React from 'react';
-import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
+import type { GriffelRenderer } from '@griffel/core';
 
 /**
  * This method returns a list of <style> React elements with the rendered CSS. This is useful for Server-Side rendering.
@@ -9,10 +9,7 @@ import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
  */
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
   const styleElements = Object.values(renderer.styleElements).sort((a, b) => {
-    return (
-      styleBucketOrdering.indexOf(a.bucketName as StyleBucketName) -
-      styleBucketOrdering.indexOf(b.bucketName as StyleBucketName)
-    );
+    return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
   });
 
   return styleElements
