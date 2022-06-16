@@ -1,9 +1,9 @@
 import { DATA_BUCKET_ATTR } from '../constants';
-import { IsomorphicStyleSheet } from '../types';
+import { IsomorphicStyleSheet, StyleBucketName } from '../types';
 
 export function createIsomorphicStyleSheet(
   styleElement: HTMLStyleElement | undefined,
-  bucketName: string,
+  bucketName: StyleBucketName,
   elementAttributes: Record<string, string>,
 ): IsomorphicStyleSheet {
   // no CSSStyleSheet in SSR, just append rules here for server render
