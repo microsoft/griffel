@@ -1,4 +1,5 @@
-import { GriffelRenderer, IsomorphicStyleElement, StyleBucketName } from '../types';
+import { GriffelRenderer, StyleBucketName } from '../types';
+import { createIsomorphicStyleSheetFromElement } from './createIsomorphicStyleSheet';
 
 // Regexps to extract names of classes and animations
 // https://github.com/styletron/styletron/blob/e0fcae826744eb00ce679ac613a1b10d44256660/packages/styletron-engine-atomic/src/client/client.js#L8
@@ -30,7 +31,7 @@ export function rehydrateRendererCache(
 
       // 👇 If some elements are not created yet, we will register them in renderer
       if (!renderer.styleElements[bucketName]) {
-        renderer.styleElements[bucketName] = styleElement as IsomorphicStyleElement;
+        renderer.styleElements[bucketName] = createIsomorphicStyleSheetFromElement(target, styleElement);
       }
 
       let match;

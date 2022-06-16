@@ -39,3 +39,11 @@ export function createIsomorphicStyleSheet(
     },
   };
 }
+
+export function createIsomorphicStyleSheetFromElement(target: Document, element: HTMLStyleElement) {
+  const elementAttributes = Array.from(element.attributes).reduce((acc, attr) => {
+    acc[attr.name] = attr.value;
+    return acc;
+  }, {} as Record<string, string>);
+  return createIsomorphicStyleSheet(target, elementAttributes[DATA_BUCKET_ATTR], elementAttributes);
+}
