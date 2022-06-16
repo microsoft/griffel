@@ -40,7 +40,8 @@ export function getStyleSheetForBucket(
   elementAttributes: Record<string, string> = {},
 ): IsomorphicStyleSheet {
   if (!renderer.styleElements[bucketName]) {
-    const stylesheet = createIsomorphicStyleSheet(target, bucketName, elementAttributes);
+    const tag = target && target.createElement('style');
+    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
     renderer.styleElements[bucketName] = stylesheet;
 
     if (target) {

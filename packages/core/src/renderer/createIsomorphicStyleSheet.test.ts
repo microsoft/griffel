@@ -2,7 +2,7 @@ import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
 describe('createIsomorphicStyleElement', () => {
   it('should insert css rule', () => {
-    const stylesheet = createIsomorphicStyleSheet(document, 'd', {});
+    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', {});
     stylesheet.insertRule(".foo { color: 'red' }");
     expect(stylesheet.cssRules()).toMatchInlineSnapshot(`
       Array [
@@ -12,7 +12,7 @@ describe('createIsomorphicStyleElement', () => {
   });
 
   it('should set element attributes', () => {
-    const stylesheet = createIsomorphicStyleSheet(document, 'd', { 'data-foo': 'foo' });
+    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', { 'data-foo': 'foo' });
     expect(stylesheet.elementAttributes).toMatchInlineSnapshot(`
       Object {
         "data-foo": "foo",
@@ -36,7 +36,7 @@ describe('createIsomorphicStyleElement', () => {
   });
 
   it('should create HTML style element', () => {
-    const stylesheet = createIsomorphicStyleSheet(document, 'd', {});
+    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', {});
     expect(stylesheet.element).not.toBeUndefined();
     expect(stylesheet.element).toMatchInlineSnapshot(`
       <style

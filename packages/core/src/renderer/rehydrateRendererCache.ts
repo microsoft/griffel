@@ -31,7 +31,7 @@ export function rehydrateRendererCache(
 
       // 👇 If some elements are not created yet, we will register them in renderer
       if (!renderer.styleElements[bucketName]) {
-        renderer.styleElements[bucketName] = createIsomorphicStyleSheetFromElement(target, styleElement);
+        renderer.styleElements[bucketName] = createIsomorphicStyleSheetFromElement(styleElement);
       }
 
       let match;

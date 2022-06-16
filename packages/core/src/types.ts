@@ -87,10 +87,10 @@ export interface MakeStaticStylesOptions {
 
 export interface IsomorphicStyleSheet {
   elementAttributes: Record<string, string>;
-  insertRule(rule: string): number | undefined;
   element: HTMLStyleElement | undefined;
   bucketName: string;
   cssRules(): string[];
+  insertRule(rule: string): number | undefined;
 }
 
 export interface GriffelRenderer {

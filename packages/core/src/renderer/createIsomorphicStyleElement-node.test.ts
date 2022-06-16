@@ -6,7 +6,7 @@
 
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
-describe('createIsomorphicStyleElement', () => {
+describe('createIsomorphicStyleElement - node', () => {
   it('should insert css rule', () => {
     const stylesheet = createIsomorphicStyleSheet(undefined, 'd', {});
     stylesheet.insertRule(".foo { color: 'red' }");

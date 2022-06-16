@@ -2,24 +2,23 @@ import { DATA_BUCKET_ATTR } from '../constants';
 import { IsomorphicStyleSheet } from '../types';
 
 export function createIsomorphicStyleSheet(
-  target: Document | undefined,
+  styleElement: HTMLStyleElement | undefined,
   bucketName: string,
   elementAttributes: Record<string, string>,
 ): IsomorphicStyleSheet {
-  let element: HTMLStyleElement | undefined;
+  // no CSSStyleSheet in SSR, just append rules here for server render
   const __cssRulesForSSR: string[] = [];
 
   elementAttributes[DATA_BUCKET_ATTR] = bucketName;
-  if (target) {
-    element = target.createElement('style');
+  if (styleElement) {
     for (const attrName in elementAttributes) {
-      element.setAttribute(attrName, elementAttributes[attrName]);
+      styleElement.setAttribute(attrName, elementAttributes[attrName]);
     }
   }
 
   function insertRule(rule: string) {
-    if (element?.sheet) {
-      return element.sheet.insertRule(rule, element.sheet.cssRules.length);
+    if (styleElement?.sheet) {
+      return styleElement.sheet.insertRule(rule, styleElement.sheet.cssRules.length);
     }
 
     return __cssRulesForSSR.push(rule);
@@ -28,11 +27,11 @@ export function createIsomorphicStyleSheet(
   return {
     elementAttributes,
     insertRule,
-    element,
+    element: styleElement,
     bucketName,
     cssRules() {
-      if (element?.sheet) {
-        return Array.from(element.sheet.cssRules).map(cssRule => cssRule.cssText);
+      if (styleElement?.sheet) {
+        return Array.from(styleElement.sheet.cssRules).map(cssRule => cssRule.cssText);
       }
 
       return __cssRulesForSSR;
@@ -40,10 +39,11 @@ export function createIsomorphicStyleSheet(
   };
 }
 
-export function createIsomorphicStyleSheetFromElement(target: Document, element: HTMLStyleElement) {
+export function createIsomorphicStyleSheetFromElement(element: HTMLStyleElement) {
   const elementAttributes = Array.from(element.attributes).reduce((acc, attr) => {
     acc[attr.name] = attr.value;
     return acc;
   }, {} as Record<string, string>);
-  return createIsomorphicStyleSheet(target, elementAttributes[DATA_BUCKET_ATTR], elementAttributes);
+  const stylesheet = createIsomorphicStyleSheet(element, elementAttributes[DATA_BUCKET_ATTR], elementAttributes);
+  return stylesheet;
 }
