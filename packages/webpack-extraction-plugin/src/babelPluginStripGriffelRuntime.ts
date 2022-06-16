@@ -79,6 +79,7 @@ export const babelPluginStripGriffelRuntime = declare<
                 );
               }
 
+              // Returns the styles as a JavaScript object
               const evaluationResult = argumentPaths[1].evaluate();
 
               if (!evaluationResult.confident) {
