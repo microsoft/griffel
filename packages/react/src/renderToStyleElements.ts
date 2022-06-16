@@ -13,7 +13,7 @@ export function renderToStyleElements(renderer: GriffelRenderer): React.ReactEle
   });
 
   return styleElements
-    .map((styleElement, i) => {
+    .map(styleElement => {
       const cssRules = styleElement.cssRules();
       // don't want to create any empty style elements
       if (!cssRules.length) {
