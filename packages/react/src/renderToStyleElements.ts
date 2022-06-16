@@ -8,11 +8,11 @@ import type { GriffelRenderer } from '@griffel/core';
  * @public
  */
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
-  const styleElements = Object.values(renderer.styleElements).sort((a, b) => {
+  const stylesheets = Object.values(renderer.stylesheets).sort((a, b) => {
     return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
   });
 
-  return styleElements
+  return stylesheets
     .map(styleElement => {
       const cssRules = styleElement.cssRules();
       // don't want to create any empty style elements
