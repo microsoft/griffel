@@ -10,8 +10,8 @@ import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
   const styleElements = Object.values(renderer.styleElements).sort((a, b) => {
     return (
-      styleBucketOrdering.indexOf(a.dataset['makeStylesBucket'] as StyleBucketName) -
-      styleBucketOrdering.indexOf(b.dataset['makeStylesBucket'] as StyleBucketName)
+      styleBucketOrdering.indexOf(a.__attributes!['data-make-styles-bucket'] as StyleBucketName) -
+      styleBucketOrdering.indexOf(b.__attributes!['data-make-styles-bucket'] as StyleBucketName)
     );
   });
 
@@ -22,20 +22,12 @@ export function renderToStyleElements(renderer: GriffelRenderer): React.ReactEle
         return null;
       }
 
-      const dataset: Record<string, string | undefined> = {};
-      for (const i in styleElement.dataset) {
-        const attr = styleElement.dataset[i];
-        dataset[`data-${kebabize(i)}`] = attr;
-      }
-
       return React.createElement('style', {
-        // key: bucketName,
-        key: styleElement.dataset['makeStylesBucket'],
+        key: styleElement.__attributes!['data-make-styles-bucket'],
 
         // TODO: support "nonce"
         // ...renderer.styleNodeAttributes,
         ...styleElement.__attributes,
-        ...dataset,
         'data-make-styles-rehydration': 'true',
 
         dangerouslySetInnerHTML: {
@@ -45,5 +37,3 @@ export function renderToStyleElements(renderer: GriffelRenderer): React.ReactEle
     })
     .filter(Boolean) as React.ReactElement[];
 }
-
-const kebabize = (str: string) => str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());

@@ -6,7 +6,7 @@ export function createIsomorphicStyleElement(target: Document | undefined): Isom
   }
 
   return {
-    __attributes: undefined,
+    __attributes: {},
     setAttribute(name: string, value: string) {
       this.__attributes![name] = value;
     },

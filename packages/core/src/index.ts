@@ -65,8 +65,6 @@ export type {
   CSSClassesMapBySlot,
   CSSRulesByBucket,
   StyleBucketName,
-  CSSRuleWithMeta,
-  CSSBucketEntry,
   // Util
   MakeStaticStylesOptions,
   MakeStylesOptions,

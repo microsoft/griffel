@@ -1,3 +1,4 @@
+import { DATA_BUCKET_ATTR } from '../constants';
 import { GriffelRenderer, IsomorphicCSSStyleSheet, StyleBucketName } from '../types';
 import { createIsomorphicStyleElement } from './createIsomorphicStyleElement';
 
@@ -27,8 +28,6 @@ export const styleBucketOrdering: StyleBucketName[] = [
   'k',
   // at-rules
   't',
-  // media rules
-  'm',
 ];
 
 /**
@@ -44,20 +43,16 @@ export function getStyleSheetForBucket(
   if (!renderer.styleElements[bucketName]) {
     const tag = createIsomorphicStyleElement(target);
 
-    tag.dataset['makeStylesBucket'] = bucketName;
+    tag.setAttribute(DATA_BUCKET_ATTR, bucketName);
 
     for (const attribute in elementAttributes) {
       tag.setAttribute(attribute, elementAttributes[attribute]);
     }
 
-    if (bucketName === 'm' && metadata) {
-      tag.media = metadata['m'] as string;
-    }
-
     renderer.styleElements[bucketName] = tag;
 
     if (target) {
-      const tags = target.head.querySelectorAll<HTMLStyleElement>('[data-make-styles-bucket]');
+      const tags = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
       const sibling = getStyleElementSibling(bucketName, Array.from(tags));
 
       if (sibling) {
@@ -80,17 +75,13 @@ export function getStyleElementSibling(targetBucketName: string, styleElements: 
   for (; currentIndex < styleElements.length; currentIndex++) {
     const styleElement = styleElements[currentIndex];
 
-    const currentBucketName = styleElement.dataset['makeStylesBucket'] as StyleBucketName;
+    const currentBucketName = styleElement.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName;
     const currentBucketIndex = styleBucketOrdering.indexOf(currentBucketName);
 
     if (currentBucketIndex >= targetBucketIndex) {
       nextBucket = styleElement;
       break;
     }
-  }
-
-  if (targetBucketName === 'm') {
-    return null;
   }
 
   return nextBucket;

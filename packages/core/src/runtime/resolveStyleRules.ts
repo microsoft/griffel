@@ -2,14 +2,7 @@ import hashString from '@emotion/hash';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { HASH_PREFIX } from '../constants';
-import {
-  GriffelStyle,
-  CSSClassesMap,
-  CSSRulesByBucket,
-  StyleBucketName,
-  GriffelAnimation,
-  CSSBucketEntry,
-} from '../types';
+import { GriffelStyle, CSSClassesMap, CSSRulesByBucket, StyleBucketName, GriffelAnimation } from '../types';
 import { compileCSS, CompileCSSOptions } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
@@ -38,21 +31,12 @@ function pushToCSSRules(
   styleBucketName: StyleBucketName,
   ltrCSS: string,
   rtlCSS: string | undefined,
-  media: string | undefined,
 ) {
-  let entry: CSSBucketEntry = ltrCSS;
-  let rtlEntry: CSSBucketEntry | undefined = rtlCSS;
-  cssRulesByBucket[styleBucketName] ??= [];
+  cssRulesByBucket[styleBucketName] = cssRulesByBucket[styleBucketName] || [];
+  cssRulesByBucket[styleBucketName]!.push(ltrCSS);
 
-  if (media) {
-    entry = { r: ltrCSS, m: media };
-    rtlEntry = rtlCSS ? { r: rtlCSS, m: media } : undefined;
-  }
-
-  cssRulesByBucket[styleBucketName]!.push(entry);
-
-  if (rtlEntry) {
-    cssRulesByBucket[styleBucketName]!.push(rtlEntry);
+  if (rtlCSS) {
+    cssRulesByBucket[styleBucketName]!.push(rtlCSS);
   }
 }
 
@@ -144,7 +128,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
     } else if (property === 'animationName') {
       const animationNameValue = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
 
@@ -176,7 +160,6 @@ export function resolveStyleRules(
             'k',
             keyframeRules[i],
             rtlKeyframeRules[i],
-            media,
           );
         }
 
@@ -262,7 +245,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS);
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(

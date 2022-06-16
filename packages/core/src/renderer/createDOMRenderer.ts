@@ -1,5 +1,5 @@
 import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
-import { GriffelRenderer, IsomorphicCSSStyleSheet, StyleBucketName } from '../types';
+import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
 let lastIndex = 0;
@@ -43,37 +43,22 @@ export function createDOMRenderer(
       // eslint-disable-next-line guard-for-in
       for (const styleBucketName in cssRules) {
         const cssRulesForBucket = cssRules[styleBucketName as StyleBucketName]!;
+        const sheet = getStyleSheetForBucket(
+          styleBucketName as StyleBucketName,
+          target,
+          renderer,
+          options.styleElementAttributes,
+        );
 
         // This is a hot path in rendering styles: ".length" is cached in "l" var to avoid accesses the property
         for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
-          const bucketEntry = cssRulesForBucket[i];
-          const hasMeta = typeof bucketEntry === 'object';
-          const ruleCSS = hasMeta ? bucketEntry.r : bucketEntry;
-
-          let sheet: IsomorphicCSSStyleSheet | null;
-          if (hasMeta) {
-            sheet = getStyleSheetForBucket(
-              styleBucketName as StyleBucketName,
-              target,
-              renderer,
-              options.styleElementAttributes,
-              bucketEntry,
-            );
-          } else {
-            sheet = getStyleSheetForBucket(
-              styleBucketName as StyleBucketName,
-              target,
-              renderer,
-              options.styleElementAttributes,
-            );
-          }
+          const ruleCSS = cssRulesForBucket[i];
 
           if (renderer.insertionCache[ruleCSS]) {
             continue;
           }
 
-          renderer.insertionCache[ruleCSS] = styleBucketName;
-
+          renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
           if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
             debugData.addCSSRule(ruleCSS);
           }
