@@ -1,4 +1,3 @@
-import { DATA_BUCKET_ATTR } from '../constants';
 import { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
@@ -40,43 +39,28 @@ export function getStyleSheetForBucket(
   elementAttributes: Record<string, string> = {},
 ): IsomorphicStyleSheet {
   if (!renderer.styleElements[bucketName]) {
-    const tag = target && target.createElement('style');
+    const tag: HTMLStyleElement | undefined = target && target.createElement('style');
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
     renderer.styleElements[bucketName] = stylesheet;
 
-    if (target) {
-      const tags = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
-      const styleElement = stylesheet.element;
-      const sibling = getStyleElementSibling(bucketName, Array.from(tags));
+    if (!target || !tag) {
+      return stylesheet;
+    }
 
-      if (sibling) {
-        target.head.insertBefore(styleElement!, sibling);
-      } else {
-        target.head.appendChild(styleElement!);
+    let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
+    let nextBucketFromCache = null;
+
+    // Find the next bucket which we will add our new style bucket before.
+    for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
+      const nextBucket = renderer.styleElements[styleBucketOrdering[currentBucketIndex]];
+      if (nextBucket) {
+        nextBucketFromCache = nextBucket;
+        break;
       }
     }
+
+    target.head.insertBefore(tag, nextBucketFromCache?.element || null);
   }
 
   return renderer.styleElements[bucketName]!;
-}
-
-export function getStyleElementSibling(targetBucketName: string, styleElements: HTMLStyleElement[]) {
-  const targetBucketIndex = styleBucketOrdering.indexOf(targetBucketName as StyleBucketName);
-
-  let nextBucket = null;
-  let currentIndex = 0;
-
-  for (; currentIndex < styleElements.length; currentIndex++) {
-    const styleElement = styleElements[currentIndex];
-
-    const currentBucketName = styleElement.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName;
-    const currentBucketIndex = styleBucketOrdering.indexOf(currentBucketName);
-
-    if (currentBucketIndex >= targetBucketIndex) {
-      nextBucket = styleElement;
-      break;
-    }
-  }
-
-  return nextBucket;
 }
