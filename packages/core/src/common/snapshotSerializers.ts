@@ -10,7 +10,7 @@ const isObject = (value: unknown) => value != null && !Array.isArray(value) && t
 
 export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
   test(value) {
-    return isObject(value) && isObject(value.styleElements);
+    return isObject(value) && isObject(value.stylesheets);
   },
   print(value) {
     /**
@@ -18,13 +18,13 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
      */
     const _value = value as GriffelRenderer;
 
-    const styleElementsKeys = Object.keys(_value.stylesheets) as (keyof typeof _value['stylesheets'])[];
+    const stylesheetKeys = Object.keys(_value.stylesheets) as (keyof typeof _value['stylesheets'])[];
 
-    const rules = styleElementsKeys.reduce((acc, styleEl) => {
-      const styleElement = _value.stylesheets[styleEl]?.element;
+    const rules = stylesheetKeys.reduce((acc, styleEl) => {
+      const stylesheet = _value.stylesheets[styleEl]?.element;
 
-      if (styleElement) {
-        const cssRules = styleElement.sheet ? Array.from(styleElement.sheet.cssRules) : [];
+      if (stylesheet) {
+        const cssRules = stylesheet.sheet ? Array.from(stylesheet.sheet.cssRules) : [];
 
         return [...acc, ...cssRules.map(rule => rule.cssText)];
       }
