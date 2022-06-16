@@ -85,18 +85,28 @@ export interface MakeStaticStylesOptions {
   renderer: GriffelRenderer;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IsomorphicStyleElement extends Pick<HTMLStyleElement, 'dataset' | 'setAttribute' | 'media'> {
+  __attributes?: Record<string, string>;
+  sheet: IsomorphicCSSStyleSheet;
+}
+
+export interface IsomorphicCSSStyleSheet extends Pick<CSSStyleSheet, 'insertRule' | 'cssRules'> {
+  __cssRules?: string[];
+}
+
 export interface GriffelRenderer {
   id: string;
 
   /**
    * @private
    */
-  insertionCache: Record<string, StyleBucketName>;
+  insertionCache: Record<string, string>;
 
   /**
    * @private
    */
-  styleElements: Partial<Record<StyleBucketName, HTMLStyleElement>>;
+  styleElements: Partial<Record<StyleBucketName, IsomorphicStyleElement>>;
 
   /**
    * @private
@@ -104,30 +114,43 @@ export interface GriffelRenderer {
   insertCSSRules(cssRules: CSSRulesByBucket): void;
 }
 
-/**
- * Buckets under which we will group our stylesheets.
- */
-export type StyleBucketName =
+export type StyleBucketName = keyof CSSRulesByBucket;
+export type CSSRulesByBucket = {
   // default
-  | 'd'
-  // link
-  | 'l'
-  // visited
-  | 'v'
-  // focus-within
-  | 'w'
-  // focus
-  | 'f'
-  // focus-visible
-  | 'i'
-  // hover
-  | 'h'
-  // active
-  | 'a'
-  // @keyframes definitions
-  | 'k'
-  // at-rules (@media, @support, @layer)
-  | 't';
+  d?: CSSBucketEntry[];
+  //  link
+  l?: CSSBucketEntry[];
+  //  visited
+  v?: CSSBucketEntry[];
+  //  focus-within
+  w?: CSSBucketEntry[];
+  //  focus
+  f?: CSSBucketEntry[];
+  //  focus-visible
+  i?: CSSBucketEntry[];
+  //  hover
+  h?: CSSBucketEntry[];
+  //  active
+  a?: CSSBucketEntry[];
+  //  @keyframes definitions
+  k?: CSSBucketEntry[];
+  //  at-rules (@support, @layer)
+  t?: CSSBucketEntry[];
+  //  @media rules
+  m?: CSSBucketEntry[];
+};
+
+export type CSSBucketEntry = string | CSSRuleWithMeta;
+
+/**
+ * Some CSS buckets are specific to the rule itself (i.e. media queries)
+ * In this case, store additional metadata for the renderer
+ */
+export interface CSSRuleWithMeta {
+  /** CSS rule */
+  r: string;
+  [key: string]: unknown;
+}
 
 export type SequenceHash = string;
 export type PropertyHash = string;
@@ -136,8 +159,6 @@ export type CSSClasses = /* ltrClassName */ string | [/* ltrClassName */ string,
 
 export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
-
-export type CSSRulesByBucket = Partial<Record<StyleBucketName, string[]>>;
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 

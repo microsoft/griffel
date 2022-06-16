@@ -41,8 +41,12 @@ const pseudosMap: Record<string, StyleBucketName | undefined> = {
  * ```
  */
 export function getStyleBucketName(pseudo: string, layer: string, media: string, support: string): StyleBucketName {
-  // We are grouping all the at-rules like @media, @supports etc under `t` bucket.
-  if (media || layer || support) {
+  if (media) {
+    return 'm';
+  }
+
+  // Group all other at-rules like @supports etc under `t` bucket.
+  if (layer || support) {
     return 't';
   }
 

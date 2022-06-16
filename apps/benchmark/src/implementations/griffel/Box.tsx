@@ -10,6 +10,9 @@ const useStyles = makeStyles({
   },
   row: {
     flexDirection: 'row',
+    '@media screen and (max-width: 1px)': {
+      color: 'red',
+    },
   },
   color0: {
     backgroundColor: '#14171A',

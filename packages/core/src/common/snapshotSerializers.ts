@@ -3,7 +3,7 @@
 import * as prettier from 'prettier';
 
 import { resolveStyleRules } from '../runtime/resolveStyleRules';
-import type { GriffelRenderer } from '../types';
+import type { GriffelRenderer, StyleBucketName } from '../types';
 
 // eslint-disable-next-line eqeqeq
 const isObject = (value: unknown) => value != null && !Array.isArray(value) && typeof value === 'object';
@@ -53,7 +53,13 @@ export const griffelRulesSerializer: jest.SnapshotSerializerPlugin = {
     const keys = Object.keys(cssRulesByBucket) as (keyof typeof cssRulesByBucket)[];
 
     return keys.reduce((acc, styleBucketName) => {
-      const rules = cssRulesByBucket[styleBucketName]!;
+      const rules = cssRulesByBucket[styleBucketName as StyleBucketName]!.map(rule => {
+        if (typeof rule === 'string') {
+          return rule;
+        } else {
+          return rule.r;
+        }
+      });
 
       return prettier.format(acc + rules.join(''), { parser: 'css' }).trim();
     }, '');

@@ -2,47 +2,48 @@ import { styleBucketOrdering } from '@griffel/core';
 import * as React from 'react';
 import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
 
-type CSSRulesGroupedByStyleBucket = Record<StyleBucketName, string[]>;
-
 /**
  * This method returns a list of <style> React elements with the rendered CSS. This is useful for Server-Side rendering.
  *
  * @public
  */
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
-  const styles = styleBucketOrdering.reduce<CSSRulesGroupedByStyleBucket>((acc, bucketName) => {
-    return { ...acc, [bucketName]: [] };
-  }, {} as CSSRulesGroupedByStyleBucket);
+  const styleElements = Object.values(renderer.styleElements).sort((a, b) => {
+    return (
+      styleBucketOrdering.indexOf(a.dataset['makeStylesBucket'] as StyleBucketName) -
+      styleBucketOrdering.indexOf(b.dataset['makeStylesBucket'] as StyleBucketName)
+    );
+  });
 
-  // eslint-disable-next-line guard-for-in
-  for (const cssRule in renderer.insertionCache) {
-    const bucketName: StyleBucketName = renderer.insertionCache[cssRule];
-
-    styles[bucketName].push(cssRule);
-  }
-
-  return (Object.keys(styles) as StyleBucketName[])
-    .map(bucketName => {
-      const cssRules = styles[bucketName].join('');
-
-      // We don't want to create empty style elements
-      if (cssRules.length === 0) {
+  return styleElements
+    .map((styleElement, i) => {
+      // don't want to create any empty style elements
+      if (!styleElement.sheet.__cssRules?.length) {
         return null;
       }
 
+      const dataset: Record<string, string | undefined> = {};
+      for (const i in styleElement.dataset) {
+        const attr = styleElement.dataset[i];
+        dataset[`data-${kebabize(i)}`] = attr;
+      }
+
       return React.createElement('style', {
-        key: bucketName,
+        // key: bucketName,
+        key: styleElement.dataset['makeStylesBucket'],
 
         // TODO: support "nonce"
         // ...renderer.styleNodeAttributes,
-
-        'data-make-styles-bucket': bucketName || 'default',
-        'data-make-styles-rehydration': true,
+        ...styleElement.__attributes,
+        ...dataset,
+        'data-make-styles-rehydration': 'true',
 
         dangerouslySetInnerHTML: {
-          __html: cssRules,
+          __html: styleElement.sheet.__cssRules.join(''),
         },
       });
     })
     .filter(Boolean) as React.ReactElement[];
 }
+
+const kebabize = (str: string) => str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
