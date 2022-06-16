@@ -113,7 +113,7 @@ export interface GriffelRenderer {
   /**
    * @private
    */
-  styleElements: Partial<Record<StyleBucketName, IsomorphicStyleSheet>>;
+  styleElements: Record<StyleBucketName | string, IsomorphicStyleSheet>;
 
   /**
    * @private
@@ -124,28 +124,7 @@ export interface GriffelRenderer {
 /**
  * Buckets under which we will group our stylesheets.
  */
-export type StyleBucketName =
-  // default
-  | 'd'
-  // link
-  | 'l'
-  // visited
-  | 'v'
-  // focus-within
-  | 'w'
-  // focus
-  | 'f'
-  // focus-visible
-  | 'i'
-  // hover
-  | 'h'
-  // active
-  | 'a'
-  // @keyframes definitions
-  | 'k'
-  // at-rules (@media, @support, @layer)
-  | 't';
-
+export type StyleBucketName = keyof CSSRulesByBucket;
 export type SequenceHash = string;
 export type PropertyHash = string;
 
@@ -154,7 +133,37 @@ export type CSSClasses = /* ltrClassName */ string | [/* ltrClassName */ string,
 export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
 
-export type CSSRulesByBucket = Partial<Record<StyleBucketName, string[]>>;
+export interface CSSRulesByBucket {
+  // default
+  d?: CSSBucketEntry[];
+  // link
+  l?: CSSBucketEntry[];
+  // visited
+  v?: CSSBucketEntry[];
+  // focus-within
+  w?: CSSBucketEntry[];
+  // focus
+  f?: CSSBucketEntry[];
+  // focus-visible
+  i?: CSSBucketEntry[];
+  // hover
+  h?: CSSBucketEntry[];
+  // active
+  a?: CSSBucketEntry[];
+  // @keyframes definitions
+  k?: CSSBucketEntry[];
+  // at-rules (@support, @layer)
+  t?: CSSBucketEntry[];
+  // @media rules
+  m?: CSSBucketEntry[];
+}
+
+export interface CSSMediaRuleMetadata {
+  /** Media query */
+  m: string;
+}
+
+export type CSSBucketEntry<TMetadata = Record<string, unknown>> = string | [string, TMetadata];
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 

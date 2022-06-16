@@ -27,6 +27,8 @@ export const styleBucketOrdering: StyleBucketName[] = [
   'k',
   // at-rules
   't',
+  // @media rules
+  'm',
 ];
 
 /**
@@ -37,30 +39,38 @@ export function getStyleSheetForBucket(
   target: Document | undefined,
   renderer: GriffelRenderer,
   elementAttributes: Record<string, string> = {},
+  metadata?: Record<string, unknown>,
 ): IsomorphicStyleSheet {
-  if (!renderer.styleElements[bucketName]) {
-    const tag: HTMLStyleElement | undefined = target && target.createElement('style');
-    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
-    renderer.styleElements[bucketName] = stylesheet;
-
-    if (!target || !tag) {
-      return stylesheet;
-    }
-
-    let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
-    let nextBucketFromCache = null;
-
-    // Find the next bucket which we will add our new style bucket before.
-    for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
-      const nextBucket = renderer.styleElements[styleBucketOrdering[currentBucketIndex]];
-      if (nextBucket) {
-        nextBucketFromCache = nextBucket;
-        break;
-      }
-    }
-
-    target.head.insertBefore(tag, nextBucketFromCache?.element || null);
+  let styleElementKey: StyleBucketName | string = bucketName;
+  if (bucketName === 'm' && metadata) {
+    styleElementKey = metadata['m'] as string;
   }
 
-  return renderer.styleElements[bucketName]!;
+  if (!renderer.styleElements[styleElementKey]) {
+    const tag: HTMLStyleElement | undefined = target && target.createElement('style');
+    if (bucketName === 'm' && metadata) {
+      elementAttributes['media'] = metadata['m'] as string;
+    }
+    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
+
+    renderer.styleElements[styleElementKey] = stylesheet;
+
+    if (target && tag) {
+      let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
+      let nextBucketFromCache = null;
+
+      // Find the next bucket which we will add our new style bucket before.
+      for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
+        const nextBucket = renderer.styleElements[styleBucketOrdering[currentBucketIndex]];
+        if (nextBucket) {
+          nextBucketFromCache = nextBucket;
+          break;
+        }
+      }
+
+      target.head.insertBefore(tag, nextBucketFromCache?.element || null);
+    }
+  }
+
+  return renderer.styleElements[styleElementKey]!;
 }
