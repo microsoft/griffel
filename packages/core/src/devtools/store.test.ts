@@ -60,7 +60,13 @@ describe('debugData', () => {
     const sequenceBlock = findSequenceHash(classes.block);
     const sequenceGrid = findSequenceHash(classes.grid);
 
-    expect(debugData.getSequenceDetails(sequenceBlock!)).toEqual({ slotName: 'block' });
-    expect(debugData.getSequenceDetails(sequenceGrid!)).toEqual({ slotName: 'grid' });
+    expect(debugData.getSequenceDetails(sequenceBlock!)).toEqual({
+      slotName: 'block',
+      sourceURLwithPos: expect.stringMatching(/.*\/.*:[0-9]+:[0-9]+/),
+    });
+    expect(debugData.getSequenceDetails(sequenceGrid!)).toEqual({
+      slotName: 'grid',
+      sourceURLwithPos: expect.stringMatching(/.*\/.*:[0-9]+:[0-9]+/),
+    });
   });
 });

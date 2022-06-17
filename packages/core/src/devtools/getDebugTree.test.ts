@@ -51,6 +51,7 @@ describe('getDebugTree', () => {
               },
               sequenceHash: sequenceBlock,
               slot: 'block',
+              sourceURLwithPos: expect.stringMatching(/.*\/.*:[0-9]+:[0-9]+/),
             },
           ],
           debugClassNames: [
@@ -76,6 +77,7 @@ describe('getDebugTree', () => {
           },
           sequenceHash: sequenceGrid,
           slot: 'grid',
+          sourceURLwithPos: expect.stringMatching(/.*\/.*:[0-9]+:[0-9]+/),
         },
       ],
       debugClassNames: [
