@@ -21,14 +21,14 @@ export interface CreateDOMRendererOptions {
    * ⚠️ Keep the filter as performant as possible to avoid negative performance impacts to your application.
    * ⚠️ This API is unstable and can be removed from the library at any time.
    */
-  unstable_filterCSSRule?(cssRule: string): boolean;
+  unstable_filterCSSRule?: (cssRule: string) => boolean;
 
   /**
    * @param a - media query
    * @param b - media query
    * @returns positive number if a > b or negative number if a < b
    */
-  compareMediaQueries?(a: string, b: string): number;
+  compareMediaQueries?: (a: string, b: string) => number;
 }
 
 /**
