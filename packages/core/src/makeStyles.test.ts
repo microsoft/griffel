@@ -188,7 +188,7 @@ describe('makeStyles', () => {
     // Classes emitted by different renderers can be the same
     expect(classesA).toBe(classesB);
     // Style elements should be different for different renderers
-    expect(rendererA.stylesheets['d']).not.toBe(rendererB.stylesheets['d']);
+    expect(rendererA.stylesheets['d']).not.toBe(rendererB.stylesheets.d);
 
     expect(rendererA).toMatchInlineSnapshot(`
       .f22iagw {

@@ -26,9 +26,9 @@ describe('rehydrateRendererCache', () => {
     styleElement.textContent = ".foo { color: 'red' }";
     rehydrateRendererCache(renderer, document);
 
-    expect(renderer.stylesheets['d']).not.toBeUndefined();
-    expect(renderer.stylesheets['d']?.bucketName).toMatchInlineSnapshot(`"d"`);
-    expect(renderer.stylesheets['d']?.elementAttributes).toMatchInlineSnapshot(`
+    expect(renderer.stylesheets.d).not.toBeUndefined();
+    expect(renderer.stylesheets.d?.bucketName).toMatchInlineSnapshot(`"d"`);
+    expect(renderer.stylesheets.d?.elementAttributes).toMatchInlineSnapshot(`
       Object {
         "data-make-styles-bucket": "d",
       }
