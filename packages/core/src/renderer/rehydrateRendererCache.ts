@@ -30,11 +30,11 @@ export function rehydrateRendererCache(
       const bucketName = styleElement.dataset['makeStylesBucket'] as StyleBucketName;
       const regex = regexps[bucketName] || STYLES_HYDRATOR;
 
-      const styleElementKey = bucketName === 'm' ? styleElement.media : bucketName;
+      const stylesheetKey = bucketName === 'm' ? styleElement.media : bucketName;
 
       // 👇 If some elements are not created yet, we will register them in renderer
-      if (!renderer.styleElements[styleElementKey]) {
-        renderer.styleElements[styleElementKey] = createIsomorphicStyleSheetFromElement(styleElement);
+      if (!renderer.stylesheets[stylesheetKey]) {
+        renderer.stylesheets[stylesheetKey] = createIsomorphicStyleSheetFromElement(styleElement);
       }
 
       let match;

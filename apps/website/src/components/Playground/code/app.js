@@ -23,7 +23,7 @@ export default function App() {
         setRules(prettified);
       },
       insertionCache: {},
-      styleElements: {},
+      stylesheets: {},
     };
 
     styles({

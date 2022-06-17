@@ -41,19 +41,19 @@ export function getStyleSheetForBucket(
   elementAttributes: Record<string, string> = {},
   metadata?: Record<string, unknown>,
 ): IsomorphicStyleSheet {
-  let styleElementKey: StyleBucketName | string = bucketName;
+  let stylesheetKey: StyleBucketName | string = bucketName;
   if (bucketName === 'm' && metadata) {
-    styleElementKey = metadata['m'] as string;
+    stylesheetKey = metadata['m'] as string;
   }
 
-  if (!renderer.styleElements[styleElementKey]) {
+  if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = target && target.createElement('style');
     if (bucketName === 'm' && metadata) {
       elementAttributes['media'] = metadata['m'] as string;
     }
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
 
-    renderer.styleElements[styleElementKey] = stylesheet;
+    renderer.stylesheets[stylesheetKey] = stylesheet;
 
     if (target && tag) {
       let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
@@ -61,7 +61,7 @@ export function getStyleSheetForBucket(
 
       // Find the next bucket which we will add our new style bucket before.
       for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
-        const nextBucket = renderer.styleElements[styleBucketOrdering[currentBucketIndex]];
+        const nextBucket = renderer.stylesheets[styleBucketOrdering[currentBucketIndex]];
         if (nextBucket) {
           nextBucketFromCache = nextBucket;
           break;
@@ -72,5 +72,5 @@ export function getStyleSheetForBucket(
     }
   }
 
-  return renderer.styleElements[styleElementKey]!;
+  return renderer.stylesheets[stylesheetKey]!;
 }
