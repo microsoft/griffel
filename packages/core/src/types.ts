@@ -158,12 +158,7 @@ export interface CSSRulesByBucket {
   m?: CSSBucketEntry[];
 }
 
-export interface CSSMediaRuleMetadata {
-  /** Media query */
-  m: string;
-}
-
-export type CSSBucketEntry<TMetadata = Record<string, unknown>> = string | [string, TMetadata];
+export type CSSBucketEntry = string | [string, unknown];
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 
