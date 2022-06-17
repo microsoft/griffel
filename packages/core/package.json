@@ -11,7 +11,6 @@
   "dependencies": {
     "@emotion/hash": "^0.8.0",
     "csstype": "^3.0.10",
-    "error-stack-parser": "^2.1.4",
     "rtl-css-js": "^1.15.0",
     "stylis": "^4.0.13",
     "tslib": "^2.1.0"

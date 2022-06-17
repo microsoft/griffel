@@ -1,4 +1,4 @@
-import { debugData, DebugSourceLoc, isDevToolsEnabled, getSourceLocation } from './devtools';
+import { debugData, isDevToolsEnabled, getSourceURLwithPos } from './devtools';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import { CSSClassesMapBySlot, CSSRulesByBucket, MakeStylesOptions, StylesBySlots } from './types';
@@ -12,9 +12,9 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;
   let rtlClassNamesForSlots: Record<Slots, string> | null = null;
 
-  let sourceLocation: DebugSourceLoc | undefined;
+  let sourceURLwithPos: string | undefined;
   if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-    sourceLocation = getSourceLocation(true);
+    sourceURLwithPos = getSourceURLwithPos();
   }
 
   function computeClasses(options: MakeStylesOptions): Record<Slots, string> {
@@ -47,7 +47,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
       : (rtlClassNamesForSlots as Record<Slots, string>);
 
     if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-      debugData.addSequenceDetails(classNamesForSlots!, sourceLocation);
+      debugData.addSequenceDetails(classNamesForSlots!, sourceURLwithPos);
     }
 
     return classNamesForSlots;

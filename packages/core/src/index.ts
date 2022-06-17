@@ -72,4 +72,4 @@ export type {
 } from './types';
 
 // Private exports, are used by devtools
-export type { DebugCSSRules, DebugSequence, DebugResult, DebugSourceLoc } from './devtools';
+export type { DebugCSSRules, DebugSequence, DebugResult } from './devtools';

@@ -1,5 +1,3 @@
-import type { DebugSourceLoc } from '@griffel/core';
-
 export type ColorTokens = {
   foreground: string;
   background: string;
@@ -15,7 +13,7 @@ export type ColorTokens = {
   cssSelector: string;
 };
 
-export type SlotInfo = { slot: string; rules: AtomicRules[]; sourceLoc?: DebugSourceLoc };
+export type SlotInfo = { slot: string; rules: AtomicRules[]; sourceURLwithPos?: string };
 
 export type AtomicRules = { cssRule: string; overriddenBy?: string };
 
