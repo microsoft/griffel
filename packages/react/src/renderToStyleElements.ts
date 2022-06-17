@@ -8,9 +8,27 @@ import type { GriffelRenderer } from '@griffel/core';
  * @public
  */
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
-  const stylesheets = Object.values(renderer.stylesheets).sort((a, b) => {
-    return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
-  });
+  console.dir(Object.values(renderer.stylesheets));
+  const stylesheets = Object.values(renderer.stylesheets)
+    // first sort: bucket names
+    .sort((a, b) => {
+      return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
+    })
+    // second sort: media queries
+    .sort((a, b) => {
+      const mediaA = a.elementAttributes['media'];
+      const mediaB = b.elementAttributes['media'];
+
+      if (mediaA && mediaB) {
+        return renderer.compareMediaQueries(mediaA, mediaB);
+      }
+
+      if (mediaA || mediaB) {
+        return mediaA ? 1 : -1;
+      }
+
+      return 0;
+    });
 
   return stylesheets
     .map(stylesheet => {

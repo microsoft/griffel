@@ -1,3 +1,4 @@
+import { DATA_BUCKET_ATTR } from '../constants';
 import { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
@@ -52,25 +53,67 @@ export function getStyleSheetForBucket(
       elementAttributes['media'] = metadata['m'] as string;
     }
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
-
     renderer.stylesheets[stylesheetKey] = stylesheet;
 
     if (target && tag) {
-      let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
-      let nextBucketFromCache = null;
-
-      // Find the next bucket which we will add our new style bucket before.
-      for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
-        const nextBucket = renderer.stylesheets[styleBucketOrdering[currentBucketIndex]];
-        if (nextBucket) {
-          nextBucketFromCache = nextBucket;
-          break;
-        }
-      }
-
-      target.head.insertBefore(tag, nextBucketFromCache?.element || null);
+      const elementSibling = findElementSibling(target, bucketName, renderer, metadata);
+      target.head.insertBefore(tag, elementSibling);
     }
   }
 
   return renderer.stylesheets[stylesheetKey]!;
+}
+
+/**
+ * Finds a element before which the new bucket style element should be inserted following the
+ * bucket sort order
+ *
+ * @param target - document
+ * @param targetBucket - The bucket that should be inserted to DOM
+ * @param renderer - Griffel renderer
+ * @param metadata - metadata for CSS rule
+ * @returns - Smallest style element with greater sort order than the current bucket
+ */
+function findElementSibling(
+  target: Document,
+  targetBucket: StyleBucketName,
+  renderer: GriffelRenderer,
+  metadata?: Record<string, unknown>,
+) {
+  // avoid repeatedly calling `indexOf`to determine order
+  const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
+    acc[cur as StyleBucketName] = j;
+    return acc;
+  }, {} as Record<StyleBucketName, number>);
+  const targetOrder = styleBucketOrderingMap[targetBucket];
+
+  // Similar to javascript sort comparators where
+  // a positive value is increasing lexicographical order
+  // a negative value is decreasing lexicographical order
+  let comparer: (el: HTMLStyleElement) => number = (el: HTMLStyleElement) =>
+    targetOrder - styleBucketOrderingMap[el.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName];
+
+  let styleElements = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
+
+  if (targetBucket === 'm' && metadata) {
+    const mediaElements = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}="${targetBucket}"]`);
+    // only reduce the scope of the search and change comparer
+    // if there are other media buckets already on the page
+    if (mediaElements.length) {
+      styleElements = mediaElements;
+      comparer = (el: HTMLStyleElement) => renderer.compareMediaQueries(metadata['m'] as string, el.media);
+    }
+  }
+
+  if (!styleElements.length) {
+    return null;
+  }
+
+  for (const styleElement of styleElements) {
+    if (comparer(styleElement) < 0) {
+      return styleElement;
+    }
+  }
+
+  return null;
 }
