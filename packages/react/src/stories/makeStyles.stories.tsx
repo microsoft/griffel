@@ -1,17 +1,14 @@
 import * as React from 'react';
-import { makeStyles, mergeClasses } from '../../src';
+import { makeStyles } from '../../src';
 
 const useStyles = makeStyles({
   root: {
     color: 'deeppink',
-  },
-  red: {
-    color: 'red',
   },
 });
 
 export const Default = () => {
   const classes = useStyles();
 
-  return <div className={mergeClasses(classes.root, classes.red)}>no stories yet</div>;
+  return <div className={classes.root}>no stories yet</div>;
 };

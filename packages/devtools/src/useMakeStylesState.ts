@@ -6,7 +6,6 @@ function getDebugInfo(callback: (result: DebugResult | undefined) => void): void
     '$0.ownerDocument.defaultView.__GRIFFEL_DEVTOOLS__.getInfo($0)',
     {},
     result => {
-      console.log('amber', result);
       callback(result);
     },
   );
