@@ -1,8 +1,6 @@
 import { styleBucketOrdering } from '@griffel/core';
 import * as React from 'react';
-import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
-
-type CSSRulesGroupedByStyleBucket = Record<StyleBucketName, string[]>;
+import type { GriffelRenderer } from '@griffel/core';
 
 /**
  * This method returns a list of <style> React elements with the rendered CSS. This is useful for Server-Side rendering.
@@ -10,37 +8,28 @@ type CSSRulesGroupedByStyleBucket = Record<StyleBucketName, string[]>;
  * @public
  */
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
-  const styles = styleBucketOrdering.reduce<CSSRulesGroupedByStyleBucket>((acc, bucketName) => {
-    return { ...acc, [bucketName]: [] };
-  }, {} as CSSRulesGroupedByStyleBucket);
+  const stylesheets = Object.values(renderer.stylesheets).sort((a, b) => {
+    return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
+  });
 
-  // eslint-disable-next-line guard-for-in
-  for (const cssRule in renderer.insertionCache) {
-    const bucketName: StyleBucketName = renderer.insertionCache[cssRule];
-
-    styles[bucketName].push(cssRule);
-  }
-
-  return (Object.keys(styles) as StyleBucketName[])
-    .map(bucketName => {
-      const cssRules = styles[bucketName].join('');
-
-      // We don't want to create empty style elements
-      if (cssRules.length === 0) {
+  return stylesheets
+    .map(styleElement => {
+      const cssRules = styleElement.cssRules();
+      // don't want to create any empty style elements
+      if (!cssRules.length) {
         return null;
       }
 
       return React.createElement('style', {
-        key: bucketName,
+        key: styleElement.bucketName,
 
         // TODO: support "nonce"
         // ...renderer.styleNodeAttributes,
-
-        'data-make-styles-bucket': bucketName || 'default',
-        'data-make-styles-rehydration': true,
+        ...styleElement.elementAttributes,
+        'data-make-styles-rehydration': 'true',
 
         dangerouslySetInnerHTML: {
-          __html: cssRules,
+          __html: cssRules.join(''),
         },
       });
     })

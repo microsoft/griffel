@@ -22,7 +22,7 @@ interface AppState {
 
 const appInitialState: AppState = {
   benchmark: 'Mount deep tree',
-  library: Object.keys(implementations)[0],
+  library: 'griffel',
   results: [],
   inProgress: false,
 };

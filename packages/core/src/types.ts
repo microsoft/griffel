@@ -85,6 +85,23 @@ export interface MakeStaticStylesOptions {
   renderer: GriffelRenderer;
 }
 
+export interface IsomorphicStyleSheet {
+  /**
+   * Attributes applied to the underlying HTMLStyleElement
+   */
+  elementAttributes: Record<string, string>;
+  /**
+   * Underlying HTMLStyleElement
+   */
+  element: HTMLStyleElement | undefined;
+  bucketName: StyleBucketName;
+  /**
+   * Returns all CSS rules on the stylesheet
+   */
+  cssRules(): string[];
+  insertRule(rule: string): number | undefined;
+}
+
 export interface GriffelRenderer {
   id: string;
 
@@ -96,7 +113,7 @@ export interface GriffelRenderer {
   /**
    * @private
    */
-  styleElements: Partial<Record<StyleBucketName, HTMLStyleElement>>;
+  stylesheets: Partial<Record<StyleBucketName, IsomorphicStyleSheet>>;
 
   /**
    * @private
