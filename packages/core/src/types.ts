@@ -158,7 +158,7 @@ export interface CSSRulesByBucket {
   m?: CSSBucketEntry[];
 }
 
-export type CSSBucketEntry = string | [string, unknown];
+export type CSSBucketEntry = string | [string, Record<string, unknown>];
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 
