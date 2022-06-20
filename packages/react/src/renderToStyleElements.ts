@@ -8,7 +8,6 @@ import type { GriffelRenderer } from '@griffel/core';
  * @public
  */
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
-  console.dir(Object.values(renderer.stylesheets));
   const stylesheets = Object.values(renderer.stylesheets)
     // first sort: bucket names
     .sort((a, b) => {

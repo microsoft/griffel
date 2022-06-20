@@ -32,6 +32,11 @@
             "glob": "LICENSE.md",
             "input": ".",
             "output": "."
+          },
+          {
+            "glob": "*.{js,css}",
+            "input": "packages/webpack-extraction-plugin/virtual-loader",
+            "output": "./virtual-loader"
           }
         ]
       }
