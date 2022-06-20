@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Support sourcemap for griffel devtools",
+  "packageName": "@griffel/core",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "none"
+}
