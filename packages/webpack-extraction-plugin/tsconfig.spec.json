@@ -7,7 +7,7 @@
     "types": ["jest", "node", "environment"]
   },
   "include": [
-    "__fixtures__/*/code.ts",
+    "__fixtures__/**/*/code.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/*.test.tsx",

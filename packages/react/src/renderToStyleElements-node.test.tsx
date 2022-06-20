@@ -69,11 +69,22 @@ describe('renderToStyleElements', () => {
           ':hover': { color: 'blue' },
         },
       },
+
+      support: {
+        '@supports (display: grid)': {
+          color: 'red',
+        },
+      },
     });
     const ExampleComponent: React.FC = () => {
       const classes = useExampleStyles();
 
-      return <div className={classes.media} />;
+      return (
+        <>
+          <div className={classes.media} />
+          <div className={classes.support} />
+        </>
+      );
     };
 
     const renderer = createDOMRenderer();
@@ -86,6 +97,16 @@ describe('renderToStyleElements', () => {
 
     expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
       <style data-make-styles-bucket="t" data-make-styles-rehydration="true">
+        @supports (display: grid) {
+          .f1ofq0jl {
+            color: red;
+          }
+        }</style
+      ><style
+        media="screen and (max-width: 992px)"
+        data-make-styles-bucket="m"
+        data-make-styles-rehydration="true"
+      >
         @media screen and (max-width: 992px) {
           .fnao3vb:hover {
             color: blue;

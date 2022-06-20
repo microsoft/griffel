@@ -1,6 +1,5 @@
-import { DATA_BUCKET_ATTR } from '../constants';
-import { GriffelRenderer, IsomorphicCSSStyleSheet, StyleBucketName } from '../types';
-import { createIsomorphicStyleElement } from './createIsomorphicStyleElement';
+import { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
+import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
 /**
  * Ordered style buckets using their short pseudo name.
@@ -28,6 +27,8 @@ export const styleBucketOrdering: StyleBucketName[] = [
   'k',
   // at-rules
   't',
+  // @media rules
+  'm',
 ];
 
 /**
@@ -39,50 +40,37 @@ export function getStyleSheetForBucket(
   renderer: GriffelRenderer,
   elementAttributes: Record<string, string> = {},
   metadata?: Record<string, unknown>,
-): IsomorphicCSSStyleSheet {
-  if (!renderer.styleElements[bucketName]) {
-    const tag = createIsomorphicStyleElement(target);
+): IsomorphicStyleSheet {
+  let stylesheetKey: StyleBucketName | string = bucketName;
+  if (bucketName === 'm' && metadata) {
+    stylesheetKey = metadata['m'] as string;
+  }
 
-    tag.setAttribute(DATA_BUCKET_ATTR, bucketName);
-
-    for (const attribute in elementAttributes) {
-      tag.setAttribute(attribute, elementAttributes[attribute]);
+  if (!renderer.stylesheets[stylesheetKey]) {
+    const tag: HTMLStyleElement | undefined = target && target.createElement('style');
+    if (bucketName === 'm' && metadata) {
+      elementAttributes['media'] = metadata['m'] as string;
     }
+    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
 
-    renderer.styleElements[bucketName] = tag;
+    renderer.stylesheets[stylesheetKey] = stylesheet;
 
-    if (target) {
-      const tags = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
-      const sibling = getStyleElementSibling(bucketName, Array.from(tags));
+    if (target && tag) {
+      let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
+      let nextBucketFromCache = null;
 
-      if (sibling) {
-        target.head.insertBefore(tag as unknown as HTMLStyleElement, sibling);
-      } else {
-        target.head.appendChild(tag as unknown as HTMLStyleElement);
+      // Find the next bucket which we will add our new style bucket before.
+      for (; currentBucketIndex < styleBucketOrdering.length; currentBucketIndex++) {
+        const nextBucket = renderer.stylesheets[styleBucketOrdering[currentBucketIndex]];
+        if (nextBucket) {
+          nextBucketFromCache = nextBucket;
+          break;
+        }
       }
+
+      target.head.insertBefore(tag, nextBucketFromCache?.element || null);
     }
   }
 
-  return renderer.styleElements[bucketName]!.sheet;
-}
-
-export function getStyleElementSibling(targetBucketName: string, styleElements: HTMLStyleElement[]) {
-  const targetBucketIndex = styleBucketOrdering.indexOf(targetBucketName as StyleBucketName);
-
-  let nextBucket = null;
-  let currentIndex = 0;
-
-  for (; currentIndex < styleElements.length; currentIndex++) {
-    const styleElement = styleElements[currentIndex];
-
-    const currentBucketName = styleElement.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName;
-    const currentBucketIndex = styleBucketOrdering.indexOf(currentBucketName);
-
-    if (currentBucketIndex >= targetBucketIndex) {
-      nextBucket = styleElement;
-      break;
-    }
-  }
-
-  return nextBucket;
+  return renderer.stylesheets[stylesheetKey]!;
 }
