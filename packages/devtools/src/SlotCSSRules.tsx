@@ -52,10 +52,10 @@ const useStyles = makeStyles({
   },
 });
 
-export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; sourceURLwithPos?: string }> = ({
+export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; sourceURL?: string }> = ({
   slot,
   atomicRules,
-  sourceURLwithPos,
+  sourceURL,
 }) => {
   const rules = React.useMemo(() => getMonolithicCSSRules(atomicRules), [atomicRules]);
 
@@ -68,10 +68,10 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
   const { setHighlightedClass } = useViewContext();
   const undoHighlight = () => setHighlightedClass('');
 
-  const jumpToSourceHandler = sourceURLwithPos
+  const jumpToSourceHandler = sourceURL
     ? (e: React.SyntheticEvent) => {
         e.stopPropagation();
-        openOriginalCode(sourceURLwithPos);
+        openOriginalCode(sourceURL);
       }
     : undefined;
 
@@ -94,9 +94,9 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
   );
 };
 
-function openOriginalCode(sourceURLwithPos: string) {
+function openOriginalCode(sourceURL: string) {
   chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
-    const result = await resolveSourceLoc(sourceURLwithPos);
+    const result = await resolveSourceLoc(sourceURL);
     const results = result.split(':');
     results.pop();
     const line = Number(results.pop()) ?? 1;

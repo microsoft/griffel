@@ -20,7 +20,7 @@ export type DebugSequence = {
   slot?: string;
   rules?: DebugCSSRules;
 
-  sourceURLwithPos?: string;
+  sourceURL?: string;
 };
 
 export type DebugResult = DebugSequence;

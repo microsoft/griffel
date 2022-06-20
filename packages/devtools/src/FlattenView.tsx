@@ -92,8 +92,8 @@ export const FlattenView: React.FC<FlattenViewProps> = props => {
       </div>
       <div className={classes.rules}>
         <ViewContext.Provider value={contextValue}>
-          {filteredSlots.map(({ slot, rules, sourceURLwithPos }) => (
-            <SlotCSSRules key={slot} slot={slot} atomicRules={rules} sourceURLwithPos={sourceURLwithPos} />
+          {filteredSlots.map(({ slot, rules, sourceURL }) => (
+            <SlotCSSRules key={slot} slot={slot} atomicRules={rules} sourceURL={sourceURL} />
           ))}
         </ViewContext.Provider>
       </div>

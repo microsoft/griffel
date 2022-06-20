@@ -2,7 +2,7 @@ import type { SequenceHash } from '../types';
 import { SEQUENCE_PREFIX, SEQUENCE_SIZE } from '../constants';
 import { mergeClassesCachedResults } from '../mergeClasses';
 
-const sequenceDetails: Record<SequenceHash, { slotName: string; sourceURLwithPos?: string }> = {};
+const sequenceDetails: Record<SequenceHash, { slotName: string; sourceURL?: string }> = {};
 
 const cssRules: string[] = [];
 
@@ -28,10 +28,10 @@ export const debugData = {
   },
   addSequenceDetails: <Slots extends string | number>(
     classNamesForSlots: Record<Slots, string>,
-    sourceURLwithPos?: string,
+    sourceURL?: string,
   ) => {
     Object.entries<string>(classNamesForSlots).forEach(([slotName, sequenceHash]) => {
-      sequenceDetails[sequenceHash.substring(0, SEQUENCE_SIZE)] = { slotName, sourceURLwithPos };
+      sequenceDetails[sequenceHash.substring(0, SEQUENCE_SIZE)] = { slotName, sourceURL };
     });
   },
 

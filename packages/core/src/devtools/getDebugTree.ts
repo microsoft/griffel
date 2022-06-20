@@ -35,7 +35,7 @@ export function getDebugTree(debugSequenceHash: SequenceHash, parentNode?: Debug
       const mapData = debugData.getSequenceDetails(debugSequenceHash);
       if (mapData) {
         node.slot = mapData.slotName;
-        node.sourceURLwithPos = mapData.sourceURLwithPos;
+        node.sourceURL = mapData.sourceURL;
       }
 
       const cssRule = debugData.getCSSRules().find(cssRule => {
