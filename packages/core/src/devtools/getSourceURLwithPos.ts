@@ -1,13 +1,6 @@
 import { parseStackTraceLine } from './react-render-tracker/stackTrace';
 
 export function getSourceURLwithPos() {
-  // Reason for getting line with index 4:
-  // the error stack looks like:
-  // Error:
-  //   getSourceURLwithPos
-  //   makeStyles/__styles in griffel core
-  //   makeStyles/__styles in griffel react
-  //   user makeStyles call
   const stacks = String(new Error().stack).split('\n');
   const userMakeStyleCallLine = findUserMakeStyleCallInStacks(stacks);
   if (userMakeStyleCallLine === undefined) {
