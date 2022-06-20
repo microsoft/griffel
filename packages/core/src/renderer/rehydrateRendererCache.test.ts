@@ -23,7 +23,6 @@ describe('rehydrateRendererCache', () => {
     const styleElement = document.createElement('style');
     document.head.appendChild(styleElement);
     styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
-    styleElement.textContent = ".foo { color: 'red' }";
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.stylesheets.d).not.toBeUndefined();
