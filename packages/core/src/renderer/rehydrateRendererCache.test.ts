@@ -24,6 +24,7 @@ describe('rehydrateRendererCache', () => {
     const styleElement = document.createElement('style');
     document.head.appendChild(styleElement);
     styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.stylesheets.d).not.toBeUndefined();

@@ -14,7 +14,7 @@ describe('getStyleBucketName', () => {
     expect(getStyleBucketName(':active', '', '', '')).toBe('a');
 
     expect(getStyleBucketName(':active', 'theme', '', '')).toBe('t');
-    expect(getStyleBucketName(':active', '', '(max-width: 100px)', '')).toBe('t');
+    expect(getStyleBucketName(':active', '', '(max-width: 100px)', '')).toBe('m');
     expect(getStyleBucketName(':active', '', '', '(display: table-cell)')).toBe('t');
   });
 });

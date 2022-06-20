@@ -27,6 +27,8 @@ export const styleBucketOrdering: StyleBucketName[] = [
   'k',
   // at-rules
   't',
+  // @media rules
+  'm',
 ];
 
 /**
@@ -37,11 +39,23 @@ export function getStyleSheetForBucket(
   target: Document | undefined,
   renderer: GriffelRenderer,
   elementAttributes: Record<string, string> = {},
+  metadata?: Record<string, unknown>,
 ): IsomorphicStyleSheet {
-  if (!renderer.stylesheets[bucketName]) {
+  let stylesheetKey: StyleBucketName | string = bucketName;
+
+  if (bucketName === 'm' && metadata) {
+    stylesheetKey = (bucketName + metadata['m']) as string;
+  }
+
+  if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = target && target.createElement('style');
+
+    if (bucketName === 'm' && metadata) {
+      elementAttributes['media'] = metadata['m'] as string;
+    }
+
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
-    renderer.stylesheets[bucketName] = stylesheet;
+    renderer.stylesheets[stylesheetKey] = stylesheet;
 
     if (target && tag) {
       let currentBucketIndex = styleBucketOrdering.indexOf(bucketName) + 1;
@@ -60,5 +74,5 @@ export function getStyleSheetForBucket(
     }
   }
 
-  return renderer.stylesheets[bucketName]!;
+  return renderer.stylesheets[stylesheetKey]!;
 }

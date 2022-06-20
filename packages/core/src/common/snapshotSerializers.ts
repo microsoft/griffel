@@ -3,6 +3,7 @@
 import * as prettier from 'prettier';
 
 import { resolveStyleRules } from '../runtime/resolveStyleRules';
+import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
 import type { GriffelRenderer } from '../types';
 
 // eslint-disable-next-line eqeqeq
@@ -21,12 +22,12 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
     const stylesheetKeys = Object.keys(_value.stylesheets) as (keyof typeof _value['stylesheets'])[];
 
     const rules = stylesheetKeys.reduce((acc, styleEl) => {
-      const stylesheet = _value.stylesheets[styleEl]?.element;
+      const stylesheet = _value.stylesheets[styleEl];
 
       if (stylesheet) {
-        const cssRules = stylesheet.sheet ? Array.from(stylesheet.sheet.cssRules) : [];
+        const cssRules = stylesheet.cssRules() ?? ([] as string[]);
 
-        return [...acc, ...cssRules.map(rule => rule.cssText)];
+        return [...acc, ...cssRules];
       }
 
       return acc;
@@ -53,7 +54,7 @@ export const griffelRulesSerializer: jest.SnapshotSerializerPlugin = {
     const keys = Object.keys(cssRulesByBucket) as (keyof typeof cssRulesByBucket)[];
 
     return keys.reduce((acc, styleBucketName) => {
-      const rules = cssRulesByBucket[styleBucketName]!;
+      const rules = cssRulesByBucket[styleBucketName]!.map(entry => normalizeCSSBucketEntry(entry)[0]);
 
       return prettier.format(acc + rules.join(''), { parser: 'css' }).trim();
     }, '');

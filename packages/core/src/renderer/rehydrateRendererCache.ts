@@ -10,6 +10,7 @@ const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
 const regexps: Partial<Record<StyleBucketName, RegExp>> = {
   k: KEYFRAMES_HYDRATOR,
   t: AT_RULES_HYDRATOR,
+  m: AT_RULES_HYDRATOR,
 };
 
 /**
@@ -29,9 +30,11 @@ export function rehydrateRendererCache(
       const bucketName = styleElement.dataset['makeStylesBucket'] as StyleBucketName;
       const regex = regexps[bucketName] || STYLES_HYDRATOR;
 
+      const stylesheetKey = bucketName === 'm' ? bucketName + styleElement.media : bucketName;
+
       // 👇 If some elements are not created yet, we will register them in renderer
-      if (!renderer.stylesheets[bucketName]) {
-        renderer.stylesheets[bucketName] = createIsomorphicStyleSheetFromElement(styleElement);
+      if (!renderer.stylesheets[stylesheetKey]) {
+        renderer.stylesheets[stylesheetKey] = createIsomorphicStyleSheetFromElement(styleElement);
       }
 
       let match;

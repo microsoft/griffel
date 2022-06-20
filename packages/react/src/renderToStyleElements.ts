@@ -13,19 +13,19 @@ export function renderToStyleElements(renderer: GriffelRenderer): React.ReactEle
   });
 
   return stylesheets
-    .map(styleElement => {
-      const cssRules = styleElement.cssRules();
+    .map(stylesheet => {
+      const cssRules = stylesheet.cssRules();
       // don't want to create any empty style elements
       if (!cssRules.length) {
         return null;
       }
 
       return React.createElement('style', {
-        key: styleElement.bucketName,
+        key: stylesheet.bucketName,
 
         // TODO: support "nonce"
         // ...renderer.styleNodeAttributes,
-        ...styleElement.elementAttributes,
+        ...stylesheet.elementAttributes,
         'data-make-styles-rehydration': 'true',
 
         dangerouslySetInnerHTML: {

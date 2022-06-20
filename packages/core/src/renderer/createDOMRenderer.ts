@@ -1,4 +1,5 @@
 import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
+import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 
@@ -43,16 +44,17 @@ export function createDOMRenderer(
       // eslint-disable-next-line guard-for-in
       for (const styleBucketName in cssRules) {
         const cssRulesForBucket = cssRules[styleBucketName as StyleBucketName]!;
-        const sheet = getStyleSheetForBucket(
-          styleBucketName as StyleBucketName,
-          target,
-          renderer,
-          options.styleElementAttributes,
-        );
 
         // This is a hot path in rendering styles: ".length" is cached in "l" var to avoid accesses the property
         for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
-          const ruleCSS = cssRulesForBucket[i];
+          const [ruleCSS, metadata] = normalizeCSSBucketEntry(cssRulesForBucket[i]);
+          const sheet = getStyleSheetForBucket(
+            styleBucketName as StyleBucketName,
+            target,
+            renderer,
+            options.styleElementAttributes,
+            metadata,
+          );
 
           if (renderer.insertionCache[ruleCSS]) {
             continue;
