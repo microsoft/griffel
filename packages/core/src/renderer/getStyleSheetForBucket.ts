@@ -42,17 +42,19 @@ export function getStyleSheetForBucket(
   metadata?: Record<string, unknown>,
 ): IsomorphicStyleSheet {
   let stylesheetKey: StyleBucketName | string = bucketName;
+
   if (bucketName === 'm' && metadata) {
-    stylesheetKey = metadata['m'] as string;
+    stylesheetKey = (bucketName + metadata['m']) as string;
   }
 
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = target && target.createElement('style');
+
     if (bucketName === 'm' && metadata) {
       elementAttributes['media'] = metadata['m'] as string;
     }
-    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
 
+    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
     renderer.stylesheets[stylesheetKey] = stylesheet;
 
     if (target && tag) {

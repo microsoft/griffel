@@ -30,7 +30,7 @@ export function rehydrateRendererCache(
       const bucketName = styleElement.dataset['makeStylesBucket'] as StyleBucketName;
       const regex = regexps[bucketName] || STYLES_HYDRATOR;
 
-      const stylesheetKey = bucketName === 'm' ? styleElement.media : bucketName;
+      const stylesheetKey = bucketName === 'm' ? bucketName + styleElement.media : bucketName;
 
       // 👇 If some elements are not created yet, we will register them in renderer
       if (!renderer.stylesheets[stylesheetKey]) {
