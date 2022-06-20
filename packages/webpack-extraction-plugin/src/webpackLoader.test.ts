@@ -5,8 +5,6 @@ import * as prettier from 'prettier';
 import * as webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import webpackLoader from './webpackLoader';
-
 type CompileOptions = {
   webpackConfig?: webpack.Configuration;
 };

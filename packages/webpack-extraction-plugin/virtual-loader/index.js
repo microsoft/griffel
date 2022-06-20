@@ -8,7 +8,7 @@ function virtualLoader() {
   const query = new URLSearchParams(this.resourceQuery);
   const styleRule = query.get('style');
 
-  return styleRule || '';
+  return styleRule ?? '';
 }
 
 module.exports = virtualLoader;
