@@ -32,6 +32,7 @@ export interface CreateDOMRendererOptions {
 }
 
 const defaultCompareMediaQueries = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
+
 /**
  * Creates a new instances of a renderer.
  *
