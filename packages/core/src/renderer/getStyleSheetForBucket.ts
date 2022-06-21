@@ -74,7 +74,7 @@ export function getStyleSheetForBucket(
 }
 
 /**
- * Finds a element before which the new bucket style element should be inserted following the
+ * Finds an element before which the new bucket style element should be inserted following the
  * bucket sort order
  *
  * @param target - document
