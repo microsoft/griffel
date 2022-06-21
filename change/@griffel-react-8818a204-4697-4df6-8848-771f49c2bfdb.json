@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add __css() functions for upcoming CSS extraction",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
