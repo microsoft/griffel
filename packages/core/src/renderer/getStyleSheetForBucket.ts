@@ -32,6 +32,12 @@ export const styleBucketOrdering: StyleBucketName[] = [
   'm',
 ];
 
+// avoid repeatedly calling `indexOf`to determine order during new insertions
+const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
+  acc[cur as StyleBucketName] = j;
+  return acc;
+}, {} as Record<StyleBucketName, number>);
+
 /**
  * Lazily adds a `<style>` bucket to the `<head>`. This will ensure that the style buckets are ordered.
  */
@@ -83,11 +89,6 @@ function findElementSibling(
   renderer: GriffelRenderer,
   metadata?: Record<string, unknown>,
 ) {
-  // avoid repeatedly calling `indexOf`to determine order
-  const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
-    acc[cur as StyleBucketName] = j;
-    return acc;
-  }, {} as Record<StyleBucketName, number>);
   const targetOrder = styleBucketOrderingMap[targetBucket];
 
   // Similar to javascript sort comparators where

@@ -65,13 +65,31 @@ describe('getStyleSheetForBucket', () => {
     getStyleSheetForBucket('m', target, renderer, {}, { m: '(max-width: 2px)' });
 
     const styleElements = target.head.querySelectorAll(`[${DATA_BUCKET_ATTR}]`);
-    const styleElementOrder = Array.from(styleElements)
-      .map(styleElement => styleElement.getAttribute(DATA_BUCKET_ATTR))
-      .slice(-4);
+    const styleElementOrder = Array.from(styleElements).map(styleElement =>
+      styleElement.getAttribute(DATA_BUCKET_ATTR),
+    );
+    expect(styleElementOrder).toMatchInlineSnapshot(`
+      Array [
+        "d",
+        "l",
+        "v",
+        "w",
+        "f",
+        "i",
+        "h",
+        "a",
+        "k",
+        "t",
+        "m",
+        "m",
+        "m",
+        "m",
+      ]
+    `);
+
     const actualMediaQueryOrder = Array.from(styleElements)
       .map(styleElement => styleElement.getAttribute('media'))
-      .slice(-4);
-    expect(styleElementOrder).toEqual(['m', 'm', 'm', 'm']);
+      .filter(Boolean);
     expect(actualMediaQueryOrder).toEqual(mediaQueryOrder);
   });
 });
