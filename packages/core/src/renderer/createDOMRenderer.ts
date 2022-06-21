@@ -31,6 +31,7 @@ export interface CreateDOMRendererOptions {
   compareMediaQueries?: (a: string, b: string) => number;
 }
 
+const defaultCompareMediaQueries = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 /**
  * Creates a new instances of a renderer.
  *
@@ -40,7 +41,7 @@ export function createDOMRenderer(
   target: Document | undefined = typeof document === 'undefined' ? undefined : document,
   options: CreateDOMRendererOptions = {},
 ): GriffelRenderer {
-  const { unstable_filterCSSRule, compareMediaQueries = (a, b) => a.localeCompare(b) } = options;
+  const { unstable_filterCSSRule, compareMediaQueries = defaultCompareMediaQueries } = options;
   const renderer: GriffelRenderer = {
     insertionCache: {},
     stylesheets: {},
