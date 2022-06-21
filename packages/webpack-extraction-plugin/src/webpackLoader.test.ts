@@ -175,7 +175,7 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
     if (expectedError) {
       expect(resultError.message).toMatch(expectedError.default);
     }
-  }, 10000);
+  }, 15000);
 }
 
 describe('webpackLoader', () => {
