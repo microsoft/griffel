@@ -179,6 +179,10 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 }
 
 describe('webpackLoader', () => {
+  beforeEach(() => {
+    jest.setTimeout(15000);
+  });
+
   // Basic assertions
   testFixture('basic-rules');
 
