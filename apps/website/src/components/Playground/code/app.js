@@ -24,6 +24,7 @@ export default function App() {
       },
       insertionCache: {},
       stylesheets: {},
+      compareMediaQueries: () => 1,
     };
 
     styles({

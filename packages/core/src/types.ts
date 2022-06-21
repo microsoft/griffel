@@ -119,6 +119,11 @@ export interface GriffelRenderer {
    * @private
    */
   insertCSSRules(cssRules: CSSRulesByBucket): void;
+
+  /**
+   * @private
+   */
+  compareMediaQueries(a: string, b: string): number;
 }
 
 /**

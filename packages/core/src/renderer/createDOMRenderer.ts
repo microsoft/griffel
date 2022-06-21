@@ -22,7 +22,16 @@ export interface CreateDOMRendererOptions {
    * ⚠️ This API is unstable and can be removed from the library at any time.
    */
   unstable_filterCSSRule?: (cssRule: string) => boolean;
+
+  /**
+   * @param a - media query
+   * @param b - media query
+   * @returns positive number if a > b or negative number if a < b
+   */
+  compareMediaQueries?: (a: string, b: string) => number;
 }
+
+const defaultCompareMediaQueries = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 
 /**
  * Creates a new instances of a renderer.
@@ -33,10 +42,11 @@ export function createDOMRenderer(
   target: Document | undefined = typeof document === 'undefined' ? undefined : document,
   options: CreateDOMRendererOptions = {},
 ): GriffelRenderer {
-  const { unstable_filterCSSRule } = options;
+  const { unstable_filterCSSRule, compareMediaQueries = defaultCompareMediaQueries } = options;
   const renderer: GriffelRenderer = {
     insertionCache: {},
     stylesheets: {},
+    compareMediaQueries,
 
     id: `d${lastIndex++}`,
 
