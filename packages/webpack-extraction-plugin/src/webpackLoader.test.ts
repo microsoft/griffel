@@ -175,14 +175,10 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
     if (expectedError) {
       expect(resultError.message).toMatch(expectedError.default);
     }
-  });
+  }, 15000);
 }
 
 describe('webpackLoader', () => {
-  beforeEach(() => {
-    jest.setTimeout(15000);
-  });
-
   // Basic assertions
   testFixture('basic-rules');
 
