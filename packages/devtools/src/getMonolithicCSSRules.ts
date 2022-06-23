@@ -1,7 +1,7 @@
 import * as stylis from 'stylis';
 import type { AtomicRules, MonolithicAtRules, MonolithicRules, RuleDetail } from './types';
 
-const griffelClassNameRegex = /\.[0-9a-z]+/;
+const griffelClassNameRegex = /^\.[0-9a-z]+$/;
 
 function parseRuleElement(element: stylis.Element, overriddenBy?: string) {
   // example of `value`: `.f3xbvq9:hover`
