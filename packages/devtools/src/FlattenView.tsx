@@ -1,4 +1,5 @@
 import * as React from 'react';
+import hash from '@emotion/hash';
 import { makeStaticStyles, makeStyles, shorthands } from '@griffel/react';
 
 import { SlotCSSRules } from './SlotCSSRules';
@@ -92,9 +93,10 @@ export const FlattenView: React.FC<FlattenViewProps> = props => {
       </div>
       <div className={classes.rules}>
         <ViewContext.Provider value={contextValue}>
-          {filteredSlots.map(({ slot, rules }) => (
-            <SlotCSSRules key={slot} slot={slot} atomicRules={rules} />
-          ))}
+          {filteredSlots.map(({ slot, rules }) => {
+            const key = hash(slot + rules.map(rule => rule.cssRule).join(''));
+            return <SlotCSSRules key={key} slot={slot} atomicRules={rules} />;
+          })}
         </ViewContext.Provider>
       </div>
     </div>
