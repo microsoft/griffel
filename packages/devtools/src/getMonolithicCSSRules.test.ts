@@ -145,4 +145,27 @@ describe('getMonolithicCSSRules', () => {
       },
     });
   });
+
+  it('group atomic css when class name selector has selector in front', () => {
+    const rules = [
+      '[data-keyboard-nav] .abcdef0:focus{background-color:red;}',
+      '[data-keyboard-nav] .abcdef1{color:red;}',
+    ].map(cssRule => ({ cssRule }));
+    expect(getMonolithicCSSRules(rules)).toEqual({
+      '[data-keyboard-nav] ': [
+        {
+          className: 'abcdef1',
+          css: 'color:red;',
+          overriddenBy: undefined,
+        },
+      ],
+      '[data-keyboard-nav] :focus': [
+        {
+          className: 'abcdef0',
+          css: 'background-color:red;',
+          overriddenBy: undefined,
+        },
+      ],
+    });
+  });
 });
