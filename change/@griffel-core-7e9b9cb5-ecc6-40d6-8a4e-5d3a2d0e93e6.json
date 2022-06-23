@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "feat: Add `compareMediaQueries` option to DOM renderer",
+  "comment": "feat: add `compareMediaQueries` option to DOM renderer",
   "packageName": "@griffel/core",
   "email": "lingfangao@hotmail.com",
   "dependentChangeType": "patch"

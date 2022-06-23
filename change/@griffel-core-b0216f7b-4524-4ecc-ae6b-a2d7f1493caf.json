@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "feat: Insert media queries into separate buckets based on the media query value",
+  "comment": "feat: insert media queries into separate buckets based on the media query value",
   "packageName": "@griffel/core",
   "email": "lingfangao@hotmail.com",
   "dependentChangeType": "patch"
