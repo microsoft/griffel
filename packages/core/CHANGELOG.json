@@ -2,6 +2,53 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 23 Jun 2022 08:37:05 GMT",
+      "tag": "@griffel/core_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/core",
+            "commit": "4e4c7c29deae40ae64bd3b6860356d0adeb05e8e",
+            "comment": "feat: create isomorphic stylesheet for DOM renderer"
+          },
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/core",
+            "commit": "5897290e8065eb7631770593944ea194cbced029",
+            "comment": "feat: add `compareMediaQueries` option to DOM renderer"
+          },
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/core",
+            "commit": "307d727163986ff0bb818a76b2186888622da985",
+            "comment": "feat: insert media queries into separate buckets based on the media query value"
+          },
+          {
+            "author": "riacarmin@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "69f7a31db6383e2b41c185314672fe74945f914e",
+            "comment": "feat: add shorthands support for flex property"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "d516a9aa3b52032ca3419ad5824109394643296b",
+            "comment": "chore: add __css() functions for upcoming CSS extraction"
+          },
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "ba29eb7d7242d8446ce6e084c309eead8bd14cf3",
+            "comment": "fix: collect devtools data in __styles"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 May 2022 08:34:48 GMT",
       "tag": "@griffel/core_v1.3.1",
       "version": "1.3.1",

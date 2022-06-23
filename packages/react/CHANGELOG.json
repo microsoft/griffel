@@ -2,6 +2,47 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 23 Jun 2022 08:37:05 GMT",
+      "tag": "@griffel/react_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/react",
+            "commit": "4e4c7c29deae40ae64bd3b6860356d0adeb05e8e",
+            "comment": "feat: update renderToStyleElement to use isomorphic stylesheets from renderer"
+          },
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/react",
+            "commit": "5897290e8065eb7631770593944ea194cbced029",
+            "comment": "feat: update style rehydration to sort media queries"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.4.0",
+            "commit": "6b98eb67f7b4399bcc9bd66607e296640449ae98"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "d516a9aa3b52032ca3419ad5824109394643296b",
+            "comment": "chore: add __css() functions for upcoming CSS extraction"
+          },
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/react",
+            "commit": "307d727163986ff0bb818a76b2186888622da985",
+            "comment": "chore: rename instances of styleElement to stylesheet where appropriate following [#137](https://github.com/microsoft/griffel/pull/137)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 May 2022 15:06:34 GMT",
       "tag": "@griffel/react_v1.1.0",
       "version": "1.1.0",

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: create isomorphic stylesheet for DOM renderer",
-  "packageName": "@griffel/core",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: collect devtools data in __styles",
-  "packageName": "@griffel/core",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}

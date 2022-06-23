@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: update style rehydration to sort media queries",
-  "packageName": "@griffel/react",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}

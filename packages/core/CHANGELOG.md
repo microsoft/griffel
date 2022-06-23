@@ -1,8 +1,24 @@
 # Change Log - @griffel/core
 
-This log was last generated on Tue, 17 May 2022 08:34:48 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jun 2022 08:37:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.0
+
+Thu, 23 Jun 2022 08:37:05 GMT
+
+### Minor changes
+
+- feat: create isomorphic stylesheet for DOM renderer (lingfangao@hotmail.com)
+- feat: add `compareMediaQueries` option to DOM renderer (lingfangao@hotmail.com)
+- feat: insert media queries into separate buckets based on the media query value (lingfangao@hotmail.com)
+- feat: add shorthands support for flex property (riacarmin@microsoft.com)
+
+### Patches
+
+- chore: add __css() functions for upcoming CSS extraction (olfedias@microsoft.com)
+- fix: collect devtools data in __styles (yuanboxue@microsoft.com)
 
 ## 1.3.1
 
