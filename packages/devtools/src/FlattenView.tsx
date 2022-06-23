@@ -20,6 +20,10 @@ const useStyles = makeStyles({
     columnGap: '4px',
     fontFamily: 'system-ui',
     fontSize: '12px',
+
+    position: 'sticky',
+    top: 0,
+    zIndex: 99,
   },
   input: {
     color: 'inherit',
