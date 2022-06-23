@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: update renderToStyleElement to use isomorphic stylesheets from renderer",
-  "packageName": "@griffel/react",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}

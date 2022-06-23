@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: add __css() functions for upcoming CSS extraction",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

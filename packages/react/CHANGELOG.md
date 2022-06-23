@@ -1,8 +1,23 @@
 # Change Log - @griffel/react
 
-This log was last generated on Thu, 26 May 2022 15:06:34 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jun 2022 08:37:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.0
+
+Thu, 23 Jun 2022 08:37:05 GMT
+
+### Minor changes
+
+- feat: update renderToStyleElement to use isomorphic stylesheets from renderer (lingfangao@hotmail.com)
+- feat: update style rehydration to sort media queries (lingfangao@hotmail.com)
+- Bump @griffel/core to v1.4.0
+
+### Patches
+
+- chore: add __css() functions for upcoming CSS extraction (olfedias@microsoft.com)
+- chore: rename instances of styleElement to stylesheet where appropriate following [#137](https://github.com/microsoft/griffel/pull/137) (lingfangao@hotmail.com)
 
 ## 1.1.0
 

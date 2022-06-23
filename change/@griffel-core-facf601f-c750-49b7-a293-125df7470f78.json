@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add shorthands support for flex property",
-  "packageName": "@griffel/core",
-  "email": "riacarmin@microsoft.com",
-  "dependentChangeType": "patch"
-}

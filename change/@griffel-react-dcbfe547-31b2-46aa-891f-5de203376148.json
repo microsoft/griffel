@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: rename instances of styleElement to stylesheet where appropriate following [#137](https://github.com/microsoft/griffel/pull/137)",
-  "packageName": "@griffel/react",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}
