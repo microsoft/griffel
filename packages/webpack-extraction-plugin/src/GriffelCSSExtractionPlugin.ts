@@ -5,9 +5,9 @@ import type { Compiler, sources } from 'webpack';
  * Forces all files with `griffel.css` be concatenated into a single asset.
  */
 function forceCSSIntoOneStyleSheet(compiler: Compiler) {
-  compiler.options.optimization = compiler.options.optimization || {};
-  compiler.options.optimization.splitChunks = compiler.options.optimization.splitChunks || {};
-  compiler.options.optimization.splitChunks.cacheGroups = compiler.options.optimization.splitChunks.cacheGroups || {};
+  compiler.options.optimization ??= {};
+  compiler.options.optimization.splitChunks ??= {};
+  compiler.options.optimization.splitChunks.cacheGroups ??= {};
 
   compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
     name: `griffel`,
