@@ -1,1 +1,1 @@
-export {};
+export { GriffelCSSExtractionPlugin } from './GriffelCSSExtractionPlugin';
