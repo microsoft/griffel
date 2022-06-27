@@ -55,28 +55,28 @@ export function getStyleBucketNameFromElement(element: Element): StyleBucketName
 }
 
 export function sortCSSRules(css: string, compareMediaQueries: GriffelRenderer['compareMediaQueries']): string {
-  return serialize(
-    compile(css)
-      .map(element => ({
-        ...element,
-        bucketName: getStyleBucketNameFromElement(element),
-        metadata: getElementMetadata(element),
-        reference: getElementReference(element),
-      }))
-      .filter(
-        (elementA, index, self) => self.findIndex(elementB => elementA.reference === elementB.reference) === index,
-      )
-      .sort((nodeA, nodeB) => {
-        if (nodeA.bucketName === 'm' && nodeB.bucketName === 'm') {
-          return compareMediaQueries(nodeA.metadata, nodeB.metadata);
-        }
+  const childElements = compile(css).map(element => ({
+    ...element,
+    bucketName: getStyleBucketNameFromElement(element),
+    metadata: getElementMetadata(element),
+    reference: getElementReference(element),
+  }));
+  const uniqueElements = childElements.reduce<Record<string, typeof childElements[0]>>((acc, element) => {
+    acc[element.reference] = element;
 
-        if (nodeA.bucketName === nodeB.bucketName) {
-          return 0;
-        }
+    return acc;
+  }, {});
+  const sortedElements = Object.values(uniqueElements).sort((elementA, elementB) => {
+    if (elementA.bucketName === 'm' && elementB.bucketName === 'm') {
+      return compareMediaQueries(elementA.metadata, elementB.metadata);
+    }
 
-        return styleBucketOrdering.indexOf(nodeA.bucketName) - styleBucketOrdering.indexOf(nodeB.bucketName);
-      }),
-    stringify,
-  );
+    if (elementA.bucketName === elementB.bucketName) {
+      return 0;
+    }
+
+    return styleBucketOrdering.indexOf(elementA.bucketName) - styleBucketOrdering.indexOf(elementB.bucketName);
+  });
+
+  return serialize(sortedElements, stringify);
 }
