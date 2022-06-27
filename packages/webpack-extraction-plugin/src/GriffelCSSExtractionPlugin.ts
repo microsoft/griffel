@@ -54,16 +54,18 @@ export class GriffelCSSExtractionPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
-          const griffelAsset = assets['griffel.css'];
+          const griffelAsset = Object.entries(assets).find(([assetName]) => assetName.includes('griffel'));
 
           if (!griffelAsset) {
             return;
           }
 
-          const unsortedCSSRules = getAssetSourceContents(griffelAsset);
+          const [assetName, assetSource] = griffelAsset;
+
+          const unsortedCSSRules = getAssetSourceContents(assetSource);
           const sortedCSSRules = sortCSSRules(unsortedCSSRules, this.compareMediaQueries);
 
-          compilation.updateAsset('griffel.css', new compiler.webpack.sources.RawSource(sortedCSSRules));
+          compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(sortedCSSRules));
         },
       );
     });

@@ -9,6 +9,7 @@ import { merge } from 'webpack-merge';
 import { GriffelCSSExtractionPlugin } from './GriffelCSSExtractionPlugin';
 
 type CompileOptions = {
+  cssFilename?: string;
   webpackConfig?: webpack.Configuration;
 };
 
@@ -50,7 +51,12 @@ async function compileSourceWithWebpack(
         },
       ],
     },
-    plugins: [new GriffelCSSExtractionPlugin(), new MiniCssExtractPlugin()],
+    plugins: [
+      new GriffelCSSExtractionPlugin(),
+      new MiniCssExtractPlugin({
+        filename: options.cssFilename ?? '[name].css',
+      }),
+    ],
 
     resolve: {
       alias: {
@@ -86,7 +92,12 @@ async function compileSourceWithWebpack(
         return;
       }
 
-      const cssFilePath = path.resolve(__dirname, 'griffel.css');
+      const filesList = virtualFsVolume.readdirSync(__dirname) as string[];
+
+      const cssFilePath = path.resolve(
+        __dirname,
+        options.cssFilename ? filesList.find(filename => filename.includes('griffel')) ?? '' : 'griffel.css',
+      );
 
       if (!virtualFsVolume.existsSync(cssFilePath)) {
         reject(new Error('"griffel.css" does not exist in filesystem'));
@@ -95,7 +106,6 @@ async function compileSourceWithWebpack(
       const cssOutput = virtualFsVolume.readFileSync(cssFilePath, {
         encoding: 'utf-8',
       }) as string;
-      const filesList = virtualFsVolume.readdirSync(__dirname) as string[];
 
       resolve({
         cssOutput,
@@ -205,4 +215,7 @@ describe('webpackLoader', () => {
 
   // Sorting rules by buckets
   testFixture('style-buckets');
+
+  // Custom filenames in mini-css-extract-plugin
+  testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
 });
