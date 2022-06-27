@@ -13,7 +13,14 @@ const styles = __styles(
     h: ['.color-yellow:hover { color: yellow; }'],
     a: ['.color-black:active { color: black; }'],
     k: ['@keyframes foo { from{ transform:rotate(0deg); } to { transform:rotate(360deg); } }'],
-    t: ['@media (forced-colors: active) { .color-magenta { color:magenta; } }'],
+    m: [
+      [
+        '@media (forced-colors: active) { .color-magenta { color: magenta; } }',
+        {
+          m: '(forced-colors: active)',
+        },
+      ],
+    ],
   },
 );
 

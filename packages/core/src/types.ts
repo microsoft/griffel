@@ -138,7 +138,7 @@ export type CSSClasses = /* ltrClassName */ string | [/* ltrClassName */ string,
 export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
 
-export interface CSSRulesByBucket {
+export type CSSRulesByBucket = {
   // default
   d?: CSSBucketEntry[];
   // link
@@ -161,7 +161,7 @@ export interface CSSRulesByBucket {
   t?: CSSBucketEntry[];
   // @media rules
   m?: CSSBucketEntry[];
-}
+};
 
 export type CSSBucketEntry = string | [string, Record<string, unknown>];
 
