@@ -34,7 +34,7 @@ describe('getElementReference', () => {
   });
 });
 
-describe('getMetadata', () => {
+describe('getElementMetadata', () => {
   it.each`
     css                                                    | metadata
     ${'.foo { color: red; }'}                              | ${''}
