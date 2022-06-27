@@ -17,6 +17,18 @@ describe('getMonolithicCSSRules', () => {
     });
   });
 
+  it('group atomic css with child class names selector', () => {
+    const rules = ['.f1dx00p .class1{padding-right: 10px;}'].map(cssRule => ({ cssRule }));
+    expect(getMonolithicCSSRules(rules)).toEqual({
+      ' .class1': [
+        {
+          className: 'f1dx00p',
+          css: 'padding-right:10px;',
+        },
+      ],
+    });
+  });
+
   it('separate atomic css with class names selector and pseudo selector', () => {
     const rules = [
       '.fabcde0{background-color:red;}',
