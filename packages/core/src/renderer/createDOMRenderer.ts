@@ -31,7 +31,8 @@ export interface CreateDOMRendererOptions {
   compareMediaQueries?: (a: string, b: string) => number;
 }
 
-const defaultCompareMediaQueries = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
+/** @internal */
+export const defaultCompareMediaQueries = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 
 /**
  * Creates a new instances of a renderer.

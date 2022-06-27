@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: export getStyleBucketName & normalizeCSSBucketEntry functions for internal usage",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

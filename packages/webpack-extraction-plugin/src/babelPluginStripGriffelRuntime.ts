@@ -1,6 +1,6 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
-import type { CSSRulesByBucket } from '@griffel/core';
+import { CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
 
 type StripRuntimeBabelPluginOptions = never;
 
@@ -93,7 +93,13 @@ export const babelPluginStripGriffelRuntime = declare<
 
               const cssRulesByBucket = evaluationResult.value as CSSRulesByBucket;
 
-              Object.values(cssRulesByBucket).forEach(cssRules => {
+              Object.values(cssRulesByBucket).forEach(cssBucketEntries => {
+                const cssRules = cssBucketEntries.map(cssBucketEntry => {
+                  const [cssRule] = normalizeCSSBucketEntry(cssBucketEntry);
+
+                  return cssRule;
+                });
+
                 state.cssRules!.push(...cssRules);
               });
 

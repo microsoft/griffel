@@ -196,4 +196,13 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 describe('webpackLoader', () => {
   // Basic assertions
   testFixture('basic-rules');
+
+  // Multiple calls of __styles
+  testFixture('multiple');
+
+  // Deduplicate rules in stylesheet
+  testFixture('rules-deduplication');
+
+  // Sorting rules by buckets
+  testFixture('style-buckets');
 });

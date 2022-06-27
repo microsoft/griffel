@@ -1,5 +1,12 @@
+import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
 import { Compilation } from 'webpack';
 import type { Compiler, sources } from 'webpack';
+
+import { sortCSSRules } from './sortCSSRules';
+
+type GriffelCSSExtractionPluginOptions = {
+  compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
+};
 
 /**
  * Forces all files with `griffel.css` be concatenated into a single asset.
@@ -31,6 +38,12 @@ function getAssetSourceContents(assetSource: sources.Source): string {
 export class GriffelCSSExtractionPlugin {
   static loader = require.resolve('./webpackLoader');
 
+  private readonly compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
+
+  constructor(options?: GriffelCSSExtractionPluginOptions) {
+    this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
+  }
+
   apply(compiler: Compiler): void {
     forceCSSIntoOneStyleSheet(compiler);
 
@@ -47,12 +60,10 @@ export class GriffelCSSExtractionPlugin {
             return;
           }
 
-          // TODO: implement sorting for buckets and media queries
+          const unsortedCSSRules = getAssetSourceContents(griffelAsset);
+          const sortedCSSRules = sortCSSRules(unsortedCSSRules, this.compareMediaQueries);
 
-          compilation.updateAsset(
-            'griffel.css',
-            new compiler.webpack.sources.RawSource(getAssetSourceContents(griffelAsset)),
-          );
+          compilation.updateAsset('griffel.css', new compiler.webpack.sources.RawSource(sortedCSSRules));
         },
       );
     });
