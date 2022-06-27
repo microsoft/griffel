@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
     position: 'sticky',
     top: 0,
-    zIndex: 99,
+    zIndex: 1,
     backgroundColor: tokens.background,
   },
   input: {
