@@ -27,6 +27,7 @@ _Currently, all CSS rules will be extracted to a single CSS file i.e. [code spli
 ## Usage
 
 Webpack documentation:
+
 - [Loaders](https://webpack.js.org/loaders/)
 - [Plugins](https://webpack.js.org/concepts/plugins/)
 
