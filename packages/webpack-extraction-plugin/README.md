@@ -70,3 +70,28 @@ module.exports = {
 ```
 
 - Usage `mini-css-extract-plugin` is not required
+
+For better performance (to process less files) consider to use `include` for `GriffelCSSExtractionPlugin.loader`:
+
+```js
+const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|ts|tsx)$/,
+        include: [
+          path.resolve(__dirname, 'components'),
+          /\/node_modules\/@fluentui\/,
+          // see https://webpack.js.org/configuration/module/#condition
+        ],
+        use: {
+          loader: GriffelCSSExtractionPlugin.loader,
+        },
+      },
+    ],
+  },
+};
+```
