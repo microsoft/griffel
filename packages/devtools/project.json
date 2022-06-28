@@ -47,9 +47,10 @@
       "options": {
         "commands": [
           {
-            "command": "cd packages/devtools/ && node ./pack-extension.js"
+            "command": "node ./pack-extension.js"
           }
-        ]
+        ],
+        "cwd": "packages/devtools/"
       }
     },
     "lint": {
