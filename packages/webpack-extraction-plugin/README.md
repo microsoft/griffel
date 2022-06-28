@@ -9,7 +9,7 @@ A plugin for Webpack 5 that performs CSS extraction for [`@griffel/react`](../re
 ```bash
 yarn add --dev @griffel/webpack-extraction-plugin
 # or
-npm install --dev @griffel/webpack-extraction-plugin
+npm install --save-dev @griffel/webpack-extraction-plugin
 ```
 
 ## When to use it?
