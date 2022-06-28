@@ -1,6 +1,6 @@
 {
   "name": "@griffel/devtools",
-  "version": "0.0.1",
+  "version": "0.0.1.1",
   "description": "Griffel chrome devtools extension",
   "private": true,
   "license": "MIT",
