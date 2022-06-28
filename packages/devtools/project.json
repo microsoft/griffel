@@ -47,7 +47,7 @@
       "options": {
         "commands": [
           {
-            "command": "cd dist/packages/devtools/ && bestzip ../ext.zip *"
+            "command": "cd packages/devtools/ && node ./pack-extension.js"
           }
         ]
       }

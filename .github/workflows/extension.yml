@@ -1,0 +1,58 @@
+name: Publish devtools extension
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Get Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - name: Restore Yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            yarn-cache-folder-
+
+      - run: yarn install --immutable
+      - run: yarn nx run-many --target=build --projects=@griffel/devtools --parallel --max-parallel=3
+      - run: yarn nx run @griffel/devtools:pack-extension
+
+      - name: Verify extension has changed
+        uses: tj-actions/verify-changed-files@v10
+        id: verify-extension-changed
+        with:
+          files: |
+            packages/devtools/package.json
+
+      - name: Upload extension
+        if: steps.verify-extension-changed.outputs.files_changed == 'true'
+        uses: Klemensas/chrome-extension-upload-action@v1.4.1
+        with:
+          refresh-token: ${{ secrets.CHROME_EXT_REFRESH_TOKEN }}
+          client-id: ${{ secrets.CHROME_EXT_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_EXT_CLIENT_SECRET }}
+          app-id: ${{ secrets.CHROME_EXT_APP_ID }}
+          file-name: ./dist/packages/ext.zip
