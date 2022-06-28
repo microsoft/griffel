@@ -58,7 +58,8 @@ module.exports = {
           loader: '@griffel/webpack-loader',
         },
       },
-      // ".css" configured there for example, but "css-loader" is required to handle produces CSS assets
+      // "css-loader" is required to handle produced CSS assets by Griffel
+      // you can use "style-loader" or "MiniCssExtractPlugin.loader" to handle CSS insertion
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
