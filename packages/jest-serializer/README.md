@@ -9,7 +9,7 @@ Add it as a dependency:
 ```bash
 yarn add --dev @griffel/jest-serializer
 # or
-npm install --dev @griffel/jest-serializer
+npm install --save-dev @griffel/jest-serializer
 ```
 
 Update your `jest.config.js` (or appropriate config location) to include a `snapshotSerializers` array that references this package:

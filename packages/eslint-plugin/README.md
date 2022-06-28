@@ -7,7 +7,7 @@ ESLint plugin to follow best practices and anticipate common mistakes when writi
 ```bash
 yarn add --dev @griffel/eslint-plugin
 # or
-npm install --dev @griffel/eslint-plugin
+npm install --save-dev @griffel/eslint-plugin
 ```
 
 ## Usage
