@@ -12,6 +12,8 @@ Griffel ([_German for stylus/pen_](https://en.wiktionary.org/wiki/Griffel)) is C
 
 🧩 &nbsp; Uses Atomic CSS to reuse styles and avoid specificity issues with CSS
 
+📝 &nbsp; _Experimental_ CSS extraction with [Webpack plugin](./packages/webpack-extraction-plugin)
+
 ### Griffel with React
 
 ```bash
