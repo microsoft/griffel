@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 28 Jun 2022 09:50:50 GMT",
+      "tag": "@griffel/core_v1.4.1",
+      "version": "1.4.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "13f45f365ef157651ef6dc11651fda94aa9f09a5",
+            "comment": "chore: export getStyleBucketName & normalizeCSSBucketEntry functions for internal usage"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jun 2022 08:37:05 GMT",
       "tag": "@griffel/core_v1.4.0",
       "version": "1.4.0",

@@ -1,6 +1,6 @@
 {
   "name": "@griffel/webpack-extraction-plugin",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Webpack plugin that performs CSS extraction for Griffel",
   "license": "MIT",
   "repository": {
@@ -16,7 +16,7 @@
     "tslib": "^2.1.0"
   },
   "peerDependencies": {
-    "@griffel/core": "^1.4.0",
+    "@griffel/core": "^1.4.1",
     "webpack": "^5"
   }
 }

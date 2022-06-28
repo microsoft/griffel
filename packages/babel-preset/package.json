@@ -1,6 +1,6 @@
 {
   "name": "@griffel/babel-preset",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Babel preset with build time transforms for Griffel",
   "license": "MIT",
   "repository": {
@@ -19,6 +19,6 @@
     "tslib": "^2.1.0"
   },
   "peerDependencies": {
-    "@griffel/core": "^1.4.0"
+    "@griffel/core": "^1.4.1"
   }
 }

@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 23 Jun 2022 08:37:05 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Jun 2022 09:50:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.1
+
+Tue, 28 Jun 2022 09:50:50 GMT
+
+### Patches
+
+- chore: export getStyleBucketName & normalizeCSSBucketEntry functions for internal usage (olfedias@microsoft.com)
 
 ## 1.4.0
 

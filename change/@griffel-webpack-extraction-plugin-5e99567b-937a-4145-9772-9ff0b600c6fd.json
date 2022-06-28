@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "chore: initial release",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
