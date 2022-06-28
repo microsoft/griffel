@@ -18,8 +18,8 @@ export function getElementReference(element: Element, suffix = ''): string {
     return element.value + suffix;
   }
 
-  if (Array.isArray(element.children) && element.children.length === 1) {
-    return getElementReference(element.children[0], element.value + suffix);
+  if (Array.isArray(element.children)) {
+    return element.value + '[' + element.children.map(child => getElementReference(child, suffix)).join(',') + ']';
   }
 
   function removeRootProperty(element: Element): unknown {

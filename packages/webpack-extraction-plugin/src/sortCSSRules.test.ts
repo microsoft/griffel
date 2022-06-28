@@ -22,11 +22,13 @@ expect.addSnapshotSerializer(cssSerializer);
 
 describe('getElementReference', () => {
   it.each`
-    css                                                                                       | reference
-    ${'.foo { color: red; }'}                                                                 | ${'.foo'}
-    ${'.foo:hover { color: red; }'}                                                           | ${'.foo:hover'}
-    ${'@media (max-width: 2px) { .foo { color: blue; } }'}                                    | ${'.foo@media (max-width: 2px)'}
-    ${'@keyframes foo { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }'} | ${'@keyframes foo'}
+    css                                                                                              | reference
+    ${'.foo { color: red; }'}                                                                        | ${'.foo'}
+    ${'.foo:hover { color: red; }'}                                                                  | ${'.foo:hover'}
+    ${'@media (max-width: 2px) { .foo { color: blue; } }'}                                           | ${'@media (max-width: 2px)[.foo]'}
+    ${'@keyframes foo { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }'}        | ${'@keyframes foo'}
+    ${'@media screen and (max-width: 992px) { .a { text-align: left; } .b { text-align: right; } }'} | ${'@media screen and (max-width: 992px)[.a,.b]'}
+    ${'@media (max-width: 2px) { @supports (display: grid) { .a { color: blue; } } }'}               | ${'@media (max-width: 2px)[@supports (display: grid)[.a]]'}
   `('returns "$reference" for "$css"', ({ css, reference }: { css: string; reference: string }) => {
     const element = compile(css)[0];
 
