@@ -70,7 +70,7 @@ module.exports = {
 };
 ```
 
-- Usage `mini-css-extract-plugin` is not required
+- `mini-css-extract-plugin` is not mandatory and configured there for example, you can use `style-loader` or other tooling to inject CSS on a page
 
 For better performance (to process less files) consider to use `include` for `GriffelCSSExtractionPlugin.loader`:
 
