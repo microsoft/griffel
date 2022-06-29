@@ -38,7 +38,7 @@ jobs:
       - run: yarn nx run-many --target=build --projects=@griffel/devtools --parallel --max-parallel=3
       - run: yarn nx run @griffel/devtools:pack-extension
 
-      - name: Verify extension has changed
+      - name: Verify extension has published
         uses: tj-actions/verify-changed-files@v10
         id: verify-extension-changed
         with:
