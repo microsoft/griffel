@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const zip = require('bestzip');
 
 const DIST_PATH = path.resolve(__dirname, '../../dist/packages/devtools');
@@ -28,10 +29,8 @@ fs.writeFileSync(
 );
 
 // Pack extension into .zip archive for publishing
-// eslint-disable-next-line import/no-extraneous-dependencies
 zip({
   source: '*',
   destination: '../ext.zip',
   cwd: DIST_PATH,
 });
-
