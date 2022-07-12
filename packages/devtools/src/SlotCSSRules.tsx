@@ -95,6 +95,7 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
 
 function openOriginalCode(sourceURL: string) {
   chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
+    // example sourceURL: https://source.js:<lineNumber>:<columnNumber>
     const results = sourceURL.split(':');
     results.pop();
     const line = Number(results.pop()) ?? 1;
