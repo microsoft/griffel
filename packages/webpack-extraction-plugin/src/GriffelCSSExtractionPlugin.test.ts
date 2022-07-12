@@ -218,4 +218,7 @@ describe('webpackLoader', () => {
 
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
+
+  // "pathinfo" adds comments with paths to output
+  testFixture('basic-rules', { webpackConfig: { output: { pathinfo: true } } });
 });
