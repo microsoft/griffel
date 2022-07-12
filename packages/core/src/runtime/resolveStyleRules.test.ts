@@ -208,6 +208,25 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles media queries with flipping values', () => {
+      expect(
+        resolveStyleRules({
+          '@media screen and (max-width: 992px)': {
+            textAlign: 'left',
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        @media screen and (max-width: 992px) {
+          .f1f6067w {
+            text-align: left;
+          }
+          .f133ge8t {
+            text-align: right;
+          }
+        }
+      `);
+    });
+
     it('RTL @noflip will generate a different className', () => {
       const classnamesSet = new Set<string>();
 

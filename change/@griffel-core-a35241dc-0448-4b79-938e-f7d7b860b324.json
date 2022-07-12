@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "collect devtools data when webpack loader is used",
-  "packageName": "@griffel/core",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}

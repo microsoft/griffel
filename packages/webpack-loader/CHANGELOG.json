@@ -2,6 +2,48 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Tue, 28 Jun 2022 09:50:50 GMT",
+      "tag": "@griffel/webpack-loader_v2.0.8",
+      "version": "2.0.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.3.3",
+            "commit": "604926fc2fdd4596cd122b92b82a3f5e5d40d23d"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/react to v1.2.1",
+            "commit": "604926fc2fdd4596cd122b92b82a3f5e5d40d23d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jun 2022 08:37:05 GMT",
+      "tag": "@griffel/webpack-loader_v2.0.7",
+      "version": "2.0.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.3.2",
+            "commit": "6b98eb67f7b4399bcc9bd66607e296640449ae98"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/react to v1.2.0",
+            "commit": "6b98eb67f7b4399bcc9bd66607e296640449ae98"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 May 2022 15:06:34 GMT",
       "tag": "@griffel/webpack-loader_v2.0.6",
       "version": "2.0.6",

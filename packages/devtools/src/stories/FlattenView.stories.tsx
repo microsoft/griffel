@@ -79,7 +79,7 @@ const debugResultRoot: DebugResult = {
         f7wpa5l: '@media screen and (max-width: 992px){.f7wpa5l:hover{color:red;}}',
         fy4xd57: '@media screen and (max-width: 992px){.fy4xd57:hover{background-color:blue;}}',
       },
-      slot: 'primaryRed',
+      slot: 'primary',
     },
   ],
   debugClassNames: [
@@ -105,6 +105,8 @@ export const Default: Story<{ theme: 'dark' | 'light' }> = ({ theme }) => {
         ...tokens,
         border: '3px solid gray',
         width: 400,
+        height: 600,
+        overflowY: 'auto',
       }}
     >
       <FlattenView debugResultRoot={debugResultRoot} />

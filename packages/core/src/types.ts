@@ -85,6 +85,23 @@ export interface MakeStaticStylesOptions {
   renderer: GriffelRenderer;
 }
 
+export interface IsomorphicStyleSheet {
+  /**
+   * Attributes applied to the underlying HTMLStyleElement
+   */
+  elementAttributes: Record<string, string>;
+  /**
+   * Underlying HTMLStyleElement
+   */
+  element: HTMLStyleElement | undefined;
+  bucketName: StyleBucketName;
+  /**
+   * Returns all CSS rules on the stylesheet
+   */
+  cssRules(): string[];
+  insertRule(rule: string): number | undefined;
+}
+
 export interface GriffelRenderer {
   id: string;
 
@@ -96,39 +113,23 @@ export interface GriffelRenderer {
   /**
    * @private
    */
-  styleElements: Partial<Record<StyleBucketName, HTMLStyleElement>>;
+  stylesheets: { [key in StyleBucketName]?: IsomorphicStyleSheet } & Record<string, IsomorphicStyleSheet>;
 
   /**
    * @private
    */
   insertCSSRules(cssRules: CSSRulesByBucket): void;
+
+  /**
+   * @private
+   */
+  compareMediaQueries(a: string, b: string): number;
 }
 
 /**
  * Buckets under which we will group our stylesheets.
  */
-export type StyleBucketName =
-  // default
-  | 'd'
-  // link
-  | 'l'
-  // visited
-  | 'v'
-  // focus-within
-  | 'w'
-  // focus
-  | 'f'
-  // focus-visible
-  | 'i'
-  // hover
-  | 'h'
-  // active
-  | 'a'
-  // @keyframes definitions
-  | 'k'
-  // at-rules (@media, @support, @layer)
-  | 't';
-
+export type StyleBucketName = keyof CSSRulesByBucket;
 export type SequenceHash = string;
 export type PropertyHash = string;
 
@@ -137,7 +138,32 @@ export type CSSClasses = /* ltrClassName */ string | [/* ltrClassName */ string,
 export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
 
-export type CSSRulesByBucket = Partial<Record<StyleBucketName, string[]>>;
+export type CSSRulesByBucket = {
+  // default
+  d?: CSSBucketEntry[];
+  // link
+  l?: CSSBucketEntry[];
+  // visited
+  v?: CSSBucketEntry[];
+  // focus-within
+  w?: CSSBucketEntry[];
+  // focus
+  f?: CSSBucketEntry[];
+  // focus-visible
+  i?: CSSBucketEntry[];
+  // hover
+  h?: CSSBucketEntry[];
+  // active
+  a?: CSSBucketEntry[];
+  // @keyframes definitions
+  k?: CSSBucketEntry[];
+  // at-rules (@support, @layer)
+  t?: CSSBucketEntry[];
+  // @media rules
+  m?: CSSBucketEntry[];
+};
+
+export type CSSBucketEntry = string | [string, Record<string, unknown>];
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;
 

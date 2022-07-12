@@ -1,4 +1,5 @@
 import { GriffelRenderer, StyleBucketName } from '../types';
+import { createIsomorphicStyleSheetFromElement } from './createIsomorphicStyleSheet';
 
 // Regexps to extract names of classes and animations
 // https://github.com/styletron/styletron/blob/e0fcae826744eb00ce679ac613a1b10d44256660/packages/styletron-engine-atomic/src/client/client.js#L8
@@ -9,6 +10,7 @@ const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
 const regexps: Partial<Record<StyleBucketName, RegExp>> = {
   k: KEYFRAMES_HYDRATOR,
   t: AT_RULES_HYDRATOR,
+  m: AT_RULES_HYDRATOR,
 };
 
 /**
@@ -28,9 +30,11 @@ export function rehydrateRendererCache(
       const bucketName = styleElement.dataset['makeStylesBucket'] as StyleBucketName;
       const regex = regexps[bucketName] || STYLES_HYDRATOR;
 
+      const stylesheetKey = bucketName === 'm' ? bucketName + styleElement.media : bucketName;
+
       // 👇 If some elements are not created yet, we will register them in renderer
-      if (!renderer.styleElements[bucketName]) {
-        renderer.styleElements[bucketName] = styleElement;
+      if (!renderer.stylesheets[stylesheetKey]) {
+        renderer.stylesheets[stylesheetKey] = createIsomorphicStyleSheetFromElement(styleElement);
       }
 
       let match;

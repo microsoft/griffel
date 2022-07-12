@@ -1,16 +1,28 @@
 import * as stylis from 'stylis';
 import type { AtomicRules, MonolithicAtRules, MonolithicRules, RuleDetail } from './types';
 
+const griffelClassNameRegex = /^\.f[0-9a-z]+$/;
+
 function parseRuleElement(element: stylis.Element, overriddenBy?: string) {
   // example of `value`: `.f3xbvq9:hover`
   // `children` contains all CSS rules under the `value` selector
   const { value: classNameSelector, children } = element;
 
   if (Array.isArray(children)) {
-    const selector = stylis.tokenize(classNameSelector).slice(1).join('');
+    let className: string | undefined;
+    const selector = stylis
+      .tokenize(classNameSelector)
+      .filter(token => {
+        if (griffelClassNameRegex.test(token)) {
+          className = token.slice(1);
+          return false;
+        }
+        return true;
+      })
+      .join('');
     const rules: RuleDetail[] = children.map(child => ({
       css: child.value,
-      className: stylis.tokenize(classNameSelector)[0].slice(1),
+      className: className ?? stylis.tokenize(classNameSelector)[0].slice(1),
       overriddenBy,
     }));
     return {

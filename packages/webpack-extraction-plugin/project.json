@@ -1,0 +1,54 @@
+{
+  "root": "packages/webpack-extraction-plugin",
+  "sourceRoot": "packages/webpack-extraction-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/webpack-extraction-plugin/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/webpack-extraction-plugin"],
+      "options": {
+        "jestConfig": "packages/webpack-extraction-plugin/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/webpack-extraction-plugin",
+        "tsConfig": "packages/webpack-extraction-plugin/tsconfig.lib.json",
+        "packageJson": "packages/webpack-extraction-plugin/package.json",
+        "main": "packages/webpack-extraction-plugin/src/index.ts",
+        "assets": [
+          "packages/webpack-extraction-plugin/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "*.{js,css}",
+            "input": "packages/webpack-extraction-plugin/virtual-loader",
+            "output": "./virtual-loader"
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/webpack-extraction-plugin",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "@griffel/benchmark": "apps/benchmark",
     "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
     "@griffel/devtools": "packages/devtools",
@@ -9,6 +10,7 @@
     "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/react": "packages/react",
     "@griffel/webpack-loader": "packages/webpack-loader",
+    "@griffel/webpack-extraction-plugin": "packages/webpack-extraction-plugin",
     "@griffel/website": "apps/website"
   }
 }

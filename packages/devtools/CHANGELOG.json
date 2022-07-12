@@ -2,6 +2,36 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Tue, 28 Jun 2022 09:50:50 GMT",
+      "tag": "@griffel/devtools_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.2.1",
+            "commit": "604926fc2fdd4596cd122b92b82a3f5e5d40d23d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jun 2022 08:37:05 GMT",
+      "tag": "@griffel/devtools_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.2.0",
+            "commit": "6b98eb67f7b4399bcc9bd66607e296640449ae98"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 May 2022 15:06:34 GMT",
       "tag": "@griffel/devtools_v0.0.1",
       "version": "0.0.1",

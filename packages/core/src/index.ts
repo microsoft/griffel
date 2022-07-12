@@ -40,7 +40,6 @@ export const shorthands = {
 
 export { createDOMRenderer } from './renderer/createDOMRenderer';
 export type { CreateDOMRendererOptions } from './renderer/createDOMRenderer';
-export { styleBucketOrdering } from './renderer/getStyleSheetForBucket';
 export { rehydrateRendererCache } from './renderer/rehydrateRendererCache';
 
 export { mergeClasses } from './mergeClasses';
@@ -48,7 +47,13 @@ export { makeStaticStyles } from './makeStaticStyles';
 export { makeStyles } from './makeStyles';
 export { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 
-// Private exports, are used by build time transforms
+// Private exports, are used by build time transforms or other tools
+export { __css } from './__css';
+export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry';
+export { styleBucketOrdering } from './renderer/getStyleSheetForBucket';
+export { defaultCompareMediaQueries } from './renderer/createDOMRenderer';
+export { getStyleBucketName } from './runtime/getStyleBucketName';
+export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 export { resolveStyleRules } from './runtime/resolveStyleRules';
 export { __styles } from './__styles';
 

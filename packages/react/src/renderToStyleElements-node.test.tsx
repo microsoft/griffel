@@ -69,11 +69,22 @@ describe('renderToStyleElements', () => {
           ':hover': { color: 'blue' },
         },
       },
+
+      support: {
+        '@supports (display: grid)': {
+          color: 'red',
+        },
+      },
     });
     const ExampleComponent: React.FC = () => {
       const classes = useExampleStyles();
 
-      return <div className={classes.media} />;
+      return (
+        <>
+          <div className={classes.media} />
+          <div className={classes.support} />
+        </>
+      );
     };
 
     const renderer = createDOMRenderer();
@@ -86,8 +97,113 @@ describe('renderToStyleElements', () => {
 
     expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
       <style data-make-styles-bucket="t" data-make-styles-rehydration="true">
+        @supports (display: grid) {
+          .f1ofq0jl {
+            color: red;
+          }
+        }</style
+      ><style
+        media="screen and (max-width: 992px)"
+        data-make-styles-bucket="m"
+        data-make-styles-rehydration="true"
+      >
         @media screen and (max-width: 992px) {
           .fnao3vb:hover {
+            color: blue;
+          }
+        }
+      </style>
+    `);
+  });
+
+  it('handles media query order', () => {
+    const useExampleStyles = makeStyles({
+      media: {
+        color: 'red',
+        '@media (max-width: 4px)': {
+          ':hover': { color: 'blue' },
+        },
+        '@media (max-width: 2px)': {
+          ':hover': { color: 'blue' },
+        },
+        '@supports (display: grid)': {
+          color: 'green',
+        },
+        '@media (max-width: 3px)': {
+          ':hover': { color: 'blue' },
+        },
+        '@media (max-width: 1px)': {
+          ':hover': { color: 'blue' },
+        },
+      },
+    });
+    const ExampleComponent: React.FC = () => {
+      const classes = useExampleStyles();
+
+      return <div className={classes.media} />;
+    };
+
+    const mediaQueryOrder = ['(max-width: 1px)', '(max-width: 2px)', '(max-width: 3px)', '(max-width: 4px)'];
+    const renderer = createDOMRenderer(undefined, {
+      compareMediaQueries(a, b) {
+        return mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
+      },
+    });
+
+    ReactDOM.renderToStaticMarkup(
+      <RendererProvider renderer={renderer}>
+        <ExampleComponent />
+      </RendererProvider>,
+    );
+
+    expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
+      <style data-make-styles-bucket="d" data-make-styles-rehydration="true">
+        .fe3e8s9 {
+          color: red;
+        }</style
+      ><style data-make-styles-bucket="t" data-make-styles-rehydration="true">
+        @supports (display: grid) {
+          .f1vq01kz {
+            color: green;
+          }
+        }</style
+      ><style
+        media="(max-width: 1px)"
+        data-make-styles-bucket="m"
+        data-make-styles-rehydration="true"
+      >
+        @media (max-width: 1px) {
+          .f1f7njb2:hover {
+            color: blue;
+          }
+        }</style
+      ><style
+        media="(max-width: 2px)"
+        data-make-styles-bucket="m"
+        data-make-styles-rehydration="true"
+      >
+        @media (max-width: 2px) {
+          .f1c6999y:hover {
+            color: blue;
+          }
+        }</style
+      ><style
+        media="(max-width: 3px)"
+        data-make-styles-bucket="m"
+        data-make-styles-rehydration="true"
+      >
+        @media (max-width: 3px) {
+          .f1qdcc3n:hover {
+            color: blue;
+          }
+        }</style
+      ><style
+        media="(max-width: 4px)"
+        data-make-styles-bucket="m"
+        data-make-styles-rehydration="true"
+      >
+        @media (max-width: 4px) {
+          .f1b4up97:hover {
             color: blue;
           }
         }

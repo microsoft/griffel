@@ -2,6 +2,9 @@ import * as CSS from 'csstype';
 import { LookupItem, SequenceHash } from './types';
 
 /** @internal */
+export const DATA_BUCKET_ATTR = 'data-make-styles-bucket';
+
+/** @internal */
 export const HASH_PREFIX = 'f';
 
 /** @internal */

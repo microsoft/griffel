@@ -7,7 +7,7 @@ A loader for Webpack 5 that performs build time transforms for [`@griffel/react`
 ```bash
 yarn add --dev @griffel/webpack-loader
 # or
-npm install --dev @griffel/webpack-loader
+npm install --save-dev @griffel/webpack-loader
 ```
 
 ## When to use it?

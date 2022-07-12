@@ -7,7 +7,7 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
 ```bash
 yarn add --dev @griffel/babel-preset
 # or
-npm install --dev @griffel/babel-preset
+npm install --save-dev @griffel/babel-preset
 ```
 
 ## When to use it?

@@ -32,7 +32,7 @@ export function reduceToClassName(classMap: CSSClassesMap, dir: 'ltr' | 'rtl'): 
  * Reduces classname maps for slots to classname strings. Registers them in a definition cache to be used by
  * `mergeClasses()`.
  *
- * @private
+ * @internal
  */
 export function reduceToClassNameForSlots<Slots extends string | number>(
   classesMapBySlot: CSSClassesMapBySlot<Slots>,
