@@ -11,41 +11,6 @@ type LineParseResult = null | {
   loc: string | null;
 };
 
-function getCallStackLine(depth: number) {
-  const stack = String(new Error().stack).split('\n');
-
-  return stack[stack[0] === 'Error' ? depth + 1 : depth];
-}
-
-export function extractCallLoc(depth: number) {
-  const line = getCallStackLine(depth + 3);
-  const parsed = line ? parseStackTraceLine(line) : null;
-
-  if (parsed && parsed.loc) {
-    return parsed.loc;
-  }
-
-  return null;
-}
-
-/**
- * This parses the different stack traces and puts them into one format
- * This borrows heavily from TraceKit (https://github.com/csnover/TraceKit)
- */
-export function parseStackTrace(stackString: string) {
-  const lines = stackString.split('\n');
-
-  return lines.reduce((stack, line) => {
-    const parseResult = parseStackTraceLine(line);
-
-    if (parseResult) {
-      stack.push(parseResult);
-    }
-
-    return stack;
-  }, [] as LineParseResult[]);
-}
-
 export function parseStackTraceLine(line: string): LineParseResult {
   return parseChrome(line) || parseGecko(line) || parseJSC(line);
 }

@@ -3,7 +3,6 @@ import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 
 import { getMonolithicCSSRules } from './getMonolithicCSSRules';
 import { MonolithicRulesView } from './MonolithicRulesView';
-import { resolveSourceLoc } from './react-render-tracker/resolveSourceLoc';
 import { tokens } from './themes';
 import { useViewContext } from './ViewContext';
 
@@ -96,8 +95,7 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
 
 function openOriginalCode(sourceURL: string) {
   chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
-    const result = await resolveSourceLoc(sourceURL);
-    const results = result.split(':');
+    const results = sourceURL.split(':');
     results.pop();
     const line = Number(results.pop()) ?? 1;
     chrome.devtools.panels.openResource(results.join(':'), line - 1, () => ({}));

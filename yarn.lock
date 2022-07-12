@@ -13733,7 +13733,6 @@ __metadata:
     rtl-css-js: ^1.15.0
     schema-utils: ^3.1.1
     simple-git-hooks: 2.7.0
-    source-map-js: ^1.0.2
     stylis: ^4.0.13
     syncpack: 6.2.0
     tmp: 0.2.1
@@ -22082,13 +22081,6 @@ __metadata:
   version: 0.6.2
   resolution: "source-map-js@npm:0.6.2"
   checksum: 9c8151a29e00fd8d3ba87709fdf9a9ce48313d653f4a29a39b4ae53d346ac79e005de624796ff42eff55cbaf26d2e87f4466001ca87831d400d818c5cf146a0e
-  languageName: node
-  linkType: hard
-
-"source-map-js@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "source-map-js@npm:1.0.2"
-  checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
   languageName: node
   linkType: hard
 
