@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
         name: Checkout [main]
 
-      - name: Verify extension has published
+      - name: Verify extension has changed
         uses: tj-actions/changed-files@v23.1
         id: verify-extension-changed
         with:
