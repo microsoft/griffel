@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "feat: export `CreateDOMRendererOptions` from `@griffel/react`",
+  "packageName": "@griffel/react",
+  "email": "lingfangao@hotmail.com",
+  "dependentChangeType": "patch"
+}
