@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added shorthand for grid-area",
+  "packageName": "@griffel/core",
+  "email": "geoff.cox@live.com",
+  "dependentChangeType": "patch"
+}
