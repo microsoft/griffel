@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: update linaria dependencies to latest",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
