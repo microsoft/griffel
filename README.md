@@ -6,7 +6,7 @@ Griffel ([_German for stylus/pen_](https://en.wiktionary.org/wiki/Griffel)) is C
 
 🚀 &nbsp; Zero config start: Griffel has both runtime & build time implementations
 
-🔥 &nbsp; Optional build time transforms to improve performance
+🔥 &nbsp; Optional [build time transforms](./packages/webpack-loader) to improve performance
 
 💪 &nbsp; Type-safe styles via [csstype](https://github.com/frenic/csstype)
 
