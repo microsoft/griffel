@@ -14,7 +14,7 @@ Griffel ([_German for stylus/pen_](https://en.wiktionary.org/wiki/Griffel)) is C
 
 📝 &nbsp; _Experimental_ CSS extraction with [Webpack plugin](./packages/webpack-extraction-plugin)
 
-🐞 &nbsp; Debug using [griffel devtools extension](https://chrome.google.com/webstore/detail/griffel-devtools/bejhagjehnpgagkaaeehdpdadmffbigb)
+🐞 &nbsp; Debug using [Griffel DevTools extension](https://chrome.google.com/webstore/detail/griffel-devtools/bejhagjehnpgagkaaeehdpdadmffbigb)
 
 ### Griffel with React
 
