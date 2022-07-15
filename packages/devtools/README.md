@@ -1,6 +1,6 @@
 # Griffel Devtools
 
-Chrome devtools panel extension for debugging griffel.
+Chrome devtools panel extension for debugging Griffel.
 Available on [chrome web store](https://chrome.google.com/webstore/detail/griffel-devtools/bejhagjehnpgagkaaeehdpdadmffbigb)
 
 ### Contribution
