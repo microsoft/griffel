@@ -13,6 +13,8 @@ export type BorderRadiusInput = ValueOrArray<CSS.Property.BorderRadius<GriffelSt
 
 export type GapInput = ValueOrArray<CSS.Property.Gap<GriffelStylesCSSValue>>;
 
+export type GridAreaInput = CSS.Property.GridArea;
+
 export type MarginInput = ValueOrArray<CSS.Property.Margin<GriffelStylesCSSValue>>;
 
 export type OverflowInput = ValueOrArray<CSS.Property.Overflow>;

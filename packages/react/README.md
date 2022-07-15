@@ -175,6 +175,36 @@ const useClasses = makeStyles({
 });
 ```
 
+### `shorthands.gridArea`
+
+```js
+import { makeStyles, shorthands } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    ...shorthands.gridArea('auto'),
+    ...shorthands.gridArea('first', 'second'),
+    ...shorthands.gridArea(2, 4, 'span footer'),
+    ...shorthands.gridArea(2, 4, 1, 3),
+  },
+});
+```
+
+### `shorthands.inset`
+
+```js
+import { makeStyles, shorthands } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    ...shorthands.inset('10px'),
+    ...shorthands.inset('10px', '5px'),
+    ...shorthands.inset('2px', '4px', '8px'),
+    ...shorthands.inset('1px', 0, '3px', '4px'),
+  },
+});
+```
+
 ### `shorthands.margin`
 
 ```js
@@ -335,7 +365,7 @@ const useClasses = makeStyles({
 
     '@media screen and (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
-    '@layer utility': { marginBottom: '1em' }
+    '@layer utility': { marginBottom: '1em' },
   },
 });
 ```
