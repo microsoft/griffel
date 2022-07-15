@@ -132,10 +132,10 @@ describe('gridArea(rowStart, columnStart, rowEnd)', () => {
   });
 
   it('for span custom-ident', () => {
-    expect(gridArea('header', 'span footer')).toEqual({
+    expect(gridArea('header', 'span body', 'span footer')).toEqual({
       gridRowStart: 'header',
-      gridColumnStart: 'span footer',
-      gridRowEnd: 'header',
+      gridColumnStart: 'span body',
+      gridRowEnd: 'span footer',
       gridColumnEnd: 'auto',
     });
   });

@@ -6,9 +6,6 @@ type GridAreaStyle = Pick<
   'gridRowStart' | 'gridRowEnd' | 'gridColumnStart' | 'gridColumnEnd'
 >;
 
-function containsCssVar(value: GridAreaInput) {
-  return typeof value === 'string' && value.match(/var\(.*\)/g);
-}
 
 const cssVarRegEx = /var\(.*\)/gi;
 
@@ -42,9 +39,9 @@ export function gridArea(
  *
  * @example
  *   gridArea('auto')
- *   gridArea('first','second')
- *   gridArea(2,4,4)
- *   gridArea(2,4,1,3)
+ *   gridArea('first', 'second')
+ *   gridArea(2, 4, 4)
+ *   gridArea(2, 4, 1, 3)
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area
  */
@@ -54,7 +51,14 @@ export function gridArea(...values: GridAreaInput[]): GridAreaStyle {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.error(
-        `The value passed to shorthands.gridArea did not match any gridArea property specs. The CSS styles were not generated. Please, check the gridArea documentation.`,
+        `The value passed to shorthands.gridArea() did not match any gridArea property specs. The CSS styles were not generated. Please, check the gridArea documentation.`,
+       [
+         'The value passed to shorthands.gridArea() did not match any gridArea property specs. ',
+         'The CSS styles were not generated.\n',
+         'Please, check the `grid-area` documentation:\n'
+         '- https://developer.mozilla.org/docs/Web/CSS/grid-area',
+         '- https://griffel.js.org/react/api/shorthands#shorthandsgridarea',
+       ].join(''),
       );
     }
 
