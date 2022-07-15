@@ -34,7 +34,7 @@ export function gridArea(
 ): GridAreaStyle;
 
 /**
- * A function that implements CSS spec conformant expansion for "gridArea"
+ * A function that implements CSS spec conformant expansion for "grid-area"
  *
  * @example
  *   gridArea('auto')
