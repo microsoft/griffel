@@ -47,9 +47,10 @@
       "options": {
         "commands": [
           {
-            "command": "cd dist/packages/devtools/ && bestzip ../ext.zip *"
+            "command": "node ./pack-extension.js"
           }
-        ]
+        ],
+        "cwd": "packages/devtools/"
       }
     },
     "lint": {
