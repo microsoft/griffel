@@ -5,46 +5,54 @@ const babel = require('@babel/core');
 function generateTryItOutSidebar() {
   const playgroundTemplatePath = path.join(__dirname, '/src/components/Playground/code/templates');
   const templateFiles = fs.readdirSync(playgroundTemplatePath);
-  return templateFiles
-    .map(templateFile => {
-      const id = path.parse(templateFile).name;
-      const templatePath = path.join(playgroundTemplatePath, templateFile);
-      const code = fs.readFileSync(templatePath, { encoding: 'utf-8' });
-      const res = babel.parseSync(code, { filename: templateFile });
-      const meta = { name: id };
-      babel.traverse(res, {
-        VariableDeclarator(path) {
-          const idPath = path.get('id');
-          const initPath = path.get('init');
+  const sidebarItems = [];
 
-          if (idPath.isIdentifier({ name: 'meta' }) && initPath.isObjectExpression) {
-            const properties = initPath.get('properties');
-            if (Array.isArray(properties)) {
-              properties.forEach(propertyPath => {
-                if (propertyPath.isObjectProperty()) {
-                  const keyPath = propertyPath.get('key');
-                  const valuePath = propertyPath.get('value');
+  templateFiles.forEach(templateFile => {
+    const id = path.parse(templateFile).name;
+    const templatePath = path.join(playgroundTemplatePath, templateFile);
 
-                  if (keyPath.isIdentifier() && (valuePath.isStringLiteral() || valuePath.isBooleanLiteral())) {
-                    meta[keyPath.node.name] = valuePath.node.value;
-                  }
+    const code = fs.readFileSync(templatePath, { encoding: 'utf-8' });
+    const res = babel.parseSync(code, { filename: templateFile });
+    const meta = { name: id };
+
+    babel.traverse(res, {
+      VariableDeclarator(path) {
+        const idPath = path.get('id');
+        const initPath = path.get('init');
+
+        if (idPath.isIdentifier({ name: 'meta' }) && initPath.isObjectExpression) {
+          const properties = initPath.get('properties');
+
+          if (Array.isArray(properties)) {
+            properties.forEach(propertyPath => {
+              if (propertyPath.isObjectProperty()) {
+                const keyPath = propertyPath.get('key');
+                const valuePath = propertyPath.get('value');
+
+                if (
+                  keyPath.isIdentifier() &&
+                  (valuePath.isStringLiteral() || valuePath.isBooleanLiteral() || valuePath.isNumericLiteral())
+                ) {
+                  meta[keyPath.node.name] = valuePath.node.value;
                 }
-              });
-            }
+              }
+            });
           }
-        },
-      });
+        }
+      },
+    });
 
-      /** @type { {type: 'link'; label: string; href: string }} */
-      const sidebarItem = {
-        type: 'link',
-        label: meta.name,
-        href: `/try-it-out#${id}`,
-      };
+    /** @type {{ type: 'link'; label: string; href: string }} */
+    const sidebarItem = {
+      type: 'link',
+      label: meta.name,
+      href: `/try-it-out#${id}`,
+    };
 
-      return sidebarItem;
-    })
-    .filter(Boolean);
+    sidebarItems[meta.position] = sidebarItem;
+  });
+
+  return sidebarItems.filter(Boolean);
 }
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */

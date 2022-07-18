@@ -19,4 +19,5 @@ export default makeStyles({
 
 export const meta = {
   name: 'Pseudo-elements',
+  position: 5,
 };

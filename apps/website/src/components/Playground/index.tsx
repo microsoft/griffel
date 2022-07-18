@@ -2,10 +2,11 @@ import React from 'react';
 import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from '@codesandbox/sandpack-react';
 import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
+
 import AppCode from '!!raw-loader!./code/app.js';
 import DefaultStylesCode from '!!raw-loader!./code/styles.js';
 
-const ctx = require.context('!!raw-loader!./code/templates', false, /\.js$/);
+const ctx = require.context('./code/templates', false, /\.js$/);
 
 const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) => {
   if (modulePath.includes('app')) {
@@ -20,10 +21,12 @@ const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) =>
 const PLAYGROUND_HEIGHT = 400;
 
 export default function Playground() {
-  const { isDarkTheme } = useColorMode();
-  const sandpackTheme = isDarkTheme ? 'dark' : 'github-light';
+  const { colorMode } = useColorMode();
+
+  const sandpackTheme = colorMode === 'dark' ? 'dark' : 'github-light';
   const location = useLocation();
   const template = templates[location.hash.slice(1)] ?? DefaultStylesCode;
+
   return (
     <SandpackProvider
       template="react"
