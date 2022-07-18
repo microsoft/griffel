@@ -184,4 +184,7 @@ describe('webpackLoader', () => {
 
   // Multiple
   testFixture('multiple');
+
+  // Assets
+  testFixture('assets');
 });

@@ -16,9 +16,7 @@ pluginTester({
     },
   },
   pluginOptions: {
-    babelOptions: {
-      presets: ['@babel/typescript'],
-    },
+    resourceDirectory: process.cwd(),
   },
   formatResult: code =>
     prettierFormatter(code, {
