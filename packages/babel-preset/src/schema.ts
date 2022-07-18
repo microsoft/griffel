@@ -45,6 +45,9 @@ export const configSchema: JSONSchema7 = {
         },
       },
     },
+    projectRoot: {
+      type: 'string',
+    },
   },
   additionalProperties: false,
 };
