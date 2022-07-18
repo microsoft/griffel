@@ -1,24 +1,23 @@
-import React from 'react';
-import { useColorMode } from '@docusaurus/theme-common';
+import * as React from 'react';
+import { useColorMode, useThemeConfig } from '@docusaurus/theme-common';
 
-import useIsBrowser from '@docusaurus/useIsBrowser';
-import { GithubIcon, MoonIcon, SunIcon } from '../../components/icons';
+import { GithubIcon, MoonIcon, SunIcon } from '../../../components/icons';
 import styles from './styles.module.css';
 
 function ThemeToggle() {
-  const disabled = useIsBrowser() === false;
-  const { isDarkTheme, setLightTheme, setDarkTheme } = useColorMode();
+  const disabled = useThemeConfig().colorMode.disableSwitch;
+  const { colorMode, setColorMode } = useColorMode();
 
-  const ariaLabel = isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode';
-  const icon = isDarkTheme ? <SunIcon /> : <MoonIcon />;
+  const ariaLabel = colorMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  const icon = colorMode === 'dark' ? <SunIcon /> : <MoonIcon />;
 
   const handleClick = React.useCallback(() => {
-    if (isDarkTheme) {
-      setLightTheme();
+    if (colorMode === 'dark') {
+      setColorMode('light');
     } else {
-      setDarkTheme();
+      setColorMode('dark');
     }
-  }, [isDarkTheme, setLightTheme, isDarkTheme]);
+  }, [colorMode, setColorMode]);
 
   return (
     <button

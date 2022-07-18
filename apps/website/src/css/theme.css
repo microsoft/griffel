@@ -18,3 +18,7 @@
 html[data-theme='dark'] {
   --ifm-color-primary: #7f85f5;
 }
+
+html[data-theme='light'] {
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
