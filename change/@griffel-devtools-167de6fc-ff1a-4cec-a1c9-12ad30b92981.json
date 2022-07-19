@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "make package public",
+  "packageName": "@griffel/devtools",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "none"
+}
