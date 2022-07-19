@@ -2,6 +2,27 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Tue, 19 Jul 2022 14:42:50 GMT",
+      "tag": "@griffel/devtools_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "8ee7bb5af8f4fe073d7988aa8bda054b8c14841c",
+            "comment": "chore: make package public for initial release"
+          },
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "8338b9cd66bc71ad23a81164b0cf83397ba0b54a",
+            "comment": "chore: Initial release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Jul 2022 10:20:09 GMT",
       "tag": "@griffel/devtools_v0.0.1",
       "version": "0.0.1",

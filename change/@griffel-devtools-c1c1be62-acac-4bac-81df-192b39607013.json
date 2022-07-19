@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: Initial release",
-  "packageName": "@griffel/devtools",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,17 @@
 # Change Log - @griffel/devtools
 
-This log was last generated on Tue, 19 Jul 2022 10:20:09 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Jul 2022 14:42:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.2
+
+Tue, 19 Jul 2022 14:42:50 GMT
+
+### Patches
+
+- chore: make package public for initial release (yuanboxue@microsoft.com)
+- chore: Initial release (yuanboxue@microsoft.com)
 
 ## 0.0.1
 
