@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: make package public for initial release",
+  "packageName": "@griffel/devtools",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
