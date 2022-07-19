@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: handle comments in output",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

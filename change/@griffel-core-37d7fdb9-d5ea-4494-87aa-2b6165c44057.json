@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add shorthand function for `grid-area`",
-  "packageName": "@griffel/core",
-  "email": "geoff.cox@live.com",
-  "dependentChangeType": "patch"
-}

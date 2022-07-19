@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-This log was last generated on Tue, 28 Jun 2022 09:50:50 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Jul 2022 10:20:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.2
+
+Tue, 19 Jul 2022 10:20:09 GMT
+
+### Patches
+
+- feat: export `CreateDOMRendererOptions` from `@griffel/react` (lingfangao@hotmail.com)
+- Bump @griffel/core to v1.5.0
 
 ## 1.2.1
 

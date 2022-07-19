@@ -2,6 +2,27 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Tue, 19 Jul 2022 10:20:09 GMT",
+      "tag": "@griffel/babel-preset_v1.3.4",
+      "version": "1.3.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "b8003e87b16329030a6029b6b6907a1746bafe21",
+            "comment": "chore: update linaria dependencies to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.5.0",
+            "commit": "9b1d23a654c1af9ccde3aa4807b70dff2cdf58d7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jun 2022 09:50:50 GMT",
       "tag": "@griffel/babel-preset_v1.3.3",
       "version": "1.3.3",
