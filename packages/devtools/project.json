@@ -20,6 +20,16 @@
             "glob": "packages/devtools/public",
             "input": ".",
             "output": "."
+          },
+          {
+            "glob": "packages/devtools/package.json",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
           }
         ]
       },
