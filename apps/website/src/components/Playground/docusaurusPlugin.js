@@ -11,8 +11,13 @@ module.exports = function () {
           rules: [
             {
               test: /\.js$/,
+              include: path.resolve(__dirname, 'code'),
+              use: [{ loader: 'raw-loader' }],
+            },
+            {
+              test: /\.js$/,
               include: path.resolve(__dirname, 'code', 'templates'),
-              use: [{ loader: 'raw-loader' }, { loader: require.resolve('./webpackLoader') }],
+              use: [{ loader: require.resolve('./webpackLoader') }],
             },
           ],
         },

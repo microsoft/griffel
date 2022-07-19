@@ -1,4 +1,6 @@
 /**
+ * Custom Webpack loader that removes "export const meta = {}" from code.
+ *
  * @param {String} sourceCode
  * @return {String}
  */

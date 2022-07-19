@@ -3,8 +3,8 @@ import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview }
 import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
 
-import AppCode from '!!raw-loader!./code/app.js';
-import DefaultStylesCode from '!!raw-loader!./code/styles.js';
+import AppCode from './code/app';
+import DefaultStylesCode from './code/styles';
 
 const ctx = require.context('./code/templates', false, /\.js$/);
 
@@ -33,9 +33,13 @@ export default function Playground() {
       customSetup={{
         dependencies: { '@griffel/core': 'latest', 'highlight.js': 'latest', 'js-beautify': 'latest' },
         files: {
-          '/App.js': { code: AppCode, hidden: true },
+          '/App.js': {
+            // "AppCode" is a string as it's processed by "raw-loader", see "webpackLoader.js"
+            code: AppCode as unknown as string,
+            hidden: true,
+          },
           // Template files are in JS but type checked, don't want unnecessary comments leaking into docs
-          '/styles.js': { code: template.replace('//@ts-check\n', ''), active: true },
+          '/styles.js': { code: template, active: true },
         },
       }}
     >
