@@ -5,13 +5,16 @@ const babel = require('@babel/core');
 function generateTryItOutSidebar() {
   const playgroundTemplatePath = path.join(__dirname, '/src/components/Playground/code/templates');
   const templateFiles = fs.readdirSync(playgroundTemplatePath);
+
   return templateFiles
-    .map(templateFile => {
+    .reduce((sidebarItems, templateFile) => {
       const id = path.parse(templateFile).name;
       const templatePath = path.join(playgroundTemplatePath, templateFile);
+
       const code = fs.readFileSync(templatePath, { encoding: 'utf-8' });
       const res = babel.parseSync(code, { filename: templateFile });
       const meta = { name: id };
+
       babel.traverse(res, {
         VariableDeclarator(path) {
           const idPath = path.get('id');
@@ -19,13 +22,17 @@ function generateTryItOutSidebar() {
 
           if (idPath.isIdentifier({ name: 'meta' }) && initPath.isObjectExpression) {
             const properties = initPath.get('properties');
+
             if (Array.isArray(properties)) {
               properties.forEach(propertyPath => {
                 if (propertyPath.isObjectProperty()) {
                   const keyPath = propertyPath.get('key');
                   const valuePath = propertyPath.get('value');
 
-                  if (keyPath.isIdentifier() && (valuePath.isStringLiteral() || valuePath.isBooleanLiteral())) {
+                  if (
+                    keyPath.isIdentifier() &&
+                    (valuePath.isStringLiteral() || valuePath.isBooleanLiteral() || valuePath.isNumericLiteral())
+                  ) {
                     meta[keyPath.node.name] = valuePath.node.value;
                   }
                 }
@@ -35,15 +42,17 @@ function generateTryItOutSidebar() {
         },
       });
 
-      /** @type { {type: 'link'; label: string; href: string }} */
+      /** @type {{ type: 'link'; label: string; href: string }} */
       const sidebarItem = {
         type: 'link',
         label: meta.name,
         href: `/try-it-out#${id}`,
       };
 
-      return sidebarItem;
-    })
+      sidebarItems[meta.position] = sidebarItem;
+
+      return sidebarItems;
+    }, [])
     .filter(Boolean);
 }
 
