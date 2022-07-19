@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "make package public",
+  "comment": "chore: make package public",
   "packageName": "@griffel/devtools",
   "email": "yuanboxue@microsoft.com",
   "dependentChangeType": "none"
