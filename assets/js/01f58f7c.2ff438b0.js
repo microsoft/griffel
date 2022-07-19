@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_griffel_website=self.webpackChunk_griffel_website||[]).push([[572],{5745:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-content-pages","id":"default"}')}}]);
