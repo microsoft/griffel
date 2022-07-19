@@ -8,16 +8,17 @@ function ThemeToggle() {
   const disabled = useThemeConfig().colorMode.disableSwitch;
   const { colorMode, setColorMode } = useColorMode();
 
-  const ariaLabel = colorMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-  const icon = colorMode === 'dark' ? <SunIcon /> : <MoonIcon />;
+  const isDarkMode = colorMode === 'dark';
+  const ariaLabel = isDarkMode ? 'Switch to light mode' : 'Switch to dark mode';
+  const icon = isDarkMode ? <SunIcon /> : <MoonIcon />;
 
   const handleClick = React.useCallback(() => {
-    if (colorMode === 'dark') {
+    if (isDarkMode) {
       setColorMode('light');
     } else {
       setColorMode('dark');
     }
-  }, [colorMode, setColorMode]);
+  }, [isDarkMode, setColorMode]);
 
   return (
     <button
