@@ -2,10 +2,11 @@ import React from 'react';
 import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from '@codesandbox/sandpack-react';
 import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
-import AppCode from '!!raw-loader!./code/app.js';
-import DefaultStylesCode from '!!raw-loader!./code/styles.js';
 
-const ctx = require.context('!!raw-loader!./code/templates', false, /\.js$/);
+import AppCode from './code/app';
+import DefaultStylesCode from './code/styles';
+
+const ctx = require.context('./code/templates', false, /\.js$/);
 
 const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) => {
   if (modulePath.includes('app')) {
@@ -20,19 +21,25 @@ const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) =>
 const PLAYGROUND_HEIGHT = 400;
 
 export default function Playground() {
-  const { isDarkTheme } = useColorMode();
-  const sandpackTheme = isDarkTheme ? 'dark' : 'github-light';
+  const { colorMode } = useColorMode();
+
+  const sandpackTheme = colorMode === 'dark' ? 'dark' : 'github-light';
   const location = useLocation();
   const template = templates[location.hash.slice(1)] ?? DefaultStylesCode;
+
   return (
     <SandpackProvider
       template="react"
       customSetup={{
         dependencies: { '@griffel/core': 'latest', 'highlight.js': 'latest', 'js-beautify': 'latest' },
         files: {
-          '/App.js': { code: AppCode, hidden: true },
+          '/App.js': {
+            // "AppCode" is a string as it's processed by "raw-loader", see "webpackLoader.js"
+            code: AppCode as unknown as string,
+            hidden: true,
+          },
           // Template files are in JS but type checked, don't want unnecessary comments leaking into docs
-          '/styles.js': { code: template.replace('//@ts-check\n', ''), active: true },
+          '/styles.js': { code: template, active: true },
         },
       }}
     >

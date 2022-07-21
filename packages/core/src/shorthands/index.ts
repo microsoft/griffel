@@ -9,6 +9,7 @@ export { borderRadius } from './borderRadius';
 export { borderWidth } from './borderWidth';
 export { flex } from './flex';
 export { gap } from './gap';
+export { gridArea } from './gridArea';
 export { margin } from './margin';
 export { padding } from './padding';
 export { overflow } from './overflow';

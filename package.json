@@ -27,9 +27,9 @@
   "devDependencies": {
     "@babel/preset-typescript": "7.12.13",
     "@codesandbox/sandpack-react": "0.13.15",
-    "@docusaurus/core": "2.0.0-beta.15",
-    "@docusaurus/module-type-aliases": "^2.0.0-beta.15",
-    "@docusaurus/preset-classic": "2.0.0-beta.15",
+    "@docusaurus/core": "2.0.0-rc.1",
+    "@docusaurus/module-type-aliases": "^2.0.0-rc.1",
+    "@docusaurus/preset-classic": "2.0.0-rc.1",
     "@emotion/css": "^11.9.0",
     "@nrwl/cli": "13.4.5",
     "@nrwl/eslint-plugin-nx": "13.4.5",
@@ -112,8 +112,8 @@
     "@babel/template": "^7.12.13",
     "@babel/traverse": "^7.12.13",
     "@emotion/hash": "^0.8.0",
-    "@linaria/babel-preset": "^3.0.0-beta.14",
-    "@linaria/shaker": "^3.0.0-beta.14",
+    "@linaria/babel-preset": "^3.0.0-beta.22",
+    "@linaria/shaker": "^3.0.0-beta.22",
     "@typescript-eslint/utils": "^5.20.0",
     "ajv": "^8.4.0",
     "csstype": "^3.0.10",
@@ -128,7 +128,6 @@
     "@nrwl/web": "patch:@nrwl/web@npm:13.4.5#.yarn/patches/@nrwl-web-npm-13.4.5-d7e9ea40d2",
     "@nrwl/workspace": "patch:@nrwl/workspace@npm:13.4.5#.yarn/patches/@nrwl-workspace-npm-13.4.5-233a3ec85c",
     "beachball": "patch:beachball@npm:2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b",
-    "@docusaurus/theme-common@2.0.0-beta.15": "patch:@docusaurus/theme-common@npm:2.0.0-beta.15#.yarn/patches/@docusaurus-theme-common-npm-2.0.0-beta.15-aaa76f45ef",
     "monosize@0.0.3": "patch:monosize@npm:0.0.3#.yarn/patches/monosize-npm-0.0.3-9b650c3f51"
   }
 }

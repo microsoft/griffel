@@ -3,7 +3,7 @@ import React from 'react';
 import { CogsIcon } from '../icons';
 import styles from './styles.module.css';
 
-const OutpuTitle: React.FC = props => {
+const OutputTitle: React.FC = props => {
   return (
     <div className={styles['container']}>
       <CogsIcon />
@@ -12,4 +12,4 @@ const OutpuTitle: React.FC = props => {
   );
 };
 
-export default OutpuTitle;
+export default OutputTitle;

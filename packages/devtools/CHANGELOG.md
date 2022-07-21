@@ -1,8 +1,25 @@
 # Change Log - @griffel/devtools
 
-This log was last generated on Tue, 28 Jun 2022 09:50:50 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Jul 2022 14:42:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.2
+
+Tue, 19 Jul 2022 14:42:50 GMT
+
+### Patches
+
+- chore: make package public for initial release (yuanboxue@microsoft.com)
+- chore: Initial release (yuanboxue@microsoft.com)
+
+## 0.0.1
+
+Tue, 19 Jul 2022 10:20:09 GMT
+
+### Patches
+
+- Bump @griffel/react to v1.2.2
 
 ## 0.0.1
 

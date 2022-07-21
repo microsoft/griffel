@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Tue, 28 Jun 2022 09:50:50 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Jul 2022 10:20:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.0
+
+Tue, 19 Jul 2022 10:20:09 GMT
+
+### Minor changes
+
+- feat: add shorthand function for `grid-area` (geoff.cox@live.com)
 
 ## 1.4.1
 

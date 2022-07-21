@@ -15,4 +15,5 @@ export default makeStyles({
 
 export const meta = {
   name: 'Media queries',
+  position: 8,
 };

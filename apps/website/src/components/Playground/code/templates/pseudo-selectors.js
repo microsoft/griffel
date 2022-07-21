@@ -22,4 +22,5 @@ export default makeStyles({
 
 export const meta = {
   name: 'Pseudo-selectors',
+  position: 4,
 };

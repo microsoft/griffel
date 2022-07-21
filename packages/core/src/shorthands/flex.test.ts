@@ -98,6 +98,11 @@ describe('flex', () => {
   });
 
   it('for incorrect input', () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+
     expect(flex('hello', 'oh', 'no')).toEqual({});
+
+    jest.spyOn(console, 'error').mockClear();
   });
 });

@@ -137,4 +137,17 @@ describe('sortCSSRules', () => {
       }
     `);
   });
+
+  it('removes comments from output', () => {
+    const css = `
+      /* This is a comment in CSS */
+      .baz { color: orange; }
+    `;
+
+    expect(sortCSSRules(css, () => 0)).toMatchInlineSnapshot(`
+      .baz {
+        color: orange;
+      }
+    `);
+  });
 });

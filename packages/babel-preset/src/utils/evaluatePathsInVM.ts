@@ -27,7 +27,7 @@ function evaluate(code: string, filename: string, pluginOptions: Required<BabelP
 
   mod.evaluate(code, [EVAL_EXPORT_NAME]);
 
-  return mod.exports[EVAL_EXPORT_NAME];
+  return (mod.exports as { [EVAL_EXPORT_NAME]: unknown[] })[EVAL_EXPORT_NAME];
 }
 
 function findFreeName(scope: Scope, name: string): string {

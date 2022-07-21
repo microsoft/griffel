@@ -6,13 +6,15 @@ Griffel ([_German for stylus/pen_](https://en.wiktionary.org/wiki/Griffel)) is C
 
 🚀 &nbsp; Zero config start: Griffel has both runtime & build time implementations
 
-🔥 &nbsp; Optional build time transforms to improve performance
+🔥 &nbsp; Optional [build time transforms](./packages/webpack-loader) to improve performance
 
 💪 &nbsp; Type-safe styles via [csstype](https://github.com/frenic/csstype)
 
 🧩 &nbsp; Uses Atomic CSS to reuse styles and avoid specificity issues with CSS
 
 📝 &nbsp; _Experimental_ CSS extraction with [Webpack plugin](./packages/webpack-extraction-plugin)
+
+🐞 &nbsp; Debug using [Griffel DevTools extension](https://chrome.google.com/webstore/detail/griffel-devtools/bejhagjehnpgagkaaeehdpdadmffbigb)
 
 ### Griffel with React
 

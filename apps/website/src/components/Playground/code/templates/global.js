@@ -10,4 +10,5 @@ export default makeStyles({
 
 export const meta = {
   name: 'Global styles',
+  position: 9,
 };

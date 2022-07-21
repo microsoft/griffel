@@ -12,11 +12,13 @@ const config = {
   onBrokenMarkdownLinks: 'throw',
 
   title: 'Griffel',
-  tagline: 'Dinosaurs are cool',
+  // tagline: 'Dinosaurs are cool',
 
   url: 'https://griffel.js.org',
   baseUrl: '/',
   // favicon: 'img/favicon.ico',
+
+  plugins: [require.resolve('./src/components/Playground/docusaurusPlugin')],
 
   presets: [
     [
@@ -44,7 +46,11 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      autoCollapseSidebarCategories: false,
+      docs: {
+        sidebar: {
+          autoCollapseCategories: false,
+        },
+      },
       navbar: {
         title: 'Griffel',
         // logo: {

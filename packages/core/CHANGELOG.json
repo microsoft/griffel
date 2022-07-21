@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 19 Jul 2022 10:20:09 GMT",
+      "tag": "@griffel/core_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "geoff.cox@live.com",
+            "package": "@griffel/core",
+            "commit": "14a7e23b818bb7260f378b62b22db243cc9dd523",
+            "comment": "feat: add shorthand function for `grid-area`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jun 2022 09:50:50 GMT",
       "tag": "@griffel/core_v1.4.1",
       "version": "1.4.1",

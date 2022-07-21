@@ -1,5 +1,5 @@
 import { getStyleBucketName, GriffelRenderer, StyleBucketName, styleBucketOrdering } from '@griffel/core';
-import { compile, Element, KEYFRAMES, MEDIA, RULESET, serialize, stringify, SUPPORTS, tokenize } from 'stylis';
+import { COMMENT, compile, Element, KEYFRAMES, MEDIA, RULESET, serialize, stringify, SUPPORTS, tokenize } from 'stylis';
 
 export function getSelectorFromElement(element: Element) {
   return tokenize(element.value).slice(1).join('');
@@ -55,12 +55,15 @@ export function getStyleBucketNameFromElement(element: Element): StyleBucketName
 }
 
 export function sortCSSRules(css: string, compareMediaQueries: GriffelRenderer['compareMediaQueries']): string {
-  const childElements = compile(css).map(element => ({
-    ...element,
-    bucketName: getStyleBucketNameFromElement(element),
-    metadata: getElementMetadata(element),
-    reference: getElementReference(element),
-  }));
+  const childElements = compile(css)
+    // Remove top level comments as it is unclear how to sort them
+    .filter(element => element.type !== COMMENT)
+    .map(element => ({
+      ...element,
+      bucketName: getStyleBucketNameFromElement(element),
+      metadata: getElementMetadata(element),
+      reference: getElementReference(element),
+    }));
   const uniqueElements = childElements.reduce<Record<string, typeof childElements[0]>>((acc, element) => {
     acc[element.reference] = element;
 
