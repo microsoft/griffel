@@ -39,12 +39,23 @@ const useStyles = makeStyles({
       ...shorthands.borderRight('3px', 'solid', tokens.foreground),
     },
   },
+  toSourceCode: {
+    cursor: 'help',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dotted',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+  },
   rules: {
     ...shorthands.padding(0, '5px'),
   },
 });
 
-export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }> = ({ slot, atomicRules }) => {
+export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; sourceURL?: string }> = ({
+  slot,
+  atomicRules,
+  sourceURL,
+}) => {
   const rules = React.useMemo(() => getMonolithicCSSRules(atomicRules), [atomicRules]);
 
   const [expanded, setExpanded] = React.useState(true);
@@ -56,10 +67,22 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }
   const { setHighlightedClass } = useViewContext();
   const undoHighlight = () => setHighlightedClass('');
 
+  const jumpToSourceHandler = sourceURL
+    ? (e: React.SyntheticEvent) => {
+        e.stopPropagation();
+        openOriginalCode(sourceURL);
+      }
+    : undefined;
+
   return (
     <div>
       <pre className={slotClassName} onClick={toggleExpanded}>
         {slot}
+        {jumpToSourceHandler && (
+          <div className={classes.toSourceCode} onClick={jumpToSourceHandler} title={`inspect source`}>
+            {`</>`}
+          </div>
+        )}
       </pre>
       {expanded && (
         <div className={classes.rules} onClick={undoHighlight}>
@@ -69,3 +92,13 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[] }
     </div>
   );
 };
+
+function openOriginalCode(sourceURL: string) {
+  chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
+    // example sourceURL: https://source.js:<lineNumber>:<columnNumber>
+    const results = sourceURL.split(':');
+    results.pop();
+    const line = Number(results.pop()) ?? 1;
+    chrome.devtools.panels.openResource(results.join(':'), line - 1, () => ({}));
+  });
+}

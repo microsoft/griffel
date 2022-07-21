@@ -10,6 +10,7 @@ declare global {
 
 export type DebugAtomicClassName = { className: string; overriddenBy?: string };
 export type DebugCSSRules = Record<string /* className */, string /* cssRule */>;
+
 export type DebugSequence = {
   sequenceHash: SequenceHash;
   direction: 'ltr' | 'rtl';
@@ -18,6 +19,8 @@ export type DebugSequence = {
 
   slot?: string;
   rules?: DebugCSSRules;
+
+  sourceURL?: string;
 };
 
 export type DebugResult = DebugSequence;

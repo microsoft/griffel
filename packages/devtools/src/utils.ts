@@ -3,12 +3,13 @@ import { SlotInfo } from './types';
 
 export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): SlotInfo[] {
   if (node.children.length === 0 && node.slot) {
-    const { debugClassNames, rules, slot } = node;
+    const { debugClassNames, rules, slot, sourceURL } = node;
 
     return [
       ...result,
       {
         slot,
+        sourceURL,
         rules: debugClassNames.map(({ className, overriddenBy }) => {
           return {
             cssRule: rules![className],
@@ -29,11 +30,11 @@ export function filterSlots(slots: SlotInfo[], searchTerm: string) {
     return slots;
   }
 
-  return slots.reduce<SlotInfo[]>((acc, { slot, rules }) => {
+  return slots.reduce<SlotInfo[]>((acc, { slot, rules, sourceURL }) => {
     const filteredRules = rules.filter(rule => rule.cssRule.includes(searchTerm));
 
     if (filteredRules.length) {
-      return [...acc, { slot, rules: filteredRules }];
+      return [...acc, { slot, rules: filteredRules, sourceURL }];
     }
 
     return acc;

@@ -13,7 +13,7 @@ export type ColorTokens = {
   cssSelector: string;
 };
 
-export type SlotInfo = { slot: string; rules: AtomicRules[] };
+export type SlotInfo = { slot: string; rules: AtomicRules[]; sourceURL?: string };
 
 export type AtomicRules = { cssRule: string; overriddenBy?: string };
 
