@@ -10,12 +10,14 @@ export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): Slo
       {
         slot,
         sourceURL,
-        rules: debugClassNames.map(({ className, overriddenBy }) => {
-          return {
-            cssRule: rules![className],
-            overriddenBy,
-          };
-        }),
+        rules: debugClassNames
+          .filter(({ className }) => !!rules?.[className])
+          .map(({ className, overriddenBy }) => {
+            return {
+              cssRule: rules![className],
+              overriddenBy,
+            };
+          }),
       },
     ];
   }

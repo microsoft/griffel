@@ -41,4 +41,7 @@ export const debugData = {
   getSequenceDetails: (sequenceHash: SequenceHash): typeof sequenceDetails[string] | undefined => {
     return sequenceDetails[sequenceHash];
   },
+  hasCSSRule: (rule: string): boolean => {
+    return cssRules.includes(rule);
+  },
 };

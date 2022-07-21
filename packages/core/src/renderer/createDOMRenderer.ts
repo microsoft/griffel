@@ -67,14 +67,17 @@ export function createDOMRenderer(
             metadata,
           );
 
+          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+            if (!debugData.hasCSSRule(ruleCSS)) {
+              debugData.addCSSRule(ruleCSS);
+            }
+          }
+
           if (renderer.insertionCache[ruleCSS]) {
             continue;
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
-          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-            debugData.addCSSRule(ruleCSS);
-          }
 
           try {
             if (unstable_filterCSSRule) {
