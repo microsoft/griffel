@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "feat: add button next to slot name to jump to source",
+  "comment": "feat: Add button next to slot name to jump to source",
   "packageName": "@griffel/devtools",
   "email": "yuanboxue@microsoft.com",
   "dependentChangeType": "patch"
