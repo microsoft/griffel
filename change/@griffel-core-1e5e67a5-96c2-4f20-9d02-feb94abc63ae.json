@@ -1,6 +1,6 @@
 {
-  "type": "none",
-  "comment": "Support sourcemap for griffel devtools",
+  "type": "patch",
+  "comment": "feat: Add support for source maps in devtools",
   "packageName": "@griffel/core",
   "email": "yuanboxue@microsoft.com",
   "dependentChangeType": "none"
