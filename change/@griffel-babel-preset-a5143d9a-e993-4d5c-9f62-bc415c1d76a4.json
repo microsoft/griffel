@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: handle assets during transforms",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
