@@ -4,7 +4,7 @@ import { mergeClassesCachedResults } from '../mergeClasses';
 
 const sequenceDetails: Record<SequenceHash, { slotName: string; sourceURL?: string }> = {};
 
-const cssRules: string[] = [];
+const cssRules = new Set<string>();
 
 export const debugData = {
   getChildrenSequences: (debugSequenceHash: SequenceHash): SequenceHash[] => {
@@ -24,7 +24,7 @@ export const debugData = {
   },
 
   addCSSRule: (rule: string) => {
-    cssRules.push(rule);
+    cssRules.add(rule);
   },
   addSequenceDetails: <Slots extends string | number>(
     classNamesForSlots: Record<Slots, string>,
@@ -36,12 +36,9 @@ export const debugData = {
   },
 
   getCSSRules: (): string[] => {
-    return cssRules;
+    return Array.from(cssRules);
   },
   getSequenceDetails: (sequenceHash: SequenceHash): typeof sequenceDetails[string] | undefined => {
     return sequenceDetails[sequenceHash];
-  },
-  hasCSSRule: (rule: string): boolean => {
-    return cssRules.includes(rule);
   },
 };
