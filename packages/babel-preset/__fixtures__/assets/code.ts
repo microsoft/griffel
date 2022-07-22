@@ -1,6 +1,11 @@
 import { makeStyles } from '@griffel/react';
-import image from './blank.jpg';
+
+import blank from './blank.jpg';
+import blankDuplicate from './blank.jpg';
+import empty from './empty.jpg';
 
 export const useStyles = makeStyles({
-  root: { backgroundImage: `url(${image})` },
+  rootA: { backgroundImage: `url(${blank})` },
+  rootB: { backgroundImage: `url(${blankDuplicate})` },
+  rootC: { backgroundImage: `url(${empty})` },
 });
