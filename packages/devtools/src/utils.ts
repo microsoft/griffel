@@ -1,5 +1,5 @@
 import type { DebugResult } from '@griffel/core';
-import { SlotInfo } from './types';
+import type { SlotInfo, AtomicRules } from './types';
 
 export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): SlotInfo[] {
   if (node.children.length === 0 && node.slot) {
@@ -10,12 +10,16 @@ export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): Slo
       {
         slot,
         sourceURL,
-        rules: debugClassNames.map(({ className, overriddenBy }) => {
-          return {
-            cssRule: rules![className],
-            overriddenBy,
-          };
-        }),
+        rules: debugClassNames.reduce((acc, { className, overriddenBy }) => {
+          if (className) {
+            acc.push({
+              cssRule: rules![className],
+              overriddenBy,
+            });
+          }
+
+          return acc;
+        }, [] as AtomicRules[]),
       },
     ];
   }

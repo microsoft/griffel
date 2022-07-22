@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: add css rules to devtools extension debugger when pass renderer on SSR",
+  "packageName": "@griffel/devtools",
+  "email": "dwlad90@gmail.com",
+  "dependentChangeType": "patch"
+}

@@ -1,5 +1,6 @@
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { createIsomorphicStyleSheetFromElement } from './createIsomorphicStyleSheet';
+import { isDevToolsEnabled, debugData } from '../devtools';
 
 // Regexps to extract names of classes and animations
 // https://github.com/styletron/styletron/blob/e0fcae826744eb00ce679ac613a1b10d44256660/packages/styletron-engine-atomic/src/client/client.js#L8
@@ -43,6 +44,10 @@ export function rehydrateRendererCache(
         const [cssRule] = match;
 
         renderer.insertionCache[cssRule] = bucketName;
+
+        if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+          debugData.addCSSRule(cssRule);
+        }
       }
     });
   }
