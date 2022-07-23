@@ -7,6 +7,7 @@ import { tokens } from './themes';
 import { useViewContext } from './ViewContext';
 
 import type { AtomicRules } from './types';
+import { loadOriginalSourceLoc } from './sourceMap';
 
 const useStyles = makeStyles({
   slotName: {
@@ -93,12 +94,10 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
   );
 };
 
-function openOriginalCode(sourceURL: string) {
+// example sourceUrlWithLoc: https://source.js:<lineNumber>:<columnNumber>
+function openOriginalCode(sourceUrlWithLoc: string) {
   chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
-    // example sourceURL: https://source.js:<lineNumber>:<columnNumber>
-    const results = sourceURL.split(':');
-    results.pop();
-    const line = Number(results.pop()) ?? 1;
-    chrome.devtools.panels.openResource(results.join(':'), line - 1, () => ({}));
+    const { line, source } = await loadOriginalSourceLoc(sourceUrlWithLoc);
+    chrome.devtools.panels.openResource(source, line - 1, () => ({}));
   });
 }

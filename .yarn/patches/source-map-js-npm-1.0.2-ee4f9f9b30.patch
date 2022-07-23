@@ -1,0 +1,63 @@
+diff --git a/lib/quick-sort.js b/lib/quick-sort.js
+index 23f9eda57f7383b5291361e4593cf2fdef5409ba..016785171b4d69d756ac795763abc6cf2c9d1b31 100644
+--- a/lib/quick-sort.js
++++ b/lib/quick-sort.js
+@@ -15,8 +15,6 @@
+ // sorting in C++. By using our own JS-implemented Quick Sort (below), we get
+ // a ~3500ms mean speed-up in `bench/bench.html`.
+ 
+-function SortTemplate(comparator) {
+-
+ /**
+  * Swap the elements indexed by `x` and `y` in the array `ary`.
+  *
+@@ -42,7 +40,7 @@ function swap(ary, x, y) {
+  *        The upper bound on the range.
+  */
+ function randomIntInRange(low, high) {
+-  return Math.round(low + (Math.random() * (high - low)));
++  return Math.round(low + Math.random() * (high - low));
+ }
+ 
+ /**
+@@ -87,7 +85,7 @@ function doQuickSort(ary, comparator, p, r) {
+     //
+     //   * Every element in `ary[i+1 .. j-1]` is greater than the pivot.
+     for (var j = p; j < r; j++) {
+-      if (comparator(ary[j], pivot, false) <= 0) {
++      if (comparator(ary[j], pivot) <= 0) {
+         i += 1;
+         swap(ary, i, j);
+       }
+@@ -103,15 +101,6 @@ function doQuickSort(ary, comparator, p, r) {
+   }
+ }
+ 
+-  return doQuickSort;
+-}
+-
+-function cloneSort(comparator) {
+-  let template = SortTemplate.toString();
+-  let templateFn = new Function(`return ${template}`)();
+-  return templateFn(comparator);
+-}
+-
+ /**
+  * Sort the given array in-place with the given comparator function.
+  *
+@@ -120,13 +109,6 @@ function cloneSort(comparator) {
+  * @param {function} comparator
+  *        Function to use to compare two items.
+  */
+-
+-let sortCache = new WeakMap();
+-exports.quickSort = function (ary, comparator, start = 0) {
+-  let doQuickSort = sortCache.get(comparator);
+-  if (doQuickSort === void 0) {
+-    doQuickSort = cloneSort(comparator);
+-    sortCache.set(comparator, doQuickSort);
+-  }
+-  doQuickSort(ary, comparator, start, ary.length - 1);
++exports.quickSort = function (ary, comparator) {
++  doQuickSort(ary, comparator, 0, ary.length - 1);
+ };
