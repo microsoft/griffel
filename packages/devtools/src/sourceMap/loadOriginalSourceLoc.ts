@@ -3,10 +3,10 @@ import { getOriginalPosition, sourceMapIncludesSource } from './sourceMapConsume
 import { fetchRuntimeSource } from './fetchRuntimeSource';
 
 // TODO holding too many sourceMapJSON may blow up memory
-const sourceMapJSONCache: Map<string, RawSourceMap> = new Map();
+const sourceMapJSONs: Map<string, RawSourceMap> = new Map();
 
-const getCachedSouceMapJSON = ({ source, line, column }: MappedPosition) => {
-  return sourceMapJSONCache.get(source) ?? sourceMapJSONCache.get(`${source}:${line}:${column}`);
+const getComputedSouceMapJSON = ({ source, line, column }: MappedPosition) => {
+  return sourceMapJSONs.get(source) ?? sourceMapJSONs.get(`${source}:${line}:${column}`);
 };
 
 // inspired by https://github.com/facebook/react/blob/b66936ece7d9ad41a33e077933c9af0bda8bff87/packages/react-devtools-shared/src/hooks/parseHookNames/loadSourceAndMetadata.js#L97
@@ -19,7 +19,7 @@ export async function loadOriginalSourceLoc(sourceUrlWithLoc: string): Promise<M
     return sourceLoc;
   }
 
-  const sourceMapJSON = getCachedSouceMapJSON(sourceLoc);
+  const sourceMapJSON = getComputedSouceMapJSON(sourceLoc);
   if (sourceMapJSON) {
     return getOriginalPosition(sourceMapJSON, sourceLoc);
   }
@@ -90,14 +90,14 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
   }
 
   if (sourceMapJSON) {
-    // populate cache
+    // store computed sourceMapJSON
     if (sourceMapNum > 1) {
-      sourceMapJSONCache.set(`${source}:${line}:${column}`, sourceMapJSON);
+      sourceMapJSONs.set(`${source}:${line}:${column}`, sourceMapJSON);
     } else {
       if (sourceMapRegex.exec(runtimeSourceCode) === null) {
-        sourceMapJSONCache.set(source, sourceMapJSON);
+        sourceMapJSONs.set(source, sourceMapJSON);
       } else {
-        sourceMapJSONCache.set(`${source}:${line}:${column}`, sourceMapJSON);
+        sourceMapJSONs.set(`${source}:${line}:${column}`, sourceMapJSON);
       }
     }
 
@@ -132,7 +132,7 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
   const sourceMapContent = await fetchFiles(sourceMappingURL);
   sourceMapJSON = JSON.parse(sourceMapContent);
 
-  sourceMapJSONCache.set(source, sourceMapJSON);
+  sourceMapJSONs.set(source, sourceMapJSON);
 
   return getOriginalPosition(sourceMapJSON, sourceLoc);
 }
