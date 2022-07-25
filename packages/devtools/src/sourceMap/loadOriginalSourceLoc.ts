@@ -61,7 +61,6 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
       try {
         // Web apps like Code Sandbox embed multiple inline source maps.
         // In this case, we need to loop through and find the right one.
-        // We may also need to trim any part of this string that isn't based64 encoded data.
         const trimmed = sourceMappingURL.match(/base64,([a-zA-Z0-9+/=]+)/)?.[1] ?? '';
         const decoded = decodeBase64String(trimmed);
         const currSourceMapJSON = JSON.parse(decoded);
@@ -105,7 +104,7 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
     return getOriginalPosition(sourceMapJSON, sourceLoc);
   }
 
-  // process external source map
+  // No inline sourcemap found. Check if there's external source map
   let sourceMappingURL = externalSourceMapURLs.pop();
   if (!sourceMappingURL) {
     throw new Error(
@@ -123,7 +122,6 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
   }
 
   if (!sourceMappingURL.startsWith('http') && !sourceMappingURL.startsWith('/')) {
-    // Resolve paths relative to the location of the file name
     const lastSlashIdx = source.lastIndexOf('/');
     if (lastSlashIdx !== -1) {
       const baseURL = source.slice(0, lastSlashIdx);

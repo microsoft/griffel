@@ -1,14 +1,5 @@
 const runtimeSourcePromises = new Map<string, (value: string | undefined | PromiseLike<string | undefined>) => void>();
 
-/**
- * Fetches source content and invokes a callback.
- *
- * Griffel core obtains location of a makeStyles call from error stack.
- * TODO...
- *
- * @param runtimeSourceUrl
- * @param callback
- */
 export async function fetchRuntimeSource(runtimeSourceUrl: string): Promise<string | undefined> {
   try {
     const response = await fetch(runtimeSourceUrl);
@@ -20,7 +11,10 @@ export async function fetchRuntimeSource(runtimeSourceUrl: string): Promise<stri
     );
     return undefined;
   } catch (error) {
-    // runtimeSourceUrl probably came from webpack and contains webpack url scheme like webpack-internal://
+    // runtimeSourceUrl probably came from webpack and contains webpack url scheme 'webpack-internal://'.
+    // If so, `fetch` would fail. But the source content may be obtained from
+    // host page's webpack chunk dictionary object: window.webpackChunk_<appName>.
+    // Extension code will send a request to content-script to read source in this object.
     if (!runtimeSourceUrl.startsWith('webpack-internal')) {
       console.error(`[Griffel devtools] fetchRuntimeSource() error fetching ${runtimeSourceUrl}: ${error}`);
       return undefined;
@@ -48,7 +42,7 @@ export async function fetchRuntimeSource(runtimeSourceUrl: string): Promise<stri
   }
 }
 
-chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function (request) {
   if (request.name === 'extension-script_respond-source') {
     const filepath = request.filepath;
     const resolve = runtimeSourcePromises.get(filepath);

@@ -4,9 +4,9 @@
  * When extension requests to read content of a webpack compiled source (to get its sourcemap),
  * its content-script sends request to this script.
  * The script responds to the extension with the source content
- * obtained through reading `window.webpackChunk_<myAppName>` object of host page.
+ * obtained through reading `window.webpackChunk_<appName>` object of host page.
  *
- * `webpackChunk_<myAppName>` contains a map of compiled source path to its content. Example:
+ * `webpackChunk_<appName>` contains a map of compiled source path to its content. Example:
  * [
  *   [
  *     ['chunkName'],
