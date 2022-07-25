@@ -18,9 +18,9 @@ export function getOriginalPosition(sourceMapJSON: RawSourceMap, sourceLoc: Mapp
  * returns a valid url that can be used to view file in chrome source tab
  */
 function normalizeWebpackURL(sourceMapJSON: RawSourceMap | IndexSourceMap, originalSource: string) {
-  const matchGroups = originalSource.match(/^(webpack:\/\/)(.*)$/);
+  const matchGroups = originalSource.match(/^(webpack:\/\/)([./]*)(.*)$/);
   const scheme = matchGroups?.[1];
-  const path = matchGroups?.[2];
+  const path = matchGroups?.[3];
   if (scheme && path) {
     if (path.startsWith('@')) {
       // By default path start with name in package.json ([output.devtoolnamespace](https://webpack.js.org/configuration/output/#outputdevtoolnamespace)).
