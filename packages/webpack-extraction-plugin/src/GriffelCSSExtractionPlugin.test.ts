@@ -34,6 +34,7 @@ async function compileSourceWithWebpack(
       path: path.resolve(__dirname),
       filename: 'bundle.js',
       pathinfo: false,
+      assetModuleFilename: '[name][ext]',
     },
 
     module: {
@@ -47,7 +48,11 @@ async function compileSourceWithWebpack(
         },
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          use: [MiniCssExtractPlugin.loader, { loader: 'css-loader' }],
+        },
+        {
+          test: /\.jpg$/,
+          type: 'asset/resource',
         },
       ],
     },
@@ -215,6 +220,9 @@ describe('webpackLoader', () => {
 
   // Sorting rules by buckets
   testFixture('style-buckets');
+
+  // Assets
+  testFixture('assets');
 
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });

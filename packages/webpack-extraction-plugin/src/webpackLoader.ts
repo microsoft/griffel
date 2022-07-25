@@ -10,8 +10,10 @@ type WebpackLoaderOptions = never;
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
-const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
-const resourcePath = path.resolve(__dirname, '..', 'virtual-loader', 'griffel.css');
+const resourceDirectory = path.resolve(__dirname, '..', 'virtual-loader');
+
+const virtualLoaderPath = path.resolve(resourceDirectory, 'index.js');
+const resourcePath = path.resolve(resourceDirectory, 'griffel.css');
 
 function toURIComponent(rule: string): string {
   return encodeURIComponent(rule).replace(/!/g, '%21');
@@ -66,6 +68,7 @@ function webpackLoader(
   try {
     result = transformSync(sourceCode, {
       filename: path.relative(process.cwd(), this.resourcePath),
+      resourceDirectory,
 
       enableSourceMaps: this.sourceMap || false,
       inputSourceMap: parseSourceMap(inputSourceMap),

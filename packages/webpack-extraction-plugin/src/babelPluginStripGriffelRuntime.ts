@@ -1,8 +1,12 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
+import * as path from 'path';
 
-type StripRuntimeBabelPluginOptions = never;
+type StripRuntimeBabelPluginOptions = {
+  /** A directory that contains fake .css file used for CSS extraction */
+  resourceDirectory?: string;
+};
 
 type StripRuntimeBabelPluginState = PluginPass & {
   cssRules?: string[];
@@ -12,10 +16,18 @@ export type StripRuntimeBabelPluginMetadata = {
   cssRules: string[];
 };
 
+export function transformUrl(filename: string, resourceDirectory: string, assetPath: string) {
+  // Get the absolute path to the asset from the path relative to the JS file
+  const absoluteAssetPath = path.resolve(path.dirname(filename), assetPath);
+
+  // Replace asset path with new path relative to the output CSS
+  return path.relative(resourceDirectory, absoluteAssetPath);
+}
+
 export const babelPluginStripGriffelRuntime = declare<
   Partial<StripRuntimeBabelPluginOptions>,
   PluginObj<StripRuntimeBabelPluginState>
->(api => {
+>((api, options) => {
   api.assertVersion(7);
 
   return {
@@ -29,6 +41,30 @@ export const babelPluginStripGriffelRuntime = declare<
 
     visitor: {
       Program: {
+        enter(path, state) {
+          if (typeof options.resourceDirectory === 'undefined') {
+            throw new Error(
+              [
+                '@griffel/webpack-extraction-plugin: This plugin requires "resourceDirectory" option to be specified. ',
+                "It's automatically done by our loaders. ",
+                "If you're facing this issue, please check your setup.\n\n",
+                'See: https://babeljs.io/docs/en/options#filename',
+              ].join(''),
+            );
+          }
+
+          if (typeof state.filename === 'undefined') {
+            throw new Error(
+              [
+                '@griffel/webpack-extraction-plugin: This plugin requires "filename" option to be specified by Babel. ',
+                "It's automatically done by our loaders. ",
+                "If you're facing this issue, please check your setup.\n\n",
+                'See: https://babeljs.io/docs/en/options#filename',
+              ].join(''),
+            );
+          }
+        },
+
         exit(path, state) {
           path.traverse({
             ImportSpecifier(path) {
@@ -78,6 +114,59 @@ export const babelPluginStripGriffelRuntime = declare<
                   ].join(' '),
                 );
               }
+
+              argumentPaths[1].traverse({
+                TemplateLiteral(literalPath) {
+                  const expressionPath = literalPath.get('expressions.0');
+
+                  if (Array.isArray(expressionPath) || !expressionPath.isIdentifier()) {
+                    throw literalPath.buildCodeFrameError(
+                      [
+                        'A template literal with an imported asset should contain an expression statement.',
+                        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+                      ].join(' '),
+                    );
+                  }
+
+                  const expressionName = expressionPath.node.name;
+                  const expressionBinding = literalPath.scope.getBinding(expressionName);
+
+                  if (typeof expressionBinding === 'undefined') {
+                    throw expressionPath.buildCodeFrameError(
+                      [
+                        'Failed to resolve a binding in a scope for an identifier.',
+                        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+                      ].join(' '),
+                    );
+                  }
+
+                  const importDeclarationPath = expressionBinding.path.findParent(p =>
+                    p.isImportDeclaration(),
+                  ) as NodePath<t.ImportDeclaration> | null;
+
+                  if (importDeclarationPath === null) {
+                    throw expressionBinding.path.buildCodeFrameError(
+                      [
+                        'Failed to resolve an import for the identifier.',
+                        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+                      ].join(' '),
+                    );
+                  }
+
+                  expressionPath.replaceWith(
+                    t.stringLiteral(
+                      // When imports are inlined, we need to adjust the relative paths inside url(..) expressions
+                      // to allow css-loader resolve an imported asset properly
+                      transformUrl(
+                        state.filename!,
+                        options.resourceDirectory!,
+                        importDeclarationPath.get('source').node.value,
+                      ),
+                    ),
+                  );
+                  importDeclarationPath.remove();
+                },
+              });
 
               // Returns the styles as a JavaScript object
               const evaluationResult = argumentPaths[1].evaluate();
