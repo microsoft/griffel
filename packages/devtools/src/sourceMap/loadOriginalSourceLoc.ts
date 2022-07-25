@@ -1,9 +1,6 @@
 import { MappedPosition, RawSourceMap } from 'source-map-js';
-import { getOriginalPosition } from './sourceMapConsumer';
+import { getOriginalPosition, sourceMapIncludesSource } from './sourceMapConsumer';
 import { fetchRuntimeSource } from './fetchRuntimeSource';
-
-// TODO logging, control it base on something
-const __DEBUG__ = 0;
 
 // TODO holding too many sourceMapJSON may blow up memory
 const sourceMapJSONCache: Map<string, RawSourceMap> = new Map();
@@ -12,38 +9,30 @@ const getCachedSouceMapJSON = ({ source, line, column }: MappedPosition) => {
   return sourceMapJSONCache.get(source) ?? sourceMapJSONCache.get(`${source}:${line}:${column}`);
 };
 
-// inspired by https://github.com/facebook/react/blob/522f47345f79bb117f338384e75c8a79622bd735/packages/react-devtools-shared/src/hooks/parseHookNames/loadSourceAndMetadata.js#L97
+// inspired by https://github.com/facebook/react/blob/b66936ece7d9ad41a33e077933c9af0bda8bff87/packages/react-devtools-shared/src/hooks/parseHookNames/loadSourceAndMetadata.js#L97
 export async function loadOriginalSourceLoc(
   sourceUrlWithLoc: string,
   callback: (originalPosition: MappedPosition | Promise<MappedPosition>) => void,
 ) {
   const paths = sourceUrlWithLoc.split(':');
-  const columnStr = paths.pop();
-  const lineStr = paths.pop();
-  const source = paths.join(':');
-
-  const line = Number(lineStr);
-  const column = Number(columnStr);
-  const sourceLoc: MappedPosition = { source, line, column };
+  const column = Number(paths.pop());
+  const line = Number(paths.pop());
+  const sourceLoc: MappedPosition = { source: paths.join(':'), line, column };
   if (Number.isNaN(line) || Number.isNaN(column)) {
-    callback(sourceLoc);
-    return;
+    return callback(sourceLoc);
   }
 
   const sourceMapJSON = getCachedSouceMapJSON(sourceLoc);
   if (sourceMapJSON) {
-    callback(getOriginalPosition(sourceMapJSON, sourceLoc));
-    return;
+    return callback(getOriginalPosition(sourceMapJSON, sourceLoc));
   }
 
-  if (!sourceMapJSON) {
-    try {
-      extractAndLoadSourceMapJSON(sourceLoc, callback);
-    } catch (error) {
-      callback(sourceLoc);
-      console.warn(`[Griffel devtools] unable to load source map for ${sourceUrlWithLoc}`);
-      console.warn(error);
-    }
+  try {
+    extractAndLoadSourceMapJSON(sourceLoc, callback);
+  } catch (error) {
+    callback(sourceLoc);
+    console.warn(`[Griffel devtools] unable to load source map for ${sourceUrlWithLoc}`);
+    console.warn(error);
   }
 }
 
@@ -52,10 +41,10 @@ async function extractAndLoadSourceMapJSON(
   callback: (originalPosition: MappedPosition | Promise<MappedPosition>) => void,
 ) {
   const { source, line, column } = sourceLoc;
-  fetchRuntimeSource(source, async (runtimeSourceCodePromise: undefined | Promise<string>) => {
-    const runtimeSourceCode = await runtimeSourceCodePromise;
+  fetchRuntimeSource(source, async (runtimeSourcePromise: undefined | Promise<string>) => {
+    const runtimeSourceCode = await runtimeSourcePromise;
     if (!runtimeSourceCode) {
-      throw new Error(`[Griffel devtools] extractAndLoadSourceMapJSON() unable to fetch source content`);
+      return callback(sourceLoc);
     }
 
     let sourceMapJSON;
@@ -83,11 +72,12 @@ async function extractAndLoadSourceMapJSON(
           const decoded = decodeBase64String(trimmed);
           const currSourceMapJSON = JSON.parse(decoded);
 
-          if (__DEBUG__) {
-            console.groupCollapsed('[Griffel devtools] extractAndLoadSourceMapJSON() Inline source map');
-            console.log(sourceMapJSON);
-            console.groupEnd();
-          }
+          // TODO optionally turn on debug message
+          // if (__DEBUG__) {
+          //   console.groupCollapsed('[Griffel devtools] extractAndLoadSourceMapJSON() Inline source map');
+          //   console.log(sourceMapJSON);
+          //   console.groupEnd();
+          // }
 
           if (sourceMapIncludesSource(currSourceMapJSON, source)) {
             sourceMapJSON = currSourceMapJSON;
@@ -118,8 +108,7 @@ async function extractAndLoadSourceMapJSON(
         }
       }
 
-      callback(getOriginalPosition(sourceMapJSON, sourceLoc));
-      return;
+      return callback(getOriginalPosition(sourceMapJSON, sourceLoc));
     }
 
     // process external source map
@@ -154,7 +143,6 @@ async function extractAndLoadSourceMapJSON(
     sourceMapJSONCache.set(source, sourceMapJSON);
 
     callback(getOriginalPosition(sourceMapJSON, sourceLoc));
-    return;
   });
 }
 
@@ -166,32 +154,6 @@ function decodeBase64String(encoded: string): string {
   } else {
     throw Error('Cannot decode base64 string');
   }
-}
-
-type IndexSourceMapSection = {
-  map: IndexSourceMap | RawSourceMap;
-  offset: {
-    line: number;
-    column: number;
-  };
-};
-type IndexSourceMap = {
-  file?: string;
-  mappings?: void;
-  sourcesContent?: void;
-  sections: IndexSourceMapSection[];
-  version: number;
-};
-function sourceMapIncludesSource(sourcemap: RawSourceMap | IndexSourceMap, source: string): boolean {
-  if (sourcemap.mappings === undefined) {
-    return (sourcemap as IndexSourceMap).sections.some(section => {
-      return sourceMapIncludesSource(section.map, source);
-    });
-  }
-
-  return (sourcemap as RawSourceMap).sources.some(
-    s => s === 'Inline Babel script' || s.includes(source.replace(/^webpack-internal:\/\/\//, '')),
-  );
 }
 
 async function fetchFiles(url: string) {
