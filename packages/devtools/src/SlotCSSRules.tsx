@@ -101,10 +101,9 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
  * example: https://source.js:<lineNumber>:<columnNumber>
  */
 function openOriginalCode(sourceUrlWithLoc: string) {
-  loadOriginalSourceLoc(sourceUrlWithLoc, originalPosition => {
-    chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
-      const { line, source } = await originalPosition;
-      chrome.devtools.panels.openResource(source, line - 1, () => ({}));
-    });
+  const originalPosition = loadOriginalSourceLoc(sourceUrlWithLoc);
+  chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
+    const { line, source } = await originalPosition;
+    chrome.devtools.panels.openResource(source, line - 1, () => ({}));
   });
 }

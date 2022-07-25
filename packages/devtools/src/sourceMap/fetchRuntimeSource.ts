@@ -1,4 +1,4 @@
-const callbackMap = new Map<string, (runtimeSourceCode: undefined | Promise<string>) => void>();
+const runtimeSourcePromises = new Map<string, (value: string | undefined | PromiseLike<string | undefined>) => void>();
 
 /**
  * Fetches source content and invokes a callback.
@@ -9,42 +9,41 @@ const callbackMap = new Map<string, (runtimeSourceCode: undefined | Promise<stri
  * @param runtimeSourceUrl
  * @param callback
  */
-export async function fetchRuntimeSource(
-  runtimeSourceUrl: string,
-  callback: (runtimeSourceCode: undefined | Promise<string>) => void,
-) {
+export async function fetchRuntimeSource(runtimeSourceUrl: string): Promise<string | undefined> {
   try {
     const response = await fetch(runtimeSourceUrl);
     if (response.ok) {
-      return callback(response.text());
+      return response.text();
     }
     console.error(
       `[Griffel devtools] fetchRuntimeSource() bad response fetching ${runtimeSourceUrl}: ${response.status}`,
     );
-    return callback(undefined);
+    return undefined;
   } catch (error) {
     // runtimeSourceUrl probably came from webpack and contains webpack url scheme like webpack-internal://
     if (!runtimeSourceUrl.startsWith('webpack-internal')) {
       console.error(`[Griffel devtools] fetchRuntimeSource() error fetching ${runtimeSourceUrl}: ${error}`);
-      return callback(undefined);
+      return undefined;
     }
 
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tabs[0] === undefined) {
       console.error(`[Griffel devtools] fetchRuntimeSource() unable to find current tab`);
-      return callback(undefined);
+      return undefined;
     }
 
     const filepath = runtimeSourceUrl.replace(/^webpack-internal:\/\/\//, '');
-    chrome.tabs.sendMessage(tabs[0].id!, { name: 'extension_request-source', filepath }, function (response) {
-      if (response.success) {
-        callbackMap.set(filepath, callback);
-      } else {
-        console.error(
-          `[Griffel devtools] fetchRuntimeSource() unable to connect to content-script for fetching ${filepath}`,
-        );
-        callback(undefined);
-      }
+    return new Promise(resolve => {
+      chrome.tabs.sendMessage(tabs[0].id!, { name: 'extension_request-source', filepath }, function (response) {
+        if (response.success) {
+          runtimeSourcePromises.set(filepath, resolve);
+        } else {
+          console.error(
+            `[Griffel devtools] fetchRuntimeSource() unable to connect to content-script for fetching ${filepath}`,
+          );
+          resolve(undefined);
+        }
+      });
     });
   }
 }
@@ -52,15 +51,15 @@ export async function fetchRuntimeSource(
 chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
   if (request.name === 'extension-script_respond-source') {
     const filepath = request.filepath;
-    const callback = callbackMap.get(filepath);
-    if (callback) {
+    const resolve = runtimeSourcePromises.get(filepath);
+    if (resolve) {
       if (request.success) {
-        callback(request.result);
+        resolve(request.result);
       } else {
         console.error(`[Griffel devtools] fetchRuntimeSource() content-script failed to fetch ${filepath}`);
-        callback(undefined);
+        resolve(undefined);
       }
-      callbackMap.delete(filepath);
+      runtimeSourcePromises.delete(filepath);
     }
   }
 });
