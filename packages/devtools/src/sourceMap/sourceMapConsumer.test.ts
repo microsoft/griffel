@@ -1,4 +1,4 @@
-import { RawSourceMap } from 'source-map-js';
+import type { RawSourceMap } from 'source-map-js';
 import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer';
 
 describe('getOriginalPosition', () => {

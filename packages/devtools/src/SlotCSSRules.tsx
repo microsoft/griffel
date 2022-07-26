@@ -3,11 +3,11 @@ import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 
 import { getMonolithicCSSRules } from './getMonolithicCSSRules';
 import { MonolithicRulesView } from './MonolithicRulesView';
+import { loadOriginalSourceLoc } from './sourceMap';
 import { tokens } from './themes';
 import { useViewContext } from './ViewContext';
 
 import type { AtomicRules } from './types';
-import { loadOriginalSourceLoc } from './sourceMap';
 
 const useStyles = makeStyles({
   slotName: {

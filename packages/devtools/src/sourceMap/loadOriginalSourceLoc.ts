@@ -1,4 +1,4 @@
-import { MappedPosition, RawSourceMap } from 'source-map-js';
+import type { MappedPosition, RawSourceMap } from 'source-map-js';
 import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer';
 
 // TODO holding too many sourceMapJSON may blow up memory
@@ -132,6 +132,7 @@ async function fetchFiles(url: string): Promise<string> {
     }
     throw new Error(`[Griffel devtools] fetchRuntimeSource() bad response fetching ${url}: ${response.status}`);
   } catch (error) {
+    // try to get url content from chrome resources api
     const resource = (await resources).find(resource => resource.url === url);
     if (resource) {
       return new Promise(resolve => resource.getContent(content => resolve(content)));
