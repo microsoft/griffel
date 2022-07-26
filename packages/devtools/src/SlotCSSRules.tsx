@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
+import type { MappedPosition } from 'source-map-js';
 
 import { getMonolithicCSSRules } from './getMonolithicCSSRules';
 import { MonolithicRulesView } from './MonolithicRulesView';
@@ -100,10 +101,7 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
  * @param sourceUrlWithLoc source url with line and column
  * example: https://source.js:<lineNumber>:<columnNumber>
  */
-function openOriginalCode(sourceUrlWithLoc: string) {
-  const originalPosition = loadOriginalSourceLoc(sourceUrlWithLoc);
-  chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
-    const { line, source } = await originalPosition;
-    chrome.devtools.panels.openResource(source, line - 1, () => ({}));
-  });
+async function openOriginalCode(sourceUrlWithLoc: string) {
+  const originalPosition = await loadOriginalSourceLoc(sourceUrlWithLoc);
+  chrome.devtools.panels.openResource(originalPosition.source, originalPosition.line - 1, () => ({}));
 }

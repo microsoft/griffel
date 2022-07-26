@@ -1,5 +1,5 @@
 import { MappedPosition, RawSourceMap } from 'source-map-js';
-import { getOriginalPosition, sourceMapIncludesSource } from './sourceMapConsumer';
+import { getOriginalPosition } from './sourceMapConsumer';
 import { fetchRuntimeSource } from './fetchRuntimeSource';
 
 // TODO holding too many sourceMapJSON may blow up memory
@@ -157,4 +157,31 @@ async function fetchFiles(url: string) {
     throw new Error(`[Griffel devtools] fetchFiles() unable to fetch ${url}: ${err}`);
   }
   return '';
+}
+
+type IndexSourceMapSection = {
+  map: IndexSourceMap | RawSourceMap;
+  offset: {
+    line: number;
+    column: number;
+  };
+};
+type IndexSourceMap = {
+  file?: string;
+  mappings?: void;
+  sourcesContent?: void;
+  sections: IndexSourceMapSection[];
+  version: number;
+};
+
+export function sourceMapIncludesSource(sourcemap: RawSourceMap | IndexSourceMap, source: string): boolean {
+  if (sourcemap.mappings === undefined) {
+    return (sourcemap as IndexSourceMap).sections.some(section => {
+      return sourceMapIncludesSource(section.map, source);
+    });
+  }
+
+  return (sourcemap as RawSourceMap).sources.some(
+    s => s === 'Inline Babel script' || s.includes(source.replace(/^webpack-internal:\/\/\//, '')),
+  );
 }
