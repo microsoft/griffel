@@ -16,7 +16,16 @@ export async function getOriginalPosition(sourceMapJSON: RawSourceMap, sourceLoc
   try {
     const sourceMapConsumer = new SourceMapConsumer(sourceMapJSON);
     const result = sourceMapConsumer.originalPositionFor({ line, column });
-    return { ...result, source: await getSourceTabURL(result.source) };
+
+    // The url in source map is not always the url used in chrome source tab.
+    // We find the real url by searching the path of url in chrome resources.
+    let originalSource = result.source;
+    const path = getFilePath(result.source);
+    if (path) {
+      originalSource = (await resources).find(resource => resource.url.includes(path))?.url ?? originalSource;
+    }
+
+    return { ...result, source: originalSource };
   } catch (error) {
     console.error(`[Griffel devtools] unable to consume source map for ${source}:${line}:${column}`);
     console.error(error);
@@ -25,17 +34,12 @@ export async function getOriginalPosition(sourceMapJSON: RawSourceMap, sourceLoc
 }
 
 /**
- * The source url in sourcemap is not always a valid url for chrome source tab.
+ * @param url
+ * @returns path of the url, for example:
+ * webpack-interal://src/a -> src/a
+ * webpack://@test/pkg/src/a -> test/pkg/src/a
+ * /pkg/src/a -> pkg/src/a
  */
-async function getSourceTabURL(originalSource: string) {
-  // example:
-  // originalSource: webpack://src/a -> path: src/a
-  // originalSource: webpack://@test/pkg/src/a -> path: test/pkg/src/a
-  // originalSource: /pkg/src/a -> path: pkg/src/a
-  const path = originalSource.match(/^([a-z]+:\/\/|)([./@]*)(.*)$/)?.[3] ?? '';
-  if (path) {
-    return (await resources).find(resource => resource.url.includes(path))?.url ?? originalSource;
-  }
-
-  return originalSource;
+export function getFilePath(url: string) {
+  return url.match(/^([^:]+:\/\/|)([./@]*)(.*)$/)?.[3] ?? '';
 }

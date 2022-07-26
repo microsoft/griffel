@@ -1,5 +1,5 @@
 import { MappedPosition, RawSourceMap } from 'source-map-js';
-import { getOriginalPosition, resources } from './sourceMapConsumer';
+import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer';
 
 // TODO holding too many sourceMapJSON may blow up memory
 const sourceMapJSONs: Map<string, RawSourceMap> = new Map();
@@ -8,7 +8,6 @@ const getComputedSouceMapJSON = ({ source, line, column }: MappedPosition) => {
   return sourceMapJSONs.get(source) ?? sourceMapJSONs.get(`${source}:${line}:${column}`);
 };
 
-// inspired by https://github.com/facebook/react/blob/b66936ece7d9ad41a33e077933c9af0bda8bff87/packages/react-devtools-shared/src/hooks/parseHookNames/loadSourceAndMetadata.js#L97
 export async function loadOriginalSourceLoc(sourceUrlWithLoc: string): Promise<MappedPosition> {
   const paths = sourceUrlWithLoc.split(':');
   const column = Number(paths.pop());
@@ -32,27 +31,23 @@ export async function loadOriginalSourceLoc(sourceUrlWithLoc: string): Promise<M
   }
 }
 
+// inspired by https://github.com/facebook/react/blob/b66936ece7d9ad41a33e077933c9af0bda8bff87/packages/react-devtools-shared/src/hooks/parseHookNames/loadSourceAndMetadata.js#L135
 async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<MappedPosition> {
   const { source, line, column } = sourceLoc;
 
-  const runtimeSourceCode = await fetchRuntimeSource(source);
-  if (!runtimeSourceCode) {
-    return sourceLoc;
-  }
+  const runtimeSourceCode = await fetchFiles(source);
 
-  let sourceMapJSON;
   const externalSourceMapURLs = [];
   let sourceMapNum = 0;
   const sourceMapRegex = / ?sourceMappingURL=([^\s'"]+)/gm;
 
   let sourceMappingURLMatch = sourceMapRegex.exec(runtimeSourceCode);
   if (!sourceMappingURLMatch) {
-    throw new Error(`[Griffel devtools] extractAndLoadSourceMapJSON() no source map find in ${source}`);
+    throw new Error(`[Griffel devtools] extractAndLoadSourceMapJSON() no source map found in ${source}`);
   }
 
   while (sourceMappingURLMatch) {
     sourceMapNum++;
-
     const sourceMappingURL = sourceMappingURLMatch[1];
 
     const hasInlineSourceMap = sourceMappingURL.indexOf('base64,') >= 0;
@@ -62,7 +57,7 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
         // In this case, we need to loop through and find the right one.
         const trimmed = sourceMappingURL.match(/base64,([a-zA-Z0-9+/=]+)/)?.[1] ?? '';
         const decoded = decodeBase64String(trimmed);
-        const currSourceMapJSON = JSON.parse(decoded);
+        const sourceMapJSON = JSON.parse(decoded);
 
         // TODO optionally turn on debug message
         // if (__DEBUG__) {
@@ -71,9 +66,19 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
         //   console.groupEnd();
         // }
 
-        if (sourceMapIncludesSource(currSourceMapJSON, source)) {
-          sourceMapJSON = currSourceMapJSON;
-          break;
+        if (sourceMapIncludesSource(sourceMapJSON, getFilePath(source))) {
+          // store computed sourceMapJSON
+          if (sourceMapNum > 1) {
+            sourceMapJSONs.set(`${source}:${line}:${column}`, sourceMapJSON);
+          } else {
+            if (sourceMapRegex.exec(runtimeSourceCode) === null) {
+              sourceMapJSONs.set(source, sourceMapJSON);
+            } else {
+              sourceMapJSONs.set(`${source}:${line}:${column}`, sourceMapJSON);
+            }
+          }
+
+          return getOriginalPosition(sourceMapJSON, sourceLoc);
         }
       } catch (error) {
         // We've likely encountered a string in the source code that looks like a source map but isn't.
@@ -82,25 +87,9 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
       }
     } else {
       externalSourceMapURLs.push(sourceMappingURL);
-      sourceMapNum++;
     }
 
     sourceMappingURLMatch = sourceMapRegex.exec(runtimeSourceCode);
-  }
-
-  if (sourceMapJSON) {
-    // store computed sourceMapJSON
-    if (sourceMapNum > 1) {
-      sourceMapJSONs.set(`${source}:${line}:${column}`, sourceMapJSON);
-    } else {
-      if (sourceMapRegex.exec(runtimeSourceCode) === null) {
-        sourceMapJSONs.set(source, sourceMapJSON);
-      } else {
-        sourceMapJSONs.set(`${source}:${line}:${column}`, sourceMapJSON);
-      }
-    }
-
-    return getOriginalPosition(sourceMapJSON, sourceLoc);
   }
 
   // No inline sourcemap found. Check if there's external source map
@@ -129,30 +118,25 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
   }
 
   const sourceMapContent = await fetchFiles(sourceMappingURL);
-  sourceMapJSON = JSON.parse(sourceMapContent);
-
+  const sourceMapJSON = JSON.parse(sourceMapContent);
   sourceMapJSONs.set(source, sourceMapJSON);
 
   return getOriginalPosition(sourceMapJSON, sourceLoc);
 }
 
-async function fetchRuntimeSource(runtimeSourceUrl: string): Promise<string | undefined> {
+async function fetchFiles(url: string): Promise<string> {
   try {
-    const response = await fetch(runtimeSourceUrl);
+    const response = await fetch(url);
     if (response.ok) {
       return response.text();
     }
-    console.error(
-      `[Griffel devtools] fetchRuntimeSource() bad response fetching ${runtimeSourceUrl}: ${response.status}`,
-    );
-    return undefined;
+    throw new Error(`[Griffel devtools] fetchRuntimeSource() bad response fetching ${url}: ${response.status}`);
   } catch (error) {
-    const resource = (await resources).find(resource => resource.url === runtimeSourceUrl);
+    const resource = (await resources).find(resource => resource.url === url);
     if (resource) {
       return new Promise(resolve => resource.getContent(content => resolve(content)));
     }
-    console.error(`[Griffel devtools] fetchRuntimeSource() error fetching ${runtimeSourceUrl}: ${error}`);
-    return undefined;
+    throw new Error(`[Griffel devtools] fetchFiles() unable to fetch ${url}: ${error}`);
   }
 }
 
@@ -162,20 +146,8 @@ function decodeBase64String(encoded: string): string {
   } else if (typeof Buffer !== 'undefined' && Buffer !== null && typeof Buffer.from === 'function') {
     return Buffer.from(encoded, 'base64').toString('utf-8');
   } else {
-    throw Error('Cannot decode base64 string');
+    throw Error('[Griffel devtools] Cannot decode base64 string');
   }
-}
-
-async function fetchFiles(url: string) {
-  try {
-    const response = await fetch(url);
-    if (response.ok) {
-      return await response.text();
-    }
-  } catch (err) {
-    throw new Error(`[Griffel devtools] fetchFiles() unable to fetch ${url}: ${err}`);
-  }
-  return '';
 }
 
 type IndexSourceMapSection = {
@@ -192,15 +164,12 @@ type IndexSourceMap = {
   sections: IndexSourceMapSection[];
   version: number;
 };
-
-function sourceMapIncludesSource(sourcemap: RawSourceMap | IndexSourceMap, source: string): boolean {
+function sourceMapIncludesSource(sourcemap: RawSourceMap | IndexSourceMap, sourcePath: string): boolean {
   if (sourcemap.mappings === undefined) {
     return (sourcemap as IndexSourceMap).sections.some(section => {
-      return sourceMapIncludesSource(section.map, source);
+      return sourceMapIncludesSource(section.map, sourcePath);
     });
   }
 
-  return (sourcemap as RawSourceMap).sources.some(
-    s => s === 'Inline Babel script' || s.includes(source.replace(/^webpack-internal:\/\/\//, '')),
-  );
+  return (sourcemap as RawSourceMap).sources.some(s => s === 'Inline Babel script' || s.includes(sourcePath));
 }

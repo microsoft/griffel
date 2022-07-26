@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
-import type { MappedPosition } from 'source-map-js';
 
 import { getMonolithicCSSRules } from './getMonolithicCSSRules';
 import { MonolithicRulesView } from './MonolithicRulesView';
