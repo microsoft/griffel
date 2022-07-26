@@ -1,6 +1,5 @@
 import { MappedPosition, RawSourceMap } from 'source-map-js';
-import { getOriginalPosition } from './sourceMapConsumer';
-import { fetchRuntimeSource } from './fetchRuntimeSource';
+import { getOriginalPosition, resources } from './sourceMapConsumer';
 
 // TODO holding too many sourceMapJSON may blow up memory
 const sourceMapJSONs: Map<string, RawSourceMap> = new Map();
@@ -137,6 +136,26 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
   return getOriginalPosition(sourceMapJSON, sourceLoc);
 }
 
+async function fetchRuntimeSource(runtimeSourceUrl: string): Promise<string | undefined> {
+  try {
+    const response = await fetch(runtimeSourceUrl);
+    if (response.ok) {
+      return response.text();
+    }
+    console.error(
+      `[Griffel devtools] fetchRuntimeSource() bad response fetching ${runtimeSourceUrl}: ${response.status}`,
+    );
+    return undefined;
+  } catch (error) {
+    const resource = (await resources).find(resource => resource.url === runtimeSourceUrl);
+    if (resource) {
+      return new Promise(resolve => resource.getContent(content => resolve(content)));
+    }
+    console.error(`[Griffel devtools] fetchRuntimeSource() error fetching ${runtimeSourceUrl}: ${error}`);
+    return undefined;
+  }
+}
+
 function decodeBase64String(encoded: string): string {
   if (typeof atob === 'function') {
     return atob(encoded);
@@ -174,7 +193,7 @@ type IndexSourceMap = {
   version: number;
 };
 
-export function sourceMapIncludesSource(sourcemap: RawSourceMap | IndexSourceMap, source: string): boolean {
+function sourceMapIncludesSource(sourcemap: RawSourceMap | IndexSourceMap, source: string): boolean {
   if (sourcemap.mappings === undefined) {
     return (sourcemap as IndexSourceMap).sections.some(section => {
       return sourceMapIncludesSource(section.map, source);

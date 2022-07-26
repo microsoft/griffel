@@ -1,9 +1,13 @@
 import { SourceMapConsumer, MappedPosition, RawSourceMap } from 'source-map-js';
 
-const urls = new Set<string>();
-chrome.devtools.inspectedWindow.onResourceAdded.addListener(resource => {
+export const resources: Promise<chrome.devtools.inspectedWindow.Resource[]> = new Promise(resolve => {
+  chrome.devtools.inspectedWindow.getResources(currResources => {
+    resolve(currResources);
+  });
+});
+chrome.devtools.inspectedWindow.onResourceAdded.addListener(async resource => {
   if (!resource.url.startsWith('debugger')) {
-    urls.add(resource.url);
+    (await resources).push(resource);
   }
 });
 
@@ -23,38 +27,15 @@ export async function getOriginalPosition(sourceMapJSON: RawSourceMap, sourceLoc
 /**
  * The source url in sourcemap is not always a valid url for chrome source tab.
  */
-function getSourceTabURL(originalSource: string) {
-  return new Promise<string>(resolve => {
-    // example:
-    // originalSource: webpack://src/a -> path: src/a
-    // originalSource: webpack://@test/pkg/src/a -> path: test/pkg/src/a
-    // originalSource: /pkg/src/a -> path: pkg/src/a
-    const path = originalSource.match(/^([a-z]+:\/\/|)([./@]*)(.*)$/)?.[3] ?? '';
-    if (!path) {
-      resolve(originalSource);
-    }
+async function getSourceTabURL(originalSource: string) {
+  // example:
+  // originalSource: webpack://src/a -> path: src/a
+  // originalSource: webpack://@test/pkg/src/a -> path: test/pkg/src/a
+  // originalSource: /pkg/src/a -> path: pkg/src/a
+  const path = originalSource.match(/^([a-z]+:\/\/|)([./@]*)(.*)$/)?.[3] ?? '';
+  if (path) {
+    return (await resources).find(resource => resource.url.includes(path))?.url ?? originalSource;
+  }
 
-    if (urls.size) {
-      urls.forEach(url => {
-        if (url.includes(path)) {
-          resolve(url);
-        }
-      });
-      resolve(originalSource);
-    } else {
-      chrome.devtools.inspectedWindow.getResources(resources => {
-        let match: string | undefined;
-        resources.forEach(resource => {
-          urls.add(resource.url);
-          if (!match && resource.url.includes(path)) {
-            match = resource.url;
-          }
-        });
-        if (match) {
-          resolve(match);
-        }
-        resolve(originalSource);
-      });
-    }
-  });
+  return originalSource;
 }
