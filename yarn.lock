@@ -5978,6 +5978,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chrome@npm:^0.0.114":
+  version: 0.0.114
+  resolution: "@types/chrome@npm:0.0.114"
+  dependencies:
+    "@types/filesystem": "*"
+    "@types/har-format": "*"
+  checksum: 7b7c7d7ae72e54011328709b23f6bb2b15e8626af01e7577deae34fd1a0ec52f3f911f9eb9eeb49110a6816ee993450119eb889a286e077c5ce194878415d63f
+  languageName: node
+  linkType: hard
+
 "@types/color-convert@npm:^2.0.0":
   version: 2.0.0
   resolution: "@types/color-convert@npm:2.0.0"
@@ -13707,6 +13717,7 @@ __metadata:
     eslint-plugin-react-hooks: 4.3.0
     highlight.js: 11.4.0
     jest: 27.2.3
+    jest-chrome: ^0.7.2
     js-beautify: ^1.14.0
     loader-utils: ^2.0.0
     log-symbols: 5.1.0
@@ -15497,6 +15508,17 @@ __metadata:
     execa: ^5.0.0
     throat: ^6.0.1
   checksum: 4df8dff39882995d4852756686357e0629cf8029ea5c35dcf25f63fba4febe15b564b9222f7d18a7546fcd48d3414345bf3c363a1d13af61d8d66e662a035420
+  languageName: node
+  linkType: hard
+
+"jest-chrome@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "jest-chrome@npm:0.7.2"
+  dependencies:
+    "@types/chrome": ^0.0.114
+  peerDependencies:
+    jest: ^26.0.1 || ^27.0.0
+  checksum: 1a7ebbe6981a7800504ab016665fc6c2ffd713b528a8d8b61664dd20406977b0b3212805cd0964ca96b870d687822c7965acf71f64991da12fc23a1733585408
   languageName: node
   linkType: hard
 

@@ -86,6 +86,7 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "highlight.js": "11.4.0",
     "jest": "27.2.3",
+    "jest-chrome": "^0.7.2",
     "js-beautify": "^1.14.0",
     "log-symbols": "5.1.0",
     "mini-css-extract-plugin": "2.6.0",
