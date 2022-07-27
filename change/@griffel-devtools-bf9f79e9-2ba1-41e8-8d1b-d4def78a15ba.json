@@ -1,7 +1,7 @@
 {
-  "type": "patch",
-  "comment": "fix: open real source instead of the compiled source",
+  "type": "minor",
+  "comment": "feat: 'inspect source' button opens real source instead of the compiled source",
   "packageName": "@griffel/devtools",
   "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "minor"
 }
