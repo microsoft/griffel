@@ -13719,7 +13719,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-test-renderer: 17.0.2
-    rtl-css-js: ^1.15.0
+    rtl-css-js: ^1.16.0
     schema-utils: ^3.1.1
     simple-git-hooks: 2.7.0
     stylis: ^4.0.13
@@ -21173,12 +21173,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rtl-css-js@npm:^1.15.0":
-  version: 1.15.0
-  resolution: "rtl-css-js@npm:1.15.0"
+"rtl-css-js@npm:^1.16.0":
+  version: 1.16.0
+  resolution: "rtl-css-js@npm:1.16.0"
   dependencies:
     "@babel/runtime": ^7.1.2
-  checksum: e18a7b30b847def79e14636ee2096185881c4b8bab93dbb20fac2227b5a4d404a5a48d48cf357b618e113a5ebc027394f5c23ccd6f71ff0abc018a7ddbb8db54
+  checksum: 51756329f691cacd3e1b48f0f9d04a69338a90013f2d2942ca1ae3b069c952f70055f5fd76c66921e9a5cb956276252376a847c3294bd0ee54be9ceb32ea868c
   languageName: node
   linkType: hard
 
