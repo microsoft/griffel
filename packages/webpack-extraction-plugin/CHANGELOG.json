@@ -2,6 +2,27 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Wed, 27 Jul 2022 13:03:12 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.1.3",
+      "version": "0.1.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "379e56e840a16928e7e8cc2fe48ed98e57f596ec",
+            "comment": "fix: handle asset imports"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.5.1",
+            "commit": "2b80f0c1fae8d5dc0ae66d072f499e25bd6042c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Jul 2022 10:20:09 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.1.2",
       "version": "0.1.2",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: flip CSS properties even if they contain CSS variables",
-  "packageName": "@griffel/core",
-  "email": "miroslav.stastny@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,21 @@
 # Change Log - @griffel/devtools
 
-This log was last generated on Tue, 19 Jul 2022 14:42:50 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jul 2022 13:03:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.0
+
+Wed, 27 Jul 2022 13:03:12 GMT
+
+### Minor changes
+
+- feat: Add button next to slot name to jump to source (yuanboxue@microsoft.com)
+- Bump @griffel/react to v1.2.3
+
+### Patches
+
+- fix: add css rules to devtools extension debugger when pass renderer on SSR (dwlad90@gmail.com)
 
 ## 0.0.2
 

@@ -1,8 +1,18 @@
 # Change Log - @griffel/core
 
-This log was last generated on Tue, 19 Jul 2022 10:20:09 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jul 2022 13:03:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.1
+
+Wed, 27 Jul 2022 13:03:12 GMT
+
+### Patches
+
+- feat: Add support for source maps in devtools (yuanboxue@microsoft.com)
+- fix: add css rules to devtools extension debugger when pass renderer on SSR (dwlad90@gmail.com)
+- fix: flip CSS properties even if they contain CSS variables (miroslav.stastny@microsoft.com)
 
 ## 1.5.0
 

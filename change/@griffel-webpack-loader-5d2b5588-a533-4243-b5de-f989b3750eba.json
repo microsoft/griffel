@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: update compilerOptions.lib",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
