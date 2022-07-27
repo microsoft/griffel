@@ -1,7 +1,8 @@
 import type { MappedPosition, RawSourceMap } from 'source-map-js';
 import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer';
 
-// TODO holding too many sourceMapJSON may blow up memory
+// when only one source map appears in a source file: source url -> source map JSON
+// when more than one source maps appear in a source file: `${source}:${line}:${column}` -> source map JSON
 const sourceMapJSONs: Map<string, RawSourceMap> = new Map();
 
 const getComputedSouceMapJSON = ({ source, line, column }: MappedPosition) => {
@@ -12,10 +13,11 @@ export async function loadOriginalSourceLoc(sourceUrlWithLoc: string): Promise<M
   const paths = sourceUrlWithLoc.split(':');
   const column = Number(paths.pop());
   const line = Number(paths.pop());
-  const sourceLoc: MappedPosition = { source: paths.join(':'), line, column };
+  const source = paths.join(':');
   if (Number.isNaN(line) || Number.isNaN(column)) {
-    return sourceLoc;
+    return { source, line: 1, column: 0 };
   }
+  const sourceLoc: MappedPosition = { source, line, column };
 
   const sourceMapJSON = getComputedSouceMapJSON(sourceLoc);
   if (sourceMapJSON) {
