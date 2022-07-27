@@ -2,6 +2,12 @@ import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
+import template from '@babel/template';
+
+const resourceDirectory = path.resolve(__dirname, '..', 'virtual-loader');
+
+const virtualLoaderPath = path.resolve(resourceDirectory, 'index.js');
+const resourcePath = path.resolve(resourceDirectory, 'griffel.css');
 
 type StripRuntimeBabelPluginOptions = {
   /** A directory that contains fake .css file used for CSS extraction */
@@ -23,6 +29,19 @@ export function transformUrl(filename: string, resourceDirectory: string, assetP
   // Replace asset path with new path relative to the output CSS
   return path.relative(resourceDirectory, absoluteAssetPath);
 }
+
+/**
+ * Escapes a CSS rule to be a valid query param.
+ * Also escapes escalamation marks (!) to not confuse webpack.
+ *
+ * @param rule
+ * @returns
+ */
+export const toURIComponent = (rule: string): string => {
+  const component = encodeURIComponent(rule).replace(/!/g, '%21');
+
+  return component;
+};
 
 export const babelPluginStripGriffelRuntime = declare<
   Partial<StripRuntimeBabelPluginOptions>,
@@ -64,7 +83,6 @@ export const babelPluginStripGriffelRuntime = declare<
             );
           }
         },
-
         exit(path, state) {
           path.traverse({
             ImportSpecifier(path) {
@@ -194,6 +212,20 @@ export const babelPluginStripGriffelRuntime = declare<
 
               argumentPaths[1].remove();
             },
+          });
+
+          state?.cssRules?.forEach(rule => {
+            // Each found atomic rule will create a new import that uses the styleSheetPath provided.
+            // The benefit is two fold:
+            // (1) thread safe collection of styles
+            // (2) caching -- resulting in faster builds (one import per rule!)
+            const params = toURIComponent(rule);
+            path.unshiftContainer(
+              'body',
+              template.ast(`require("${virtualLoaderPath}!${resourcePath}?style=${params}");`),
+            );
+            // We use require instead of import so it works with both ESM and CJS source.
+            // If we used ESM it would blow up with CJS source, unfortunately.
           });
         },
       },

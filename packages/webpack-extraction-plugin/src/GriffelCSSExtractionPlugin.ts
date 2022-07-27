@@ -20,7 +20,7 @@ function forceCSSIntoOneStyleSheet(compiler: Compiler) {
     name: `griffel`,
     type: 'css/mini-extract',
     chunks: 'all',
-    test: /griffel.css/,
+    test: /virtual-loader\/griffel\.css$/,
     enforce: true,
   };
 }

@@ -12,9 +12,6 @@ type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLo
 
 const resourceDirectory = path.resolve(__dirname, '..', 'virtual-loader');
 
-const virtualLoaderPath = path.resolve(resourceDirectory, 'index.js');
-const resourcePath = path.resolve(resourceDirectory, 'griffel.css');
-
 function toURIComponent(rule: string): string {
   return encodeURIComponent(rule).replace(/!/g, '%21');
 }
@@ -78,18 +75,6 @@ function webpackLoader(
   }
 
   if (result) {
-    if (result.cssRules) {
-      const request = `import ${JSON.stringify(
-        this.utils.contextify(
-          this.context || this.rootContext,
-          `griffel.css!=!${virtualLoaderPath}!${resourcePath}?style=${toURIComponent(result.cssRules.join('\n'))}`,
-        ),
-      )};`;
-
-      this.callback(null, `${result.code}\n\n${request};`, result.sourceMap);
-      return;
-    }
-
     this.callback(null, result.code, result.sourceMap);
     return;
   }

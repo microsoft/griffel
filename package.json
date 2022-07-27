@@ -52,6 +52,7 @@
     "@testing-library/react-hooks": "7.0.2",
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/babel__helper-plugin-utils": "7.10.0",
+    "@types/babel__template": "^7.4.1",
     "@types/chrome": "0.0.180",
     "@types/d3-scale-chromatic": "^3.0.0",
     "@types/jest": "27.0.2",
