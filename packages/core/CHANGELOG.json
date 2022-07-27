@@ -2,6 +2,33 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 27 Jul 2022 13:03:12 GMT",
+      "tag": "@griffel/core_v1.5.1",
+      "version": "1.5.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "79c97b9ec6b4b028e31e17b613e6d89a37bfd6a7",
+            "comment": "feat: Add support for source maps in devtools"
+          },
+          {
+            "author": "dwlad90@gmail.com",
+            "package": "@griffel/core",
+            "commit": "bf8955f8a4b0fe9d553c49a865e8c1b2e9c371b3",
+            "comment": "fix: add css rules to devtools extension debugger when pass renderer on SSR"
+          },
+          {
+            "author": "miroslav.stastny@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "2b80f0c1fae8d5dc0ae66d072f499e25bd6042c4",
+            "comment": "fix: flip CSS properties even if they contain CSS variables"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Jul 2022 10:20:09 GMT",
       "tag": "@griffel/core_v1.5.0",
       "version": "1.5.0",

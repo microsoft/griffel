@@ -189,15 +189,64 @@ describe('resolveStyleRules', () => {
       );
     });
 
-    it('handles RTL', () => {
-      expect(resolveStyleRules({ left: '5px' })).toMatchInlineSnapshot(`
-        .f5b3q4t {
-          left: 5px;
-        }
-        .flgfsvn {
-          right: 5px;
-        }
-      `);
+    describe('handles RTL', () => {
+      it('property flipping', () => {
+        expect(resolveStyleRules({ left: '5px' })).toMatchInlineSnapshot(`
+          .f5b3q4t {
+            left: 5px;
+          }
+          .flgfsvn {
+            right: 5px;
+          }
+        `);
+      });
+
+      it('boxShadow with strings', () => {
+        expect(
+          resolveStyleRules({
+            boxShadow: 'inset 2rem 0rem 0.4rem -1rem #eee',
+          }),
+        ).toMatchInlineSnapshot(`
+                  .fissx19 {
+                    box-shadow: inset 2rem 0rem 0.4rem -1rem #eee;
+                  }
+                  .f14ydmub {
+                    box-shadow: inset -2rem 0rem 0.4rem -1rem #eee;
+                  }
+              `);
+      });
+
+      it('boxShadow with CSS variable', () => {
+        expect(
+          resolveStyleRules({
+            boxShadow: 'inset 2rem 0rem 0.4rem -1rem var(--colorToken)',
+          }),
+        ).toMatchInlineSnapshot(`
+                  .fko8do5 {
+                    box-shadow: inset 2rem 0rem 0.4rem -1rem var(--colorToken);
+                  }
+                  .fvdav93 {
+                    box-shadow: inset -2rem 0rem 0.4rem -1rem var(--colorToken);
+                  }
+              `);
+      });
+
+      it('boxShadow with multiple values', () => {
+        expect(
+          resolveStyleRules({
+            boxShadow: 'inset 2rem 0rem 0.4rem -1rem var(--colorToken), 4px 0rem 0.4rem 2rem var(--anotherToken)',
+          }),
+        ).toMatchInlineSnapshot(`
+          .frvj0nn {
+            box-shadow: inset 2rem 0rem 0.4rem -1rem var(--colorToken),
+              4px 0rem 0.4rem 2rem var(--anotherToken);
+          }
+          .fzr4yxb {
+            box-shadow: inset -2rem 0rem 0.4rem -1rem var(--colorToken),
+              -4px 0rem 0.4rem 2rem var(--anotherToken);
+          }
+        `);
+      });
     });
 
     it('handles RTL @noflip', () => {

@@ -13,4 +13,12 @@ export type BabelPluginOptions = {
 
   /** The set of rules that defines how the matched files will be transformed during the evaluation. */
   evaluationRules?: EvalRule[];
+
+  /**
+   * Defined the of the project. Is used to have a deterministic path for asset paths, usually should be equal to Git
+   * root.
+   *
+   * @default process.cwd()
+   */
+  projectRoot?: string;
 };

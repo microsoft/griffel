@@ -4,6 +4,8 @@ import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
 import { resolveStyleRulesForSlots, CSSRulesByBucket, StyleBucketName, GriffelStyle } from '@griffel/core';
 
+import { normalizeStyleRules } from './assets/normalizeStyleRules';
+import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
 import { astify } from './utils/astify';
 import { evaluatePaths } from './utils/evaluatePaths';
 import { BabelPluginOptions } from './types';
@@ -120,6 +122,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         action: 'ignore',
       },
     ],
+    projectRoot: process.cwd(),
 
     ...options,
   };
@@ -137,19 +140,30 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
     visitor: {
       Program: {
-        enter() {
+        enter(programPath, state) {
+          if (typeof state.filename === 'undefined') {
+            throw new Error(
+              [
+                '@griffel/babel-preset: This preset requires "filename" option to be specified by Babel. ',
+                "It's automatically done by Babel and our loaders/plugins. ",
+                "If you're facing this issue, please check your setup.\n\n",
+                'See: https://babeljs.io/docs/en/options#filename',
+              ].join(''),
+            );
+          }
+
           // Invalidate cache for module evaluation to get fresh modules
           Module.invalidate();
         },
 
-        exit(path, state) {
+        exit(programPath, state) {
           if (state.importDeclarationPaths!.length === 0 && !state.requireDeclarationPath) {
             return;
           }
 
           if (state.definitionPaths) {
             // Runs Babel AST processing or module evaluation for Node once for all arguments of makeStyles() calls once
-            evaluatePaths(path, state.file.opts.filename!, state.definitionPaths, pluginOptions);
+            evaluatePaths(programPath, state.file.opts.filename!, state.definitionPaths, pluginOptions);
 
             state.definitionPaths.forEach(definitionPath => {
               const callExpressionPath = definitionPath.findParent(parentPath =>
@@ -166,10 +180,23 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               }
 
               const stylesBySlots: Record<string /* slot */, GriffelStyle> = evaluationResult.value;
-              const [classnamesMapping, cssRules] = resolveStyleRulesForSlots(stylesBySlots);
+              const [classnamesMapping, cssRulesByBucket] = resolveStyleRulesForSlots(
+                // Heads up!
+                // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
+                // results across different build targets.
+                normalizeStyleRules(
+                  pluginOptions.projectRoot,
+                  // Presence of "state.filename" is validated on `Program.enter()`
+                  state.filename as string,
+                  stylesBySlots,
+                ),
+              );
+              const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
-              // TODO: find a better way to replace arguments
-              callExpressionPath.node.arguments = [astify(classnamesMapping), astify(dedupeCSSRules(cssRules))];
+              (callExpressionPath.get('arguments.0') as NodePath).remove();
+              callExpressionPath.pushContainer('arguments', [astify(classnamesMapping), astify(uniqueCSSRules)]);
+
+              replaceAssetsWithImports(pluginOptions.projectRoot, state.filename!, programPath, callExpressionPath);
             });
           }
 
