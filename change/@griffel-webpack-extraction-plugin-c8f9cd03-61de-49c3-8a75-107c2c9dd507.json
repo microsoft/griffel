@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Inject griffel styles in babelPluginStripGriffelRuntime instead of webpackLoader",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "dwlad90@gmail.com",
+  "dependentChangeType": "patch"
+}
