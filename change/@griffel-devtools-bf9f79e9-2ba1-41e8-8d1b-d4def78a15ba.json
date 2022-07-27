@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: open real source instead of the compiled source",
+  "packageName": "@griffel/devtools",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
