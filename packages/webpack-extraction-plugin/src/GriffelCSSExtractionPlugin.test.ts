@@ -208,7 +208,7 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
   }, 15000);
 }
 
-describe('webpackLoader', () => {
+describe('babelPluginStripGriffelRuntime', () => {
   // Basic assertions
   testFixture('basic-rules');
 

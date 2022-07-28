@@ -12,10 +12,6 @@ type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLo
 
 const resourceDirectory = path.resolve(__dirname, '..', 'virtual-loader');
 
-function toURIComponent(rule: string): string {
-  return encodeURIComponent(rule).replace(/!/g, '%21');
-}
-
 function shouldTransformSourceCode(sourceCode: string): boolean {
   return sourceCode.indexOf('__styles') !== -1;
 }

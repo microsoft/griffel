@@ -4,10 +4,8 @@ import { CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
 import template from '@babel/template';
 
-const resourceDirectory = path.resolve(__dirname, '..', 'virtual-loader');
-
-const virtualLoaderPath = path.resolve(resourceDirectory, 'index.js');
-const resourcePath = path.resolve(resourceDirectory, 'griffel.css');
+const virtualLoaderPath = '@griffel/webpack-extraction-plugin/virtual-loader/index.js';
+const resourcePath = '@griffel/webpack-extraction-plugin/virtual-loader/griffel.css';
 
 type StripRuntimeBabelPluginOptions = {
   /** A directory that contains fake .css file used for CSS extraction */
@@ -214,19 +212,12 @@ export const babelPluginStripGriffelRuntime = declare<
             },
           });
 
-          state?.cssRules?.forEach(rule => {
-            // Each found atomic rule will create a new import that uses the styleSheetPath provided.
-            // The benefit is two fold:
-            // (1) thread safe collection of styles
-            // (2) caching -- resulting in faster builds (one import per rule!)
-            const params = toURIComponent(rule);
-            path.unshiftContainer(
-              'body',
-              template.ast(`require("${virtualLoaderPath}!${resourcePath}?style=${params}");`),
-            );
-            // We use require instead of import so it works with both ESM and CJS source.
-            // If we used ESM it would blow up with CJS source, unfortunately.
-          });
+          // Each found atomic rule will create a new import that uses the styleSheetPath provided.
+          // The benefit is two fold:
+          // (1) thread safe collection of styles
+          // (2) caching -- resulting in faster builds (one import per rule!)
+          const params = toURIComponent(state?.cssRules?.join('\n') || '');
+          path.pushContainer('body', template.ast(`import "${virtualLoaderPath}!${resourcePath}?style=${params}";`));
         },
       },
     },
