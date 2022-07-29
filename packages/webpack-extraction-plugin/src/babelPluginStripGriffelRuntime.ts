@@ -4,8 +4,13 @@ import { CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
 import template from '@babel/template';
 
-const virtualLoaderPath = '@griffel/webpack-extraction-plugin/virtual-loader/index.js';
-const resourcePath = '@griffel/webpack-extraction-plugin/virtual-loader/griffel.css';
+const resourceDirectory =
+  process.env.NODE_ENV === 'test'
+    ? path.relative(__dirname, 'virtual-loader')
+    : '@griffel/webpack-extraction-plugin/virtual-loader';
+
+const virtualLoaderPath = `${resourceDirectory}/index.js`;
+const resourcePath = `${resourceDirectory}/griffel.css`;
 
 type StripRuntimeBabelPluginOptions = {
   /** A directory that contains fake .css file used for CSS extraction */
