@@ -25,6 +25,9 @@ async function compileSourceWithWebpack(entryPath: string, options: CompileOptio
       filename: 'bundle.js',
       pathinfo: false,
     },
+    externals: {
+      '@griffel/react': 'Griffel',
+    },
 
     module: {
       rules: [
@@ -43,10 +46,6 @@ async function compileSourceWithWebpack(entryPath: string, options: CompileOptio
     },
 
     resolve: {
-      alias: {
-        '@griffel/core': path.resolve(__dirname, '..', '..', '..', 'dist', 'packages', 'react', 'index.esm.js'),
-        '@griffel/react': path.resolve(__dirname, '..', '..', '..', 'dist', 'packages', 'react', 'index.esm.js'),
-      },
       extensions: ['.js', '.ts'],
     },
   };

@@ -3,6 +3,7 @@ import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
 import { resolveStyleRulesForSlots, CSSRulesByBucket, StyleBucketName, GriffelStyle } from '@griffel/core';
+import * as path from 'path';
 
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
 import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
@@ -185,6 +186,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
                 // results across different build targets.
                 normalizeStyleRules(
+                  path,
                   pluginOptions.projectRoot,
                   // Presence of "state.filename" is validated on `Program.enter()`
                   state.filename as string,

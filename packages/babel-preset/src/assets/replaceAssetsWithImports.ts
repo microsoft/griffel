@@ -1,20 +1,8 @@
 import { NodePath, traverse, types as t } from '@babel/core';
 import * as path from 'path';
 
+import { absolutePathToRelative } from './absolutePathToRelative';
 import { parseStringWithUrl } from './parseStringWithUrl';
-
-export function absolutePathToRelative(projectRoot: string, filename: string, assetPath: string) {
-  const fileDirectory = path.dirname(filename);
-
-  const absoluteAssetPath = path.resolve(projectRoot, assetPath);
-  const assetDirectory = path.dirname(absoluteAssetPath);
-
-  if (fileDirectory === assetDirectory) {
-    return './' + path.basename(assetPath);
-  }
-
-  return path.relative(fileDirectory, absoluteAssetPath);
-}
 
 /**
  * Replaces assets used in styles with imports and template literals.
@@ -67,7 +55,7 @@ export function replaceAssetsWithImports(
   );
 
   for (const [importPath, identifier] of assetIdentifiers.entries()) {
-    const relativePath = absolutePathToRelative(projectRoot, filename, importPath);
+    const relativePath = absolutePathToRelative(path, projectRoot, filename, importPath);
 
     programPath.unshiftContainer(
       'body',

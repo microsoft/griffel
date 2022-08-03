@@ -21,7 +21,11 @@ export function transformUrl(filename: string, resourceDirectory: string, assetP
   const absoluteAssetPath = path.resolve(path.dirname(filename), assetPath);
 
   // Replace asset path with new path relative to the output CSS
-  return path.relative(resourceDirectory, absoluteAssetPath);
+  const relativeAssetPath = path.relative(resourceDirectory, absoluteAssetPath);
+
+  // Normalize paths to be POSIX-like as bundlers don't handle Windows paths
+  // "path.posix" does not make sense there as there is no "windows-to-posix-path" function
+  return relativeAssetPath.split(path.sep).join(path.posix.sep);
 }
 
 export const babelPluginStripGriffelRuntime = declare<
