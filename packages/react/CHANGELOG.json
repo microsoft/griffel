@@ -2,6 +2,21 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Wed, 03 Aug 2022 15:28:36 GMT",
+      "tag": "@griffel/react_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "5fe534790f489fc865785463f716b196d5db0cd1",
+            "comment": "feat: re-export GriffelRenderer type"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jul 2022 13:03:12 GMT",
       "tag": "@griffel/react_v1.2.3",
       "version": "1.2.3",

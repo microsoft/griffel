@@ -1,8 +1,16 @@
 # Change Log - @griffel/react
 
-This log was last generated on Wed, 27 Jul 2022 13:03:12 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Aug 2022 15:28:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Wed, 03 Aug 2022 15:28:36 GMT
+
+### Minor changes
+
+- feat: re-export GriffelRenderer type (olfedias@microsoft.com)
 
 ## 1.2.3
 
