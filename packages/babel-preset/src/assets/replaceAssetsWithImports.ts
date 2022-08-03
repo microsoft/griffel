@@ -3,17 +3,26 @@ import * as path from 'path';
 
 import { parseStringWithUrl } from './parseStringWithUrl';
 
-export function absolutePathToRelative(projectRoot: string, filename: string, assetPath: string) {
-  const fileDirectory = path.dirname(filename);
+export function absolutePathToRelative(
+  pathImpl: typeof path,
+  projectRoot: string,
+  filename: string,
+  assetPath: string,
+) {
+  const fileDirectory = pathImpl.dirname(filename);
 
-  const absoluteAssetPath = path.resolve(projectRoot, assetPath);
-  const assetDirectory = path.dirname(absoluteAssetPath);
+  const absoluteAssetPath = pathImpl.resolve(projectRoot, assetPath);
+  const assetDirectory = pathImpl.dirname(absoluteAssetPath);
 
   if (fileDirectory === assetDirectory) {
-    return './' + path.basename(assetPath);
+    return './' + pathImpl.basename(assetPath);
   }
 
-  return path.relative(fileDirectory, absoluteAssetPath);
+  const relativeAssetPath = pathImpl.relative(fileDirectory, absoluteAssetPath);
+
+  // Normalize paths to be POSIX-like as bundlers don't handle Windows paths
+  // "path.posix" does not make sense there as there is no "windows-to-posix-path" function
+  return relativeAssetPath.split(/[\\/]/g).join(pathImpl.posix.sep);
 }
 
 /**
@@ -67,7 +76,7 @@ export function replaceAssetsWithImports(
   );
 
   for (const [importPath, identifier] of assetIdentifiers.entries()) {
-    const relativePath = absolutePathToRelative(projectRoot, filename, importPath);
+    const relativePath = absolutePathToRelative(path, projectRoot, filename, importPath);
 
     programPath.unshiftContainer(
       'body',

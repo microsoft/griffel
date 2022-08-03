@@ -9,7 +9,8 @@ import { parseStringWithUrl } from './parseStringWithUrl';
 export function normalizeAssetPath(projectRoot: string, filename: string, asset: string) {
   const absolutePath = path.resolve(path.dirname(filename), asset);
 
-  return path.relative(projectRoot, absolutePath);
+  // Normalize paths to be POSIX-like to be independent from an execution environment
+  return path.relative(projectRoot, absolutePath).split(/[\\/]/g).join(path.posix.sep);
 }
 
 export function normalizeStyleRule(projectRoot: string, filename: string, ruleValue: string | number) {
