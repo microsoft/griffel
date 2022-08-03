@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 27 Jul 2022 13:03:12 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Aug 2022 13:28:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.4
+
+Wed, 03 Aug 2022 13:28:05 GMT
+
+### Patches
+
+- fix: assets handling in Windows env (olfedias@microsoft.com)
 
 ## 0.1.3
 

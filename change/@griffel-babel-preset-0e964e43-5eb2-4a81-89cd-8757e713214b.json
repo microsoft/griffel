@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: assets handling in Windows env",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

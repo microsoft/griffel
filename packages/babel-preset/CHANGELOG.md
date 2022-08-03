@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Wed, 27 Jul 2022 13:03:12 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Aug 2022 13:28:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.6
+
+Wed, 03 Aug 2022 13:28:05 GMT
+
+### Patches
+
+- fix: assets handling in Windows env (olfedias@microsoft.com)
 
 ## 1.3.5
 
