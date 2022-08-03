@@ -36,6 +36,9 @@ async function compileSourceWithWebpack(
       pathinfo: false,
       assetModuleFilename: '[name][ext]',
     },
+    externals: {
+      '@griffel/react': 'Griffel',
+    },
 
     module: {
       rules: [
@@ -64,10 +67,6 @@ async function compileSourceWithWebpack(
     ],
 
     resolve: {
-      alias: {
-        '@griffel/core': path.resolve(__dirname, '..', '..', '..', 'dist', 'packages', 'react', 'index.esm.js'),
-        '@griffel/react': path.resolve(__dirname, '..', '..', '..', 'dist', 'packages', 'react', 'index.esm.js'),
-      },
       extensions: ['.js', '.ts'],
     },
   };
