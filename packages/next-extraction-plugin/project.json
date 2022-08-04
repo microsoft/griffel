@@ -1,0 +1,42 @@
+{
+  "root": "packages/next-extraction-plugin",
+  "sourceRoot": "packages/next-extraction-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/next-extraction-plugin/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/next-extraction-plugin"],
+      "options": {
+        "jestConfig": "packages/next-extraction-plugin/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/next-extraction-plugin",
+        "tsConfig": "packages/next-extraction-plugin/tsconfig.lib.json",
+        "packageJson": "packages/next-extraction-plugin/package.json",
+        "main": "packages/next-extraction-plugin/src/index.ts",
+        "assets": ["packages/next-extraction-plugin/*.md"]
+      }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/next-extraction-plugin",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}
