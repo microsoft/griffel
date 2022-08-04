@@ -8,6 +8,7 @@
     "@griffel/e2e-typescript": "e2e/typescript",
     "@griffel/eslint-plugin": "packages/eslint-plugin",
     "@griffel/jest-serializer": "packages/jest-serializer",
+    "@griffel/next-extraction-plugin": "packages/next-extraction-plugin",
     "@griffel/react": "packages/react",
     "@griffel/webpack-loader": "packages/webpack-loader",
     "@griffel/webpack-extraction-plugin": "packages/webpack-extraction-plugin",
