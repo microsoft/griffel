@@ -5,21 +5,17 @@ import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer
 // when more than one source maps appear in a source file: `${source}:${line}:${column}` -> source map JSON
 const sourceMapJSONs: Map<string, RawSourceMap> = new Map();
 
-const getComputedSouceMapJSON = ({ source, line, column }: MappedPosition) => {
+function getComputedSourceMapJSON({ source, line, column }: MappedPosition) {
   return sourceMapJSONs.get(source) ?? sourceMapJSONs.get(`${source}:${line}:${column}`);
-};
+}
 
 export async function loadOriginalSourceLoc(sourceUrlWithLoc: string): Promise<MappedPosition> {
-  const paths = sourceUrlWithLoc.split(':');
-  const column = Number(paths.pop());
-  const line = Number(paths.pop());
-  const source = paths.join(':');
-  if (Number.isNaN(line) || Number.isNaN(column)) {
-    return { source, line: 1, column: 0 };
+  const sourceLoc = parseSourceUrl(sourceUrlWithLoc);
+  if (sourceLoc === null) {
+    return { source: sourceUrlWithLoc, line: 1, column: 0 };
   }
-  const sourceLoc: MappedPosition = { source, line, column };
 
-  const sourceMapJSON = getComputedSouceMapJSON(sourceLoc);
+  const sourceMapJSON = getComputedSourceMapJSON(sourceLoc);
   if (sourceMapJSON) {
     return getOriginalPosition(sourceMapJSON, sourceLoc);
   }
@@ -31,6 +27,17 @@ export async function loadOriginalSourceLoc(sourceUrlWithLoc: string): Promise<M
     console.warn(error);
     return sourceLoc;
   }
+}
+
+function parseSourceUrl(sourceUrlWithLoc: string): MappedPosition | null {
+  const paths = sourceUrlWithLoc.split(':');
+  const column = Number(paths.pop());
+  const line = Number(paths.pop());
+  const source = paths.join(':');
+  if (Number.isNaN(line) || Number.isNaN(column)) {
+    return null;
+  }
+  return { source, line, column };
 }
 
 // inspired by https://github.com/facebook/react/blob/b66936ece7d9ad41a33e077933c9af0bda8bff87/packages/react-devtools-shared/src/hooks/parseHookNames/loadSourceAndMetadata.js#L135
@@ -58,7 +65,7 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
         // Web apps like Code Sandbox embed multiple inline source maps.
         // In this case, we need to loop through and find the right one.
         const trimmed = sourceMappingURL.match(/base64,([a-zA-Z0-9+/=]+)/)?.[1] ?? '';
-        const decoded = decodeBase64String(trimmed);
+        const decoded = atob(trimmed);
         const sourceMapJSON = JSON.parse(decoded);
 
         // TODO optionally turn on debug message
@@ -103,6 +110,10 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
   }
 
   if (externalSourceMapURLs.length > 0) {
+    // Files with external source maps should only have a single source map.
+    // More than one result might indicate an edge case,
+    // like a string in the source code that matched our "sourceMappingURL" regex.
+    // We should just skip over cases like this.
     console.warn(
       `[Griffel devtools] extractAndLoadSourceMapJSON() More than one external source map detected in the file ${source}:`,
     );
@@ -140,16 +151,6 @@ async function fetchFiles(url: string): Promise<string> {
       return new Promise(resolve => resource.getContent(content => resolve(content)));
     }
     throw new Error(`[Griffel devtools] fetchFiles() unable to fetch ${url}: ${error}`);
-  }
-}
-
-function decodeBase64String(encoded: string): string {
-  if (typeof atob === 'function') {
-    return atob(encoded);
-  } else if (typeof Buffer !== 'undefined' && Buffer !== null && typeof Buffer.from === 'function') {
-    return Buffer.from(encoded, 'base64').toString('utf-8');
-  } else {
-    throw Error('[Griffel devtools] Cannot decode base64 string');
   }
 }
 
