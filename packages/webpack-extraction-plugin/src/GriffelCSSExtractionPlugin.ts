@@ -4,7 +4,7 @@ import type { Compiler, sources } from 'webpack';
 
 import { sortCSSRules } from './sortCSSRules';
 
-type GriffelCSSExtractionPluginOptions = {
+export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
 };
 

@@ -1,1 +1,1 @@
-export * from './lib/next-extraction-plugin';
+export { withGriffelCSSExtraction } from './lib/next-extraction-plugin';
