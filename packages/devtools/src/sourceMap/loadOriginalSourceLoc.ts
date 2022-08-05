@@ -150,7 +150,7 @@ async function fetchFiles(url: string): Promise<string> {
     if (resource) {
       return new Promise(resolve => resource.getContent(content => resolve(content)));
     }
-throw error
+    throw error;
   }
 }
 
@@ -168,12 +168,14 @@ type IndexSourceMap = {
   sections: IndexSourceMapSection[];
   version: number;
 };
+function isRawSourceMap(sourcemap: RawSourceMap | IndexSourceMap): sourcemap is RawSourceMap {
+  return sourcemap.mappings !== undefined;
+}
 function sourceMapIncludesSource(sourcemap: RawSourceMap | IndexSourceMap, sourcePath: string): boolean {
-  if (sourcemap.mappings === undefined) {
-    return (sourcemap as IndexSourceMap).sections.some(section => {
-      return sourceMapIncludesSource(section.map, sourcePath);
-    });
+  if (isRawSourceMap(sourcemap)) {
+    return sourcemap.sources.some(s => s === 'Inline Babel script' || s.includes(sourcePath));
   }
-
-  return (sourcemap as RawSourceMap).sources.some(s => s === 'Inline Babel script' || s.includes(sourcePath));
+  return sourcemap.sections.some(section => {
+    return sourceMapIncludesSource(section.map, sourcePath);
+  });
 }
