@@ -23,7 +23,8 @@
       "@griffel/jest-serializer": ["packages/jest-serializer/src/index.ts"],
       "@griffel/next-extraction-plugin": ["packages/next-extraction-plugin/src/index.ts"],
       "@griffel/react": ["packages/react/src/index.ts"],
-      "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"]
+      "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"],
+      "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]
   },

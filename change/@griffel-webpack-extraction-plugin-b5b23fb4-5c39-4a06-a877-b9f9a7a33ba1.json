@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "feat: add NextJS plugin for CSS extraction",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "dwlad90@gmail.com",
+  "dependentChangeType": "patch"
+}
