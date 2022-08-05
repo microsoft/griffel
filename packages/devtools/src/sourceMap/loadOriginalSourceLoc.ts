@@ -150,7 +150,7 @@ async function fetchFiles(url: string): Promise<string> {
     if (resource) {
       return new Promise(resolve => resource.getContent(content => resolve(content)));
     }
-    throw new Error(`[Griffel devtools] fetchFiles() unable to fetch ${url}: ${error}`);
+throw error
   }
 }
 
