@@ -15,3 +15,4 @@ export { padding } from './padding';
 export { overflow } from './overflow';
 export { inset } from './inset';
 export { outline } from './outline';
+export { transition } from './transition';

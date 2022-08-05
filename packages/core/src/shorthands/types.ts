@@ -24,3 +24,9 @@ export type PaddingInput = ValueOrArray<CSS.Property.Padding<GriffelStylesCSSVal
 export type InsetInput = ValueOrArray<CSS.Property.Inset<GriffelStylesCSSValue>>;
 
 export type FlexInput = [CSS.Property.Flex, CSS.Property.Flex?, CSS.Property.Flex?];
+
+export type TransitionPropertyInput = CSS.Property.TransitionProperty;
+export type TransitionDurationInput = CSS.Property.TransitionDuration;
+export type TransitionDelayInput = CSS.Property.TransitionDelay;
+export type TransitionTimingFunctionInput = CSS.Property.TransitionTimingFunction;
+export type TransitionGlobalnInput = CSS.Globals;
