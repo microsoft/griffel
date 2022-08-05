@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "feat: export GriffelCSSExtractionPluginOptions type",
-  "packageName": "@griffel/next-extraction-plugin",
-  "email": "dwlad90@gmail.com",
-  "dependentChangeType": "patch"
-}

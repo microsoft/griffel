@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 05 Aug 2022 09:44:44 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.1.5",
+      "version": "0.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "dwlad90@gmail.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "81c9176d20ecefdeca14c94fb4705563f5faeba2",
+            "comment": "feat: add NextJS plugin for CSS extraction"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Aug 2022 13:28:05 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.1.4",
       "version": "0.1.4",
