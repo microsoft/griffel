@@ -53,21 +53,23 @@ export function transition(
       transitionTimingFunction: values[0],
     };
   }
-  const [headTransitionInput, ...tailTransitionInputs] = normalizeTransitionInputs(values);
-  return tailTransitionInputs.reduce<TransitionStyle>(
-    (acc, [property, duration = '0s', delay = '0s', timingFunction = 'ease']) => {
-      acc.transitionProperty = `${acc.transitionProperty}, ${property}`;
-      acc.transitionDuration = `${acc.transitionDuration}, ${duration}`;
-      acc.transitionDelay = `${acc.transitionDelay}, ${delay}`;
-      acc.transitionTimingFunction = `${acc.transitionTimingFunction}, ${timingFunction}`;
+  const transitionInputs = normalizeTransitionInputs(values);
+  return transitionInputs.reduce<TransitionStyle>(
+    (acc, [property, duration = '0s', delay = '0s', timingFunction = 'ease'], index) => {
+      if (index === 0) {
+        acc.transitionProperty = property;
+        acc.transitionDuration = duration;
+        acc.transitionDelay = delay;
+        acc.transitionTimingFunction = timingFunction;
+      } else {
+        acc.transitionProperty += `, ${property}`;
+        acc.transitionDuration += `, ${duration}`;
+        acc.transitionDelay += `, ${delay}`;
+        acc.transitionTimingFunction += `, ${timingFunction}`;
+      }
       return acc;
     },
-    {
-      transitionProperty: headTransitionInput[0],
-      transitionDuration: headTransitionInput[1],
-      transitionDelay: headTransitionInput[2],
-      transitionTimingFunction: headTransitionInput[3],
-    },
+    {},
   );
 }
 

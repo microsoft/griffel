@@ -14,6 +14,8 @@ describe('transition', () => {
     expect(transition('margin', '2s')).toEqual<ReturnType<typeof transition>>({
       transitionProperty: 'margin',
       transitionDuration: '2s',
+      transitionDelay: '0s',
+      transitionTimingFunction: 'ease',
     });
   });
 
@@ -22,6 +24,7 @@ describe('transition', () => {
       transitionProperty: 'margin',
       transitionDuration: '2s',
       transitionDelay: '1s',
+      transitionTimingFunction: 'ease',
     });
   });
 
