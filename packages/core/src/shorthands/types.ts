@@ -29,4 +29,4 @@ export type TransitionPropertyInput = CSS.Property.TransitionProperty;
 export type TransitionDurationInput = CSS.Property.TransitionDuration;
 export type TransitionDelayInput = CSS.Property.TransitionDelay;
 export type TransitionTimingFunctionInput = CSS.Property.TransitionTimingFunction;
-export type TransitionGlobalnInput = CSS.Globals;
+export type TransitionGlobalInput = CSS.Globals;

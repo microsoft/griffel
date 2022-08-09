@@ -4,15 +4,22 @@ import {
   TransitionDurationInput,
   TransitionPropertyInput,
   TransitionTimingFunctionInput,
-  TransitionGlobalnInput,
+  TransitionGlobalInput,
 } from './types';
+
+type TransitionInputs = [
+  TransitionPropertyInput,
+  TransitionDurationInput?,
+  TransitionDelayInput?,
+  TransitionTimingFunctionInput?,
+];
 
 type TransitionStyle = Pick<
   GriffelStylesStrictCSSObject,
   'transitionProperty' | 'transitionDelay' | 'transitionDuration' | 'transitionTimingFunction'
 >;
 
-export function transition(globalValue: TransitionGlobalnInput): TransitionStyle;
+export function transition(globalValue: TransitionGlobalInput): TransitionStyle;
 export function transition(property: TransitionPropertyInput, duration: TransitionDurationInput): TransitionStyle;
 export function transition(
   property: TransitionPropertyInput,
@@ -43,7 +50,7 @@ export function transition(values: TransitionInputs[]): TransitionStyle;
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/transition
  */
 export function transition(
-  ...values: [TransitionGlobalnInput] | TransitionInputs | [TransitionInputs[]]
+  ...values: [TransitionGlobalInput] | TransitionInputs | [TransitionInputs[]]
 ): TransitionStyle {
   if (isTransitionGlobalInputs(values)) {
     return {
@@ -73,18 +80,11 @@ export function transition(
   );
 }
 
-type TransitionInputs = [
-  TransitionPropertyInput,
-  TransitionDurationInput?,
-  TransitionDelayInput?,
-  TransitionTimingFunctionInput?,
-];
-
-const transitionGlobalInputs: TransitionGlobalnInput[] = ['-moz-initial', 'inherit', 'initial', 'revert', 'unset'];
+const transitionGlobalInputs: TransitionGlobalInput[] = ['-moz-initial', 'inherit', 'initial', 'revert', 'unset'];
 function isTransitionGlobalInputs(
-  values: [TransitionGlobalnInput] | TransitionInputs | [TransitionInputs[]],
-): values is [TransitionGlobalnInput] {
-  return values.length === 1 && transitionGlobalInputs.includes(values[0] as TransitionGlobalnInput);
+  values: [TransitionGlobalInput] | TransitionInputs | [TransitionInputs[]],
+): values is [TransitionGlobalInput] {
+  return values.length === 1 && transitionGlobalInputs.includes(values[0] as TransitionGlobalInput);
 }
 
 function normalizeTransitionInputs(transitionInputs: TransitionInputs | [TransitionInputs[]]): TransitionInputs[] {
