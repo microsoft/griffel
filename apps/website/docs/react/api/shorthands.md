@@ -224,3 +224,22 @@ const useClasses = makeStyles({
   },
 });
 ```
+
+### `shorthands.transition`
+
+```js
+import { makeStyles, shorthands } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    ...shorthands.transition('inherit'),
+    ...shorthands.transition('margin-right', '2s'),
+    ...shorthands.transition('margin-right', '4s', '1s'),
+    ...shorthands.transition('margin-right', '4s', '1s', 'ease-in'),
+    ...shorthands.transition([
+      ['margin-right', '4s', '1s', 'ease-in'],
+      ['margin-left', '2s', '0s', 'ease-in-out'],
+    ]),
+  },
+});
+```

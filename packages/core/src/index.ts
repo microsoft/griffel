@@ -18,6 +18,7 @@ import {
   overflow,
   inset,
   outline,
+  transition,
 } from './shorthands/index';
 
 export const shorthands = {
@@ -38,6 +39,7 @@ export const shorthands = {
   overflow,
   inset,
   outline,
+  transition,
 };
 
 export { createDOMRenderer } from './renderer/createDOMRenderer';
