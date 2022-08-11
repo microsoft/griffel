@@ -3,6 +3,7 @@ import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 
 import { getMonolithicCSSRules } from './getMonolithicCSSRules';
 import { MonolithicRulesView } from './MonolithicRulesView';
+import { loadOriginalSourceLoc } from './sourceMap';
 import { tokens } from './themes';
 import { useViewContext } from './ViewContext';
 
@@ -93,12 +94,13 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
   );
 };
 
-function openOriginalCode(sourceURL: string) {
-  chrome.devtools.inspectedWindow.eval<string>('window.location.origin', {}, async () => {
-    // example sourceURL: https://source.js:<lineNumber>:<columnNumber>
-    const results = sourceURL.split(':');
-    results.pop();
-    const line = Number(results.pop()) ?? 1;
-    chrome.devtools.panels.openResource(results.join(':'), line - 1, () => ({}));
-  });
+/**
+ * Opens source in chrome source tab
+ *
+ * @param sourceUrlWithLoc source url with line and column
+ * example: https://source.js:<lineNumber>:<columnNumber>
+ */
+async function openOriginalCode(sourceUrlWithLoc: string) {
+  const originalPosition = await loadOriginalSourceLoc(sourceUrlWithLoc);
+  chrome.devtools.panels.openResource(originalPosition.source, originalPosition.line - 1, () => ({}));
 }

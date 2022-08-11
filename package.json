@@ -86,6 +86,7 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "highlight.js": "11.4.0",
     "jest": "27.2.3",
+    "jest-chrome": "^0.7.2",
     "js-beautify": "^1.14.0",
     "log-symbols": "5.1.0",
     "mini-css-extract-plugin": "2.6.0",
@@ -123,6 +124,7 @@
     "loader-utils": "^2.0.0",
     "rtl-css-js": "^1.16.0",
     "schema-utils": "^3.1.1",
+    "source-map-js": "1.0.2",
     "stylis": "^4.0.13",
     "tslib": "^2.1.0"
   },
@@ -130,6 +132,7 @@
     "@nrwl/web": "patch:@nrwl/web@npm:13.4.5#.yarn/patches/@nrwl-web-npm-13.4.5-d7e9ea40d2",
     "@nrwl/workspace": "patch:@nrwl/workspace@npm:13.4.5#.yarn/patches/@nrwl-workspace-npm-13.4.5-233a3ec85c",
     "beachball": "patch:beachball@npm:2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b",
-    "monosize@0.0.3": "patch:monosize@npm:0.0.3#.yarn/patches/monosize-npm-0.0.3-9b650c3f51"
+    "monosize@0.0.3": "patch:monosize@npm:0.0.3#.yarn/patches/monosize-npm-0.0.3-9b650c3f51",
+    "source-map-js@1.0.2": "patch:source-map-js@npm:1.0.2#.yarn/patches/source-map-js-npm-1.0.2-ee4f9f9b30.patch"
   }
 }

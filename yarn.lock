@@ -6085,6 +6085,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chrome@npm:^0.0.114":
+  version: 0.0.114
+  resolution: "@types/chrome@npm:0.0.114"
+  dependencies:
+    "@types/filesystem": "*"
+    "@types/har-format": "*"
+  checksum: 7b7c7d7ae72e54011328709b23f6bb2b15e8626af01e7577deae34fd1a0ec52f3f911f9eb9eeb49110a6816ee993450119eb889a286e077c5ce194878415d63f
+  languageName: node
+  linkType: hard
+
 "@types/color-convert@npm:^2.0.0":
   version: 2.0.0
   resolution: "@types/color-convert@npm:2.0.0"
@@ -13815,6 +13825,7 @@ __metadata:
     eslint-plugin-react-hooks: 4.3.0
     highlight.js: 11.4.0
     jest: 27.2.3
+    jest-chrome: ^0.7.2
     js-beautify: ^1.14.0
     loader-utils: ^2.0.0
     log-symbols: 5.1.0
@@ -13831,6 +13842,7 @@ __metadata:
     rtl-css-js: ^1.16.0
     schema-utils: ^3.1.1
     simple-git-hooks: 2.7.0
+    source-map-js: 1.0.2
     stylis: ^4.0.13
     syncpack: 6.2.0
     tmp: 0.2.1
@@ -15605,6 +15617,17 @@ __metadata:
     execa: ^5.0.0
     throat: ^6.0.1
   checksum: 4df8dff39882995d4852756686357e0629cf8029ea5c35dcf25f63fba4febe15b564b9222f7d18a7546fcd48d3414345bf3c363a1d13af61d8d66e662a035420
+  languageName: node
+  linkType: hard
+
+"jest-chrome@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "jest-chrome@npm:0.7.2"
+  dependencies:
+    "@types/chrome": ^0.0.114
+  peerDependencies:
+    jest: ^26.0.1 || ^27.0.0
+  checksum: 1a7ebbe6981a7800504ab016665fc6c2ffd713b528a8d8b61664dd20406977b0b3212805cd0964ca96b870d687822c7965acf71f64991da12fc23a1733585408
   languageName: node
   linkType: hard
 
@@ -22108,7 +22131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2":
+"source-map-js@npm:1.0.2, source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
@@ -22119,6 +22142,13 @@ __metadata:
   version: 0.6.2
   resolution: "source-map-js@npm:0.6.2"
   checksum: 9c8151a29e00fd8d3ba87709fdf9a9ce48313d653f4a29a39b4ae53d346ac79e005de624796ff42eff55cbaf26d2e87f4466001ca87831d400d818c5cf146a0e
+  languageName: node
+  linkType: hard
+
+"source-map-js@patch:source-map-js@npm:1.0.2#.yarn/patches/source-map-js-npm-1.0.2-ee4f9f9b30.patch::locator=griffel-repository%40workspace%3A.":
+  version: 1.0.2
+  resolution: "source-map-js@patch:source-map-js@npm%3A1.0.2#.yarn/patches/source-map-js-npm-1.0.2-ee4f9f9b30.patch::version=1.0.2&hash=7077b7&locator=griffel-repository%40workspace%3A."
+  checksum: 7a447cd639b1994616c263889091d1308463ddccd36a350980ac8a238d50517aef8f49d062d8a978791794b77e1504d4372dc6ffd33d09cf4424431d08220bb8
   languageName: node
   linkType: hard
 
