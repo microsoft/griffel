@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump @linaria/babel-preset for compatibility with Next.js",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

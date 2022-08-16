@@ -1,8 +1,17 @@
 # Change Log - @griffel/devtools
 
-This log was last generated on Wed, 03 Aug 2022 15:28:36 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Aug 2022 11:16:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.0
+
+Tue, 16 Aug 2022 11:16:00 GMT
+
+### Minor changes
+
+- feat: 'inspect source' button opens real source instead of the compiled source (yuanboxue@microsoft.com)
+- Bump @griffel/react to v1.3.1
 
 ## 0.1.1
 

@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 16 Aug 2022 11:16:00 GMT",
+      "tag": "@griffel/core_v1.6.0",
+      "version": "1.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "bernardo.sunderhus@gmail.com",
+            "package": "@griffel/core",
+            "commit": "5b6a2e6c792e7d4f9702857680a4825efcd40b5f",
+            "comment": "feat: add transition shorthand"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jul 2022 13:03:12 GMT",
       "tag": "@griffel/core_v1.5.1",
       "version": "1.5.1",

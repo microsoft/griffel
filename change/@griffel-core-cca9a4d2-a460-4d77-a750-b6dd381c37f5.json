@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add transition shorthand",
-  "packageName": "@griffel/core",
-  "email": "bernardo.sunderhus@gmail.com",
-  "dependentChangeType": "patch"
-}

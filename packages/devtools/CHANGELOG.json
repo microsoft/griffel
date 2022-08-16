@@ -2,6 +2,27 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Tue, 16 Aug 2022 11:16:00 GMT",
+      "tag": "@griffel/devtools_v0.2.0",
+      "version": "0.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "8d663649fdf12b4fa939b9158bef03660ae03d6d",
+            "comment": "feat: 'inspect source' button opens real source instead of the compiled source"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.3.1",
+            "commit": "545253c7bd0c84f3c72803b6b88946e617922714"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Aug 2022 15:28:36 GMT",
       "tag": "@griffel/devtools_v0.1.1",
       "version": "0.1.1",
