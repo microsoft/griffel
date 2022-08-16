@@ -28,9 +28,9 @@ In `next.config.js` file you'll need to add the next-plugin from `@griffel/webpa
 // next.config.js
 const { withGriffelCSSExtraction } = require('@griffel/next-extraction-plugin');
 
-module.exports = withGriffelCssExtraction()({
+module.exports = withGriffelCSSExtraction()({
   webpack(config) {
-    config.module.rules.push({
+    config.module.rules.unshift({
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
       use: [
@@ -41,12 +41,17 @@ module.exports = withGriffelCssExtraction()({
     });
 
     // If your project uses TypeScript
-    config.module.rules.push({
+    config.module.rules.unshift({
       test: /\.(ts|tsx)$/,
       exclude: /node_modules/,
       use: [
         {
           loader: '@griffel/webpack-loader',
+          options: {
+            babelOptions: {
+              presets: ['next/babel'],
+            },
+          },
         },
       ],
     });
