@@ -3311,9 +3311,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@linaria/babel-preset@npm:^3.0.0-beta.22":
-  version: 3.0.0-beta.22
-  resolution: "@linaria/babel-preset@npm:3.0.0-beta.22"
+"@linaria/babel-preset@npm:^3.0.0-beta.22, @linaria/babel-preset@npm:^3.0.0-beta.23":
+  version: 3.0.0-beta.23
+  resolution: "@linaria/babel-preset@npm:3.0.0-beta.23"
   dependencies:
     "@babel/core": ^7.18.2
     "@babel/generator": ">=7"
@@ -3329,7 +3329,7 @@ __metadata:
     find-up: ^5.0.0
     source-map: ^0.7.3
     stylis: ^3.5.4
-  checksum: fb1d1f5366fdb91bb6ca4fcda94e6aabe9602f06782d36c5805d0de67ff26b18adc352d6e2e474da81892bad1ba2669ffe98a13c784f6b48dedd077024be2557
+  checksum: 5e1b7d077272ca93105631b0f9e1d78632769c63fd06d14994ae2b20519e470c2b7170cf50d8a32945e2298afb30f406284a6b46d8abf91b1d9772a55b761385
   languageName: node
   linkType: hard
 
@@ -13763,7 +13763,7 @@ __metadata:
     "@docusaurus/preset-classic": 2.0.1
     "@emotion/css": ^11.9.0
     "@emotion/hash": ^0.8.0
-    "@linaria/babel-preset": ^3.0.0-beta.22
+    "@linaria/babel-preset": ^3.0.0-beta.23
     "@linaria/shaker": ^3.0.0-beta.22
     "@nrwl/cli": 13.4.5
     "@nrwl/eslint-plugin-nx": 13.4.5
