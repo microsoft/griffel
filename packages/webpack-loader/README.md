@@ -26,10 +26,24 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: '@griffel/webpack-loader',
+        },
+      },
+
+      // If your project uses TypeScript
+      {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: '@griffel/webpack-loader',
+          options: {
+            babelOptions: {
+              presets: ['@babel/preset-typescript'],
+            },
+          },
         },
       },
     ],
@@ -48,6 +62,11 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: '@griffel/webpack-loader',
+          options: {
+            babelOptions: {
+              presets: ['@babel/preset-typescript'],
+            },
+          },
         },
       },
     ],
@@ -70,7 +89,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: '@griffel/webpack-loader',
@@ -101,7 +120,9 @@ module.exports = {
           loader: '@griffel/webpack-loader',
           options: {
             babelOptions: {
+              // Optional plugins specific to your environment
               plugins: ['@babel/plugin-proposal-class-static-block'],
+              // If your project uses TypeScript
               presets: ['@babel/preset-typescript'],
             },
           },
@@ -119,7 +140,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: '@griffel/webpack-loader',
@@ -151,7 +172,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: '@griffel/webpack-loader',
