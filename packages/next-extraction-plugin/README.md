@@ -10,7 +10,7 @@ yarn add --dev @griffel/next-extraction-plugin
 npm install --save-dev @griffel/next-extraction-plugin
 ```
 
-If you haven't installed yet `@griffel/webpack-loader`, please also install it:
+Please install `@griffel/webpack-loader` if you haven't done so already:
 
 ```bash
 yarn add --dev @griffel/webpack-loader
