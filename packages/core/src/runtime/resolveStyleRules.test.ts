@@ -877,5 +877,13 @@ describe('resolveStyleRules', () => {
         uwmqm3: ['frdkuqy', 'f81rol6'],
       });
     });
+
+    it('handles "&" in pseudo selectors equally', () => {
+      const caseA = resolveStyleRules({ ':hover': { color: 'red' } });
+      const caseB = resolveStyleRules({ '&:hover': { color: 'red' } });
+
+      expect(caseA[0]).toEqual(caseB[0]);
+      expect(caseA[1]).toEqual(caseB[1]);
+    });
   });
 });
