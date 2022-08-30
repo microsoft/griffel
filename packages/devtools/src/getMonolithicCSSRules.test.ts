@@ -158,11 +158,12 @@ describe('getMonolithicCSSRules', () => {
     });
   });
 
-  it('group atomic css when class name selector has selector in front', () => {
+  it.only('group atomic css when class name selector has selector in front', () => {
     const rules = [
       '[data-keyboard-nav] .fabcde0:focus{background-color:red;}',
       '[data-keyboard-nav] .fabcde1{color:red;}',
       '[data-keyboard-nav] .fabcde1 .class1{padding-top:10px;}',
+      '[data-keyboard-nav] .fabcde1.class1{padding-bottom:10px;}',
     ].map(cssRule => ({ cssRule }));
     expect(getMonolithicCSSRules(rules)).toEqual({
       '[data-keyboard-nav] ': [
@@ -176,6 +177,13 @@ describe('getMonolithicCSSRules', () => {
         {
           className: 'fabcde1',
           css: 'padding-top:10px;',
+          overriddenBy: undefined,
+        },
+      ],
+      '[data-keyboard-nav] .class1': [
+        {
+          className: 'fabcde1',
+          css: 'padding-bottom:10px;',
           overriddenBy: undefined,
         },
       ],
