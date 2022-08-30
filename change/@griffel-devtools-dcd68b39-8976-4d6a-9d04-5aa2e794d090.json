@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix devtools to show override when the overriding rule is the same",
+  "packageName": "@griffel/devtools",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
