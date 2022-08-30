@@ -11,7 +11,12 @@ export function getDebugTree(debugSequenceHash: SequenceHash, parentNode?: Debug
   }
 
   const parentLookupItem = parentNode ? DEFINITION_LOOKUP_TABLE[parentNode.sequenceHash] : undefined;
-  const debugClassNames = getDebugClassNames(lookupItem, parentLookupItem, parentNode?.debugClassNames);
+  const debugClassNames = getDebugClassNames(
+    lookupItem,
+    parentLookupItem,
+    parentNode?.debugClassNames,
+    parentNode?.children,
+  );
 
   const node: DebugSequence = {
     sequenceHash: debugSequenceHash,
@@ -21,12 +26,14 @@ export function getDebugTree(debugSequenceHash: SequenceHash, parentNode?: Debug
   };
 
   const childrenSequences = debugData.getChildrenSequences(node.sequenceHash);
-  childrenSequences.forEach((sequence: SequenceHash) => {
-    const child = getDebugTree(sequence, node);
-    if (child) {
-      node.children.push(child);
-    }
-  });
+  childrenSequences
+    .reverse() // first process the overriding children that are merged last
+    .forEach((sequence: SequenceHash) => {
+      const child = getDebugTree(sequence, node);
+      if (child) {
+        node.children.push(child);
+      }
+    });
 
   // if it's leaf (makeStyle node), get css rules
   if (!node.children.length) {

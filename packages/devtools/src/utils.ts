@@ -24,7 +24,7 @@ export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): Slo
     ];
   }
 
-  return node.children.reverse().reduce((acc, child) => {
+  return node.children.reduce((acc, child) => {
     return [...acc, ...getRulesBySlots(child)];
   }, result);
 }
