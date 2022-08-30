@@ -13,13 +13,13 @@ function parseRuleElement(element: stylis.Element, overriddenBy?: string) {
     let className: string | undefined;
     const selector = stylis
       .tokenize(classNameSelector)
-      .filter(token => {
+      .map(token => {
         const match = token.match(griffelClassNameRegex);
         if (match?.[1]) {
           className = match?.[1];
-          return match[2] ? true : false;
+          return match[2] ?? '';
         }
-        return true;
+        return token;
       })
       .join('');
     const rules: RuleDetail[] = children.map(child => ({
