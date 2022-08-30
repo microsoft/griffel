@@ -30,20 +30,29 @@ const useSingleRuleStyles = makeStyles({
 const SingleRuleView: React.FC<{ rule: RuleDetail; indent?: boolean }> = ({ rule, indent }) => {
   const { highlightedClass, setHighlightedClass } = useViewContext();
 
+  const [clicked, setClicked] = React.useState(false);
+
   const handleClick = (e: React.SyntheticEvent) => {
     e.stopPropagation();
     if (rule.overriddenBy) {
+      setClicked(true);
       setHighlightedClass(highlighted => (highlighted === rule.overriddenBy ? '' : rule.overriddenBy!));
     } else {
       setHighlightedClass('');
     }
   };
 
+  React.useEffect(() => {
+    if (!highlightedClass || highlightedClass !== rule.overriddenBy) {
+      setClicked(false);
+    }
+  }, [highlightedClass, rule.overriddenBy]);
+
   const classes = useSingleRuleStyles();
   const className = mergeClasses(
     rule.overriddenBy && classes.overriden,
     indent && classes.indent,
-    highlightedClass === rule.className && classes.highlighted,
+    (clicked || highlightedClass === rule.className) && classes.highlighted,
   );
 
   return (
