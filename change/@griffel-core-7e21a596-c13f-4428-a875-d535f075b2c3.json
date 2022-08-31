@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: do not emit sequence hashes for empty sets",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
