@@ -44,6 +44,12 @@ export function reduceToClassNameForSlots<Slots extends string | number>(
   for (const slotName in classesMapBySlot) {
     const classnamesForSlot = reduceToClassName(classesMapBySlot[slotName], dir);
 
+    // Handles a case when there are no classes in a set i.e. "makeStyles({ root: {} })"
+    if (classnamesForSlot === '') {
+      classNamesForSlots[slotName] = '';
+      continue;
+    }
+
     const sequenceHash = hashSequence(classnamesForSlot, dir);
     const resultSlotClasses = sequenceHash + ' ' + classnamesForSlot;
 
