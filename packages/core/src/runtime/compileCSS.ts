@@ -6,7 +6,7 @@ import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
 export interface CompileCSSOptions {
   className: string;
 
-  pseudo: string;
+  selectors: string[];
   media: string;
   layer: string;
   support: string;
@@ -60,50 +60,58 @@ export function compileCSSRules(cssRules: string): string[] {
   return rules;
 }
 
+function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudos: string[]): string {
+  let globalSelector = '';
+  let cssRule = cssDeclaration;
+
+  if (pseudos.length > 0) {
+    cssRule = pseudos.reduceRight((acc, selector, index) => {
+      // Should be handled by namespace plugin of Stylis, is buggy now
+      // Issues are reported:
+      // https://github.com/thysultan/stylis.js/issues/253
+      // https://github.com/thysultan/stylis.js/issues/252
+      if (selector.indexOf(':global(') === 0) {
+        // 👇 :global(GROUP_1)GROUP_2
+        const GLOBAL_PSEUDO_REGEX = /global\((.+)\)(.+)?/;
+        const result = GLOBAL_PSEUDO_REGEX.exec(selector)!;
+
+        globalSelector = result[1] + ' ';
+        const restPseudo = result[2] || '';
+
+        // should be normalized to handle ":global(SELECTOR) &"
+        const normalizedPseudoSelector = normalizePseudoSelector(restPseudo);
+
+        if (normalizedPseudoSelector === '') {
+          return acc;
+        }
+
+        return `${normalizedPseudoSelector} { ${acc} }`;
+      }
+
+      return `${normalizePseudoSelector(selector)} { ${acc} }`;
+    }, cssDeclaration);
+  }
+
+  return `${globalSelector}${classNameSelector}{${cssRule}}`;
+}
+
 export function compileCSS(options: CompileCSSOptions): [string /* ltr definition */, string? /* rtl definition */] {
-  const { className, media, layer, pseudo, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
+  const { className, media, layer, selectors, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
-    ? `{ ${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')}; }`
-    : `{ ${hyphenateProperty(property)}: ${value}; }`;
+    ? `${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')};`
+    : `${hyphenateProperty(property)}: ${value};`;
 
-  let rtlClassNameSelector: string | null = null;
-  let rtlCSSDeclaration: string | null = null;
+  let cssRule = createCSSRule(classNameSelector, cssDeclaration, selectors);
 
   if (rtlProperty && rtlClassName) {
-    rtlClassNameSelector = `.${rtlClassName}`;
-    rtlCSSDeclaration = Array.isArray(rtlValue)
-      ? `{ ${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')}; }`
-      : `{ ${hyphenateProperty(rtlProperty)}: ${rtlValue}; }`;
-  }
+    const rtlClassNameSelector = `.${rtlClassName}`;
+    const rtlCSSDeclaration = Array.isArray(rtlValue)
+      ? `${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')};`
+      : `${hyphenateProperty(rtlProperty)}: ${rtlValue};`;
 
-  let cssRule = '';
-
-  // Should be handled by namespace plugin of Stylis, is buggy now
-  // Issues are reported:
-  // https://github.com/thysultan/stylis.js/issues/253
-  // https://github.com/thysultan/stylis.js/issues/252
-  if (pseudo.indexOf(':global(') === 0) {
-    // 👇 :global(GROUP_1)GROUP_2
-    const GLOBAL_PSEUDO_REGEX = /global\((.+)\)(.+)?/;
-    const [, globalSelector, restPseudo = ''] = GLOBAL_PSEUDO_REGEX.exec(pseudo)!;
-
-    // should be normalized to handle ":global(SELECTOR) &"
-    const normalizedPseudo = normalizeNestedProperty(restPseudo.trim());
-
-    const ltrRule = `${classNameSelector}${normalizedPseudo} ${cssDeclaration}`;
-    const rtlRule = rtlProperty ? `${rtlClassNameSelector}${normalizedPseudo} ${rtlCSSDeclaration}` : '';
-
-    cssRule = `${globalSelector} { ${ltrRule}; ${rtlRule} }`;
-  } else {
-    const normalizedPseudo = normalizePseudoSelector(pseudo);
-
-    cssRule = `${classNameSelector}{${normalizedPseudo} ${cssDeclaration}};`;
-
-    if (rtlProperty) {
-      cssRule = `${cssRule}; ${rtlClassNameSelector}{${normalizedPseudo} ${rtlCSSDeclaration}};`;
-    }
+    cssRule += createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
   }
 
   if (media) {

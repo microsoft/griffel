@@ -68,7 +68,7 @@ function pushToCSSRules(
  */
 export function resolveStyleRules(
   styles: GriffelStyle,
-  pseudo = '',
+  selectors: string[] = [],
   media = '',
   layer = '',
   support = '',
@@ -105,13 +105,13 @@ export function resolveStyleRules(
 
     if (typeof value === 'string' || typeof value === 'number') {
       // uniq key based on a hash of property & selector, used for merging later
-      const key = hashPropertyKey(pseudo, media, support, property);
+      const key = hashPropertyKey(selectors, media, support, property);
       const className = hashClassName({
         media,
         layer,
         value: value.toString(),
         support,
-        pseudo,
+        selectors,
         property,
       });
 
@@ -122,7 +122,7 @@ export function resolveStyleRules(
         ? hashClassName({
             value: rtlDefinition.value.toString(),
             property: rtlDefinition.key,
-            pseudo,
+            selectors,
             media,
             layer,
             support,
@@ -136,12 +136,12 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(pseudo, layer, media, support);
+      const styleBucketName = getStyleBucketName(selectors, layer, media, support);
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
         layer,
-        pseudo,
+        selectors,
         property,
         support,
         value,
@@ -191,7 +191,7 @@ export function resolveStyleRules(
 
       resolveStyleRules(
         { animationName: animationNames.join(', ') },
-        pseudo,
+        selectors,
         media,
         layer,
         support,
@@ -210,13 +210,13 @@ export function resolveStyleRules(
         continue;
       }
 
-      const key = hashPropertyKey(pseudo, media, support, property);
+      const key = hashPropertyKey(selectors, media, support, property);
       const className = hashClassName({
         media,
         layer,
         value: value.map(v => (v ?? '').toString()).join(';'),
         support,
-        pseudo,
+        selectors,
         property,
       });
 
@@ -239,7 +239,7 @@ export function resolveStyleRules(
         ? hashClassName({
             value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
             property: rtlDefinitions[0].key,
-            pseudo,
+            selectors,
             layer,
             media,
             support,
@@ -254,12 +254,12 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(pseudo, layer, media, support);
+      const styleBucketName = getStyleBucketName(selectors, layer, media, support);
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
         layer,
-        pseudo,
+        selectors,
         property,
         support,
         value: value as Array<string | number>,
@@ -272,7 +272,7 @@ export function resolveStyleRules(
       if (isNestedSelector(property)) {
         resolveStyleRules(
           value as GriffelStyle,
-          pseudo + normalizeNestedProperty(property),
+          selectors.concat(normalizeNestedProperty(property)),
           media,
           layer,
           support,
@@ -284,7 +284,7 @@ export function resolveStyleRules(
 
         resolveStyleRules(
           value as GriffelStyle,
-          pseudo,
+          selectors,
           combinedMediaQuery,
           layer,
           support,
@@ -296,7 +296,7 @@ export function resolveStyleRules(
 
         resolveStyleRules(
           value as GriffelStyle,
-          pseudo,
+          selectors,
           media,
           combinedLayerQuery,
           support,
@@ -308,7 +308,7 @@ export function resolveStyleRules(
 
         resolveStyleRules(
           value as GriffelStyle,
-          pseudo,
+          selectors,
           media,
           layer,
           combinedSupportQuery,

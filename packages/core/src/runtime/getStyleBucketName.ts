@@ -42,7 +42,12 @@ const pseudosMap: Record<string, StyleBucketName | undefined> = {
  *
  * @internal
  */
-export function getStyleBucketName(pseudo: string, layer: string, media: string, support: string): StyleBucketName {
+export function getStyleBucketName(
+  selectors: string[],
+  layer: string,
+  media: string,
+  support: string,
+): StyleBucketName {
   if (media) {
     return 'm';
   }
@@ -52,20 +57,22 @@ export function getStyleBucketName(pseudo: string, layer: string, media: string,
     return 't';
   }
 
-  const normalizedPseudo = pseudo.trim();
+  if (selectors.length > 0) {
+    const normalizedPseudo = selectors[0].trim();
 
-  if (normalizedPseudo.charCodeAt(0) === 58 /* ":" */) {
-    // We send through a subset of the string instead of the full pseudo name.
-    // For example:
-    // - `"focus-visible"` name would instead of `"us-v"`.
-    // - `"focus"` name would instead of `"us"`.
-    // Return a mapped pseudo else default bucket.
+    if (normalizedPseudo.charCodeAt(0) === 58 /* ":" */) {
+      // We send through a subset of the string instead of the full pseudo name.
+      // For example:
+      // - `"focus-visible"` name would instead of `"us-v"`.
+      // - `"focus"` name would instead of `"us"`.
+      // Return a mapped pseudo else default bucket.
 
-    return (
-      pseudosMap[normalizedPseudo.slice(4, 8)] /* allows to avoid collisions between "focus-visible" & "focus" */ ||
-      pseudosMap[normalizedPseudo.slice(3, 5)] ||
-      'd'
-    );
+      return (
+        pseudosMap[normalizedPseudo.slice(4, 8)] /* allows to avoid collisions between "focus-visible" & "focus" */ ||
+        pseudosMap[normalizedPseudo.slice(3, 5)] ||
+        'd'
+      );
+    }
   }
 
   // Return default bucket
