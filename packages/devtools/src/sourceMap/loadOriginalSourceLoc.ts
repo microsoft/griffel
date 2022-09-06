@@ -33,7 +33,19 @@ function parseSourceUrl(sourceUrlWithLoc: string): MappedPosition | null {
   const paths = sourceUrlWithLoc.split(':');
   const column = Number(paths.pop());
   const line = Number(paths.pop());
-  const source = paths.join(':');
+
+  let source = paths.join(':');
+  try {
+    // url can contain relative path when webpack is used; normalize it
+    const { protocol, pathname } = new URL(source);
+    if (!protocol.startsWith('http')) {
+      const absPathname = new URL(`http://${pathname}`).pathname; // URL only normalizes pathname for http/https
+      source = `${protocol}//${absPathname}`;
+    }
+  } catch (error) {
+    console.warn(error);
+  }
+
   if (Number.isNaN(line) || Number.isNaN(column)) {
     return null;
   }
