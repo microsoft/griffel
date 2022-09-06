@@ -16,9 +16,11 @@ export function shouldTransformSourceCode(
   modules: WebpackLoaderOptions['modules'] | undefined,
 ): boolean {
   // Fallback to "makeStyles" if options were not provided
-  const imports = modules ? modules.map(module => module.importName).join('|') : 'makeStyles';
+  const imports = modules
+    ? modules.flatMap(module => [module.importName, module.resetImportName || 'makeResetStyles']).join('|')
+    : 'makeStyles|makeResetStyles';
 
-  return new RegExp(`\\b(${imports})`).test(sourceCode);
+  return new RegExp(`\\b(${imports}|makeResetStyles)`).test(sourceCode);
 }
 
 /**
