@@ -2,6 +2,7 @@ export { shorthands, mergeClasses, createDOMRenderer } from '@griffel/core';
 export type { GriffelStyle, CreateDOMRendererOptions, GriffelRenderer } from '@griffel/core';
 
 export { makeStyles } from './makeStyles';
+export { makeResetStyles } from './makeResetStyles';
 export { makeStaticStyles } from './makeStaticStyles';
 export { renderToStyleElements } from './renderToStyleElements';
 

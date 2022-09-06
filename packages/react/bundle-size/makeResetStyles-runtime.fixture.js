@@ -1,4 +1,4 @@
-import { makeResetStyles } from '@griffel/core';
+import { makeResetStyles } from '@griffel/react';
 
 console.log(makeResetStyles);
 
