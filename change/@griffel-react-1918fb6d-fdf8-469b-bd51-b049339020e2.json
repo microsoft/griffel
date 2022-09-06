@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add __resetStyles (internal function)",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

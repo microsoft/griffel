@@ -56,6 +56,7 @@ export { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 // Private exports, are used by build time transforms or other tools
 export { __css } from './__css';
 export { __styles } from './__styles';
+export { __resetStyles } from './__resetStyles';
 
 export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry';
 export { styleBucketOrdering } from './renderer/getStyleSheetForBucket';
