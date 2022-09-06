@@ -151,13 +151,10 @@ type GriffelStylesCSSObjectCustomL5 = {
 } & GriffelStylesStrictCSSObject;
 
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelStylesCSSObjectCustomL1;
-
 export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSObjectCustomL1>;
 
-export interface MakeStylesOptions {
-  dir: 'ltr' | 'rtl';
-  renderer: GriffelRenderer;
-}
+// Types for makeStaticStyles()
+// ---
 
 export type GriffelStaticStyle = {
   [key: string]: CSS.Properties &
@@ -179,6 +176,61 @@ export type GriffelStaticStyle = {
   };
 };
 export type GriffelStaticStyles = GriffelStaticStyle | string;
+
+// Types for makeResetStyles()
+// ---
+
+type GriffelResetStylesCSSProperties = Omit<
+  CSS.PropertiesFallback<ValueOrArray<GriffelStylesCSSValue>>,
+  // We have custom definition for "animationName"
+  'animationName'
+>;
+
+type GriffelResetStylesStrictCSSObject = GriffelResetStylesCSSProperties &
+  GriffelResetStylesCSSPseudos & {
+    animationName?: GriffelAnimation | GriffelAnimation[] | CSS.Property.Animation;
+  };
+
+type GriffelResetStylesCSSPseudos = {
+  [Property in CSS.Pseudos]?:
+    | (GriffelResetStylesStrictCSSObject & { content?: string | string[] })
+    | (GriffelResetStylesCSSObjectCustomL1 & { content?: string | string[] });
+};
+
+//
+// "GriffelStylesCSSObjectCustom*" is a workaround to avoid circular references in types that are breaking TS <4.
+// Once we will support "typesVersions" (types downleleving) or update our requirements for TS this should be
+// updated or removed.
+//
+
+type GriffelResetStylesCSSObjectCustomL1 = {
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL2;
+} & GriffelResetStylesStrictCSSObject;
+
+type GriffelResetStylesCSSObjectCustomL2 = {
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL3;
+} & GriffelResetStylesStrictCSSObject;
+
+type GriffelResetStylesCSSObjectCustomL3 = {
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL4;
+} & GriffelResetStylesStrictCSSObject;
+
+type GriffelResetStylesCSSObjectCustomL4 = {
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL5;
+} & GriffelResetStylesStrictCSSObject;
+
+type GriffelResetStylesCSSObjectCustomL5 = {
+  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesStrictCSSObject;
+} & GriffelResetStylesStrictCSSObject;
+
+export type GriffelResetStyle = GriffelResetStylesStrictCSSObject | GriffelResetStylesCSSObjectCustomL1;
+
+// ---
+
+export interface MakeStylesOptions {
+  dir: 'ltr' | 'rtl';
+  renderer: GriffelRenderer;
+}
 
 export interface MakeStaticStylesOptions {
   renderer: GriffelRenderer;
@@ -238,6 +290,8 @@ export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;
 
 export type CSSRulesByBucket = {
+  // reset
+  r?: CSSBucketEntry[];
   // default
   d?: CSSBucketEntry[];
   // link
