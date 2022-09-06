@@ -1,5 +1,6 @@
 import { compile, middleware, prefixer, rulesheet, serialize, stringify } from 'stylis';
 
+import { globalPlugin } from './stylis/globalPlugin';
 import { hyphenateProperty } from './utils/hyphenateProperty';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
 
@@ -47,6 +48,7 @@ export function compileCSSRules(cssRules: string): string[] {
   serialize(
     compile(cssRules),
     middleware([
+      globalPlugin,
       prefixer,
       stringify,
 
@@ -61,38 +63,15 @@ export function compileCSSRules(cssRules: string): string[] {
 }
 
 function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudos: string[]): string {
-  let globalSelector = '';
   let cssRule = cssDeclaration;
 
   if (pseudos.length > 0) {
-    cssRule = pseudos.reduceRight((acc, selector, index) => {
-      // Should be handled by namespace plugin of Stylis, is buggy now
-      // Issues are reported:
-      // https://github.com/thysultan/stylis.js/issues/253
-      // https://github.com/thysultan/stylis.js/issues/252
-      if (selector.indexOf(':global(') === 0) {
-        // 👇 :global(GROUP_1)GROUP_2
-        const GLOBAL_PSEUDO_REGEX = /global\((.+)\)(.+)?/;
-        const result = GLOBAL_PSEUDO_REGEX.exec(selector)!;
-
-        globalSelector = result[1] + ' ';
-        const restPseudo = result[2] || '';
-
-        // should be normalized to handle ":global(SELECTOR) &"
-        const normalizedPseudoSelector = normalizePseudoSelector(restPseudo);
-
-        if (normalizedPseudoSelector === '') {
-          return acc;
-        }
-
-        return `${normalizedPseudoSelector} { ${acc} }`;
-      }
-
+    cssRule = pseudos.reduceRight((acc, selector) => {
       return `${normalizePseudoSelector(selector)} { ${acc} }`;
     }, cssDeclaration);
   }
 
-  return `${globalSelector}${classNameSelector}{${cssRule}}`;
+  return `${classNameSelector}{${cssRule}}`;
 }
 
 export function compileCSS(options: CompileCSSOptions): [string /* ltr definition */, string? /* rtl definition */] {
