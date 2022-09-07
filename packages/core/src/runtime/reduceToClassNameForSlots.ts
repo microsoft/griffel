@@ -42,16 +42,16 @@ export function reduceToClassNameForSlots<Slots extends string | number>(
 
   // eslint-disable-next-line guard-for-in
   for (const slotName in classesMapBySlot) {
-    const classnamesForSlot = reduceToClassName(classesMapBySlot[slotName], dir);
+    const slotClasses = reduceToClassName(classesMapBySlot[slotName], dir);
 
     // Handles a case when there are no classes in a set i.e. "makeStyles({ root: {} })"
-    if (classnamesForSlot === '') {
+    if (slotClasses === '') {
       classNamesForSlots[slotName] = '';
       continue;
     }
 
-    const sequenceHash = hashSequence(classnamesForSlot, dir);
-    const resultSlotClasses = sequenceHash + ' ' + classnamesForSlot;
+    const sequenceHash = hashSequence(slotClasses, dir);
+    const resultSlotClasses = sequenceHash + ' ' + slotClasses;
 
     DEFINITION_LOOKUP_TABLE[sequenceHash] = [classesMapBySlot[slotName], dir];
     classNamesForSlots[slotName] = resultSlotClasses;
