@@ -25,9 +25,9 @@ describe('getDebugClassNames', () => {
       },
       'ltr',
     ];
-    const parentlLookupItem: LookupItem = [...lookupItem];
+    const parentLookupItem: LookupItem = [...lookupItem];
     const parentDebugClassNames = [{ className: 'f3xbvq9', overriddenBy: undefined }];
-    expect(getDebugClassNames(lookupItem, parentlLookupItem, parentDebugClassNames)).toEqual([
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames)).toEqual([
       {
         className: 'f3xbvq9',
         overriddenBy: undefined,
@@ -42,14 +42,14 @@ describe('getDebugClassNames', () => {
       },
       'ltr',
     ];
-    const parentlLookupItem: LookupItem = [
+    const parentLookupItem: LookupItem = [
       {
         De3pzq: 'f3xbvq9',
       },
       'ltr',
     ];
     const parentDebugClassNames = [{ className: 'f3xbvq9', overriddenBy: undefined }];
-    expect(getDebugClassNames(lookupItem, parentlLookupItem, parentDebugClassNames)).toEqual([
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames)).toEqual([
       {
         className: 'fdmssx0',
         overriddenBy: 'f3xbvq9',
@@ -64,9 +64,9 @@ describe('getDebugClassNames', () => {
       },
       'ltr',
     ];
-    const parentlLookupItem: LookupItem = [...lookupItem];
+    const parentLookupItem: LookupItem = [...lookupItem];
     const parentDebugClassNames = [{ className: 'fdmssx0', overriddenBy: 'f3xbvq9' }];
-    expect(getDebugClassNames(lookupItem, parentlLookupItem, parentDebugClassNames)).toEqual([
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames)).toEqual([
       {
         className: 'fdmssx0',
         overriddenBy: 'f3xbvq9',
@@ -81,7 +81,7 @@ describe('getDebugClassNames', () => {
       },
       'ltr',
     ];
-    const parentlLookupItem: LookupItem = [
+    const parentLookupItem: LookupItem = [
       {
         De3pzq: 'fdmssx0',
       },
@@ -96,7 +96,7 @@ describe('getDebugClassNames', () => {
         debugClassNames: [{ className: 'fdmssx0' }],
       },
     ];
-    expect(getDebugClassNames(lookupItem, parentlLookupItem, parentDebugClassNames, overridingSiblings)).toEqual([
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames, overridingSiblings)).toEqual([
       {
         className: 'fdmssx0',
         overriddenBy: 'fdmssx0',

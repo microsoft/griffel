@@ -60,14 +60,14 @@ describe('debugData', () => {
     const sequenceBlock = findSequenceHash(classes.block);
     const sequenceGrid = findSequenceHash(classes.grid);
 
-    const souceURLregex = /.*\/.*:[0-9]+:[0-9]+/; // url with line and column number
+    const sourceURLregex = /.*\/.*:[0-9]+:[0-9]+/; // url with line and column number
     expect(debugData.getSequenceDetails(sequenceBlock!)).toEqual({
       slotName: 'block',
-      sourceURL: expect.stringMatching(souceURLregex),
+      sourceURL: expect.stringMatching(sourceURLregex),
     });
     expect(debugData.getSequenceDetails(sequenceGrid!)).toEqual({
       slotName: 'grid',
-      sourceURL: expect.stringMatching(souceURLregex),
+      sourceURL: expect.stringMatching(sourceURLregex),
     });
   });
 });

@@ -17,7 +17,7 @@ const options: MakeStylesOptions = {
 const findSequenceHash = (classNames: string) =>
   classNames.split(' ').find(className => className.startsWith(SEQUENCE_PREFIX));
 
-const souceURLregex = /.*\/.*:[0-9]+:[0-9]+/; // url with line and column number
+const sourceURLregex = /.*\/.*:[0-9]+:[0-9]+/; // url with line and column number
 
 describe('getDebugTree', () => {
   it.each<'ltr' | 'rtl'>(['ltr', 'rtl'])('returns styles merge tree when dir=%p', dir => {
@@ -51,7 +51,7 @@ describe('getDebugTree', () => {
           },
           sequenceHash: sequenceGrid,
           slot: 'grid',
-          sourceURL: expect.stringMatching(souceURLregex),
+          sourceURL: expect.stringMatching(sourceURLregex),
         },
         {
           children: [
@@ -69,7 +69,7 @@ describe('getDebugTree', () => {
               },
               sequenceHash: sequenceBlock,
               slot: 'block',
-              sourceURL: expect.stringMatching(souceURLregex),
+              sourceURL: expect.stringMatching(sourceURLregex),
             },
           ],
           debugClassNames: [
@@ -129,7 +129,7 @@ describe('getDebugTree', () => {
           },
           sequenceHash: sequenceBlueBlock,
           slot: 'blueBlock',
-          sourceURL: expect.stringMatching(souceURLregex),
+          sourceURL: expect.stringMatching(sourceURLregex),
         },
         {
           children: [
@@ -152,7 +152,7 @@ describe('getDebugTree', () => {
               },
               sequenceHash: sequenceRedBlock,
               slot: 'redBlock',
-              sourceURL: expect.stringMatching(souceURLregex),
+              sourceURL: expect.stringMatching(sourceURLregex),
             },
           ],
           debugClassNames: [
