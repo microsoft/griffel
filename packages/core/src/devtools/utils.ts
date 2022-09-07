@@ -29,12 +29,12 @@ export function getDebugClassNames(
         // parent node has current className (style), and has current selector:
         // case 1. style is not overriden during current merging; it may be overriden in higher level of merging
         // case 2. style is overriden in current merging by exactly the same rule in sibling nodes
-        const siblingHasSameRule = overridingSiblings?.filter(
-          overridingSibling =>
-            overridingSibling.debugClassNames.filter(
-              ({ className: siblingClassName }) => siblingClassName === className,
-            ).length > 0,
-        ).length > 0;
+        const siblingHasSameRule = overridingSiblings
+          ? overridingSiblings.filter(
+              ({ debugClassNames }) =>
+                debugClassNames.filter(({ className: siblingClassName }) => siblingClassName === className).length > 0,
+            ).length > 0
+          : false;
         overriddenBy = siblingHasSameRule
           ? matching.className // case 2
           : matching.overriddenBy; // case 1
