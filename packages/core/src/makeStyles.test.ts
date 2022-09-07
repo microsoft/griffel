@@ -17,6 +17,13 @@ describe('makeStyles', () => {
     document.head.innerHTML = '';
   });
 
+  it('returns an empty classname for an empty style set', () => {
+    const computeClasses = makeStyles({
+      root: {},
+    });
+    expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('');
+  });
+
   it('returns a single classname for a single style', () => {
     const computeClasses = makeStyles({
       root: {

@@ -93,7 +93,7 @@
     "monosize": "0.0.3",
     "monosize-storage-upstash": "0.0.2",
     "nano-staged": "0.5.0",
-    "next": "^12.0.5",
+    "next": "12.2.4",
     "prettier": "2.3.1",
     "prism-react-renderer": "1.2.1",
     "react": "17.0.2",
