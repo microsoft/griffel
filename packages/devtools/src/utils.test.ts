@@ -6,14 +6,14 @@ describe('getRulesBySlots', () => {
   it('traverse debug result, gather and return all makeStyles slot name and rules', () => {
     const makeStylesNodes: DebugResult[] = [
       {
-        sequenceHash: '___abcdef0_0000000',
+        sequenceHash: '___abcdef2_0000000',
         direction: 'ltr',
         children: [],
-        debugClassNames: [{ className: 'fabcde0' }],
+        debugClassNames: [{ className: 'fabcde2' }],
         rules: {
-          fabcde0: '.fabcde0{background-color:transparent;}',
+          fabcde2: '.fabcde2{display:none;}',
         },
-        slot: 'root',
+        slot: 'slot2',
       },
       {
         sequenceHash: '___abcdef1_0000000',
@@ -26,14 +26,14 @@ describe('getRulesBySlots', () => {
         slot: 'slot1',
       },
       {
-        sequenceHash: '___abcdef2_0000000',
+        sequenceHash: '___abcdef0_0000000',
         direction: 'ltr',
         children: [],
-        debugClassNames: [{ className: 'fabcde2' }],
+        debugClassNames: [{ className: 'fabcde0' }],
         rules: {
-          fabcde2: '.fabcde2{display:none;}',
+          fabcde0: '.fabcde0{background-color:transparent;}',
         },
-        slot: 'slot2',
+        slot: 'root',
       },
     ];
     const debugResultRoot = {

@@ -1,4 +1,5 @@
-import { LookupItem } from '../types';
+import type { LookupItem } from '../types';
+import type { DebugSequence } from './types';
 import { getDebugClassNames } from './utils';
 
 describe('getDebugClassNames', () => {
@@ -24,9 +25,9 @@ describe('getDebugClassNames', () => {
       },
       'ltr',
     ];
-    const parentlLookupItem: LookupItem = [...lookupItem];
+    const parentLookupItem: LookupItem = [...lookupItem];
     const parentDebugClassNames = [{ className: 'f3xbvq9', overriddenBy: undefined }];
-    expect(getDebugClassNames(lookupItem, parentlLookupItem, parentDebugClassNames)).toEqual([
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames)).toEqual([
       {
         className: 'f3xbvq9',
         overriddenBy: undefined,
@@ -41,14 +42,14 @@ describe('getDebugClassNames', () => {
       },
       'ltr',
     ];
-    const parentlLookupItem: LookupItem = [
+    const parentLookupItem: LookupItem = [
       {
         De3pzq: 'f3xbvq9',
       },
       'ltr',
     ];
     const parentDebugClassNames = [{ className: 'f3xbvq9', overriddenBy: undefined }];
-    expect(getDebugClassNames(lookupItem, parentlLookupItem, parentDebugClassNames)).toEqual([
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames)).toEqual([
       {
         className: 'fdmssx0',
         overriddenBy: 'f3xbvq9',
@@ -63,12 +64,42 @@ describe('getDebugClassNames', () => {
       },
       'ltr',
     ];
-    const parentlLookupItem: LookupItem = [...lookupItem];
+    const parentLookupItem: LookupItem = [...lookupItem];
     const parentDebugClassNames = [{ className: 'fdmssx0', overriddenBy: 'f3xbvq9' }];
-    expect(getDebugClassNames(lookupItem, parentlLookupItem, parentDebugClassNames)).toEqual([
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames)).toEqual([
       {
         className: 'fdmssx0',
         overriddenBy: 'f3xbvq9',
+      },
+    ]);
+  });
+
+  it('handles parent debug node contains overriding style, but the overriding rule is the same', () => {
+    const lookupItem: LookupItem = [
+      {
+        De3pzq: 'fdmssx0',
+      },
+      'ltr',
+    ];
+    const parentLookupItem: LookupItem = [
+      {
+        De3pzq: 'fdmssx0',
+      },
+      'ltr',
+    ];
+    const parentDebugClassNames = [{ className: 'fdmssx0', overriddenBy: undefined }];
+    const overridingSiblings: DebugSequence[] = [
+      {
+        sequenceHash: '___1abcdef_1abcdef',
+        direction: 'ltr',
+        children: [],
+        debugClassNames: [{ className: 'fdmssx0' }],
+      },
+    ];
+    expect(getDebugClassNames(lookupItem, parentLookupItem, parentDebugClassNames, overridingSiblings)).toEqual([
+      {
+        className: 'fdmssx0',
+        overriddenBy: 'fdmssx0',
       },
     ]);
   });

@@ -1,7 +1,8 @@
 import * as stylis from 'stylis';
 import type { AtomicRules, MonolithicAtRules, MonolithicRules, RuleDetail } from './types';
 
-const griffelClassNameRegex = /^\.f[0-9a-z]+$/;
+// match className like '.fvnxzrg' or '.fvnxzrg.fui-focus-visible'
+const griffelClassNameRegex = /^\.(f[0-9a-z]+)(\..*|$)/;
 
 function parseRuleElement(element: stylis.Element, overriddenBy?: string) {
   // example of `value`: `.f3xbvq9:hover`
@@ -12,12 +13,13 @@ function parseRuleElement(element: stylis.Element, overriddenBy?: string) {
     let className: string | undefined;
     const selector = stylis
       .tokenize(classNameSelector)
-      .filter(token => {
-        if (griffelClassNameRegex.test(token)) {
-          className = token.slice(1);
-          return false;
+      .map(token => {
+        const match = token.match(griffelClassNameRegex);
+        if (match?.[1]) {
+          className = match?.[1];
+          return match[2] ?? '';
         }
-        return true;
+        return token;
       })
       .join('');
     const rules: RuleDetail[] = children.map(child => ({

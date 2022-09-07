@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: update debug data collection to handle duplicate overrides",
+  "packageName": "@griffel/core",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
