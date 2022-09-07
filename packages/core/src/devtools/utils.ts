@@ -33,8 +33,8 @@ export function getDebugClassNames(
           overridingSibling =>
             overridingSibling.debugClassNames.filter(
               ({ className: siblingClassName }) => siblingClassName === className,
-            ).length,
-        ).length;
+            ).length > 0,
+        ).length > 0;
         overriddenBy = siblingHasSameRule
           ? matching.className // case 2
           : matching.overriddenBy; // case 1
