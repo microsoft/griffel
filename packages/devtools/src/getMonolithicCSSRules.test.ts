@@ -158,7 +158,7 @@ describe('getMonolithicCSSRules', () => {
     });
   });
 
-  it.only('group atomic css when class name selector has selector in front', () => {
+  it('group atomic css when class name selector has selector in front', () => {
     const rules = [
       '[data-keyboard-nav] .fabcde0:focus{background-color:red;}',
       '[data-keyboard-nav] .fabcde1{color:red;}',
