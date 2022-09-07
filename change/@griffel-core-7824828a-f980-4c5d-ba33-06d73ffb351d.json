@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "fix devtools to show override when the overriding rule is the same",
+  "comment": "fix: update debug data collection to handle duplicate overrides",
   "packageName": "@griffel/core",
   "email": "yuanboxue@microsoft.com",
   "dependentChangeType": "patch"
