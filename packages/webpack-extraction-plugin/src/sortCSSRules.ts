@@ -47,7 +47,7 @@ export function getStyleBucketNameFromElement(element: Element): StyleBucketName
   }
 
   return getStyleBucketName(
-    getSelectorFromElement(element),
+    [getSelectorFromElement(element)],
     element.type === '@layer' ? element.value : '',
     element.type === MEDIA ? element.value : '',
     element.type === SUPPORTS ? element.value : '',

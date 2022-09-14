@@ -1,21 +1,23 @@
 import { compileCSS, CompileCSSOptions, normalizePseudoSelector } from './compileCSS';
 
-const defaultOptions: Pick<CompileCSSOptions, 'rtlClassName' | 'className' | 'media' | 'pseudo' | 'support' | 'layer'> =
-  {
-    className: 'foo',
-    rtlClassName: 'rtl-foo',
-    media: '',
-    pseudo: '',
-    support: '',
-    layer: '',
-  };
+const defaultOptions: Pick<
+  CompileCSSOptions,
+  'rtlClassName' | 'className' | 'media' | 'selectors' | 'support' | 'layer'
+> = {
+  className: 'foo',
+  rtlClassName: 'rtl-foo',
+  media: '',
+  selectors: [],
+  support: '',
+  layer: '',
+};
 
 describe('compileCSS', () => {
   it('handles pseudo', () => {
     expect(
       compileCSS({
         ...defaultOptions,
-        pseudo: ':hover',
+        selectors: [':hover'],
         property: 'color',
         value: 'red',
       }),
@@ -27,7 +29,7 @@ describe('compileCSS', () => {
     expect(
       compileCSS({
         ...defaultOptions,
-        pseudo: ':focus:hover',
+        selectors: [':focus:hover'],
         property: 'color',
         value: 'red',
       }),
@@ -98,11 +100,11 @@ describe('compileCSS', () => {
     `);
   });
 
-  it('handles rtl properties with preudo selectors', () => {
+  it('handles rtl properties with pseudo selectors', () => {
     expect(
       compileCSS({
         ...defaultOptions,
-        pseudo: ':before',
+        selectors: [':before'],
 
         property: 'paddingLeft',
         value: '10px',
@@ -140,7 +142,7 @@ describe('compileCSS', () => {
       expect(
         compileCSS({
           ...defaultOptions,
-          pseudo: ':global(body)',
+          selectors: [':global(body)'],
           property: 'color',
           value: 'red',
         }),
@@ -152,13 +154,13 @@ describe('compileCSS', () => {
       expect(
         compileCSS({
           ...defaultOptions,
-          pseudo: ':global(body) &',
+          selectors: [':global(.fui-FluentProvider)', '& .focus:hover'],
           property: 'color',
           value: 'red',
         }),
       ).toMatchInlineSnapshot(`
       Array [
-        "body .foo{color:red;}",
+        ".fui-FluentProvider .foo .focus:hover{color:red;}",
       ]
     `);
     });
@@ -167,7 +169,7 @@ describe('compileCSS', () => {
       expect(
         compileCSS({
           ...defaultOptions,
-          pseudo: ':global(body)',
+          selectors: [':global(body)'],
           property: 'paddingLeft',
           value: '10px',
 

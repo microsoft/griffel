@@ -412,6 +412,21 @@ describe('resolveStyleRules', () => {
           padding-right: 10px;
         }
       `);
+
+      expect(
+        resolveStyleRules({
+          ':hover,:focus-within': {
+            '::before': {
+              color: 'orange',
+            },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        .fij4gri:hover::before,
+        .fij4gri:focus-within::before {
+          color: orange;
+        }
+      `);
     });
 
     it('handles media queries', () => {
@@ -576,18 +591,6 @@ describe('resolveStyleRules', () => {
     it('handles :global selector', () => {
       expect(
         resolveStyleRules({
-          ':global(body) &': { color: 'green' },
-        }),
-      ).toMatchInlineSnapshot(`
-        body .fm1e7ra {
-          color: green;
-        }
-      `);
-    });
-
-    it('handles :global selector', () => {
-      expect(
-        resolveStyleRules({
           ':global(body)': {
             ':focus': {
               color: 'green',
@@ -609,34 +612,38 @@ describe('resolveStyleRules', () => {
       `);
       expect(
         resolveStyleRules({
+          ':global(body):focus': { color: 'pink' },
           ':global(body) :focus': { color: 'green' },
           ':global(body) :focus:hover': { color: 'blue' },
           ':global(body) :focus .foo': { color: 'yellow' },
         }),
       ).toMatchInlineSnapshot(`
-        body .frou13r:focus {
+        body .fug6i29:focus {
+          color: pink;
+        }
+        body .frou13r :focus {
           color: green;
         }
-        body .f1emv7y1:focus:hover {
+        body .f1emv7y1 :focus:hover {
           color: blue;
         }
-        body .f1g015sp:focus .foo {
+        body .f1g015sp :focus .foo {
           color: yellow;
         }
       `);
     });
 
-    // it.todo('supports :global as a nested selector', () => {
-    //   expect(
-    //     resolveStyleRules({
-    //       ':focus': { ':global(body)': { color: 'green' } },
-    //     }),
-    //   ).toMatchInlineSnapshot(`
-    //     body .fm1e7ra0:focus {
-    //       color: green;
-    //     }
-    //   `);
-    // });
+    it('supports :global as a nested selector', () => {
+      expect(
+        resolveStyleRules({
+          ':focus': { ':global(body)': { color: 'green' } },
+        }),
+      ).toMatchInlineSnapshot(`
+        body .fz7er5p:focus {
+          color: green;
+        }
+      `);
+    });
   });
 
   describe('keyframes', () => {
