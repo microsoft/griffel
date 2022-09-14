@@ -1,5 +1,4 @@
-import * as CSS from 'csstype';
-import { LookupItem, SequenceHash } from './types';
+import { GriffelStylesUnsupportedCSSProperties, LookupItem, SequenceHash } from './types';
 
 /** @internal */
 export const DATA_BUCKET_ATTR = 'data-make-styles-bucket';
@@ -35,7 +34,7 @@ export const LOOKUP_DIR_INDEX = 1;
 
 // This collection is a map simply for faster access when checking if a CSS property is unsupported
 /** @internal */
-export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, 1> = {
+export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof GriffelStylesUnsupportedCSSProperties, 1> = {
   all: 1,
   animation: 1,
   background: 1,
