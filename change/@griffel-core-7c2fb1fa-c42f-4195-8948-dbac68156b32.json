@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Add TSDoc to unsupported CSS properties",
+  "comment": "fix: add TSDoc to unsupported CSS properties",
   "packageName": "@griffel/core",
   "email": "tigeroakes@microsoft.com",
   "dependentChangeType": "patch"
