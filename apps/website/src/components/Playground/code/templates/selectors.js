@@ -9,19 +9,19 @@ export default makeStyles({
 
   attribute: {
     '&[data-attribute]': {
-      color: 'red',
+      color: 'magenta',
     },
   },
 
   class: {
-    '&. child-class': {
-      color: 'red',
+    '&.my-class': {
+      color: 'olive',
     },
   },
 
   childClass: {
-    '&.my-class': {
-      color: 'red',
+    '& .my-class': {
+      color: 'pink',
     },
   },
 });
