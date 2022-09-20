@@ -1,10 +1,17 @@
 import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/vs.css';
+import 'highlight.js/styles/vs2015.css';
 import beautify from 'js-beautify';
 import React from 'react';
 import css from 'highlight.js/lib/languages/css';
 import styles from './styles';
 hljs.registerLanguage('css', css);
+
+// Style reset
+Object.assign(document.body.style, {
+  // matches "highlight.js" theme
+  background: '#1e1e1e',
+  margin: 0,
+});
 
 export default function App() {
   const [rules, setRules] = React.useState('');
@@ -62,7 +69,7 @@ export default function App() {
   }, [rules]);
 
   return (
-    <pre>
+    <pre style={{ margin: 0 }}>
       <code ref={ref} className="language-css">
         {rules}
       </code>

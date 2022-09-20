@@ -4,25 +4,11 @@
   font-size: 24px;
 }
 
-.toggleButton {
-  color: var(--ifm-color-content);
-  background-color: transparent;
-  border: unset;
-  display: flex;
-  font-size: inherit;
-  padding: 0;
-  outline-offset: 2px;
-}
-
-.toggleButton:hover {
-  color: var(--ifm-color-content-secondary);
-  cursor: pointer;
-}
-
 .githubLink {
   color: var(--ifm-color-content);
   display: flex;
   outline-offset: 2px;
+  font-size: 32px;
 }
 
 .githubLink:hover {

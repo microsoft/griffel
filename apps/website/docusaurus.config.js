@@ -1,6 +1,5 @@
 // @ts-check
 
-const lightCodeTheme = require('prism-react-renderer/themes/vsLight');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
 /** @type {import('@docusaurus/types').Config} */
@@ -46,6 +45,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        defaultMode: 'dark',
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
+      },
+
       docs: {
         sidebar: {
           autoCollapseCategories: false,
@@ -73,7 +78,6 @@ const config = {
         ],
       },
       prism: {
-        theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
         prism: {
           additionalLanguages: ['javascript', 'css'],
