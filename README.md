@@ -26,6 +26,14 @@ yarn add @griffel/react
 
 [Read more](./packages/react)
 
+## Learn more?
+
+Check series episodes of Fluent UI Insights related to styling issues and Griffel 🎥
+
+|                                                                                                           EP02: Styling                                                                                                           |                                                                                                  EP03: Griffel                                                                                                  |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://learn.microsoft.com/en-us/shows/fluent-ui-insights/fluent-ui-insights-styling?utm_source=github" target="_blank"><img src="ghdocs/medias/fluentui-ep02-preview.gif" alt="Watch EP02: Styling" width="240" /></a> | <a href="https://learn.microsoft.com/en-us/shows/fluent-ui-insights/fluent-ui-insights-griffel" target="_blank"><img src="ghdocs/medias/fluentui-ep03-preview.gif" alt="Watch EP03: Griffel" width="240" /></a> |
+
 ## Contributing
 
 This project welcomes contributions and suggestions, please see [CONTRIBUTING.md](./CONTRIBUTING.md) to get started.
