@@ -4,6 +4,52 @@ sidebar_position: 2
 
 # Limitations
 
+## Runtime styles
+
+Styles can't be created at runtime which includes dynamic selectors as well.
+
+```jsx
+function App(props) {
+  // ❌ This will not work and throw an expection
+  const useClasses = makeStyles({
+    color: props.color,
+    [`.${props.area}`]: { display: 'block' },
+  });
+}
+```
+
+As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation/introduction) values used in CSS rules should be static to be compiled.
+
+### Workarounds
+
+- Use inline styles on elements. They don't have the best performance, but it will be faster than invoke any CSS-in-JS for frequently changing values.
+
+  ```jsx
+  const useClasses = makeStyles({
+    /* your styles */
+  });
+
+  function App(props) {
+    const classes = useClasses();
+    return <div style={{ color: props.color }} />;
+  }
+  ```
+
+- Use local CSS variables for nested/pseudo selectors. Prefer to use inline styles, but they can't be used for pseudo selector, for example.
+
+  ```jsx
+  const useClasses = makeStyles({
+    root: {
+      ':hover': { color: 'var(--my-app-color)' },
+    },
+  });
+
+  function App(props) {
+    const classes = useClasses();
+    return <div style={{ '--my-app-color': props.color }} />;
+  }
+  ```
+
 ## CSS shorthands are not supported
 
 There are [shorthand and longhand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) in CSS. Shorthand properties allow to define a set of longhand properties. For example:
