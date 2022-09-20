@@ -1,0 +1,36 @@
+diff --git a/lib/utils/docsUtils.js b/lib/utils/docsUtils.js
+index 61d72a3300b94904c8809503360206081e1c029c..43d75f84e8fc18e023ebb91afc17bd7354d9be27 100644
+--- a/lib/utils/docsUtils.js
++++ b/lib/utils/docsUtils.js
+@@ -105,13 +105,13 @@ export function isActiveSidebarItem(item, activePath) {
+  * Get the sidebar the breadcrumbs for a given pathname
+  * Ordered from top to bottom
+  */
+-function getSidebarBreadcrumbs({ sidebarItems, pathname, onlyCategories = false, }) {
++function getSidebarBreadcrumbs({ sidebarItems, pathname, hash = '', onlyCategories = false, }) {
+     const breadcrumbs = [];
+     function extract(items) {
+         for (const item of items) {
+             if ((item.type === 'category' &&
+-                (isSamePath(item.href, pathname) || extract(item.items))) ||
+-                (item.type === 'link' && isSamePath(item.href, pathname))) {
++                (isSamePath(item.href, pathname + hash) || extract(item.items))) ||
++                (item.type === 'link' && isSamePath(item.href, pathname + hash))) {
+                 const filtered = onlyCategories && item.type !== 'category';
+                 if (!filtered) {
+                     breadcrumbs.unshift(item);
+@@ -130,12 +130,12 @@ function getSidebarBreadcrumbs({ sidebarItems, pathname, onlyCategories = false,
+  */
+ export function useSidebarBreadcrumbs() {
+     const sidebar = useDocsSidebar();
+-    const { pathname } = useLocation();
++    const { pathname, hash } = useLocation();
+     const breadcrumbsOption = useActivePlugin()?.pluginData.breadcrumbs;
+     if (breadcrumbsOption === false || !sidebar) {
+         return null;
+     }
+-    return getSidebarBreadcrumbs({ sidebarItems: sidebar.items, pathname });
++    return getSidebarBreadcrumbs({ sidebarItems: sidebar.items, hash, pathname });
+ }
+ /**
+  * "Version candidates" are mostly useful for the layout components, which must

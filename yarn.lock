@@ -2519,6 +2519,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@docusaurus/theme-common@patch:@docusaurus/theme-common@npm:2.1.0#.yarn/patches/@docusaurus-theme-common-npm-2.1.0-d5ae2a9539.patch::locator=griffel-repository%40workspace%3A.":
+  version: 2.1.0
+  resolution: "@docusaurus/theme-common@patch:@docusaurus/theme-common@npm%3A2.1.0#.yarn/patches/@docusaurus-theme-common-npm-2.1.0-d5ae2a9539.patch::version=2.1.0&hash=9c5bd1&locator=griffel-repository%40workspace%3A."
+  dependencies:
+    "@docusaurus/mdx-loader": 2.1.0
+    "@docusaurus/module-type-aliases": 2.1.0
+    "@docusaurus/plugin-content-blog": 2.1.0
+    "@docusaurus/plugin-content-docs": 2.1.0
+    "@docusaurus/plugin-content-pages": 2.1.0
+    "@docusaurus/utils": 2.1.0
+    "@types/history": ^4.7.11
+    "@types/react": "*"
+    "@types/react-router-config": "*"
+    clsx: ^1.2.1
+    parse-numeric-range: ^1.3.0
+    prism-react-renderer: ^1.3.5
+    tslib: ^2.4.0
+    utility-types: ^3.10.0
+  peerDependencies:
+    react: ^16.8.4 || ^17.0.0
+    react-dom: ^16.8.4 || ^17.0.0
+  checksum: a64130306aa4d5b103d5c613019b7e3d6be3f1226d910e10109eaa21c278e8dc4cea9eee8cfc9d2e8df7e6ada1423ebd1c74119da6139009736b705829f3ecd5
+  languageName: node
+  linkType: hard
+
 "@docusaurus/theme-search-algolia@npm:2.1.0":
   version: 2.1.0
   resolution: "@docusaurus/theme-search-algolia@npm:2.1.0"
