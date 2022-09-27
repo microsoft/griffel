@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface SelectProps {
+  children: React.ReactNode;
   label: string;
 }
 
