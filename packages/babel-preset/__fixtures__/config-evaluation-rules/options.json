@@ -1,7 +1,0 @@
-{
-  "evaluationRules": [
-    {
-      "action": "sampleEvaluator"
-    }
-  ]
-}
