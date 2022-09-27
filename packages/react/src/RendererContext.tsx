@@ -10,6 +10,11 @@ export interface RendererProviderProps {
    * Document used to insert CSS variables to head
    */
   targetDocument?: Document;
+
+  /**
+   * Content wrapped by the RendererProvider
+   */
+  children: React.ReactNode;
 }
 
 /**

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface BoxProps {
   color: 0 | 1 | 2 | 3 | 4 | 5;
   fixed: boolean;
@@ -9,5 +11,6 @@ export interface DotProps {
   size: number;
   x: number;
   y: number;
+  children: React.ReactNode;
   color: string;
 }
