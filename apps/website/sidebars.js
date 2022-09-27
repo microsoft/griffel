@@ -6,7 +6,7 @@ function generateTryItOutSidebar() {
   const playgroundTemplatePath = path.join(__dirname, '/src/components/Playground/code/templates');
   const templateFiles = fs.readdirSync(playgroundTemplatePath);
 
-  return templateFiles
+  const items = templateFiles
     .reduce((sidebarItems, templateFile) => {
       const id = path.parse(templateFile).name;
       const templatePath = path.join(playgroundTemplatePath, templateFile);
@@ -54,6 +54,20 @@ function generateTryItOutSidebar() {
       return sidebarItems;
     }, [])
     .filter(Boolean);
+
+  return [
+    {
+      type: 'category',
+      label: 'Try it out',
+      link: {
+        type: 'doc',
+        id: 'try-it-out/try-it-out',
+      },
+      collapsible: false,
+      collapsed: false,
+      items,
+    },
+  ];
 }
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
