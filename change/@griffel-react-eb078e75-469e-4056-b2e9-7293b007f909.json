@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Adding children to prop type definitions",
+  "comment": "fix: Adding children to prop type definitions for React 18",
   "packageName": "@griffel/react",
   "email": "liukerry@microsoft.com",
   "dependentChangeType": "patch"
