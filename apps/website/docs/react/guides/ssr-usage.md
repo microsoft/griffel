@@ -10,7 +10,7 @@ Griffel provides first class support for Server-Side Rendering.
 
 ### Base setup
 
-For basic instructions to setup Next.js, see [Getting Started](https://nextjs.org/docs/getting-started). Please complete following steps:
+For basic instructions to setup Next.js, see [Getting Started](https://nextjs.org/docs/getting-started). Please complete the following steps:
 
 1. Get a basic Next.js setup running, rendering a page from the `pages` folder, as guided by the tutorial.
 2. Add the Griffel to dependencies (`@griffel/react` package), check [Install](/react/install) page.
@@ -84,7 +84,7 @@ function MyApp({ Component, pageProps, renderer }) {
 export default MyApp;
 ```
 
-3. You should now be able to server render components with Griffel styles in any of your pages:
+3. You should now be able to server render components with Griffel styles on any of your pages:
 
 ```js
 import { makeStyles } from '@griffel/react';
@@ -96,6 +96,6 @@ const useClasses = makeStyles({
 export default function Home() {
   const classes = useClasses();
 
-  return <Button classeName={classes.button}>Hello world!</Button>;
+  return <Button className={classes.button}>Hello world!</Button>;
 }
 ```
