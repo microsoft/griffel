@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Adding children to prop type definitions",
+  "packageName": "@griffel/react",
+  "email": "liukerry@microsoft.com",
+  "dependentChangeType": "patch"
+}
