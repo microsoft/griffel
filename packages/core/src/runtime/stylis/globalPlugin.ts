@@ -6,13 +6,11 @@ export const globalPlugin: Middleware = element => {
     case RULESET:
       if (typeof element.props === 'string') {
         throw new Error(
-          process.env.NODE_ENV === 'production'
-            ? ''
-            : `"element.props" has type "string" (${JSON.stringify(
-                element.props,
-                null,
-                2,
-              )}), it's not expected. Please report a bug if it happens.`,
+          `"element.props" has type "string" (${JSON.stringify(
+            element.props,
+            null,
+            2,
+          )}), it's not expected. Please report a bug if it happens.`,
         );
       }
 
@@ -32,11 +30,7 @@ export const globalPlugin: Middleware = element => {
               acc.unshift(selector);
 
               if (acc[acc.length - 1] !== ':') {
-                throw new Error(
-                  process.env.NODE_ENV === 'production'
-                    ? ''
-                    : `A token before "global()" selector should be ":": ${JSON.stringify(acc)}`,
-                );
+                throw new Error(`A token before "global()" selector should be ":": ${JSON.stringify(acc)}`);
               }
 
               delete acc[acc.length - 1];
