@@ -22,25 +22,26 @@ export const globalPlugin: Middleware = element => {
 
         return tokenize(value)
           .reduce<string[]>((acc, value, index, children) => {
-            if (value === 'global') {
-              const selector = children[index + 1].slice(1, -1);
+            if (value === '') {
+              return acc;
+            }
 
-              // A separator between selectors i.e. "body .class"
-              acc.unshift(' ');
+            if (value === ':' && children[index + 1] === 'global') {
+              const selector =
+                // An inner part of ":global()"
+                children[index + 2].slice(1, -1) +
+                // A separator between selectors i.e. "body .class"
+                ' ';
+
               acc.unshift(selector);
 
-              if (acc[acc.length - 1] !== ':') {
-                throw new Error(`A token before "global()" selector should be ":": ${JSON.stringify(acc)}`);
-              }
-
-              delete acc[acc.length - 1];
-              delete children[index + 1];
+              children[index + 1] = '';
+              children[index + 2] = '';
 
               return acc;
             }
 
             acc.push(value);
-
             return acc;
           }, [])
           .join('');
