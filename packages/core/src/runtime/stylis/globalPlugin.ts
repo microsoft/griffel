@@ -5,13 +5,17 @@ export const globalPlugin: Middleware = element => {
   switch (element.type) {
     case RULESET:
       if (typeof element.props === 'string') {
-        throw new Error(
-          `"element.props" has type "string" (${JSON.stringify(
-            element.props,
-            null,
-            2,
-          )}), it's not expected. Please report a bug if it happens.`,
-        );
+        if (process.env.NODE_ENV !== 'production') {
+          throw new Error(
+            `"element.props" has type "string" (${JSON.stringify(
+              element.props,
+              null,
+              2,
+            )}), it's not expected. Please report a bug if it happens.`,
+          );
+        }
+
+        return;
       }
 
       element.props = element.props.map(value => {
