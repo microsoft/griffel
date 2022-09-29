@@ -76,9 +76,9 @@ module.exports = {
 };
 ```
 
-- `mini-css-extract-plugin` is not mandatory and configured there for example, you can use `style-loader` or other tooling to inject CSS on a page
+- `mini-css-extract-plugin` is not mandatory and is used as am example, you can use `style-loader` or other tooling to inject CSS on a page
 
-For better performance (to process less files) consider to use `include` for `GriffelCSSExtractionPlugin.loader`:
+For better performance (to process less files) consider using `include` for `GriffelCSSExtractionPlugin.loader`:
 
 ```js
 const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');

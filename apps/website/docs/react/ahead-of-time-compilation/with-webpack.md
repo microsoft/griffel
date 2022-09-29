@@ -87,7 +87,7 @@ module.exports = {
 
 ## Usage with Next.js
 
-Next.js allows to [tweak Webpack's config](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config) so the same options are applicanle to its config.
+Next.js lets users [tweak Webpack's config](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config) so the same options are applicable to its config.
 
 ```js
 // next.config.js

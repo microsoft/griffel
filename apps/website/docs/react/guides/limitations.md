@@ -18,11 +18,11 @@ function App(props) {
 }
 ```
 
-As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation/introduction) values used in CSS rules should be static to be compiled.
+As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation/introduction) values used in CSS rules should be static so that they can be compiled.
 
 ### Workarounds
 
-- Use inline styles on elements. They don't have the best performance, but it will be faster than invoke any CSS-in-JS for frequently changing values.
+- Use inline styles on elements. They don't have the best performance, but it will be faster than invoking any CSS-in-JS for frequently changing values.
 
   ```jsx
   const useClasses = makeStyles({
