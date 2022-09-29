@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Technical details
 
-## What is being optimized with AOT (Ahead Of Time) complilation?
+## What is being optimized with AOT (Ahead Of Time) compilation?
 
 :::info
 
