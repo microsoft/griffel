@@ -22,6 +22,27 @@ As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation
 
 ### Workarounds
 
+- Use variants enumeration. If you know values in advance and a set is limited the best option is to enumerate them.
+
+  ```jsx
+  const useClasses = makeStyles({
+    twoColumns: {},
+    threeColumns: {},
+    fourColumns: {},
+  });
+
+  function App(props) {
+    const classes = useClasses();
+    const className = mergeClasses(
+      props.columns === 'two' && classes.twoColumns,
+      props.columns === 'three' && classes.threeColumns,
+      props.columns === 'four' && classes.fourColumns,
+    );
+
+    return <div className={className} />;
+  }
+  ```
+
 - Use inline styles on elements. They don't have the best performance, but it will be faster than invoking any CSS-in-JS for frequently changing values.
 
   ```jsx
