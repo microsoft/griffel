@@ -147,54 +147,56 @@ export const babelPluginStripGriffelRuntime = declare<
 
               argumentPath.traverse({
                 TemplateLiteral(literalPath) {
-                  const expressionPath = literalPath.get('expressions.0');
+                  const expressionPaths = literalPath.get('expressions');
 
-                  if (Array.isArray(expressionPath) || !expressionPath.isIdentifier()) {
-                    throw literalPath.buildCodeFrameError(
-                      [
-                        'A template literal with an imported asset should contain an expression statement.',
-                        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                      ].join(' '),
-                    );
-                  }
+                  expressionPaths.map(expressionPath => {
+                    if (Array.isArray(expressionPath) || !expressionPath.isIdentifier()) {
+                      throw literalPath.buildCodeFrameError(
+                        [
+                          'A template literal with an imported asset should contain an expression statement.',
+                          'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+                        ].join(' '),
+                      );
+                    }
 
-                  const expressionName = expressionPath.node.name;
-                  const expressionBinding = literalPath.scope.getBinding(expressionName);
+                    const expressionName = expressionPath.node.name;
+                    const expressionBinding = literalPath.scope.getBinding(expressionName);
 
-                  if (typeof expressionBinding === 'undefined') {
-                    throw expressionPath.buildCodeFrameError(
-                      [
-                        'Failed to resolve a binding in a scope for an identifier.',
-                        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                      ].join(' '),
-                    );
-                  }
+                    if (typeof expressionBinding === 'undefined') {
+                      throw expressionPath.buildCodeFrameError(
+                        [
+                          'Failed to resolve a binding in a scope for an identifier.',
+                          'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+                        ].join(' '),
+                      );
+                    }
 
-                  const importDeclarationPath = expressionBinding.path.findParent(p =>
-                    p.isImportDeclaration(),
-                  ) as NodePath<t.ImportDeclaration> | null;
+                    const importDeclarationPath = expressionBinding.path.findParent(p =>
+                      p.isImportDeclaration(),
+                    ) as NodePath<t.ImportDeclaration> | null;
 
-                  if (importDeclarationPath === null) {
-                    throw expressionBinding.path.buildCodeFrameError(
-                      [
-                        'Failed to resolve an import for the identifier.',
-                        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                      ].join(' '),
-                    );
-                  }
+                    if (importDeclarationPath === null) {
+                      throw expressionBinding.path.buildCodeFrameError(
+                        [
+                          'Failed to resolve an import for the identifier.',
+                          'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+                        ].join(' '),
+                      );
+                    }
 
-                  expressionPath.replaceWith(
-                    t.stringLiteral(
-                      // When imports are inlined, we need to adjust the relative paths inside url(..) expressions
-                      // to allow css-loader resolve an imported asset properly
-                      transformUrl(
-                        state.filename!,
-                        options.resourceDirectory!,
-                        importDeclarationPath.get('source').node.value,
+                    expressionPath.replaceWith(
+                      t.stringLiteral(
+                        // When imports are inlined, we need to adjust the relative paths inside url(..) expressions
+                        // to allow css-loader resolve an imported asset properly
+                        transformUrl(
+                          state.filename!,
+                          options.resourceDirectory!,
+                          importDeclarationPath.get('source').node.value,
+                        ),
                       ),
-                    ),
-                  );
-                  importDeclarationPath.remove();
+                    );
+                    importDeclarationPath.remove();
+                  });
                 },
               });
 

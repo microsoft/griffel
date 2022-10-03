@@ -1,8 +1,9 @@
 import { NodePath, traverse, types as t } from '@babel/core';
 import * as path from 'path';
+import { tokenize } from 'stylis';
 
 import { absolutePathToRelative } from './absolutePathToRelative';
-import { parseStringWithUrl } from './parseStringWithUrl';
+import { isAssetUrl } from './isAssetUrl';
 
 /**
  * Replaces assets used in styles with imports and template literals.
@@ -29,6 +30,39 @@ export function replaceAssetsWithImports(
     return assetIdentifiers.get(assetPath) as t.Identifier;
   }
 
+  function buildTemplateLiteralFromValue(value: string): t.TemplateLiteral {
+    const tokens = tokenize(value);
+
+    const quasis: t.TemplateElement[] = [];
+    const expressions: t.Identifier[] = [];
+
+    let acc = '';
+
+    for (let i = 0, l = tokens.length; i < l; i++) {
+      for (; i < l; i++) {
+        acc += tokens[i];
+
+        if (tokens[i] === 'url') {
+          const url = tokens[i + 1].slice(1, -1);
+
+          if (isAssetUrl(url)) {
+            quasis.push(t.templateElement({ raw: acc + '(' }, false));
+            expressions.push(getAssetIdentifier(url));
+
+            acc = ')';
+            i++;
+
+            break;
+          }
+        }
+      }
+    }
+
+    quasis.push(t.templateElement({ raw: acc }, true));
+
+    return t.templateLiteral(quasis, expressions);
+  }
+
   traverse(
     pathToUpdate.node,
     {
@@ -39,15 +73,7 @@ export function replaceAssetsWithImports(
           return;
         }
 
-        const result = parseStringWithUrl(value);
-        const assetIdentifier = getAssetIdentifier(result.url);
-
-        const templateLiteral = t.templateLiteral(
-          [t.templateElement({ raw: result.prefix }, false), t.templateElement({ raw: result.suffix }, true)],
-          [assetIdentifier],
-        );
-
-        literalPath.replaceWith(templateLiteral);
+        literalPath.replaceWith(buildTemplateLiteralFromValue(value));
       },
     },
     programPath.scope,

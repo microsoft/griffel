@@ -1,5 +1,7 @@
 import { GriffelStyle } from '@griffel/core';
-import { parseStringWithUrl } from './parseStringWithUrl';
+import { tokenize } from 'stylis';
+
+import { isAssetUrl } from './isAssetUrl';
 
 /**
  * Linaria v3 emits relative paths for assets, we normalize these paths to be relative from the project root to be the
@@ -22,16 +24,19 @@ export function normalizeStyleRule(
     return ruleValue;
   }
 
-  const result = parseStringWithUrl(ruleValue);
-  // Quotes in URL are optional, so we can also normalize them
-  // https://www.w3.org/TR/CSS2/syndata.html#value-def-uri
-  const url = result.url.replace(/['|"](.+)['|"]/, '$1');
+  return tokenize(ruleValue).reduce((result, token, index, array) => {
+    if (token === 'url') {
+      // Quotes in URL are optional, so we can also normalize them
+      // https://www.w3.org/TR/CSS2/syndata.html#value-def-uri
+      const url = array[index + 1].replace(/['|"](.+)['|"]/, '$1').slice(1, -1);
 
-  if (url.startsWith('data:')) {
-    return `${result.prefix}${url}${result.suffix}`;
-  }
+      if (isAssetUrl(url)) {
+        array[index + 1] = `(${normalizeAssetPath(path, projectRoot, filename, url)})`;
+      }
+    }
 
-  return `${result.prefix}${normalizeAssetPath(path, projectRoot, filename, url)}${result.suffix}`;
+    return result + token;
+  }, '');
 }
 
 export function normalizeStyleRules(

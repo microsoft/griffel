@@ -99,4 +99,33 @@ describe('normalizeStyleRules', () => {
       },
     });
   });
+
+  it('handles multiple URLs', () => {
+    expect(
+      normalizeStyleRules(
+        path.posix,
+        '/home/projects/foo',
+        '/home/projects/foo/src/styles/Component.styles.ts',
+
+        {
+          root: {
+            // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Backgrounds_and_Borders/Using_multiple_backgrounds
+            backgroundImage: [
+              'url(../../assets/firefox.png),',
+              'url(../../assets/bubbles.png),',
+              'linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0))',
+            ].join(' '),
+          },
+        },
+      ),
+    ).toEqual({
+      root: {
+        backgroundImage: [
+          'url(assets/firefox.png),',
+          'url(assets/bubbles.png),',
+          'linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0))',
+        ].join(' '),
+      },
+    });
+  });
 });
