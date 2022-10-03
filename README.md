@@ -1,6 +1,22 @@
-# ✏️ Griffel
+<!-- DOCTOC SKIP -->
 
-**CSS-in-JS with ahead-of-time compilation.**
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./ghdocs/images/griffel-light.png">
+    <img width="600" alt="Griffel's logo" src="./ghdocs/images/griffel-dark.png">
+  </picture>
+</div>
+
+<h2 align="center">CSS-in-JS with ahead-of-time compilation ⚡️</h2>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@griffel/react">
+    <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/@griffel/react.svg?style=flat"/>
+  </a>
+  <img alt="MIT License" src="https://img.shields.io/github/license/microsoft/griffel"/>
+  <a href="https://github.com/microsoft/griffel/discussions">
+    <img alt="Github discussions" src="https://img.shields.io/github/discussions/microsoft/griffel" />
+  </a>
+</p>
 
 Griffel ([_German for stylus/pen_](https://en.wiktionary.org/wiki/Griffel)) is CSS-in-JS with near-zero runtime, SSR support and styles defined with JavaScript objects.
 
@@ -30,8 +46,8 @@ yarn add @griffel/react
 
 Check series episodes of Fluent UI Insights related to styling issues and Griffel 🎥
 
-|                                                                                                           EP02: Styling                                                                                                           |                                                                                                  EP03: Griffel                                                                                                   |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|                                                                                                           EP02: Styling                                                                                                           |                                                                                                           EP03: Griffel                                                                                                           |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://learn.microsoft.com/en-us/shows/fluent-ui-insights/fluent-ui-insights-styling?utm_source=github" target="_blank"><img src="ghdocs/medias/fluentui-ep02-preview.gif" alt="Watch EP02: Styling" width="240" /></a> | <a href="https://learn.microsoft.com/en-us/shows/fluent-ui-insights/fluent-ui-insights-griffel?utm_source=github" target="_blank"><img src="ghdocs/medias/fluentui-ep03-preview.gif" alt="Watch EP03: Griffel" width="240" /></a> |
 
 ## Contributing

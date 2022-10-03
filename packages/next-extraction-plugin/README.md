@@ -2,6 +2,14 @@
 
 A plugin for NextJS 12.0.5 and newer that adds [`@griffel/webpack-extraction-plugin`](../webpack-extraction-plugin) to webpack loaders pipeline.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Install](#install)
+- [Usage](#usage)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```bash

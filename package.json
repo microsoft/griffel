@@ -9,7 +9,8 @@
   },
   "packageManager": "yarn@3.1.1",
   "nano-staged": {
-    "**/*.{js,json,ts,tsx}": "prettier --write"
+    "**/*.{js,json,ts,tsx}": "prettier --write",
+    "**/*.{md}": "doctoc"
   },
   "simple-git-hooks": {
     "pre-commit": "./node_modules/.bin/nano-staged"
@@ -74,6 +75,7 @@
     "beachball": "^2.20.0",
     "bestzip": "2.2.0",
     "d3-scale-chromatic": "^3.0.0",
+    "doctoc": "2.2.1",
     "esbuild": "^0.14.43",
     "esbuild-plugin-alias": "^0.2.1",
     "esbuild-plugin-import-glob": "^0.1.1",

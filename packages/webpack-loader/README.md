@@ -2,6 +2,19 @@
 
 A loader for Webpack 5 that performs build time transforms for [`@griffel/react`](../react).
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Install](#install)
+- [When to use it?](#when-to-use-it)
+- [Usage](#usage)
+  - [Handling Griffel re-exports](#handling-griffel-re-exports)
+  - [Configuring Babel settings](#configuring-babel-settings)
+  - [Configuring module evaluation](#configuring-module-evaluation)
+- [Troubleshooting](#troubleshooting)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```bash
