@@ -23,9 +23,9 @@ describe('makeResetStyles', () => {
       flexDirection: 'row',
     });
 
-    expect(computeClassName({ dir: 'ltr', renderer })).toEqual('rf7lmmpp');
+    expect(computeClassName({ dir: 'ltr', renderer })).toEqual('r7lmmpp');
     expect(renderer).toMatchInlineSnapshot(`
-      .rf7lmmpp {
+      .r7lmmpp {
         color: red;
         -webkit-flex-direction: row;
         -ms-flex-direction: row;

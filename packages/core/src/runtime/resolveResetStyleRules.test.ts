@@ -9,10 +9,10 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rf11y0rml",
+        "r11y0rml",
         null,
         Array [
-          ".rf11y0rml{color:red;overflow-x:hidden;}",
+          ".r11y0rml{color:red;overflow-x:hidden;}",
         ],
       ]
     `);
@@ -23,11 +23,11 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rfovwgyn",
-        "rfj5b9iu",
+        "rovwgyn",
+        "rj5b9iu",
         Array [
-          ".rfovwgyn{margin-left:15px;}",
-          ".rfj5b9iu{margin-right:15px;}",
+          ".rovwgyn{margin-left:15px;}",
+          ".rj5b9iu{margin-right:15px;}",
         ],
       ]
     `);
@@ -40,10 +40,10 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rfj1urkn",
+        "rj1urkn",
         null,
         Array [
-          ".rfj1urkn{color:red;color:blue;}",
+          ".rj1urkn{color:red;color:blue;}",
         ],
       ]
     `);
@@ -57,11 +57,11 @@ describe('resolveResetStyleRules', () => {
       }),
     ).toMatchInlineSnapshot(`
       Array [
-        "rfzlpwqs",
+        "rzlpwqs",
         null,
         Array [
-          ".rfzlpwqs{color:red;}",
-          "body .rfzlpwqs{color:magenta;}",
+          ".rzlpwqs{color:red;}",
+          "body .rzlpwqs{color:magenta;}",
         ],
       ]
     `);
@@ -75,11 +75,11 @@ describe('resolveResetStyleRules', () => {
       }),
     ).toMatchInlineSnapshot(`
       Array [
-        "rf1i1zh9k",
+        "r1i1zh9k",
         null,
         Array [
-          "body .rf1i1zh9k{color:magenta;}",
-          "body .rf1i1zh9k:focus{color:pink;}",
+          "body .r1i1zh9k{color:magenta;}",
+          "body .r1i1zh9k:focus{color:pink;}",
         ],
       ]
     `);
@@ -92,10 +92,10 @@ describe('resolveResetStyleRules', () => {
       }),
     ).toMatchInlineSnapshot(`
       Array [
-        "rfmi35r5",
+        "rmi35r5",
         null,
         Array [
-          ".fui-FluentProvider .rfmi35r5 .foo{color:orange;}",
+          ".fui-FluentProvider .rmi35r5 .foo{color:orange;}",
         ],
       ]
     `);
@@ -114,11 +114,11 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rfpycl1b",
+        "rpycl1b",
         null,
         Array [
-          ".rfpycl1b{color:red;}",
-          "@media (forced-colors: active){.rfpycl1b{color:orange;}.rfpycl1b:focus{color:yellow;}}",
+          ".rpycl1b{color:red;}",
+          "@media (forced-colors: active){.rpycl1b{color:orange;}.rpycl1b:focus{color:yellow;}}",
         ],
       ]
     `);
@@ -136,7 +136,7 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rfvhnavh",
+        "rvhnavh",
         null,
         Array [
           "@layer utilities{color:orange;:focus{color:yellow;}}",
@@ -157,10 +157,10 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rfxf8lon",
+        "rxf8lon",
         null,
         Array [
-          "@supports (display: flex){.rfxf8lon{color:orange;}.rfxf8lon:focus{color:yellow;}}",
+          "@supports (display: flex){.rxf8lon{color:orange;}.rxf8lon:focus{color:yellow;}}",
         ],
       ]
     `);
@@ -179,10 +179,10 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rfhd25ja",
+        "rhd25ja",
         null,
         Array [
-          "@supports (display: flex){.rfhd25ja{color:pink;}@media (forced-colors: active){.rfhd25ja{color:orange;}}}",
+          "@supports (display: flex){.rhd25ja{color:pink;}@media (forced-colors: active){.rhd25ja{color:orange;}}}",
         ],
       ]
     `);
@@ -197,12 +197,12 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "rf1s1f2pl",
+        "r1s1f2pl",
         null,
         Array [
-          ".rf1s1f2pl:hover{color:red;}",
-          ".rf1s1f2pl :focus{color:red;}",
-          ".rf1s1f2pl.foo{color:red;}",
+          ".r1s1f2pl:hover{color:red;}",
+          ".r1s1f2pl :focus{color:red;}",
+          ".r1s1f2pl.foo{color:red;}",
         ],
       ]
     `);

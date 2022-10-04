@@ -7,7 +7,7 @@ export const DATA_BUCKET_ATTR = 'data-make-styles-bucket';
 export const HASH_PREFIX = 'f';
 
 /** @internal */
-export const RESET_HASH_PREFIX = 'rf';
+export const RESET_HASH_PREFIX = 'r';
 
 /** @internal */
 export const SEQUENCE_HASH_LENGTH = 7;
