@@ -13,7 +13,7 @@ export function isInsideComponent() {
     }
 
     // A check with hooks call (i.e. call "React.useContext()" outside a component) will always produce errors, but
-    // a call on the dispatcher don't
+    // a call on the dispatcher wont
     dispatcher.useContext({});
     return true;
   } catch (e) {
