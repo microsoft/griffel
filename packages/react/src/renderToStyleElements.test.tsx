@@ -1,9 +1,10 @@
-import { createDOMRenderer } from '@griffel/core';
+import { createDOMRenderer, GriffelRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 
 import { makeStyles } from './makeStyles';
+import { makeResetStyles } from './makeResetStyles';
 import { RendererProvider } from './RendererContext';
 import { renderToStyleElements } from './renderToStyleElements';
 
@@ -21,8 +22,19 @@ expect.addSnapshotSerializer({
   },
 });
 
-describe('renderToStyleElements', () => {
-  it('renders elements in DOM env', () => {
+describe('renderToStyleElements (DOM)', () => {
+  let renderer: GriffelRenderer;
+
+  beforeEach(() => {
+    process.env.NODE_ENV = 'production';
+    renderer = createDOMRenderer(document);
+  });
+
+  afterEach(() => {
+    document.head.innerHTML = '';
+  });
+
+  it('makeStyles', () => {
     const useExampleStyles = makeStyles({
       root: { color: 'red', ':hover': { color: 'green' } },
     });
@@ -31,8 +43,6 @@ describe('renderToStyleElements', () => {
 
       return <div className={classes.root} />;
     };
-
-    const renderer = createDOMRenderer();
 
     ReactDOM.renderToStaticMarkup(
       <RendererProvider renderer={renderer}>
@@ -51,5 +61,32 @@ describe('renderToStyleElements', () => {
         }
       </style>
     `);
+  });
+
+  it('makeResetStyles', () => {
+    const useClassName = makeResetStyles({
+      color: 'red',
+      ':hover': { color: 'pink' },
+    });
+    const ExampleComponent: React.FC = () => {
+      return <div className={useClassName()} />;
+    };
+
+    ReactDOM.renderToStaticMarkup(
+      <RendererProvider renderer={renderer}>
+        <ExampleComponent />
+      </RendererProvider>,
+    );
+
+    expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
+        <style data-make-styles-bucket="r" data-make-styles-rehydration="true">
+          .r1tsu58y {
+            color: red;
+          }
+          .r1tsu58y:hover {
+            color: pink;
+          }
+        </style>
+      `);
   });
 });
