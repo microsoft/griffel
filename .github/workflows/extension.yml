@@ -58,11 +58,11 @@ jobs:
       - run: yarn nx run @griffel/devtools:pack-extension
 
       - name: Upload extension
-        uses: Passiverecords/chrome-extension-upload-action@1.4.1
+        uses: mobilefirstllc/cws-publish@latest
         with:
-          refresh-token: ${{ secrets.CHROME_EXT_REFRESH_TOKEN }}
-          client-id: ${{ secrets.CHROME_EXT_CLIENT_ID }}
-          client-secret: ${{ secrets.CHROME_EXT_CLIENT_SECRET }}
-          app-id: ${{ secrets.CHROME_EXT_APP_ID }}
-          file-name: ./dist/packages/ext.zip
-          publish: true
+          action: 'publish'
+          refresh_token: ${{ secrets.CHROME_EXT_REFRESH_TOKEN }}
+          client_id: ${{ secrets.CHROME_EXT_CLIENT_ID }}
+          client_secret: ${{ secrets.CHROME_EXT_CLIENT_SECRET }}
+          extension_id: ${{ secrets.CHROME_EXT_APP_ID }}
+          zip_file: ./dist/packages/ext.zip
