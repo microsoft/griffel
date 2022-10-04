@@ -8,6 +8,8 @@ import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
  * @internal
  */
 export const styleBucketOrdering: StyleBucketName[] = [
+  // reset styles
+  'r',
   // catch-all
   'd',
   // link

@@ -77,6 +77,7 @@ async function performTest(tsVersion) {
     console.log(logSymbols.success, 'Package files were packed');
 
     await fs.promises.copyFile(path.resolve(assetsPath, 'fixture.ts'), path.join(tempDir, 'fixture.ts'));
+    await fs.promises.copyFile(path.resolve(assetsPath, 'fixture-reset.ts'), path.join(tempDir, 'fixture-reset.ts'));
     await fs.promises.copyFile(path.resolve(assetsPath, 'tsconfig.fixture.json'), path.join(tempDir, 'tsconfig.json'));
 
     // Reuse the same cache directory to speed up install and avoid network requests

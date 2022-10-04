@@ -14,6 +14,7 @@ describe('getStyleSheetForBucket', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();
 
+    getStyleSheetForBucket('r', target, renderer);
     getStyleSheetForBucket('l', target, renderer);
     getStyleSheetForBucket('d', target, renderer);
     getStyleSheetForBucket('v', target, renderer);

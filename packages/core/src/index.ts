@@ -47,19 +47,23 @@ export type { CreateDOMRendererOptions } from './renderer/createDOMRenderer';
 export { rehydrateRendererCache } from './renderer/rehydrateRendererCache';
 
 export { mergeClasses } from './mergeClasses';
-export { makeStaticStyles } from './makeStaticStyles';
 export { makeStyles } from './makeStyles';
+export { makeStaticStyles } from './makeStaticStyles';
+export { makeResetStyles } from './makeResetStyles';
+
 export { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 
 // Private exports, are used by build time transforms or other tools
 export { __css } from './__css';
+export { __styles } from './__styles';
+
 export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry';
 export { styleBucketOrdering } from './renderer/getStyleSheetForBucket';
 export { defaultCompareMediaQueries } from './renderer/createDOMRenderer';
 export { getStyleBucketName } from './runtime/getStyleBucketName';
 export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 export { resolveStyleRules } from './runtime/resolveStyleRules';
-export { __styles } from './__styles';
+export { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
 
 export * from './constants';
 export type {
@@ -69,6 +73,8 @@ export type {
   // Styles
   GriffelAnimation,
   GriffelStyle,
+  // Reset styles
+  GriffelResetStyle,
   // Internal types
   CSSClasses,
   CSSClassesMapBySlot,
