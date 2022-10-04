@@ -14,7 +14,7 @@ import { hyphenateProperty } from './utils/hyphenateProperty';
 /**
  * @internal
  */
-export function createStringFromStyles(styles: GriffelResetStyle) {
+function createStringFromStyles(styles: GriffelResetStyle) {
   let ltrCSS = '';
   let rtlCSS = '';
 
