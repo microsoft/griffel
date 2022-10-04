@@ -22,7 +22,7 @@ As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation
 
 ### Workarounds
 
-- Use variants enumeration. If you know values in advance and a set is limited the best option is to enumerate them.
+- Enumerate variants. If you know values in advance and a set is limited the best option is to enumerate them.
 
   ```jsx
   const useClasses = makeStyles({
