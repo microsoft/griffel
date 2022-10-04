@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "minor",
   "comment": "feat: add makeResetStyles to @griffel/core",
   "packageName": "@griffel/core",
   "email": "olfedias@microsoft.com",
