@@ -166,6 +166,28 @@ describe('resolveResetStyleRules', () => {
     `);
   });
 
+  it('handles nested queries queries', () => {
+    const result = resolveResetStyleRules({
+      '@supports (display: flex)': {
+        color: 'pink',
+
+        '@media (forced-colors: active)': {
+          color: 'orange',
+        },
+      },
+    });
+
+    expect(result).toMatchInlineSnapshot(`
+      Array [
+        "rfhd25ja",
+        null,
+        Array [
+          "@supports (display: flex){.rfhd25ja{color:pink;}@media (forced-colors: active){.rfhd25ja{color:orange;}}}",
+        ],
+      ]
+    `);
+  });
+
   it('handles nested selectors', () => {
     const result = resolveResetStyleRules({
       ':hover': { color: 'red' },
