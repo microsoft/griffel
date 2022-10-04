@@ -1,7 +1,7 @@
-import { makeResetStyles } from '@griffel/core';
+import { makeStyles, mergeClasses } from '@griffel/core';
 
-console.log(makeResetStyles);
+console.log(makeStyles, mergeClasses);
 
 export default {
-  name: 'makeResetStyles (runtime)',
+  name: 'makeStyles + mergeClasses (runtime)',
 };
