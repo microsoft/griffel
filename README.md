@@ -3,7 +3,7 @@
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./ghdocs/images/griffel-light.png">
-    <img width="600" alt="Griffel's logo" src="./ghdocs/images/griffel-dark.png">
+    <img width="400" alt="Griffel's logo" src="./ghdocs/images/griffel-dark.png">
   </picture>
 </div>
 
