@@ -1,15 +1,16 @@
 import hashString from '@emotion/hash';
-import { convertProperty } from 'rtl-css-js/core';
+import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { RESET_HASH_PREFIX } from '../constants';
-import { GriffelStyle, GriffelResetStyle } from '../types';
-import { compileCSSRules, normalizePseudoSelector } from './compileCSS';
+import { GriffelStyle, GriffelResetStyle, GriffelAnimation } from '../types';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
 import { isLayerSelector } from './utils/isLayerSelector';
 import { isNestedSelector } from './utils/isNestedSelector';
 import { isSupportQuerySelector } from './utils/isSupportQuerySelector';
 import { isObject } from './utils/isObject';
 import { hyphenateProperty } from './utils/hyphenateProperty';
+import { compileCSSRules, normalizePseudoSelector } from './compileCSS';
+import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 
 /**
  * @internal
@@ -36,9 +37,33 @@ function createStringFromStyles(styles: GriffelResetStyle) {
       continue;
     }
 
-    if (property === 'animationName') {
-      // TODO: handle animations
-      throw new Error();
+    if (property === 'animationName' && typeof value === 'object') {
+      const values = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
+
+      const ltrAnimationNames: string[] = [];
+      const rtlAnimationNames: string[] = [];
+
+      for (const keyframeObject of values) {
+        const ltrKeyframeRule = compileKeyframeRule(keyframeObject);
+        const rtlKeyframeRule = compileKeyframeRule(convert(keyframeObject));
+
+        const ltrAnimationName = RESET_HASH_PREFIX + hashString(ltrKeyframeRule);
+        const rtlAnimationName = RESET_HASH_PREFIX + hashString(rtlKeyframeRule);
+
+        ltrAnimationNames.push(ltrAnimationName);
+        rtlAnimationNames.push(rtlAnimationName);
+
+        ltrCSS += compileKeyframesCSS(ltrAnimationName, ltrKeyframeRule).join('');
+
+        if (ltrAnimationName !== rtlAnimationName) {
+          rtlCSS += compileKeyframesCSS(rtlAnimationName, rtlKeyframeRule).join('');
+        }
+      }
+
+      ltrCSS += `animation-name:${ltrAnimationNames.join(',')};`;
+      rtlCSS += `animation-name:${rtlAnimationNames.join(',')};`;
+
+      continue;
     }
 
     if (Array.isArray(value)) {

@@ -1,4 +1,19 @@
+import * as prettier from 'prettier';
 import { resolveResetStyleRules } from './resolveResetStyleRules';
+
+expect.addSnapshotSerializer({
+  test(value) {
+    return Array.isArray(value);
+  },
+  print(value) {
+    /**
+     * test function makes sure that value is the guarded type
+     */
+    const _value = value as ReturnType<typeof resolveResetStyleRules>;
+
+    return prettier.format(_value[2].join(''), { parser: 'css' }).trim();
+  },
+});
 
 describe('resolveResetStyleRules', () => {
   it('handles base rules', () => {
@@ -8,13 +23,10 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "r11y0rml",
-        null,
-        Array [
-          ".r11y0rml{color:red;overflow-x:hidden;}",
-        ],
-      ]
+      .r11y0rml {
+        color: red;
+        overflow-x: hidden;
+      }
     `);
   });
 
@@ -22,14 +34,12 @@ describe('resolveResetStyleRules', () => {
     const result = resolveResetStyleRules({ marginLeft: '15px' });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "rovwgyn",
-        "rj5b9iu",
-        Array [
-          ".rovwgyn{margin-left:15px;}",
-          ".rj5b9iu{margin-right:15px;}",
-        ],
-      ]
+      .rovwgyn {
+        margin-left: 15px;
+      }
+      .rj5b9iu {
+        margin-right: 15px;
+      }
     `);
   });
 
@@ -39,13 +49,10 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "rj1urkn",
-        null,
-        Array [
-          ".rj1urkn{color:red;color:blue;}",
-        ],
-      ]
+      .rj1urkn {
+        color: red;
+        color: blue;
+      }
     `);
   });
 
@@ -56,14 +63,12 @@ describe('resolveResetStyleRules', () => {
         ':global(body)': { color: 'magenta' },
       }),
     ).toMatchInlineSnapshot(`
-      Array [
-        "rzlpwqs",
-        null,
-        Array [
-          ".rzlpwqs{color:red;}",
-          "body .rzlpwqs{color:magenta;}",
-        ],
-      ]
+      .rzlpwqs {
+        color: red;
+      }
+      body .rzlpwqs {
+        color: magenta;
+      }
     `);
 
     expect(
@@ -74,14 +79,12 @@ describe('resolveResetStyleRules', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Array [
-        "r1i1zh9k",
-        null,
-        Array [
-          "body .r1i1zh9k{color:magenta;}",
-          "body .r1i1zh9k:focus{color:pink;}",
-        ],
-      ]
+      body .r1i1zh9k {
+        color: magenta;
+      }
+      body .r1i1zh9k:focus {
+        color: pink;
+      }
     `);
 
     expect(
@@ -91,13 +94,9 @@ describe('resolveResetStyleRules', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
-      Array [
-        "rmi35r5",
-        null,
-        Array [
-          ".fui-FluentProvider .rmi35r5 .foo{color:orange;}",
-        ],
-      ]
+      .fui-FluentProvider .rmi35r5 .foo {
+        color: orange;
+      }
     `);
   });
 
@@ -113,14 +112,17 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "rpycl1b",
-        null,
-        Array [
-          ".rpycl1b{color:red;}",
-          "@media (forced-colors: active){.rpycl1b{color:orange;}.rpycl1b:focus{color:yellow;}}",
-        ],
-      ]
+      .rpycl1b {
+        color: red;
+      }
+      @media (forced-colors: active) {
+        .rpycl1b {
+          color: orange;
+        }
+        .rpycl1b:focus {
+          color: yellow;
+        }
+      }
     `);
   });
 
@@ -135,13 +137,12 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "rvhnavh",
-        null,
-        Array [
-          "@layer utilities{color:orange;:focus{color:yellow;}}",
-        ],
-      ]
+      @layer utilities {
+        color: orange;
+        :focus {
+          color: yellow;
+        }
+      }
     `);
   });
 
@@ -156,13 +157,14 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "rxf8lon",
-        null,
-        Array [
-          "@supports (display: flex){.rxf8lon{color:orange;}.rxf8lon:focus{color:yellow;}}",
-        ],
-      ]
+      @supports (display: flex) {
+        .rxf8lon {
+          color: orange;
+        }
+        .rxf8lon:focus {
+          color: yellow;
+        }
+      }
     `);
   });
 
@@ -178,13 +180,16 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "rhd25ja",
-        null,
-        Array [
-          "@supports (display: flex){.rhd25ja{color:pink;}@media (forced-colors: active){.rhd25ja{color:orange;}}}",
-        ],
-      ]
+      @supports (display: flex) {
+        .rhd25ja {
+          color: pink;
+        }
+        @media (forced-colors: active) {
+          .rhd25ja {
+            color: orange;
+          }
+        }
+      }
     `);
   });
 
@@ -196,15 +201,148 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        "r1s1f2pl",
-        null,
-        Array [
-          ".r1s1f2pl:hover{color:red;}",
-          ".r1s1f2pl :focus{color:red;}",
-          ".r1s1f2pl.foo{color:red;}",
-        ],
-      ]
+      .r1s1f2pl:hover {
+        color: red;
+      }
+      .r1s1f2pl :focus {
+        color: red;
+      }
+      .r1s1f2pl.foo {
+        color: red;
+      }
     `);
+  });
+
+  describe('animationName', () => {
+    it('supports strings', () => {
+      const result = resolveResetStyleRules({
+        animationName: 'foo',
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        .reh730q {
+          -webkit-animation-name: foo;
+          animation-name: foo;
+        }
+      `);
+    });
+
+    it('supports objects', () => {
+      const result = resolveResetStyleRules({
+        animationName: {
+          from: { height: '10px' },
+          to: { height: '20px' },
+        },
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        .r9hyr5r {
+          -webkit-animation-name: r1kgwxhb;
+          animation-name: r1kgwxhb;
+        }
+        @-webkit-keyframes r1kgwxhb {
+          from {
+            height: 10px;
+          }
+          to {
+            height: 20px;
+          }
+        }
+        @-webkit-keyframes r1kgwxhb {
+          from {
+            height: 10px;
+          }
+          to {
+            height: 20px;
+          }
+        }
+        @keyframes r1kgwxhb {
+          from {
+            height: 10px;
+          }
+          to {
+            height: 20px;
+          }
+        }
+        .r1u04j3e {
+          -webkit-animation-name: r1kgwxhb;
+          animation-name: r1kgwxhb;
+        }
+      `);
+    });
+
+    it('supports arrays', () => {
+      const result = resolveResetStyleRules({
+        animationName: [
+          {
+            from: { top: 0 },
+            to: { top: '100px' },
+          },
+          {
+            from: { opacity: '0' },
+            to: { opacity: '1' },
+          },
+        ],
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        .r14v303j {
+          -webkit-animation-name: r1sekkel, r5j8bii;
+          animation-name: r1sekkel, r5j8bii;
+        }
+        @-webkit-keyframes r1sekkel {
+          from {
+            top: 0;
+          }
+          to {
+            top: 100px;
+          }
+        }
+        @-webkit-keyframes r1sekkel {
+          from {
+            top: 0;
+          }
+          to {
+            top: 100px;
+          }
+        }
+        @keyframes r1sekkel {
+          from {
+            top: 0;
+          }
+          to {
+            top: 100px;
+          }
+        }
+        @-webkit-keyframes r5j8bii {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @-webkit-keyframes r5j8bii {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes r5j8bii {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .rcoo9tn {
+          -webkit-animation-name: r1sekkel, r5j8bii;
+          animation-name: r1sekkel, r5j8bii;
+        }
+      `);
+    });
   });
 });
