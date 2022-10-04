@@ -1,8 +1,20 @@
 # Change Log - @griffel/core
 
-This log was last generated on Tue, 16 Aug 2022 11:16:00 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Oct 2022 08:44:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.1
+
+Tue, 04 Oct 2022 08:44:33 GMT
+
+### Patches
+
+- fix: update debug data collection to handle duplicate overrides (yuanboxue@microsoft.com)
+- fix: add TSDoc to unsupported CSS properties (tigeroakes@microsoft.com)
+- fix: do not emit sequence hashes for empty sets (olfedias@microsoft.com)
+- fix: handle nesting in comma separated selectors (olfedias@microsoft.com)
+- chore: create stylis plugin to handle :global() (olfedias@microsoft.com)
 
 ## 1.6.0
 

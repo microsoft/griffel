@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: adopt API changes from @griffel/core",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

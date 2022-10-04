@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-This log was last generated on Tue, 16 Aug 2022 11:16:00 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Oct 2022 08:44:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.2
+
+Tue, 04 Oct 2022 08:44:33 GMT
+
+### Patches
+
+- fix: Adding children to prop type definitions for React 18 (liukerry@microsoft.com)
+- Bump @griffel/core to v1.6.1
 
 ## 1.3.1
 

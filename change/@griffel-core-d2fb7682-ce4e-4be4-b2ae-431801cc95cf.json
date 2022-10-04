@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: create stylis plugin to handle :global()",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

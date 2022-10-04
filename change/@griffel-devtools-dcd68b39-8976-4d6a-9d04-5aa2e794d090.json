@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: show override for same rule, and highlight both selected rule and overriding rule on click; fix griffel className parsing",
-  "packageName": "@griffel/devtools",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}

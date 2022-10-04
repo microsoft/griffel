@@ -2,6 +2,33 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Tue, 04 Oct 2022 08:44:33 GMT",
+      "tag": "@griffel/devtools_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "0e358cbda0f663246ed7c1cc1ad7db0bdc86c22c",
+            "comment": "fix devtools to resolve relative source url"
+          },
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "485ddf103dde824efeb7647e1adb5abd0587e2fe",
+            "comment": "fix: show override for same rule, and highlight both selected rule and overriding rule on click; fix griffel className parsing"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.3.2",
+            "commit": "6828b9b754d65621e12a8fbff54c9f486eab032e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Aug 2022 11:16:00 GMT",
       "tag": "@griffel/devtools_v0.2.0",
       "version": "0.2.0",

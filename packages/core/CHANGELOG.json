@@ -2,6 +2,45 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 04 Oct 2022 08:44:33 GMT",
+      "tag": "@griffel/core_v1.6.1",
+      "version": "1.6.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "485ddf103dde824efeb7647e1adb5abd0587e2fe",
+            "comment": "fix: update debug data collection to handle duplicate overrides"
+          },
+          {
+            "author": "tigeroakes@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "9228140c805f662b6c12df4c3f6e45bf9378b4ac",
+            "comment": "fix: add TSDoc to unsupported CSS properties"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "3db315e0aea3851944c6cc430e240ef63eb01de3",
+            "comment": "fix: do not emit sequence hashes for empty sets"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "926fe7376dc15a55d2262ce2d32e895f752adbc2",
+            "comment": "fix: handle nesting in comma separated selectors"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "3a915ea7b6d6716657d5b0e14787fe25c22e5825",
+            "comment": "chore: create stylis plugin to handle :global()"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Aug 2022 11:16:00 GMT",
       "tag": "@griffel/core_v1.6.0",
       "version": "1.6.0",

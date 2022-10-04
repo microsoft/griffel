@@ -2,6 +2,27 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Tue, 04 Oct 2022 08:44:33 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.1.7",
+      "version": "0.1.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "926fe7376dc15a55d2262ce2d32e895f752adbc2",
+            "comment": "chore: adopt API changes from @griffel/core"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.6.1",
+            "commit": "6828b9b754d65621e12a8fbff54c9f486eab032e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Aug 2022 11:16:00 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.1.6",
       "version": "0.1.6",
