@@ -143,6 +143,11 @@ assertType({
   boxSizing: 'outline-box',
   zIndex: 1,
 });
+assertType({
+  zIndex: 1,
+  // @ts-expect-error type check still fails on outline-box, not on any other line
+  boxSizing: 'outline-box',
+});
 
 assertType({
   // @ts-expect-error Object is not assignable to CSS property
