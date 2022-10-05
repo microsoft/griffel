@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add makeResetStyles to @griffel/react",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

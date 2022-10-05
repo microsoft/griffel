@@ -1,8 +1,20 @@
 # Change Log - @griffel/core
 
-This log was last generated on Tue, 04 Oct 2022 08:44:33 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Oct 2022 14:28:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.7.0
+
+Wed, 05 Oct 2022 14:28:43 GMT
+
+### Minor changes
+
+- feat: add makeResetStyles to @griffel/core (olfedias@microsoft.com)
+
+### Patches
+
+- fix: handle empty strings in mergeClasses() (olfedias@microsoft.com)
 
 ## 1.6.1
 

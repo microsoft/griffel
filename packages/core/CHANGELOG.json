@@ -2,6 +2,37 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 05 Oct 2022 14:28:43 GMT",
+      "tag": "@griffel/core_v1.7.0",
+      "version": "1.7.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "67109b0dea4d3e41481784b6cac7c940f5e40def",
+            "comment": "feat: add makeResetStyles to @griffel/core"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "9173966f4f1c69556f68351e6361d9302c674621",
+            "comment": "fix: handle empty strings in mergeClasses()"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "f9a70d8435481f58138eacd0a5035b73b6f93035",
+            "comment": "chore: add bundle size fixtures"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Oct 2022 08:44:33 GMT",
       "tag": "@griffel/core_v1.6.1",
       "version": "1.6.1",

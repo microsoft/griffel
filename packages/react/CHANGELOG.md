@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-This log was last generated on Tue, 04 Oct 2022 08:44:33 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Oct 2022 14:28:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.0
+
+Wed, 05 Oct 2022 14:28:43 GMT
+
+### Minor changes
+
+- feat: add makeResetStyles to @griffel/react (olfedias@microsoft.com)
+- Bump @griffel/core to v1.7.0
 
 ## 1.3.2
 
