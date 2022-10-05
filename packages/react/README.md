@@ -1,4 +1,35 @@
-# Griffel for React
+# Griffel for React.js
+
+A package with wrappers and APIs to be used with React.js.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Install](#install)
+- [`makeStyles()`](#makestyles)
+  - [Pseudo & class selectors, at-rules, global styles](#pseudo--class-selectors-at-rules-global-styles)
+  - [Keyframes (animations)](#keyframes-animations)
+  - [CSS Fallback Properties](#css-fallback-properties)
+- [`mergeClasses()`](#mergeclasses)
+- [`makeStaticStyles()`](#makestaticstyles)
+- [`createDOMRenderer()`, `RendererProvider`](#createdomrenderer-rendererprovider)
+  - [styleElementAttributes](#styleelementattributes)
+- [Shorthands](#shorthands)
+  - [`shorthands.border`](#shorthandsborder)
+  - [`shorthands.borderBottom`, `shorthands.borderTop`, `shorthands.borderLeft`, `shorthands.borderRight`](#shorthandsborderbottom-shorthandsbordertop-shorthandsborderleft-shorthandsborderright)
+  - [`shorthands.borderColor`](#shorthandsbordercolor)
+  - [`shorthands.borderStyle`](#shorthandsborderstyle)
+  - [`shorthands.borderWidth`](#shorthandsborderwidth)
+  - [`shorthands.flex`](#shorthandsflex)
+  - [`shorthands.gap`](#shorthandsgap)
+  - [`shorthands.gridArea`](#shorthandsgridarea)
+  - [`shorthands.inset`](#shorthandsinset)
+  - [`shorthands.margin`](#shorthandsmargin)
+  - [`shorthands.overflow`](#shorthandsoverflow)
+  - [`shorthands.padding`](#shorthandspadding)
+  - [`shorthands.transition`](#shorthandstransition)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Install
 
@@ -8,9 +39,7 @@ npm install @griffel/react
 yarn add @griffel/react
 ```
 
-## API
-
-### `makeStyles()`
+## `makeStyles()`
 
 Is used to define styles, returns a React hook that should be called inside a component:
 
@@ -34,7 +63,91 @@ function Component() {
 }
 ```
 
-### `mergeClasses()`
+### Pseudo & class selectors, at-rules, global styles
+
+`makeStyles()` supports pseudo, class selectors and at-rules.
+
+```ts
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    ':active': { color: 'pink' },
+    ':hover': { color: 'blue' },
+    // :link, :focus, etc.
+
+    '.foo': { color: 'black' },
+    ':nth-child(2n)': { backgroundColor: '#fafafa' },
+
+    '@media screen and (max-width: 992px)': { color: 'orange' },
+    '@supports (display: grid)': { color: 'red' },
+    '@layer utility': { marginBottom: '1em' },
+  },
+});
+```
+
+Another useful feature is `:global()` selector, it allows connecting local styles with global selectors.
+
+```ts
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    ':global(html[data-whatintent="mouse"])': { backgroundColor: 'yellow' },
+    // outputs: html[data-whatintent="mouse"] .abcd { background-color: yellow }
+  },
+});
+```
+
+### Keyframes (animations)
+
+`keyframes` are supported via `animationName` property that can be defined as an object or an array of objects:
+
+```tsx
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    animationIterationCount: 'infinite',
+    animationDuration: '3s',
+    animationName: {
+      from: { transform: 'rotate(0deg)' },
+      to: { transform: 'rotate(360deg)' },
+    },
+  },
+  array: {
+    animationIterationCount: 'infinite',
+    animationDuration: '3s',
+    animationName: [
+      {
+        from: { transform: 'rotate(0deg)' },
+        to: { transform: 'rotate(360deg)' },
+      },
+      {
+        from: { height: '100px' },
+        to: { height: '200px' },
+      },
+    ],
+  },
+});
+```
+
+### CSS Fallback Properties
+
+Any CSS property accepts an array of values which are all added to the styles.
+Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser):
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    overflowY: ['scroll', 'overlay'],
+  },
+});
+```
+
+## `mergeClasses()`
 
 > 💡 **It is not possible to simply concatenate classes returned by `useClasses()`.**
 
@@ -70,7 +183,104 @@ function Component() {
 }
 ```
 
-## `shorthands`
+## `makeStaticStyles()`
+
+Creates styles attached to a global selector. Styles can be defined via objects:
+
+```tsx
+import { makeStaticStyles } from '@griffel/react';
+
+const useStaticStyles = makeStaticStyles({
+  '@font-face': {
+    fontFamily: 'Open Sans',
+    src: `url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),
+         url("/fonts/OpenSans-Regular-webfont.woff") format("woff")`,
+  },
+  body: {
+    background: 'red',
+  },
+
+  /**
+   * ⚠️ nested and pseudo selectors are not supported for this scenario via nesting
+   *
+   * Not supported:
+   * .some {
+   *   .class { ... },
+   *   ':hover': { ... }
+   * }
+   *
+   * Supported:
+   * '.some.class': { ... }
+   * '.some.class:hover': { ... }
+   */
+});
+
+function App() {
+  useStaticStyles();
+
+  return <div />;
+}
+```
+
+Or with string & arrays of strings/objects:
+
+```tsx
+import { makeStaticStyles } from '@griffel/react';
+
+const useStaticStyles1 = makeStaticStyles('body { background: red; } .foo { color: green; }');
+const useStaticStyles2 = makeStaticStyles([
+  {
+    '@font-face': {
+      fontFamily: 'My Font',
+      src: `url(my_font.woff)`,
+    },
+  },
+  'html { line-height: 20px; }',
+]);
+
+function App() {
+  useStaticStyles1();
+  useStaticStyles2();
+
+  return <div />;
+}
+```
+
+## `createDOMRenderer()`, `RendererProvider`
+
+`createDOMRenderer` is paired with `RendererProvider` component and is useful for child window rendering and SSR scenarios. This is the default renderer for web, and will make sure that styles are injected to a document.
+
+```jsx
+import { createDOMRenderer, RendererProvider } from '@griffel/react';
+
+function App(props) {
+  const { targetDocument } = props;
+  const renderer = React.useMemo(() => createDOMRenderer(targetDocument), [targetDocument]);
+
+  return (
+    <RendererProvider renderer={renderer} targetDocument={targetDocument}>
+      {/* Children components */}
+      {/* ... */}
+    </RendererProvider>
+  );
+}
+```
+
+### styleElementAttributes
+
+A map of attributes that's passed to the generated style elements. For example, is useful to set ["nonce" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce).
+
+```js
+import { createDOMRenderer } from '@griffel/react';
+
+const renderer = createDOMRenderer(targetDocument, {
+  styleElementAttributes: {
+    nonce: 'random',
+  },
+});
+```
+
+## Shorthands
 
 `shorthands` provides a set of functions to mimic [CSS shorthands](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) and improve developer experience as [CSS shorthands are not supported](https://griffel.js.org/react/guides/limitations#css-shorthands-are-not-supported) by Griffel.
 
@@ -263,189 +473,6 @@ const useClasses = makeStyles({
       ['margin-right', '4s', '1s', 'ease-in'],
       ['margin-left', '2s', '0s', 'ease-in-out'],
     ]),
-  },
-});
-```
-
-## `makeStaticStyles()`
-
-Creates styles attached to a global selector. Styles can be defined via objects:
-
-```tsx
-import { makeStaticStyles } from '@griffel/react';
-
-const useStaticStyles = makeStaticStyles({
-  '@font-face': {
-    fontFamily: 'Open Sans',
-    src: `url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),
-         url("/fonts/OpenSans-Regular-webfont.woff") format("woff")`,
-  },
-  body: {
-    background: 'red',
-  },
-
-  /**
-   * ⚠️ nested and pseudo selectors are not supported for this scenario via nesting
-   *
-   * Not supported:
-   * .some {
-   *   .class { ... },
-   *   ':hover': { ... }
-   * }
-   *
-   * Supported:
-   * '.some.class': { ... }
-   * '.some.class:hover': { ... }
-   */
-});
-
-function App() {
-  useStaticStyles();
-
-  return <div />;
-}
-```
-
-Or with string & arrays of strings/objects:
-
-```tsx
-import { makeStaticStyles } from '@griffel/react';
-
-const useStaticStyles1 = makeStaticStyles('body { background: red; } .foo { color: green; }');
-const useStaticStyles2 = makeStaticStyles([
-  {
-    '@font-face': {
-      fontFamily: 'My Font',
-      src: `url(my_font.woff)`,
-    },
-  },
-  'html { line-height: 20px; }',
-]);
-
-function App() {
-  useStaticStyles1();
-  useStaticStyles2();
-
-  return <div />;
-}
-```
-
-## `createDOMRenderer()`, `RendererProvider`
-
-`createDOMRenderer` is paired with `RendererProvider` component and is useful for child window rendering and SSR scenarios. This is the default renderer for web, and will make sure that styles are injected to a document.
-
-```jsx
-import { createDOMRenderer, RendererProvider } from '@griffel/react';
-
-function App(props) {
-  const { targetDocument } = props;
-  const renderer = React.useMemo(() => createDOMRenderer(targetDocument), [targetDocument]);
-
-  return (
-    <RendererProvider renderer={renderer} targetDocument={targetDocument}>
-      {/* Children components */}
-      {/* ... */}
-    </RendererProvider>
-  );
-}
-```
-
-### styleElementAttributes
-
-A map of attributes that's passed to the generated style elements. For example, is useful to set ["nonce" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce).
-
-```js
-import { createDOMRenderer } from '@griffel/react';
-
-const renderer = createDOMRenderer(targetDocument, {
-  styleElementAttributes: {
-    nonce: 'random',
-  },
-});
-```
-
-## Features support
-
-### 📃 pseudo & class selectors, at-rules, global styles
-
-`makeStyles()` supports pseudo, class selectors and at-rules.
-
-```ts
-import { makeStyles } from '@griffel/react';
-
-const useClasses = makeStyles({
-  root: {
-    ':active': { color: 'pink' },
-    ':hover': { color: 'blue' },
-    // :link, :focus, etc.
-
-    '.foo': { color: 'black' },
-    ':nth-child(2n)': { backgroundColor: '#fafafa' },
-
-    '@media screen and (max-width: 992px)': { color: 'orange' },
-    '@supports (display: grid)': { color: 'red' },
-    '@layer utility': { marginBottom: '1em' },
-  },
-});
-```
-
-Another useful feature is `:global()` selector, it allows connecting local styles with global selectors.
-
-```ts
-import { makeStyles } from '@griffel/react';
-
-const useClasses = makeStyles({
-  root: {
-    ':global(html[data-whatintent="mouse"])': { backgroundColor: 'yellow' },
-    // outputs: html[data-whatintent="mouse"] .abcd { background-color: yellow }
-  },
-});
-```
-
-### 🎞 `keyframes` (animations)
-
-`keyframes` are supported via `animationName` property that can be defined as an object or an array of objects:
-
-```tsx
-import { makeStyles } from '@griffel/react';
-
-const useClasses = makeStyles({
-  root: {
-    animationIterationCount: 'infinite',
-    animationDuration: '3s',
-    animationName: {
-      from: { transform: 'rotate(0deg)' },
-      to: { transform: 'rotate(360deg)' },
-    },
-  },
-  array: {
-    animationIterationCount: 'infinite',
-    animationDuration: '3s',
-    animationName: [
-      {
-        from: { transform: 'rotate(0deg)' },
-        to: { transform: 'rotate(360deg)' },
-      },
-      {
-        from: { height: '100px' },
-        to: { height: '200px' },
-      },
-    ],
-  },
-});
-```
-
-### CSS Fallback Properties
-
-Any CSS property accepts an array of values which are all added to the styles.
-Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser):
-
-```js
-import { makeStyles } from '@griffel/react';
-
-const useClasses = makeStyles({
-  root: {
-    overflowY: ['scroll', 'overlay'],
   },
 });
 ```
