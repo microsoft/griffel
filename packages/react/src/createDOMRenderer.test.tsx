@@ -1,9 +1,10 @@
-import { createDOMRenderer } from '@griffel/core';
+import { createDOMRenderer, mergeClasses } from '@griffel/core';
 import * as React from 'react';
 import { hydrate } from 'react-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import { makeStyles } from './makeStyles';
+import { makeResetStyles } from './makeResetStyles';
 import { RendererProvider } from './RendererContext';
 import { renderToStyleElements } from './renderToStyleElements';
 
@@ -13,11 +14,11 @@ describe('createDOMRenderer', () => {
 
     const clientRenderer = createDOMRenderer(document);
     const serverRenderer = createDOMRenderer(
-      // we should use "null" as "undefined" will fallback to "document" which is present in this environment
+      // we should use "null" as "undefined" will fall back to "document" which is present in this environment
       null as unknown as undefined,
     );
 
-    const useExampleStyles = makeStyles({
+    const useExampleClasses = makeStyles({
       root: {
         animationName: {
           from: { height: '10px' },
@@ -28,10 +29,15 @@ describe('createDOMRenderer', () => {
         '@media screen and (max-width: 992px)': { ':hover': { color: 'blue' } },
       },
     });
+    const useExampleClass = makeResetStyles({
+      color: 'red',
+      ':hover': { color: 'blue' },
+    });
     const ExampleComponent: React.FC = () => {
-      const classes = useExampleStyles();
+      const classes = useExampleClasses();
+      const className = useExampleClass();
 
-      return <div className={classes.root} />;
+      return <div className={mergeClasses(className, classes.root)} />;
     };
 
     //
@@ -81,11 +87,15 @@ describe('createDOMRenderer', () => {
     expect(styleElementsBeforeHydration.length).toBe(styleElementsAfterHydration.length);
 
     // Following rules are present in cache:
-    // - "animationName"
-    // - "color"
-    // - @keyframes + prefixed
-    // - @media
-    expect(Object.keys(clientRenderer.insertionCache)).toHaveLength(5);
+    // - makeResetStyles
+    //   - color
+    //   - :hover + color
+    // - makeStyles
+    //   - "animationName"
+    //   - "color"
+    //   - @keyframes + prefixed
+    //   - @media
+    expect(Object.keys(clientRenderer.insertionCache)).toHaveLength(7);
     insertRules.forEach(insertRule => {
       expect(insertRule).not.toHaveBeenCalled();
     });
