@@ -52,6 +52,11 @@ describe('mergeClasses', () => {
     expect(mergeClasses(undefined, false)).toBe('');
   });
 
+  it('handles empty classes', () => {
+    expect(mergeClasses('ui-button', '', 'ui-toogle-button')).toBe('ui-button ui-toogle-button');
+    expect(mergeClasses('', '')).toBe('');
+  });
+
   it('performs deduplication for multiple arguments', () => {
     const classes = makeStyles({
       block: { display: 'block' },
