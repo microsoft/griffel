@@ -36,17 +36,4 @@ const Dot: React.FC<DotProps> = ({ size, x, y, children, color }) => {
   );
 };
 
-const styles = {
-  root: {
-    position: 'absolute',
-    cursor: 'pointer',
-    width: 0,
-    height: 0,
-    borderColor: 'transparent',
-    borderStyle: 'solid',
-    borderTopWidth: 0,
-    transform: 'translate(50%, 50%)',
-  },
-} as const;
-
 export default Dot;
