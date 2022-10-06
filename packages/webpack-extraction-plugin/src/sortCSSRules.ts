@@ -1,5 +1,15 @@
-import { getStyleBucketName, GriffelRenderer, StyleBucketName, styleBucketOrdering } from '@griffel/core';
+import {
+  RESET_HASH_PREFIX,
+  getStyleBucketName,
+  GriffelRenderer,
+  StyleBucketName,
+  styleBucketOrdering,
+} from '@griffel/core';
 import { COMMENT, compile, Element, KEYFRAMES, MEDIA, RULESET, serialize, stringify, SUPPORTS, tokenize } from 'stylis';
+
+function isResetClassName(className: string) {
+  return className[0] === '.' && className[1] === RESET_HASH_PREFIX;
+}
 
 export function getSelectorFromElement(element: Element) {
   return tokenize(element.value).slice(1).join('');
@@ -44,6 +54,10 @@ export function getElementReference(element: Element, suffix = ''): string {
 export function getStyleBucketNameFromElement(element: Element): StyleBucketName {
   if (element.type === KEYFRAMES) {
     return 'k';
+  }
+
+  if (isResetClassName(element.value)) {
+    return 'r';
   }
 
   return getStyleBucketName(

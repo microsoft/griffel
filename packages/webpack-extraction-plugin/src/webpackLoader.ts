@@ -20,7 +20,7 @@ function toURIComponent(rule: string): string {
 }
 
 function shouldTransformSourceCode(sourceCode: string): boolean {
-  return sourceCode.indexOf('__styles') !== -1;
+  return sourceCode.indexOf('__styles') !== -1 || sourceCode.indexOf('__resetStyles') !== -1;
 }
 
 /**

@@ -8,6 +8,8 @@ type StripRuntimeBabelPluginOptions = {
   resourceDirectory?: string;
 };
 
+type FunctionKinds = '__styles' | '__resetStyles';
+
 type StripRuntimeBabelPluginState = PluginPass & {
   cssRules?: string[];
 };
@@ -73,8 +75,13 @@ export const babelPluginStripGriffelRuntime = declare<
           path.traverse({
             ImportSpecifier(path) {
               const importedPath = path.get('imported');
+              let functionKind: FunctionKinds;
 
-              if (!importedPath.isIdentifier({ name: '__styles' })) {
+              if (importedPath.isIdentifier({ name: '__styles' })) {
+                functionKind = '__styles';
+              } else if (importedPath.isIdentifier({ name: '__resetStyles' })) {
+                functionKind = '__resetStyles';
+              } else {
                 return;
               }
 
@@ -91,7 +98,13 @@ export const babelPluginStripGriffelRuntime = declare<
                 );
               }
 
-              declarationPath.pushContainer('specifiers', t.identifier('__css'));
+              if (functionKind === '__styles') {
+                declarationPath.pushContainer('specifiers', t.identifier('__css'));
+              }
+
+              if (functionKind === '__resetStyles') {
+                declarationPath.pushContainer('specifiers', t.identifier('__resetCSS'));
+              }
             },
 
             /**
@@ -101,16 +114,26 @@ export const babelPluginStripGriffelRuntime = declare<
              */
             CallExpression(path) {
               const calleePath = path.get('callee');
+              const argumentPaths = path.get('arguments');
 
-              if (!calleePath.isIdentifier({ name: '__styles' })) {
+              let argumentPath: typeof argumentPaths[number];
+              let functionKind: FunctionKinds;
+
+              if (calleePath.isIdentifier({ name: '__styles' })) {
+                argumentPath = argumentPaths[1];
+                functionKind = '__styles';
+
+                calleePath.replaceWith(t.identifier('__css'));
+              } else if (calleePath.isIdentifier({ name: '__resetStyles' })) {
+                argumentPath = argumentPaths[2];
+                functionKind = '__resetStyles';
+
+                calleePath.replaceWith(t.identifier('__resetCSS'));
+              } else {
                 return;
               }
 
-              calleePath.replaceWith(t.identifier('__css'));
-
-              const argumentPaths = path.get('arguments');
-
-              if (argumentPaths.length !== 2) {
+              if (functionKind === '__styles' && argumentPaths.length !== 2) {
                 throw calleePath.buildCodeFrameError(
                   [
                     '"__styles" function call should have exactly two arguments.',
@@ -119,7 +142,16 @@ export const babelPluginStripGriffelRuntime = declare<
                 );
               }
 
-              argumentPaths[1].traverse({
+              if (functionKind === '__resetStyles' && argumentPaths.length !== 3) {
+                throw calleePath.buildCodeFrameError(
+                  [
+                    '"__resetStyles" function call should have exactly three arguments.',
+                    'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+                  ].join(' '),
+                );
+              }
+
+              argumentPath.traverse({
                 TemplateLiteral(literalPath) {
                   const expressionPath = literalPath.get('expressions.0');
 
@@ -173,30 +205,39 @@ export const babelPluginStripGriffelRuntime = declare<
               });
 
               // Returns the styles as a JavaScript object
-              const evaluationResult = argumentPaths[1].evaluate();
+              const evaluationResult = argumentPath.evaluate();
 
               if (!evaluationResult.confident) {
-                throw argumentPaths[1].buildCodeFrameError(
+                throw argumentPath.buildCodeFrameError(
                   [
-                    'Failed to evaluate CSS rules from "__styles" call.',
+                    `Failed to evaluate CSS rules from "${functionKind}" call.`,
                     'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
                   ].join(' '),
                 );
               }
 
-              const cssRulesByBucket = evaluationResult.value as CSSRulesByBucket;
+              if (functionKind === '__styles') {
+                const cssRulesByBucket = evaluationResult.value as CSSRulesByBucket;
 
-              Object.values(cssRulesByBucket).forEach(cssBucketEntries => {
-                const cssRules = cssBucketEntries.map(cssBucketEntry => {
-                  const [cssRule] = normalizeCSSBucketEntry(cssBucketEntry);
+                Object.values(cssRulesByBucket).forEach(cssBucketEntries => {
+                  const cssRules = cssBucketEntries.map(cssBucketEntry => {
+                    const [cssRule] = normalizeCSSBucketEntry(cssBucketEntry);
 
-                  return cssRule;
+                    return cssRule;
+                  });
+
+                  state.cssRules!.push(...cssRules);
                 });
 
-                state.cssRules!.push(...cssRules);
-              });
+                argumentPath.remove();
+              }
 
-              argumentPaths[1].remove();
+              if (functionKind === '__resetStyles') {
+                const cssRules = evaluationResult.value as string[];
+
+                state.cssRules!.push(...cssRules);
+                argumentPaths[2].remove();
+              }
             },
           });
         },

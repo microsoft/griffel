@@ -210,6 +210,8 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 describe('webpackLoader', () => {
   // Basic assertions
   testFixture('basic-rules');
+  testFixture('reset');
+  testFixture('mixed');
 
   // Multiple calls of __styles
   testFixture('multiple');
@@ -222,6 +224,7 @@ describe('webpackLoader', () => {
 
   // Assets
   testFixture('assets');
+  testFixture('reset-assets');
 
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
