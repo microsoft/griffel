@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add support for makeResetStyles transforms",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

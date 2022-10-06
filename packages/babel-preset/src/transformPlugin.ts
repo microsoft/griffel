@@ -2,7 +2,13 @@ import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
-import { resolveStyleRulesForSlots, CSSRulesByBucket, StyleBucketName, GriffelStyle } from '@griffel/core';
+import {
+  resolveStyleRulesForSlots,
+  CSSRulesByBucket,
+  StyleBucketName,
+  GriffelStyle,
+  resolveResetStyleRules,
+} from '@griffel/core';
 import * as path from 'path';
 
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
@@ -12,45 +18,54 @@ import { evaluatePaths } from './utils/evaluatePaths';
 import { BabelPluginOptions } from './types';
 import { validateOptions } from './validateOptions';
 
+type FunctionKinds = 'makeStyles' | 'makeResetStyles';
+
 type BabelPluginState = PluginPass & {
   importDeclarationPaths?: NodePath<t.ImportDeclaration>[];
   requireDeclarationPath?: NodePath<t.VariableDeclarator>;
 
-  definitionPaths?: NodePath<t.ObjectExpression>[];
+  definitionPaths?: { functionKind: FunctionKinds; path: NodePath<t.Expression | t.SpreadElement> }[];
   calleePaths?: NodePath<t.Identifier>[];
 };
 
-function getDefinitionPathFromMakeStylesCallExpression(
+function getDefinitionPathFromCallExpression(
+  functionKind: FunctionKinds,
   callExpression: NodePath<t.CallExpression>,
-): NodePath<t.ObjectExpression> {
+): NodePath<t.Expression | t.SpreadElement> {
   const argumentPaths = callExpression.get('arguments') as NodePath<t.Node>[];
   const hasValidArguments = Array.isArray(argumentPaths) && argumentPaths.length === 1;
 
   if (!hasValidArguments) {
-    throw new Error('makeStyles() function accepts only a single param');
+    throw callExpression.buildCodeFrameError(`${functionKind}() function accepts only a single param`);
   }
 
   const definitionsPath = argumentPaths[0];
 
   if (!definitionsPath.isObjectExpression()) {
-    throw definitionsPath.buildCodeFrameError('makeStyles() function accepts only an object as a param');
+    throw definitionsPath.buildCodeFrameError(`${functionKind}() function accepts only an object as a param`);
   }
 
   return definitionsPath;
 }
 
 /**
- * Checks that passed callee imports makesStyles().
+ * Gets a kind of passed callee.
  */
-function isMakeStylesCallee(
-  path: NodePath<t.Expression | t.V8IntrinsicIdentifier>,
+function getCalleeFunctionKind(
+  path: NodePath<t.Identifier>,
   modules: NonNullable<BabelPluginOptions['modules']>,
-): path is NodePath<t.Identifier> {
-  if (path.isIdentifier()) {
-    return Boolean(modules.find(module => path.referencesImport(module.moduleSource, module.importName)));
+): FunctionKinds | null {
+  for (const module of modules) {
+    if (path.referencesImport(module.moduleSource, module.importName)) {
+      return 'makeStyles';
+    }
+
+    if (path.referencesImport(module.moduleSource, module.resetImportName || 'makeResetStyles')) {
+      return 'makeResetStyles';
+    }
   }
 
-  return false;
+  return null;
 }
 
 /**
@@ -164,39 +179,69 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
           if (state.definitionPaths) {
             // Runs Babel AST processing or module evaluation for Node once for all arguments of makeStyles() calls once
-            evaluatePaths(programPath, state.file.opts.filename!, state.definitionPaths, pluginOptions);
+            evaluatePaths(
+              programPath,
+              state.file.opts.filename!,
+              state.definitionPaths.map(p => p.path),
+              pluginOptions,
+            );
 
             state.definitionPaths.forEach(definitionPath => {
-              const callExpressionPath = definitionPath.findParent(parentPath =>
+              const callExpressionPath = definitionPath.path.findParent(parentPath =>
                 parentPath.isCallExpression(),
               ) as NodePath<t.CallExpression>;
-              const evaluationResult = definitionPath.evaluate();
+              const evaluationResult = definitionPath.path.evaluate();
 
               if (!evaluationResult.confident) {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const deoptPath = (evaluationResult as any).deopt as NodePath | undefined;
-                throw (deoptPath || definitionPath).buildCodeFrameError(
+                throw (deoptPath || definitionPath.path).buildCodeFrameError(
                   'Evaluation of a code fragment failed, this is a bug, please report it',
                 );
               }
 
-              const stylesBySlots: Record<string /* slot */, GriffelStyle> = evaluationResult.value;
-              const [classnamesMapping, cssRulesByBucket] = resolveStyleRulesForSlots(
-                // Heads up!
-                // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
-                // results across different build targets.
-                normalizeStyleRules(
-                  path,
-                  pluginOptions.projectRoot,
-                  // Presence of "state.filename" is validated on `Program.enter()`
-                  state.filename as string,
-                  stylesBySlots,
-                ),
-              );
-              const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
+              if (definitionPath.functionKind === 'makeStyles') {
+                const stylesBySlots: Record<string /* slot */, GriffelStyle> = evaluationResult.value;
+                const [classnamesMapping, cssRulesByBucket] = resolveStyleRulesForSlots(
+                  // Heads up!
+                  // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
+                  // results across different build targets.
+                  normalizeStyleRules(
+                    path,
+                    pluginOptions.projectRoot,
+                    // Presence of "state.filename" is validated on `Program.enter()`
+                    state.filename as string,
+                    stylesBySlots,
+                  ),
+                );
+                const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
-              (callExpressionPath.get('arguments.0') as NodePath).remove();
-              callExpressionPath.pushContainer('arguments', [astify(classnamesMapping), astify(uniqueCSSRules)]);
+                (callExpressionPath.get('arguments.0') as NodePath).remove();
+                callExpressionPath.pushContainer('arguments', [astify(classnamesMapping), astify(uniqueCSSRules)]);
+              }
+
+              if (definitionPath.functionKind === 'makeResetStyles') {
+                const styles: GriffelStyle = evaluationResult.value;
+                const [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(
+                  // Heads up!
+                  // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
+                  // results across different build targets.
+                  normalizeStyleRules(
+                    path,
+                    pluginOptions.projectRoot,
+                    // Presence of "state.filename" is validated on `Program.enter()`
+                    state.filename as string,
+                    styles,
+                  ),
+                );
+
+                (callExpressionPath.get('arguments.0') as NodePath).remove();
+                callExpressionPath.pushContainer('arguments', [
+                  astify(ltrClassName),
+                  astify(rtlClassName),
+                  astify(cssRules),
+                ]);
+              }
 
               replaceAssetsWithImports(pluginOptions.projectRoot, state.filename!, programPath, callExpressionPath);
             });
@@ -208,19 +253,19 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
             specifiers.forEach(specifier => {
               if (specifier.isImportSpecifier()) {
-                // TODO: should use generated modifier to avoid collisions
-
                 const importedPath = specifier.get('imported');
-                const importIdentifierPath = pluginOptions.modules.find(module => {
-                  return (
-                    module.moduleSource === source.node.value &&
-                    // 👆 "moduleSource" should match "importDeclarationPath.source" to skip unrelated ".importName"
-                    importedPath.isIdentifier({ name: module.importName })
-                  );
-                });
 
-                if (importIdentifierPath) {
-                  specifier.replaceWith(t.identifier('__styles'));
+                for (const module of pluginOptions.modules) {
+                  if (module.moduleSource !== source.node.value) {
+                    // 👆 "moduleSource" should match "importDeclarationPath.source" to skip unrelated ".importName"
+                    continue;
+                  }
+
+                  if (importedPath.isIdentifier({ name: module.importName })) {
+                    specifier.replaceWith(t.identifier('__styles'));
+                  } else if (importedPath.isIdentifier({ name: module.resetImportName || 'makeResetStyles' })) {
+                    specifier.replaceWith(t.identifier('__resetStyles'));
+                  }
                 }
               }
             });
@@ -228,6 +273,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
           if (state.calleePaths) {
             state.calleePaths.forEach(calleePath => {
+              if (calleePath.node.name === 'makeResetStyles') {
+                calleePath.replaceWith(t.identifier('__resetStyles'));
+                return;
+              }
+
               calleePath.replaceWith(t.identifier('__styles'));
             });
           }
@@ -261,12 +311,17 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
         const calleePath = path.get('callee');
 
-        if (!isMakeStylesCallee(calleePath, pluginOptions.modules)) {
-          return;
-        }
+        if (calleePath.isIdentifier()) {
+          const functionKind = getCalleeFunctionKind(calleePath, pluginOptions.modules);
 
-        state.definitionPaths!.push(getDefinitionPathFromMakeStylesCallExpression(path));
-        state.calleePaths!.push(calleePath);
+          if (functionKind) {
+            state.definitionPaths!.push({
+              functionKind,
+              path: getDefinitionPathFromCallExpression(functionKind, path),
+            });
+            state.calleePaths!.push(calleePath);
+          }
+        }
       },
 
       // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -283,11 +338,19 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         const objectPath = expressionPath.get('object');
         const propertyPath = expressionPath.get('property');
 
-        const isMakeStylesCall =
-          objectPath.isIdentifier({ name: (state.requireDeclarationPath.node.id as t.Identifier).name }) &&
-          propertyPath.isIdentifier({ name: 'makeStyles' });
+        if (!objectPath.isIdentifier({ name: (state.requireDeclarationPath.node.id as t.Identifier).name })) {
+          return;
+        }
 
-        if (!isMakeStylesCall) {
+        let functionKind: FunctionKinds | null = null;
+
+        if (propertyPath.isIdentifier({ name: 'makeStyles' })) {
+          functionKind = 'makeStyles';
+        } else if (propertyPath.isIdentifier({ name: 'makeResetStyles' })) {
+          functionKind = 'makeResetStyles';
+        }
+
+        if (!functionKind) {
           return;
         }
 
@@ -297,7 +360,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
           return;
         }
 
-        state.definitionPaths!.push(getDefinitionPathFromMakeStylesCallExpression(parentPath));
+        state.definitionPaths!.push({
+          functionKind,
+          path: getDefinitionPathFromCallExpression(functionKind, parentPath),
+        });
         state.calleePaths!.push(propertyPath as NodePath<t.Identifier>);
       },
     },

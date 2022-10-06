@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add support for makeResetStyles transforms",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

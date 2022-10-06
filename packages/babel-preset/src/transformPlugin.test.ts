@@ -144,6 +144,20 @@ pluginTester({
       },
     },
 
+    // Reset styles
+    //
+    //
+    {
+      title: 'reset: default',
+      fixture: path.resolve(fixturesDir, 'reset-styles', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'reset-styles', 'output.ts'),
+    },
+    {
+      title: 'reset: assets',
+      fixture: path.resolve(fixturesDir, 'assets-reset-styles', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'assets-reset-styles', 'output.ts'),
+    },
+
     // Imports
     //
     //
@@ -180,6 +194,12 @@ pluginTester({
       pluginOptions: {
         modules: [{ moduleSource: 'custom-package', importName: 'makeStyles' }],
       },
+    },
+
+    {
+      title: 'imports: require() for makeResetStyles',
+      fixture: path.resolve(fixturesDir, 'require-reset-styles', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'require-reset-styles', 'output.ts'),
     },
 
     // Errors

@@ -16,8 +16,7 @@
       "options": {
         "jestConfig": "packages/webpack-loader/jest.config.js",
         "passWithNoTests": true
-      },
-      "dependsOn": [{ "target": "build", "projects": "dependencies" }]
+      }
     },
     "build": {
       "executor": "@nrwl/node:package",

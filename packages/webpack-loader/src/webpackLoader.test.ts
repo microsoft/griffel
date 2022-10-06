@@ -28,6 +28,9 @@ async function compileSourceWithWebpack(entryPath: string, options: CompileOptio
       path: path.resolve(__dirname),
       filename: 'bundle.js',
     },
+    externals: {
+      '@griffel/react': 'Griffel',
+    },
 
     module: {
       rules: [
@@ -43,10 +46,6 @@ async function compileSourceWithWebpack(entryPath: string, options: CompileOptio
     },
 
     resolve: {
-      alias: {
-        '@griffel/core': path.resolve(__dirname, '..', '..', '..', 'dist', 'packages', 'react', 'index.esm.js'),
-        '@griffel/react': path.resolve(__dirname, '..', '..', '..', 'dist', 'packages', 'react', 'index.esm.js'),
-      },
       extensions: ['.js', '.ts'],
     },
   };
@@ -175,28 +174,56 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 }
 
 describe('shouldTransformSourceCode', () => {
-  it('handles defaults', () => {
-    expect(shouldTransformSourceCode(`import { makeStyles } from "@griffel/react"`, undefined)).toBe(true);
-    expect(shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, undefined)).toBe(false);
+  describe('handles defaults', () => {
+    it('makeStyles', () => {
+      expect(shouldTransformSourceCode(`import { makeStyles } from "@griffel/react"`, undefined)).toBe(true);
+      expect(shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, undefined)).toBe(false);
+    });
+
+    it('makeResetStyles', () => {
+      expect(shouldTransformSourceCode(`import { makeResetStyles } from "@griffel/react"`, undefined)).toBe(true);
+      expect(shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, undefined)).toBe(false);
+    });
   });
 
-  it('handles options', () => {
-    expect(
-      shouldTransformSourceCode(`import { makeStyles } from "@griffel/react"`, [
-        { moduleSource: '@griffel/react', importName: 'makeStyles' },
-      ]),
-    ).toBe(true);
-    expect(
-      shouldTransformSourceCode(`import { createStyles } from "make-styles"`, [
-        { moduleSource: 'make-styles', importName: 'createStyles' },
-      ]),
-    ).toBe(true);
+  describe('handles options', () => {
+    it('makeStyles', () => {
+      expect(
+        shouldTransformSourceCode(`import { makeStyles } from "@griffel/react"`, [
+          { moduleSource: '@griffel/react', importName: 'makeStyles' },
+        ]),
+      ).toBe(true);
+      expect(
+        shouldTransformSourceCode(`import { createStyles } from "make-styles"`, [
+          { moduleSource: 'make-styles', importName: 'createStyles' },
+        ]),
+      ).toBe(true);
 
-    expect(
-      shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, [
-        { moduleSource: '@griffel/react', importName: 'makeStyles' },
-      ]),
-    ).toBe(false);
+      expect(
+        shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, [
+          { moduleSource: '@griffel/react', importName: 'makeStyles' },
+        ]),
+      ).toBe(false);
+    });
+
+    it('makeResetStyles', () => {
+      expect(
+        shouldTransformSourceCode(`import { makeResetStyles } from "@griffel/react"`, [
+          { moduleSource: '@griffel/react', importName: 'makeStyles', resetImportName: 'makeResetStyles' },
+        ]),
+      ).toBe(true);
+      expect(
+        shouldTransformSourceCode(`import { createResetStyles } from "make-styles"`, [
+          { moduleSource: 'make-styles', importName: 'makeStyles', resetImportName: 'createResetStyles' },
+        ]),
+      ).toBe(true);
+
+      expect(
+        shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, [
+          { moduleSource: '@griffel/react', importName: 'makeStyles', resetImportName: 'makeResetStyles' },
+        ]),
+      ).toBe(false);
+    });
   });
 });
 
@@ -204,6 +231,7 @@ describe('webpackLoader', () => {
   // Integration fixtures for base functionality, all scenarios are tested in "@griffel/babel-preset"
   testFixture('object');
   testFixture('function');
+  testFixture('reset');
 
   // Integration fixtures for config functionality
   testFixture('config-modules', {
@@ -211,10 +239,8 @@ describe('webpackLoader', () => {
       modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],
     },
     webpackConfig: {
-      resolve: {
-        alias: {
-          'react-make-styles': '@griffel/react',
-        },
+      externals: {
+        'react-make-styles': 'Griffel',
       },
     },
   });
