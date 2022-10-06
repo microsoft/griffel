@@ -41,17 +41,11 @@ function getDefinitionPathFromCallExpression(
 
   const definitionsPath = argumentPaths[0];
 
-  if (functionKind === 'makeStyles') {
-    if (!definitionsPath.isObjectExpression()) {
-      throw definitionsPath.buildCodeFrameError('makeStyles() function accepts only an object as a param');
-    }
+  if (!definitionsPath.isObjectExpression()) {
+    throw definitionsPath.buildCodeFrameError(`${functionKind}() function accepts only an object as a param`);
   }
 
-  if (definitionsPath.isSpreadElement() || definitionsPath.isExpression()) {
-    return definitionsPath;
-  }
-
-  throw definitionsPath.buildCodeFrameError('Unexpected kind of element was received, this is a bug, please report it');
+  return definitionsPath;
 }
 
 /**
