@@ -10,7 +10,7 @@
   "packageManager": "yarn@3.1.1",
   "nano-staged": {
     "**/*.{js,json,ts,tsx}": "prettier --write",
-    "**/*.{md}": "doctoc"
+    "**/*.{md}": "doctoc -u"
   },
   "simple-git-hooks": {
     "pre-commit": "./node_modules/.bin/nano-staged"
