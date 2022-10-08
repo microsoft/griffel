@@ -90,7 +90,7 @@ module.exports = {
 ### Handling Griffel re-exports
 
 ```js
-import { makeStyles } from 'custom-package';
+import { makeStyles, makeResetStyles } from 'custom-package';
 // 👇 custom import names are also supported
 import { createStyles } from 'custom-package';
 ```
@@ -107,7 +107,13 @@ module.exports = {
         use: {
           loader: '@griffel/webpack-loader',
           options: {
-            modules: [{ moduleSource: 'custom-package', importName: 'makeStyles' }],
+            modules: [
+              {
+                moduleSource: 'custom-package',
+                importName: 'makeStyles',
+                resetImportName: 'makeResetStyles',
+              },
+            ],
           },
         },
       },
@@ -116,7 +122,12 @@ module.exports = {
 };
 ```
 
-> **Note**: "custom-package" should re-export `__styles` function from `@griffel/react`
+> **Note**: "custom-package" should re-export following functions from `@griffel/react`:
+>
+> - `__styles`
+> - `__css`
+> - `__resetStyles`
+> - `__resetCSS`
 
 ### Configuring Babel settings
 
