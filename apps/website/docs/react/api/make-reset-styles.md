@@ -75,7 +75,7 @@ function Component(props) {
 
 ## Features support
 
-`makeResetStyles` support the same features as [`makeStyles()`](/react/api/make-styles) including nested selectors and at-rules.
+`makeResetStyles` supports the same features as [`makeStyles()`](/react/api/make-styles) including nested selectors and at-rules.
 
 ## Limitations
 
