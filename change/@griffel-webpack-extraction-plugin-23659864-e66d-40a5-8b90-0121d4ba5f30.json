@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add support for makeResetStyles",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

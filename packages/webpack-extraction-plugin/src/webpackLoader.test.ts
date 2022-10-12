@@ -180,10 +180,13 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 describe('webpackLoader', () => {
   // Basic assertions
   testFixture('basic-rules');
+  testFixture('reset');
+  testFixture('mixed');
 
   // Multiple
   testFixture('multiple');
 
   // Assets
   testFixture('assets');
+  testFixture('reset-assets');
 });
