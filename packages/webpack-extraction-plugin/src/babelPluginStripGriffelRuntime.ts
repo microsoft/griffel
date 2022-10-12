@@ -133,19 +133,13 @@ export const babelPluginStripGriffelRuntime = declare<
                 return;
               }
 
-              if (functionKind === '__styles' && argumentPaths.length !== 2) {
+              if (
+                (functionKind === '__styles' && argumentPaths.length !== 2) ||
+                (functionKind === '__resetStyles' && argumentPaths.length !== 3)
+              ) {
                 throw calleePath.buildCodeFrameError(
                   [
-                    '"__styles" function call should have exactly two arguments.',
-                    'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                  ].join(' '),
-                );
-              }
-
-              if (functionKind === '__resetStyles' && argumentPaths.length !== 3) {
-                throw calleePath.buildCodeFrameError(
-                  [
-                    '"__resetStyles" function call should have exactly three arguments.',
+                    `"${functionKind}" function call should have exactly ${argumentPaths.length} arguments.`,
                     'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
                   ].join(' '),
                 );
