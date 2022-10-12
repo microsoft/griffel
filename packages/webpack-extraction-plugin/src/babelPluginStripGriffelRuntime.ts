@@ -228,16 +228,13 @@ export const babelPluginStripGriffelRuntime = declare<
 
                   state.cssRules!.push(...cssRules);
                 });
-
-                argumentPath.remove();
-              }
-
-              if (functionKind === '__resetStyles') {
+              } else if (functionKind === '__resetStyles') {
                 const cssRules = evaluationResult.value as string[];
 
                 state.cssRules!.push(...cssRules);
-                argumentPaths[2].remove();
               }
+
+              argumentPath.remove();
             },
           });
         },
