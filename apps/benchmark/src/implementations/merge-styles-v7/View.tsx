@@ -1,9 +1,9 @@
 import React from 'react';
-import { mergeStyleSets } from '@uifabric/merge-styles';
+import { mergeStyles, IStyle } from '@uifabric/merge-styles';
 
-const getClassNames = () => {
-  return mergeStyleSets({
-    root: {
+const getClassName = (customStyles: IStyle) => {
+  return mergeStyles([
+    {
       alignItems: 'stretch',
       borderWidth: '0px',
       borderStyle: 'solid',
@@ -19,12 +19,14 @@ const getClassNames = () => {
       minHeight: 0,
       minWidth: 0,
     },
-  });
+    customStyles,
+  ]);
 };
 
-const View: React.FC<{ className: string }> = ({ className, ...other }) => {
-  const styles = getClassNames();
-  return <div {...other} className={`${styles.root} ${className}`} />;
+const View: React.FC<{ styles: IStyle }> = ({ styles, ...other }) => {
+  const className = getClassName(styles);
+
+  return <div {...other} className={className} />;
 };
 
 export default View;
