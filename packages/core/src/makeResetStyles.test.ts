@@ -33,4 +33,22 @@ describe('makeResetStyles', () => {
       }
     `);
   });
+
+  it('handles RTL', () => {
+    const computeClassName = makeResetStyles({
+      padding: '40px 20px 10px 5px',
+    });
+
+    expect(computeClassName({ dir: 'ltr', renderer })).toEqual('rgb6zd6');
+    expect(computeClassName({ dir: 'rtl', renderer })).toEqual('rjhindo');
+
+    expect(renderer).toMatchInlineSnapshot(`
+      .rgb6zd6 {
+        padding: 40px 20px 10px 5px;
+      }
+      .rjhindo {
+        padding: 40px 5px 10px 20px;
+      }
+    `);
+  });
 });
