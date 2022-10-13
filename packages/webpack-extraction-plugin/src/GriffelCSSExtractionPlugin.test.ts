@@ -224,6 +224,7 @@ describe('webpackLoader', () => {
 
   // Assets
   testFixture('assets');
+  testFixture('assets-multiple');
   testFixture('reset-assets');
 
   // Custom filenames in mini-css-extract-plugin

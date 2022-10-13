@@ -36,11 +36,6 @@ pluginTester({
     //
     //
     {
-      title: 'assets import handling',
-      fixture: path.resolve(fixturesDir, 'assets', 'code.ts'),
-      outputFixture: path.resolve(fixturesDir, 'assets', 'output.ts'),
-    },
-    {
       title: 'duplicated imports',
       fixture: path.resolve(fixturesDir, 'duplicated-imports', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'duplicated-imports', 'output.ts'),
@@ -57,6 +52,25 @@ pluginTester({
       title: 'call of non existing module',
       fixture: path.resolve(fixturesDir, 'non-existing-module-call', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'non-existing-module-call', 'output.ts'),
+    },
+
+    // Assets
+    //
+    //
+    {
+      title: 'assets: import handling',
+      fixture: path.resolve(fixturesDir, 'assets', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'assets', 'output.ts'),
+    },
+    {
+      title: 'assets: multiple url()',
+      fixture: path.resolve(fixturesDir, 'assets-multiple-declarations', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'assets-multiple-declarations', 'output.ts'),
+    },
+    {
+      title: 'assets: url() without imports',
+      fixture: path.resolve(fixturesDir, 'assets-urls', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'assets-urls', 'output.ts'),
     },
 
     // Evaluation

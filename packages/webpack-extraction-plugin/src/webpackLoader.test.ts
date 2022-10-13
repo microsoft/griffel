@@ -188,5 +188,6 @@ describe('webpackLoader', () => {
 
   // Assets
   testFixture('assets');
+  testFixture('assets-multiple');
   testFixture('reset-assets');
 });
