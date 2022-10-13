@@ -39,21 +39,17 @@ export function replaceAssetsWithImports(
     let acc = '';
 
     for (let i = 0, l = tokens.length; i < l; i++) {
-      for (; i < l; i++) {
-        acc += tokens[i];
+      acc += tokens[i];
 
-        if (tokens[i] === 'url') {
-          const url = tokens[i + 1].slice(1, -1);
+      if (tokens[i] === 'url') {
+        const url = tokens[i + 1].slice(1, -1);
 
-          if (isAssetUrl(url)) {
-            quasis.push(t.templateElement({ raw: acc + '(' }, false));
-            expressions.push(getAssetIdentifier(url));
+        if (isAssetUrl(url)) {
+          quasis.push(t.templateElement({ raw: acc + '(' }, false));
+          expressions.push(getAssetIdentifier(url));
 
-            acc = ')';
-            i++;
-
-            break;
-          }
+          acc = ')';
+          i++;
         }
       }
     }
