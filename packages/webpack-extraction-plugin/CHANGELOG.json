@@ -2,6 +2,35 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Thu, 13 Oct 2022 08:36:18 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.2.0",
+      "version": "0.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "635096302c6e9a8b18e51745c1fadec5ab4674d5",
+            "comment": "feat: add support for makeResetStyles"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.8.0",
+            "commit": "32d9b0bfa4372343d710368b6bed1cc5185a6684"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "32d9b0bfa4372343d710368b6bed1cc5185a6684",
+            "comment": "fix: handle multiple url()"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 14:28:43 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.1.8",
       "version": "0.1.8",

@@ -2,6 +2,33 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 13 Oct 2022 08:36:18 GMT",
+      "tag": "@griffel/react_v1.4.1",
+      "version": "1.4.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "4f7c10f9e057cf613deecc2b47cb1777f2a2dc3e",
+            "comment": "chore: add __resetStyles (internal function)"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "635096302c6e9a8b18e51745c1fadec5ab4674d5",
+            "comment": "chore: add __resetStyles (internal function)"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.8.0",
+            "commit": "32d9b0bfa4372343d710368b6bed1cc5185a6684"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 14:28:43 GMT",
       "tag": "@griffel/react_v1.4.0",
       "version": "1.4.0",

@@ -1,8 +1,21 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 05 Oct 2022 14:28:43 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Oct 2022 08:36:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.8.0
+
+Thu, 13 Oct 2022 08:36:18 GMT
+
+### Minor changes
+
+- feat: add support for `animationName` in makeResetStyles (olfedias@microsoft.com)
+
+### Patches
+
+- chore: add __resetStyles (internal function) (olfedias@microsoft.com)
+- chore: add __resetStyles (internal function) (olfedias@microsoft.com)
 
 ## 1.7.0
 

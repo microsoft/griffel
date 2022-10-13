@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Thu, 13 Oct 2022 08:36:18 GMT",
+      "tag": "@griffel/webpack-loader_v2.1.0",
+      "version": "2.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "b360b562bc7180fa13c6d0a1979673983bfe5ee0",
+            "comment": "feat: add support for makeResetStyles transforms"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.4.0",
+            "commit": "32d9b0bfa4372343d710368b6bed1cc5185a6684"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/react to v1.4.1",
+            "commit": "32d9b0bfa4372343d710368b6bed1cc5185a6684"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 14:28:43 GMT",
       "tag": "@griffel/webpack-loader_v2.0.15",
       "version": "2.0.15",

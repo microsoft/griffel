@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: handle multiple url()",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

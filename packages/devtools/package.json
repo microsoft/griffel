@@ -1,6 +1,6 @@
 {
   "name": "@griffel/devtools",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Griffel chrome devtools extension",
   "license": "MIT",
   "repository": {
@@ -10,7 +10,7 @@
   "sideEffects": false,
   "dependencies": {
     "@emotion/hash": "^0.8.0",
-    "@griffel/react": "^1.4.0",
+    "@griffel/react": "^1.4.1",
     "js-beautify": "^1.14.0",
     "prism-react-renderer": "1.2.1",
     "react-dom": ">=16.8.0 <18.0.0",

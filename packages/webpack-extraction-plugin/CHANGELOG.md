@@ -1,8 +1,21 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 05 Oct 2022 14:28:43 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Oct 2022 08:36:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.0
+
+Thu, 13 Oct 2022 08:36:18 GMT
+
+### Minor changes
+
+- feat: add support for makeResetStyles (olfedias@microsoft.com)
+- Bump @griffel/core to v1.8.0
+
+### Patches
+
+- fix: handle multiple url() (olfedias@microsoft.com)
 
 ## 0.1.8
 
