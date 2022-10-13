@@ -18132,17 +18132,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mdx-mermaid@patch:mdx-mermaid@npm:1.3.2#.yarn/patches/mdx-mermaid-npm-1.3.2-e8a6432fce.patch::locator=griffel-repository%40workspace%3A.":
-  version: 1.3.2
-  resolution: "mdx-mermaid@patch:mdx-mermaid@npm%3A1.3.2#.yarn/patches/mdx-mermaid-npm-1.3.2-e8a6432fce.patch::version=1.3.2&hash=d12a40&locator=griffel-repository%40workspace%3A."
-  peerDependencies:
-    mermaid: ">=8.11.0"
-    react: ^16.8.4 || ^17.0.0 || ^18.0.0
-    unist-util-visit: ^2.0.0
-  checksum: c0e2dfb8121add98a4d9c8d16cb4701e1506a82f86ddef850614ebdf059c013f37bf61627d66b9770737a1d7021a2d9a67d4e3636f24e4061b1a339f93d182a8
-  languageName: node
-  linkType: hard
-
 "media-typer@npm:0.3.0":
   version: 0.3.0
   resolution: "media-typer@npm:0.3.0"

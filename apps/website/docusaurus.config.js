@@ -27,7 +27,7 @@ const config = {
         docs: {
           editUrl: 'https://github.com/microsoft/griffel/tree/main/apps/website/',
           sidebarPath: require.resolve('./sidebars.js'),
-          remarkPlugins: [require('mdx-mermaid')],
+          remarkPlugins: [[require('mdx-mermaid'), {}]],
           routeBasePath: '/',
         },
         blog: false,
