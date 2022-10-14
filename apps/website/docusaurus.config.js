@@ -1,6 +1,13 @@
 // @ts-check
 
-const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
+const vsDarkTheme = require('prism-react-renderer/themes/vsDark');
+const prismTheme = {
+  ...vsDarkTheme,
+  plain: {
+    ...vsDarkTheme.plain,
+    backgroundColor: '#000',
+  },
+};
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -57,29 +64,46 @@ const config = {
           autoCollapseCategories: false,
         },
       },
+      footer: {
+        links: [
+          {
+            label: 'Open source at Microsoft',
+            href: 'https://opensource.microsoft.com',
+          },
+          {
+            label: 'Microsoft Privacy Statement',
+            href: 'http://aka.ms/privacy',
+          },
+        ],
+      },
       navbar: {
-        title: 'Griffel',
-        // logo: {
-        //   alt: 'My Site Logo',
-        //   src: 'img/logo.svg',
-        // },
+        logo: {
+          alt: 'Griffel.js',
+          src: 'img/griffel.png',
+        },
         items: [
           {
             type: 'doc',
             docId: 'react/install',
-            position: 'left',
+            position: 'right',
             label: 'For React.js',
           },
           {
             type: 'doc',
             docId: 'try-it-out/try-it-out',
-            position: 'left',
+            position: 'right',
             label: 'Try it out',
+          },
+          {
+            href: 'https://github.com/microsoft/griffel',
+            position: 'right',
+            className: 'navbar-github-link',
+            html: 'Github <span aria-hidden="true" />',
           },
         ],
       },
       prism: {
-        darkTheme: darkCodeTheme,
+        darkTheme: prismTheme,
         prism: {
           additionalLanguages: ['javascript', 'css'],
         },

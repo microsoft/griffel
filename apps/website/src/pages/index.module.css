@@ -1,38 +1,28 @@
-.container {
-  position: relative;
-}
-
-.containerLayer {
-  background: #000;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 72px;
-  z-index: -1;
-}
-
 .hero {
-  background: transparent;
-  padding-bottom: 0;
+  border-radius: 100px;
+  background: #000;
+  position: relative;
+  overflow: hidden;
 }
 
 .heroContainer {
-  padding: 0 32px;
+  margin: initial;
+  width: 50%;
+  z-index: 1;
 }
 
 .heroTitle {
-  font-size: 60px;
+  font-size: 70px;
 }
 
-.heroTitle b {
-  color: var(--ifm-color-primary);
+.heroSubtitle {
+  margin-bottom: 0;
 }
 
 .ctaContainer {
   align-items: center;
   display: flex;
-  gap: 18px;
+  gap: 12px;
   margin-top: 48px;
 }
 
@@ -40,24 +30,72 @@
   height: 32px;
 }
 
-.codeContainer {
-  margin-top: 48px;
-}
-
 .codeContainer > div {
   margin-bottom: 0;
 }
 
-@media only screen and (max-width: 768px) {
+.meshA {
+  position: absolute;
+  left: 20%;
+  top: -20%;
+
+  background: linear-gradient(0deg, rgba(130, 48, 255, 0.2), rgba(130, 48, 255, 0.2));
+  border-radius: 150px;
+  transform: rotate(135deg);
+
+  width: 670px;
+  height: 770px;
+}
+
+.meshB {
+  position: absolute;
+  bottom: -30%;
+  right: 10%;
+
+  background: linear-gradient(0deg, rgba(130, 48, 255), rgba(130, 48, 255));
+  border-radius: 150px;
+  transform: matrix(-0.71, -0.71, -0.71, 0.71, 0, 0);
+
+  width: 540px;
+  height: 625px;
+}
+
+.content {
+  margin-top: 40px;
+}
+
+.feature {
+  color: #54de62;
+}
+
+@media (max-width: 481px) {
+  .hero {
+    border-radius: 0;
+    padding: 48px 48px 48px 25px;
+  }
+
   .heroTitle {
-    font-size: 48px;
+    font-size: 32px;
+  }
+
+  .heroSubtitle {
+    font-size: 20px;
   }
 
   .ctaContainer {
+    align-items: start;
     flex-direction: column;
   }
+}
 
-  .githubButton {
-    display: none;
+@media (max-width: 680px) {
+  .hero {
+    padding: 48px 48px 48px 25px;
+  }
+}
+
+@media (max-width: 960px) {
+  .heroContainer {
+    width: 100%;
   }
 }
