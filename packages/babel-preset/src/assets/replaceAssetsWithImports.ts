@@ -45,10 +45,13 @@ export function replaceAssetsWithImports(
         const url = tokens[i + 1].slice(1, -1);
 
         if (isAssetUrl(url)) {
-          quasis.push(t.templateElement({ raw: acc + '(' }, false));
-          expressions.push(getAssetIdentifier(url));
+          // Handle `filter: url(./a.svg#id)`
+          const [pathname, hash] = url.split('#');
 
-          acc = ')';
+          quasis.push(t.templateElement({ raw: acc + '(' }, false));
+          expressions.push(getAssetIdentifier(pathname));
+
+          acc = `${hash ? `#${hash}` : ''})`;
           i++;
         }
       }

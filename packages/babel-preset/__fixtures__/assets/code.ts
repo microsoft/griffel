@@ -6,6 +6,7 @@ import empty from './empty.jpg';
 
 export const useStyles = makeStyles({
   rootA: { backgroundImage: `url(${blank})` },
-  rootB: { backgroundImage: `url(${blankDuplicate})` },
+  rootB: { backgroundImage: `url("${blankDuplicate}")` },
   rootC: { backgroundImage: `url(${empty})` },
+  assetWithHash: { filter: 'url(./a.svg#a)' },
 });

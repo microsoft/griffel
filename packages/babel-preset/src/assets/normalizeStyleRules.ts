@@ -32,6 +32,9 @@ export function normalizeStyleRule(
 
       if (isAssetUrl(url)) {
         array[index + 1] = `(${normalizeAssetPath(path, projectRoot, filename, url)})`;
+      } else {
+        // Always replace with normalized value, so @griffel/core can de-duplicate them.
+        array[index + 1] = `(${url})`;
       }
     }
 
