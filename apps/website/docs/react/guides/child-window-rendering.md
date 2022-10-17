@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Child Window
+# Child Window rendering
 
 When rendering in the main browser window, many components will need access to window or document to apply styles, listening for events, or measuring things. However it is possible to render to child windows and elements hosted in iframes. The same technique can be used to render styles in Shadow DOM.
 

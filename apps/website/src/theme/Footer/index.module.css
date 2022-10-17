@@ -1,0 +1,15 @@
+.teamsLink {
+  display: flex;
+  place-items: center;
+  gap: 3px;
+}
+
+.teamsLink svg {
+  font-size: 24px;
+}
+
+@media (max-width: 996px) {
+  .teamsLink {
+    margin-bottom: 20px;
+  }
+}
