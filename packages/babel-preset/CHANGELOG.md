@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Thu, 13 Oct 2022 08:36:18 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Oct 2022 15:59:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.1
+
+Tue, 18 Oct 2022 15:59:43 GMT
+
+### Patches
+
+- fix: don't extract http:, https:, data: and hash only urls as assets (1330321+yume-chan@users.noreply.github.com)
 
 ## 1.4.0
 

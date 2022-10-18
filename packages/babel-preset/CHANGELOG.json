@@ -2,6 +2,21 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Tue, 18 Oct 2022 15:59:43 GMT",
+      "tag": "@griffel/babel-preset_v1.4.1",
+      "version": "1.4.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "1330321+yume-chan@users.noreply.github.com",
+            "package": "@griffel/babel-preset",
+            "commit": "7745eb70d3e82aed0a188f2546b01f43917d440d",
+            "comment": "fix: don't extract http:, https:, data: and hash only urls as assets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Oct 2022 08:36:18 GMT",
       "tag": "@griffel/babel-preset_v1.4.0",
       "version": "1.4.0",

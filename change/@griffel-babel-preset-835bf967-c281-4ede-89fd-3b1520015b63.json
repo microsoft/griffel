@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: don't extract http:, https:, data: and hash only urls as assets",
-  "packageName": "@griffel/babel-preset",
-  "email": "1330321+yume-chan@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
