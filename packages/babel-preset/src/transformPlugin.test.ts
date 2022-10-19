@@ -232,11 +232,6 @@ pluginTester({
       },
     },
     {
-      title: 'errors: throws on invalid argument type',
-      fixture: path.resolve(fixturesDir, 'error-argument-type', 'fixture.js'),
-      error: /function accepts only an object as a param/,
-    },
-    {
       title: 'errors: throws on invalid argument count',
       fixture: path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'),
       error: /function accepts only a single param/,

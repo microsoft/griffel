@@ -32,7 +32,7 @@ function getDefinitionPathFromCallExpression(
   functionKind: FunctionKinds,
   callExpression: NodePath<t.CallExpression>,
 ): NodePath<t.Expression | t.SpreadElement> {
-  const argumentPaths = callExpression.get('arguments') as NodePath<t.Node>[];
+  const argumentPaths = callExpression.get('arguments');
   const hasValidArguments = Array.isArray(argumentPaths) && argumentPaths.length === 1;
 
   if (!hasValidArguments) {
@@ -41,11 +41,11 @@ function getDefinitionPathFromCallExpression(
 
   const definitionsPath = argumentPaths[0];
 
-  if (!definitionsPath.isObjectExpression()) {
-    throw definitionsPath.buildCodeFrameError(`${functionKind}() function accepts only an object as a param`);
+  if (definitionsPath.isExpression() || definitionsPath.isSpreadElement()) {
+    return definitionsPath;
   }
 
-  return definitionsPath;
+  throw definitionsPath.buildCodeFrameError(`${functionKind}() function accepts only expressions and spreads`);
 }
 
 /**
