@@ -1,6 +1,6 @@
 {
   "name": "@griffel/babel-preset",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Babel preset with build time transforms for Griffel",
   "license": "MIT",
   "repository": {

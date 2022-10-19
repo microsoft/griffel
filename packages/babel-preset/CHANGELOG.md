@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Tue, 18 Oct 2022 15:59:43 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Oct 2022 08:34:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.2
+
+Wed, 19 Oct 2022 08:34:48 GMT
+
+### Patches
+
+- fix: relax check in transform plugin (olfedias@microsoft.com)
 
 ## 1.4.1
 
