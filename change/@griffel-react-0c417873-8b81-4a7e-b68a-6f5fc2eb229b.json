@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: add export for __resetCSS",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -12,4 +12,5 @@ export { TextDirectionProvider } from './TextDirectionContext';
 // Private exports, are used by build time transforms
 export { __css } from './__css';
 export { __styles } from './__styles';
+export { __resetCSS } from './__resetCSS';
 export { __resetStyles } from './__resetStyles';
