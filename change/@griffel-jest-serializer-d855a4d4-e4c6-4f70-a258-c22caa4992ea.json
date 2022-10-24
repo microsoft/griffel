@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "feat: add support for makeResetStyles",
+  "packageName": "@griffel/jest-serializer",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

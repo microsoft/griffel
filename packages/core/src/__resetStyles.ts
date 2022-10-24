@@ -1,3 +1,4 @@
+import { DEBUG_RESET_CLASSES } from './constants';
 import type { MakeStylesOptions } from './types';
 
 /**
@@ -18,7 +19,13 @@ export function __resetStyles(ltrClassName: string, rtlClassName: string | null,
       insertionCache[rendererId] = true;
     }
 
-    return isLTR ? ltrClassName : rtlClassName || ltrClassName;
+    const className = isLTR ? ltrClassName : rtlClassName || ltrClassName;
+
+    if (process.env.NODE_ENV !== 'production') {
+      DEBUG_RESET_CLASSES[className] = 1;
+    }
+
+    return className;
   }
 
   return computeClassName;
