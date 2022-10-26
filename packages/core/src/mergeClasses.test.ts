@@ -3,6 +3,7 @@ import { makeStyles } from './makeStyles';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { MakeStylesOptions } from './types';
 import { SEQUENCE_PREFIX, SEQUENCE_SIZE } from './constants';
+import { makeResetStyles } from './makeResetStyles';
 
 function removeSequenceHash(classNames: string) {
   const indexOfSequence = classNames.indexOf(SEQUENCE_PREFIX);
@@ -147,6 +148,19 @@ describe('mergeClasses', () => {
 
     mergeClasses(ltrClassName, rtlClassName);
     expect(error).toHaveBeenCalledWith(expect.stringMatching(/that has different direction \(dir="rtl"\)/));
+  });
+
+  it('warns if contains multiple classes from makeResetStyles', () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+
+    const className1 = makeResetStyles({ display: 'block' })(options);
+    const className2 = makeResetStyles({ display: 'grid' })(options);
+
+    expect(mergeClasses(className1, className2)).toMatchInlineSnapshot(`r13o7eu2 rlgj0h8`);
+    expect(error).toHaveBeenCalledWith(
+      expect.stringMatching(/a passed string contains multiple classes produced by makeResetStyles/),
+    );
   });
 
   describe('"dir" option', () => {

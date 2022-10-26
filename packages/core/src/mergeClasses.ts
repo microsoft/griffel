@@ -1,7 +1,9 @@
 import {
+  DEBUG_RESET_CLASSES,
   DEFINITION_LOOKUP_TABLE,
   LOOKUP_DEFINITIONS_INDEX,
   LOOKUP_DIR_INDEX,
+  RESET_HASH_PREFIX,
   SEQUENCE_PREFIX,
   SEQUENCE_SIZE,
 } from './constants';
@@ -43,6 +45,8 @@ export function mergeClasses(): string {
   let sequenceMatch = '';
   const sequencesIds: (SequenceHash | undefined)[] = new Array(arguments.length);
 
+  let containsResetClassName = '';
+
   for (let i = 0; i < arguments.length; i++) {
     const className = arguments[i];
 
@@ -52,6 +56,25 @@ export function mergeClasses(): string {
       const sequenceIndex = className.indexOf(SEQUENCE_PREFIX);
 
       if (sequenceIndex === -1) {
+        if (process.env.NODE_ENV !== 'production') {
+          className.split(' ').forEach(entry => {
+            if (entry.startsWith(RESET_HASH_PREFIX) && DEBUG_RESET_CLASSES[entry]) {
+              if (containsResetClassName) {
+                // eslint-disable-next-line no-console
+                console.error(
+                  'mergeClasses(): a passed string contains multiple classes produced by makeResetStyles (' +
+                    `${className} & ${resultClassName}, this will lead to non-deterministic behavior. Learn more:` +
+                    'https://griffel.js.org/react/api/make-reset-styles#limitations' +
+                    '\n' +
+                    `Source string: ${className}`,
+                );
+              } else {
+                containsResetClassName = entry;
+              }
+            }
+          });
+        }
+
         resultClassName += className + ' ';
       } else {
         const sequenceId = className.substr(sequenceIndex, SEQUENCE_SIZE);

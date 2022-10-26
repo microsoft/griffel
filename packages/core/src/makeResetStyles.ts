@@ -1,9 +1,7 @@
+import { DEBUG_RESET_CLASSES } from './constants';
 import { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
 import type { GriffelResetStyle, MakeStylesOptions } from './types';
 
-/**
- * @internal
- */
 export function makeResetStyles(styles: GriffelResetStyle) {
   const insertionCache: Record<string, boolean> = {};
 
@@ -28,7 +26,13 @@ export function makeResetStyles(styles: GriffelResetStyle) {
       insertionCache[rendererId] = true;
     }
 
-    return isLTR ? ltrClassName : rtlClassName || ltrClassName;
+    const className = isLTR ? ltrClassName : rtlClassName || ltrClassName;
+
+    if (process.env.NODE_ENV !== 'production') {
+      DEBUG_RESET_CLASSES[className] = 1;
+    }
+
+    return className;
   }
 
   return computeClassName;

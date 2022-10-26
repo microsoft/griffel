@@ -25,6 +25,9 @@ export const SEQUENCE_SIZE =
     : SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH + DEBUG_SEQUENCE_SEPARATOR.length + SEQUENCE_HASH_LENGTH;
 
 /** @internal */
+export const DEBUG_RESET_CLASSES: Record<string, 1> = {};
+
+/** @internal */
 export const DEFINITION_LOOKUP_TABLE: Record<SequenceHash, LookupItem> = {};
 
 // indexes for values in LookupItem tuple

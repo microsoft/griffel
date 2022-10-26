@@ -1,4 +1,4 @@
-import { DEFINITION_LOOKUP_TABLE, CSSClasses } from '@griffel/core';
+import { DEBUG_RESET_CLASSES, DEFINITION_LOOKUP_TABLE, CSSClasses } from '@griffel/core';
 
 export function print(val: unknown) {
   /**
@@ -17,6 +17,12 @@ export function print(val: unknown) {
 
   while ((result = regex.exec(_val))) {
     const [name] = result;
+
+    if (DEBUG_RESET_CLASSES[name]) {
+      regexParts.push(name);
+      continue;
+    }
+
     const [definitions] = DEFINITION_LOOKUP_TABLE[name];
 
     /**
@@ -34,7 +40,7 @@ export function print(val: unknown) {
   /**
    * form parts of regular expression and removes collected classNames from string
    * @example
-   * regex = /r?(f16th3vw|frdkuqy0|fat0sn40|fjseox00)/
+   * regex = /f16th3vw|frdkuqy0|fat0sn40|fjseox00/
    */
   const valStrippedClassNames = _val.replace(new RegExp(regexParts.join('|'), 'g'), '').trim();
 
@@ -61,7 +67,7 @@ export function test(val: unknown) {
  * lookupRegex() // /(__1qdh4ig)/g
  */
 function lookupRegex(): RegExp | undefined {
-  const definitionKeys = Object.keys(DEFINITION_LOOKUP_TABLE);
+  const definitionKeys = Object.keys({ ...DEFINITION_LOOKUP_TABLE, ...DEBUG_RESET_CLASSES });
 
   if (definitionKeys.length) {
     return new RegExp(`${definitionKeys.join('|')}`, 'g');
