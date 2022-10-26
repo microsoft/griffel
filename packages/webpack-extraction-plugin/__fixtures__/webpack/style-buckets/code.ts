@@ -1,6 +1,6 @@
 import { __styles } from '@griffel/react';
 
-const styles = __styles(
+export const styles = __styles(
   {},
   // Classes in this test are intentionally not realistic to simplify snapshots
   {
@@ -13,6 +13,7 @@ const styles = __styles(
     h: ['.color-yellow:hover { color: yellow; }'],
     a: ['.color-black:active { color: black; }'],
     k: ['@keyframes foo { from{ transform:rotate(0deg); } to { transform:rotate(360deg); } }'],
+    t: ['@supports (display: table-cell){.foo{color:red;}}', '@layer color {.f1hjcal7 {color: red;}}'],
     m: [
       [
         '@media (forced-colors: active) { .color-magenta { color: magenta; } }',
@@ -23,5 +24,3 @@ const styles = __styles(
     ],
   },
 );
-
-console.log(styles);

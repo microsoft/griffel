@@ -97,19 +97,19 @@ async function compileSourceWithWebpack(
       }
 
       const filesList = virtualFsVolume.readdirSync(__dirname) as string[];
-
-      const cssFilePath = path.resolve(
-        __dirname,
-        options.cssFilename ? filesList.find(filename => filename.includes('griffel')) ?? '' : 'griffel.css',
-      );
-
-      if (!virtualFsVolume.existsSync(cssFilePath)) {
-        reject(new Error('"griffel.css" does not exist in filesystem'));
-      }
-
-      const cssOutput = virtualFsVolume.readFileSync(cssFilePath, {
-        encoding: 'utf-8',
-      }) as string;
+      const cssOutput = filesList
+        .filter(filename => filename.includes('.css'))
+        .map(filename => {
+          return (
+            '\n' +
+            `/** ${path.basename(filename)} **/` +
+            '\n' +
+            virtualFsVolume.readFileSync(path.resolve(__dirname, filename), {
+              encoding: 'utf-8',
+            })
+          );
+        })
+        .join('');
 
       resolve({
         cssOutput,
@@ -192,11 +192,12 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
       }
     }
 
+    const fsSnapshot = JSON.parse(await fs.promises.readFile(fsSnapshotPath, { encoding: 'utf8' }));
+    expect(resultFsSnapshot).toMatchObject(fsSnapshot);
+
     if (cssOutputPath) {
       const cssOutput = fixLineEndings(await fs.promises.readFile(cssOutputPath, { encoding: 'utf8' }));
-      const fsSnapshot = JSON.parse(await fs.promises.readFile(fsSnapshotPath, { encoding: 'utf8' }));
 
-      expect(resultFsSnapshot).toMatchObject(fsSnapshot);
       expect(resultCSS).toBe(cssOutput);
       return;
     }
@@ -232,4 +233,10 @@ describe('webpackLoader', () => {
 
   // "pathinfo" adds comments with paths to output
   testFixture('basic-rules', { webpackConfig: { output: { pathinfo: true } } });
+
+  // With existing CSS
+  testFixture('with-css');
+
+  // Chunks
+  testFixture('with-chunks');
 });
