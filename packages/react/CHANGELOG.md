@@ -1,8 +1,18 @@
 # Change Log - @griffel/react
 
-This log was last generated on Thu, 13 Oct 2022 08:36:18 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Oct 2022 11:06:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.2
+
+Wed, 26 Oct 2022 11:06:03 GMT
+
+### Patches
+
+- fix: add export for __resetCSS (olfedias@microsoft.com)
+- chore: allow React 18 in peerDependencies (olfedias@microsoft.com)
+- Bump @griffel/core to v1.8.1
 
 ## 1.4.1
 

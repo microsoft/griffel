@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "feat: add validation into mergeClasses for makeResetStyles calls",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

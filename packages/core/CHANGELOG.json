@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 26 Oct 2022 11:06:03 GMT",
+      "tag": "@griffel/core_v1.8.1",
+      "version": "1.8.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "5f2b99cb41fe1fc8c1676c3319e6d8fccd95dd26",
+            "comment": "feat: add validation into mergeClasses for makeResetStyles calls"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Oct 2022 08:36:18 GMT",
       "tag": "@griffel/core_v1.8.0",
       "version": "1.8.0",

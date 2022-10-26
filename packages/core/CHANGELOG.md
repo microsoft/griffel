@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 13 Oct 2022 08:36:18 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Oct 2022 11:06:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.8.1
+
+Wed, 26 Oct 2022 11:06:03 GMT
+
+### Patches
+
+- feat: add validation into mergeClasses for makeResetStyles calls (olfedias@microsoft.com)
 
 ## 1.8.0
 

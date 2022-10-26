@@ -2,6 +2,27 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Wed, 26 Oct 2022 11:06:03 GMT",
+      "tag": "@griffel/jest-serializer_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "5f2b99cb41fe1fc8c1676c3319e6d8fccd95dd26",
+            "comment": "feat: add support for makeResetStyles"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.8.1",
+            "commit": "f9fb5726c89abff0c7f5e07c6e1d1c8e0ebbcde6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Oct 2022 08:36:18 GMT",
       "tag": "@griffel/jest-serializer_v1.0.13",
       "version": "1.0.13",

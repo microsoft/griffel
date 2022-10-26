@@ -2,6 +2,33 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Wed, 26 Oct 2022 11:06:03 GMT",
+      "tag": "@griffel/react_v1.4.2",
+      "version": "1.4.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "d37c4b57efacd1d878d9c93aa06707fe972b89a9",
+            "comment": "fix: add export for __resetCSS"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "f9fb5726c89abff0c7f5e07c6e1d1c8e0ebbcde6",
+            "comment": "chore: allow React 18 in peerDependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.8.1",
+            "commit": "f9fb5726c89abff0c7f5e07c6e1d1c8e0ebbcde6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Oct 2022 08:36:18 GMT",
       "tag": "@griffel/react_v1.4.1",
       "version": "1.4.1",

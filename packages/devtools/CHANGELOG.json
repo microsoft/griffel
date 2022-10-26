@@ -2,6 +2,29 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Wed, 26 Oct 2022 11:06:03 GMT",
+      "tag": "@griffel/devtools_v0.2.4",
+      "version": "0.2.4",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "f9fb5726c89abff0c7f5e07c6e1d1c8e0ebbcde6",
+            "comment": "fix: cleanup dependencies in @griffel/devtools"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.4.2",
+            "commit": "f9fb5726c89abff0c7f5e07c6e1d1c8e0ebbcde6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Oct 2022 08:36:18 GMT",
       "tag": "@griffel/devtools_v0.2.3",
       "version": "0.2.3",

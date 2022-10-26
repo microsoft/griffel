@@ -1,8 +1,17 @@
 # Change Log - @griffel/jest-serializer
 
-This log was last generated on Thu, 13 Oct 2022 08:36:18 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Oct 2022 11:06:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Wed, 26 Oct 2022 11:06:03 GMT
+
+### Minor changes
+
+- feat: add support for makeResetStyles (olfedias@microsoft.com)
+- Bump @griffel/core to v1.8.1
 
 ## 1.0.13
 
