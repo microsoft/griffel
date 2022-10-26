@@ -2,12 +2,13 @@
   "root": "e2e/nextjs",
   "sourceRoot": "e2e/nextjs/src",
   "projectType": "library",
+  "implicitDependencies": ["@griffel/webpack-loader"],
   "targets": {
     "test": {
       "executor": "@nrwl/workspace:run-commands",
+      "dependsOn": [{ "target": "build", "projects": "dependencies" }],
       "options": {
         "cwd": "e2e/nextjs",
-        "dependsOn": [{ "target": "build", "projects": "dependencies" }],
         "commands": [{ "command": "swc-node src/test.ts" }],
         "outputPath": []
       }

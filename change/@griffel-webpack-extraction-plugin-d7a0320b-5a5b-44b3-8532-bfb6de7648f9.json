@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "chore: rework plugin to avoid dependency on splitChunks.cacheGroups",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

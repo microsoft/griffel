@@ -1,29 +1,35 @@
 import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
 import { Compilation } from 'webpack';
-import type { Compiler, sources } from 'webpack';
+import type { Chunk, Compiler, Module, sources } from 'webpack';
 
-import { sortCSSRules } from './sortCSSRules';
 import { parseCSSRules } from './parseCSSRules';
+import { sortCSSRules } from './sortCSSRules';
 
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
 };
 
-/**
- * Forces all files with `griffel.css` be concatenated into a single asset.
- */
-function forceCSSIntoOneStyleSheet(compiler: Compiler) {
-  compiler.options.optimization ??= {};
-  compiler.options.optimization.splitChunks ??= {};
-  compiler.options.optimization.splitChunks.cacheGroups ??= {};
+type IterableElement<TargetIterable> = TargetIterable extends Iterable<infer ElementType> ? ElementType : never;
+type ChunkGroup = IterableElement<Chunk['groupsIterable']>;
 
-  compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
-    name: `griffel`,
-    type: 'css/mini-extract',
-    chunks: 'all',
-    test: /griffel.css/,
-    enforce: true,
-  };
+const PLUGIN_NAME = 'GriffelExtractPlugin';
+
+function attachGriffelChunkToMainEntryPoint(compilation: Compilation, griffelChunk: Chunk) {
+  const entryPoints = Array.from(compilation.entrypoints.values());
+
+  if (entryPoints.length === 0) {
+    throw new Error('Failed to find and entry points in "compilation.entrypoints"');
+  }
+
+  const mainEntryPoint = entryPoints[0];
+  const targetChunk = mainEntryPoint.getEntrypointChunk();
+  const targetChunkGroup = Array.from(targetChunk.groupsIterable)[0];
+
+  mainEntryPoint.pushChunk(griffelChunk);
+
+  // It's mandatory to have the chunk in a group, otherwise ".groupsIterable" will be empty and will fail mini-css-extract
+  // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L1125-L1130
+  griffelChunk.addGroup(targetChunkGroup);
 }
 
 function getAssetSourceContents(assetSource: sources.Source): string {
@@ -36,6 +42,63 @@ function getAssetSourceContents(assetSource: sources.Source): string {
   return source.toString();
 }
 
+// https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L90
+type CSSModule = Module & {
+  content: Buffer;
+};
+
+function isGriffelCSSModule(cssModule: CSSModule): boolean {
+  if (Buffer.isBuffer(cssModule.content)) {
+    const content = cssModule.content.toString('utf-8');
+
+    return content.indexOf('/** @griffel:css-start') !== -1;
+  }
+
+  return false;
+}
+
+function ensureModuleHasPostOrderIndex(griffelChunk: Chunk, cssModule: Module) {
+  for (const group of griffelChunk.groupsIterable) {
+    if (group.getModulePostOrderIndex(cssModule)) {
+      continue;
+    }
+
+    // "mini-css-extract" requires to an index on modules, modules without indexes will be filtered out and throw
+    // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L1133-L1140
+    group.setModulePostOrderIndex(
+      cssModule,
+      // It's bad to use private APIs, but it's more reliable than just random indexes
+      // The same approach is used in Gatsby
+      // https://github.com/gatsbyjs/gatsby/blob/0b3c34c2bf932e5486ad2d0c3589bde6dc818661/packages/gatsby/src/utils/webpack/plugins/partial-hydration.ts#L455-L463
+      // https://github.com/webpack/webpack/blob/e184a03f2504f03b2e30091662df6630a99a5f72/lib/ChunkGroup.js#L98-L99
+      (group as ChunkGroup & { _modulePostOrderIndices: Map<Module, number> })._modulePostOrderIndices.size + 1,
+    );
+  }
+}
+
+function moveCSSModulesToGriffelChunk(compilation: Compilation, chunks: Iterable<Chunk>, griffelChunk: Chunk) {
+  for (const chunk of chunks) {
+    // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L693-L697
+    const cssModules = compilation.chunkGraph.getChunkModulesIterableBySourceType(chunk, 'css/mini-extract');
+
+    if (typeof cssModules === 'undefined') {
+      continue;
+    }
+
+    for (const cssModule of cssModules) {
+      if (!isGriffelCSSModule(cssModule as CSSModule)) {
+        continue;
+      }
+
+      // https://github.com/webpack/webpack/blob/8241da7f1e75c5581ba535d127fa66aeb9eb2ac8/lib/Chunk.js#L245-L253
+      compilation.chunkGraph.disconnectChunkAndModule(chunk, cssModule);
+      compilation.chunkGraph.connectChunkAndModule(griffelChunk, cssModule);
+
+      ensureModuleHasPostOrderIndex(griffelChunk, cssModule);
+    }
+  }
+}
+
 export class GriffelCSSExtractionPlugin {
   static loader = require.resolve('./webpackLoader');
 
@@ -46,27 +109,35 @@ export class GriffelCSSExtractionPlugin {
   }
 
   apply(compiler: Compiler): void {
-    forceCSSIntoOneStyleSheet(compiler);
+    compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
+      // A chunk where we will move all CSS modules
+      const griffelChunk = compilation.addChunk('griffel');
 
-    compiler.hooks.compilation.tap('GriffelExtractPlugin', compilation => {
+      compilation.hooks.afterChunks.tap(PLUGIN_NAME, chunks => {
+        attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
+        moveCSSModulesToGriffelChunk(compilation, chunks, griffelChunk);
+      });
+
       compilation.hooks.processAssets.tap(
         {
-          name: 'GriffelExtractPlugin',
+          name: PLUGIN_NAME,
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
-          const griffelAsset = Object.entries(assets).find(([assetName]) => assetName.includes('griffel'));
+          const cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
 
-          if (!griffelAsset) {
-            return;
+          if (typeof cssAssetDetails === 'undefined') {
+            throw new Error('Failed to an asset that contains Griffel CSS output');
           }
 
-          const [assetName, assetSource] = griffelAsset;
+          const [cssAssetName, cssAssetSource] = cssAssetDetails;
 
-          const { cssRulesByBucket } = parseCSSRules(getAssetSourceContents(assetSource));
-          const cssRules = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
+          const cssContent = getAssetSourceContents(cssAssetSource);
+          const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-          compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(cssRules));
+          const cssSource = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
+
+          compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
         },
       );
     });

@@ -5,9 +5,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/workspace:run-commands",
+      "dependsOn": [{ "target": "build", "projects": "dependencies" }],
       "options": {
         "cwd": "e2e/typescript",
-        "dependsOn": [{ "target": "build", "projects": "dependencies" }],
         "commands": [{ "command": "swc-node src/test.ts" }],
         "outputPath": []
       }
