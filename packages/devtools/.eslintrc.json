@@ -7,7 +7,15 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": ["**/*.ts", "**/*.tsx"],
+            "packageDir": [".", "./packages/devtools"]
+          }
+        ]
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],

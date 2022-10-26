@@ -7,15 +7,7 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
-  "sideEffects": false,
-  "dependencies": {
-    "@emotion/hash": "^0.8.0",
-    "@griffel/react": "^1.4.1",
-    "js-beautify": "^1.14.0",
-    "prism-react-renderer": "1.2.1",
-    "react-dom": ">=16.8.0 <18.0.0",
-    "react": ">=16.8.0 <18.0.0",
-    "source-map-js": "1.0.2",
-    "stylis": "^4.0.13"
+  "devDependencies": {
+    "@griffel/react": "^1.4.1"
   }
 }
