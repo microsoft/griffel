@@ -10,4 +10,4 @@ export const stylesB = __css({
   },
 });
 
-import 'griffel.css!=!../../../virtual-loader/index.js!../../../virtual-loader/griffel.css?style=.fe3e8s9%7Bcolor%3Ared%3B%7D%0A.fcnqdeg%7Bbackground-color%3Agreen%3B%7D';
+import 'griffel.css!=!../../../virtual-loader/index.js!../../../virtual-loader/griffel.css?style=%2F**%20%40griffel%3Acss-start%20%5Bd%5D%20**%2F%0A.fcnqdeg%7Bbackground-color%3Agreen%3B%7D.fe3e8s9%7Bcolor%3Ared%3B%7D%0A%2F**%20%40griffel%3Acss-end%20**%2F%0A';

@@ -316,6 +316,7 @@ export type CSSRulesByBucket = {
   m?: CSSBucketEntry[];
 };
 
+/** @internal */
 export type CSSBucketEntry = string | [string, Record<string, unknown>];
 
 export type StylesBySlots<Slots extends string | number> = Record<Slots, GriffelStyle>;

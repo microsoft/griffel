@@ -1,3 +1,4 @@
+import { normalizeCSSBucketEntry } from '@griffel/core';
 import { getOptions } from 'loader-utils';
 import * as path from 'path';
 import { validate } from 'schema-utils';
@@ -17,10 +18,6 @@ const resourcePath = path.resolve(resourceDirectory, 'griffel.css');
 
 function toURIComponent(rule: string): string {
   return encodeURIComponent(rule).replace(/!/g, '%21');
-}
-
-function shouldTransformSourceCode(sourceCode: string): boolean {
-  return sourceCode.indexOf('__styles') !== -1 || sourceCode.indexOf('__resetStyles') !== -1;
 }
 
 /**
@@ -57,7 +54,7 @@ function webpackLoader(
   });
 
   // Early return to handle cases when __styles() calls are not present, allows skipping expensive invocation of Babel
-  if (!shouldTransformSourceCode(sourceCode)) {
+  if (sourceCode.indexOf('__styles') === -1 && sourceCode.indexOf('__resetStyles') === -1) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }
@@ -78,11 +75,41 @@ function webpackLoader(
   }
 
   if (result) {
-    if (result.cssRules) {
+    if (result.cssRulesByBucket) {
+      const css = Object.entries(result.cssRulesByBucket).reduce((acc, [cssBucketName, cssBucketRules]) => {
+        if (cssBucketName === 'm') {
+          return (
+            acc +
+            cssBucketRules
+              .map(entry => {
+                return (
+                  `/** @griffel:css-start [${cssBucketName}] [${JSON.stringify(entry[1])}] **/` +
+                  '\n' +
+                  normalizeCSSBucketEntry(entry)[0] +
+                  '\n' +
+                  `/** @griffel:css-end **/` +
+                  '\n'
+                );
+              })
+              .join('')
+          );
+        }
+
+        return (
+          acc +
+          `/** @griffel:css-start [${cssBucketName}] **/` +
+          '\n' +
+          cssBucketRules.flatMap(entry => normalizeCSSBucketEntry(entry)).join('') +
+          '\n' +
+          `/** @griffel:css-end **/` +
+          '\n'
+        );
+      }, '');
+
       const request = `import ${JSON.stringify(
         this.utils.contextify(
           this.context || this.rootContext,
-          `griffel.css!=!${virtualLoaderPath}!${resourcePath}?style=${toURIComponent(result.cssRules.join('\n'))}`,
+          `griffel.css!=!${virtualLoaderPath}!${resourcePath}?style=${toURIComponent(css)}`,
         ),
       )};`;
 

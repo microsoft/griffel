@@ -80,6 +80,7 @@ export type {
   // Internal types
   CSSClasses,
   CSSClassesMapBySlot,
+  CSSBucketEntry,
   CSSRulesByBucket,
   StyleBucketName,
   // Util
