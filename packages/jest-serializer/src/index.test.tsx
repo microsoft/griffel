@@ -1,11 +1,8 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as ReactTestUtils from 'react-dom/test-utils';
 import { makeResetStyles, makeStyles, mergeClasses, TextDirectionProvider } from '@griffel/react';
 import { render } from '@testing-library/react';
 
 import { print, test } from './index';
-import { renderIntoDocument } from 'react-dom/test-utils';
 
 expect.addSnapshotSerializer({ print, test });
 
