@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix(jest-serializer): handles whitespaces better",
-  "packageName": "@griffel/jest-serializer",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

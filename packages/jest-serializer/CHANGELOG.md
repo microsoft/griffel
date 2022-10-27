@@ -1,8 +1,16 @@
 # Change Log - @griffel/jest-serializer
 
-This log was last generated on Wed, 26 Oct 2022 11:06:03 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Oct 2022 11:38:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.1
+
+Thu, 27 Oct 2022 11:38:11 GMT
+
+### Patches
+
+- fix(jest-serializer): handles whitespaces better (olfedias@microsoft.com)
 
 ## 1.1.0
 
