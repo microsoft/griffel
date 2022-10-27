@@ -42,12 +42,12 @@ export function print(val: unknown) {
    * @example
    * regex = /f16th3vw|frdkuqy0|fat0sn40|fjseox00/
    */
-  const valStrippedClassNames = _val.replace(new RegExp(regexParts.join('|'), 'g'), '').trim();
+  const valStrippedClassNames = _val.replace(new RegExp(regexParts.map(p => `${p}\\s?`).join('|'), 'g'), '').trim();
 
   /**
    * Trim whitespace from className
    */
-  return `"${valStrippedClassNames.replace(/className="\s*(\w*)\s*"/, 'className="$1"')}"`;
+  return `"${valStrippedClassNames.replace(/(class|className)="([^"]*)\s+"/, '$1="$2"')}"`;
 }
 
 export function test(val: unknown) {
