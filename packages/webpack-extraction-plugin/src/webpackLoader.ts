@@ -82,14 +82,12 @@ function webpackLoader(
             acc +
             cssBucketRules
               .map(entry => {
-                return (
-                  `/** @griffel:css-start [${cssBucketName}] [${JSON.stringify(entry[1])}] **/` +
-                  '\n' +
-                  normalizeCSSBucketEntry(entry)[0] +
-                  '\n' +
-                  `/** @griffel:css-end **/` +
-                  '\n'
-                );
+                return [
+                  `/** @griffel:css-start [${cssBucketName}] [${JSON.stringify(entry[1])}] **/`,
+                  normalizeCSSBucketEntry(entry)[0],
+                  `/** @griffel:css-end **/`,
+                  '',
+                ].join('\n');
               })
               .join('')
           );
@@ -97,12 +95,12 @@ function webpackLoader(
 
         return (
           acc +
-          `/** @griffel:css-start [${cssBucketName}] **/` +
-          '\n' +
-          cssBucketRules.flatMap(entry => normalizeCSSBucketEntry(entry)).join('') +
-          '\n' +
-          `/** @griffel:css-end **/` +
-          '\n'
+          [
+            `/** @griffel:css-start [${cssBucketName}] **/`,
+            cssBucketRules.flatMap(entry => normalizeCSSBucketEntry(entry)).join(''),
+            `/** @griffel:css-end **/`,
+            '',
+          ].join('\n')
         );
       }, '');
 

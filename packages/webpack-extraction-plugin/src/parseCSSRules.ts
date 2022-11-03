@@ -15,7 +15,7 @@ export function parseCSSRules(css: string) {
   let cssBucketName: StyleBucketName | null = null;
   let cssMeta: Record<string, unknown> | null = null;
 
-  elements.forEach(element => {
+  for (const element of elements) {
     if (element.type === COMMENT) {
       if (element.value.indexOf('/** @griffel:css-start') === 0) {
         cssBucketName = element.value.charAt(24) as StyleBucketName;
@@ -24,14 +24,14 @@ export function parseCSSRules(css: string) {
           cssMeta = JSON.parse(element.value.slice(28, -5));
         }
 
-        return;
+        continue;
       }
 
       if (element.value.indexOf('/** @griffel:css-end') === 0) {
         cssBucketName = null;
         cssMeta = null;
 
-        return;
+        continue;
       }
     }
 
@@ -40,11 +40,11 @@ export function parseCSSRules(css: string) {
       const bucketEntry: CSSBucketEntry = element.type === MEDIA ? [cssRule, cssMeta!] : cssRule;
 
       cssRulesByBucket[cssBucketName].push(bucketEntry);
-      return;
+      continue;
     }
 
     unrelatedElements.push(element);
-  });
+  }
 
   return { cssRulesByBucket, remainingCSS: serialize(unrelatedElements, stringify) };
 }
