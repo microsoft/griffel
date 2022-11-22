@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: Babel plugin no longer errors on array values being passed to animationName.",
+  "packageName": "@griffel/babel-preset",
+  "email": "humberto_makoto@hotmail.com",
+  "dependentChangeType": "patch"
+}
