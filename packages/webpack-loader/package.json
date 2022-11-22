@@ -17,6 +17,6 @@
   },
   "peerDependencies": {
     "@griffel/react": "^1.4.2",
-    "webpack": "^5"
+    "webpack": "^4.44.2 || ^5"
   }
 }

@@ -1,4 +1,4 @@
-import { getOptions } from 'loader-utils';
+import { getOptions, stringifyRequest } from 'loader-utils';
 import * as path from 'path';
 import { validate } from 'schema-utils';
 import * as webpack from 'webpack';
@@ -79,12 +79,20 @@ function webpackLoader(
 
   if (result) {
     if (result.cssRules) {
-      const request = `import ${JSON.stringify(
-        this.utils.contextify(
-          this.context || this.rootContext,
-          `griffel.css!=!${virtualLoaderPath}!${resourcePath}?style=${toURIComponent(result.cssRules.join('\n'))}`,
-        ),
-      )};`;
+      const request = this.utils
+        ? // webpack 5
+          `import ${JSON.stringify(
+            this.utils.contextify(
+              this.context || this.rootContext,
+              `griffel.css!=!${virtualLoaderPath}!${resourcePath}?style=${toURIComponent(result.cssRules.join('\n'))}`,
+            ),
+          )};`
+        : `import ${JSON.stringify(
+            stringifyRequest(
+              this.context || this.rootContext,
+              `griffel.css!=!${virtualLoaderPath}!${resourcePath}?style=${toURIComponent(result.cssRules.join('\n'))}`,
+            ),
+          )};`.replace(/\\"/gi, '');
 
       this.callback(null, `${result.code}\n\n${request};`, result.sourceMap);
       return;

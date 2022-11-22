@@ -48,26 +48,42 @@ export class GriffelCSSExtractionPlugin {
     forceCSSIntoOneStyleSheet(compiler);
 
     compiler.hooks.compilation.tap('GriffelExtractPlugin', compilation => {
-      compilation.hooks.processAssets.tap(
-        {
-          name: 'GriffelExtractPlugin',
-          stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
-        },
-        assets => {
-          const griffelAsset = Object.entries(assets).find(([assetName]) => assetName.includes('griffel'));
-
-          if (!griffelAsset) {
-            return;
-          }
-
-          const [assetName, assetSource] = griffelAsset;
-
-          const unsortedCSSRules = getAssetSourceContents(assetSource);
-          const sortedCSSRules = sortCSSRules(unsortedCSSRules, this.compareMediaQueries);
-
-          compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(sortedCSSRules));
-        },
-      );
+      if (compilation.hooks.optimizeAssets) {
+        compilation.hooks.optimizeAssets.tap('GriffelExtractPlugin', assets =>
+          updateGriffelCSS(assets, compiler, compilation, this.compareMediaQueries),
+        );
+      } else {
+        compilation.hooks.processAssets.tap(
+          {
+            name: 'GriffelExtractPlugin',
+            stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
+          },
+          assets => updateGriffelCSS(assets, compiler, compilation, this.compareMediaQueries),
+        );
+      }
     });
   }
 }
+
+const updateGriffelCSS = (
+  assets: Compilation['assets'],
+  compiler: Compiler,
+  compilation: Compilation,
+  compareMediaQueries: GriffelRenderer['compareMediaQueries'],
+) => {
+  const griffelAsset = Object.entries(assets).find(
+    ([assetName]) => assetName.includes('griffel') && assetName.endsWith('.css'),
+  );
+
+  if (!griffelAsset) {
+    return;
+  }
+
+  const [assetName, assetSource] = griffelAsset;
+  const unsortedCSSRules = getAssetSourceContents(assetSource);
+  const sortedCSSRules = sortCSSRules(unsortedCSSRules, compareMediaQueries);
+
+  const webpack = compiler.webpack ? compiler.webpack : require('webpack');
+
+  compilation.updateAsset(assetName, new webpack.sources.RawSource(sortedCSSRules));
+};
