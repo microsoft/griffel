@@ -1,7 +1,6 @@
 import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
 import { Compilation } from 'webpack';
 import type { Compiler, sources } from 'webpack';
-import { RawSource } from 'webpack-sources';
 
 import { sortCSSRules } from './sortCSSRules';
 
