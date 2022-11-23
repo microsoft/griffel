@@ -4,6 +4,7 @@
     "allowJs": true,
     "checkJs": true,
     "module": "CommonJS",
+    "jsx": "react",
     "lib": ["ES2019", "DOM", "DOM.Iterable"],
     "forceConsistentCasingInFileNames": true,
     "strict": true,
