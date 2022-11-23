@@ -3,6 +3,7 @@ import { Compilation } from 'webpack';
 import type { Compiler, sources } from 'webpack';
 
 import { sortCSSRules } from './sortCSSRules';
+import { parseCSSRules } from './parseCSSRules';
 
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
@@ -62,10 +63,10 @@ export class GriffelCSSExtractionPlugin {
 
           const [assetName, assetSource] = griffelAsset;
 
-          const unsortedCSSRules = getAssetSourceContents(assetSource);
-          const sortedCSSRules = sortCSSRules(unsortedCSSRules, this.compareMediaQueries);
+          const { cssRulesByBucket } = parseCSSRules(getAssetSourceContents(assetSource));
+          const cssRules = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
 
-          compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(sortedCSSRules));
+          compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(cssRules));
         },
       );
     });

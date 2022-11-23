@@ -1,99 +1,58 @@
-import {
-  RESET_HASH_PREFIX,
-  getStyleBucketName,
-  GriffelRenderer,
-  StyleBucketName,
-  styleBucketOrdering,
-} from '@griffel/core';
-import { COMMENT, compile, Element, KEYFRAMES, MEDIA, RULESET, serialize, stringify, SUPPORTS, tokenize } from 'stylis';
+import { styleBucketOrdering } from '@griffel/core';
+import type { GriffelRenderer, CSSBucketEntry, CSSRulesByBucket } from '@griffel/core';
 
-function isResetClassName(className: string) {
-  return className[0] === '.' && className[1] === RESET_HASH_PREFIX;
+function getCSSRuleFromBucketEntry(entry: CSSBucketEntry): string {
+  return Array.isArray(entry) ? entry[0] : entry;
 }
 
-export function getSelectorFromElement(element: Element) {
-  return tokenize(element.value).slice(1).join('');
+function getCSSMetaFromBucketEntry(entry: CSSBucketEntry): Record<string, unknown> {
+  return Array.isArray(entry) ? entry[1] : {};
 }
 
-export function getElementMetadata(element: Element): string {
-  if (element.type === MEDIA) {
-    return element.value.replace(/^@media/, '').trim();
-  }
+export function sortCSSRules(
+  setOfCSSRules: CSSRulesByBucket[],
+  compareMediaQueries: GriffelRenderer['compareMediaQueries'],
+) {
+  return styleBucketOrdering
+    .map(styleBucketName => {
+      return {
+        styleBucketName,
+        cssBucketEntries:
+          // We deduplicate CSS rules there by using them as keys in an object:
+          // - create an array with pairs [key, value]
+          // - use Object.fromEntries() to create an object that contains unique values
+          Object.values(
+            Object.fromEntries(
+              setOfCSSRules.flatMap(cssRulesByBucket => {
+                if (Array.isArray(cssRulesByBucket[styleBucketName])) {
+                  return cssRulesByBucket[styleBucketName]!.map(bucketEntry => [
+                    getCSSRuleFromBucketEntry(bucketEntry),
+                    bucketEntry,
+                  ]);
+                }
 
-  return '';
-}
+                return [];
+              }),
+            ),
+          ),
+      };
+    })
+    .reduce((acc, { styleBucketName, cssBucketEntries }) => {
+      if (styleBucketName === 'm') {
+        return (
+          acc +
+          cssBucketEntries
+            .sort((entryA, entryB) => {
+              return compareMediaQueries(
+                getCSSMetaFromBucketEntry(entryA)['m'] as string,
+                getCSSMetaFromBucketEntry(entryB)['m'] as string,
+              );
+            })
+            .map(entry => entry[0])
+            .join('')
+        );
+      }
 
-export function getElementReference(element: Element, suffix = ''): string {
-  if (element.type === RULESET || element.type === KEYFRAMES) {
-    return element.value + suffix;
-  }
-
-  if (Array.isArray(element.children)) {
-    return element.value + '[' + element.children.map(child => getElementReference(child, suffix)).join(',') + ']';
-  }
-
-  function removeRootProperty(element: Element): unknown {
-    return {
-      ...element,
-      children: Array.isArray(element.children)
-        ? element.children.map(child => removeRootProperty(child))
-        : element.children,
-      root: undefined,
-      parent: undefined,
-    };
-  }
-
-  throw new Error(
-    [
-      'getElementReference(): An unhandled case, please report if it happens and provide debug information about an element:',
-      JSON.stringify(removeRootProperty(element), null, 2),
-    ].join('\n'),
-  );
-}
-
-export function getStyleBucketNameFromElement(element: Element): StyleBucketName {
-  if (element.type === KEYFRAMES) {
-    return 'k';
-  }
-
-  if (isResetClassName(element.value)) {
-    return 'r';
-  }
-
-  return getStyleBucketName(
-    [getSelectorFromElement(element)],
-    element.type === '@layer' ? element.value : '',
-    element.type === MEDIA ? element.value : '',
-    element.type === SUPPORTS ? element.value : '',
-  );
-}
-
-export function sortCSSRules(css: string, compareMediaQueries: GriffelRenderer['compareMediaQueries']): string {
-  const childElements = compile(css)
-    // Remove top level comments as it is unclear how to sort them
-    .filter(element => element.type !== COMMENT)
-    .map(element => ({
-      ...element,
-      bucketName: getStyleBucketNameFromElement(element),
-      metadata: getElementMetadata(element),
-      reference: getElementReference(element),
-    }));
-  const uniqueElements = childElements.reduce<Record<string, typeof childElements[0]>>((acc, element) => {
-    acc[element.reference] = element;
-
-    return acc;
-  }, {});
-  const sortedElements = Object.values(uniqueElements).sort((elementA, elementB) => {
-    if (elementA.bucketName === 'm' && elementB.bucketName === 'm') {
-      return compareMediaQueries(elementA.metadata, elementB.metadata);
-    }
-
-    if (elementA.bucketName === elementB.bucketName) {
-      return 0;
-    }
-
-    return styleBucketOrdering.indexOf(elementA.bucketName) - styleBucketOrdering.indexOf(elementB.bucketName);
-  });
-
-  return serialize(sortedElements, stringify);
+      return acc + cssBucketEntries.join('');
+    }, '');
 }

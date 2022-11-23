@@ -10,4 +10,4 @@ export const styles = __css({
   },
 });
 
-import 'griffel.css!=!../../../virtual-loader/index.js!../../../virtual-loader/griffel.css?style=.fe3e8s9%7Bcolor%3Ared%3B%7D%0A.fycuoez%7Bpadding-left%3A4px%3B%7D%0A.f8wuabp%7Bpadding-right%3A4px%3B%7D%0A.fcnqdeg%7Bbackground-color%3Agreen%3B%7D';
+import 'griffel.css!=!../../../virtual-loader/index.js!../../../virtual-loader/griffel.css?style=%2F**%20%40griffel%3Acss-start%20%5Bd%5D%20**%2F%0A.fe3e8s9%7Bcolor%3Ared%3B%7D.fycuoez%7Bpadding-left%3A4px%3B%7D.f8wuabp%7Bpadding-right%3A4px%3B%7D.fcnqdeg%7Bbackground-color%3Agreen%3B%7D%0A%2F**%20%40griffel%3Acss-end%20**%2F%0A';

@@ -1,6 +1,6 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
-import { CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
+import { CSSRulesByBucket } from '@griffel/core';
 import * as path from 'path';
 
 type StripRuntimeBabelPluginOptions = {
@@ -11,11 +11,11 @@ type StripRuntimeBabelPluginOptions = {
 type FunctionKinds = '__styles' | '__resetStyles';
 
 type StripRuntimeBabelPluginState = PluginPass & {
-  cssRules?: string[];
+  cssRulesByBucket?: CSSRulesByBucket;
 };
 
 export type StripRuntimeBabelPluginMetadata = {
-  cssRules: string[];
+  cssRulesByBucket: CSSRulesByBucket;
 };
 
 export function transformUrl(filename: string, resourceDirectory: string, assetPath: string) {
@@ -39,10 +39,10 @@ export const babelPluginStripGriffelRuntime = declare<
   return {
     name: '@griffel/webpack-extraction-plugin/babel',
     pre() {
-      this.cssRules = [];
+      this.cssRulesByBucket = {};
     },
     post() {
-      (this.file.metadata as unknown as StripRuntimeBabelPluginMetadata).cssRules = this.cssRules!;
+      (this.file.metadata as unknown as StripRuntimeBabelPluginMetadata).cssRulesByBucket = this.cssRulesByBucket!;
     },
 
     visitor: {
@@ -215,19 +215,15 @@ export const babelPluginStripGriffelRuntime = declare<
               if (functionKind === '__styles') {
                 const cssRulesByBucket = evaluationResult.value as CSSRulesByBucket;
 
-                Object.values(cssRulesByBucket).forEach(cssBucketEntries => {
-                  const cssRules = cssBucketEntries.map(cssBucketEntry => {
-                    const [cssRule] = normalizeCSSBucketEntry(cssBucketEntry);
-
-                    return cssRule;
-                  });
-
-                  state.cssRules!.push(...cssRules);
+                Object.entries(cssRulesByBucket).forEach(([cssBucketName, cssBucketEntries]) => {
+                  state.cssRulesByBucket![cssBucketName as keyof CSSRulesByBucket] = cssBucketEntries.concat(
+                    state.cssRulesByBucket![cssBucketName as keyof CSSRulesByBucket] || [],
+                  );
                 });
               } else if (functionKind === '__resetStyles') {
-                const cssRules = evaluationResult.value as string[];
+                const cssRules = evaluationResult.value as NonNullable<CSSRulesByBucket['r']>;
 
-                state.cssRules!.push(...cssRules);
+                state.cssRulesByBucket!.r = cssRules.concat(state.cssRulesByBucket!.r || []);
               }
 
               argumentPath.remove();
