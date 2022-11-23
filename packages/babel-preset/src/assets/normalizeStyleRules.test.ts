@@ -128,4 +128,24 @@ describe('normalizeStyleRules', () => {
       },
     });
   });
+
+  it('handles keyframe arrays', () => {
+    expect(
+      normalizeStyleRules(
+        path.posix,
+        '/home/projects/foo',
+        '/home/projects/foo/src/styles/Component.styles.ts',
+
+        {
+          root: {
+            animationName: [{ from: { height: '20px' }, to: { height: '10px' } }],
+          },
+        },
+      ).toEqual({
+        root: {
+          animationName: [{ from: { eight: '20px' }, to: { height: '10px' } }],
+        },
+      }),
+    );
+  });
 });
