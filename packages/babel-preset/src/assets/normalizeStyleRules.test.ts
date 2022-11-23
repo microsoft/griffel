@@ -144,7 +144,7 @@ describe('normalizeStyleRules', () => {
       ),
     ).toEqual({
       root: {
-        animationName: [{ from: { eight: '20px' }, to: { height: '10px' } }],
+        animationName: [{ from: { height: '20px' }, to: { height: '10px' } }],
       },
     });
   });
