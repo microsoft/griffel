@@ -1,6 +1,7 @@
 import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
 import { Compilation } from 'webpack';
 import type { Compiler, sources } from 'webpack';
+import { RawSource } from 'webpack-sources';
 
 import { sortCSSRules } from './sortCSSRules';
 
@@ -48,17 +49,17 @@ export class GriffelCSSExtractionPlugin {
     forceCSSIntoOneStyleSheet(compiler);
 
     compiler.hooks.compilation.tap('GriffelExtractPlugin', compilation => {
-      if (compilation.hooks.optimizeAssets) {
-        compilation.hooks.optimizeAssets.tap('GriffelExtractPlugin', assets =>
-          updateGriffelCSS(assets, compiler, compilation, this.compareMediaQueries),
-        );
-      } else {
+      if (compilation.hooks.processAssets) {
         compilation.hooks.processAssets.tap(
           {
             name: 'GriffelExtractPlugin',
             stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
           },
-          assets => updateGriffelCSS(assets, compiler, compilation, this.compareMediaQueries),
+          assets => updateGriffelCSS(compiler, compilation, this.compareMediaQueries),
+        );
+      } else {
+        compilation.hooks.optimizeAssets.tap('GriffelExtractPlugin', assets =>
+          updateGriffelCSS(compiler, compilation, this.compareMediaQueries),
         );
       }
     });
@@ -66,12 +67,11 @@ export class GriffelCSSExtractionPlugin {
 }
 
 const updateGriffelCSS = (
-  assets: Compilation['assets'],
   compiler: Compiler,
   compilation: Compilation,
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
 ) => {
-  const griffelAsset = Object.entries(assets).find(
+  const griffelAsset = Object.entries(compilation.assets).find(
     ([assetName]) => assetName.includes('griffel') && assetName.endsWith('.css'),
   );
 
@@ -82,8 +82,7 @@ const updateGriffelCSS = (
   const [assetName, assetSource] = griffelAsset;
   const unsortedCSSRules = getAssetSourceContents(assetSource);
   const sortedCSSRules = sortCSSRules(unsortedCSSRules, compareMediaQueries);
+  const { RawSource } = compiler.webpack.sources || require('webpack-sources');
 
-  const webpack = compiler.webpack ? compiler.webpack : require('webpack');
-
-  compilation.updateAsset(assetName, new webpack.sources.RawSource(sortedCSSRules));
+  compilation.updateAsset(assetName, new RawSource(sortedCSSRules));
 };

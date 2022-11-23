@@ -17,6 +17,7 @@
   },
   "peerDependencies": {
     "@griffel/core": "^1.8.1",
-    "webpack": "^4.44.2 || ^5"
+    "webpack": "^4.44.2 || ^5",
+    "webpack-sources": "3.2.3"
   }
 }

@@ -6805,7 +6805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webpack-sources@npm:*":
+"@types/webpack-sources@npm:*, @types/webpack-sources@npm:3.2.0":
   version: 3.2.0
   resolution: "@types/webpack-sources@npm:3.2.0"
   dependencies:
@@ -14564,6 +14564,7 @@ __metadata:
     "@types/stylis": 4.0.2
     "@types/tmp": 0.2.3
     "@types/webpack-env": ^1.17.0
+    "@types/webpack-sources": 3.2.0
     "@types/yargs": ^17.0.10
     "@typescript-eslint/eslint-plugin": ~5.3.0
     "@typescript-eslint/parser": ~5.3.0
@@ -14620,6 +14621,7 @@ __metadata:
     tslib: ^2.1.0
     typescript: ~4.5.2
     url-loader: ^3.0.0
+    webpack-sources: 3.2.3
     yargs: ^17.5.1
   languageName: unknown
   linkType: soft
@@ -25720,6 +25722,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"webpack-sources@npm:3.2.3, webpack-sources@npm:^3.0.2, webpack-sources@npm:^3.2.2, webpack-sources@npm:^3.2.3":
+  version: 3.2.3
+  resolution: "webpack-sources@npm:3.2.3"
+  checksum: 989e401b9fe3536529e2a99dac8c1bdc50e3a0a2c8669cbafad31271eadd994bc9405f88a3039cd2e29db5e6d9d0926ceb7a1a4e7409ece021fe79c37d9c4607
+  languageName: node
+  linkType: hard
+
 "webpack-sources@npm:^1.2.0, webpack-sources@npm:^1.3.0, webpack-sources@npm:^1.4.0, webpack-sources@npm:^1.4.1, webpack-sources@npm:^1.4.3":
   version: 1.4.3
   resolution: "webpack-sources@npm:1.4.3"
@@ -25727,13 +25736,6 @@ __metadata:
     source-list-map: ^2.0.0
     source-map: ~0.6.1
   checksum: 37463dad8d08114930f4bc4882a9602941f07c9f0efa9b6bc78738cd936275b990a596d801ef450d022bb005b109b9f451dd087db2f3c9baf53e8e22cf388f79
-  languageName: node
-  linkType: hard
-
-"webpack-sources@npm:^3.0.2, webpack-sources@npm:^3.2.2, webpack-sources@npm:^3.2.3":
-  version: 3.2.3
-  resolution: "webpack-sources@npm:3.2.3"
-  checksum: 989e401b9fe3536529e2a99dac8c1bdc50e3a0a2c8669cbafad31271eadd994bc9405f88a3039cd2e29db5e6d9d0926ceb7a1a4e7409ece021fe79c37d9c4607
   languageName: node
   linkType: hard
 
