@@ -17,20 +17,24 @@ export function sortCSSRules(
     .map(styleBucketName => {
       return {
         styleBucketName,
-        cssBucketEntries: Object.values(
-          Object.fromEntries(
-            setOfCSSRules.flatMap(cssRulesByBucket => {
-              if (Array.isArray(cssRulesByBucket[styleBucketName])) {
-                return cssRulesByBucket[styleBucketName]!.map(bucketEntry => [
-                  getCSSRuleFromBucketEntry(bucketEntry),
-                  bucketEntry,
-                ]);
-              }
+        cssBucketEntries:
+          // We deduplicate CSS rules there by using them as keys in an object:
+          // - create an array with pairs [key, value]
+          // - use Object.fromEntries() to create an object that contains unique values
+          Object.values(
+            Object.fromEntries(
+              setOfCSSRules.flatMap(cssRulesByBucket => {
+                if (Array.isArray(cssRulesByBucket[styleBucketName])) {
+                  return cssRulesByBucket[styleBucketName]!.map(bucketEntry => [
+                    getCSSRuleFromBucketEntry(bucketEntry),
+                    bucketEntry,
+                  ]);
+                }
 
-              return [];
-            }),
+                return [];
+              }),
+            ),
           ),
-        ),
       };
     })
     .reduce((acc, { styleBucketName, cssBucketEntries }) => {
