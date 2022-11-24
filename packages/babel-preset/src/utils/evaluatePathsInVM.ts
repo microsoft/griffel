@@ -5,7 +5,6 @@ import generator from '@babel/generator';
 import { Module, StrictOptions } from '@linaria/babel-preset';
 
 import type { BabelPluginOptions } from '../types';
-import { astify } from './astify';
 
 const EVAL_EXPORT_NAME = '__mkPreval';
 
@@ -107,6 +106,6 @@ export function evaluatePathsInVM(
   for (let i = 0; i < nodePaths.length; i++) {
     const nodePath = nodePaths[i];
 
-    nodePath.replaceWith(astify(results[i]));
+    nodePath.replaceWith(t.valueToNode(results[i]));
   }
 }

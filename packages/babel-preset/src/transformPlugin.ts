@@ -13,7 +13,6 @@ import * as path from 'path';
 
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
 import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
-import { astify } from './utils/astify';
 import { evaluatePaths } from './utils/evaluatePaths';
 import { BabelPluginOptions } from './types';
 import { validateOptions } from './validateOptions';
@@ -217,7 +216,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
-                callExpressionPath.pushContainer('arguments', [astify(classnamesMapping), astify(uniqueCSSRules)]);
+                callExpressionPath.pushContainer('arguments', [
+                  t.valueToNode(classnamesMapping),
+                  t.valueToNode(uniqueCSSRules),
+                ]);
               }
 
               if (definitionPath.functionKind === 'makeResetStyles') {
@@ -237,9 +239,9 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
                 callExpressionPath.pushContainer('arguments', [
-                  astify(ltrClassName),
-                  astify(rtlClassName),
-                  astify(cssRules),
+                  t.valueToNode(ltrClassName),
+                  t.valueToNode(rtlClassName),
+                  t.valueToNode(cssRules),
                 ]);
               }
 
