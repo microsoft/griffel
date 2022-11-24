@@ -53,6 +53,11 @@ pluginTester({
       fixture: path.resolve(fixturesDir, 'non-existing-module-call', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'non-existing-module-call', 'output.ts'),
     },
+    {
+      title: 'syntax: animationName',
+      fixture: path.resolve(fixturesDir, 'keyframes', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'keyframes', 'output.ts'),
+    },
 
     // Assets
     //

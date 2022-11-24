@@ -1,4 +1,4 @@
-import { GriffelStyle } from '@griffel/core';
+import { GriffelAnimation, GriffelStyle } from '@griffel/core';
 import { tokenize } from 'stylis';
 
 import { isAssetUrl } from './isAssetUrl';
@@ -54,9 +54,18 @@ export function normalizeStyleRules(
         return [key, value];
       }
 
-      // Fallback value
+      // Fallback values or keyframes
       if (Array.isArray(value)) {
-        return [key, value.map(rule => normalizeStyleRule(path, projectRoot, filename, rule as string))];
+        return [
+          key,
+          value.map(rule => {
+            if (typeof rule === 'object') {
+              return normalizeStyleRules(path, projectRoot, filename, rule as GriffelAnimation);
+            }
+
+            return normalizeStyleRule(path, projectRoot, filename, rule);
+          }),
+        ];
       }
 
       // Nested objects
