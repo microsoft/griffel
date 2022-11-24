@@ -5,6 +5,8 @@
     "@griffel/babel-preset": "packages/babel-preset",
     "@griffel/core": "packages/core",
     "@griffel/devtools": "packages/devtools",
+    "@griffel/e2e-nextjs": "e2e/nextjs",
+    "@griffel/e2e-utils": "e2e/utils",
     "@griffel/e2e-typescript": "e2e/typescript",
     "@griffel/eslint-plugin": "packages/eslint-plugin",
     "@griffel/jest-serializer": "packages/jest-serializer",

@@ -1,12 +1,12 @@
 {
-  "root": "e2e/typescript",
-  "sourceRoot": "e2e/typescript/src",
+  "root": "e2e/nextjs",
+  "sourceRoot": "e2e/nextjs/src",
   "projectType": "library",
   "targets": {
     "test": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "cwd": "e2e/typescript",
+        "cwd": "e2e/nextjs",
         "dependsOn": [{ "target": "build", "projects": "dependencies" }],
         "commands": [{ "command": "swc-node src/test.ts" }],
         "outputPath": []
@@ -15,7 +15,7 @@
     "type-check": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "cwd": "e2e/typescript",
+        "cwd": "e2e/nextjs",
         "commands": [{ "command": "tsc -b --pretty" }],
         "outputPath": []
       }
