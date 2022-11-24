@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 24 Nov 2022 10:05:12 GMT",
+      "tag": "@griffel/core_v1.8.2",
+      "version": "1.8.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "ebd004e9e8935e099c1873bf2d4841c773bb8417",
+            "comment": "chore: export \"CSSBucketEntry\" type for internal usage"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Oct 2022 11:06:03 GMT",
       "tag": "@griffel/core_v1.8.1",
       "version": "1.8.1",

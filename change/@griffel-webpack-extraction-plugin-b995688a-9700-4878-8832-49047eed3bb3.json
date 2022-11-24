@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: use style buckets in CSS extraction",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

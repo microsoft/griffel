@@ -2,6 +2,27 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Thu, 24 Nov 2022 10:05:12 GMT",
+      "tag": "@griffel/babel-preset_v1.4.4",
+      "version": "1.4.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "humberto_makoto@hotmail.com",
+            "package": "@griffel/babel-preset",
+            "commit": "fc3403a602d5dd0b206ceeb48ca689cb2fdf6d37",
+            "comment": "fix: Handle arrays in `animationName` definitions."
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.8.2",
+            "commit": "fc3403a602d5dd0b206ceeb48ca689cb2fdf6d37"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Oct 2022 11:06:03 GMT",
       "tag": "@griffel/babel-preset_v1.4.3",
       "version": "1.4.3",

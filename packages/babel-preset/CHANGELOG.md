@@ -1,8 +1,17 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Wed, 26 Oct 2022 11:06:03 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Nov 2022 10:05:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.4
+
+Thu, 24 Nov 2022 10:05:12 GMT
+
+### Patches
+
+- fix: Handle arrays in `animationName` definitions. (humberto_makoto@hotmail.com)
+- Bump @griffel/core to v1.8.2
 
 ## 1.4.3
 

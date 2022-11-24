@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 26 Oct 2022 11:06:03 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Nov 2022 10:05:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.8.2
+
+Thu, 24 Nov 2022 10:05:12 GMT
+
+### Patches
+
+- chore: export "CSSBucketEntry" type for internal usage (olfedias@microsoft.com)
 
 ## 1.8.1
 

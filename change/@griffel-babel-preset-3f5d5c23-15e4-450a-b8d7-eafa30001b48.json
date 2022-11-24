@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: Handle arrays in `animationName` definitions.",
-  "packageName": "@griffel/babel-preset",
-  "email": "humberto_makoto@hotmail.com",
-  "dependentChangeType": "patch"
-}

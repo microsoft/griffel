@@ -1,8 +1,16 @@
 # Change Log - @griffel/jest-serializer
 
-This log was last generated on Thu, 27 Oct 2022 11:38:11 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Nov 2022 10:05:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.2
+
+Thu, 24 Nov 2022 10:05:12 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.8.2
 
 ## 1.1.1
 
