@@ -127,7 +127,7 @@ export class GriffelCSSExtractionPlugin {
           const cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
 
           if (typeof cssAssetDetails === 'undefined') {
-            throw new Error('Failed to an asset that contains Griffel CSS output');
+            throw new Error('Failed to find an asset that contains Griffel CSS output');
           }
 
           const [cssAssetName, cssAssetSource] = cssAssetDetails;
