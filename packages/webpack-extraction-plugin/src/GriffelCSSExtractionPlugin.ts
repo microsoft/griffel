@@ -67,7 +67,7 @@ function ensureModuleHasPostOrderIndex(griffelChunk: Chunk, cssModule: Module) {
     // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L1133-L1140
     group.setModulePostOrderIndex(
       cssModule,
-      // It's bad to use private APIs, but it's more reliable than just random indexes
+      // It's bad to use private APIs, but it's more reliable than random indexes
       // The same approach is used in Gatsby
       // https://github.com/gatsbyjs/gatsby/blob/0b3c34c2bf932e5486ad2d0c3589bde6dc818661/packages/gatsby/src/utils/webpack/plugins/partial-hydration.ts#L455-L463
       // https://github.com/webpack/webpack/blob/e184a03f2504f03b2e30091662df6630a99a5f72/lib/ChunkGroup.js#L98-L99
