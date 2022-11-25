@@ -63,7 +63,7 @@ function ensureModuleHasPostOrderIndex(griffelChunk: Chunk, cssModule: Module) {
       continue;
     }
 
-    // "mini-css-extract" requires to an index on modules, modules without indexes will be filtered out and throw
+    // "mini-css-extract" requires an index to exist on modules. A module with an index will be filtered out and the plugin will throw
     // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L1133-L1140
     group.setModulePostOrderIndex(
       cssModule,
