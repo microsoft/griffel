@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: Add linter rule to enforce hook naming pattern",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "tigeroakes@microsoft.com",
+  "dependentChangeType": "patch"
+}
