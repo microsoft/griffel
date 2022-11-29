@@ -2,7 +2,7 @@ import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 import * as CSS from 'csstype';
 
 import { createRule } from '../utils/createRule';
-import { isIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
+import { isIdentifier, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
 
 export const RULE_NAME = 'no-shorthands';
 
@@ -102,7 +102,7 @@ export const noShorthandsRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCrea
   create(context) {
     return {
       CallExpression(node) {
-        if (isIdentifier(node.callee) && node.callee.name === 'makeStyles') {
+        if (isMakeStylesIdentifier(node.callee)) {
           const argument = node.arguments[0];
 
           if (isObjectExpression(argument)) {
