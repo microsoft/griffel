@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Thu, 24 Nov 2022 10:05:12 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Nov 2022 09:32:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.5
+
+Wed, 30 Nov 2022 09:32:24 GMT
+
+### Patches
+
+- chore: remove custom astify in @griffel/babel-preset (olfedias@microsoft.com)
 
 ## 1.4.4
 

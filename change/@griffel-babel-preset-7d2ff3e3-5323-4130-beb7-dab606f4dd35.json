@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: remove custom astify in @griffel/babel-preset",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

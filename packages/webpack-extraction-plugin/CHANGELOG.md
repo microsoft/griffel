@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Thu, 24 Nov 2022 10:05:12 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Nov 2022 09:32:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.0
+
+Wed, 30 Nov 2022 09:32:24 GMT
+
+### Minor changes
+
+- chore: rework plugin to avoid dependency on splitChunks.cacheGroups (olfedias@microsoft.com)
 
 ## 0.2.2
 

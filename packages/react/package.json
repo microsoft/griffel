@@ -1,6 +1,6 @@
 {
   "name": "@griffel/react",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "React implementation of Atomic CSS-in-JS",
   "license": "MIT",
   "repository": {

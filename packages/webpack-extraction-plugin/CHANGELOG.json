@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Wed, 30 Nov 2022 09:32:24 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "f5c9ec05b8892ef7388e876671b475daf64b28b6",
+            "comment": "chore: rework plugin to avoid dependency on splitChunks.cacheGroups"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Nov 2022 10:05:12 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.2.2",
       "version": "0.2.2",

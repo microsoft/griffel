@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: re-export GriffelResetStyle type",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
