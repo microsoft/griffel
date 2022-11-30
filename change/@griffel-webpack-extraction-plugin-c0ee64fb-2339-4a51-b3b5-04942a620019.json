@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: update loader-utils dependency",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
