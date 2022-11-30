@@ -1,5 +1,4 @@
 const react_make_styles_1 = require('custom-package');
-
 export const useStyles = react_make_styles_1.__styles(
   {
     root: {

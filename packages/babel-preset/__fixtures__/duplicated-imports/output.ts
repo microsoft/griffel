@@ -1,6 +1,6 @@
 // @ts-expect-error This module does not exist, but will be resolved via aliases
-import { __styles } from 'custom-package'; // @ts-expect-error This module does not exist, but will be resolved via aliases
-
+import { __styles } from 'custom-package';
+// @ts-expect-error This module does not exist, but will be resolved via aliases
 import { createStylesB } from 'custom-package';
 export const useClassesA = __styles(
   {

@@ -1,7 +1,5 @@
 import { makeStyles } from '@griffel/react';
 
-const styles = makeStyles({
+export const styles = makeStyles({
   root: { color: 'red' },
 });
-
-console.log(styles);
