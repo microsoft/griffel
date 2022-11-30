@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: don't throw in the plugin",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
