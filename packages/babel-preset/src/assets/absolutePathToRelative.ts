@@ -5,15 +5,13 @@ export function absolutePathToRelative(
   assetPath: string,
 ) {
   const fileDirectory = path.dirname(filename);
-
   const absoluteAssetPath = path.resolve(projectRoot, assetPath);
-  const assetDirectory = path.dirname(absoluteAssetPath);
 
-  if (fileDirectory === assetDirectory) {
-    return './' + path.basename(assetPath);
+  let relativeAssetPath = path.relative(fileDirectory, absoluteAssetPath);
+
+  if (!relativeAssetPath.startsWith('..' + path.sep)) {
+    relativeAssetPath = './' + relativeAssetPath;
   }
-
-  const relativeAssetPath = path.relative(fileDirectory, absoluteAssetPath);
 
   // Normalize paths to be POSIX-like as bundlers don't handle Windows paths
   // "path.posix" does not make sense there as there is no "windows-to-posix-path" function
