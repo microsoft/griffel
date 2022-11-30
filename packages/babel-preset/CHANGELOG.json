@@ -2,6 +2,21 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Wed, 30 Nov 2022 17:14:53 GMT",
+      "tag": "@griffel/babel-preset_v1.4.6",
+      "version": "1.4.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "f985b6dc5e3576f5aacce45752755d06cff7ef70",
+            "comment": "fix: update path normalization in absolutePathToRelative"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Nov 2022 09:32:24 GMT",
       "tag": "@griffel/babel-preset_v1.4.5",
       "version": "1.4.5",

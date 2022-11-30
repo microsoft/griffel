@@ -2,6 +2,27 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Wed, 30 Nov 2022 17:14:53 GMT",
+      "tag": "@griffel/webpack-loader_v2.1.6",
+      "version": "2.1.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "ac04890efdb16a99bc2d3c8eae2b7cfe514b6288",
+            "comment": "chore: update loader-utils dependency"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.4.6",
+            "commit": "f985b6dc5e3576f5aacce45752755d06cff7ef70"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Nov 2022 09:32:24 GMT",
       "tag": "@griffel/webpack-loader_v2.1.5",
       "version": "2.1.5",

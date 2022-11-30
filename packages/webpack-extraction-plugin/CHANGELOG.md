@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 30 Nov 2022 09:32:24 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Nov 2022 17:14:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.1
+
+Wed, 30 Nov 2022 17:14:53 GMT
+
+### Patches
+
+- chore: update loader-utils dependency (olfedias@microsoft.com)
+- fix: don't throw in the plugin (olfedias@microsoft.com)
 
 ## 0.3.0
 

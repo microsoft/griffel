@@ -2,6 +2,27 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Wed, 30 Nov 2022 17:14:53 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.1",
+      "version": "0.3.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "ac04890efdb16a99bc2d3c8eae2b7cfe514b6288",
+            "comment": "chore: update loader-utils dependency"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "569eb09804b9fd45c1b5869fa78f0e7d8e12c181",
+            "comment": "fix: don't throw in the plugin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Nov 2022 09:32:24 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.0",
       "version": "0.3.0",
