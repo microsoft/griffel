@@ -18,7 +18,7 @@ function attachGriffelChunkToMainEntryPoint(compilation: Compilation, griffelChu
   const entryPoints = Array.from(compilation.entrypoints.values());
 
   if (entryPoints.length === 0) {
-    throw new Error('Failed to find and entry points in "compilation.entrypoints"');
+    return;
   }
 
   const mainEntryPoint = entryPoints[0];
@@ -127,7 +127,7 @@ export class GriffelCSSExtractionPlugin {
           const cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
 
           if (typeof cssAssetDetails === 'undefined') {
-            throw new Error('Failed to find an asset that contains Griffel CSS output');
+            return;
           }
 
           const [cssAssetName, cssAssetSource] = cssAssetDetails;
