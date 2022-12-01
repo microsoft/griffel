@@ -4,11 +4,9 @@ import color from 'non-existing-color-module';
 
 import { tokens } from './tokens';
 
-const styles = makeStyles({
+export const styles = makeStyles({
   root: {
     backgroundColor: color,
     color: tokens.colorBrandStroke1,
   },
 });
-
-console.log(styles);

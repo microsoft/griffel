@@ -1,7 +1,6 @@
 import { __styles } from '@griffel/react';
 import { tokens } from './tokens';
-
-const styles = __styles(
+export const styles = __styles(
   {
     root: {
       sj55zd: 'fl9q5hc',
@@ -11,5 +10,3 @@ const styles = __styles(
     d: ['.fl9q5hc{color:var(--colorBrandStroke1);}'],
   },
 );
-
-console.log(styles);
