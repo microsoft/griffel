@@ -1,8 +1,6 @@
 import { configSchema, BabelPluginOptions, EvalCache, Module } from '@griffel/babel-preset';
 import * as enhancedResolve from 'enhanced-resolve';
-import { getOptions } from 'loader-utils';
 import * as path from 'path';
-import { validate } from 'schema-utils';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
@@ -40,20 +38,15 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
 }
 
 export function webpackLoader(
-  this: webpack.LoaderContext<never>,
+  this: webpack.LoaderContext<WebpackLoaderOptions>,
   sourceCode: WebpackLoaderParams[0],
   inputSourceMap: WebpackLoaderParams[1],
 ) {
-  // Loaders are cacheable by default, but in there edge cases/bugs when caching does not work until it's specified:
+  // Loaders are cacheable by default, but there are edge cases/bugs when caching does not work until it's specified:
   // https://github.com/webpack/webpack/issues/14946
   this.cacheable();
 
-  const options = getOptions(this) as WebpackLoaderOptions;
-
-  validate(configSchema, options, {
-    name: '@griffel/webpack-loader',
-    baseDataPath: 'options',
-  });
+  const options = this.getOptions(configSchema);
 
   // Early return to handle cases when makeStyles() calls are not present, allows to avoid expensive invocation of Babel
   if (!shouldTransformSourceCode(sourceCode, options.modules)) {
