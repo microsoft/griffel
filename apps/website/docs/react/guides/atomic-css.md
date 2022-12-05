@@ -87,7 +87,7 @@ Atomic CSS increases size of HTML markup as more classes added to elements: ever
 
 ### Recalculation performance
 
-Once an element has many HTML class names each pointing to different CSS rules, Blink based browsers (Chrome, Edge) have linear performance degradation based on an amount of classes.
+Once an element has many HTML class names each pointing to different CSS rules, browsers have linear performance degradation based on an amount of classes.
 
 | Class names            |     1 |     10 |     50 |    100 |    200 |    500 | 1000   |
 | ---------------------- | ----: | -----: | -----: | -----: | -----: | -----: | ------ |
