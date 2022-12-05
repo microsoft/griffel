@@ -12,8 +12,10 @@ Styles can't be created at runtime which includes dynamic selectors as well.
 function App(props) {
   // ❌ This will not work and throw an expection
   const useClasses = makeStyles({
-    color: props.color,
-    [`.${props.area}`]: { display: 'block' },
+    root: {
+      color: props.color,
+      [`.${props.area}`]: { display: 'block' },
+    }
   });
 }
 ```
@@ -26,9 +28,9 @@ As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation
 
   ```jsx
   const useClasses = makeStyles({
-    twoColumns: {},
-    threeColumns: {},
-    fourColumns: {},
+    twoColumns: { /* styles */ },
+    threeColumns: { /* styles */ },
+    fourColumns: { /* styles */ },
   });
 
   function App(props) {
@@ -47,12 +49,12 @@ As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation
 
   ```jsx
   const useClasses = makeStyles({
-    /* your styles */
+    root: { /* your other styles styles */ },
   });
 
   function App(props) {
     const classes = useClasses();
-    return <div style={{ color: props.color }} />;
+    return <div className={classes.root} style={{ color: props.color }} />;
   }
   ```
 
