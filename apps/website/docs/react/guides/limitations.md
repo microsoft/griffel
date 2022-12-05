@@ -10,7 +10,7 @@ Styles can't be created at runtime which includes dynamic selectors as well.
 
 ```jsx
 function App(props) {
-  // ❌ This will not work and throw an expection
+  // ❌ This will not work and throw an exception
   const useClasses = makeStyles({
     root: {
       color: props.color,
