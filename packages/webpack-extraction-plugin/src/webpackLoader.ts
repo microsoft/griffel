@@ -1,11 +1,8 @@
 import { normalizeCSSBucketEntry } from '@griffel/core';
-import { getOptions } from 'loader-utils';
 import * as path from 'path';
-import { validate } from 'schema-utils';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
-import { configSchema } from './schema';
 
 type WebpackLoaderOptions = never;
 
@@ -37,7 +34,7 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
 }
 
 function webpackLoader(
-  this: webpack.LoaderContext<never>,
+  this: webpack.LoaderContext<WebpackLoaderOptions>,
   sourceCode: WebpackLoaderParams[0],
   inputSourceMap: WebpackLoaderParams[1],
 ) {
@@ -45,13 +42,6 @@ function webpackLoader(
   // Loaders are cacheable by default, but in edge cases/bugs when caching does not work until it's specified:
   // https://github.com/webpack/webpack/issues/14946
   this.cacheable();
-
-  const options = getOptions(this) as WebpackLoaderOptions;
-
-  validate(configSchema, options, {
-    name: '@griffel/webpack-extraction-plugin/loader',
-    baseDataPath: 'options',
-  });
 
   // Early return to handle cases when __styles() calls are not present, allows skipping expensive invocation of Babel
   if (sourceCode.indexOf('__styles') === -1 && sourceCode.indexOf('__resetStyles') === -1) {

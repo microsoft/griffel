@@ -57,7 +57,6 @@
     "@types/d3-scale-chromatic": "^3.0.0",
     "@types/jest": "27.0.2",
     "@types/js-beautify": "^1.13.3",
-    "@types/loader-utils": "2.0.3",
     "@types/mini-css-extract-plugin": "2.5.1",
     "@types/node": "14.14.33",
     "@types/react": "17.0.30",
@@ -72,7 +71,7 @@
     "babel-loader": "8.1.0",
     "babel-plugin-annotate-pure-calls": "0.4.0",
     "babel-plugin-tester": "10.0.0",
-    "beachball": "^2.20.0",
+    "beachball": "2.31.5",
     "bestzip": "2.2.0",
     "d3-scale-chromatic": "^3.0.0",
     "doctoc": "2.2.1",
@@ -127,9 +126,7 @@
     "browserslist": "^4.19.1",
     "csstype": "^3.0.10",
     "enhanced-resolve": "^5.8.2",
-    "loader-utils": "^2.0.4",
     "rtl-css-js": "^1.16.0",
-    "schema-utils": "^3.1.1",
     "source-map-js": "1.0.2",
     "stylis": "^4.0.13",
     "swc-node": "1.0.0",
@@ -139,7 +136,7 @@
     "@docusaurus/theme-common@2.1.0": "patch:@docusaurus/theme-common@npm:2.1.0#.yarn/patches/@docusaurus-theme-common-npm-2.1.0-d5ae2a9539.patch",
     "@nrwl/web": "patch:@nrwl/web@npm:13.4.5#.yarn/patches/@nrwl-web-npm-13.4.5-d7e9ea40d2",
     "@nrwl/workspace": "patch:@nrwl/workspace@npm:13.4.5#.yarn/patches/@nrwl-workspace-npm-13.4.5-233a3ec85c",
-    "beachball": "patch:beachball@npm:2.21.0#.yarn/patches/beachball-npm-2.21.0-85c8ba3d6b",
+    "beachball@2.31.5": "patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch",
     "source-map-js@1.0.2": "patch:source-map-js@npm:1.0.2#.yarn/patches/source-map-js-npm-1.0.2-ee4f9f9b30.patch"
   }
 }
