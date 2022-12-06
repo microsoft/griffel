@@ -1,5 +1,27 @@
 import { GriffelStylesUnsupportedCSSProperties, LookupItem, SequenceHash } from './types';
 
+// ----
+
+// Heads up!
+// These constants are global and will be shared between Griffel instances
+// Any change in them should happen only in a MAJOR version
+
+const __GLOBAL__: any = typeof window === 'undefined' ? global : window;
+const __NAMESPACE_PREFIX__ = '@griffel/';
+
+function getGlobalVar<T>(name: string, defaultValue: T): T {
+  return (__GLOBAL__[Symbol.for(__NAMESPACE_PREFIX__ + name)] =
+    __GLOBAL__[Symbol.for(__NAMESPACE_PREFIX__ + name)] || defaultValue);
+}
+
+/** @internal */
+export const DEBUG_RESET_CLASSES = getGlobalVar<Record<string, 1>>('DEBUG_RESET_CLASSES', {});
+
+/** @internal */
+export const DEFINITION_LOOKUP_TABLE = getGlobalVar<Record<SequenceHash, LookupItem>>('DEFINITION_LOOKUP_TABLE', {});
+
+// ----
+
 /** @internal */
 export const DATA_BUCKET_ATTR = 'data-make-styles-bucket';
 
@@ -23,12 +45,6 @@ export const SEQUENCE_SIZE =
   process.env.NODE_ENV === 'production'
     ? SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH
     : SEQUENCE_PREFIX.length + SEQUENCE_HASH_LENGTH + DEBUG_SEQUENCE_SEPARATOR.length + SEQUENCE_HASH_LENGTH;
-
-/** @internal */
-export const DEBUG_RESET_CLASSES: Record<string, 1> = {};
-
-/** @internal */
-export const DEFINITION_LOOKUP_TABLE: Record<SequenceHash, LookupItem> = {};
 
 // indexes for values in LookupItem tuple
 
