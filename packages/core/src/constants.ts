@@ -3,15 +3,19 @@ import { GriffelStylesUnsupportedCSSProperties, LookupItem, SequenceHash } from 
 // ----
 
 // Heads up!
-// These constants are global and will be shared between Griffel instances
-// Any change in them should happen only in a MAJOR version
+// These constants are global and will be shared between Griffel instances.
+// Any change in them should happen only in a MAJOR version. If it happens,
+// please change "__NAMESPACE_PREFIX__" to include a version.
 
 const __GLOBAL__: any = typeof window === 'undefined' ? global : window;
 const __NAMESPACE_PREFIX__ = '@griffel/';
 
 function getGlobalVar<T>(name: string, defaultValue: T): T {
-  return (__GLOBAL__[Symbol.for(__NAMESPACE_PREFIX__ + name)] =
-    __GLOBAL__[Symbol.for(__NAMESPACE_PREFIX__ + name)] || defaultValue);
+  if (!__GLOBAL__[Symbol.for(__NAMESPACE_PREFIX__ + name)]) {
+    __GLOBAL__[Symbol.for(__NAMESPACE_PREFIX__ + name)] = defaultValue;
+  }
+
+  return __GLOBAL__[Symbol.for(__NAMESPACE_PREFIX__ + name)];
 }
 
 /** @internal */
