@@ -15,9 +15,6 @@ pluginTester({
       plugins: ['typescript'],
     },
   },
-  pluginOptions: {
-    resourceDirectory: process.cwd(),
-  },
   formatResult: code =>
     prettierFormatter(code, {
       config: {
