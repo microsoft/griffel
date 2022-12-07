@@ -26,12 +26,17 @@ export function normalizeStyleRule(
 
   return tokenize(ruleValue).reduce((result, token, index, array) => {
     if (token === 'url') {
-      // Quotes in URL are optional, so we can also normalize them
-      // https://www.w3.org/TR/CSS2/syndata.html#value-def-uri
-      const url = array[index + 1].replace(/['|"](.+)['|"]/, '$1').slice(1, -1);
+      const url = array[index + 1].slice(1, -1);
 
       if (isAssetUrl(url)) {
-        array[index + 1] = `(${normalizeAssetPath(path, projectRoot, filename, url)})`;
+        array[index + 1] = `(${normalizeAssetPath(
+          path,
+          projectRoot,
+          filename,
+          // Quotes in URL are optional, so we can also normalize them as we know that it's a file path
+          // https://www.w3.org/TR/CSS2/syndata.html#value-def-uri
+          url.replace(/^['|"](.+)['|"]$/, '$1'),
+        )})`;
       } else {
         // Always replace with normalized value, so @griffel/core can de-duplicate them.
         array[index + 1] = `(${url})`;
