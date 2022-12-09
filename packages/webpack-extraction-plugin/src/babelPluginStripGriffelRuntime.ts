@@ -1,12 +1,8 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import type { CSSRulesByBucket } from '@griffel/core';
-import * as path from 'path';
 
-type StripRuntimeBabelPluginOptions = {
-  /** A directory that contains fake .css file used for CSS extraction */
-  resourceDirectory?: string;
-};
+type StripRuntimeBabelPluginOptions = Record<string, unknown>;
 
 type FunctionKinds = '__styles' | '__resetStyles';
 
@@ -17,18 +13,6 @@ type StripRuntimeBabelPluginState = PluginPass & {
 export type StripRuntimeBabelPluginMetadata = {
   cssRulesByBucket?: CSSRulesByBucket;
 };
-
-export function transformUrl(filename: string, resourceDirectory: string, assetPath: string) {
-  // Get the absolute path to the asset from the path relative to the JS file
-  const absoluteAssetPath = path.resolve(path.dirname(filename), assetPath);
-
-  // Replace asset path with new path relative to the output CSS
-  const relativeAssetPath = path.relative(resourceDirectory, absoluteAssetPath);
-
-  // Normalize paths to be POSIX-like as bundlers don't handle Windows paths
-  // "path.posix" does not make sense there as there is no "windows-to-posix-path" function
-  return relativeAssetPath.split(path.sep).join(path.posix.sep);
-}
 
 function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRulesByBucket) {
   Object.entries(bucketB).forEach(([cssBucketName, cssBucketEntries]) => {
@@ -43,7 +27,7 @@ function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRule
 export const babelPluginStripGriffelRuntime = declare<
   Partial<StripRuntimeBabelPluginOptions>,
   PluginObj<StripRuntimeBabelPluginState>
->((api, options) => {
+>(api => {
   api.assertVersion(7);
 
   return {
@@ -55,17 +39,6 @@ export const babelPluginStripGriffelRuntime = declare<
     visitor: {
       Program: {
         enter(path, state) {
-          if (typeof options.resourceDirectory === 'undefined') {
-            throw new Error(
-              [
-                '@griffel/webpack-extraction-plugin: This plugin requires "resourceDirectory" option to be specified. ',
-                "It's automatically done by our loaders. ",
-                "If you're facing this issue, please check your setup.\n\n",
-                'See: https://babeljs.io/docs/en/options#filename',
-              ].join(''),
-            );
-          }
-
           if (typeof state.filename === 'undefined') {
             throw new Error(
               [
@@ -191,17 +164,7 @@ export const babelPluginStripGriffelRuntime = declare<
                       );
                     }
 
-                    expressionPath.replaceWith(
-                      t.stringLiteral(
-                        // When imports are inlined, we need to adjust the relative paths inside url(..) expressions
-                        // to allow css-loader resolve an imported asset properly
-                        transformUrl(
-                          state.filename!,
-                          options.resourceDirectory!,
-                          importDeclarationPath.get('source').node.value,
-                        ),
-                      ),
-                    );
+                    expressionPath.replaceWith(t.stringLiteral(importDeclarationPath.get('source').node.value));
                     importDeclarationPath.remove();
                   });
                 },
