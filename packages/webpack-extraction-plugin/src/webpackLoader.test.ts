@@ -190,4 +190,7 @@ describe('webpackLoader', () => {
   testFixture('assets');
   testFixture('assets-multiple');
   testFixture('reset-assets');
+
+  // Ensures that a file without __styles calls remains unprocessed
+  testFixture('missing-calls');
 });
