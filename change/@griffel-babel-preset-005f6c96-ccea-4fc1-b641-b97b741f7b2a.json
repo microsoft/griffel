@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: do not always normalize quotes in url()",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

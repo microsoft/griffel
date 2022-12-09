@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Fri, 09 Dec 2022 11:15:19 GMT",
+      "tag": "@griffel/webpack-loader_v2.1.7",
+      "version": "2.1.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "6c3c1e3738c2f5bad96a99f68df9a64099989cb2",
+            "comment": "chore: remove loader-utils & schema-utils from dependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.4.7",
+            "commit": "9b94a45ba5bd526460dd97aaea103cf64d9d5450"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/react to v1.5.1",
+            "commit": "9b94a45ba5bd526460dd97aaea103cf64d9d5450"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Nov 2022 17:14:53 GMT",
       "tag": "@griffel/webpack-loader_v2.1.6",
       "version": "2.1.6",

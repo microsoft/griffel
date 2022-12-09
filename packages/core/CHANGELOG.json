@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Fri, 09 Dec 2022 11:15:19 GMT",
+      "tag": "@griffel/core_v1.8.3",
+      "version": "1.8.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "735cbfdc1e1ca7f12928393acdb98e295ed6133e",
+            "comment": "fix: use global constants"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Nov 2022 10:05:12 GMT",
       "tag": "@griffel/core_v1.8.2",
       "version": "1.8.2",

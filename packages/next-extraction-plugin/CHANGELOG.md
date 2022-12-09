@@ -1,8 +1,17 @@
 # Change Log - @griffel/next-extraction-plugin
 
-This log was last generated on Wed, 30 Nov 2022 17:14:53 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Dec 2022 11:15:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.11
+
+Fri, 09 Dec 2022 11:15:19 GMT
+
+### Patches
+
+- Bump @griffel/webpack-extraction-plugin to v0.3.2
+- Bump @griffel/core to v1.8.3
 
 ## 0.0.10
 

@@ -1,8 +1,19 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 30 Nov 2022 17:14:53 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Dec 2022 11:15:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.2
+
+Fri, 09 Dec 2022 11:15:19 GMT
+
+### Patches
+
+- fix: avoid empty CSS imports (olfedias@microsoft.com)
+- chore: remove loader-utils & schema-utils from dependencies (olfedias@microsoft.com)
+- chore: remove path magic in extraction process (olfedias@microsoft.com)
+- Bump @griffel/core to v1.8.3
 
 ## 0.3.1
 

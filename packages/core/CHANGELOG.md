@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 24 Nov 2022 10:05:12 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Dec 2022 11:15:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.8.3
+
+Fri, 09 Dec 2022 11:15:19 GMT
+
+### Patches
+
+- fix: use global constants (olfedias@microsoft.com)
 
 ## 1.8.2
 

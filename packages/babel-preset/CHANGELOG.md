@@ -1,8 +1,17 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Wed, 30 Nov 2022 17:14:53 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Dec 2022 11:15:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.7
+
+Fri, 09 Dec 2022 11:15:19 GMT
+
+### Patches
+
+- fix: do not always normalize quotes in url() (olfedias@microsoft.com)
+- Bump @griffel/core to v1.8.3
 
 ## 1.4.6
 

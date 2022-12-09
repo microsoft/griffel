@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: remove path magic in extraction process",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

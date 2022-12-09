@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: remove loader-utils & schema-utils from dependencies",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

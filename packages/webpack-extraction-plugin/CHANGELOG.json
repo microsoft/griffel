@@ -2,6 +2,39 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 09 Dec 2022 11:15:19 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.2",
+      "version": "0.3.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "7d3fa72250eb487aa760135b078d7b84fa6683ad",
+            "comment": "fix: avoid empty CSS imports"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "6c3c1e3738c2f5bad96a99f68df9a64099989cb2",
+            "comment": "chore: remove loader-utils & schema-utils from dependencies"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "9b94a45ba5bd526460dd97aaea103cf64d9d5450",
+            "comment": "chore: remove path magic in extraction process"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.8.3",
+            "commit": "9b94a45ba5bd526460dd97aaea103cf64d9d5450"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Nov 2022 17:14:53 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.1",
       "version": "0.3.1",
