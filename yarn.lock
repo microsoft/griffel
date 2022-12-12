@@ -14749,8 +14749,8 @@ __metadata:
     mdx-mermaid: 1.3.2
     mermaid: 9.1.7
     mini-css-extract-plugin: 2.6.0
-    monosize: 0.0.8
-    monosize-storage-upstash: 0.0.7
+    monosize: 0.0.9
+    monosize-storage-upstash: 0.0.8
     nano-staged: 0.5.0
     next: 12.2.4
     prettier: 2.3.1
@@ -18849,36 +18849,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monosize-storage-upstash@npm:0.0.7":
-  version: 0.0.7
-  resolution: "monosize-storage-upstash@npm:0.0.7"
+"monosize-storage-upstash@npm:0.0.8":
+  version: 0.0.8
+  resolution: "monosize-storage-upstash@npm:0.0.8"
   dependencies:
     "@upstash/redis": ^1.18.0
-    monosize: ^0.0.8
-  peerDependencies:
-    "@babel/core": 7.20.2
-    ajv: 8.11.2
-    ci-info: 3.7.0
-    cli-table3: 0.6.3
-    del: 7.0.0
-    find-up: 6.3.0
-    glob: 8.0.3
-    gzip-size: 7.0.0
-    picocolors: 1.0.0
-    prettier: 2.8.0
-    pretty-bytes: 6.0.0
-    terser: 5.16.0
-    tslib: 2.4.1
-    webpack: 5.75.0
-    workspace-tools: 0.29.1
-    yargs: 17.6.2
-  checksum: ea8adeec26514e3ab097cf7825dd894c4559f18c0d712214cf7fecc5ce80d9c7b4e6104721cdb489a829704b282ac2133755f176dc20e6a6e95227f0852163c8
+    monosize: ^0.0.9
+    tslib: ^2.4.1
+  checksum: 7a49634abb0d871815f3bf7eb8051cb89d3ae354d34d947921eab4305c24f27006f99252442c3111dd3ae9c862963e35c8c330610815f8742a046a2a0be620ea
   languageName: node
   linkType: hard
 
-"monosize@npm:0.0.8, monosize@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "monosize@npm:0.0.8"
+"monosize@npm:0.0.9, monosize@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "monosize@npm:0.0.9"
   dependencies:
     "@babel/core": ^7.20.2
     ajv: ^8.11.2
@@ -18898,7 +18882,7 @@ __metadata:
     yargs: ^17.6.2
   bin:
     monosize: bin/monosize.mjs
-  checksum: 3ae2da371cd820feb4120cbcbb1fce001aa2c5b4a5bf625d18b2215d45d3eb861164090ab7a2974aed41945339fe5adcda0c1c396cb9639a2e4010c9ea8e69a9
+  checksum: a16a11f15e49ff16fd524c3351e4fe3df0100f7975f9234f2f8784d56b49858ce179d56d1ce1169ea7f27aae6d3d9fe18f9016b5fbab5945de567ed8143a690c
   languageName: node
   linkType: hard
 
