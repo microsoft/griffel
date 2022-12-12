@@ -2,7 +2,7 @@ import path from 'path';
 import upstashStorage from 'monosize-storage-upstash';
 
 const dirname = new URL('.', import.meta.url).pathname;
-console.log(dirname, path.resolve(dirname, './dist/packages/core/index.esm.js'));
+
 export default {
   repository: 'https://github.com/microsoft/griffel',
   storage: upstashStorage({
