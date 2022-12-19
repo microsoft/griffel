@@ -391,7 +391,7 @@ const renderer = createDOMRenderer(targetDocument, {
 
 ## `TextDirectionProvider`
 
-`TextDirectionProvider` is used to define current text direction to be used to apply styles in the scope of its component, by default renders with Left-To-Right (LTR).
+`TextDirectionProvider` is used to determine the text direction for style computation. The default text direction is Left-To-Right (LTR).
 
 ```jsx
 import { TextDirectionProvider } from '@griffel/react';
