@@ -10,11 +10,13 @@ A package with wrappers and APIs to be used with React.js.
   - [Pseudo & class selectors, at-rules, global styles](#pseudo--class-selectors-at-rules-global-styles)
   - [Keyframes (animations)](#keyframes-animations)
   - [CSS Fallback Properties](#css-fallback-properties)
+  - [RTL support](#rtl-support)
 - [`mergeClasses()`](#mergeclasses)
 - [`makeStaticStyles()`](#makestaticstyles)
 - [`makeResetStyles()`](#makeresetstyles)
 - [`createDOMRenderer()`, `RendererProvider`](#createdomrenderer-rendererprovider)
   - [styleElementAttributes](#styleelementattributes)
+- [`TextDirectionProvider`](#textdirectionprovider)
 - [Shorthands](#shorthands)
   - [`shorthands.border`](#shorthandsborder)
   - [`shorthands.borderBottom`, `shorthands.borderTop`, `shorthands.borderLeft`, `shorthands.borderRight`](#shorthandsborderbottom-shorthandsbordertop-shorthandsborderleft-shorthandsborderright)
@@ -133,8 +135,6 @@ const useClasses = makeStyles({
 });
 ```
 
-
-
 ### CSS Fallback Properties
 
 Any CSS property accepts an array of values which are all added to the styles.
@@ -148,6 +148,54 @@ const useClasses = makeStyles({
     overflowY: ['scroll', 'overlay'],
   },
 });
+```
+
+### RTL support
+
+Griffel uses [rtl-css-js](https://github.com/kentcdodds/rtl-css-js) to perform automatic flipping of properties and values in Right-To-Left (RTL) text direction defined by `TextDirectionProvider`.
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    paddingLeft: '10px',
+  },
+});
+```
+
+⬇️⬇️⬇️
+
+```css
+/* Will be applied in LTR */
+.frdkuqy {
+  padding-left: 10px;
+}
+/* Will be applied in RTL */
+.f81rol6 {
+  padding-right: 10px;
+}
+```
+
+You can also control which rules you don't want to flip by adding a `/* @noflip */` CSS comment to your rule:
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    paddingLeft: '10px /* @noflip */',
+  },
+});
+```
+
+⬇️⬇️⬇️
+
+```css
+/* Will be applied in LTR & RTL */
+.f6x5cb6 {
+  padding-left: 10px;
+}
 ```
 
 ## `mergeClasses()`
@@ -339,6 +387,29 @@ const renderer = createDOMRenderer(targetDocument, {
     nonce: 'random',
   },
 });
+```
+
+## `TextDirectionProvider`
+
+`TextDirectionProvider` is used to determine the text direction for style computation. The default text direction is Left-To-Right (LTR).
+
+```jsx
+import { TextDirectionProvider } from '@griffel/react';
+
+function App() {
+  return (
+    <>
+      <TextDirectionProvider>
+        {/* Inner components will have styles for LTR */}
+        {/* ... */}
+      </TextDirectionProvider>
+      <TextDirectionProvider dir="rtl">
+        {/* Inner components will have styles for RTL */}
+        {/* ... */}
+      </TextDirectionProvider>
+    </>
+  );
+}
 ```
 
 ## Shorthands
