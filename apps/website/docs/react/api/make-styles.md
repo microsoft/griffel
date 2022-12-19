@@ -131,7 +131,7 @@ const useClasses = makeStyles({
   root: {
     '@media screen and (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
-    '@layer utility': { marginBottom: '1em' }
+    '@layer utility': { marginBottom: '1em' },
   },
 });
 ```
@@ -226,7 +226,7 @@ const useClasses = makeStyles({
 Griffel supports CSS fallback properties in order to support older browsers.
 
 Any CSS property accepts an array of values which are all added to the styles.
-Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser): 
+Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser):
 
 ```js
 import { makeStyles } from '@griffel/react';
@@ -241,8 +241,71 @@ const useClasses = makeStyles({
 <OutputTitle>Produces following CSS...</OutputTitle>
 
 ```css
-.f1qdoogn{
-  overflow-y: scroll;  /* Fallback for browsers which do not support overflow: overlay */
+.f1qdoogn {
+  overflow-y: scroll; /* Fallback for browsers which do not support overflow: overlay */
   overflow-y: overlay; /* Used by browsers which support overflow: overlay */
 }
+```
+
+### RTL support
+
+Griffel uses [rtl-css-js](https://github.com/kentcdodds/rtl-css-js) to perform automatic flipping of properties and values in Right-To-Left (RTL) text direction defined by [`TextDirectionProvider`](/react/api/text-direction-provider).
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    paddingLeft: '10px',
+  },
+});
+```
+
+<OutputTitle>Produces following CSS...</OutputTitle>
+
+```css
+/* Will be applied in LTR */
+.frdkuqy {
+  padding-left: 10px;
+}
+/* Will be applied in RTL */
+.f81rol6 {
+  padding-right: 10px;
+}
+```
+
+You can also control which rules you don't want to flip by adding a `/* @noflip */` CSS comment to your rule:
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    paddingLeft: '10px /* @noflip */',
+  },
+});
+```
+
+<OutputTitle>Produces following CSS...</OutputTitle>
+
+```css
+/* Will be applied in LTR & RTL */
+.f6x5cb6 {
+  padding-left: 10px;
+}
+```
+
+:::caution
+
+Values than contain CSS variables might not be always converted, for example:
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    // ⚠️ "boxShadow" will not be flipped in this example
+    boxShadow: 'var(--box-shadow)',
+  },
+});
 ```
