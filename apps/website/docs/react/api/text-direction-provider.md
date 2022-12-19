@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # TextDirectionProvider
 
-`TextDirectionProvider` is used to define current text direction to be used to apply styles in the scope of its component, by default renders with Left-To-Right (LTR). For details, check [RTL support](/react/api/make-styles#rtl-support).
+`TextDirectionProvider` is used to determine the text direction for style computation. The default text direction is Left-To-Right (LTR). For more details, check [RTL support](/react/api/make-styles#rtl-support).
 
 ```jsx
 import { TextDirectionProvider } from '@griffel/react';
