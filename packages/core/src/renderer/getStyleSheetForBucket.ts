@@ -48,22 +48,18 @@ export function getStyleSheetForBucket(
   target: Document | undefined,
   renderer: GriffelRenderer,
   elementAttributes: Record<string, string> = {},
-  metadata?: Record<string, unknown>,
+  metadata: Record<string, unknown> = {},
 ): IsomorphicStyleSheet {
-  let stylesheetKey: StyleBucketName | string = bucketName;
-
-  if (bucketName === 'm' && metadata) {
-    stylesheetKey = (bucketName + metadata['m']) as string;
-  }
+  const isMediaBucket = bucketName === 'm';
+  const stylesheetKey: StyleBucketName | string = isMediaBucket ? ((bucketName + metadata['m']) as string) : bucketName;
 
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = target && target.createElement('style');
+    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, {
+      ...elementAttributes,
+      ...(isMediaBucket && { media: metadata['m'] as string }),
+    });
 
-    if (bucketName === 'm' && metadata) {
-      elementAttributes['media'] = metadata['m'] as string;
-    }
-
-    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, elementAttributes);
     renderer.stylesheets[stylesheetKey] = stylesheet;
 
     if (target && tag) {
