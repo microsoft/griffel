@@ -1,8 +1,21 @@
 # Change Log - @griffel/core
 
-This log was last generated on Fri, 09 Dec 2022 11:15:19 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Dec 2022 11:48:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.9.0
+
+Tue, 20 Dec 2022 11:48:33 GMT
+
+### Minor changes
+
+- feat: expose "styleElementAttributes" on GriffelRenderer (olfedias@microsoft.com)
+
+### Patches
+
+- fix: avoid mutations in getStyleSheetForBucket (olfedias@microsoft.com)
+- fix: do not emit "undefined" for CSS rules (olfedias@microsoft.com)
 
 ## 1.8.3
 

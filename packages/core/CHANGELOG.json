@@ -2,6 +2,35 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 20 Dec 2022 11:48:33 GMT",
+      "tag": "@griffel/core_v1.9.0",
+      "version": "1.9.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "77f1f771c2785cefd2d969ff98fff58875adab18",
+            "comment": "feat: expose \"styleElementAttributes\" on GriffelRenderer"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "53a659a4a00fd8e782a45af652ef8911ebf5c8d7",
+            "comment": "fix: avoid mutations in getStyleSheetForBucket"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "7d2e3ba8656afccb6cf0b56e7b7f6cce0ae9fd15",
+            "comment": "fix: do not emit \"undefined\" for CSS rules"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Dec 2022 11:15:19 GMT",
       "tag": "@griffel/core_v1.8.3",
       "version": "1.8.3",

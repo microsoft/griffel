@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: do not emit \"undefined\" for CSS rules",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

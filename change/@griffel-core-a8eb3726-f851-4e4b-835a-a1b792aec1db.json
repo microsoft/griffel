@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: expose \"styleElementAttributes\" on GriffelRenderer",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
