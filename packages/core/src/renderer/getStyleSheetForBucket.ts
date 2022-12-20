@@ -47,7 +47,6 @@ export function getStyleSheetForBucket(
   bucketName: StyleBucketName,
   target: Document | undefined,
   renderer: GriffelRenderer,
-  elementAttributes: Record<string, string> = {},
   metadata: Record<string, unknown> = {},
 ): IsomorphicStyleSheet {
   const isMediaBucket = bucketName === 'm';
@@ -56,7 +55,7 @@ export function getStyleSheetForBucket(
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = target && target.createElement('style');
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, {
-      ...elementAttributes,
+      ...renderer.styleElementAttributes,
       ...(isMediaBucket && { media: metadata['m'] as string }),
     });
 

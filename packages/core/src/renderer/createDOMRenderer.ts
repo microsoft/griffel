@@ -43,10 +43,11 @@ export function createDOMRenderer(
   target: Document | undefined = typeof document === 'undefined' ? undefined : document,
   options: CreateDOMRendererOptions = {},
 ): GriffelRenderer {
-  const { unstable_filterCSSRule, compareMediaQueries = defaultCompareMediaQueries } = options;
+  const { unstable_filterCSSRule, styleElementAttributes, compareMediaQueries = defaultCompareMediaQueries } = options;
   const renderer: GriffelRenderer = {
     insertionCache: {},
     stylesheets: {},
+    styleElementAttributes: Object.freeze(styleElementAttributes),
     compareMediaQueries,
 
     id: `d${lastIndex++}`,
@@ -59,13 +60,7 @@ export function createDOMRenderer(
         // This is a hot path in rendering styles: ".length" is cached in "l" var to avoid accesses the property
         for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
           const [ruleCSS, metadata] = normalizeCSSBucketEntry(cssRulesForBucket[i]);
-          const sheet = getStyleSheetForBucket(
-            styleBucketName as StyleBucketName,
-            target,
-            renderer,
-            options.styleElementAttributes,
-            metadata,
-          );
+          const sheet = getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer, metadata);
 
           if (renderer.insertionCache[ruleCSS]) {
             continue;

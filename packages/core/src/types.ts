@@ -269,6 +269,11 @@ export interface GriffelRenderer {
   /**
    * @private
    */
+  styleElementAttributes?: Readonly<Record<string, string>>;
+
+  /**
+   * @private
+   */
   insertCSSRules(cssRules: CSSRulesByBucket): void;
 
   /**
