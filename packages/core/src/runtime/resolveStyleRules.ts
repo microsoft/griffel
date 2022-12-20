@@ -44,7 +44,7 @@ function createBucketEntry(cssRule: string, metadata: Record<string, unknown> | 
 function pushToCSSRules(
   cssRulesByBucket: CSSRulesByBucket,
   styleBucketName: StyleBucketName,
-  ltrCSS: string,
+  ltrCSS: string | undefined,
   rtlCSS: string | undefined,
   media: string | undefined,
 ) {
@@ -54,7 +54,10 @@ function pushToCSSRules(
   }
 
   cssRulesByBucket[styleBucketName] ??= [];
-  cssRulesByBucket[styleBucketName]!.push(createBucketEntry(ltrCSS, metadata));
+
+  if (ltrCSS) {
+    cssRulesByBucket[styleBucketName]!.push(createBucketEntry(ltrCSS, metadata));
+  }
 
   if (rtlCSS) {
     cssRulesByBucket[styleBucketName]!.push(createBucketEntry(rtlCSS, metadata));

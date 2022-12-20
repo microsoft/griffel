@@ -74,7 +74,7 @@ function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudo
   return `${classNameSelector}{${cssRule}}`;
 }
 
-export function compileCSS(options: CompileCSSOptions): [string /* ltr definition */, string? /* rtl definition */] {
+export function compileCSS(options: CompileCSSOptions): [string? /* ltr definition */, string? /* rtl definition */] {
   const { className, media, layer, selectors, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
 
   const classNameSelector = `.${className}`;
@@ -105,5 +105,5 @@ export function compileCSS(options: CompileCSSOptions): [string /* ltr definitio
     cssRule = `@supports ${support} { ${cssRule} }`;
   }
 
-  return compileCSSRules(cssRule) as [string, string?];
+  return compileCSSRules(cssRule) as [string?, string?];
 }
