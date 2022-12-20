@@ -47,23 +47,23 @@ describe('getStyleSheetForBucket', () => {
     getStyleSheetForBucket('d', target, renderer);
     getStyleSheetForBucket('v', target, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, {}, { m: '(max-width: 3px)' });
+    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 3px)' });
 
     getStyleSheetForBucket('a', target, renderer);
     getStyleSheetForBucket('i', target, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, {}, { m: '(max-width: 1px)' });
+    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 1px)' });
 
     getStyleSheetForBucket('h', target, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, {}, { m: '(max-width: 4px)' });
+    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 4px)' });
 
     getStyleSheetForBucket('w', target, renderer);
     getStyleSheetForBucket('t', target, renderer);
     getStyleSheetForBucket('k', target, renderer);
     getStyleSheetForBucket('f', target, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, {}, { m: '(max-width: 2px)' });
+    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 2px)' });
 
     const styleElements = target.head.querySelectorAll(`[${DATA_BUCKET_ATTR}]`);
     const styleElementOrder = Array.from(styleElements).map(styleElement =>
