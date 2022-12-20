@@ -85,6 +85,12 @@ describe('resolveStyleRules', () => {
 
       expect(classnamesSet.size).toBe(7);
     });
+
+    it('skips invalid rules', () => {
+      const [, cssRules] = resolveStyleRules({ color: '' });
+
+      expect(cssRules).toEqual({ d: [] });
+    });
   });
 
   describe('css', () => {
