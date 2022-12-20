@@ -1,7 +1,7 @@
 import { TSESLint } from '@typescript-eslint/utils';
 import * as path from 'path';
 
-import { noShorthandsRule, RULE_NAME } from './no-shorthands';
+import { hookNamingRule, RULE_NAME } from './hook-naming';
 
 const ruleTester = new TSESLint.RuleTester({
   parser: path.resolve('./node_modules/@typescript-eslint/parser'),
@@ -11,7 +11,7 @@ const ruleTester = new TSESLint.RuleTester({
   },
 });
 
-ruleTester.run(RULE_NAME, noShorthandsRule, {
+ruleTester.run(RULE_NAME, hookNamingRule, {
   valid: [
     {
       name: 'named useStyles',
