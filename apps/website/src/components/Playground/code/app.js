@@ -1,5 +1,5 @@
 import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/vs2015.css';
+import 'highlight.js/styles/base16/summerfruit-dark.css';
 import beautify from 'js-beautify';
 import React from 'react';
 import css from 'highlight.js/lib/languages/css';
@@ -9,7 +9,7 @@ hljs.registerLanguage('css', css);
 // Style reset
 Object.assign(document.body.style, {
   // matches "highlight.js" theme
-  background: '#1e1e1e',
+  background: '#151515',
   margin: 0,
 });
 
