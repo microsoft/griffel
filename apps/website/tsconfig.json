@@ -6,7 +6,7 @@
     "checkJs": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["es2019", "dom", "DOM.Iterable"],
+    "noEmit": true,
     "outDir": "../../dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,

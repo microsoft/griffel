@@ -4,7 +4,7 @@
     "allowJs": true,
     "checkJs": true,
     "module": "CommonJS",
-    "lib": ["ES2019"],
+    "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
