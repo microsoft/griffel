@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'jest-serializer',
   preset: '../../jest.preset.js',
   globals: {

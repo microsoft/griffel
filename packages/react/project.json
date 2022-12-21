@@ -1,11 +1,12 @@
 {
-  "root": "packages/react",
+  "name": "@griffel/react",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/react/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "buildableProjectDepsInPackageJsonType": "dependencies",
@@ -15,7 +16,9 @@
         "entryFile": "packages/react/src/index.ts",
         "compiler": "babel",
         "rollupConfig": ["@nrwl/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
+        "external": ["tslib"],
         "format": ["esm", "cjs"],
+        "skipTypeField": true,
         "assets": [
           {
             "glob": "packages/react/README.md",
@@ -39,14 +42,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/react"],
+      "outputs": ["{workspaceRoot}/coverage/packages/react"],
       "options": {
-        "jestConfig": "packages/react/jest.config.js",
+        "jestConfig": "packages/react/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "bundle-size": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "dependsOn": [
         {
           "target": "build",
@@ -94,7 +97,7 @@
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/react",
         "commands": [{ "command": "tsc -b --pretty" }],

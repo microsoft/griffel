@@ -1,11 +1,12 @@
 {
-  "root": "packages/core",
+  "name": "@griffel/core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/core/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "buildableProjectDepsInPackageJsonType": "dependencies",
@@ -17,6 +18,7 @@
         "compiler": "babel",
         "external": ["tslib"],
         "format": ["esm", "cjs"],
+        "skipTypeField": true,
         "assets": [
           {
             "glob": "packages/core/README.md",
@@ -40,14 +42,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/core"],
+      "outputs": ["{workspaceRoot}/coverage/packages/core"],
       "options": {
-        "jestConfig": "packages/core/jest.config.js",
+        "jestConfig": "packages/core/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "bundle-size": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "dependsOn": [{ "target": "build", "projects": "self" }],
       "options": {
         "cwd": "packages/core",
@@ -55,7 +57,7 @@
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/core",
         "commands": [{ "command": "tsc -b --pretty" }],

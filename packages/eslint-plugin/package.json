@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "csstype": "^3.0.10",
-    "@typescript-eslint/utils": "^5.20.0"
+    "@typescript-eslint/utils": "^5.47.0",
+    "tslib": "^2.1.0"
   },
   "peerDependencies": {
     "eslint": "^7.5.0 || ^8.0.0"

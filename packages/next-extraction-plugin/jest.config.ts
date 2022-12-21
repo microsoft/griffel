@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'eslint-plugin',
+/* eslint-disable */
+export default {
+  displayName: 'next-extraction-plugin',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/packages/eslint-plugin',
+  coverageDirectory: '../../coverage/packages/next-extraction-plugin',
 };

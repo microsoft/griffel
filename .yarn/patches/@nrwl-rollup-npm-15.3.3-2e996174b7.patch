@@ -1,0 +1,36 @@
+diff --git a/src/executors/rollup/lib/update-package-json.js b/src/executors/rollup/lib/update-package-json.js
+index 3bb0d36249b3f8ae8ad3f7932d6b1713a7cec101..848ebb1b85fcb7038fef12073e7ff41f00a431df 100644
+--- a/src/executors/rollup/lib/update-package-json.js
++++ b/src/executors/rollup/lib/update-package-json.js
+@@ -17,14 +17,14 @@ function updatePackageJson(options, context, target, dependencies, packageJson)
+     if (hasEsmFormat) {
+         // `module` field is used by bundlers like rollup and webpack to detect ESM.
+         // May not be required in the future if type is already "module".
+-        packageJson.module = './index.js';
++        packageJson.module = './index.esm.js';
+         exports['.']['import'] = './index.js';
+         if (!hasCjsFormat) {
+             packageJson.main = './index.js';
+         }
+     }
+     if (hasCjsFormat) {
+-        packageJson.main = './index.cjs';
++        packageJson.main = './index.cjs.js';
+         exports['.']['require'] = './index.cjs';
+     }
+     if (!options.skipTypeField) {
+diff --git a/src/executors/rollup/rollup.impl.js b/src/executors/rollup/rollup.impl.js
+index 9f31b3b69501963e632ca960545dc2411f9e4f1f..7aa1c8ed6403d8aab28fa13e6f1082bbe4b296fa 100644
+--- a/src/executors/rollup/rollup.impl.js
++++ b/src/executors/rollup/rollup.impl.js
+@@ -195,8 +195,8 @@ function createRollupOptions(options, dependencies, context, packageJson, source
+                 format,
+                 dir: `${options.outputPath}`,
+                 name: (0, devkit_1.names)(context.projectName).className,
+-                entryFileNames: `[name].${format === 'esm' ? 'js' : 'cjs'}`,
+-                chunkFileNames: `[name].${format === 'esm' ? 'js' : 'cjs'}`,
++                entryFileNames: `[name].${format === 'esm' ? 'esm' : 'cjs'}.js`,
++                chunkFileNames: `[name].${format === 'esm' ? 'esm' : 'cjs'}.js`,
+             },
+             external: (id) => externalPackages.some((name) => id === name || id.startsWith(`${name}/`)) || npmDeps.some((name) => id === name || id.startsWith(`${name}/`)),
+             plugins,

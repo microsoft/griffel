@@ -15,5 +15,6 @@
     "@griffel/webpack-extraction-plugin": "packages/webpack-extraction-plugin",
     "@griffel/webpack-loader": "packages/webpack-loader",
     "@griffel/website": "apps/website"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
