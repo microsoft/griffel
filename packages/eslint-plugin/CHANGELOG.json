@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Tue, 03 Jan 2023 13:35:21 GMT",
+      "tag": "@griffel/eslint-plugin_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tigeroakes@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "da6d2cc4d94b1ca4ccb7cb041bad8e3844f2186f",
+            "comment": "feat: Add linter rule to enforce hook naming pattern"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 May 2022 16:15:22 GMT",
       "tag": "@griffel/eslint-plugin_v1.0.0",
       "version": "1.0.0",
