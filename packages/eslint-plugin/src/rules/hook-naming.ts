@@ -14,7 +14,7 @@ export const hookNamingRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreato
       recommended: 'error',
     },
     messages: {
-      invalidMakeStylesHookNameFound: 'Hooks must start with the prefix "use"',
+      invalidMakeStylesHookNameFound: '`makeStyles` returns a hook. Hooks must start with the prefix `use`',
     },
     schema: [
       {
