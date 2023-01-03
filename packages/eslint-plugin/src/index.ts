@@ -1,4 +1,5 @@
 import { recommendedConfig } from './configs/recommended';
+import { hookNamingRule } from './rules/hook-naming';
 import { noShorthandsRule } from './rules/no-shorthands';
 
 export = {
@@ -6,6 +7,7 @@ export = {
     recommended: recommendedConfig,
   },
   rules: {
+    'hook-naming': hookNamingRule,
     'no-shorthands': noShorthandsRule,
   },
 };

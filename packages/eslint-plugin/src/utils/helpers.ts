@@ -9,3 +9,7 @@ export const isObjectExpression: IsHelper<AST_NODE_TYPES.ObjectExpression> = AST
   AST_NODE_TYPES.ObjectExpression,
 );
 export const isProperty: IsHelper<AST_NODE_TYPES.Property> = ASTUtils.isNodeOfType(AST_NODE_TYPES.Property);
+
+export function isMakeStylesIdentifier(node: TSESTree.Node | null | undefined): node is TSESTree.Identifier {
+  return isIdentifier(node) && node.name === 'makeStyles';
+}
