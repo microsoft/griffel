@@ -2050,19 +2050,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codesandbox/sandpack-client@npm:^0.13.15":
-  version: 0.13.15
-  resolution: "@codesandbox/sandpack-client@npm:0.13.15"
+"@codesandbox/sandpack-client@npm:^1.18.0":
+  version: 1.18.0
+  resolution: "@codesandbox/sandpack-client@npm:1.18.0"
   dependencies:
     codesandbox-import-utils: ^1.2.3
     lodash.isequal: ^4.5.0
-  checksum: 4b5b9d2a0aaedf6476e0200828f1606d5112cb458c4c8f26a2a01242c7a430cc1b5bc38b64b94f4c47a9ae84675ce892439e397686a1c2f979b4291b8dfbef0e
+  checksum: fae5780399308f3cf536657d8a11c8594c52111e5edf1900c0b958dbcb548d5fff0cb730b069022ba3f7dcd222cdc5caae0d5ce12252474d3555b53786dbd521
   languageName: node
   linkType: hard
 
-"@codesandbox/sandpack-react@npm:0.13.15":
-  version: 0.13.15
-  resolution: "@codesandbox/sandpack-react@npm:0.13.15"
+"@codesandbox/sandpack-react@npm:1.18.4":
+  version: 1.18.4
+  resolution: "@codesandbox/sandpack-react@npm:1.18.4"
   dependencies:
     "@code-hike/classer": ^0.0.0-aa6efee
     "@codemirror/closebrackets": ^0.19.0
@@ -2078,17 +2078,26 @@ __metadata:
     "@codemirror/matchbrackets": ^0.19.3
     "@codemirror/state": ^0.19.6
     "@codemirror/view": ^0.19.32
-    "@codesandbox/sandpack-client": ^0.13.15
+    "@codesandbox/sandpack-client": ^1.18.0
     "@react-hook/intersection-observer": ^3.1.1
+    "@stitches/core": ^1.2.6
+    clean-set: ^1.1.2
     codesandbox-import-util-types: ^2.2.3
-    codesandbox-import-utils: ^2.2.3
     lodash.isequal: ^4.5.0
+    lz-string: ^1.4.4
     react-devtools-inline: 4.4.0
     react-is: ^17.0.2
   peerDependencies:
-    react: ^16.8.0 || ^17
-    react-dom: ^16.8.0 || ^17
-  checksum: 3a3f779c48937095a86d081b63cd92d52968dd9b3775ceb1bc597f35921a883b2128a61a87314bf4abcdad74a177e4d41b4cb1e1577461b5fe7d5709ecbec7e3
+    react: ^16.8.0 || ^17 || ^18
+    react-dom: ^16.8.0 || ^17 || ^18
+  checksum: 7ea2a6f5d5a8ba5bc962dfa0fade9697fcea4f0c7207980996fb427e7d6b0135c80846d94a2927e45bc0feca45593c6c2077667640e44e7c80673bb5c35d0bb1
+  languageName: node
+  linkType: hard
+
+"@codesandbox/sandpack-themes@npm:1.17.0":
+  version: 1.17.0
+  resolution: "@codesandbox/sandpack-themes@npm:1.17.0"
+  checksum: e4ed29d15c4f17d3f6cff6428c9b7300b960f7a9005f40d785c8bd42b6180e5e3c03f6f5c4494f2ff3b301959f861eed55cc6cde2c6d4844a39ab5238d4e2c36
   languageName: node
   linkType: hard
 
@@ -4391,6 +4400,13 @@ __metadata:
     p-map: ^4.0.0
     webpack-sources: ^3.2.2
   checksum: a1e1d8b22dd51059524993f3fdd6861db10eb950debc389e5dd650702287fa2004eace03e6bc8f25b977bd7bc01d76a50aa271cbb73c58a8ec558945d728f307
+  languageName: node
+  linkType: hard
+
+"@stitches/core@npm:^1.2.6":
+  version: 1.2.8
+  resolution: "@stitches/core@npm:1.2.8"
+  checksum: 3a76a697b1d71ffb212e8b166f923c8f66ef99de93689dd417571f90fbba5692abb9a92220acd102baf5298896f0fdfeaa721da2d61adee1247531a26f67a15f
   languageName: node
   linkType: hard
 
@@ -8871,7 +8887,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"binaryextensions@npm:2, binaryextensions@npm:^2.1.2":
+"binaryextensions@npm:2":
   version: 2.3.0
   resolution: "binaryextensions@npm:2.3.0"
   checksum: e64e4658a611a753e0320b047a0045a063c6f2dd92d7a7fc06c25f7e72fb3700dabcf328e319c79f1038e6d0ea46edb0644686603d5f36bff3350d0e7eb198a9
@@ -9686,6 +9702,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clean-set@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "clean-set@npm:1.1.2"
+  checksum: 1bd86cc20a1f5834b2e081f96b4336c4619b8eb842392b496b748d63e1ee58aa1959aa13cd392e96988600e105b9067d29082a13ae80f3b92d55c0474c0fda08
+  languageName: node
+  linkType: hard
+
 "clean-stack@npm:^2.0.0":
   version: 2.2.0
   resolution: "clean-stack@npm:2.2.0"
@@ -9828,7 +9851,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codesandbox-import-util-types@npm:^2.2.3, codesandbox-import-util-types@npm:^2.3.0":
+"codesandbox-import-util-types@npm:^2.2.3":
   version: 2.3.0
   resolution: "codesandbox-import-util-types@npm:2.3.0"
   checksum: e527fe1a0bc2de5a0a9842a70d42ad4c6de56a99a4a9e1427a81f4006ab91d85ff098e2e919cccbcd8703f9b3216b9c1f4ce5a40261051d8d1511287fbbf7d77
@@ -9843,17 +9866,6 @@ __metadata:
     istextorbinary: 2.2.1
     lz-string: ^1.4.4
   checksum: 8b760b8270c202a93e555f1ca516e6af3c2e898be6162da316470740a45b43fa933697519377955a90b598eb9963eb5e5ee59b43bec8ef4d0733f1ee9558137c
-  languageName: node
-  linkType: hard
-
-"codesandbox-import-utils@npm:^2.2.3":
-  version: 2.3.0
-  resolution: "codesandbox-import-utils@npm:2.3.0"
-  dependencies:
-    codesandbox-import-util-types: ^2.3.0
-    istextorbinary: ^2.2.1
-    lz-string: ^1.4.4
-  checksum: 977edf0d95706bf02e0b850679efb84ab04fa2d92d05faf183626fa996e2ff0c9f1350d69b0a8cf11c519f3edf15266f1109402810d0e6219b08a0b0589b072d
   languageName: node
   linkType: hard
 
@@ -12209,16 +12221,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"editions@npm:^2.2.0":
-  version: 2.3.1
-  resolution: "editions@npm:2.3.1"
-  dependencies:
-    errlop: ^2.0.0
-    semver: ^6.3.0
-  checksum: 0b08a2b50c30e7b046a3096ee66ea326158a147daac5f8c134b4bdfe4d2fe02f9916c8b92d8e86887f2379c3528df2150cc9eb3d5bc25c442b4b380d6d7a754e
-  languageName: node
-  linkType: hard
-
 "editorconfig@npm:^0.15.3":
   version: 0.15.3
   resolution: "editorconfig@npm:0.15.3"
@@ -12443,13 +12445,6 @@ __metadata:
   version: 2.0.3
   resolution: "err-code@npm:2.0.3"
   checksum: 8b7b1be20d2de12d2255c0bc2ca638b7af5171142693299416e6a9339bd7d88fc8d7707d913d78e0993176005405a236b066b45666b27b797252c771156ace54
-  languageName: node
-  linkType: hard
-
-"errlop@npm:^2.0.0":
-  version: 2.2.0
-  resolution: "errlop@npm:2.2.0"
-  checksum: 9bce5eba67866b168cfbc98de46df4d7ad7a8e75fb12a40ade886d801dbe4c9d5d640a0bb6a41552a47aeda00c26db97182732213d7d523439e10dc6a853bd7d
   languageName: node
   linkType: hard
 
@@ -14673,7 +14668,8 @@ __metadata:
     "@babel/preset-typescript": 7.12.13
     "@babel/template": ^7.12.13
     "@babel/traverse": ^7.12.13
-    "@codesandbox/sandpack-react": 0.13.15
+    "@codesandbox/sandpack-react": 1.18.4
+    "@codesandbox/sandpack-themes": 1.17.0
     "@docusaurus/core": 2.1.0
     "@docusaurus/module-type-aliases": 2.1.0
     "@docusaurus/preset-classic": 2.1.0
@@ -16511,17 +16507,6 @@ __metadata:
     editions: ^1.3.3
     textextensions: 2
   checksum: 2fff548636a7837679aebfe3846a39a6e39683f345f38f1f222414108b58e3782211bb650dee1c9d31957fa94b3522d5bd9aba862442d52c6e3d059a8983d33f
-  languageName: node
-  linkType: hard
-
-"istextorbinary@npm:^2.2.1":
-  version: 2.6.0
-  resolution: "istextorbinary@npm:2.6.0"
-  dependencies:
-    binaryextensions: ^2.1.2
-    editions: ^2.2.0
-    textextensions: ^2.5.0
-  checksum: 964915aa9533df46a7142d36263e9e1a0940d63b58e2ee1ca1ecc9088239a2499b8153d9746225cfe71b9a7a0ab40565bf23c0a8cfed3a4bce7465303b9fb237
   languageName: node
   linkType: hard
 
@@ -24389,7 +24374,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"textextensions@npm:2, textextensions@npm:^2.5.0":
+"textextensions@npm:2":
   version: 2.6.0
   resolution: "textextensions@npm:2.6.0"
   checksum: e28781f092d0172b78974fd22d5c007cc43ac50be666b36bbf10125d961775faf309a70b51697a2debc074c8f23cc923f1386b1e4661e11b128cee292060034c

@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "7.12.13",
-    "@codesandbox/sandpack-react": "0.13.15",
+    "@codesandbox/sandpack-react": "1.18.4",
+    "@codesandbox/sandpack-themes": "1.17.0",
     "@docusaurus/core": "2.1.0",
     "@docusaurus/module-type-aliases": "2.1.0",
     "@docusaurus/preset-classic": "2.1.0",
@@ -104,6 +105,7 @@
     "react-dom": "17.0.2",
     "react-test-renderer": "17.0.2",
     "simple-git-hooks": "2.7.0",
+    "swc-node": "1.0.0",
     "syncpack": "6.2.0",
     "tmp": "0.2.1",
     "ts-jest": "27.0.5",
@@ -129,7 +131,6 @@
     "rtl-css-js": "^1.16.0",
     "source-map-js": "1.0.2",
     "stylis": "^4.0.13",
-    "swc-node": "1.0.0",
     "tslib": "^2.1.0"
   },
   "resolutions": {
