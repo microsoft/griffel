@@ -119,8 +119,19 @@ function createStringFromStyles(styles: GriffelResetStyle) {
     }
 
     if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
-      console.error(`Please fix the unresolved style rule: \n ${property} \n ${JSON.stringify(value, null, 2)}"`);
+      if (property.indexOf('&') === -1) {
+        // eslint-disable-next-line no-console
+        console.error(
+          `Please fix the unresolved style rule (it may be missing an ampersand placeholder where the generated class name should be injected): \n ${property} \n ${JSON.stringify(
+            value,
+            null,
+            2,
+          )}"`,
+        );
+      } else {
+        // eslint-disable-next-line no-console
+        console.error(`Please fix the unresolved style rule: \n ${property} \n ${JSON.stringify(value, null, 2)}"`);
+      }
     }
   }
 
