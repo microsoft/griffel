@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Adjusting console logging to emit a more descriptive error message.",
+  "packageName": "@griffel/core",
+  "email": "dzearing@microsoft.com",
+  "dependentChangeType": "patch"
+}
