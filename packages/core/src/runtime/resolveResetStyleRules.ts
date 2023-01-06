@@ -122,7 +122,7 @@ function createStringFromStyles(styles: GriffelResetStyle) {
       if (property.indexOf('&') === -1) {
         // eslint-disable-next-line no-console
         console.error(
-          `Please fix the unresolved style rule (it may be missing an ampersand placeholder where the generated class name should be injected): \n ${property} \n ${JSON.stringify(
+          `Please fix the unresolved style rule (it is missing an ampersand placeholder where the generated class name should be injected): \n ${property} \n ${JSON.stringify(
             value,
             null,
             2,
