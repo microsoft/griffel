@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.13",
+    "@babel/helper-module-imports": "^7.12.13",
     "@babel/helper-plugin-utils": "^7.12.13",
     "stylis": "^4.0.13",
     "tslib": "^2.1.0"

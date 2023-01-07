@@ -1,4 +1,6 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
+// @ts-expect-error Missing typings
+import { addNamed } from '@babel/helper-module-imports';
 import { declare } from '@babel/helper-plugin-utils';
 import type { CSSRulesByBucket } from '@griffel/core';
 
@@ -22,6 +24,170 @@ function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRule
   });
 
   return bucketA;
+}
+
+function evaluateAndUpdateArgument(
+  argumentPath: NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression>,
+  functionKind: FunctionKinds,
+  state: StripRuntimeBabelPluginState,
+) {
+  // Returns the styles as a JavaScript object
+  const evaluationResult = argumentPath.evaluate();
+
+  if (!evaluationResult.confident) {
+    throw argumentPath.buildCodeFrameError(
+      [
+        `Failed to evaluate CSS rules from "${functionKind}" call.`,
+        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+      ].join(' '),
+    );
+  }
+
+  if (functionKind === '__styles') {
+    const cssRulesByBucket = evaluationResult.value as CSSRulesByBucket;
+
+    state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, cssRulesByBucket);
+  } else if (functionKind === '__resetStyles') {
+    const cssRules = evaluationResult.value as NonNullable<CSSRulesByBucket['r']>;
+
+    state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, { r: cssRules });
+  }
+
+  argumentPath.remove();
+}
+
+function getFunctionArgumentPath(
+  callExpressionPath: NodePath<t.CallExpression>,
+  functionKind: FunctionKinds,
+): NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression> | null {
+  const argumentPaths = callExpressionPath.get('arguments');
+
+  if (
+    (functionKind === '__styles' && argumentPaths.length !== 2) ||
+    (functionKind === '__resetStyles' && argumentPaths.length !== 3)
+  ) {
+    const calleePath = callExpressionPath.get('callee');
+
+    throw calleePath.buildCodeFrameError(
+      [
+        `"${functionKind}" function call should have exactly ${argumentPaths.length} arguments.`,
+        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+      ].join(' '),
+    );
+  }
+
+  if (functionKind === '__styles' && argumentPaths[1].isObjectExpression()) {
+    return argumentPaths[1];
+  }
+
+  if (functionKind === '__resetStyles' && argumentPaths[2].isArrayExpression()) {
+    return argumentPaths[2];
+  }
+
+  return null;
+}
+
+function getReferencePaths(
+  specifierPath: NodePath<t.ImportSpecifier>,
+  functionKind: FunctionKinds,
+): NodePath<t.Node>[] {
+  const importedPath = specifierPath.get('imported');
+
+  if (importedPath.isIdentifier({ name: functionKind })) {
+    const localPath = specifierPath.get('local');
+    const programPath = specifierPath.findParent(p => p.isProgram())!;
+
+    const importBinding = programPath.scope.getBinding(localPath.node.name);
+
+    if (importBinding) {
+      return importBinding.referencePaths;
+    }
+  }
+
+  return [];
+}
+
+function inlineAssetImports(argumentPath: NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression>) {
+  argumentPath.traverse({
+    TemplateLiteral(literalPath) {
+      const expressionPaths = literalPath.get('expressions');
+
+      expressionPaths.map(expressionPath => {
+        if (Array.isArray(expressionPath) || !expressionPath.isIdentifier()) {
+          throw literalPath.buildCodeFrameError(
+            [
+              'A template literal with an imported asset should contain an expression statement.',
+              'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+            ].join(' '),
+          );
+        }
+
+        const expressionName = expressionPath.node.name;
+        const expressionBinding = literalPath.scope.getBinding(expressionName);
+
+        if (typeof expressionBinding === 'undefined') {
+          throw expressionPath.buildCodeFrameError(
+            [
+              'Failed to resolve a binding in a scope for an identifier.',
+              'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+            ].join(' '),
+          );
+        }
+
+        const importDeclarationPath = expressionBinding.path.findParent(p =>
+          p.isImportDeclaration(),
+        ) as NodePath<t.ImportDeclaration> | null;
+
+        if (importDeclarationPath === null) {
+          throw expressionBinding.path.buildCodeFrameError(
+            [
+              'Failed to resolve an import for the identifier.',
+              'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+            ].join(' '),
+          );
+        }
+
+        expressionPath.replaceWith(t.stringLiteral(importDeclarationPath.get('source').node.value));
+        importDeclarationPath.remove();
+      });
+    },
+  });
+}
+
+function updateCalleeName(
+  callExpressionPath: NodePath<t.CallExpression>,
+  functionKind: FunctionKinds,
+  importSource: string,
+) {
+  const calleePath = callExpressionPath.get('callee');
+
+  const importName = functionKind === '__styles' ? '__css' : '__resetCSS';
+  const importIdentifier = addNamed(callExpressionPath, importName, importSource);
+
+  calleePath.replaceWith(importIdentifier);
+}
+
+function updateReferences(
+  state: StripRuntimeBabelPluginState,
+  importSpecifierPath: NodePath<t.ImportSpecifier>,
+  importSource: string,
+  functionKind: FunctionKinds,
+) {
+  const referencePaths = getReferencePaths(importSpecifierPath, functionKind);
+
+  for (const referencePath of referencePaths) {
+    if (referencePath.parentPath?.isCallExpression()) {
+      const callExpressionPath = referencePath.parentPath;
+      const argumentPath = getFunctionArgumentPath(callExpressionPath, functionKind);
+
+      if (argumentPath) {
+        inlineAssetImports(argumentPath);
+        evaluateAndUpdateArgument(argumentPath, functionKind, state);
+
+        updateCalleeName(callExpressionPath, functionKind, importSource);
+      }
+    }
+  }
 }
 
 export const babelPluginStripGriffelRuntime = declare<
@@ -55,144 +221,15 @@ export const babelPluginStripGriffelRuntime = declare<
           path.traverse({
             ImportSpecifier(path) {
               const importedPath = path.get('imported');
-              let functionKind: FunctionKinds;
+
+              const importSourcePath = (path.parentPath as NodePath<t.ImportDeclaration>).get('source');
+              const importSource = importSourcePath.node.value;
 
               if (importedPath.isIdentifier({ name: '__styles' })) {
-                functionKind = '__styles';
+                updateReferences(state, path, importSource, '__styles');
               } else if (importedPath.isIdentifier({ name: '__resetStyles' })) {
-                functionKind = '__resetStyles';
-              } else {
-                return;
+                updateReferences(state, path, importSource, '__resetStyles');
               }
-
-              const declarationPath = path.findParent(p =>
-                p.isImportDeclaration(),
-              ) as NodePath<t.ImportDeclaration> | null;
-
-              if (declarationPath === null) {
-                throw path.buildCodeFrameError(
-                  [
-                    'Failed to find "ImportDeclaration" path for an "ImportSpecifier".',
-                    'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                  ].join(' '),
-                );
-              }
-
-              if (functionKind === '__styles') {
-                declarationPath.pushContainer('specifiers', t.identifier('__css'));
-              }
-
-              if (functionKind === '__resetStyles') {
-                declarationPath.pushContainer('specifiers', t.identifier('__resetCSS'));
-              }
-            },
-
-            /**
-             * Visits all call expressions (__styles function calls):
-             * - replaces "__styles" calls "__css"
-             * - removes CSS rules from "__styles" calls
-             */
-            CallExpression(path) {
-              const calleePath = path.get('callee');
-              const argumentPaths = path.get('arguments');
-
-              let argumentPath: typeof argumentPaths[number];
-              let functionKind: FunctionKinds;
-
-              if (calleePath.isIdentifier({ name: '__styles' })) {
-                argumentPath = argumentPaths[1];
-                functionKind = '__styles';
-
-                calleePath.replaceWith(t.identifier('__css'));
-              } else if (calleePath.isIdentifier({ name: '__resetStyles' })) {
-                argumentPath = argumentPaths[2];
-                functionKind = '__resetStyles';
-
-                calleePath.replaceWith(t.identifier('__resetCSS'));
-              } else {
-                return;
-              }
-
-              if (
-                (functionKind === '__styles' && argumentPaths.length !== 2) ||
-                (functionKind === '__resetStyles' && argumentPaths.length !== 3)
-              ) {
-                throw calleePath.buildCodeFrameError(
-                  [
-                    `"${functionKind}" function call should have exactly ${argumentPaths.length} arguments.`,
-                    'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                  ].join(' '),
-                );
-              }
-
-              argumentPath.traverse({
-                TemplateLiteral(literalPath) {
-                  const expressionPaths = literalPath.get('expressions');
-
-                  expressionPaths.map(expressionPath => {
-                    if (Array.isArray(expressionPath) || !expressionPath.isIdentifier()) {
-                      throw literalPath.buildCodeFrameError(
-                        [
-                          'A template literal with an imported asset should contain an expression statement.',
-                          'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                        ].join(' '),
-                      );
-                    }
-
-                    const expressionName = expressionPath.node.name;
-                    const expressionBinding = literalPath.scope.getBinding(expressionName);
-
-                    if (typeof expressionBinding === 'undefined') {
-                      throw expressionPath.buildCodeFrameError(
-                        [
-                          'Failed to resolve a binding in a scope for an identifier.',
-                          'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                        ].join(' '),
-                      );
-                    }
-
-                    const importDeclarationPath = expressionBinding.path.findParent(p =>
-                      p.isImportDeclaration(),
-                    ) as NodePath<t.ImportDeclaration> | null;
-
-                    if (importDeclarationPath === null) {
-                      throw expressionBinding.path.buildCodeFrameError(
-                        [
-                          'Failed to resolve an import for the identifier.',
-                          'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                        ].join(' '),
-                      );
-                    }
-
-                    expressionPath.replaceWith(t.stringLiteral(importDeclarationPath.get('source').node.value));
-                    importDeclarationPath.remove();
-                  });
-                },
-              });
-
-              // Returns the styles as a JavaScript object
-              const evaluationResult = argumentPath.evaluate();
-
-              if (!evaluationResult.confident) {
-                throw argumentPath.buildCodeFrameError(
-                  [
-                    `Failed to evaluate CSS rules from "${functionKind}" call.`,
-                    'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-                  ].join(' '),
-                );
-              }
-
-              if (functionKind === '__styles') {
-                const cssRulesByBucket = evaluationResult.value as CSSRulesByBucket;
-
-                state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, cssRulesByBucket);
-              } else if (functionKind === '__resetStyles') {
-                const cssRules = evaluationResult.value as NonNullable<CSSRulesByBucket['r']>;
-
-                state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, { r: cssRules });
-              }
-
-              argumentPath.remove();
             },
           });
         },

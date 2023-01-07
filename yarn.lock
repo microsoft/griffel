@@ -15229,6 +15229,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.12.13
     "@babel/generator": ^7.12.13
+    "@babel/helper-module-imports": ^7.12.13
     "@babel/helper-plugin-utils": ^7.12.13
     "@babel/preset-typescript": 7.12.13
     "@babel/template": ^7.12.13
