@@ -15,11 +15,7 @@ pluginTester({
   babelOptions: {
     parserOpts: {
       plugins: ['typescript'],
-    },
-  },
-  pluginOptions: {
-    babelOptions: {
-      presets: ['@babel/typescript'],
+      sourceType: 'unambiguous',
     },
   },
   formatResult: code =>
@@ -41,9 +37,6 @@ pluginTester({
       title: 'duplicated imports',
       fixture: path.resolve(fixturesDir, 'duplicated-imports', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'duplicated-imports', 'output.ts'),
-      pluginOptions: {
-        modules: [{ moduleSource: 'custom-package', importName: 'createStylesA' }],
-      },
     },
     {
       title: 'at rules',
@@ -54,11 +47,6 @@ pluginTester({
       title: 'multiple declarations',
       fixture: path.resolve(fixturesDir, 'multiple-declarations', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'multiple-declarations', 'output.ts'),
-    },
-    {
-      title: 'call of non existing module',
-      fixture: path.resolve(fixturesDir, 'non-existing-module-call', 'code.ts'),
-      outputFixture: path.resolve(fixturesDir, 'non-existing-module-call', 'output.ts'),
     },
     {
       title: 'syntax: animationName',
@@ -151,9 +139,9 @@ pluginTester({
       title: 'config: babelOptions',
       fixture: path.resolve(fixturesDir, 'config-babel-options', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'config-babel-options', 'output.ts'),
-      pluginOptions: {
+      presetOptions: {
         babelOptions: {
-          plugins: ['./packages/babel-preset/__fixtures__/config-babel-options/colorRenamePlugin'],
+          plugins: [path.resolve(fixturesDir, 'config-babel-options', 'colorRenamePlugin.js')],
         },
       },
     },
@@ -161,12 +149,8 @@ pluginTester({
       title: 'config: evaluationRules',
       fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
-      pluginOptions: {
-        evaluationRules: [
-          {
-            action: 'sampleEvaluator',
-          },
-        ],
+      presetOptions: {
+        evaluationRules: [{ action: 'sampleEvaluator' }],
       },
     },
 
@@ -198,35 +182,10 @@ pluginTester({
       outputFixture: path.resolve(fixturesDir, 'import-alias', 'output.ts'),
     },
     {
-      title: 'imports: custom module',
-      fixture: path.resolve(fixturesDir, 'import-custom-module', 'code.ts'),
-      outputFixture: path.resolve(fixturesDir, 'import-custom-module', 'output.ts'),
-      pluginOptions: {
-        modules: [{ moduleSource: 'custom-package', importName: 'makeStyles' }],
-      },
-    },
-    {
-      title: 'imports: custom module name',
-      fixture: path.resolve(fixturesDir, 'import-custom-name', 'code.ts'),
-      outputFixture: path.resolve(fixturesDir, 'import-custom-name', 'output.ts'),
-      pluginOptions: {
-        modules: [{ moduleSource: 'custom-package', importName: 'createStyles' }],
-      },
-    },
-    {
       title: 'imports: require()',
       fixture: path.resolve(fixturesDir, 'require', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'require', 'output.ts'),
     },
-    {
-      title: 'imports: require() with custom module',
-      fixture: path.resolve(fixturesDir, 'require-custom-module', 'code.ts'),
-      outputFixture: path.resolve(fixturesDir, 'require-custom-module', 'output.ts'),
-      pluginOptions: {
-        modules: [{ moduleSource: 'custom-package', importName: 'makeStyles' }],
-      },
-    },
-
     {
       title: 'imports: require() for makeResetStyles',
       fixture: path.resolve(fixturesDir, 'require-reset-styles', 'code.ts'),
@@ -240,6 +199,7 @@ pluginTester({
       title: 'errors: unsupported shorthand CSS properties',
       fixture: path.resolve(fixturesDir, 'unsupported-css-properties', 'fixture.ts'),
       outputFixture: path.resolve(fixturesDir, 'unsupported-css-properties', 'output.ts'),
+
       setup() {
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
@@ -249,14 +209,9 @@ pluginTester({
       },
     },
     {
-      title: 'errors: throws on invalid argument count',
-      fixture: path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'),
-      error: /function accepts only a single param/,
-    },
-    {
       title: 'errors: throws on invalid config',
       fixture: path.resolve(fixturesDir, 'error-config-babel-options', 'fixture.ts'),
-      pluginOptions: {
+      presetOptions: {
         babelOptions: {
           plugins: {},
         },
@@ -265,8 +220,11 @@ pluginTester({
     },
   ],
 
-  plugin: transformPlugin,
-  pluginName: '@griffel/babel-plugin-transform',
+  preset: griffelPreset,
+  presetName: '@griffel/babel-preset',
+  presetOptions: {
+    babelOptions: { presets: ['@babel/preset-typescript'] },
+  },
 });
 
 // TODO use the plugin tester and all existing fixtures once there is support for that

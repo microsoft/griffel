@@ -1,5 +1,5 @@
 import type { TransformOptions } from '@babel/core';
-import type { EvalRule } from '@linaria/babel-preset';
+import type { EvalRule } from '@linaria/utils';
 
 export type BabelPluginOptions = {
   /**
@@ -22,14 +22,6 @@ export type BabelPluginOptions = {
 
   /** The set of rules that defines how the matched files will be transformed during the evaluation. */
   evaluationRules?: EvalRule[];
-
-  /**
-   * Defined the of the project. Is used to have a deterministic path for asset paths, usually should be equal to Git
-   * root.
-   *
-   * @default process.cwd()
-   */
-  projectRoot?: string;
 };
 
 export type BabelPluginMetadata = {

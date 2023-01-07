@@ -1,5 +1,5 @@
-import { __styles } from '@griffel/react';
-export const useStyles = __styles(
+import { __styles as _styles } from '@griffel/react';
+export const useStyles = /*#__PURE__*/ _styles(
   {
     single: {
       Bv12yb3: ['f1g6ul6r', 'f1fp4ujf'],

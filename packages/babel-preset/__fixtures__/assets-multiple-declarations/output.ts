@@ -1,15 +1,13 @@
+import { __styles as _styles } from '@griffel/react';
 import _asset2 from './empty.jpg';
 import _asset from './blank.jpg';
-import { __styles } from '@griffel/react';
-import blank from './blank.jpg';
-import empty from './empty.jpg';
-export const useStyles = __styles(
+export const useStyles = /*#__PURE__*/ _styles(
   {
     root: {
-      Bcmaq0h: 'fp00rh9',
+      Bcmaq0h: 'f1surbjy',
     },
   },
   {
-    d: [`.fp00rh9{background-image:url(${_asset}),url(${_asset2});}`],
+    d: [`.f1surbjy{background-image:url(${_asset}),url(${_asset2});}`],
   },
 );

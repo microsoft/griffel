@@ -1,6 +1,5 @@
-import { __styles } from '@griffel/react';
-import { tokens } from './tokens';
-export const useStyles = __styles(
+import { __styles as _styles } from '@griffel/react';
+export const useStyles = /*#__PURE__*/ _styles(
   {
     root: {
       De3pzq: 'f1734hy',

@@ -19,9 +19,9 @@ A loader for Webpack 5 that performs build time transforms for [`@griffel/react`
 ## Install
 
 ```bash
-yarn add --dev @griffel/webpack-loader
+yarn add --dev @griffel/tag-processor @griffel/webpack-loader
 # or
-npm install --save-dev @griffel/webpack-loader
+npm install --save-dev @griffel/tag-processor @griffel/webpack-loader
 ```
 
 ## When to use it?
@@ -92,35 +92,21 @@ module.exports = {
 
 ```js
 import { makeStyles, makeResetStyles } from 'custom-package';
-// 👇 custom import names are also supported
-import { createStyles } from 'custom-package';
 ```
 
-By default, the Webpack loader handles imports from `@griffel/react`. The webpack loader can be re-configured to handle re-exports of Griffel from custom packages. The `makeStyles` function itself can also be renamed in this case.
+By default, the Webpack loader handles imports from `@griffel/react` & `@fluentui/react-components`, to handle imports from custom packages settings you need to include meta information to a matching `package.json`:
 
-```js
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: '@griffel/webpack-loader',
-          options: {
-            modules: [
-              {
-                moduleSource: 'custom-package',
-                importName: 'makeStyles',
-                resetImportName: 'makeResetStyles',
-              },
-            ],
-          },
-        },
-      },
-    ],
-  },
-};
+```json
+{
+  "name": "custom-package",
+  "version": "1.0.0",
+  "linaria": {
+    "tags": {
+      "makeStyles": "@griffel/tag-processor/make-styles",
+      "makeResetStyles": "@griffel/tag-processor/make-reset-styles"
+    }
+  }
+}
 ```
 
 > **Note**: "custom-package" should re-export following functions from `@griffel/react`:

@@ -9,15 +9,14 @@
   },
   "dependencies": {
     "@babel/core": "^7.23.2",
-    "@babel/generator": "^7.23.0",
-    "@babel/helper-plugin-utils": "^7.22.5",
-    "@babel/template": "^7.22.15",
-    "@babel/traverse": "^7.23.2",
-    "@griffel/core": "^1.15.1",
     "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
+    "@griffel/core": "^1.15.1",
     "ajv": "^8.4.0",
     "stylis": "^4.2.0",
     "tslib": "^2.1.0"
+  },
+  "peerDependencies": {
+    "@griffel/tag-processor": "^0.0.1"
   }
 }

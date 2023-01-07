@@ -1,12 +1,10 @@
-// @ts-expect-error This module does not exist, but will be resolved via aliases
-import { createStylesA } from 'custom-package';
-// @ts-expect-error This module does not exist, but will be resolved via aliases
-import { createStylesB } from 'custom-package';
+import { makeStyles as makeStylesA } from '@griffel/react';
+import { makeStyles as makeStylesB } from '@griffel/react';
 
-export const useClassesA = createStylesA({
+export const useClassesA = makeStylesA({
   root: { color: 'red' },
 });
 
-export const useClassesB = createStylesB({
+export const useClassesB = makeStylesB({
   root: { color: 'yellow' },
 });
