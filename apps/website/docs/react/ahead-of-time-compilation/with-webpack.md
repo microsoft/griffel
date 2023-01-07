@@ -13,14 +13,14 @@ import TabItem from '@theme/TabItem';
 <TabItem value="yarn" label="Yarn">
 
 ```shell
-yarn add --dev @griffel/webpack-loader
+yarn add --dev @griffel/linaria-processor @griffel/webpack-loader
 ```
 
 </TabItem>
 <TabItem value="npm" label="NPM">
 
 ```shell
-npm install --save-dev @griffel/webpack-loader
+npm install --save-dev @griffel/linaria-processor @griffel/webpack-loader
 ```
 
 </TabItem>

@@ -1,4 +1,5 @@
-import { makeStyles, GriffelStyle } from '@griffel/react';
+import { makeStyles } from '@griffel/react';
+import type { GriffelStyle } from '@griffel/react';
 
 const switchClassName = 'fui-Switch';
 let _a: Record<string, GriffelStyle>;

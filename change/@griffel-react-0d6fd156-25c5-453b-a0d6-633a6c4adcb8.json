@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add meta to package.json for @griffel/processor",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

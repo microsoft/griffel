@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "BREAKING: update to Linaria v4",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

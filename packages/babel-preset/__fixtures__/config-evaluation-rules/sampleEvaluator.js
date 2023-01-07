@@ -1,12 +1,19 @@
 // @ts-check
 
-/** @type {import("@linaria/babel-preset").Evaluator} */
+/** @type {import("@linaria/utils").Evaluator} */
 const sampleEvaluator = () => {
-  // Evaluators transform input code to something that will be evaluated by Node later. In evaluatePathsInVM() we expect
-  // that results will be available as "exports.__mkPreval", this evaluator mocks it
-  const result = `exports.__mkPreval = [{ root: { color: 'blue' } }]`;
+  // Evaluators transform input code to something that will be evaluated by Node
+  // later. Linaria expects that results will be available as
+  // "exports.__linariaPreval", this evaluator mocks it
+  const result = `
+    exports.__linariaPreval = {
+      _exp: () => ({
+        root: { color: 'blue' }
+      })
+    };
+  `;
 
-  return [result, null];
+  return [null, result, null];
 };
 
 module.exports.default = sampleEvaluator;

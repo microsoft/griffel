@@ -9,15 +9,15 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.13",
-    "@babel/generator": "^7.12.13",
-    "@babel/helper-plugin-utils": "^7.12.13",
-    "@babel/template": "^7.12.13",
-    "@babel/traverse": "^7.12.13",
+    "@linaria/babel-preset": "^4.5.4",
+    "@linaria/shaker": "^4.5.3",
+    "@linaria/utils": "^4.5.3",
     "@griffel/core": "^1.14.1",
-    "@linaria/babel-preset": "^3.0.0-beta.23",
-    "@linaria/shaker": "^3.0.0-beta.22",
     "ajv": "^8.4.0",
     "stylis": "^4.2.0",
     "tslib": "^2.1.0"
+  },
+  "peerDependencies": {
+    "@griffel/linaria-processor": "^0.0.1"
   }
 }

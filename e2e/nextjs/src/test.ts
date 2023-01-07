@@ -23,6 +23,7 @@ async function performTest() {
       packLocalPackage(rootDir, tempDir, '@griffel/style-types'),
       packLocalPackage(rootDir, tempDir, '@griffel/core'),
       packLocalPackage(rootDir, tempDir, '@griffel/react'),
+      packLocalPackage(rootDir, tempDir, '@griffel/linaria-processor'),
       packLocalPackage(rootDir, tempDir, '@griffel/webpack-extraction-plugin'),
       packLocalPackage(rootDir, tempDir, '@griffel/webpack-loader'),
       packLocalPackage(rootDir, tempDir, '@griffel/next-extraction-plugin'),

@@ -1,5 +1,6 @@
-import { __styles } from '@griffel/react';
-export const useStyles1 = __styles(
+import { __styles as _styles2 } from '@griffel/react';
+import { __styles as _styles } from '@griffel/react';
+export const useStyles1 = /*#__PURE__*/ _styles(
   {
     root: {
       sj55zd: 'fe3e8s9',
@@ -9,7 +10,7 @@ export const useStyles1 = __styles(
     d: ['.fe3e8s9{color:red;}'],
   },
 );
-export const useStyles2 = __styles(
+export const useStyles2 = /*#__PURE__*/ _styles2(
   {
     root: {
       sj55zd: 'fka9v86',

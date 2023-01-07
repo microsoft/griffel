@@ -1,6 +1,5 @@
-import { __styles } from '@griffel/react';
-import { flexStyles, gridStyles, typography } from './mixins';
-export const useStyles = __styles(
+import { __styles as _styles } from '@griffel/react';
+export const useStyles = /*#__PURE__*/ _styles(
   {
     root: {
       mc9l5x: 'f22iagw',

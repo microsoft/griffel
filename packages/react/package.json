@@ -8,6 +8,12 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
+  "linaria": {
+    "tags": {
+      "makeStyles": "@griffel/linaria-processor/make-styles",
+      "makeResetStyles": "@griffel/linaria-processor/make-reset-styles"
+    }
+  },
   "dependencies": {
     "@griffel/core": "^1.14.1",
     "tslib": "^2.1.0"

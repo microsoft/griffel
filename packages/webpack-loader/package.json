@@ -8,12 +8,10 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@babel/core": "^7.12.13",
-    "@griffel/babel-preset": "^1.4.20",
-    "enhanced-resolve": "^5.8.2",
+    "@linaria/webpack-loader": "^4.5.4",
     "tslib": "^2.1.0"
   },
   "peerDependencies": {
-    "webpack": "^5"
+    "@griffel/linaria-processor": "^0.0.1"
   }
 }

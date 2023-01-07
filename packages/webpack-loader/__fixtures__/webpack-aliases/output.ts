@@ -1,8 +1,5 @@
-import { __styles } from '@griffel/react';
-// @ts-expect-error This module will be resolved via aliases
-import color from 'non-existing-color-module';
-import { tokens } from './tokens';
-export const styles = __styles(
+import { __styles as _styles } from '@griffel/react'; // @ts-expect-error This module will be resolved via aliases
+export const styles = /*#__PURE__*/ _styles(
   {
     root: {
       De3pzq: 'f1bh81bl',

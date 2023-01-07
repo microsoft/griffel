@@ -1,0 +1,30 @@
+{
+  "name": "@griffel/linaria-processor",
+  "version": "0.0.1",
+  "description": "Linaria processor for Griffel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "dependencies": {
+    "@griffel/core": "^1.14.1",
+    "@linaria/tags": "^4.5.4",
+    "stylis": "^4.2.0",
+    "tslib": "^2.1.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./make-styles": {
+      "types": "./src/MakeStylesProcessor.d.ts",
+      "default": "./src/MakeStylesProcessor.js"
+    },
+    "./make-reset-styles": {
+      "types": "./src/MakeResetStylesProcessor.d.ts",
+      "default": "./src/MakeResetStylesProcessor.js"
+    }
+  }
+}

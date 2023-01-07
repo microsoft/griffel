@@ -1,6 +1,5 @@
-import { __styles } from '@griffel/react';
-import { className, selector } from './consts';
-export const useStyles = __styles(
+import { __styles as _styles } from '@griffel/react';
+export const useStyles = /*#__PURE__*/ _styles(
   {
     root: {
       B0egftl: 'f1wgwx3x',

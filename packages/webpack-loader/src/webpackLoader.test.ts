@@ -5,11 +5,10 @@ import * as prettier from 'prettier';
 import * as webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import type { WebpackLoaderOptions } from './webpackLoader';
 import { shouldTransformSourceCode } from './webpackLoader';
 
 type CompileOptions = {
-  loaderOptions?: WebpackLoaderOptions;
+  loaderOptions?: Record<string, unknown>;
   webpackConfig?: webpack.Configuration;
 };
 
@@ -35,7 +34,7 @@ async function compileSourceWithWebpack(entryPath: string, options: CompileOptio
     module: {
       rules: [
         {
-          test: /\.(ts|tsx|txt)$/,
+          test: /\.ts$/,
           include: path.dirname(entryPath),
           use: {
             loader: path.resolve(__dirname, './index.ts'),
@@ -174,77 +173,29 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 }
 
 describe('shouldTransformSourceCode', () => {
-  describe('handles defaults', () => {
+  describe('handles functions', () => {
     it('makeStyles', () => {
-      expect(shouldTransformSourceCode(`import { makeStyles } from "@griffel/react"`, undefined)).toBe(true);
-      expect(shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, undefined)).toBe(false);
+      expect(shouldTransformSourceCode(`import { makeStyles } from "@griffel/react"`)).toBe(true);
+      expect(shouldTransformSourceCode(`import { Button } from "@fluentui/react"`)).toBe(false);
     });
 
     it('makeResetStyles', () => {
-      expect(shouldTransformSourceCode(`import { makeResetStyles } from "@griffel/react"`, undefined)).toBe(true);
-      expect(shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, undefined)).toBe(false);
-    });
-  });
-
-  describe('handles options', () => {
-    it('makeStyles', () => {
-      expect(
-        shouldTransformSourceCode(`import { makeStyles } from "@griffel/react"`, [
-          { moduleSource: '@griffel/react', importName: 'makeStyles' },
-        ]),
-      ).toBe(true);
-      expect(
-        shouldTransformSourceCode(`import { createStyles } from "make-styles"`, [
-          { moduleSource: 'make-styles', importName: 'createStyles' },
-        ]),
-      ).toBe(true);
-
-      expect(
-        shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, [
-          { moduleSource: '@griffel/react', importName: 'makeStyles' },
-        ]),
-      ).toBe(false);
-    });
-
-    it('makeResetStyles', () => {
-      expect(
-        shouldTransformSourceCode(`import { makeResetStyles } from "@griffel/react"`, [
-          { moduleSource: '@griffel/react', importName: 'makeStyles', resetImportName: 'makeResetStyles' },
-        ]),
-      ).toBe(true);
-      expect(
-        shouldTransformSourceCode(`import { createResetStyles } from "make-styles"`, [
-          { moduleSource: 'make-styles', importName: 'makeStyles', resetImportName: 'createResetStyles' },
-        ]),
-      ).toBe(true);
-
-      expect(
-        shouldTransformSourceCode(`import { Button } from "@fluentui/react"`, [
-          { moduleSource: '@griffel/react', importName: 'makeStyles', resetImportName: 'makeResetStyles' },
-        ]),
-      ).toBe(false);
+      expect(shouldTransformSourceCode(`import { makeResetStyles } from "@griffel/react"`)).toBe(true);
+      expect(shouldTransformSourceCode(`import { Button } from "@fluentui/react"`)).toBe(false);
     });
   });
 });
 
 describe('webpackLoader', () => {
+  jest.setTimeout(15000);
+
   // Integration fixtures for base functionality, all scenarios are tested in "@griffel/babel-preset"
   testFixture('object');
   testFixture('function');
   testFixture('reset');
   testFixture('empty');
 
-  // Integration fixtures for config functionality
-  testFixture('config-modules', {
-    loaderOptions: {
-      modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],
-    },
-    webpackConfig: {
-      externals: {
-        'react-make-styles': 'Griffel',
-      },
-    },
-  });
+  testFixture('react-component');
 
   // Asserts that aliases are resolved properly in Babel plugin
   testFixture('webpack-aliases', {
@@ -287,18 +238,4 @@ describe('webpackLoader', () => {
       },
     },
   });
-
-  // Asserts handling errors from Babel plugin
-  testFixture('error-argument-count');
-  // Asserts errors in loader's config
-  testFixture('error-config', {
-    loaderOptions: {
-      babelOptions: {
-        // @ts-expect-error "plugins" should be an array, an object is passed to test schema
-        plugins: {},
-      },
-    },
-  });
-  // Asserts errors in loader functionality
-  testFixture('error-syntax');
 });

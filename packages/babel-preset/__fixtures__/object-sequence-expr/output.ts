@@ -1,7 +1,7 @@
-import { __styles, GriffelStyle } from '@griffel/react';
-const switchClassName = 'fui-Switch';
+import { __styles as _styles } from '@griffel/react';
+import type { GriffelStyle } from '@griffel/react';
 let _a: Record<string, GriffelStyle>;
-export const useStyles = __styles(
+export const useStyles = /*#__PURE__*/ _styles(
   {
     root: {
       ozcac4: 'f1cm6cy7',

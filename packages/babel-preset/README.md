@@ -21,9 +21,9 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
 ## Install
 
 ```bash
-yarn add --dev @griffel/babel-preset
+yarn add --dev @griffel/babel-preset @griffel/linaria-processor
 # or
-npm install --save-dev @griffel/babel-preset
+npm install --save-dev @griffel/babel-preset @griffel/linaria-processor
 ```
 
 ## When to use it?
@@ -49,22 +49,27 @@ import { makeStyles } from 'custom-package';
 import { createStyles } from 'custom-package';
 ```
 
-By default, preset handles imports from `@griffel/react` & `@fluentui/react-components`, to handle imports from custom packages settings should be tweaked:
+By default, preset handles imports from `@griffel/react` & `@fluentui/react-components`, to handle imports from custom packages settings you need to include meta information to a matching `package.json`:
 
 ```json
 {
-  "presets": [
-    [
-      "@griffel",
-      {
-        "modules": [{ "moduleSource": "custom-package", "importName": "makeStyles" }]
-      }
-    ]
-  ]
+  "name": "custom-package",
+  "version": "1.0.0",
+  "linaria": {
+    "tags": {
+      "makeStyles": "@griffel/linaria-processor/make-styles",
+      "makeResetStyles": "@griffel/linaria-processor/make-reset-styles"
+    }
+  }
 }
 ```
 
-> **Note**: "custom-package" should re-export `__styles` function from `@griffel/react`
+> **Note**: "custom-package" should re-export following functions from `@griffel/react`:
+>
+> - `__styles`
+> - `__css`
+> - `__resetStyles`
+> - `__resetCSS`
 
 ### Configuring Babel settings
 
@@ -156,9 +161,9 @@ const useStyles = makeStyles({
 roughly to
 
 ```js
-import { __styles } from '@griffel/react';
+import { __styles as _styles } from '@griffel/react';
 
-const useStyles = __styles(/* resolved styles */);
+const useStyles = _styles(/* resolved styles */);
 ```
 
 ## Troubleshooting
@@ -168,7 +173,7 @@ However, the concepts are not coupled to the repo setup.
 
 ### Module evaluation
 
-The preset uses tools from [linaria](https://github.com/callstack/linaria) to evaluate runtime calls of `makeStyles`.
+The preset reuses `@linaria/babel-preset` from [linaria](https://github.com/callstack/linaria) to evaluate runtime calls of `makeStyles` and `makeResetStyles`.
 [Linaria's debugging documentation can help here](https://github.com/callstack/linaria/blob/master/CONTRIBUTING.md#debugging-and-deep-dive-into-babel-plugin).
 
 Debugging output can be activated with following environment variables:
@@ -182,9 +187,3 @@ On Windows it's required to set environment variables via [`set`](https://docs.m
 ```sh
 $ cross-env DEBUG=linaria\* LINARIA_LOG=debug yarn build
 ```
-
-The debug output will include:
-
-- Prepared code
-- Evaluated code
-- AST that indicates what code has been shaken with `@linaria/shaker`

@@ -1,28 +1,10 @@
-import type { Evaluator } from '@linaria/babel-preset';
+import type { File } from '@babel/types';
+import type { Evaluator } from '@linaria/utils';
 
 import { validateOptions } from './validateOptions';
 import { BabelPluginOptions } from './types';
 
 describe('validateOptions', () => {
-  describe('modules', () => {
-    it('passes on valid options', () => {
-      const pluginOptions: BabelPluginOptions = {
-        modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],
-      };
-
-      expect(() => validateOptions(pluginOptions)).not.toThrow();
-    });
-
-    it('throws on wrong options', () => {
-      const pluginOptions = { modules: {} };
-
-      // @ts-expect-error Invalid options are passed for testing purposes
-      expect(() => validateOptions(pluginOptions)).toThrowErrorMatchingInlineSnapshot(
-        `"Validation failed for passed config: data/modules must be array"`,
-      );
-    });
-  });
-
   describe('babelOptions', () => {
     it('passes on valid options', () => {
       const pluginOptions: BabelPluginOptions = {
@@ -47,7 +29,7 @@ describe('validateOptions', () => {
 
   describe('evaluationRules', () => {
     it('passes on valid options', () => {
-      const noopEvaluator: Evaluator = () => ['foo', null];
+      const noopEvaluator: Evaluator = () => [null as unknown as File, 'foo', null];
       const pluginOptions: BabelPluginOptions = {
         evaluationRules: [
           { action: noopEvaluator },
