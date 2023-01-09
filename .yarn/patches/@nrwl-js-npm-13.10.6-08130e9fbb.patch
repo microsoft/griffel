@@ -1,0 +1,13 @@
+diff --git a/src/utils/check-dependencies.js b/src/utils/check-dependencies.js
+index a217906583ac82d9e7881af4f02fc44f8afc04dc..ff5d6ea946c4c5b745d367f7070f00cfa166dcaa 100644
+--- a/src/utils/check-dependencies.js
++++ b/src/utils/check-dependencies.js
+@@ -5,7 +5,7 @@ const devkit_1 = require("@nrwl/devkit");
+ const buildable_libs_utils_1 = require("@nrwl/workspace/src/utilities/buildable-libs-utils");
+ function checkDependencies(context, tsConfigPath) {
+     const projectGraph = (0, devkit_1.readCachedProjectGraph)();
+-    const { target, dependencies, nonBuildableDependencies } = (0, buildable_libs_utils_1.calculateProjectDependencies)(projectGraph, context.root, context.projectName, context.targetName, context.configurationName);
++    const { target, dependencies, nonBuildableDependencies } = (0, buildable_libs_utils_1.calculateProjectDependencies)(projectGraph, context.root, context.projectName, context.targetName, context.configurationName, true);
+     const projectRoot = target.data.root;
+     if (nonBuildableDependencies.length > 0) {
+         throw new Error(`Buildable libraries can only depend on other buildable libraries. You must define the ${context.targetName} target for the following libraries: ${nonBuildableDependencies

@@ -49,7 +49,9 @@ const TestResetComponent: React.FC<{ id?: string }> = ({ id }) => {
   return <div data-testid={id} className={className} />;
 };
 
-const RtlWrapper: React.FC = ({ children }) => <TextDirectionProvider dir="rtl">{children}</TextDirectionProvider>;
+const RtlWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <TextDirectionProvider dir="rtl">{children}</TextDirectionProvider>
+);
 
 describe('serializer', () => {
   it('should check styles', () => {

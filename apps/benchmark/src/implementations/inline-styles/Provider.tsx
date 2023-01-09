@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InlineStylesProvider: React.FC = ({ children }) => {
+const InlineStylesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <>{children}</>;
 };
 

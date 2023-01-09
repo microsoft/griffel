@@ -19,7 +19,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/eslint-plugin",
@@ -40,7 +40,11 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "cwd": "packages/babel-preset",
-        "commands": [{ "command": "tsc -b --pretty" }],
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ],
         "outputPath": []
       }
     }
