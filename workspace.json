@@ -1,19 +1,19 @@
 {
   "version": 2,
   "projects": {
-    "@griffel/benchmark": "apps/benchmark",
     "@griffel/babel-preset": "packages/babel-preset",
+    "@griffel/benchmark": "apps/benchmark",
     "@griffel/core": "packages/core",
     "@griffel/devtools": "packages/devtools",
     "@griffel/e2e-nextjs": "e2e/nextjs",
-    "@griffel/e2e-utils": "e2e/utils",
     "@griffel/e2e-typescript": "e2e/typescript",
+    "@griffel/e2e-utils": "e2e/utils",
     "@griffel/eslint-plugin": "packages/eslint-plugin",
     "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/next-extraction-plugin": "packages/next-extraction-plugin",
     "@griffel/react": "packages/react",
-    "@griffel/webpack-loader": "packages/webpack-loader",
     "@griffel/webpack-extraction-plugin": "packages/webpack-extraction-plugin",
+    "@griffel/webpack-loader": "packages/webpack-loader",
     "@griffel/website": "apps/website"
   }
 }

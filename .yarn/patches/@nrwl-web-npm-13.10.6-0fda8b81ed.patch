@@ -1,16 +1,8 @@
 diff --git a/src/executors/rollup/rollup.impl.js b/src/executors/rollup/rollup.impl.js
-index b948c2e5f1228bb68fd820e396c332774322b13d..8d9f5d14aa57f8ec04d87394aa2c227533445d96 100644
+index baca3a675716434819a482ace464c4afa9e51b5f..7861137cb48e7dbf09709dfbd09517ed898a7959 100644
 --- a/src/executors/rollup/rollup.impl.js
 +++ b/src/executors/rollup/rollup.impl.js
-@@ -209,14 +209,14 @@ function createCompilerOptions(format, options, dependencies) {
-         paths: compilerOptionPaths,
-     };
-     if (format !== 'esm') {
--        return Object.assign(Object.assign({}, compilerOptions), { target: 'es5' });
-+        // return Object.assign(Object.assign({}, compilerOptions), { target: 'es5' });
-     }
-     return compilerOptions;
- }
+@@ -209,7 +209,7 @@ function createCompilerOptions(options, dependencies) {
  function updatePackageJson(options, context, target, dependencies, packageJson) {
      const entryFileTmpl = `./index.<%= extension %>.js`;
      const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
