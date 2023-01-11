@@ -62,26 +62,16 @@ function getFunctionArgumentPath(
 ): NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression> | null {
   const argumentPaths = callExpressionPath.get('arguments');
 
-  if (
-    (functionKind === '__styles' && argumentPaths.length !== 2) ||
-    (functionKind === '__resetStyles' && argumentPaths.length !== 3)
-  ) {
-    const calleePath = callExpressionPath.get('callee');
-
-    throw calleePath.buildCodeFrameError(
-      [
-        `"${functionKind}" function call should have exactly ${argumentPaths.length} arguments.`,
-        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
-      ].join(' '),
-    );
+  if (functionKind === '__styles') {
+    if (argumentPaths.length === 2 && argumentPaths[1].isObjectExpression()) {
+      return argumentPaths[1];
+    }
   }
 
-  if (functionKind === '__styles' && argumentPaths[1].isObjectExpression()) {
-    return argumentPaths[1];
-  }
-
-  if (functionKind === '__resetStyles' && argumentPaths[2].isArrayExpression()) {
-    return argumentPaths[2];
+  if (functionKind === '__resetStyles') {
+    if (argumentPaths.length === 3 && argumentPaths[2].isArrayExpression()) {
+      return argumentPaths[2];
+    }
   }
 
   return null;
@@ -154,17 +144,10 @@ function inlineAssetImports(argumentPath: NodePath<t.ObjectExpression> | NodePat
   });
 }
 
-function updateCalleeName(
-  callExpressionPath: NodePath<t.CallExpression>,
-  functionKind: FunctionKinds,
-  importSource: string,
-) {
+function updateCalleeName(callExpressionPath: NodePath<t.CallExpression>, importName: string) {
   const calleePath = callExpressionPath.get('callee');
 
-  const importName = functionKind === '__styles' ? '__css' : '__resetCSS';
-  const importIdentifier = addNamed(callExpressionPath, importName, importSource);
-
-  calleePath.replaceWith(importIdentifier);
+  calleePath.replaceWith(t.identifier(importName));
 }
 
 function updateReferences(
@@ -173,6 +156,9 @@ function updateReferences(
   importSource: string,
   functionKind: FunctionKinds,
 ) {
+  const importName = functionKind === '__styles' ? '__css' : '__resetCSS';
+  const importIdentifier = addNamed(importSpecifierPath, importName, importSource);
+
   const referencePaths = getReferencePaths(importSpecifierPath, functionKind);
 
   for (const referencePath of referencePaths) {
@@ -184,7 +170,7 @@ function updateReferences(
         inlineAssetImports(argumentPath);
         evaluateAndUpdateArgument(argumentPath, functionKind, state);
 
-        updateCalleeName(callExpressionPath, functionKind, importSource);
+        updateCalleeName(callExpressionPath, importIdentifier.name);
       }
     }
   }
