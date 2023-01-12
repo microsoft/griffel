@@ -6869,6 +6869,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/babel__helper-module-imports@npm:7.18.0":
+  version: 7.18.0
+  resolution: "@types/babel__helper-module-imports@npm:7.18.0"
+  dependencies:
+    "@types/babel__core": "*"
+    "@types/babel__traverse": "*"
+  checksum: a6c474e93bd85da957f1c66c5676cdc4b3c8dfd1af18b41e80e27c782d286a89dc9cde1c2870e93a786f810591525a5a4f61de9a3385a2fcd38a5fea50764cd9
+  languageName: node
+  linkType: hard
+
 "@types/babel__helper-plugin-utils@npm:7.10.0":
   version: 7.10.0
   resolution: "@types/babel__helper-plugin-utils@npm:7.10.0"
@@ -15264,6 +15274,7 @@ __metadata:
     "@testing-library/react": 13.0.0
     "@testing-library/react-hooks": 7.0.2
     "@tsconfig/docusaurus": ^1.0.4
+    "@types/babel__helper-module-imports": 7.18.0
     "@types/babel__helper-plugin-utils": 7.10.0
     "@types/chrome": 0.0.180
     "@types/d3-scale-chromatic": ^3.0.0
