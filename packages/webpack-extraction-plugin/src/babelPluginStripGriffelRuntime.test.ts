@@ -23,8 +23,39 @@ pluginTester({
       },
     }),
 
-  fixtures: fixturesDir,
-  tests: [],
+  tests: [
+    // 🎩 Tip: use "only: true" to run a single test
+    // https://github.com/babel-utils/babel-plugin-tester#only
+    //
+
+    {
+      title: 'basic (makeStyles)',
+      fixture: path.resolve(fixturesDir, 'basic', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'basic', 'output.ts'),
+    },
+    {
+      title: 'basic (makeResetStyles)',
+      fixture: path.resolve(fixturesDir, 'reset', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'reset', 'output.ts'),
+    },
+
+    {
+      title: 'multiple declarations (makeStyles)',
+      fixture: path.resolve(fixturesDir, 'multiple', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'multiple', 'output.ts'),
+    },
+    {
+      title: 'mixed (makeStyles + makeResetStyles)',
+      fixture: path.resolve(fixturesDir, 'mixed', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'mixed', 'output.ts'),
+    },
+
+    {
+      title: 'alias imports (makeStyles)',
+      fixture: path.resolve(fixturesDir, 'alias', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'alias', 'output.ts'),
+    },
+  ],
 
   plugin: babelPluginStripGriffelRuntime,
   pluginName: '@griffel/webpack-extraction-plugin/babel',
