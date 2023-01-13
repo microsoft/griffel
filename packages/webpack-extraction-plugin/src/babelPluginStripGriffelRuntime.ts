@@ -1,5 +1,4 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
-// @ts-expect-error Missing typings
 import { addNamed } from '@babel/helper-module-imports';
 import { declare } from '@babel/helper-plugin-utils';
 import type { CSSRulesByBucket } from '@griffel/core';
