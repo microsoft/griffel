@@ -98,6 +98,30 @@ const useClasses = makeStyles({
 }
 ```
 
+### Pseudo-elements
+
+Griffel supports pseudo-elements like `::before` and `::after`.
+
+```ts
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    '::after': {
+      content: '""', // Note the nested quotes
+    },
+  },
+});
+```
+
+:::caution
+
+When setting content on pseudo elements, make sure to use nested quotes, e.g. `content: '"hello"'`
+
+This also applies for empty content: `content: '""'`.
+
+:::
+
 ### `:global()` selector
 
 Another useful feature is `:global()` selector, it associates local styles with global selectors.
