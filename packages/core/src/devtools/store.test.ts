@@ -60,7 +60,7 @@ describe('debugData', () => {
     const sequenceBlock = findSequenceHash(classes.block);
     const sequenceGrid = findSequenceHash(classes.grid);
 
-    const sourceURLregex = /.*\/.*:[0-9]+:[0-9]+/; // url with line and column number
+    const sourceURLregex = /.*[/\\].*:[0-9]+:[0-9]+/; // url with line and column number
     expect(debugData.getSequenceDetails(sequenceBlock!)).toEqual({
       slotName: 'block',
       sourceURL: expect.stringMatching(sourceURLregex),

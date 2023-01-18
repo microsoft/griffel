@@ -96,7 +96,7 @@ async function compileSourceWithWebpack(
         return;
       }
 
-      const filesList = virtualFsVolume.readdirSync(__dirname) as string[];
+      const filesList = (virtualFsVolume.readdirSync(__dirname) as string[]).sort();
       const cssOutput = filesList
         .filter(filename => filename.includes('.css'))
         .map(filename => {

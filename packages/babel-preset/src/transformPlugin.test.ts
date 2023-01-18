@@ -22,7 +22,7 @@ pluginTester({
   },
   formatResult: code =>
     prettierFormatter(code, {
-      config: {
+      prettierOptions: {
         ...prettierConfig,
         parser: 'typescript',
       },

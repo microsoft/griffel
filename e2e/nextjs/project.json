@@ -9,7 +9,7 @@
       "dependsOn": [{ "target": "build", "projects": "dependencies" }],
       "options": {
         "cwd": "e2e/nextjs",
-        "commands": [{ "command": "swc-node src/test.ts" }],
+        "commands": [{ "command": "node -r @swc-node/register src/test.ts" }],
         "outputPath": []
       }
     },

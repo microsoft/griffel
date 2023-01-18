@@ -17,7 +17,7 @@ const options: MakeStylesOptions = {
 const findSequenceHash = (classNames: string) =>
   classNames.split(' ').find(className => className.startsWith(SEQUENCE_PREFIX));
 
-const sourceURLregex = /.*\/.*:[0-9]+:[0-9]+/; // url with line and column number
+const sourceURLregex = /.*[/\\].*:[0-9]+:[0-9]+/; // url with line and column number
 
 describe('getDebugTree', () => {
   it.each<'ltr' | 'rtl'>(['ltr', 'rtl'])('returns styles merge tree when dir=%p', dir => {
