@@ -34,7 +34,7 @@ async function performTest(tsVersion: string) {
     console.log(
       logSymbols.info,
       'Using TypeScript',
-      (await sh(`${tscBin} --version`, tempDir, true)).replace('Version', '').trim(),
+      (await sh(`node ${tscBin} --version`, tempDir, true)).replace('Version', '').trim(),
     );
   } catch (e) {
     console.error(logSymbols.error, 'Something went wrong setting up the test:');
@@ -43,7 +43,7 @@ async function performTest(tsVersion: string) {
   }
 
   try {
-    await sh(`${tscBin} --noEmit --pretty`, tempDir);
+    await sh(`node ${tscBin} --noEmit --pretty`, tempDir);
 
     console.log(logSymbols.success, `Example project was successfully built with typescript@${tsVersion}`);
     console.log('');

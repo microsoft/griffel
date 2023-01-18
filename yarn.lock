@@ -6548,7 +6548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc-node/register@npm:^1.4.0, @swc-node/register@npm:^1.4.2":
+"@swc-node/register@npm:^1.4.2":
   version: 1.5.5
   resolution: "@swc-node/register@npm:1.5.5"
   dependencies:
@@ -6834,16 +6834,6 @@ __metadata:
   version: 5.0.1
   resolution: "@types/aria-query@npm:5.0.1"
   checksum: 69fd7cceb6113ed370591aef04b3fd0742e9a1b06dd045c43531448847b85de181495e4566f98e776b37c422a12fd71866e0a1dfd904c5ec3f84d271682901de
-  languageName: node
-  linkType: hard
-
-"@types/babel-plugin-tester@npm:^9.0.0":
-  version: 9.0.4
-  resolution: "@types/babel-plugin-tester@npm:9.0.4"
-  dependencies:
-    "@types/babel__core": "*"
-    "@types/prettier": "*"
-  checksum: ff34219d60212e4ec98868fdba13abcb9565f7be81fcd4a2b1944fc174b8784ab115df717675e3296c7e5dc572f9a422e351f3bfb064ed33ef6a0f7cb3d5791c
   languageName: node
   linkType: hard
 
@@ -7315,7 +7305,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prettier@npm:*, @types/prettier@npm:^2.1.5":
+"@types/prettier@npm:^2.1.5":
   version: 2.4.3
   resolution: "@types/prettier@npm:2.4.3"
   checksum: b240434daabac54700c862b0bb52a83fec396e0e9c847447119ba41fd8404d79aadfa174e6306fb094b29efadac586344b7606c3a71c286b71755ab2579d54df
@@ -9281,17 +9271,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-tester@npm:10.0.0":
-  version: 10.0.0
-  resolution: "babel-plugin-tester@npm:10.0.0"
+"babel-plugin-tester@npm:11.0.0":
+  version: 11.0.0
+  resolution: "babel-plugin-tester@npm:11.0.0"
   dependencies:
-    "@types/babel-plugin-tester": ^9.0.0
+    debug: ^4.3.4
     lodash.mergewith: ^4.6.2
-    prettier: ^2.0.1
+    prettier: ^2.8.3
     strip-indent: ^3.0.0
   peerDependencies:
-    "@babel/core": ^7.11.6
-  checksum: 9a93dccee0347fe8953f2727da66a76fe27d9b4ead3ef86023d36d7fe6f6d85cfd4440b36134ceca317ae0700bf2a24997505be2c7c3f0c41ecf89b1fe7eb27d
+    "@babel/core": ">=7.11.6"
+  checksum: e88246f7fa333f4934ebca5988760da488ee6907b854d5b5f1a5632d96516870fd3c71c11b8d48e7516c9034c0af2c3d1eae87953abd9279bd8d694a145c69eb
   languageName: node
   linkType: hard
 
@@ -15295,7 +15285,7 @@ __metadata:
     babel-jest: 27.2.3
     babel-loader: 8.1.0
     babel-plugin-annotate-pure-calls: 0.4.0
-    babel-plugin-tester: 10.0.0
+    babel-plugin-tester: 11.0.0
     beachball: 2.31.5
     bestzip: 2.2.0
     browserslist: ^4.19.1
@@ -15337,7 +15327,6 @@ __metadata:
     simple-git-hooks: 2.7.0
     source-map-js: 1.0.2
     stylis: ^4.0.13
-    swc-node: 1.0.0
     syncpack: 6.2.0
     tmp: 0.2.1
     ts-jest: 27.0.5
@@ -21510,7 +21499,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.8.2, prettier@npm:^2.0.1, prettier@npm:^2.8.0":
+"prettier@npm:2.8.2":
   version: 2.8.2
   resolution: "prettier@npm:2.8.2"
   bin:
@@ -21525,6 +21514,15 @@ __metadata:
   bin:
     prettier: bin-prettier.js
   checksum: e8851a45f60f2994775f96e07964646c299b8a8f9c64da4fbd8efafc20db3458bdcedac79aed34e1d5477540b3aa04f6499adc4979cb7937f8ebd058a767d8ff
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.8.0, prettier@npm:^2.8.3":
+  version: 2.8.3
+  resolution: "prettier@npm:2.8.3"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 92f2ceb522d454370e02082aa74ad27388672f7cee8975028b59517c069fe643bdc73e322675c8faf2ff173d7a626d1a6389f26b474000308e793aa25fff46e5
   languageName: node
   linkType: hard
 
@@ -24686,17 +24684,6 @@ __metadata:
   bin:
     svgo: bin/svgo
   checksum: b92f71a8541468ffd0b81b8cdb36b1e242eea320bf3c1a9b2c8809945853e9d8c80c19744267eb91cabf06ae9d5fff3592d677df85a31be4ed59ff78534fa420
-  languageName: node
-  linkType: hard
-
-"swc-node@npm:1.0.0":
-  version: 1.0.0
-  resolution: "swc-node@npm:1.0.0"
-  dependencies:
-    "@swc-node/register": ^1.4.0
-  bin:
-    swc-node: bin/swc-node
-  checksum: 08602996e917b0f23bc0f2f7d5095bf65d3e057664a2849aeb88e40dcf465fcec9a3a7566f1bd1d1a81e2c57d90a5ea09fa0fbff14a9d3a286139eed64519257
   languageName: node
   linkType: hard
 
