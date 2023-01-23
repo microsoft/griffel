@@ -1,4 +1,4 @@
-import type { GriffelResetStyle, GriffelStyle } from '@griffel/core';
+import type { GriffelResetStyle, GriffelStyle } from '../types';
 
 export function warnAboutUnresolvedRule(property: string, value: GriffelStyle | GriffelResetStyle) {
   const ruleText = JSON.stringify(value, null, 2);
