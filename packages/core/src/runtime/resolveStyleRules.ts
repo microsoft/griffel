@@ -1,7 +1,7 @@
 import hashString from '@emotion/hash';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
-import { HASH_PREFIX } from '../constants';
+import { HASH_PREFIX, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
 import {
   GriffelStyle,
   CSSClassesMap,
@@ -22,7 +22,7 @@ import { isObject } from './utils/isObject';
 import { getStyleBucketName } from './getStyleBucketName';
 import { hashClassName } from './utils/hashClassName';
 import { hashPropertyKey } from './utils/hashPropertyKey';
-import { UNSUPPORTED_CSS_PROPERTIES } from '..';
+import { warnAboutUnresolvedRule } from './warnAboutUnresolvedRule';
 
 function pushToClassesMap(
   classesMap: CSSClassesMap,
@@ -320,8 +320,7 @@ export function resolveStyleRules(
         );
       } else {
         if (process.env.NODE_ENV !== 'production') {
-          // eslint-disable-next-line no-console
-          console.error(`Please fix the unresolved style rule: \n ${property} \n ${JSON.stringify(value, null, 2)}"`);
+          warnAboutUnresolvedRule(property, value);
         }
       }
     }
