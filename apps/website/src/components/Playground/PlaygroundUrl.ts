@@ -1,6 +1,6 @@
 import { useActiveCode } from '@codesandbox/sandpack-react';
 import * as lz from 'lz-string';
-import React from 'react';
+import * as React from 'react';
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = React.useState(value);
