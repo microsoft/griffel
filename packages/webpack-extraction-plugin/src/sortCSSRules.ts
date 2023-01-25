@@ -12,7 +12,7 @@ function getCSSMetaFromBucketEntry(entry: CSSBucketEntry): Record<string, unknow
 export function sortCSSRules(
   setOfCSSRules: CSSRulesByBucket[],
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
-) {
+): string {
   return styleBucketOrdering
     .map(styleBucketName => {
       return {

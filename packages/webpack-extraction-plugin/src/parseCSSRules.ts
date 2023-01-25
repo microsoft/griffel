@@ -37,7 +37,7 @@ export function parseCSSRules(css: string) {
 
     if (cssBucketName) {
       const cssRule = serialize([element], stringify);
-      const bucketEntry: CSSBucketEntry = element.type === MEDIA ? [cssRule, cssMeta!] : cssRule;
+      const bucketEntry: CSSBucketEntry = cssBucketName === 'm' ? [cssRule, cssMeta!] : cssRule;
 
       cssRulesByBucket[cssBucketName].push(bucketEntry);
       continue;
