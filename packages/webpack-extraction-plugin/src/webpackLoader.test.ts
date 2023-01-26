@@ -5,7 +5,10 @@ import * as prettier from 'prettier';
 import * as webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
+import type { WebpackLoaderOptions } from './webpackLoader';
+
 type CompileOptions = {
+  loaderOptions?: WebpackLoaderOptions;
   webpackConfig?: webpack.Configuration;
 };
 
@@ -36,6 +39,7 @@ async function compileSourceWithWebpack(entryPath: string, options: CompileOptio
           include: path.dirname(entryPath),
           use: {
             loader: path.resolve(__dirname, './webpackLoader.ts'),
+            options: options.loaderOptions,
           },
         },
         {
@@ -193,4 +197,7 @@ describe('webpackLoader', () => {
 
   // Ensures that a file without __styles calls remains unprocessed
   testFixture('missing-calls');
+
+  // Unstable
+  testFixture('unstable-keep-original-code', { loaderOptions: { unstable_keepOriginalCode: true } });
 });
