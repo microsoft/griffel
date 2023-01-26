@@ -4,7 +4,12 @@ import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
 
-type WebpackLoaderOptions = never;
+export type WebpackLoaderOptions = {
+  /**
+   * Please never use this feature, it will be removed without further notice.
+   */
+  unstable_keepOriginalCode?: boolean;
+};
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
@@ -46,6 +51,8 @@ function webpackLoader(
     return;
   }
 
+  const { unstable_keepOriginalCode } = this.getOptions();
+
   let result: TransformResult | null = null;
   let error: Error | null = null;
 
@@ -55,6 +62,8 @@ function webpackLoader(
 
       enableSourceMaps: this.sourceMap || false,
       inputSourceMap: parseSourceMap(inputSourceMap),
+
+      unstable_keepOriginalCode,
     });
   } catch (err) {
     error = err as Error;

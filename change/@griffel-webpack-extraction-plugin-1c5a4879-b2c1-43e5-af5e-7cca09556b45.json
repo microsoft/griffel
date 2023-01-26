@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "feat: implement \"unstable_keepOriginalCode\" for extraction plugin",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

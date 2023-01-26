@@ -239,4 +239,7 @@ describe('webpackLoader', () => {
 
   // Chunks
   testFixture('with-chunks');
+
+  // Unstable
+  testFixture('unstable-keep-original-code');
 });
