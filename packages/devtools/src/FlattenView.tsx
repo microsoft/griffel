@@ -1,5 +1,4 @@
 import * as React from 'react';
-import hash from '@emotion/hash';
 import { makeStaticStyles, makeStyles, shorthands } from '@griffel/react';
 
 import { SlotCSSRules } from './SlotCSSRules';

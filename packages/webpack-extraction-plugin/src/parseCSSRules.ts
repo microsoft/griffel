@@ -1,5 +1,5 @@
 import { styleBucketOrdering } from '@griffel/core';
-import { COMMENT, compile, MEDIA, serialize, stringify } from 'stylis';
+import { COMMENT, compile, serialize, stringify } from 'stylis';
 
 import type { CSSBucketEntry, CSSRulesByBucket, StyleBucketName } from '@griffel/core';
 
@@ -37,7 +37,7 @@ export function parseCSSRules(css: string) {
 
     if (cssBucketName) {
       const cssRule = serialize([element], stringify);
-      const bucketEntry: CSSBucketEntry = element.type === MEDIA ? [cssRule, cssMeta!] : cssRule;
+      const bucketEntry: CSSBucketEntry = cssBucketName === 'm' ? [cssRule, cssMeta!] : cssRule;
 
       cssRulesByBucket[cssBucketName].push(bucketEntry);
       continue;

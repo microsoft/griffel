@@ -212,6 +212,7 @@ describe('webpackLoader', () => {
   // Basic assertions
   testFixture('basic-rules');
   testFixture('reset');
+  testFixture('reset-media');
   testFixture('mixed');
 
   // Multiple calls of __styles
