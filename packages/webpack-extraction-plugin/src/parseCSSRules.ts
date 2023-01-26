@@ -1,5 +1,5 @@
 import { styleBucketOrdering } from '@griffel/core';
-import { COMMENT, compile, MEDIA, serialize, stringify } from 'stylis';
+import { COMMENT, compile, serialize, stringify } from 'stylis';
 
 import type { CSSBucketEntry, CSSRulesByBucket, StyleBucketName } from '@griffel/core';
 
