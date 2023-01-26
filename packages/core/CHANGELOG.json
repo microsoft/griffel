@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 26 Jan 2023 14:06:28 GMT",
+      "tag": "@griffel/core_v1.9.1",
+      "version": "1.9.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dzearing@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "60d299736b2ff1267fd8ce29c06890316e7dfce2",
+            "comment": "chore: adjust console logging to emit a more descriptive error message"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Dec 2022 11:48:33 GMT",
       "tag": "@griffel/core_v1.9.0",
       "version": "1.9.0",

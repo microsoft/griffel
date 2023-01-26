@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: support aliased imports",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

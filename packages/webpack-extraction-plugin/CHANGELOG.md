@@ -1,8 +1,19 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Tue, 20 Dec 2022 11:48:33 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Jan 2023 14:06:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.4
+
+Thu, 26 Jan 2023 14:06:28 GMT
+
+### Patches
+
+- feat: implement "unstable_keepOriginalCode" for extraction plugin (olfedias@microsoft.com)
+- fix: properly handle @media in __resetStyles() (olfedias@microsoft.com)
+- fix: support aliased imports (olfedias@microsoft.com)
+- Bump @griffel/core to v1.9.1
 
 ## 0.3.3
 

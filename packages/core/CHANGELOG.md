@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Tue, 20 Dec 2022 11:48:33 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Jan 2023 14:06:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.9.1
+
+Thu, 26 Jan 2023 14:06:28 GMT
+
+### Patches
+
+- chore: adjust console logging to emit a more descriptive error message (dzearing@microsoft.com)
 
 ## 1.9.0
 

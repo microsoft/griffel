@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: properly handle @media in __resetStyles()",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

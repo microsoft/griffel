@@ -2,6 +2,29 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Thu, 26 Jan 2023 14:06:28 GMT",
+      "tag": "@griffel/devtools_v0.2.9",
+      "version": "0.2.9",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "bd0d13ae15ccd09c045287f246438b7cf02d5f81",
+            "comment": "chore: remove unused import"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.5.3",
+            "commit": "d87ba30b4f07fc759c0abb18ff86fd57dd79296f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Dec 2022 11:48:33 GMT",
       "tag": "@griffel/devtools_v0.2.8",
       "version": "0.2.8",

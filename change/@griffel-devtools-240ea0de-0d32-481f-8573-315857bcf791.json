@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: remove unused import",
-  "packageName": "@griffel/devtools",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: use typings for @babel/helper-module-imports",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

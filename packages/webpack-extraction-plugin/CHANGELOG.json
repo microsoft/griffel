@@ -2,6 +2,47 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Thu, 26 Jan 2023 14:06:28 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.4",
+      "version": "0.3.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "d87ba30b4f07fc759c0abb18ff86fd57dd79296f",
+            "comment": "feat: implement \"unstable_keepOriginalCode\" for extraction plugin"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "bd0d13ae15ccd09c045287f246438b7cf02d5f81",
+            "comment": "fix: properly handle @media in __resetStyles()"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "bde2d2d9e9eb5e6db7c4198f353d7d4971fc5f77",
+            "comment": "fix: support aliased imports"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.9.1",
+            "commit": "d87ba30b4f07fc759c0abb18ff86fd57dd79296f"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "a2bb5ea56637aa20872d683a178a49e91f6a02c8",
+            "comment": "chore: use typings for @babel/helper-module-imports"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Dec 2022 11:48:33 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.3",
       "version": "0.3.3",
