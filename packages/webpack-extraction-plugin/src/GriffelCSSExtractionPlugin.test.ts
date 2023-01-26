@@ -7,9 +7,11 @@ import * as webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
 import { GriffelCSSExtractionPlugin } from './GriffelCSSExtractionPlugin';
+import { WebpackLoaderOptions } from './webpackLoader';
 
 type CompileOptions = {
   cssFilename?: string;
+  loaderOptions?: WebpackLoaderOptions;
   webpackConfig?: webpack.Configuration;
 };
 
@@ -47,6 +49,7 @@ async function compileSourceWithWebpack(
           include: path.dirname(entryPath),
           use: {
             loader: GriffelCSSExtractionPlugin.loader,
+            options: options.loaderOptions,
           },
         },
         {
@@ -241,5 +244,5 @@ describe('webpackLoader', () => {
   testFixture('with-chunks');
 
   // Unstable
-  testFixture('unstable-keep-original-code');
+  testFixture('unstable-keep-original-code', { loaderOptions: { unstable_keepOriginalCode: true } });
 });
