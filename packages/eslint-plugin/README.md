@@ -28,6 +28,7 @@ This plugin exports recommended configuration that enforce good practices, but y
 {
   "plugins": ["@griffel"],
   "rules": {
+    "@griffel/hook-naming": "error",
     "@griffel/no-shorthands": "warn"
   }
 }
@@ -39,6 +40,7 @@ You can find more info about enabled rules in the [Supported Rules section](#sup
 
 **Key**: 🔧 = fixable
 
-| Name                                                     | Description                    | 🔧  |
-| -------------------------------------------------------- | ------------------------------ | --- |
-| [`@griffel/no-shorthands`](./src/rules/no-shorthands.md) | Enforce usage of CSS longhands |     |
+| Name                                                     | Description                                                                | 🔧  |
+| -------------------------------------------------------- | -------------------------------------------------------------------------- | --- |
+| [`@griffel/hook-naming`](./src/rules/hook-naming.md)     | Ensure that hooks returned by the `makeStyles()` function start with "use" |     |
+| [`@griffel/no-shorthands`](./src/rules/no-shorthands.md) | Enforce usage of CSS longhands                                             |     |
