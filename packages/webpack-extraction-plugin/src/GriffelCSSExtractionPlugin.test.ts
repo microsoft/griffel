@@ -235,6 +235,24 @@ describe('webpackLoader', () => {
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
 
+  // Config that forces chunk splitting
+  testFixture('config-split-chunks', {
+    webpackConfig: {
+      optimization: {
+        splitChunks: {
+          cacheGroups: {
+            styles: {
+              enforce: true,
+              name: 'split',
+              test: /chunk[A|B]/,
+              chunks: 'all',
+            },
+          },
+        },
+      },
+    },
+  });
+
   // "pathinfo" adds comments with paths to output
   testFixture('basic-rules', { webpackConfig: { output: { pathinfo: true } } });
 

@@ -2,6 +2,7 @@ import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
 import { Compilation } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
 
+import { GriffelDummyModule } from './GriffelDummyModule';
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
 
@@ -78,6 +79,10 @@ function ensureModuleHasPostOrderIndex(griffelChunk: Chunk, cssModule: Module) {
 
 function moveCSSModulesToGriffelChunk(compilation: Compilation, chunks: Iterable<Chunk>, griffelChunk: Chunk) {
   for (const chunk of chunks) {
+    if (chunk === griffelChunk) {
+      continue;
+    }
+
     // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L693-L697
     const cssModules = compilation.chunkGraph.getChunkModulesIterableBySourceType(chunk, 'css/mini-extract');
 
@@ -112,10 +117,23 @@ export class GriffelCSSExtractionPlugin {
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
       // A chunk where we will move all CSS modules
       const griffelChunk = compilation.addChunk('griffel');
+      // Set up a dummy module to prevent the chunk from getting cleaned up by RemoveEmptyChunksPlugin
+      const dummyModule = new GriffelDummyModule();
 
-      compilation.hooks.afterChunks.tap(PLUGIN_NAME, chunks => {
+      compilation.hooks.afterChunks.tap(PLUGIN_NAME, () => {
         attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
+      });
+
+      compilation.hooks.afterOptimizeModules.tap(PLUGIN_NAME, () => {
+        compilation.modules.add(dummyModule);
+        compilation.chunkGraph.connectChunkAndModule(griffelChunk, dummyModule);
+      });
+
+      compilation.hooks.afterOptimizeChunks.tap(PLUGIN_NAME, chunks => {
         moveCSSModulesToGriffelChunk(compilation, chunks, griffelChunk);
+
+        compilation.modules.delete(dummyModule);
+        compilation.chunkGraph.disconnectChunkAndModule(griffelChunk, dummyModule);
       });
 
       compilation.hooks.processAssets.tap(
