@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Wed, 01 Feb 2023 10:47:40 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.5",
+      "version": "0.3.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "15fa8433ef03cb28b8f528960ae335e9e2231eeb",
+            "comment": "fix: avoid conflicts with SplitChunksPlugin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Jan 2023 14:06:28 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.4",
       "version": "0.3.4",
