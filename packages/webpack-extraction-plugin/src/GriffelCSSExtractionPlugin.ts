@@ -124,11 +124,15 @@ export class GriffelCSSExtractionPlugin {
         attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
       });
 
+      // Adds dummy module here to try make sure that other module
+      // optimization steps won't conflict
       compilation.hooks.afterOptimizeModules.tap(PLUGIN_NAME, () => {
         compilation.modules.add(dummyModule);
         compilation.chunkGraph.connectChunkAndModule(griffelChunk, dummyModule);
       });
 
+      // Remove dummy module once we are sure chunk optimization steps
+      // have finished. i.e. won't conflict with SplitChunksPlugin
       compilation.hooks.afterOptimizeChunks.tap(PLUGIN_NAME, chunks => {
         moveCSSModulesToGriffelChunk(compilation, chunks, griffelChunk);
 
