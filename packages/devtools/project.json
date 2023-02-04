@@ -78,20 +78,12 @@
         "passWithNoTests": true
       }
     },
-    "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "cwd": "packages/devtools",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
-    },
     "watch": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "cwd": ".",
         "parallel": false,
-        "commands": [{ "command": " nx build @griffel/devtools --skip-nx-cache --configuration=development --watch" }]
+        "commands": [{ "command": "nx build @griffel/devtools --skip-nx-cache --configuration=development --watch" }]
       }
     },
     "storybook": {

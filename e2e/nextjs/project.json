@@ -12,14 +12,6 @@
         "commands": [{ "command": "node -r @swc-node/register src/test.ts" }],
         "outputPath": []
       }
-    },
-    "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "cwd": "e2e/nextjs",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     }
   },
   "tags": []

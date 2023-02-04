@@ -1,0 +1,20 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./apps/benchmark/tsconfig.json" },
+    { "path": "./apps/website/tsconfig.json" },
+    { "path": "./e2e/nextjs/tsconfig.json" },
+    { "path": "./e2e/typescript/tsconfig.json" },
+    { "path": "./e2e/utils/tsconfig.json" },
+    { "path": "./packages/babel-preset/tsconfig.json" },
+    { "path": "./packages/core/tsconfig.json" },
+    { "path": "./packages/devtools/tsconfig.json" },
+    { "path": "./packages/eslint-plugin/tsconfig.json" },
+    { "path": "./packages/jest-serializer/tsconfig.json" },
+    { "path": "./packages/next-extraction-plugin/tsconfig.json" },
+    { "path": "./packages/react/tsconfig.json" },
+    { "path": "./packages/webpack-extraction-plugin/tsconfig.json" },
+    { "path": "./packages/webpack-loader/tsconfig.json" }
+  ]
+}

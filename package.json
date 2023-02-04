@@ -23,7 +23,7 @@
     "start": "nx run @griffel/website:serve",
     "storybook": "nx run @griffel/react:storybook",
     "test": "nx affected:test",
-    "type-check": "nx affected --target=type-check"
+    "type-check": "tsc -b tsconfig.type-check.json --pretty"
   },
   "devDependencies": {
     "@babel/preset-typescript": "7.12.13",

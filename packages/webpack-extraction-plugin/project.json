@@ -40,14 +40,6 @@
           }
         ]
       }
-    },
-    "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "cwd": "packages/webpack-extraction-plugin",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     }
   },
   "tags": []

@@ -53,14 +53,6 @@
         "cwd": "packages/core",
         "commands": [{ "command": "monosize measure" }]
       }
-    },
-    "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "cwd": "packages/core",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     }
   }
 }

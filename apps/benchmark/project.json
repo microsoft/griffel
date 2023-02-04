@@ -25,14 +25,6 @@
         "cwd": "apps/benchmark",
         "commands": [{ "command": "npx http-serve ../../dist/apps/benchmark" }]
       }
-    },
-    "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "cwd": "apps/benchmark",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     }
   },
   "tags": []

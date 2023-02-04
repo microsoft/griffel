@@ -2,15 +2,6 @@
   "root": "e2e/utils",
   "sourceRoot": "e2e/utils/src",
   "projectType": "library",
-  "targets": {
-    "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "cwd": "e2e/utils",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
-    }
-  },
+  "targets": {},
   "tags": []
 }

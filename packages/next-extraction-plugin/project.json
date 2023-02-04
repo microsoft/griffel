@@ -28,14 +28,6 @@
         "main": "packages/next-extraction-plugin/src/index.ts",
         "assets": ["packages/next-extraction-plugin/*.md"]
       }
-    },
-    "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "cwd": "packages/next-extraction-plugin",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     }
   },
   "tags": []
