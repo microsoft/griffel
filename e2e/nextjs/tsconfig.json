@@ -5,7 +5,7 @@
     "checkJs": true,
     "module": "CommonJS",
     "jsx": "react",
-    "lib": ["ES2019", "DOM", "DOM.Iterable"],
+    "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,

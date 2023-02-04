@@ -3,7 +3,6 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "lib": ["es2019", "dom", "DOM.Iterable"],
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
