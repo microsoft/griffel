@@ -17,8 +17,7 @@ jobs:
       status: ${{ steps.verify-extension-changed.outputs.any_changed }}
 
     steps:
-      - uses: actions/checkout@v2
-        name: Checkout [main]
+      - uses: actions/checkout@v3
 
       - name: Verify extension has changed
         uses: tj-actions/changed-files@v23.1
@@ -33,25 +32,12 @@ jobs:
     if: ${{ needs.check.outputs.status == 'true' || github.event_name == 'workflow_dispatch' }}
 
     steps:
-      - uses: actions/checkout@v2
-        name: Checkout [main]
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
+          cache: 'yarn'
           node-version: '16'
-
-      - name: Get Yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Restore Yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
-          restore-keys: |
-            yarn-cache-folder-
 
       - run: yarn install --immutable
       - run: yarn nx run-many --target=build --projects=@griffel/devtools --parallel --max-parallel=3

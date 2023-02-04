@@ -9,33 +9,24 @@ jobs:
   bundle-size:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
+        uses: nrwl/nx-set-shas@v3
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version: '18'
-
-      - name: Get Yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Restore Yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
-          restore-keys: |
-            yarn-cache-folder-
 
       - run: yarn install --immutable
 
+      #
       # Steps for PRs
+      #
+
       - name: Measure affected packages
         if: ${{ github.event_name == 'pull_request' }}
         run: yarn nx affected --target=bundle-size --parallel --max-parallel=2
@@ -58,7 +49,10 @@ jobs:
             monosize.md
             pr.txt
 
+      #
       # Steps for "main" branch
+      #
+
       - name: Measure all packages
         if: ${{ github.event_name != 'pull_request' }}
         run: yarn nx run-many --all --target=bundle-size --parallel --max-parallel=2
