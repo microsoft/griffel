@@ -133,7 +133,7 @@
     "browserslist": "^4.19.1",
     "csstype": "^3.0.10",
     "enhanced-resolve": "^5.8.2",
-    "rtl-css-js": "^1.16.0",
+    "rtl-css-js": "^1.16.1",
     "source-map-js": "1.0.2",
     "stylis": "^4.0.13",
     "tslib": "^2.1.0"
