@@ -7833,6 +7833,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uifabric/merge-styles@npm:7.19.1":
+  version: 7.19.1
+  resolution: "@uifabric/merge-styles@npm:7.19.1"
+  dependencies:
+    "@uifabric/set-version": ^7.0.23
+    tslib: ^1.10.0
+  checksum: ccc23a0ad0bd153881a54da5984f66b179cccc4d909cabb687e7a436f4e20115a76336a583d73b54bd3cf5f62e796aa7791aecaefab0886105ef3f64791dc832
+  languageName: node
+  linkType: hard
+
+"@uifabric/set-version@npm:^7.0.23":
+  version: 7.0.24
+  resolution: "@uifabric/set-version@npm:7.0.24"
+  dependencies:
+    tslib: ^1.10.0
+  checksum: 5d4f69596946f4128539c65e357b4c6a62e0eebe5037f87ec5c31f48eb1c7f0ccd68277b55ade5cc49012c49506f5a292a716eabff68ad0ac928bece7fb783c3
+  languageName: node
+  linkType: hard
+
 "@upstash/redis@npm:^1.18.0":
   version: 1.18.0
   resolution: "@upstash/redis@npm:1.18.0"
@@ -15289,6 +15308,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 5.18.0
     "@typescript-eslint/parser": 5.18.0
     "@typescript-eslint/utils": ^5.20.0
+    "@uifabric/merge-styles": 7.19.1
     ajv: ^8.4.0
     babel-jest: 27.2.3
     babel-loader: 8.1.0

@@ -1,5 +1,5 @@
-import React from 'react';
 import { mergeStyles, IStyle } from '@uifabric/merge-styles';
+import * as React from 'react';
 
 const getClassName = (customStyles: IStyle) => {
   return mergeStyles([

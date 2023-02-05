@@ -1,7 +1,7 @@
 import { mergeStyles } from '@uifabric/merge-styles';
-import React from 'react';
+import * as React from 'react';
 
-import { DotProps } from '../types';
+import type { DotProps } from '../types';
 
 const getClassName = (size: number, x: number, y: number, color: string) => {
   return mergeStyles({

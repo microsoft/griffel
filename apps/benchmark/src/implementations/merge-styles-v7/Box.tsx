@@ -1,7 +1,7 @@
-import { IStyle } from '@uifabric/merge-styles';
-import React from 'react';
+import type { IStyle } from '@uifabric/merge-styles';
+import * as React from 'react';
 
-import { BoxProps } from '../types';
+import type { BoxProps } from '../types';
 import View from './View';
 
 const COLORS = ['#14171A', '#AAB8C2', '#E6ECF0', '#FFAD1F', '#F45D22', '#E0245E'];
