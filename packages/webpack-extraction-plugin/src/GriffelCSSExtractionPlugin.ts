@@ -15,24 +15,6 @@ type ChunkGroup = IterableElement<Chunk['groupsIterable']>;
 
 const PLUGIN_NAME = 'GriffelExtractPlugin';
 
-function attachGriffelChunkToMainEntryPoint(compilation: Compilation, griffelChunk: Chunk) {
-  const entryPoints = Array.from(compilation.entrypoints.values());
-
-  if (entryPoints.length === 0) {
-    return;
-  }
-
-  const mainEntryPoint = entryPoints[0];
-  const targetChunk = mainEntryPoint.getEntrypointChunk();
-  const targetChunkGroup = Array.from(targetChunk.groupsIterable)[0];
-
-  mainEntryPoint.pushChunk(griffelChunk);
-
-  // It's mandatory to have the chunk in a group, otherwise ".groupsIterable" will be empty and will fail mini-css-extract
-  // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L1125-L1130
-  griffelChunk.addGroup(targetChunkGroup);
-}
-
 function getAssetSourceContents(assetSource: sources.Source): string {
   const source = assetSource.source();
 
@@ -48,9 +30,9 @@ type CSSModule = Module & {
   content: Buffer;
 };
 
-function isGriffelCSSModule(cssModule: CSSModule): boolean {
-  if (Buffer.isBuffer(cssModule.content)) {
-    const content = cssModule.content.toString('utf-8');
+function isGriffelCSSModule(module: CSSModule): boolean {
+  if (Buffer.isBuffer(module.content)) {
+    const content = module.content.toString('utf-8');
 
     return content.indexOf('/** @griffel:css-start') !== -1;
   }
@@ -58,50 +40,33 @@ function isGriffelCSSModule(cssModule: CSSModule): boolean {
   return false;
 }
 
-function ensureModuleHasPostOrderIndex(griffelChunk: Chunk, cssModule: Module) {
-  for (const group of griffelChunk.groupsIterable) {
-    if (group.getModulePostOrderIndex(cssModule)) {
-      continue;
-    }
+function findMatchingEntities(compilation: Compilation, chunks: Iterable<Chunk>, griffelChunk: Chunk) {
+  const matchingChunks = new Set<Chunk>();
+  const matchingCSSModules = new Set<CSSModule>();
 
-    // "mini-css-extract" requires an index to exist on modules. A module with an index will be filtered out and the plugin will throw
-    // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L1133-L1140
-    group.setModulePostOrderIndex(
-      cssModule,
-      // It's bad to use private APIs, but it's more reliable than random indexes
-      // The same approach is used in Gatsby
-      // https://github.com/gatsbyjs/gatsby/blob/0b3c34c2bf932e5486ad2d0c3589bde6dc818661/packages/gatsby/src/utils/webpack/plugins/partial-hydration.ts#L455-L463
-      // https://github.com/webpack/webpack/blob/e184a03f2504f03b2e30091662df6630a99a5f72/lib/ChunkGroup.js#L98-L99
-      (group as ChunkGroup & { _modulePostOrderIndices: Map<Module, number> })._modulePostOrderIndices.size + 1,
-    );
-  }
-}
-
-function moveCSSModulesToGriffelChunk(compilation: Compilation, chunks: Iterable<Chunk>, griffelChunk: Chunk) {
   for (const chunk of chunks) {
     if (chunk === griffelChunk) {
       continue;
     }
 
     // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L693-L697
-    const cssModules = compilation.chunkGraph.getChunkModulesIterableBySourceType(chunk, 'css/mini-extract');
+    const cssModules = compilation.chunkGraph.getChunkModulesIterableBySourceType(chunk, 'css/mini-extract') as
+      | Iterable<CSSModule>
+      | undefined;
 
     if (typeof cssModules === 'undefined') {
       continue;
     }
 
     for (const cssModule of cssModules) {
-      if (!isGriffelCSSModule(cssModule as CSSModule)) {
-        continue;
+      if (isGriffelCSSModule(cssModule)) {
+        matchingChunks.add(chunk);
+        matchingCSSModules.add(cssModule);
       }
-
-      // https://github.com/webpack/webpack/blob/8241da7f1e75c5581ba535d127fa66aeb9eb2ac8/lib/Chunk.js#L245-L253
-      compilation.chunkGraph.disconnectChunkAndModule(chunk, cssModule);
-      compilation.chunkGraph.connectChunkAndModule(griffelChunk, cssModule);
-
-      ensureModuleHasPostOrderIndex(griffelChunk, cssModule);
     }
   }
+
+  return { matchingChunks, matchingCSSModules };
 }
 
 export class GriffelCSSExtractionPlugin {
@@ -120,22 +85,29 @@ export class GriffelCSSExtractionPlugin {
       // Set up a dummy module to prevent the chunk from getting cleaned up by RemoveEmptyChunksPlugin
       const dummyModule = new GriffelDummyModule();
 
-      compilation.hooks.afterChunks.tap(PLUGIN_NAME, () => {
-        attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
-      });
-
-      // Adds dummy module here to try make sure that other module
-      // optimization steps won't conflict
       compilation.hooks.afterOptimizeModules.tap(PLUGIN_NAME, () => {
+        // Adds dummy module to try to make sure that other module optimization steps won't conflict
         compilation.modules.add(dummyModule);
         compilation.chunkGraph.connectChunkAndModule(griffelChunk, dummyModule);
       });
 
-      // Remove dummy module once we are sure chunk optimization steps
-      // have finished. i.e. won't conflict with SplitChunksPlugin
       compilation.hooks.afterOptimizeChunks.tap(PLUGIN_NAME, chunks => {
-        moveCSSModulesToGriffelChunk(compilation, chunks, griffelChunk);
+        const { matchingChunks, matchingCSSModules } = findMatchingEntities(compilation, chunks, griffelChunk);
 
+        for (const chunk of matchingChunks) {
+          chunk.split(griffelChunk);
+        }
+
+        for (const module of matchingCSSModules) {
+          for (const chunk of matchingChunks) {
+            compilation.chunkGraph.disconnectChunkAndModule(chunk, module);
+          }
+
+          compilation.chunkGraph.connectChunkAndModule(griffelChunk, module);
+        }
+
+        // Remove dummy module once we are sure chunk optimization steps have finished. i.e. won't conflict with
+        // SplitChunksPlugin
         compilation.modules.delete(dummyModule);
         compilation.chunkGraph.disconnectChunkAndModule(griffelChunk, dummyModule);
       });

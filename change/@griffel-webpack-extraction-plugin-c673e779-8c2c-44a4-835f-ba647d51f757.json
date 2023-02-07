@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "refactor: attach Griffel's chunk to dependant chunks",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
