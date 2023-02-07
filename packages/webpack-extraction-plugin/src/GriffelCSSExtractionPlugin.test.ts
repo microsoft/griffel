@@ -28,13 +28,16 @@ async function compileSourceWithWebpack(
 }> {
   const defaultConfig: webpack.Configuration = {
     context: __dirname,
-    entry: entryPath,
+    entry: {
+      bundle: entryPath,
+    },
 
-    mode: 'development',
+    mode: 'production',
+    devtool: false,
 
     output: {
       path: path.resolve(__dirname),
-      filename: 'bundle.js',
+      filename: '[name].js',
       pathinfo: false,
       assetModuleFilename: '[name][ext]',
     },
@@ -69,6 +72,9 @@ async function compileSourceWithWebpack(
       }),
     ],
 
+    optimization: {
+      minimizer: [],
+    },
     resolve: {
       extensions: ['.js', '.ts'],
     },
