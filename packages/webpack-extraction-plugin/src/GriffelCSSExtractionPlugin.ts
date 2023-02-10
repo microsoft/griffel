@@ -6,6 +6,10 @@ import { GriffelDummyModule } from './GriffelDummyModule';
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
 
+// Webpack does not export these constants
+// https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
+const OPTIMIZE_CHUNKS_STAGE_BASIC = -10;
+
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
 };
@@ -77,8 +81,14 @@ function ensureModuleHasPostOrderIndex(griffelChunk: Chunk, cssModule: Module) {
   }
 }
 
-function moveCSSModulesToGriffelChunk(compilation: Compilation, chunks: Iterable<Chunk>, griffelChunk: Chunk) {
-  for (const chunk of chunks) {
+function moveCSSModulesToGriffelChunk(compilation: Compilation) {
+  const griffelChunk = compilation.namedChunks.get('griffel');
+
+  if (!griffelChunk) {
+    return;
+  }
+
+  for (const chunk of compilation.chunks) {
     if (chunk === griffelChunk) {
       continue;
     }
@@ -124,18 +134,26 @@ export class GriffelCSSExtractionPlugin {
         attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
       });
 
-      // Adds dummy module here to try make sure that other module
-      // optimization steps won't conflict
+      // Adds dummy module here to try to make sure that other module optimization steps won't conflict
       compilation.hooks.afterOptimizeModules.tap(PLUGIN_NAME, () => {
         compilation.modules.add(dummyModule);
         compilation.chunkGraph.connectChunkAndModule(griffelChunk, dummyModule);
       });
 
-      // Remove dummy module once we are sure chunk optimization steps
-      // have finished. i.e. won't conflict with SplitChunksPlugin
-      compilation.hooks.afterOptimizeChunks.tap(PLUGIN_NAME, chunks => {
-        moveCSSModulesToGriffelChunk(compilation, chunks, griffelChunk);
+      // Performs movements before SplitChunksPlugin
+      compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_BASIC }, () => {
+        moveCSSModulesToGriffelChunk(compilation);
+      });
 
+      compilation.hooks.afterOptimizeChunks.tap(PLUGIN_NAME, () => {
+        // If SplitChunksPlugin has configured "cacheGroups", we need to move chunks again to ensure that needed
+        // modules are still attached "griffel" chunk
+        if (compiler.options.optimization.splitChunks && compiler.options.optimization.splitChunks.cacheGroups) {
+          moveCSSModulesToGriffelChunk(compilation);
+        }
+
+        // Remove dummy module once we are sure chunk optimization steps have finished. i.e. won't conflict with
+        // SplitChunksPlugin
         compilation.modules.delete(dummyModule);
         compilation.chunkGraph.disconnectChunkAndModule(griffelChunk, dummyModule);
       });
