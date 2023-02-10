@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "refactor: update how griffel chunk is attached",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

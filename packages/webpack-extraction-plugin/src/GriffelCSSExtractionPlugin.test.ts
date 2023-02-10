@@ -6,12 +6,13 @@ import * as prettier from 'prettier';
 import * as webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import { GriffelCSSExtractionPlugin } from './GriffelCSSExtractionPlugin';
+import { GriffelCSSExtractionPlugin, GriffelCSSExtractionPluginOptions } from './GriffelCSSExtractionPlugin';
 import { WebpackLoaderOptions } from './webpackLoader';
 
 type CompileOptions = {
   cssFilename?: string;
   loaderOptions?: WebpackLoaderOptions;
+  pluginOptions?: GriffelCSSExtractionPluginOptions;
   webpackConfig?: webpack.Configuration;
 };
 
@@ -269,5 +270,13 @@ describe('webpackLoader', () => {
   testFixture('with-chunks');
 
   // Unstable
+  testFixture('unstable-attach-to-main', {
+    pluginOptions: { unstable_attachToMainEntryPoint: true },
+    webpackConfig: {
+      entry: {
+        bundleB: path.resolve(__dirname, '..', '__fixtures__', 'webpack', 'unstable-attach-to-main', 'codeB.ts'),
+      },
+    },
+  });
   testFixture('unstable-keep-original-code', { loaderOptions: { unstable_keepOriginalCode: true } });
 });
