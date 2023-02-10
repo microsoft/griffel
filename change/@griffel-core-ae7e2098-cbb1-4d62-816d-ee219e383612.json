@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump rtl-css-js",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,41 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 10 Feb 2023 10:23:25 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.6",
+      "version": "0.3.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "5837c739ee141a9099a031449870dbca46ce648d",
+            "comment": "refactor: update how griffel chunk is attached"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "86750111d8c8a0334c5f725b56595d72dc586ecd",
+            "comment": "fix: handling modules with SplitChunksPlugin"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.9.2",
+            "commit": "5837c739ee141a9099a031449870dbca46ce648d"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "bb07d370d3084b9bd7f2941fd82be79fa6c99b4b",
+            "comment": "chore: update tsconfig files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Feb 2023 10:47:40 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.5",
       "version": "0.3.5",

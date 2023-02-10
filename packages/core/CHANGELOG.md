@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 26 Jan 2023 14:06:28 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Feb 2023 10:23:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.9.2
+
+Fri, 10 Feb 2023 10:23:25 GMT
+
+### Patches
+
+- chore: bump rtl-css-js (olfedias@microsoft.com)
 
 ## 1.9.1
 

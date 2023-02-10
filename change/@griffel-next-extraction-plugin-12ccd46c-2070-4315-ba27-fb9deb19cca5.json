@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: update tsconfig files",
-  "packageName": "@griffel/next-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

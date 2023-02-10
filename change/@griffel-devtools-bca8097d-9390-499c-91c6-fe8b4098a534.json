@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: update tsconfig files",
-  "packageName": "@griffel/devtools",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

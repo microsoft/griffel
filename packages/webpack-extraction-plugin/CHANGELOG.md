@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 01 Feb 2023 10:47:40 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Feb 2023 10:23:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.6
+
+Fri, 10 Feb 2023 10:23:25 GMT
+
+### Patches
+
+- refactor: update how griffel chunk is attached (olfedias@microsoft.com)
+- fix: handling modules with SplitChunksPlugin (olfedias@microsoft.com)
+- Bump @griffel/core to v1.9.2
 
 ## 0.3.5
 
