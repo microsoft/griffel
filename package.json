@@ -123,7 +123,7 @@
     "react-test-renderer": "18.0.0",
     "simple-git-hooks": "2.7.0",
     "styled-components": "^5.3.6",
-    "syncpack": "6.2.0",
+    "syncpack": "8.5.14",
     "tmp": "0.2.1",
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",
