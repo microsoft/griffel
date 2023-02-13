@@ -47,7 +47,7 @@ describe('getDebugTree', () => {
           ],
           direction: dir,
           rules: {
-            f13qh94s: '.f13qh94s{display:grid;}',
+            f13qh94s: '.f13qh94s{display:-ms-grid;display:grid;}',
           },
           sequenceHash: sequenceGrid,
           slot: 'grid',

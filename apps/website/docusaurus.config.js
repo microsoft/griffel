@@ -24,6 +24,10 @@ const config = {
   baseUrl: '/',
   // favicon: 'img/favicon.ico',
 
+  markdown: {
+    mermaid: true,
+  },
+
   plugins: [require.resolve('./src/components/Playground/docusaurusPlugin')],
 
   presets: [
@@ -34,7 +38,6 @@ const config = {
         docs: {
           editUrl: 'https://github.com/microsoft/griffel/tree/main/apps/website/',
           sidebarPath: require.resolve('./sidebars.js'),
-          remarkPlugins: [[require('mdx-mermaid'), {}]],
           routeBasePath: '/',
         },
         blog: false,
@@ -49,6 +52,7 @@ const config = {
     ],
   ],
 
+  themes: ['@docusaurus/theme-mermaid'],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
