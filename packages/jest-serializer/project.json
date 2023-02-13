@@ -1,5 +1,6 @@
 {
-  "root": "packages/jest-serializer",
+  "name": "@griffel/jest-serializer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/jest-serializer/src",
   "projectType": "library",
   "implicitDependencies": ["!@griffel/react"],
@@ -13,9 +14,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/jest-serializer"],
+      "outputs": ["{workspaceRoot}/coverage/packages/jest-serializer"],
       "options": {
-        "jestConfig": "packages/jest-serializer/jest.config.js",
+        "jestConfig": "packages/jest-serializer/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -38,7 +39,7 @@
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/jest-serializer",
         "commands": [{ "command": "tsc -b --pretty" }],

@@ -1,11 +1,12 @@
 {
-  "root": "packages/devtools",
+  "name": "@griffel/devtools",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/devtools/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -47,7 +48,7 @@
       }
     },
     "pack-extension": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "dependsOn": [
         {
           "target": "build",
@@ -72,14 +73,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/devtools"],
+      "outputs": ["{workspaceRoot}/coverage/packages/devtools"],
       "options": {
-        "jestConfig": "packages/devtools/jest.config.js",
+        "jestConfig": "packages/devtools/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/devtools",
         "commands": [{ "command": "tsc -b --pretty" }],
@@ -87,7 +88,7 @@
       }
     },
     "watch": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": ".",
         "parallel": false,

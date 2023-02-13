@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@griffel/webpack-extraction-plugin": "^0.3.6",
-    "browserslist": "^4.19.1"
+    "browserslist": "^4.19.1",
+    "tslib": "^2.1.0"
   },
   "peerDependencies": {
     "@griffel/core": "^1.9.2",

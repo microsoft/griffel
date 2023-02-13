@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'babel-preset',
+/* eslint-disable */
+export default {
+  displayName: 'webpack-extraction-plugin',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,8 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  moduleNameMapper: {
-    '^sampleEvaluator$': '<rootDir>/__fixtures__/config-evaluation-rules/sampleEvaluator.js',
-  },
-  coverageDirectory: '../../coverage/packages/babel-preset',
+  coverageDirectory: '../../coverage/packages/webpack-loader',
 };

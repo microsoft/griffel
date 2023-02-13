@@ -1,5 +1,6 @@
 {
-  "root": "packages/eslint-plugin",
+  "name": "@griffel/eslint-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/eslint-plugin/src",
   "projectType": "library",
   "targets": {
@@ -12,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/eslint-plugin"],
+      "outputs": ["{workspaceRoot}/coverage/packages/eslint-plugin"],
       "options": {
-        "jestConfig": "packages/eslint-plugin/jest.config.js",
+        "jestConfig": "packages/eslint-plugin/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -37,7 +38,7 @@
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/babel-preset",
         "commands": [

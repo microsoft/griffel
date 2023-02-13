@@ -1,20 +1,21 @@
 {
-  "root": "e2e/nextjs",
+  "name": "@griffel/e2e-nextjs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "e2e/nextjs/src",
   "projectType": "library",
   "implicitDependencies": ["@griffel/webpack-loader"],
   "targets": {
     "test": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "dependsOn": [{ "target": "build", "projects": "dependencies" }],
       "options": {
         "cwd": "e2e/nextjs",
-        "commands": [{ "command": "node -r @swc-node/register src/test.ts" }],
+        "commands": [{ "command": "ts-node src/test.ts" }],
         "outputPath": []
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "e2e/nextjs",
         "commands": [{ "command": "tsc -b --pretty" }],

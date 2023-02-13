@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'next-extraction-plugin',
+/* eslint-disable */
+export default {
+  displayName: 'webpack-loader',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,6 +11,6 @@ module.exports = {
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/packages/next-extraction-plugin',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  coverageDirectory: '../../coverage/packages/webpack-loader',
 };

@@ -1,5 +1,6 @@
 {
-  "root": "packages/webpack-extraction-plugin",
+  "name": "@griffel/webpack-extraction-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/webpack-extraction-plugin/src",
   "projectType": "library",
   "targets": {
@@ -12,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/webpack-extraction-plugin"],
+      "outputs": ["{workspaceRoot}/coverage/packages/webpack-extraction-plugin"],
       "options": {
-        "jestConfig": "packages/webpack-extraction-plugin/jest.config.js",
+        "jestConfig": "packages/webpack-extraction-plugin/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -42,7 +43,7 @@
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/webpack-extraction-plugin",
         "commands": [{ "command": "tsc -b --pretty" }],

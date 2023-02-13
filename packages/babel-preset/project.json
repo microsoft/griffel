@@ -1,5 +1,6 @@
 {
-  "root": "packages/babel-preset",
+  "name": "@griffel/babel-preset",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/babel-preset/src",
   "projectType": "library",
   "implicitDependencies": ["!@griffel/react"],
@@ -13,9 +14,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/babel-preset"],
+      "outputs": ["{workspaceRoot}/coverage/packages/babel-preset"],
       "options": {
-        "jestConfig": "packages/babel-preset/jest.config.js",
+        "jestConfig": "packages/babel-preset/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -38,7 +39,7 @@
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/babel-preset",
         "commands": [{ "command": "tsc -b --pretty" }],

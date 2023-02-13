@@ -1,19 +1,20 @@
 {
-  "root": "e2e/typescript",
+  "name": "@griffel/e2e-typescript",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "e2e/typescript/src",
   "projectType": "library",
   "targets": {
     "test": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "dependsOn": [{ "target": "build", "projects": "dependencies" }],
       "options": {
         "cwd": "e2e/typescript",
-        "commands": [{ "command": "node -r @swc-node/register src/test.ts" }],
+        "commands": [{ "command": "ts-node src/test.ts" }],
         "outputPath": []
       }
     },
     "type-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "cwd": "e2e/typescript",
         "commands": [{ "command": "tsc -b --pretty" }],
