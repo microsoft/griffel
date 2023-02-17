@@ -12,11 +12,12 @@ npm install --save-dev @griffel/eslint-plugin
 
 ## Usage
 
-Add `@griffel/eslint-plugin` to the extends section of your `.eslintrc` configuration file:
+Add `@griffel` to the plugins section and `plugin:@griffel/recommended` to the extends section of your `.eslintrc` configuration file:
 
 ```json
 {
-  "extends": ["@griffel"]
+  "plugins": ["@griffel"],
+  "extends": ["plugin:@griffel/recommended"]
 }
 ```
 
