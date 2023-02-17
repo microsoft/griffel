@@ -18,7 +18,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
   }
 
   function computeClasses(options: MakeStylesOptions): Record<Slots, string> {
-    console.log('foo')
+    console.log('foo2')
     const { dir, renderer } = options;
 
     if (classesMapBySlot === null) {
