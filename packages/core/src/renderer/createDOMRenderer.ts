@@ -7,6 +7,11 @@ let lastIndex = 0;
 
 export interface CreateDOMRendererOptions {
   /**
+   * If specified, a renderer will insert created style tags after this element.
+   */
+  insertionPoint?: HTMLElement;
+
+  /**
    * A map of attributes that's passed to the generated style elements. Is useful to set "nonce" attribute.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
@@ -40,10 +45,15 @@ export const defaultCompareMediaQueries = (a: string, b: string) => (a < b ? -1 
  * @public
  */
 export function createDOMRenderer(
-  target: Document | undefined = typeof document === 'undefined' ? undefined : document,
+  targetDocument: Document | undefined = typeof document === 'undefined' ? undefined : document,
   options: CreateDOMRendererOptions = {},
 ): GriffelRenderer {
-  const { unstable_filterCSSRule, styleElementAttributes, compareMediaQueries = defaultCompareMediaQueries } = options;
+  const {
+    unstable_filterCSSRule,
+    insertionPoint,
+    styleElementAttributes,
+    compareMediaQueries = defaultCompareMediaQueries,
+  } = options;
   const renderer: GriffelRenderer = {
     insertionCache: {},
     stylesheets: {},
@@ -60,13 +70,20 @@ export function createDOMRenderer(
         // This is a hot path in rendering styles: ".length" is cached in "l" var to avoid accesses the property
         for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
           const [ruleCSS, metadata] = normalizeCSSBucketEntry(cssRulesForBucket[i]);
-          const sheet = getStyleSheetForBucket(styleBucketName as StyleBucketName, target, renderer, metadata);
+          const sheet = getStyleSheetForBucket(
+            styleBucketName as StyleBucketName,
+            targetDocument,
+            insertionPoint || null,
+            renderer,
+            metadata,
+          );
 
           if (renderer.insertionCache[ruleCSS]) {
             continue;
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName as StyleBucketName;
+
           if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
             debugData.addCSSRule(ruleCSS);
           }
@@ -91,8 +108,8 @@ export function createDOMRenderer(
     },
   };
 
-  if (target && process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-    injectDevTools(target);
+  if (targetDocument && process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+    injectDevTools(targetDocument);
   }
 
   return renderer;

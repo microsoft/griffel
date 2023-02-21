@@ -81,4 +81,40 @@ describe('createDOMRenderer', () => {
       ]
     `);
   });
+
+  it('handles "insertionPoint"', () => {
+    const elementA = document.createElement('style');
+    const elementB = document.createElement('style');
+
+    elementA.setAttribute('data-test', 'A');
+    elementB.setAttribute('data-test', 'B');
+
+    document.head.appendChild(elementA);
+    document.head.appendChild(elementB);
+
+    const renderer = createDOMRenderer(document, {
+      insertionPoint: elementA,
+    });
+
+    // CSS rules are redundant for this test, but they are necessary as they trigger style nodes creation
+    const cssRules: CSSRulesByBucket = {
+      d: ['.foo { color: red; }'],
+    };
+
+    renderer.insertCSSRules(cssRules);
+
+    expect(document.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-test="A"
+        />,
+        <style
+          data-make-styles-bucket="d"
+        />,
+        <style
+          data-test="B"
+        />,
+      ]
+    `);
+  });
 });

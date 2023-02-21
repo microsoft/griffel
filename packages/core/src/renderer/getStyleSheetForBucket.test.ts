@@ -1,6 +1,6 @@
-import { getStyleSheetForBucket, styleBucketOrdering } from './getStyleSheetForBucket';
-import { createDOMRenderer } from './createDOMRenderer';
 import { DATA_BUCKET_ATTR } from '../constants';
+import { createDOMRenderer } from './createDOMRenderer';
+import { getStyleSheetForBucket, styleBucketOrdering } from './getStyleSheetForBucket';
 
 function createFakeDocument(): Document {
   const doc = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
@@ -14,18 +14,18 @@ describe('getStyleSheetForBucket', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();
 
-    getStyleSheetForBucket('r', target, renderer);
-    getStyleSheetForBucket('l', target, renderer);
-    getStyleSheetForBucket('d', target, renderer);
-    getStyleSheetForBucket('v', target, renderer);
-    getStyleSheetForBucket('a', target, renderer);
-    getStyleSheetForBucket('i', target, renderer);
-    getStyleSheetForBucket('h', target, renderer);
-    getStyleSheetForBucket('m', target, renderer);
-    getStyleSheetForBucket('w', target, renderer);
-    getStyleSheetForBucket('t', target, renderer);
-    getStyleSheetForBucket('k', target, renderer);
-    getStyleSheetForBucket('f', target, renderer);
+    getStyleSheetForBucket('r', target, null, renderer);
+    getStyleSheetForBucket('l', target, null, renderer);
+    getStyleSheetForBucket('d', target, null, renderer);
+    getStyleSheetForBucket('v', target, null, renderer);
+    getStyleSheetForBucket('a', target, null, renderer);
+    getStyleSheetForBucket('i', target, null, renderer);
+    getStyleSheetForBucket('h', target, null, renderer);
+    getStyleSheetForBucket('m', target, null, renderer);
+    getStyleSheetForBucket('w', target, null, renderer);
+    getStyleSheetForBucket('t', target, null, renderer);
+    getStyleSheetForBucket('k', target, null, renderer);
+    getStyleSheetForBucket('f', target, null, renderer);
 
     const styleElements = target.head.querySelectorAll(`[${DATA_BUCKET_ATTR}]`);
     const styleElementOrder = Array.from(styleElements).map(styleElement =>
@@ -43,27 +43,27 @@ describe('getStyleSheetForBucket', () => {
       },
     });
 
-    getStyleSheetForBucket('l', target, renderer);
-    getStyleSheetForBucket('d', target, renderer);
-    getStyleSheetForBucket('v', target, renderer);
+    getStyleSheetForBucket('l', target, null, renderer);
+    getStyleSheetForBucket('d', target, null, renderer);
+    getStyleSheetForBucket('v', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 3px)' });
+    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 3px)' });
 
-    getStyleSheetForBucket('a', target, renderer);
-    getStyleSheetForBucket('i', target, renderer);
+    getStyleSheetForBucket('a', target, null, renderer);
+    getStyleSheetForBucket('i', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 1px)' });
+    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 1px)' });
 
-    getStyleSheetForBucket('h', target, renderer);
+    getStyleSheetForBucket('h', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 4px)' });
+    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 4px)' });
 
-    getStyleSheetForBucket('w', target, renderer);
-    getStyleSheetForBucket('t', target, renderer);
-    getStyleSheetForBucket('k', target, renderer);
-    getStyleSheetForBucket('f', target, renderer);
+    getStyleSheetForBucket('w', target, null, renderer);
+    getStyleSheetForBucket('t', target, null, renderer);
+    getStyleSheetForBucket('k', target, null, renderer);
+    getStyleSheetForBucket('f', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, renderer, { m: '(max-width: 2px)' });
+    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 2px)' });
 
     const styleElements = target.head.querySelectorAll(`[${DATA_BUCKET_ATTR}]`);
     const styleElementOrder = Array.from(styleElements).map(styleElement =>
@@ -92,5 +92,45 @@ describe('getStyleSheetForBucket', () => {
       .map(styleElement => styleElement.getAttribute('media'))
       .filter(Boolean);
     expect(actualMediaQueryOrder).toEqual(mediaQueryOrder);
+  });
+
+  it('handles "insertionPoint"', () => {
+    const target = createFakeDocument();
+    const renderer = createDOMRenderer();
+
+    const elementA = target.createElement('style');
+    const elementB = target.createElement('style');
+    const elementC = target.createElement('style');
+
+    elementA.setAttribute('data-test', 'A');
+    elementB.setAttribute('data-test', 'B');
+    elementC.setAttribute('data-test', 'C');
+
+    target.head.appendChild(elementA);
+    target.head.appendChild(elementB);
+    target.head.appendChild(elementC);
+
+    getStyleSheetForBucket('r', target, elementB, renderer);
+    getStyleSheetForBucket('d', target, elementB, renderer);
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-test="A"
+        />,
+        <style
+          data-test="B"
+        />,
+        <style
+          data-make-styles-bucket="d"
+        />,
+        <style
+          data-make-styles-bucket="r"
+        />,
+        <style
+          data-test="C"
+        />,
+      ]
+    `);
   });
 });

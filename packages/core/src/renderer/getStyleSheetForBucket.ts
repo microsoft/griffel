@@ -45,7 +45,8 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
  */
 export function getStyleSheetForBucket(
   bucketName: StyleBucketName,
-  target: Document | undefined,
+  targetDocument: Document | undefined,
+  insertionPoint: HTMLElement | null,
   renderer: GriffelRenderer,
   metadata: Record<string, unknown> = {},
 ): IsomorphicStyleSheet {
@@ -53,7 +54,7 @@ export function getStyleSheetForBucket(
   const stylesheetKey: StyleBucketName | string = isMediaBucket ? ((bucketName + metadata['m']) as string) : bucketName;
 
   if (!renderer.stylesheets[stylesheetKey]) {
-    const tag: HTMLStyleElement | undefined = target && target.createElement('style');
+    const tag: HTMLStyleElement | undefined = targetDocument && targetDocument.createElement('style');
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, {
       ...renderer.styleElementAttributes,
       ...(isMediaBucket && { media: metadata['m'] as string }),
@@ -61,9 +62,14 @@ export function getStyleSheetForBucket(
 
     renderer.stylesheets[stylesheetKey] = stylesheet;
 
-    if (target && tag) {
-      const elementSibling = findElementSibling(target, bucketName, renderer, metadata);
-      target.head.insertBefore(tag, elementSibling);
+    if (targetDocument && tag) {
+      let beforeElement: Node | null = findElementSibling(targetDocument, bucketName, renderer, metadata);
+
+      if (beforeElement === null && insertionPoint) {
+        beforeElement = insertionPoint.nextSibling;
+      }
+
+      targetDocument.head.insertBefore(tag, beforeElement);
     }
   }
 
