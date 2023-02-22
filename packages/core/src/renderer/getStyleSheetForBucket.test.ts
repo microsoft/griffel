@@ -10,6 +10,33 @@ function createFakeDocument(): Document {
 }
 
 describe('getStyleSheetForBucket', () => {
+  it('creates elements order', () => {
+    const target = createFakeDocument();
+    const renderer = createDOMRenderer();
+
+    getStyleSheetForBucket('l', target, null, renderer);
+    getStyleSheetForBucket('r', target, null, renderer);
+    getStyleSheetForBucket('a', target, null, renderer);
+    getStyleSheetForBucket('d', target, null, renderer);
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-make-styles-bucket="r"
+        />,
+        <style
+          data-make-styles-bucket="d"
+        />,
+        <style
+          data-make-styles-bucket="l"
+        />,
+        <style
+          data-make-styles-bucket="a"
+        />,
+      ]
+    `);
+  });
+
   it('sets "data-make-styles-bucket" attribute in order', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();
@@ -122,10 +149,10 @@ describe('getStyleSheetForBucket', () => {
           data-test="B"
         />,
         <style
-          data-make-styles-bucket="d"
+          data-make-styles-bucket="r"
         />,
         <style
-          data-make-styles-bucket="r"
+          data-make-styles-bucket="d"
         />,
         <style
           data-test="C"

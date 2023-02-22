@@ -63,13 +63,10 @@ export function getStyleSheetForBucket(
     renderer.stylesheets[stylesheetKey] = stylesheet;
 
     if (targetDocument && tag) {
-      let beforeElement: Node | null = findElementSibling(targetDocument, bucketName, renderer, metadata);
-
-      if (beforeElement === null && insertionPoint) {
-        beforeElement = insertionPoint.nextSibling;
-      }
-
-      targetDocument.head.insertBefore(tag, beforeElement);
+      targetDocument.head.insertBefore(
+        tag,
+        findInsertionPoint(targetDocument, insertionPoint, bucketName, renderer, metadata),
+      );
     }
   }
 
@@ -77,33 +74,37 @@ export function getStyleSheetForBucket(
 }
 
 /**
- * Finds an element before which the new bucket style element should be inserted following the
- * bucket sort order
+ * Finds an element before which the new bucket style element should be inserted following the bucket sort order.
  *
- * @param target - document
+ * @param targetDocument - A document
+ * @param insertionPoint - An element that will be used as an initial insertion point
  * @param targetBucket - The bucket that should be inserted to DOM
  * @param renderer - Griffel renderer
  * @param metadata - metadata for CSS rule
  * @returns - Smallest style element with greater sort order than the current bucket
  */
-function findElementSibling(
-  target: Document,
+function findInsertionPoint(
+  targetDocument: Document,
+  insertionPoint: HTMLElement | null,
   targetBucket: StyleBucketName,
   renderer: GriffelRenderer,
   metadata?: Record<string, unknown>,
-) {
+): Node | null {
   const targetOrder = styleBucketOrderingMap[targetBucket];
 
   // Similar to javascript sort comparators where
   // a positive value is increasing sort order
   // a negative value is decreasing sort order
-  let comparer: (el: HTMLStyleElement) => number = (el: HTMLStyleElement) =>
+  let comparer: (el: HTMLStyleElement) => number = el =>
     targetOrder - styleBucketOrderingMap[el.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName];
 
-  let styleElements = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
+  let styleElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
 
   if (targetBucket === 'm' && metadata) {
-    const mediaElements = target.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}="${targetBucket}"]`);
+    const mediaElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(
+      `[${DATA_BUCKET_ATTR}="${targetBucket}"]`,
+    );
+
     // only reduce the scope of the search and change comparer
     // if there are other media buckets already on the page
     if (mediaElements.length) {
@@ -112,11 +113,22 @@ function findElementSibling(
     }
   }
 
-  for (const styleElement of styleElements) {
-    if (comparer(styleElement) < 0) {
-      return styleElement;
+  const length = styleElements.length;
+  let index = length - 1;
+
+  while (index >= 0) {
+    const styleElement = styleElements.item(index);
+
+    if (comparer(styleElement) > 0) {
+      return styleElement.nextSibling;
     }
+
+    index--;
   }
 
-  return null;
+  if (length > 0) {
+    return styleElements.item(0);
+  }
+
+  return insertionPoint ? insertionPoint.nextSibling : null;
 }

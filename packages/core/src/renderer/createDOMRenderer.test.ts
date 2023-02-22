@@ -99,6 +99,7 @@ describe('createDOMRenderer', () => {
     // CSS rules are redundant for this test, but they are necessary as they trigger style nodes creation
     const cssRules: CSSRulesByBucket = {
       d: ['.foo { color: red; }'],
+      h: ['.foo:hover { color: blue; }'],
     };
 
     renderer.insertCSSRules(cssRules);
@@ -110,6 +111,9 @@ describe('createDOMRenderer', () => {
         />,
         <style
           data-make-styles-bucket="d"
+        />,
+        <style
+          data-make-styles-bucket="h"
         />,
         <style
           data-test="B"
