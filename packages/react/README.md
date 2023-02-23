@@ -15,6 +15,7 @@ A package with wrappers and APIs to be used with React.js.
 - [`makeStaticStyles()`](#makestaticstyles)
 - [`makeResetStyles()`](#makeresetstyles)
 - [`createDOMRenderer()`, `RendererProvider`](#createdomrenderer-rendererprovider)
+  - [insertionPoint](#insertionpoint)
   - [styleElementAttributes](#styleelementattributes)
 - [`TextDirectionProvider`](#textdirectionprovider)
 - [Shorthands](#shorthands)
@@ -375,6 +376,30 @@ function App(props) {
 }
 ```
 
+### insertionPoint
+
+If specified, a renderer will insert created style tags after this element:
+
+```js
+import { createDOMRenderer } from '@griffel/react';
+
+const insertionPoint = document.head.querySelector('#foo');
+const renderer = createDOMRenderer(document, {
+  insertionPoint,
+});
+```
+
+```html
+<html>
+  <head>
+    <style id="foo" />
+    <!-- Style elements created by Griffel will be inserted after "#foo" element -->
+    <style data-make-styles-bucket="d" />
+    <style id="bar" />
+  </head>
+</html>
+```
+
 ### styleElementAttributes
 
 A map of attributes that's passed to the generated style elements. For example, is useful to set ["nonce" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce).
@@ -382,7 +407,7 @@ A map of attributes that's passed to the generated style elements. For example, 
 ```js
 import { createDOMRenderer } from '@griffel/react';
 
-const renderer = createDOMRenderer(targetDocument, {
+const renderer = createDOMRenderer(document, {
   styleElementAttributes: {
     nonce: 'random',
   },
