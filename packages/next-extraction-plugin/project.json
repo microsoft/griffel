@@ -27,7 +27,8 @@
         "tsConfig": "packages/next-extraction-plugin/tsconfig.lib.json",
         "packageJson": "packages/next-extraction-plugin/package.json",
         "main": "packages/next-extraction-plugin/src/index.ts",
-        "assets": ["packages/next-extraction-plugin/*.md"]
+        "assets": ["packages/next-extraction-plugin/*.md"],
+        "updateBuildableProjectDepsInPackageJson": false
       }
     },
     "type-check": {

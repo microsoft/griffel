@@ -3,7 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/babel-preset/src",
   "projectType": "library",
-  "implicitDependencies": ["!@griffel/react"],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -28,6 +27,7 @@
         "tsConfig": "packages/babel-preset/tsconfig.lib.json",
         "packageJson": "packages/babel-preset/package.json",
         "main": "packages/babel-preset/src/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/babel-preset/README.md",
           {

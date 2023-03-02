@@ -14,7 +14,6 @@
     "tslib": "^2.1.0"
   },
   "peerDependencies": {
-    "@griffel/react": "^1.5.4",
     "webpack": "^5"
   }
 }

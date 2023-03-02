@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: move @griffel/core to dependencies",
+  "packageName": "@griffel/jest-serializer",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

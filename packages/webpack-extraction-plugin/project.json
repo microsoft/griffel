@@ -27,6 +27,7 @@
         "tsConfig": "packages/webpack-extraction-plugin/tsconfig.lib.json",
         "packageJson": "packages/webpack-extraction-plugin/package.json",
         "main": "packages/webpack-extraction-plugin/src/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/webpack-extraction-plugin/README.md",
           {

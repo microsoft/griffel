@@ -3,7 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/jest-serializer/src",
   "projectType": "library",
-  "implicitDependencies": ["!@griffel/react"],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -28,6 +27,7 @@
         "tsConfig": "packages/jest-serializer/tsconfig.lib.json",
         "packageJson": "packages/jest-serializer/package.json",
         "main": "packages/jest-serializer/src/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/jest-serializer/README.md",
           {

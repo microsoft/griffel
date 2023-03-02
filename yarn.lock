@@ -3740,25 +3740,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/js@patch:@nrwl/js@npm:15.3.3#.yarn/patches/@nrwl-js-npm-15.3.3-5cbe4e2ef9.patch::locator=griffel-repository%40workspace%3A.":
-  version: 15.3.3
-  resolution: "@nrwl/js@patch:@nrwl/js@npm%3A15.3.3#.yarn/patches/@nrwl-js-npm-15.3.3-5cbe4e2ef9.patch::version=15.3.3&hash=2bece5&locator=griffel-repository%40workspace%3A."
-  dependencies:
-    "@nrwl/devkit": 15.3.3
-    "@nrwl/linter": 15.3.3
-    "@nrwl/workspace": 15.3.3
-    chalk: 4.1.0
-    fast-glob: 3.2.7
-    fs-extra: ^10.1.0
-    ignore: ^5.0.4
-    js-tokens: ^4.0.0
-    minimatch: 3.0.5
-    source-map-support: 0.5.19
-    tree-kill: 1.2.2
-  checksum: fedcad3be64f56ca2cef3264853e638e5f17ab45db02c6c135e290f082f01573c88b4fff51f318798bcc5782320ca90851d6d188f46cf6ce2d0331b6637f47fc
-  languageName: node
-  linkType: hard
-
 "@nrwl/linter@npm:15.3.3":
   version: 15.3.3
   resolution: "@nrwl/linter@npm:15.3.3"

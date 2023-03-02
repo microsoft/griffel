@@ -19,6 +19,7 @@
         "external": ["tslib"],
         "format": ["esm", "cjs"],
         "skipTypeField": true,
+        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           {
             "glob": "packages/core/README.md",

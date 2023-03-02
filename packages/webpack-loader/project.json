@@ -27,6 +27,7 @@
         "tsConfig": "packages/webpack-loader/tsconfig.lib.json",
         "packageJson": "packages/webpack-loader/package.json",
         "main": "packages/webpack-loader/src/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/webpack-loader/README.md",
           {

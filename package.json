@@ -156,7 +156,6 @@
     "tslib": "^2.1.0"
   },
   "resolutions": {
-    "@nrwl/js@15.3.3": "patch:@nrwl/js@npm:15.3.3#.yarn/patches/@nrwl-js-npm-15.3.3-5cbe4e2ef9.patch",
     "@nrwl/rollup@15.3.3": "patch:@nrwl/rollup@npm:15.3.3#.yarn/patches/@nrwl-rollup-npm-15.3.3-2e996174b7.patch",
     "beachball@2.31.5": "patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch",
     "source-map-js@1.0.2": "patch:source-map-js@npm:1.0.2#.yarn/patches/source-map-js-npm-1.0.2-ee4f9f9b30.patch"
