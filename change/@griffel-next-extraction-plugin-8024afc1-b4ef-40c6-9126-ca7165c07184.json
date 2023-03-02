@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: remove @griffel/core from peerDependencies",
+  "packageName": "@griffel/next-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

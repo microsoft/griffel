@@ -8,9 +8,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
+    "@griffel/core": "^1.9.2",
     "tslib": "^2.1.0"
-  },
-  "peerDependencies": {
-    "@griffel/core": "^1.9.2"
   }
 }

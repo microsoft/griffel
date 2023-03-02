@@ -16,6 +16,7 @@
         "entryFile": "packages/react/src/index.ts",
         "compiler": "babel",
         "rollupConfig": ["@nrwl/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
+        "updateBuildableProjectDepsInPackageJson": false,
         "external": ["tslib"],
         "format": ["esm", "cjs"],
         "skipTypeField": true,
