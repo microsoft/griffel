@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch' }}
 
@@ -23,9 +23,24 @@ jobs:
       - run: yarn install --immutable
       - run: yarn nx run-many --target=build --projects=@griffel/website --parallel --max-parallel=3
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/apps/website
-          cname: griffel.js.org
+          path: './dist/apps/website'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
