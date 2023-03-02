@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: remove @griffel/react from peerDependencies",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

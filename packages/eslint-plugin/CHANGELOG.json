@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 14:51:11 GMT",
+      "tag": "@griffel/eslint-plugin_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "d8e62d7756c8bd3908e2ce5a95ee0a842fc7df9d",
+            "comment": "chore: bump Nx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Jan 2023 13:35:21 GMT",
       "tag": "@griffel/eslint-plugin_v1.1.0",
       "version": "1.1.0",

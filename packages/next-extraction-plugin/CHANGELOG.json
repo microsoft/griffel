@@ -2,6 +2,35 @@
   "name": "@griffel/next-extraction-plugin",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 14:51:11 GMT",
+      "tag": "@griffel/next-extraction-plugin_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/next-extraction-plugin",
+            "commit": "d8e62d7756c8bd3908e2ce5a95ee0a842fc7df9d",
+            "comment": "chore: bump Nx"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/next-extraction-plugin",
+            "commit": "3edb840d4139d81744620d8bded738d814cd71f5",
+            "comment": "chore: remove @griffel/core from peerDependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/next-extraction-plugin",
+            "comment": "Bump @griffel/webpack-extraction-plugin to v0.3.7",
+            "commit": "3edb840d4139d81744620d8bded738d814cd71f5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Feb 2023 10:23:25 GMT",
       "tag": "@griffel/next-extraction-plugin_v0.0.15",
       "version": "0.0.15",

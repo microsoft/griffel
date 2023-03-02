@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump Nx",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

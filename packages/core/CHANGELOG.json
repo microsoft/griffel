@@ -2,6 +2,37 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 14:51:11 GMT",
+      "tag": "@griffel/core_v1.10.0",
+      "version": "1.10.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "8f10c4dd141a7024f6b7dbe51d44f1aae7c1a77b",
+            "comment": "chore: bump @emotion/hash"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "f72bc4771c2cf2b1b6fca4027723039adee7fa82",
+            "comment": "feat: add \"insertionPoint\" option to createDOMRenderer()"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "d8e62d7756c8bd3908e2ce5a95ee0a842fc7df9d",
+            "comment": "chore: bump Nx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Feb 2023 10:23:25 GMT",
       "tag": "@griffel/core_v1.9.2",
       "version": "1.9.2",

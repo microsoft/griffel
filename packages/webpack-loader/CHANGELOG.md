@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-loader
 
-This log was last generated on Fri, 10 Feb 2023 10:23:25 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 14:51:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.1.11
+
+Thu, 02 Mar 2023 14:51:11 GMT
+
+### Patches
+
+- chore: remove @griffel/react from peerDependencies (olfedias@microsoft.com)
+- Bump @griffel/babel-preset to v1.4.11
 
 ## 2.1.10
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump @emotion/hash",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

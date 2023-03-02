@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump Nx",
-  "packageName": "@griffel/next-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

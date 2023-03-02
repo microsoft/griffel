@@ -1,8 +1,20 @@
 # Change Log - @griffel/core
 
-This log was last generated on Fri, 10 Feb 2023 10:23:25 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 14:51:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.10.0
+
+Thu, 02 Mar 2023 14:51:11 GMT
+
+### Minor changes
+
+- feat: add "insertionPoint" option to createDOMRenderer() (olfedias@microsoft.com)
+
+### Patches
+
+- chore: bump @emotion/hash (olfedias@microsoft.com)
 
 ## 1.9.2
 

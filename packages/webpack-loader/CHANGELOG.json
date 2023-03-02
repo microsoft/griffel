@@ -2,6 +2,35 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 14:51:11 GMT",
+      "tag": "@griffel/webpack-loader_v2.1.11",
+      "version": "2.1.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "3edb840d4139d81744620d8bded738d814cd71f5",
+            "comment": "chore: remove @griffel/react from peerDependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.4.11",
+            "commit": "3edb840d4139d81744620d8bded738d814cd71f5"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "d8e62d7756c8bd3908e2ce5a95ee0a842fc7df9d",
+            "comment": "chore: bump Nx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Feb 2023 10:23:25 GMT",
       "tag": "@griffel/webpack-loader_v2.1.10",
       "version": "2.1.10",

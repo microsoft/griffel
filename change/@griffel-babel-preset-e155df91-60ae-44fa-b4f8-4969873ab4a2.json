@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: move @griffel/core to dependencies",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
