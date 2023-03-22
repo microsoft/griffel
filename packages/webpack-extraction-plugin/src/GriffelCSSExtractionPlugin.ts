@@ -108,6 +108,25 @@ export class GriffelCSSExtractionPlugin {
 
   apply(compiler: Compiler): void {
     // WHAT?
+    //   Prevents ".griffel.css" files from being tree shaken by forcing "sideEffects" setting.
+    // WHY?
+    //   The extraction loader adds `import ""` statements that trigger virtual loader. Modules created by this loader
+    //   will have paths relative to source file. To identify what files have side effects Webpack relies on
+    //   "sideEffects" field in "package.json" and NPM packages usually have "sideEffects: false" that will trigger
+    //   Webpack to shake out generated CSS.
+    compiler.hooks.normalModuleFactory.tap(PLUGIN_NAME, nmf => {
+      nmf.hooks.createModule.tap(
+        PLUGIN_NAME,
+        // @ts-expect-error CreateData is typed as 'object'...
+        (createData: { matchResource?: string; settings: { sideEffects?: boolean } }) => {
+          if (createData.matchResource && createData.matchResource.endsWith('.griffel.css')) {
+            createData.settings.sideEffects = true;
+          }
+        },
+      );
+    });
+
+    // WHAT?
     //  Forces all modules emitted by an extraction loader to be moved in a single chunk by SplitChunksPlugin config.
     // WHY?
     //  We need to sort CSS rules in the same order as it's done via style buckets. It's not possible in multiple
