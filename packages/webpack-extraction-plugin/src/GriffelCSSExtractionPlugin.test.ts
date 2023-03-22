@@ -242,6 +242,15 @@ describe('webpackLoader', () => {
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
 
+  // Config that disables SplitChunksPlugin
+  testFixture('config-no-split-chunks', {
+    webpackConfig: {
+      optimization: {
+        splitChunks: false,
+      },
+    },
+  });
+
   // Config that forces chunk splitting
   testFixture('config-split-chunks', {
     webpackConfig: {
