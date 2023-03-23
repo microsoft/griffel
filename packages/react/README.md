@@ -411,7 +411,7 @@ const renderer = createDOMRenderer(document, {
 </html>
 ```
 
-For mobile-first methodology, you can consider to use [`sort-css-media-queries`](https://github.com/dutchenkoOleg/sort-css-media-queries):
+For mobile-first methodology, you can consider using [`sort-css-media-queries`](https://github.com/dutchenkoOleg/sort-css-media-queries):
 
 ```js
 import { createDOMRenderer } from '@griffel/react';
