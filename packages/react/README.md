@@ -15,6 +15,7 @@ A package with wrappers and APIs to be used with React.js.
 - [`makeStaticStyles()`](#makestaticstyles)
 - [`makeResetStyles()`](#makeresetstyles)
 - [`createDOMRenderer()`, `RendererProvider`](#createdomrenderer-rendererprovider)
+  - [compareMediaQueries](#comparemediaqueries)
   - [insertionPoint](#insertionpoint)
   - [styleElementAttributes](#styleelementattributes)
 - [`TextDirectionProvider`](#textdirectionprovider)
@@ -374,6 +375,61 @@ function App(props) {
     </RendererProvider>
   );
 }
+```
+
+### compareMediaQueries
+
+A function with the same signature as sort functions in e.g. `Array.prototype.sort` for dynamically sorting media queries. Maps over an array of media query strings.
+
+Griffel does not provide an opinionated default to sort media queries as the order may vary depending on the specific needs of the application.
+
+```js
+import { createDOMRenderer } from '@griffel/react';
+
+const mediaQueryOrder = [
+  'only screen and (min-width: 1366px)',
+  'only screen and (min-width: 1366px)',
+  'only screen and (min-width: 1920px)',
+];
+
+function sortMediaQueries(a, b) {
+  return mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
+}
+
+const renderer = createDOMRenderer(document, {
+  compareMediaQueries,
+});
+```
+
+```html
+<html>
+  <head>
+    <style media="only screen and (min-width: 1024px)" data-make-styles-bucket="m"></style>
+    <style media="only screen and (min-width: 1366px)" data-make-styles-bucket="m"></style>
+    <style media="only screen and (min-width: 1920px)" data-make-styles-bucket="m"></style>
+  </head>
+</html>
+```
+
+For mobile-first methodology, you can consider using [`sort-css-media-queries`](https://github.com/dutchenkoOleg/sort-css-media-queries):
+
+```js
+import { createDOMRenderer } from '@griffel/react';
+import sortCSSmq from 'sort-css-media-queries';
+
+const renderer = createDOMRenderer(document, {
+  compareMediaQueries: sortCSSmq,
+});
+```
+
+```html
+<html>
+  <head>
+    <style media="only screen and (min-width: 1px)" data-make-styles-bucket="m"></style>
+    <style media="only screen and (min-width: 480px)" data-make-styles-bucket="m"></style>
+    <style media="only screen and (min-width: 640px)" data-make-styles-bucket="m"></style>
+  </head>
+</html>
 ```
 
 ### insertionPoint
