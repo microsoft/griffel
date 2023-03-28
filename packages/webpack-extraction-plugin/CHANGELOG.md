@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Thu, 02 Mar 2023 14:51:11 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Mar 2023 13:04:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.8
+
+Tue, 28 Mar 2023 13:04:53 GMT
+
+### Patches
+
+- chore(extraction-plugin): redo chunk attachment (olfedias@microsoft.com)
+- chore(extraction-plugin): use ESM imports (olfedias@microsoft.com)
+- chore(extraction-plugin): re-implement unstable_keepOriginalCode (olfedias@microsoft.com)
 
 ## 0.3.7
 

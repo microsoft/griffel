@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Tue, 28 Mar 2023 13:04:53 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.8",
+      "version": "0.3.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "37bd6399e99ed84bde568d6577a2c737aaeb0444",
+            "comment": "chore(extraction-plugin): redo chunk attachment"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "a0b6a6c16329b9ab79a603cbcfbbee7de80dba0e",
+            "comment": "chore(extraction-plugin): use ESM imports"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "fe0d1a828e3a3085054674305454cd0174ef0661",
+            "comment": "chore(extraction-plugin): re-implement unstable_keepOriginalCode"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Mar 2023 14:51:11 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.7",
       "version": "0.3.7",

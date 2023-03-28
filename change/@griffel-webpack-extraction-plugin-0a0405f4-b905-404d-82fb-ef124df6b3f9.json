@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(extraction-plugin): redo chunk attachment",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
