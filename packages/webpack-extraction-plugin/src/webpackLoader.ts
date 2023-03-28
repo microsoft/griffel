@@ -105,14 +105,7 @@ function webpackLoader(
       const request = `${outputFileName}!=!${virtualLoaderPath}?style=${toURIComponent(css)}!${this.resourcePath}`;
       const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
 
-      this.callback(
-        null,
-        // Heads up!
-        // This is probably a bug, but "import" does not work properly there: files from node_modules are processed, but
-        // they will not be present in chunks 😳
-        `${resultCode}\n\nrequire(${stringifiedRequest});`,
-        resultSourceMap,
-      );
+      this.callback(null, `${resultCode}\n\nimport ${stringifiedRequest};`, resultSourceMap);
       return;
     }
 
