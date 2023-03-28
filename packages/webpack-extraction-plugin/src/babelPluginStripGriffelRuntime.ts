@@ -3,9 +3,7 @@ import { addNamed } from '@babel/helper-module-imports';
 import { declare } from '@babel/helper-plugin-utils';
 import type { CSSRulesByBucket } from '@griffel/core';
 
-type StripRuntimeBabelPluginOptions = {
-  unstable_keepOriginalCode?: boolean;
-};
+type StripRuntimeBabelPluginOptions = Record<string, unknown>;
 
 type FunctionKinds = '__styles' | '__resetStyles';
 
@@ -31,7 +29,6 @@ function evaluateAndUpdateArgument(
   argumentPath: NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression>,
   functionKind: FunctionKinds,
   state: StripRuntimeBabelPluginState,
-  unstable_keepOriginalCode?: boolean,
 ) {
   // Returns the styles as a JavaScript object
   const evaluationResult = argumentPath.evaluate();
@@ -55,9 +52,7 @@ function evaluateAndUpdateArgument(
     state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, { r: cssRules });
   }
 
-  if (!unstable_keepOriginalCode) {
-    argumentPath.remove();
-  }
+  argumentPath.remove();
 }
 
 function getFunctionArgumentPath(
@@ -159,12 +154,9 @@ function updateReferences(
   importSpecifierPath: NodePath<t.ImportSpecifier>,
   importSource: string,
   functionKind: FunctionKinds,
-  unstable_keepOriginalCode?: boolean,
 ) {
   const importName = functionKind === '__styles' ? '__css' : '__resetCSS';
-  const importIdentifier = unstable_keepOriginalCode
-    ? undefined
-    : addNamed(importSpecifierPath, importName, importSource);
+  const importIdentifier = addNamed(importSpecifierPath, importName, importSource);
 
   const referencePaths = getReferencePaths(importSpecifierPath, functionKind);
 
@@ -175,11 +167,9 @@ function updateReferences(
 
       if (argumentPath) {
         inlineAssetImports(argumentPath);
-        evaluateAndUpdateArgument(argumentPath, functionKind, state, unstable_keepOriginalCode);
+        evaluateAndUpdateArgument(argumentPath, functionKind, state);
 
-        if (importIdentifier) {
-          updateCalleeName(callExpressionPath, importIdentifier.name);
-        }
+        updateCalleeName(callExpressionPath, importIdentifier.name);
       }
     }
   }
@@ -188,7 +178,7 @@ function updateReferences(
 export const babelPluginStripGriffelRuntime = declare<
   Partial<StripRuntimeBabelPluginOptions>,
   PluginObj<StripRuntimeBabelPluginState>
->((api, options) => {
+>(api => {
   api.assertVersion(7);
 
   return {
@@ -221,9 +211,9 @@ export const babelPluginStripGriffelRuntime = declare<
               const importSource = importSourcePath.node.value;
 
               if (importedPath.isIdentifier({ name: '__styles' })) {
-                updateReferences(state, path, importSource, '__styles', options.unstable_keepOriginalCode);
+                updateReferences(state, path, importSource, '__styles');
               } else if (importedPath.isIdentifier({ name: '__resetStyles' })) {
-                updateReferences(state, path, importSource, '__resetStyles', options.unstable_keepOriginalCode);
+                updateReferences(state, path, importSource, '__resetStyles');
               }
             },
           });

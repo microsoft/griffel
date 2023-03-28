@@ -8,8 +8,6 @@ export type TransformOptions = {
 
   inputSourceMap: Babel.TransformOptions['inputSourceMap'];
   enableSourceMaps: boolean;
-
-  unstable_keepOriginalCode?: boolean;
 };
 
 export type TransformResult = {
@@ -40,7 +38,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     // Ignore all user's configs and apply only our plugin
     babelrc: false,
     configFile: false,
-    plugins: [[babelPluginStripGriffelRuntime, { unstable_keepOriginalCode: options.unstable_keepOriginalCode }]],
+    plugins: [babelPluginStripGriffelRuntime],
 
     filename: options.filename,
 

@@ -62,14 +62,15 @@ function webpackLoader(
 
       enableSourceMaps: this.sourceMap || false,
       inputSourceMap: parseSourceMap(inputSourceMap),
-
-      unstable_keepOriginalCode,
     });
   } catch (err) {
     error = err as Error;
   }
 
   if (result) {
+    const resultCode = unstable_keepOriginalCode ? sourceCode : result.code;
+    const resultSourceMap = unstable_keepOriginalCode ? inputSourceMap : result.sourceMap;
+
     if (result.cssRulesByBucket) {
       const css = Object.entries(result.cssRulesByBucket).reduce((acc, [cssBucketName, cssBucketRules]) => {
         if (cssBucketName === 'm') {
@@ -109,13 +110,13 @@ function webpackLoader(
         // Heads up!
         // This is probably a bug, but "import" does not work properly there: files from node_modules are processed, but
         // they will not be present in chunks 😳
-        `${result.code}\n\nrequire(${stringifiedRequest});`,
-        result.sourceMap,
+        `${resultCode}\n\nrequire(${stringifiedRequest});`,
+        resultSourceMap,
       );
       return;
     }
 
-    this.callback(null, result.code, result.sourceMap);
+    this.callback(null, resultCode, resultSourceMap);
     return;
   }
 
