@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 29 Mar 2023 12:45:13 GMT",
+      "tag": "@griffel/core_v1.10.1",
+      "version": "1.10.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "9ad8031fa6346e97d5d444b26d7bdf380f9c69c1",
+            "comment": "chore: hide warnings in Node"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Mar 2023 14:51:11 GMT",
       "tag": "@griffel/core_v1.10.0",
       "version": "1.10.0",
