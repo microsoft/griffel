@@ -1,6 +1,10 @@
 import type { GriffelResetStyle, GriffelStyle } from '../types';
 
 export function warnAboutUnresolvedRule(property: string, value: GriffelStyle | GriffelResetStyle) {
+  if (process.env.NODE_ENV === 'production' || typeof document === 'undefined') {
+    return;
+  }
+
   const ruleText = JSON.stringify(value, null, 2);
   const message: string[] = [
     '@griffel/react: A rule was not resolved to CSS properly. ' +
