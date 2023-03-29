@@ -119,9 +119,7 @@ function createStringFromStyles(styles: GriffelResetStyle) {
       }
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-      warnAboutUnresolvedRule(property, value);
-    }
+    warnAboutUnresolvedRule(property, value);
   }
 
   return [ltrCSS, rtlCSS];

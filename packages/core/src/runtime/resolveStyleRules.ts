@@ -319,9 +319,7 @@ export function resolveStyleRules(
           cssRulesByBucket,
         );
       } else {
-        if (process.env.NODE_ENV !== 'production') {
-          warnAboutUnresolvedRule(property, value);
-        }
+        warnAboutUnresolvedRule(property, value);
       }
     }
   }
