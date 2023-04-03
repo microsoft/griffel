@@ -46,6 +46,7 @@ describe('getStyleSheetForBucket', () => {
     getStyleSheetForBucket('d', target, null, renderer);
     getStyleSheetForBucket('v', target, null, renderer);
     getStyleSheetForBucket('a', target, null, renderer);
+    getStyleSheetForBucket('c', target, null, renderer);
     getStyleSheetForBucket('i', target, null, renderer);
     getStyleSheetForBucket('h', target, null, renderer);
     getStyleSheetForBucket('m', target, null, renderer);

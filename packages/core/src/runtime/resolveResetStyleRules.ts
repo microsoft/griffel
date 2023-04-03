@@ -12,6 +12,7 @@ import { hyphenateProperty } from './utils/hyphenateProperty';
 import { compileCSSRules, normalizePseudoSelector } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { warnAboutUnresolvedRule } from './warnAboutUnresolvedRule';
+import { isContainerQuerySelector } from './utils/isContainerQuerySelector';
 
 /**
  * @internal
@@ -109,7 +110,12 @@ function createStringFromStyles(styles: GriffelResetStyle) {
         continue;
       }
 
-      if (isMediaQuerySelector(property) || isLayerSelector(property) || isSupportQuerySelector(property)) {
+      if (
+        isMediaQuerySelector(property) ||
+        isLayerSelector(property) ||
+        isSupportQuerySelector(property) ||
+        isContainerQuerySelector(property)
+      ) {
         const [ltrNested, rtlNested] = createStringFromStyles(value);
 
         ltrCSS += `${property}{${ltrNested}}`;

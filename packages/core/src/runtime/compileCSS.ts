@@ -11,6 +11,7 @@ export interface CompileCSSOptions {
   media: string;
   layer: string;
   support: string;
+  container: string;
 
   property: string;
   value: number | string | Array<number | string>;
@@ -75,7 +76,19 @@ function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudo
 }
 
 export function compileCSS(options: CompileCSSOptions): [string? /* ltr definition */, string? /* rtl definition */] {
-  const { className, media, layer, selectors, support, property, rtlClassName, rtlProperty, rtlValue, value } = options;
+  const {
+    className,
+    media,
+    layer,
+    selectors,
+    support,
+    property,
+    rtlClassName,
+    rtlProperty,
+    rtlValue,
+    value,
+    container,
+  } = options;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
@@ -103,6 +116,10 @@ export function compileCSS(options: CompileCSSOptions): [string? /* ltr definiti
 
   if (support) {
     cssRule = `@supports ${support} { ${cssRule} }`;
+  }
+
+  if (container) {
+    cssRule = `@container ${container} { ${cssRule} }`;
   }
 
   return compileCSSRules(cssRule) as [string?, string?];

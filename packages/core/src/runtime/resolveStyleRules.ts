@@ -17,6 +17,7 @@ import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
 import { isLayerSelector } from './utils/isLayerSelector';
 import { isNestedSelector } from './utils/isNestedSelector';
 import { isSupportQuerySelector } from './utils/isSupportQuerySelector';
+import { isContainerQuerySelector } from './utils/isContainerQuerySelector';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
 import { isObject } from './utils/isObject';
 import { getStyleBucketName } from './getStyleBucketName';
@@ -75,6 +76,7 @@ export function resolveStyleRules(
   media = '',
   layer = '',
   support = '',
+  container = '',
   cssClassesMap: CSSClassesMap = {},
   cssRulesByBucket: CSSRulesByBucket = {},
   rtlValue?: string,
@@ -139,7 +141,7 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(selectors, layer, media, support);
+      const styleBucketName = getStyleBucketName(selectors, layer, media, support, container);
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
@@ -147,6 +149,7 @@ export function resolveStyleRules(
         selectors,
         property,
         support,
+        container,
         value,
         ...rtlCompileOptions,
       });
@@ -198,6 +201,7 @@ export function resolveStyleRules(
         media,
         layer,
         support,
+        container,
         cssClassesMap,
         cssRulesByBucket,
         rtlAnimationNames.join(', '),
@@ -257,7 +261,7 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(selectors, layer, media, support);
+      const styleBucketName = getStyleBucketName(selectors, layer, media, support, container);
       const [ltrCSS, rtlCSS] = compileCSS({
         className,
         media,
@@ -265,6 +269,7 @@ export function resolveStyleRules(
         selectors,
         property,
         support,
+        container,
         value: value as Array<string | number>,
         ...rtlCompileOptions,
       });
@@ -279,6 +284,7 @@ export function resolveStyleRules(
           media,
           layer,
           support,
+          container,
           cssClassesMap,
           cssRulesByBucket,
         );
@@ -291,6 +297,7 @@ export function resolveStyleRules(
           combinedMediaQuery,
           layer,
           support,
+          container,
           cssClassesMap,
           cssRulesByBucket,
         );
@@ -303,6 +310,7 @@ export function resolveStyleRules(
           media,
           combinedLayerQuery,
           support,
+          container,
           cssClassesMap,
           cssRulesByBucket,
         );
@@ -315,6 +323,22 @@ export function resolveStyleRules(
           media,
           layer,
           combinedSupportQuery,
+          container,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      } else if (isContainerQuerySelector(property)) {
+        // TODO implement nested container queries if needed
+        // The only way to target multiple containers is to nest container queries
+        // https://developer.mozilla.org/en-US/docs/Web/CSS/@container#nested_container_queries
+        const containerQuery = property.slice(10).trim();
+        resolveStyleRules(
+          value as GriffelStyle,
+          selectors,
+          media,
+          layer,
+          support,
+          containerQuery,
           cssClassesMap,
           cssRulesByBucket,
         );

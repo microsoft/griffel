@@ -319,6 +319,8 @@ export type CSSRulesByBucket = {
   t?: CSSBucketEntry[];
   // @media rules
   m?: CSSBucketEntry[];
+  // @container rules
+  c?: CSSBucketEntry[];
 };
 
 /** @internal */
