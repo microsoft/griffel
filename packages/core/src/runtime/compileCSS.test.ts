@@ -2,7 +2,7 @@ import { compileCSS, CompileCSSOptions, normalizePseudoSelector } from './compil
 
 const defaultOptions: Pick<
   CompileCSSOptions,
-  'rtlClassName' | 'className' | 'media' | 'selectors' | 'support' | 'layer'
+  'rtlClassName' | 'className' | 'media' | 'selectors' | 'support' | 'layer' | 'container'
 > = {
   className: 'foo',
   rtlClassName: 'rtl-foo',
@@ -10,6 +10,7 @@ const defaultOptions: Pick<
   selectors: [],
   support: '',
   layer: '',
+  container: '',
 };
 
 describe('compileCSS', () => {
