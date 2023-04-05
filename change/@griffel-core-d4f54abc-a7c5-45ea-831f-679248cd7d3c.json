@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(core): hide warnings in Node (part 2)",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

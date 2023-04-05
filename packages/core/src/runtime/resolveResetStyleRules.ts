@@ -11,8 +11,8 @@ import { isObject } from './utils/isObject';
 import { hyphenateProperty } from './utils/hyphenateProperty';
 import { compileCSSRules, normalizePseudoSelector } from './compileCSS';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
-import { warnAboutUnresolvedRule } from './warnAboutUnresolvedRule';
 import { isContainerQuerySelector } from './utils/isContainerQuerySelector';
+import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 
 /**
  * @internal
