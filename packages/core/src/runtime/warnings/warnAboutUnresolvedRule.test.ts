@@ -1,15 +1,16 @@
 import { warnAboutUnresolvedRule } from './warnAboutUnresolvedRule';
+import { logError } from './logError';
+
+jest.mock('./logError', () => ({ logError: jest.fn() }));
 
 describe('warnAboutUnresolvedRule', () => {
   it('warns on a missing "&"', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation();
-
     warnAboutUnresolvedRule('div', {
       color: 'red',
       ':hover': { color: 'blue' },
     });
 
-    expect(spy.mock.calls[0][0]).toMatchInlineSnapshot(`
+    expect((logError as jest.Mock).mock.calls[0][0]).toMatchInlineSnapshot(`
       "@griffel/react: A rule was not resolved to CSS properly. Please check your \`makeStyles\` or \`makeResetStyles\` calls for following:
         makeStyles({
           [slot]: {

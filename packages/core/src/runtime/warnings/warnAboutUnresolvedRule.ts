@@ -1,10 +1,7 @@
-import type { GriffelResetStyle, GriffelStyle } from '../types';
+import type { GriffelResetStyle, GriffelStyle } from '../../types';
+import { logError } from './logError';
 
 export function warnAboutUnresolvedRule(property: string, value: GriffelStyle | GriffelResetStyle) {
-  if (process.env.NODE_ENV === 'production' || typeof document === 'undefined') {
-    return;
-  }
-
   const ruleText = JSON.stringify(value, null, 2);
   const message: string[] = [
     '@griffel/react: A rule was not resolved to CSS properly. ' +
@@ -33,6 +30,5 @@ export function warnAboutUnresolvedRule(property: string, value: GriffelStyle | 
     );
   }
 
-  // eslint-disable-next-line no-console
-  console.error(message.join('\n'));
+  logError(message.join('\n'));
 }
