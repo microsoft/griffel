@@ -1,33 +1,15 @@
 import { createRule } from '../utils/createRule';
 import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 
-const fluentLibraries = new Set([
-  '@fluentui/react-components',
-  '@fluentui/react-icons',
-  '@fluentui/react-shared-contexts',
-  '@fluentui/react-tabster',
-  '@fluentui/react-conformance',
-  '@fluentui/react-utilities',
-  '@griffel/core',
-  '@griffel/react',
-]);
+const MATCHING_PACKAGES = new Set(['@fluentui/react-components', '@griffel/core', '@griffel/react']);
+const STYLES_FILE_PATTERN = /^.*\.(styles)\.[j|t]s$/;
 
-/**
- * @param libName name of a library
- * @returns true if the library is a fluent ui v9 library, or its tmp re-export component
- */
-function isFluentuiLib(libName: string) {
-  return fluentLibraries.has(libName);
+function isMatchingPackage(packageName: string) {
+  return MATCHING_PACKAGES.has(packageName);
 }
 
-const stylesFilePattern = /^.*\.(styles)\.ts$/;
-
-/**
- * @param fileName
- * @returns check if a file name follows v9 styles file name convention
- */
 function isStylesFile(fileName: string) {
-  return stylesFilePattern.test(fileName);
+  return STYLES_FILE_PATTERN.test(fileName);
 }
 
 /**
@@ -35,8 +17,8 @@ function isStylesFile(fileName: string) {
  * @returns true if makeStyles is imported, or if the entire library is imported. Otherwise returns false
  */
 function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
-  if (
-    isFluentuiLib(node.source.value) &&
+  return (
+    isMatchingPackage(node.source.value) &&
     node.specifiers.filter(specifier => {
       // import * as ... from
       if (specifier.type === 'ImportNamespaceSpecifier') {
@@ -52,10 +34,7 @@ function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
 
       return false;
     }).length > 0
-  ) {
-    return true;
-  }
-  return false;
+  );
 }
 
 /**
@@ -90,7 +69,6 @@ export const stylesFileRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreato
     const fileName = context.getFilename();
 
     let isMakeStylesImported = false;
-
     const makeStylesDeclarations = []; // contains constants from makeStyles calls: `const useStyles = makeStyles({})`
 
     return {
