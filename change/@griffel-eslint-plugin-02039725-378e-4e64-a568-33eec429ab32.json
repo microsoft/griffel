@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: bump csstype & add new properties to no-shorthands rule",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

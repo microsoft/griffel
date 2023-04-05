@@ -48,10 +48,16 @@ export interface GriffelStylesUnsupportedCSSProperties extends Record<keyof CSS.
   borderTop: never;
   /** @deprecated Use `shorthands.borderWidth()` instead. */
   borderWidth: never;
+  /** @deprecated Use corresponding longhand properties `caretColor` and `caretShape` instead. */
+  caret: never;
   /** @deprecated Use corresponding longhand properties `columnCount` and `columnWidth` instead. */
   columns: never;
   /** @deprecated Use corresponding longhand properties such as `columnRuleWidth` and `columnRuleColor` instead. */
   columnRule: never;
+  /** @deprecated Use corresponding longhand properties `containIntrinsicWidth` and `containIntrinsicHeight` instead. */
+  containIntrinsicSize: never;
+  /** @deprecated Use corresponding longhand properties `containerName` and `containerType` instead. */
+  container: never;
   /** @deprecated Use `shorthands.flex()` instead. */
   flex: never;
   /** @deprecated Use corresponding longhand properties `flexWrap` and `flexDirection` instead. */
@@ -70,12 +76,22 @@ export interface GriffelStylesUnsupportedCSSProperties extends Record<keyof CSS.
   gridRow: never;
   /** @deprecated Use corresponding longhand properties such as `gridTemplateColumns` and `gridTemplateRows` instead. */
   gridTemplate: never;
+  /** @deprecated Use corresponding longhand properties `top`, `right`, `left` and `bottom` instead. */
+  inset: never;
+  /** @deprecated Use corresponding longhand properties such as `insetBlockStart` and `insetBlockEnd` instead. */
+  insetBlock: never;
+  /** @deprecated Use corresponding longhand properties such as `insetInlineStart` and `insetInlineEnd` instead. */
+  insetInline: never;
   /** @deprecated */
   lineClamp: never;
   /** @deprecated Use corresponding longhand properties such as `listStyleType` instead. */
   listStyle: never;
   /** @deprecated Use `shorthands.margin()` instead. */
   margin: never;
+  /** @deprecated Use `shorthands.marginBlock()` instead. */
+  marginBlock: never;
+  /** @deprecated Use `shorthands.marginInline()` instead. */
+  marginInline: never;
   /** @deprecated Use corresponding longhand properties such as `maskImage` and `maskSize` instead. */
   mask: never;
   /** @deprecated Use corresponding longhand properties such as `maskBorderSource` and `maskBorderWidth` instead. */
@@ -92,10 +108,32 @@ export interface GriffelStylesUnsupportedCSSProperties extends Record<keyof CSS.
   overscrollBehavior: never;
   /** @deprecated Use `shorthands.padding()` instead. */
   padding: never;
+  /** @deprecated Use `shorthands.paddingBlock()` instead. */
+  paddingBlock: never;
+  /** @deprecated Use `shorthands.paddingInline()` instead. */
+  paddingInline: never;
   /** @deprecated Use corresponding longhand properties `alignItems` and `justifyItems` instead. */
   placeItems: never;
+  /** @deprecated Use corresponding longhand properties `alignContent` and `justifyContent` instead. */
+  placeContent: never;
   /** @deprecated Use corresponding longhand properties `alignSelf` and `justifySelf` instead. */
   placeSelf: never;
+  /** @deprecated */
+  scrollMargin: never;
+  /** @deprecated */
+  scrollMarginBlock: never;
+  /** @deprecated */
+  scrollMarginInline: never;
+  /** @deprecated */
+  scrollPadding: never;
+  /** @deprecated */
+  scrollPaddingBlock: never;
+  /** @deprecated */
+  scrollPaddingInline: never;
+  /** @deprecated */
+  scrollSnapMargin: never;
+  /** @deprecated */
+  scrollTimeline: never;
   /** @deprecated Use corresponding longhand properties such as `textDecorationColor` and `textDecorationLine` instead. */
   textDecoration: never;
   /** @deprecated Use corresponding longhand properties `textEmphasisColor` and `textEmphasisStyle` instead. */
