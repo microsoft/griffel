@@ -47,6 +47,7 @@ export function getStyleBucketName(
   layer: string,
   media: string,
   support: string,
+  container: string,
 ): StyleBucketName {
   if (media) {
     return 'm';
@@ -55,6 +56,10 @@ export function getStyleBucketName(
   // We are grouping all the at-rules like @supports etc under `t` bucket.
   if (layer || support) {
     return 't';
+  }
+
+  if (container) {
+    return 'c';
   }
 
   if (selectors.length > 0) {

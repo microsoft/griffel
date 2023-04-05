@@ -1,19 +1,7 @@
-import * as prettier from 'prettier';
 import { resolveResetStyleRules } from './resolveResetStyleRules';
+import { griffelResetRulesSerializer } from '../common/snapshotSerializers';
 
-expect.addSnapshotSerializer({
-  test(value) {
-    return Array.isArray(value);
-  },
-  print(value) {
-    /**
-     * test function makes sure that value is the guarded type
-     */
-    const _value = value as ReturnType<typeof resolveResetStyleRules>;
-
-    return prettier.format(_value[2].join(''), { parser: 'css' }).trim();
-  },
-});
+expect.addSnapshotSerializer(griffelResetRulesSerializer);
 
 describe('resolveResetStyleRules', () => {
   it('handles base rules', () => {
@@ -96,6 +84,38 @@ describe('resolveResetStyleRules', () => {
     ).toMatchInlineSnapshot(`
       .fui-FluentProvider .rmi35r5 .foo {
         color: orange;
+      }
+    `);
+  });
+
+  it('handles named container queries', () => {
+    const result = resolveResetStyleRules({
+      '@container foo (max-width: 1px)': {
+        color: 'orange',
+      },
+    });
+
+    expect(result).toMatchInlineSnapshot(`
+      @container foo (max-width: 1px) {
+        .rmph5rz {
+          color: orange;
+        }
+      }
+    `);
+  });
+
+  it('handles unnamed container queries', () => {
+    const result = resolveResetStyleRules({
+      '@container (max-width: 1px)': {
+        color: 'orange',
+      },
+    });
+
+    expect(result).toMatchInlineSnapshot(`
+      @container (max-width: 1px) {
+        .r1ph1abo {
+          color: orange;
+        }
       }
     `);
   });

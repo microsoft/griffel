@@ -19,7 +19,7 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
      */
     const _value = value as GriffelRenderer;
 
-    const stylesheetKeys = Object.keys(_value.stylesheets) as (keyof typeof _value['stylesheets'])[];
+    const stylesheetKeys = Object.keys(_value.stylesheets) as (keyof (typeof _value)['stylesheets'])[];
 
     const rules = stylesheetKeys.reduce((acc, styleEl) => {
       const stylesheet = _value.stylesheets[styleEl];
@@ -58,5 +58,19 @@ export const griffelRulesSerializer: jest.SnapshotSerializerPlugin = {
 
       return prettier.format(acc + rules.join(''), { parser: 'css' }).trim();
     }, '');
+  },
+};
+
+export const griffelResetRulesSerializer: jest.SnapshotSerializerPlugin = {
+  test(value) {
+    return Array.isArray(value);
+  },
+  print(value) {
+    /**
+     * test function makes sure that value is the guarded type
+     */
+    const _value = value as [string, string | null, string[]];
+
+    return prettier.format(_value[2].join(''), { parser: 'css' }).trim();
   },
 };

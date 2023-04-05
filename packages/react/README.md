@@ -85,6 +85,8 @@ const useClasses = makeStyles({
     ':nth-child(2n)': { backgroundColor: '#fafafa' },
 
     '@media screen and (max-width: 992px)': { color: 'orange' },
+    '@container (max-width: 992px)': { color: 'orange' },
+    '@container foo (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
     '@layer utility': { marginBottom: '1em' },
   },

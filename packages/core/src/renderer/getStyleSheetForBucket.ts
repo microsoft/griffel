@@ -32,6 +32,8 @@ export const styleBucketOrdering: StyleBucketName[] = [
   't',
   // @media rules
   'm',
+  // @container rules
+  'c',
 ];
 
 // avoid repeatedly calling `indexOf`to determine order during new insertions

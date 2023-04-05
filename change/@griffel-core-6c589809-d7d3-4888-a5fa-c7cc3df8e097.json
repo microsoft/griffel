@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: Support CSS container queries",
+  "packageName": "@griffel/core",
+  "email": "lingfangao@hotmail.com",
+  "dependentChangeType": "patch"
+}

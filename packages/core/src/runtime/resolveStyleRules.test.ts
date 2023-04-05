@@ -435,6 +435,32 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('handles named container queries', () => {
+      const result = resolveStyleRules({ '@container foo (max-width: 1px)': { color: 'red' } });
+      expect(result).toMatchInlineSnapshot(`
+        @container foo (max-width: 1px) {
+          .fe3e8s9 {
+            color: red;
+          }
+        }
+      `);
+
+      expect(Object.keys(result[1])).toEqual(['c']);
+    });
+
+    it('handles unnamed container queries', () => {
+      const result = resolveStyleRules({ '@container (max-width: 1px)': { color: 'red' } });
+      expect(result).toMatchInlineSnapshot(`
+        @container (max-width: 1px) {
+          .fe3e8s9 {
+            color: red;
+          }
+        }
+      `);
+
+      expect(Object.keys(result[1])).toEqual(['c']);
+    });
+
     it('handles media queries', () => {
       expect(
         resolveStyleRules({
