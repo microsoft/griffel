@@ -16,10 +16,14 @@ export type GapInput = ValueOrArray<CSS.Property.Gap<GriffelStylesCSSValue>>;
 export type GridAreaInput = CSS.Property.GridArea;
 
 export type MarginInput = ValueOrArray<CSS.Property.Margin<GriffelStylesCSSValue>>;
+export type MarginBlockInput = ValueOrArray<CSS.Property.MarginBlock<GriffelStylesCSSValue>>;
+export type MarginInlineInput = ValueOrArray<CSS.Property.MarginInline<GriffelStylesCSSValue>>;
 
 export type OverflowInput = ValueOrArray<CSS.Property.Overflow>;
 
 export type PaddingInput = ValueOrArray<CSS.Property.Padding<GriffelStylesCSSValue>>;
+export type PaddingBlockInput = ValueOrArray<CSS.Property.MarginBlock<GriffelStylesCSSValue>>;
+export type PaddingInlineInput = ValueOrArray<CSS.Property.MarginInline<GriffelStylesCSSValue>>;
 
 export type InsetInput = ValueOrArray<CSS.Property.Inset<GriffelStylesCSSValue>>;
 

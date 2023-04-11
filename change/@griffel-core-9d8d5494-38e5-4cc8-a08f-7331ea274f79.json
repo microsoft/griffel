@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add shorthands for (padding|margin)(Block|Inline) and bump csstype",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
