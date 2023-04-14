@@ -1,8 +1,20 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Tue, 03 Jan 2023 13:35:21 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Apr 2023 07:58:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.0
+
+Fri, 14 Apr 2023 07:58:49 GMT
+
+### Minor changes
+
+- Added a styles-file rule for enforcing makeStyles call be only made in files that end in .styles.ts (1581488+christiango@users.noreply.github.com)
+
+### Patches
+
+- chore: bump csstype & add new properties to no-shorthands rule (olfedias@microsoft.com)
 
 ## 1.1.0
 

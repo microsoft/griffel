@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Added a styles-file rule for enforcing makeStyles call be only made in files that end in .styles.ts",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "1581488+christiango@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

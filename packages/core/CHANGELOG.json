@@ -2,6 +2,35 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Fri, 14 Apr 2023 07:58:49 GMT",
+      "tag": "@griffel/core_v1.11.0",
+      "version": "1.11.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/core",
+            "commit": "9294b8ce57657b258701f4ec35c69fe58a7845a5",
+            "comment": "feat: Support CSS container queries"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "ff7edd54e829fbeb5453383fe6a19009e44b64b2",
+            "comment": "feat: add shorthands for (padding|margin)(Block|Inline) and bump csstype"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "1012610174bf4e2dc39f6c30ac7dadba07b4cc1a",
+            "comment": "chore(core): hide warnings in Node (part 2)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Mar 2023 12:45:13 GMT",
       "tag": "@griffel/core_v1.10.1",
       "version": "1.10.1",

@@ -2,6 +2,29 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Fri, 14 Apr 2023 07:58:49 GMT",
+      "tag": "@griffel/eslint-plugin_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "ff7edd54e829fbeb5453383fe6a19009e44b64b2",
+            "comment": "chore: bump csstype & add new properties to no-shorthands rule"
+          }
+        ],
+        "minor": [
+          {
+            "author": "1581488+christiango@users.noreply.github.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "02dff6b0ae8093ee869514c840a2ac8123736475",
+            "comment": "Added a styles-file rule for enforcing makeStyles call be only made in files that end in .styles.ts"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Mar 2023 14:51:11 GMT",
       "tag": "@griffel/eslint-plugin_v1.1.0",
       "version": "1.1.0",

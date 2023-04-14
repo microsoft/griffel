@@ -1,8 +1,21 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 29 Mar 2023 12:45:13 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Apr 2023 07:58:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.11.0
+
+Fri, 14 Apr 2023 07:58:49 GMT
+
+### Minor changes
+
+- feat: Support CSS container queries (lingfangao@hotmail.com)
+- feat: add shorthands for (padding|margin)(Block|Inline) and bump csstype (olfedias@microsoft.com)
+
+### Patches
+
+- chore(core): hide warnings in Node (part 2) (olfedias@microsoft.com)
 
 ## 1.10.1
 
