@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Tue, 25 Apr 2023 14:34:44 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.11",
+      "version": "0.3.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "b7b8ccddbc7681cdb9894d7415cd51ea29320145",
+            "comment": "fix: cleanup imports properly"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Apr 2023 07:58:49 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.10",
       "version": "0.3.10",

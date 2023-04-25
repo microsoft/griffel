@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Fri, 14 Apr 2023 07:58:49 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Apr 2023 14:34:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.11
+
+Tue, 25 Apr 2023 14:34:44 GMT
+
+### Patches
+
+- fix: cleanup imports properly (olfedias@microsoft.com)
 
 ## 0.3.10
 
