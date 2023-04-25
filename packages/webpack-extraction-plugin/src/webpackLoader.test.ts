@@ -192,7 +192,9 @@ describe('webpackLoader', () => {
 
   // Assets
   testFixture('assets');
+  testFixture('assets-flip');
   testFixture('assets-multiple');
+
   testFixture('reset-assets');
 
   // Ensures that a file without __styles calls remains unprocessed

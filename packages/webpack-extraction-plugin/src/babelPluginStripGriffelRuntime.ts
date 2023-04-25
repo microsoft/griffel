@@ -97,6 +97,8 @@ function getReferencePaths(
 }
 
 function inlineAssetImports(argumentPath: NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression>) {
+  const importsToRemove = new Set<NodePath<t.ImportDeclaration>>();
+
   argumentPath.traverse({
     TemplateLiteral(literalPath) {
       const expressionPaths = literalPath.get('expressions');
@@ -137,9 +139,14 @@ function inlineAssetImports(argumentPath: NodePath<t.ObjectExpression> | NodePat
         }
 
         expressionPath.replaceWith(t.stringLiteral(importDeclarationPath.get('source').node.value));
-        importDeclarationPath.remove();
+        importsToRemove.add(importDeclarationPath);
       });
     },
+  });
+
+  // It's unsafe to remove imports in the middle of a traversal as imports can be reused between CSS rules
+  importsToRemove.forEach(importDeclarationPath => {
+    importDeclarationPath.remove();
   });
 }
 
