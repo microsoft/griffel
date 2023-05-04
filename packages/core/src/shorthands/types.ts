@@ -34,3 +34,8 @@ export type TransitionDurationInput = CSS.Property.TransitionDuration;
 export type TransitionDelayInput = CSS.Property.TransitionDelay;
 export type TransitionTimingFunctionInput = CSS.Property.TransitionTimingFunction;
 export type TransitionGlobalInput = CSS.Globals;
+
+export type TextDecorationStyleInput = CSS.Property.TextDecorationStyle;
+export type TextDecorationLineInput = ValueOrArray<CSS.Property.TextDecorationLine>;
+export type TextDecorationColorInput = ValueOrArray<CSS.Property.TextDecorationColor>;
+export type TextDecorationThicknessInput = ValueOrArray<CSS.Property.TextDecorationThickness>;
