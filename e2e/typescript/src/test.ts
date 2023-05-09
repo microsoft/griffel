@@ -68,4 +68,6 @@ async function performTest(tsVersion: string) {
   await performTest('3.9');
   await performTest('4.1');
   await performTest('4.4');
+  await performTest('4.9');
+  await performTest('5.0');
 })();
