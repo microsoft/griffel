@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: bump stylis",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
