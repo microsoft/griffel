@@ -1,7 +1,7 @@
-import { compileCSS, CompileCSSOptions, normalizePseudoSelector } from './compileCSS';
+import { compileAtomicCSSRule, CompileAtomicCSSOptions, normalizePseudoSelector } from './compileAtomicCSSRule';
 
 const defaultOptions: Pick<
-  CompileCSSOptions,
+  CompileAtomicCSSOptions,
   'rtlClassName' | 'className' | 'media' | 'selectors' | 'support' | 'layer' | 'container'
 > = {
   className: 'foo',
@@ -13,10 +13,10 @@ const defaultOptions: Pick<
   container: '',
 };
 
-describe('compileCSS', () => {
+describe('compileAtomicCSSRule', () => {
   it('handles pseudo', () => {
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
         selectors: [':hover'],
         property: 'color',
@@ -28,7 +28,7 @@ describe('compileCSS', () => {
       ]
     `);
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
         selectors: [':focus:hover'],
         property: 'color',
@@ -43,7 +43,7 @@ describe('compileCSS', () => {
 
   it('handles array of values', () => {
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
         property: 'color',
         value: ['red', 'blue'],
@@ -57,7 +57,7 @@ describe('compileCSS', () => {
 
   it('handles at-rules', () => {
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
         media: '(max-width: 100px)',
         property: 'color',
@@ -69,7 +69,7 @@ describe('compileCSS', () => {
       ]
     `);
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
         support: '(display: table-cell)',
         property: 'color',
@@ -84,7 +84,7 @@ describe('compileCSS', () => {
 
   it('handles rtl properties', () => {
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
 
         property: 'paddingLeft',
@@ -103,7 +103,7 @@ describe('compileCSS', () => {
 
   it('handles rtl properties with pseudo selectors', () => {
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
         selectors: [':before'],
 
@@ -123,7 +123,7 @@ describe('compileCSS', () => {
 
   it('handles rtl properties with fallback values', () => {
     expect(
-      compileCSS({
+      compileAtomicCSSRule({
         ...defaultOptions,
         property: 'paddingLeft',
         value: [0, '10px'],
@@ -141,7 +141,7 @@ describe('compileCSS', () => {
   describe('global', () => {
     it('compiles global rules', () => {
       expect(
-        compileCSS({
+        compileAtomicCSSRule({
           ...defaultOptions,
           selectors: [':global(body)'],
           property: 'color',
@@ -153,7 +153,7 @@ describe('compileCSS', () => {
       ]
     `);
       expect(
-        compileCSS({
+        compileAtomicCSSRule({
           ...defaultOptions,
           selectors: [':global(.fui-FluentProvider)', '& .focus:hover'],
           property: 'color',
@@ -168,7 +168,7 @@ describe('compileCSS', () => {
 
     it('compiles global rules with RTL', () => {
       expect(
-        compileCSS({
+        compileAtomicCSSRule({
           ...defaultOptions,
           selectors: [':global(body)'],
           property: 'paddingLeft',

@@ -2,17 +2,12 @@ import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
-import {
-  resolveStyleRulesForSlots,
-  CSSRulesByBucket,
-  StyleBucketName,
-  GriffelStyle,
-  resolveResetStyleRules,
-} from '@griffel/core';
+import { resolveStyleRulesForSlots, GriffelStyle, resolveResetStyleRules } from '@griffel/core';
 import * as path from 'path';
 
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
 import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
+import { dedupeCSSRules } from './utils/dedupeCSSRules';
 import { evaluatePaths } from './utils/evaluatePaths';
 import { BabelPluginOptions } from './types';
 import { validateOptions } from './validateOptions';
@@ -105,20 +100,6 @@ function isRequireDeclarator(
   }
 
   return false;
-}
-
-/**
- * Rules that are returned by `resolveStyles()` are not deduplicated.
- * It's critical to filter out duplicates for build-time transform to avoid duplicated rules in a bundle.
- */
-function dedupeCSSRules(cssRules: CSSRulesByBucket): CSSRulesByBucket {
-  (Object.keys(cssRules) as StyleBucketName[]).forEach(styleBucketName => {
-    cssRules[styleBucketName] = cssRules[styleBucketName]!.filter(
-      (rule, index, rules) => rules.indexOf(rule) === index,
-    );
-  });
-
-  return cssRules;
 }
 
 export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<BabelPluginState>>((api, options) => {

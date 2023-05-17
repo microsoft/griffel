@@ -44,6 +44,11 @@ pluginTester({
       },
     },
     {
+      title: 'at rules',
+      fixture: path.resolve(fixturesDir, 'at-rules', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'at-rules', 'output.ts'),
+    },
+    {
       title: 'multiple declarations',
       fixture: path.resolve(fixturesDir, 'multiple-declarations', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'multiple-declarations', 'output.ts'),
