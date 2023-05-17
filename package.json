@@ -152,7 +152,7 @@
     "enhanced-resolve": "^5.8.2",
     "rtl-css-js": "^1.16.1",
     "source-map-js": "1.0.2",
-    "stylis": "^4.0.13",
+    "stylis": "^4.2.0",
     "tslib": "^2.1.0"
   },
   "resolutions": {

@@ -158,8 +158,10 @@ describe('resolveResetStyleRules', () => {
 
     expect(result).toMatchInlineSnapshot(`
       @layer utilities {
-        color: orange;
-        :focus {
+        .rvhnavh {
+          color: orange;
+        }
+        .rvhnavh:focus {
           color: yellow;
         }
       }
