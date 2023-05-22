@@ -40,7 +40,9 @@ npm install @griffel/react
 yarn add @griffel/react
 ```
 
-[Read more](./packages/react)
+- [Quick start](https://griffel.js.org/react/install)
+- [API guide](https://griffel.js.org/react/api/make-styles)
+- [README](./packages/react)
 
 ## Learn more?
 
