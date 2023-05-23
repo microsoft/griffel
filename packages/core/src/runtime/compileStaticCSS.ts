@@ -4,5 +4,5 @@ import { compileCSSRules } from './compileCSSRules';
 
 export function compileStaticCSS(property: string, value: GriffelStaticStyle): string {
   const cssRule = `${property} {${cssifyObject(value)}}`;
-  return compileCSSRules(cssRule)[0];
+  return compileCSSRules(cssRule, false)[0];
 }

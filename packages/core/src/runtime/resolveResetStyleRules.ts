@@ -139,14 +139,14 @@ export function resolveResetStyleRules(styles: GriffelResetStyle): [string, stri
   const [ltrRule, rtlRule] = createStringFromStyles(styles);
 
   const ltrClassName = RESET_HASH_PREFIX + hashString(ltrRule);
-  const ltrCSS = compileCSSRules(`.${ltrClassName}{${ltrRule}}`);
+  const ltrCSS = compileCSSRules(`.${ltrClassName}{${ltrRule}}`, false);
 
   if (ltrRule === rtlRule) {
     return [ltrClassName, null, ltrCSS];
   }
 
   const rtlClassName = RESET_HASH_PREFIX + hashString(rtlRule);
-  const rtlCSS = compileCSSRules(`.${rtlClassName}{${rtlRule}}`);
+  const rtlCSS = compileCSSRules(`.${rtlClassName}{${rtlRule}}`, false);
 
   return [ltrClassName, rtlClassName, ltrCSS.concat(rtlCSS)];
 }

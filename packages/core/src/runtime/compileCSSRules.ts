@@ -6,7 +6,7 @@ import { sortClassesInAtRulesPlugin } from './stylis/sortClassesInAtRulesPlugin'
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 function noop() {}
 
-export function compileCSSRules(cssRules: string, sortClassesInAtRules = false): string[] {
+export function compileCSSRules(cssRules: string, sortClassesInAtRules: boolean): string[] {
   const rules: string[] = [];
 
   serialize(

@@ -15,6 +15,9 @@ describe('dedupeCSSRules', () => {
   it('dedupes rules with metadata', () => {
     const rules: CSSRulesByBucket = {
       m: [
+        ['@media (min-width: 480px) { .foo { color: red; } }', { m: '(min-width: 480px)' }],
+        ['@media (min-width: 480px) { .baz { color: pink; } }', { m: '(min-width: 480px)' }],
+
         ['@media (min-width: 600px) { .foo { color: red; } }', { m: '(min-width: 600px)' }],
         ['@media (min-width: 600px) { .foo { color: red; } }', { m: '(min-width: 600px)' }],
         ['@media (min-width: 600px) { .baz { color: pink; } }', { m: '(min-width: 600px)' }],
@@ -23,6 +26,9 @@ describe('dedupeCSSRules', () => {
 
     expect(dedupeCSSRules(rules)).toMatchObject({
       m: [
+        ['@media (min-width: 480px) { .foo { color: red; } }', { m: '(min-width: 480px)' }],
+        ['@media (min-width: 480px) { .baz { color: pink; } }', { m: '(min-width: 480px)' }],
+
         ['@media (min-width: 600px) { .foo { color: red; } }', { m: '(min-width: 600px)' }],
         ['@media (min-width: 600px) { .baz { color: pink; } }', { m: '(min-width: 600px)' }],
       ],

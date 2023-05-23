@@ -4,7 +4,7 @@ import { compileStaticCSS } from './compileStaticCSS';
 
 export function resolveStaticStyleRules(styles: GriffelStaticStyles, result: CSSRulesByBucket = {}): CSSRulesByBucket {
   if (typeof styles === 'string') {
-    const cssRules = compileCSSRules(styles);
+    const cssRules = compileCSSRules(styles, false);
 
     for (const rule of cssRules) {
       addResolvedStyles(rule, result);
