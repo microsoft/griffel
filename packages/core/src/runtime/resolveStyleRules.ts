@@ -10,7 +10,7 @@ import {
   GriffelAnimation,
   CSSBucketEntry,
 } from '../types';
-import { compileCSS, CompileCSSOptions } from './compileCSS';
+import { compileAtomicCSSRule, CompileAtomicCSSOptions } from './compileAtomicCSSRule';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
@@ -122,7 +122,7 @@ export function resolveStyleRules(
             support,
           })
         : undefined;
-      const rtlCompileOptions: Partial<CompileCSSOptions> | undefined = flippedInRtl
+      const rtlCompileOptions: Partial<CompileAtomicCSSOptions> | undefined = flippedInRtl
         ? {
             rtlClassName,
             rtlProperty: rtlDefinition.key,
@@ -131,7 +131,7 @@ export function resolveStyleRules(
         : undefined;
 
       const styleBucketName = getStyleBucketName(selectors, layer, media, support, container);
-      const [ltrCSS, rtlCSS] = compileCSS({
+      const [ltrCSS, rtlCSS] = compileAtomicCSSRule({
         className,
         media,
         layer,
@@ -242,7 +242,7 @@ export function resolveStyleRules(
           })
         : undefined;
 
-      const rtlCompileOptions: Partial<CompileCSSOptions> | undefined = flippedInRtl
+      const rtlCompileOptions: Partial<CompileAtomicCSSOptions> | undefined = flippedInRtl
         ? {
             rtlClassName,
             rtlProperty: rtlDefinitions[0].key,
@@ -251,7 +251,7 @@ export function resolveStyleRules(
         : undefined;
 
       const styleBucketName = getStyleBucketName(selectors, layer, media, support, container);
-      const [ltrCSS, rtlCSS] = compileCSS({
+      const [ltrCSS, rtlCSS] = compileAtomicCSSRule({
         className,
         media,
         layer,

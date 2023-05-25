@@ -9,7 +9,8 @@ import { isNestedSelector } from './utils/isNestedSelector';
 import { isSupportQuerySelector } from './utils/isSupportQuerySelector';
 import { isObject } from './utils/isObject';
 import { hyphenateProperty } from './utils/hyphenateProperty';
-import { compileCSSRules, normalizePseudoSelector } from './compileCSS';
+import { normalizePseudoSelector } from './compileAtomicCSSRule';
+import { compileCSSRules } from './compileCSSRules';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { isContainerQuerySelector } from './utils/isContainerQuerySelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
@@ -138,14 +139,14 @@ export function resolveResetStyleRules(styles: GriffelResetStyle): [string, stri
   const [ltrRule, rtlRule] = createStringFromStyles(styles);
 
   const ltrClassName = RESET_HASH_PREFIX + hashString(ltrRule);
-  const ltrCSS = compileCSSRules(`.${ltrClassName}{${ltrRule}}`);
+  const ltrCSS = compileCSSRules(`.${ltrClassName}{${ltrRule}}`, false);
 
   if (ltrRule === rtlRule) {
     return [ltrClassName, null, ltrCSS];
   }
 
   const rtlClassName = RESET_HASH_PREFIX + hashString(rtlRule);
-  const rtlCSS = compileCSSRules(`.${rtlClassName}{${rtlRule}}`);
+  const rtlCSS = compileCSSRules(`.${rtlClassName}{${rtlRule}}`, false);
 
   return [ltrClassName, rtlClassName, ltrCSS.concat(rtlCSS)];
 }

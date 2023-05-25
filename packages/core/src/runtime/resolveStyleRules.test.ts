@@ -272,11 +272,11 @@ describe('resolveStyleRules', () => {
         }),
       ).toMatchInlineSnapshot(`
         @media screen and (max-width: 992px) {
-          .f1f6067w {
-            text-align: left;
-          }
           .f133ge8t {
             text-align: right;
+          }
+          .f1f6067w {
+            text-align: left;
           }
         }
       `);

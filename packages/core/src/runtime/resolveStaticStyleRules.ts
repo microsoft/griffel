@@ -1,10 +1,10 @@
-import { GriffelStaticStyles, CSSRulesByBucket } from '../types';
+import type { GriffelStaticStyles, CSSRulesByBucket } from '../types';
+import { compileCSSRules } from './compileCSSRules';
 import { compileStaticCSS } from './compileStaticCSS';
-import { compileCSSRules } from './compileCSS';
 
 export function resolveStaticStyleRules(styles: GriffelStaticStyles, result: CSSRulesByBucket = {}): CSSRulesByBucket {
   if (typeof styles === 'string') {
-    const cssRules = compileCSSRules(styles);
+    const cssRules = compileCSSRules(styles, false);
 
     for (const rule of cssRules) {
       addResolvedStyles(rule, result);

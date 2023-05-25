@@ -1,10 +1,8 @@
-import { compile, middleware, prefixer, rulesheet, serialize, stringify } from 'stylis';
-
-import { globalPlugin } from './stylis/globalPlugin';
 import { hyphenateProperty } from './utils/hyphenateProperty';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
+import { compileCSSRules } from './compileCSSRules';
 
-export interface CompileCSSOptions {
+export interface CompileAtomicCSSOptions {
   className: string;
 
   selectors: string[];
@@ -43,26 +41,6 @@ export function normalizePseudoSelector(pseudoSelector: string): string {
   );
 }
 
-export function compileCSSRules(cssRules: string): string[] {
-  const rules: string[] = [];
-
-  serialize(
-    compile(cssRules),
-    middleware([
-      globalPlugin,
-      prefixer,
-      stringify,
-
-      // 💡 we are using `.insertRule()` API for DOM operations, which does not support
-      // insertion of multiple CSS rules in a single call. `rulesheet` plugin extracts
-      // individual rules to be used with this API
-      rulesheet(rule => rules.push(rule)),
-    ]),
-  );
-
-  return rules;
-}
-
 function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudos: string[]): string {
   let cssRule = cssDeclaration;
 
@@ -75,7 +53,9 @@ function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudo
   return `${classNameSelector}{${cssRule}}`;
 }
 
-export function compileCSS(options: CompileCSSOptions): [string? /* ltr definition */, string? /* rtl definition */] {
+export function compileAtomicCSSRule(
+  options: CompileAtomicCSSOptions,
+): [string? /* ltr definition */, string? /* rtl definition */] {
   const {
     className,
     media,
@@ -122,5 +102,5 @@ export function compileCSS(options: CompileCSSOptions): [string? /* ltr definiti
     cssRule = `@container ${container} { ${cssRule} }`;
   }
 
-  return compileCSSRules(cssRule) as [string?, string?];
+  return compileCSSRules(cssRule, true) as [string?, string?];
 }
