@@ -43,8 +43,18 @@ function Component(props) {
 
 :::note
 
-Compared to native CSS order of arguments in `mergeClasses()` determines the results. This lets you control styles with JavaScript.
+Compared to native CSS, the order of arguments in `mergeClasses()` affects the results. This lets you control styles with JavaScript.
 
+Each parameter passed to `mergeClasses()` is processed in turn.
+Atomic classes are deduped and merged, and non-atomic classes (those not created with `makeStyles()`) are left alone.
+
+New class names are generated as atomic classes are deduped and merged.
+This means the order of the returned class names will be different than the order of the parameters. 
+Non-atomic class names will be first and followed by the new class names.
+
+Don't worry though, the order of the class names in the result doesn't affect the application of styles. 
+Griffel will order the styles in the stylesheet correctly. 
+If you have issues with style specificity or ordering, look at the stylesheet ordering rather than the class names.
 :::
 
 ## Incorrect usages
