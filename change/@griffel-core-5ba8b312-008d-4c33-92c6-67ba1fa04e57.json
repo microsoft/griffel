@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add shorthand function for `text-decoration`",
-  "packageName": "@griffel/core",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}

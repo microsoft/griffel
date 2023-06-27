@@ -1,8 +1,21 @@
 # Change Log - @griffel/core
 
-This log was last generated on Fri, 14 Apr 2023 07:58:49 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Jun 2023 14:18:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.12.0
+
+Tue, 27 Jun 2023 14:18:04 GMT
+
+### Minor changes
+
+- feat: add shorthand function for `text-decoration` (yuanboxue@microsoft.com)
+
+### Patches
+
+- fix: bump stylis for proper @layer support (olfedias@microsoft.com)
+- chore: sort CSS classes inside at rules (olfedias@microsoft.com)
 
 ## 1.11.0
 

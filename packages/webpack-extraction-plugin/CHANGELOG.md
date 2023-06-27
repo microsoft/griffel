@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Tue, 25 Apr 2023 14:34:44 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Jun 2023 14:18:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.12
+
+Tue, 27 Jun 2023 14:18:04 GMT
+
+### Patches
+
+- feat: add experimental_resetModuleIndexes (olfedias@microsoft.com)
+- chore: bump stylis (olfedias@microsoft.com)
+- Bump @griffel/core to v1.12.0
 
 ## 0.3.11
 

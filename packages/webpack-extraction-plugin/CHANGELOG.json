@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Tue, 27 Jun 2023 14:18:04 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.12",
+      "version": "0.3.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "02499fc94501e5f859aef982db3d9a23bc2a13bc",
+            "comment": "feat: add experimental_resetModuleIndexes"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "31bb2215926d5224ed2bd50fe9a61677a756a02f",
+            "comment": "chore: bump stylis"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.12.0",
+            "commit": "02499fc94501e5f859aef982db3d9a23bc2a13bc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 14:34:44 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.11",
       "version": "0.3.11",

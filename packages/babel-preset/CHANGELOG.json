@@ -2,6 +2,33 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Tue, 27 Jun 2023 14:18:04 GMT",
+      "tag": "@griffel/babel-preset_v1.4.14",
+      "version": "1.4.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "9126746567df4cf7ad8fb552c102f6499000264a",
+            "comment": "fix: deduplicate CSS rules in output"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "31bb2215926d5224ed2bd50fe9a61677a756a02f",
+            "comment": "chore: bump stylis"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.12.0",
+            "commit": "02499fc94501e5f859aef982db3d9a23bc2a13bc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Apr 2023 07:58:49 GMT",
       "tag": "@griffel/babel-preset_v1.4.13",
       "version": "1.4.13",

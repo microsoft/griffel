@@ -2,6 +2,35 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Tue, 27 Jun 2023 14:18:04 GMT",
+      "tag": "@griffel/core_v1.12.0",
+      "version": "1.12.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "72065bb8301dc423b9e8f0ff37d0097bc025b6c1",
+            "comment": "feat: add shorthand function for `text-decoration`"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "31bb2215926d5224ed2bd50fe9a61677a756a02f",
+            "comment": "fix: bump stylis for proper @layer support"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "9126746567df4cf7ad8fb552c102f6499000264a",
+            "comment": "chore: sort CSS classes inside at rules"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Apr 2023 07:58:49 GMT",
       "tag": "@griffel/core_v1.11.0",
       "version": "1.11.0",

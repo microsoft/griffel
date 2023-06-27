@@ -1,8 +1,18 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Fri, 14 Apr 2023 07:58:49 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Jun 2023 14:18:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.14
+
+Tue, 27 Jun 2023 14:18:04 GMT
+
+### Patches
+
+- fix: deduplicate CSS rules in output (olfedias@microsoft.com)
+- chore: bump stylis (olfedias@microsoft.com)
+- Bump @griffel/core to v1.12.0
 
 ## 1.4.13
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: deduplicate CSS rules in output",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
