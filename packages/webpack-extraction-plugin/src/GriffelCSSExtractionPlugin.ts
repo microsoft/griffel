@@ -11,6 +11,7 @@ const OPTIMIZE_CHUNKS_STAGE_ADVANCED = 10;
 
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
+  experimental_resetModuleIndexes?: boolean;
   unstable_attachToMainEntryPoint?: boolean;
 };
 
@@ -93,16 +94,50 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
   }
 }
 
+/**
+ * Updates indexes on chunk groups to follow module order. This makes order of CSS modules in chunks consistent in
+ * chunk groups and prevents warnings in mini-css-extract-plugin.
+ */
+function updateCSSModulePostIndexes(compilation: Compilation): void {
+  const griffelChunk = compilation.namedChunks.get('griffel');
+
+  if (typeof griffelChunk === 'undefined') {
+    return;
+  }
+
+  // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L693-L697
+  const cssModules = compilation.chunkGraph.getChunkModulesIterableBySourceType(griffelChunk, 'css/mini-extract');
+
+  if (typeof cssModules === 'undefined') {
+    return;
+  }
+
+  for (const cssModule of cssModules) {
+    if (!isCSSModule(cssModule)) {
+      continue;
+    }
+
+    for (const group of griffelChunk.groupsIterable) {
+      group.setModulePostOrderIndex(cssModule, compilation.moduleGraph.getPostOrderIndex(cssModule));
+    }
+  }
+}
+
 export class GriffelCSSExtractionPlugin {
   static loader = require.resolve('./webpackLoader');
 
   private readonly attachToMainEntryPoint: NonNullable<
     GriffelCSSExtractionPluginOptions['unstable_attachToMainEntryPoint']
   >;
+  private readonly resetModuleIndexes: NonNullable<
+    GriffelCSSExtractionPluginOptions['experimental_resetModuleIndexes']
+  >;
   private readonly compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
 
   constructor(options?: GriffelCSSExtractionPluginOptions) {
     this.attachToMainEntryPoint = options?.unstable_attachToMainEntryPoint ?? false;
+    this.resetModuleIndexes = options?.experimental_resetModuleIndexes ?? false;
+
     this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
   }
 
@@ -159,12 +194,14 @@ export class GriffelCSSExtractionPlugin {
         if (this.attachToMainEntryPoint) {
           const griffelChunk = compilation.namedChunks.get('griffel');
 
-          if (typeof griffelChunk === 'undefined') {
-            return;
+          if (typeof griffelChunk !== 'undefined') {
+            griffelChunk.disconnectFromGroups();
+            attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
           }
+        }
 
-          griffelChunk.disconnectFromGroups();
-          attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
+        if (this.resetModuleIndexes) {
+          updateCSSModulePostIndexes(compilation);
         }
       });
 

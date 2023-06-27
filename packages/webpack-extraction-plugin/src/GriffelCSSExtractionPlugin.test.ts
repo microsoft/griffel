@@ -67,7 +67,7 @@ async function compileSourceWithWebpack(
       ],
     },
     plugins: [
-      new GriffelCSSExtractionPlugin(),
+      new GriffelCSSExtractionPlugin(options.pluginOptions),
       new MiniCssExtractPlugin({
         filename: options.cssFilename ?? '[name].css',
       }),
@@ -103,6 +103,11 @@ async function compileSourceWithWebpack(
 
       if (stats.hasErrors()) {
         reject(stats.toJson().errors![0]);
+        return;
+      }
+
+      if (stats.hasWarnings()) {
+        reject(stats.toJson().warnings![0]);
         return;
       }
 
@@ -220,6 +225,7 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 
 describe('webpackLoader', () => {
   // Basic assertions
+  // --------------------
   testFixture('basic-rules');
   testFixture('reset');
   testFixture('reset-media');
@@ -235,9 +241,13 @@ describe('webpackLoader', () => {
   testFixture('style-buckets');
 
   // Assets
+  // --------------------
   testFixture('assets');
   testFixture('assets-multiple');
   testFixture('reset-assets');
+
+  // Config
+  // --------------------
 
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
@@ -269,6 +279,9 @@ describe('webpackLoader', () => {
     },
   });
 
+  // Compatibility
+  // --------------------
+
   // "pathinfo" adds comments with paths to output
   testFixture('basic-rules', { webpackConfig: { output: { pathinfo: true } } });
 
@@ -276,9 +289,16 @@ describe('webpackLoader', () => {
   testFixture('with-css');
 
   // Chunks
+  // --------------------
   testFixture('with-chunks');
 
+  // A fixture that creates a different modules order in different chunks groups
+  testFixture('with-chunks-order', {
+    pluginOptions: { experimental_resetModuleIndexes: true },
+  });
+
   // Unstable
+  // --------------------
   testFixture('unstable-attach-to-main', {
     pluginOptions: { unstable_attachToMainEntryPoint: true },
     webpackConfig: {
