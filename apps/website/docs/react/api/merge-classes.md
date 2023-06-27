@@ -13,11 +13,11 @@ import { mergeClasses, makeStyles } from '@griffel/react';
 
 const useClasses = makeStyles({
   blueBold: {
-    color: 'blue',
-    fontWeight: 'bold',
+    color: 'blue', // className "color-blue"
+    fontWeight: 'bold', // className "font-weight-bold"
   },
   red: {
-    color: 'red',
+    color: 'red', // className "color-red"
   },
 });
 
@@ -29,23 +29,60 @@ function Component(props) {
 
   const firstClassName = mergeClasses(isBold && classes.blueBold, classes.red);
   // 👆 { color: 'red', fontWeight: 'bold' }
+  //    className "color-red font-weight-bold"
   const secondClassName = mergeClasses(classes.red, isBold && classes.blueBold);
   // 👆 { color: 'blue', fontWeight: 'bold' }
-
-  return (
-    <>
-      <div className={firstClassName} />
-      <div className={secondClassName} />
-    </>
-  );
+  //    className "color-blue font-weight-bold"
 }
 ```
 
 :::note
 
-Compared to native CSS order of arguments in `mergeClasses()` determines the results. This lets you control styles with JavaScript.
+```mermaid
+classDiagram
+    direction BT
+
+    Result <-- Input1
+    Result <-- Input2
+
+
+    Result : color blue
+    Result : fontWeight bold
+
+    class Input1 {
+      color red
+      fontWeight bold
+    }
+    class Input2 {
+      color blue
+    }
+```
+
+Compared to native CSS, the order of arguments in `mergeClasses()` affects the results. This lets you control styles with JavaScript.
 
 :::
+
+In CSS the order of the class names doesn't affect the application of styles. If you have issues with style specificity or ordering, look at the generated CSS rather than the class names.
+
+Griffel performs CSS rule ordering, check [the order of pseudo classes](react/guides/atomic-css#lvfha-order-of-pseudo-classes).
+
+```jsx
+import { mergeClasses, makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  setA: {},
+  setB: {},
+});
+
+function Component() {
+  const classes = useClasses();
+
+  // ℹ️ Non-atomic class names will be first and followed by the new class names
+
+  const className = mergeClasses('foo', classes.setA, classes.setB, 'bar');
+  // 👆 className "foo bar ...atomic classes..."
+}
+```
 
 ## Incorrect usages
 
