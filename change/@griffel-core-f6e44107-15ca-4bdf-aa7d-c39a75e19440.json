@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: export textDecoration shorthand",
-  "packageName": "@griffel/core",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}

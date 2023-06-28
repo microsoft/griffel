@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 28 Jun 2023 16:07:13 GMT",
+      "tag": "@griffel/core_v1.12.1",
+      "version": "1.12.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "d551a7f5a11b4123d1b353cab37e85058de17eb4",
+            "comment": "fix: export textDecoration shorthand"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Jun 2023 14:18:04 GMT",
       "tag": "@griffel/core_v1.12.0",
       "version": "1.12.0",

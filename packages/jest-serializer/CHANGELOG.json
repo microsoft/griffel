@@ -2,6 +2,21 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Wed, 28 Jun 2023 16:07:13 GMT",
+      "tag": "@griffel/jest-serializer_v1.1.11",
+      "version": "1.1.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.12.1",
+            "commit": "d551a7f5a11b4123d1b353cab37e85058de17eb4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Jun 2023 14:18:04 GMT",
       "tag": "@griffel/jest-serializer_v1.1.10",
       "version": "1.1.10",
