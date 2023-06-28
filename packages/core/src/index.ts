@@ -23,6 +23,7 @@ import {
   inset,
   outline,
   transition,
+  textDecoration,
 } from './shorthands/index';
 
 export const shorthands = {
