@@ -23,6 +23,7 @@ import {
   inset,
   outline,
   transition,
+  textDecoration,
 } from './shorthands/index';
 
 export const shorthands = {
@@ -48,6 +49,7 @@ export const shorthands = {
   inset,
   outline,
   transition,
+  textDecoration,
 };
 
 export { createDOMRenderer } from './renderer/createDOMRenderer';
