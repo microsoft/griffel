@@ -2,6 +2,7 @@ import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
 import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
 import { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
+import { safeInsertRule } from './safeInsertRule';
 
 let lastIndex = 0;
 
@@ -88,20 +89,12 @@ export function createDOMRenderer(
             debugData.addCSSRule(ruleCSS);
           }
 
-          try {
-            if (unstable_filterCSSRule) {
-              if (unstable_filterCSSRule(ruleCSS)) {
-                sheet.insertRule(ruleCSS);
-              }
-            } else {
-              sheet.insertRule(ruleCSS);
+          if (unstable_filterCSSRule) {
+            if (unstable_filterCSSRule(ruleCSS)) {
+              safeInsertRule(sheet, ruleCSS);
             }
-          } catch (e) {
-            // We've disabled these warnings due to false-positive errors with browser prefixes
-            if (process.env.NODE_ENV !== 'production' && !ignoreSuffixesRegex.test(ruleCSS)) {
-              // eslint-disable-next-line no-console
-              console.error(`There was a problem inserting the following rule: "${ruleCSS}"`, e);
-            }
+          } else {
+            safeInsertRule(sheet, ruleCSS);
           }
         }
       }
@@ -114,16 +107,3 @@ export function createDOMRenderer(
 
   return renderer;
 }
-
-/**
- * Suffixes to be ignored in case of error
- */
-const ignoreSuffixes = [
-  '-moz-placeholder',
-  '-moz-focus-inner',
-  '-moz-focusring',
-  '-ms-input-placeholder',
-  '-moz-read-write',
-  '-moz-read-only',
-].join('|');
-const ignoreSuffixesRegex = new RegExp(`:(${ignoreSuffixes})`);

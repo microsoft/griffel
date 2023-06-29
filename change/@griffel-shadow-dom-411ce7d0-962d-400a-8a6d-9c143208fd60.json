@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: initial release",
+  "packageName": "@griffel/shadow-dom",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

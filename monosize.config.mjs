@@ -17,6 +17,7 @@ export default {
         ...config.resolve,
         alias: {
           '@griffel/core': path.resolve(dirname, './dist/packages/core/index.esm.js'),
+          '@griffel/shadow-dom': path.resolve(dirname, './dist/packages/shadow-dom/index.esm.js'),
           '@griffel/react': path.resolve(dirname, './dist/packages/react/index.esm.js'),
         },
       },
