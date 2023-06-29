@@ -1,0 +1,26 @@
+{
+  "name": "@griffel/shadow-dom",
+  "entries": [
+    {
+      "date": "Thu, 29 Jun 2023 12:49:54 GMT",
+      "tag": "@griffel/shadow-dom_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "105857b021ee1d471efc29037a20601fb80bc72a",
+            "comment": "feat: initial release"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/shadow-dom",
+            "comment": "Bump @griffel/core to v1.12.2",
+            "commit": "105857b021ee1d471efc29037a20601fb80bc72a"
+          }
+        ]
+      }
+    }
+  ]
+}

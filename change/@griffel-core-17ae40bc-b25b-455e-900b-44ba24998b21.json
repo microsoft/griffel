@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: export safeInsertRule()",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
