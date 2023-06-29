@@ -14262,6 +14262,7 @@ __metadata:
     react-dom: 18.2.0
     react-fela: 12.2.0
     react-refresh: ^0.10.0
+    react-shadow: ^20.2.0
     react-test-renderer: 18.0.0
     rtl-css-js: ^1.16.1
     simple-git-hooks: 2.7.0
@@ -14917,6 +14918,13 @@ __metadata:
   dependencies:
     ms: ^2.0.0
   checksum: 9c7a74a2827f9294c009266c82031030eae811ca87b0da3dceb8d6071b9bde22c9f3daef0469c3c533cc67a97d8a167cd9fc0389350e5f415f61a79b171ded16
+  languageName: node
+  linkType: hard
+
+"humps@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "humps@npm:2.0.1"
+  checksum: 7d5a674cfca2f34c04562f6fd0d129b4c43a5caf85fcc1c9eacf5d0729554c9375db362c4232519b37369c94dd2560d85f96ad4091a8fbf4af4e625ab5214a30
   languageName: node
   linkType: hard
 
@@ -21321,6 +21329,19 @@ __metadata:
   peerDependencies:
     react: ">=15"
   checksum: 52a9f28fa97577fda18a8ed2922b658704eafe873e444fe07202640d55d9e81e67c03efd2b2a5b80e3a80e8be8352df826a227ce5f42b33b91bef853c74d4841
+  languageName: node
+  linkType: hard
+
+"react-shadow@npm:^20.2.0":
+  version: 20.2.0
+  resolution: "react-shadow@npm:20.2.0"
+  dependencies:
+    humps: ^2.0.1
+  peerDependencies:
+    prop-types: ^15.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: ab3a7c2231cfc63f309646e94380aff585834bac87ce71a0d41a23ddb841f9b445084fed5c9364cebe696241992d25898ad58bf11104c44cd345aa36cdb1e4e8
   languageName: node
   linkType: hard
 

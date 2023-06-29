@@ -55,6 +55,7 @@ export const shorthands = {
 export { createDOMRenderer } from './renderer/createDOMRenderer';
 export type { CreateDOMRendererOptions } from './renderer/createDOMRenderer';
 export { rehydrateRendererCache } from './renderer/rehydrateRendererCache';
+export { safeInsertRule } from './renderer/safeInsertRule';
 
 export { mergeClasses } from './mergeClasses';
 export { makeStyles } from './makeStyles';
