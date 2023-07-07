@@ -62,6 +62,40 @@ describe('getStyleSheetForBucket', () => {
     expect(styleElementOrder).toEqual(styleBucketOrdering);
   });
 
+  it('finds a position in media queries', () => {
+    const target = createFakeDocument();
+    const renderer = createDOMRenderer();
+
+    getStyleSheetForBucket('d', target, null, renderer);
+    getStyleSheetForBucket('t', target, null, renderer);
+    getStyleSheetForBucket('c', target, null, renderer);
+
+    getStyleSheetForBucket('m', target, null, renderer, { m: 'screen and (prefers-reduced-motion: reduce)' });
+    getStyleSheetForBucket('m', target, null, renderer, { m: '(forced-colors: active)' });
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-make-styles-bucket="d"
+        />,
+        <style
+          data-make-styles-bucket="t"
+        />,
+        <style
+          data-make-styles-bucket="m"
+          media="(forced-colors: active)"
+        />,
+        <style
+          data-make-styles-bucket="m"
+          media="screen and (prefers-reduced-motion: reduce)"
+        />,
+        <style
+          data-make-styles-bucket="c"
+        />,
+      ]
+    `);
+  });
+
   it('sets "data-make-styles-bucket" attribute in order with media queries', () => {
     const target = createFakeDocument();
     const mediaQueryOrder = ['(max-width: 1px)', '(max-width: 2px)', '(max-width: 3px)', '(max-width: 4px)'];

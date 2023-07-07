@@ -40,18 +40,18 @@ function getCSSStyleSheetForBucket(
   return cssSheetsCache[styleSheetKey];
 }
 
-function insertAfter<T extends CSSStyleSheet | ExtendedCSSStyleSheet>(
+function insertBefore<T extends CSSStyleSheet | ExtendedCSSStyleSheet>(
   arr: T[],
   sheetToInsert: T,
   targetSheet: T | null,
 ): T[] {
   if (targetSheet === null) {
-    return [sheetToInsert, ...arr];
+    return [...arr, sheetToInsert];
   }
 
   const index = arr.indexOf(targetSheet);
 
-  return [...arr.slice(0, index + 1), sheetToInsert, ...arr.slice(index + 1)];
+  return [...arr.slice(0, index), sheetToInsert, ...arr.slice(index)];
 }
 
 export function createShadowDOMRenderer(shadowRoot: ShadowRoot) {
@@ -85,8 +85,8 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot) {
             styleSheet => {
               const targetStyleSheet = findInsertionPoint(renderer, styleSheet);
 
-              renderer.adoptedStyleSheets = insertAfter(renderer.adoptedStyleSheets, styleSheet, targetStyleSheet);
-              shadowRoot.adoptedStyleSheets = insertAfter(shadowRoot.adoptedStyleSheets, styleSheet, targetStyleSheet);
+              renderer.adoptedStyleSheets = insertBefore(renderer.adoptedStyleSheets, styleSheet, targetStyleSheet);
+              shadowRoot.adoptedStyleSheets = insertBefore(shadowRoot.adoptedStyleSheets, styleSheet, targetStyleSheet);
             },
           );
 
