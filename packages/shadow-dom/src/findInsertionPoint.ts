@@ -29,7 +29,7 @@ export function findInsertionPoint(
     const styleElement = styleSheets[i];
 
     if (comparer(styleElement) > 0) {
-      return styleSheets[i + 1] || null;
+      return styleSheets[i + 1] ?? null;
     }
   }
 
