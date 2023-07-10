@@ -33,24 +33,28 @@ describe('findInsertionPoint', () => {
   });
 
   it('finds a position at beginning', () => {
-    const renderer = createRendererMock([createStyleSheetMock('d', {}), createStyleSheetMock('a', {})]);
+    const renderer = createRendererMock([
+      createStyleSheetMock('d', {}),
+      createStyleSheetMock('a', {}),
+      createStyleSheetMock('t', {}),
+    ]);
     const styleSheet = createStyleSheetMock('r', {});
 
-    expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
+    expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 'd');
   });
 
   it('finds a position in middle', () => {
-    const renderer = createRendererMock([createStyleSheetMock('d', {}), createStyleSheetMock('a', {})]);
+    const renderer = createRendererMock([createStyleSheetMock('d', {}), createStyleSheetMock('t', {})]);
     const styleSheet = createStyleSheetMock('h', {});
 
-    expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 'd');
+    expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 't');
   });
 
   it('finds a position at end', () => {
     const renderer = createRendererMock([createStyleSheetMock('d', {}), createStyleSheetMock('a', {})]);
     const styleSheet = createStyleSheetMock('t', {});
 
-    expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 'a');
+    expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
   });
 
   describe('media queries', () => {
@@ -65,21 +69,21 @@ describe('findInsertionPoint', () => {
       const renderer = createRendererMock([createStyleSheetMock('c', {})]);
       const styleSheet = createStyleSheetMock('m', { m: '(max-width: 3px)' });
 
-      expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
+      expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 'c');
     });
 
     it('finds a position in middle', () => {
       const renderer = createRendererMock([createStyleSheetMock('t', {}), createStyleSheetMock('c', {})]);
       const styleSheet = createStyleSheetMock('m', { m: '(max-width: 3px)' });
 
-      expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 't');
+      expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 'c');
     });
 
     it('finds a position at end', () => {
       const renderer = createRendererMock([createStyleSheetMock('d', {}), createStyleSheetMock('a', {})]);
       const styleSheet = createStyleSheetMock('m', { m: '(max-width: 3px)' });
 
-      expect(findInsertionPoint(renderer, styleSheet)).toHaveProperty('bucketName', 'a');
+      expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
     });
 
     it('finds a position in media queries', () => {
@@ -94,12 +98,24 @@ describe('findInsertionPoint', () => {
       const resultA = findInsertionPoint(renderer, createStyleSheetMock('m', { m: '(max-width: 2px)' }));
 
       expect(resultA).toHaveProperty('bucketName', 'm');
-      expect(resultA).toHaveProperty('metadata.m', '(max-width: 1px)');
+      expect(resultA).toHaveProperty('metadata.m', '(max-width: 3px)');
 
       const resultB = findInsertionPoint(renderer, createStyleSheetMock('m', { m: '(max-width: 4px)' }));
 
-      expect(resultB).toHaveProperty('bucketName', 'm');
-      expect(resultB).toHaveProperty('metadata.m', '(max-width: 3px)');
+      expect(resultB).toBe(null);
+    });
+
+    it('finds a position in media queries', () => {
+      const renderer = createRendererMock([
+        createStyleSheetMock('d', {}),
+        createStyleSheetMock('t', {}),
+        createStyleSheetMock('m', { m: '(prefers-reduced-motion: reduce)' }),
+      ]);
+
+      const resultA = findInsertionPoint(renderer, createStyleSheetMock('m', { m: '(forced-colors: active)' }));
+
+      expect(resultA).toHaveProperty('bucketName', 'm');
+      expect(resultA).toHaveProperty('metadata.m', '(prefers-reduced-motion: reduce)');
     });
   });
 });
