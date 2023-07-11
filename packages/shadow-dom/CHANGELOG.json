@@ -2,6 +2,21 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Tue, 11 Jul 2023 15:16:01 GMT",
+      "tag": "@griffel/shadow-dom_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "58b1c70f0879ba93605cd86070de75939c01a224",
+            "comment": "fix: update sorting logic"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Jun 2023 12:49:54 GMT",
       "tag": "@griffel/shadow-dom_v0.1.0",
       "version": "0.1.0",

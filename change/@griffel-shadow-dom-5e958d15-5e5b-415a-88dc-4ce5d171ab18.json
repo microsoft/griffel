@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: update sorting logic",
-  "packageName": "@griffel/shadow-dom",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
