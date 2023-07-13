@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 29 Jun 2023 12:49:54 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Jul 2023 11:31:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.13.0
+
+Thu, 13 Jul 2023 11:31:22 GMT
+
+### Minor changes
+
+- feat: Prefix according to browser support matrix (lingfangao@hotmail.com)
 
 ## 1.12.2
 
