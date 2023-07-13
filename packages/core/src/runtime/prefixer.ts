@@ -55,6 +55,7 @@ export function prefix(value: string, length: number, children?: Element[]): str
     // background, background-image
     case 5495:
     case 3959:
+      // eslint-disable-next-line no-useless-concat
       return replace(value, /(image-set\([^]*)/, WEBKIT + '$1' + '$`$1');
     // (margin|padding)-inline-(start|end)
     case 4095:
@@ -86,6 +87,7 @@ export function prefix(value: string, length: number, children?: Element[]): str
                 replace(
                   value,
                   /(.+:)(.+)-([^]+)/,
+                  // eslint-disable-next-line no-useless-concat, eqeqeq
                   '$1' + WEBKIT + '$2-$3' + '$1' + MOZ + (charat(value, length + 3) == 108 ? '$3' : '$2-$3'),
                 ) + value
               );
