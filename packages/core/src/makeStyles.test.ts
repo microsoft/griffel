@@ -106,76 +106,32 @@ describe('makeStyles', () => {
     expect(computeClasses({ dir: 'rtl', renderer }).root).toBe('___3kh5ri0 f1fp4ujf f1cpbl36 f1t9cprh');
 
     expect(renderer).toMatchInlineSnapshot(`
-      @-webkit-keyframes f1q8eu9e {
-        from {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        to {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-      @-webkit-keyframes f55c0se {
-        from {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        to {
-          -webkit-transform: rotate(-360deg);
-          -moz-transform: rotate(-360deg);
-          -ms-transform: rotate(-360deg);
-          transform: rotate(-360deg);
-        }
-      }
       @keyframes f1q8eu9e {
         from {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
           transform: rotate(0deg);
         }
         to {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
           transform: rotate(360deg);
         }
       }
       @keyframes f55c0se {
         from {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
           transform: rotate(0deg);
         }
         to {
-          -webkit-transform: rotate(-360deg);
-          -moz-transform: rotate(-360deg);
-          -ms-transform: rotate(-360deg);
           transform: rotate(-360deg);
         }
       }
       .f1g6ul6r {
-        -webkit-animation-name: f1q8eu9e;
         animation-name: f1q8eu9e;
       }
       .f1fp4ujf {
-        -webkit-animation-name: f55c0se;
         animation-name: f55c0se;
       }
       .f1cpbl36 {
-        -webkit-animation-iteration-count: infinite;
         animation-iteration-count: infinite;
       }
       .f1t9cprh {
-        -webkit-animation-duration: 5s;
         animation-duration: 5s;
       }
     `);

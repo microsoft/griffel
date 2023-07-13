@@ -1,7 +1,8 @@
-import { compile, middleware, prefixer, rulesheet, serialize, stringify } from 'stylis';
+import { compile, middleware, rulesheet, serialize, stringify } from 'stylis';
 
 import { globalPlugin } from './stylis/globalPlugin';
 import { sortClassesInAtRulesPlugin } from './stylis/sortClassesInAtRulesPlugin';
+import { prefixer } from './prefixer';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 function noop() {}
@@ -14,6 +15,7 @@ export function compileCSSRules(cssRules: string, sortClassesInAtRules: boolean)
     middleware([
       globalPlugin,
       sortClassesInAtRules ? sortClassesInAtRulesPlugin : noop,
+      // prefixer,
       prefixer,
       stringify,
 

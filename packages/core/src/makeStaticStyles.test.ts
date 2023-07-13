@@ -30,7 +30,6 @@ describe('makeStaticStyles', () => {
     expect(renderer).toMatchInlineSnapshot(`
       body {
         background: blue;
-        -webkit-transition: all 4s ease;
         transition: all 4s ease;
       }
       .foo {

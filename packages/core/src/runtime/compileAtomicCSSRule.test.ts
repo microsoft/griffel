@@ -14,6 +14,53 @@ const defaultOptions: Pick<
 };
 
 describe('compileAtomicCSSRule', () => {
+  it.only.each([
+    ['transform', 'none'],
+    ['flex-grow', '1'],
+    ['flex-shrink', '1'],
+    ['flex-basis', 'auto'],
+    ['flex-direction', 'column'],
+    ['align-self', 'center'],
+    ['align-content', 'center'],
+    ['align-items', 'center'],
+    ['order', '1'],
+    ['justify-content', 'center'],
+    ['display', 'flex'],
+    ['display', 'inline-flex'],
+    ['display', 'grid'],
+    ['display', 'inline-grid'],
+    ['transition', 'margin-right 4s'],
+    ['writing-mode', 'vertical-lr'],
+    ['columns', '2'],
+    ['text-size-adjust', 'none'],
+    ['text-decoration', 'none'],
+    ['filter', 'blur(5px)'],
+    ['position', 'sticky'],
+    ['clip-path', 'circle(40%)'],
+    ['width', 'fit-content'],
+    ['width', 'min-block-size'],
+    ['background-clip', 'text'],
+    ['animation', '3s linear 1s slidein;'],
+    ['animation-delay', '3s'],
+    ['animation-direction', 'normal'],
+    ['animation-duration', '3s'],
+    ['animation-fill-mode', 'both'],
+    ['animation-iteration-count', '10'],
+    ['animation-name', 'foo'],
+    ['animation-play-state', 'running'],
+    ['animation-timing-function', 'linear'],
+    ['scroll-snap-type', 'none'],
+    ['scroll-margin', '0'],
+  ])('does not prefix %s:%s', (property, value) => {
+    expect(
+      compileAtomicCSSRule({
+        ...defaultOptions,
+        property,
+        value,
+      }),
+    ).toMatchSnapshot();
+  });
+
   it('handles pseudo', () => {
     expect(
       compileAtomicCSSRule({
@@ -148,10 +195,10 @@ describe('compileAtomicCSSRule', () => {
           value: 'red',
         }),
       ).toMatchInlineSnapshot(`
-      Array [
-        "body .foo{color:red;}",
-      ]
-    `);
+              Array [
+                "body .foo{color:red;}",
+              ]
+          `);
       expect(
         compileAtomicCSSRule({
           ...defaultOptions,
@@ -160,10 +207,10 @@ describe('compileAtomicCSSRule', () => {
           value: 'red',
         }),
       ).toMatchInlineSnapshot(`
-      Array [
-        ".fui-FluentProvider .foo .focus:hover{color:red;}",
-      ]
-    `);
+              Array [
+                ".fui-FluentProvider .foo .focus:hover{color:red;}",
+              ]
+          `);
     });
 
     it('compiles global rules with RTL', () => {
@@ -178,11 +225,11 @@ describe('compileAtomicCSSRule', () => {
           rtlValue: '10px',
         }),
       ).toMatchInlineSnapshot(`
-      Array [
-        "body .foo{padding-left:10px;}",
-        "body .rtl-foo{padding-right:10px;}",
-      ]
-    `);
+              Array [
+                "body .foo{padding-left:10px;}",
+                "body .rtl-foo{padding-right:10px;}",
+              ]
+          `);
     });
   });
 });

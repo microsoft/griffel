@@ -93,9 +93,9 @@ describe('createDOMRenderer', () => {
     // - makeStyles
     //   - "animationName"
     //   - "color"
-    //   - @keyframes + prefixed
+    //   - @keyframes
     //   - @media
-    expect(Object.keys(clientRenderer.insertionCache)).toHaveLength(7);
+    expect(Object.keys(clientRenderer.insertionCache)).toHaveLength(6);
     insertRules.forEach(insertRule => {
       expect(insertRule).not.toHaveBeenCalled();
     });
