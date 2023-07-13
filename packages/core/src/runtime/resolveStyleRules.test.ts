@@ -149,9 +149,6 @@ describe('resolveStyleRules', () => {
     it('performs vendor prefixing', () => {
       expect(resolveStyleRules({ display: 'flex' })).toMatchInlineSnapshot(`
         .f22iagw {
-          display: -webkit-box;
-          display: -webkit-flex;
-          display: -ms-flexbox;
           display: flex;
         }
       `);
@@ -688,15 +685,12 @@ describe('resolveStyleRules', () => {
         }),
       ).toMatchInlineSnapshot(`
         .fc59ano {
-          -webkit-animation-name: fade-in slide-out;
           animation-name: fade-in slide-out;
         }
         .f1cpbl36 {
-          -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
         }
         .f1t9cprh {
-          -webkit-animation-duration: 5s;
           animation-duration: 5s;
         }
       `);
@@ -717,76 +711,32 @@ describe('resolveStyleRules', () => {
           animationDuration: '5s',
         }),
       ).toMatchInlineSnapshot(`
-        @-webkit-keyframes f1q8eu9e {
-          from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
-            transform: rotate(0deg);
-          }
-          to {
-            -webkit-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
-            transform: rotate(360deg);
-          }
-        }
-        @-webkit-keyframes f55c0se {
-          from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
-            transform: rotate(0deg);
-          }
-          to {
-            -webkit-transform: rotate(-360deg);
-            -moz-transform: rotate(-360deg);
-            -ms-transform: rotate(-360deg);
-            transform: rotate(-360deg);
-          }
-        }
         @keyframes f1q8eu9e {
           from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
             transform: rotate(0deg);
           }
           to {
-            -webkit-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
             transform: rotate(360deg);
           }
         }
         @keyframes f55c0se {
           from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
             transform: rotate(0deg);
           }
           to {
-            -webkit-transform: rotate(-360deg);
-            -moz-transform: rotate(-360deg);
-            -ms-transform: rotate(-360deg);
             transform: rotate(-360deg);
           }
         }
         .f1g6ul6r {
-          -webkit-animation-name: f1q8eu9e;
           animation-name: f1q8eu9e;
         }
         .f1fp4ujf {
-          -webkit-animation-name: f55c0se;
           animation-name: f55c0se;
         }
         .f1cpbl36 {
-          -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
         }
         .f1t9cprh {
-          -webkit-animation-duration: 5s;
           animation-duration: 5s;
         }
       `);
@@ -813,72 +763,25 @@ describe('resolveStyleRules', () => {
               },
             },
           ],
+
           animationIterationCount: 'infinite',
           animationDuration: '5s',
         }),
       ).toMatchInlineSnapshot(`
-        @-webkit-keyframes f1q8eu9e {
-          from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
-            transform: rotate(0deg);
-          }
-          to {
-            -webkit-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
-            transform: rotate(360deg);
-          }
-        }
-        @-webkit-keyframes f55c0se {
-          from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
-            transform: rotate(0deg);
-          }
-          to {
-            -webkit-transform: rotate(-360deg);
-            -moz-transform: rotate(-360deg);
-            -ms-transform: rotate(-360deg);
-            transform: rotate(-360deg);
-          }
-        }
         @keyframes f1q8eu9e {
           from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
             transform: rotate(0deg);
           }
           to {
-            -webkit-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
             transform: rotate(360deg);
           }
         }
         @keyframes f55c0se {
           from {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
             transform: rotate(0deg);
           }
           to {
-            -webkit-transform: rotate(-360deg);
-            -moz-transform: rotate(-360deg);
-            -ms-transform: rotate(-360deg);
             transform: rotate(-360deg);
-          }
-        }
-        @-webkit-keyframes f5j8bii {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
           }
         }
         @keyframes f5j8bii {
@@ -890,19 +793,15 @@ describe('resolveStyleRules', () => {
           }
         }
         .fng7zue {
-          -webkit-animation-name: f1q8eu9e, f5j8bii;
           animation-name: f1q8eu9e, f5j8bii;
         }
         .f12eevt1 {
-          -webkit-animation-name: f55c0se, f5j8bii;
           animation-name: f55c0se, f5j8bii;
         }
         .f1cpbl36 {
-          -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
         }
         .f1t9cprh {
-          -webkit-animation-duration: 5s;
           animation-duration: 5s;
         }
       `);

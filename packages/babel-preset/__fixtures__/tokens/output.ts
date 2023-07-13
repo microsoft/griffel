@@ -15,7 +15,7 @@ export const useStyles = __styles(
     d: [
       '.f1734hy{background-color:black;}',
       '.ff34w31{color:var(--colorPaletteBlueBorder2);}',
-      '.f22iagw{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}',
+      '.f22iagw{display:flex;}',
       '.f1817uup{color:var(--colorBrandBackground);}',
     ],
   },

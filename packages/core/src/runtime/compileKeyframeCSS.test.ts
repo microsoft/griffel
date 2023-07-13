@@ -32,7 +32,6 @@ describe('compileKeyframeCSS', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "@-webkit-keyframes foo{from{height:10px;}to{height:50px;}}",
         "@keyframes foo{from{height:10px;}to{height:50px;}}",
       ]
     `);

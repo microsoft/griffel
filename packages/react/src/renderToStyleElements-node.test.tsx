@@ -243,67 +243,25 @@ describe('renderToStyleElements (node)', () => {
       expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
               <style data-make-styles-bucket="d" data-make-styles-rehydration="true">
                 .f1g6ul6r {
-                  -webkit-animation-name: f1q8eu9e;
                   animation-name: f1q8eu9e;
                 }
                 .f1fp4ujf {
-                  -webkit-animation-name: f55c0se;
                   animation-name: f55c0se;
                 }</style
               ><style data-make-styles-bucket="k" data-make-styles-rehydration="true">
-                @-webkit-keyframes f1q8eu9e {
-                  from {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
-                    transform: rotate(0deg);
-                  }
-                  to {
-                    -webkit-transform: rotate(360deg);
-                    -moz-transform: rotate(360deg);
-                    -ms-transform: rotate(360deg);
-                    transform: rotate(360deg);
-                  }
-                }
-                @-webkit-keyframes f55c0se {
-                  from {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
-                    transform: rotate(0deg);
-                  }
-                  to {
-                    -webkit-transform: rotate(-360deg);
-                    -moz-transform: rotate(-360deg);
-                    -ms-transform: rotate(-360deg);
-                    transform: rotate(-360deg);
-                  }
-                }
                 @keyframes f1q8eu9e {
                   from {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
                     transform: rotate(0deg);
                   }
                   to {
-                    -webkit-transform: rotate(360deg);
-                    -moz-transform: rotate(360deg);
-                    -ms-transform: rotate(360deg);
                     transform: rotate(360deg);
                   }
                 }
                 @keyframes f55c0se {
                   from {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
                     transform: rotate(0deg);
                   }
                   to {
-                    -webkit-transform: rotate(-360deg);
-                    -moz-transform: rotate(-360deg);
-                    -ms-transform: rotate(-360deg);
                     transform: rotate(-360deg);
                   }
                 }

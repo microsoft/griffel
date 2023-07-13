@@ -24,7 +24,7 @@ export const useStyles = __styles(
     d: [
       `.fnwsaxv{background-image:url(${_asset});}`,
       `.f1ryfumh{background-image:url(${_asset2});}`,
-      `.fv04sme{-webkit-filter:url(${_asset3}#a);filter:url(${_asset3}#a);}`,
+      `.fv04sme{filter:url(${_asset3}#a);}`,
     ],
   },
 );

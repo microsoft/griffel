@@ -27,8 +27,6 @@ describe('makeResetStyles', () => {
     expect(renderer).toMatchInlineSnapshot(`
       .r7lmmpp {
         color: red;
-        -webkit-flex-direction: row;
-        -ms-flex-direction: row;
         flex-direction: row;
       }
     `);

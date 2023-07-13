@@ -243,7 +243,6 @@ describe('resolveResetStyleRules', () => {
 
       expect(result).toMatchInlineSnapshot(`
         .reh730q {
-          -webkit-animation-name: foo;
           animation-name: foo;
         }
       `);
@@ -258,25 +257,8 @@ describe('resolveResetStyleRules', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        .r9hyr5r {
-          -webkit-animation-name: r1kgwxhb;
+        .rgmpmil {
           animation-name: r1kgwxhb;
-        }
-        @-webkit-keyframes r1kgwxhb {
-          from {
-            height: 10px;
-          }
-          to {
-            height: 20px;
-          }
-        }
-        @-webkit-keyframes r1kgwxhb {
-          from {
-            height: 10px;
-          }
-          to {
-            height: 20px;
-          }
         }
         @keyframes r1kgwxhb {
           from {
@@ -287,7 +269,6 @@ describe('resolveResetStyleRules', () => {
           }
         }
         .r1u04j3e {
-          -webkit-animation-name: r1kgwxhb;
           animation-name: r1kgwxhb;
         }
       `);
@@ -308,25 +289,8 @@ describe('resolveResetStyleRules', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        .r14v303j {
-          -webkit-animation-name: r1sekkel, r5j8bii;
+        .rw8vs22 {
           animation-name: r1sekkel, r5j8bii;
-        }
-        @-webkit-keyframes r1sekkel {
-          from {
-            top: 0;
-          }
-          to {
-            top: 100px;
-          }
-        }
-        @-webkit-keyframes r1sekkel {
-          from {
-            top: 0;
-          }
-          to {
-            top: 100px;
-          }
         }
         @keyframes r1sekkel {
           from {
@@ -334,22 +298,6 @@ describe('resolveResetStyleRules', () => {
           }
           to {
             top: 100px;
-          }
-        }
-        @-webkit-keyframes r5j8bii {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        @-webkit-keyframes r5j8bii {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
           }
         }
         @keyframes r5j8bii {
@@ -361,7 +309,6 @@ describe('resolveResetStyleRules', () => {
           }
         }
         .rcoo9tn {
-          -webkit-animation-name: r1sekkel, r5j8bii;
           animation-name: r1sekkel, r5j8bii;
         }
       `);

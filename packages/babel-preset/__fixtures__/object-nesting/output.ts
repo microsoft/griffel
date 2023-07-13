@@ -10,10 +10,7 @@ export const useStyles = __styles(
     },
   },
   {
-    d: [
-      '.f22iagw{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}',
-      '.fh8e7tb .foo:hover{color:green;}',
-    ],
+    d: ['.f22iagw{display:flex;}', '.fh8e7tb .foo:hover{color:green;}'],
     h: ['.faf35ka:hover{color:red;}'],
     f: ['.f17t1d3d:focus:hover{color:blue;}'],
   },

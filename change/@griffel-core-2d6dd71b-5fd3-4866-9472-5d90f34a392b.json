@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: Prefix according to browser support matrix",
+  "packageName": "@griffel/core",
+  "email": "lingfangao@hotmail.com",
+  "dependentChangeType": "patch"
+}

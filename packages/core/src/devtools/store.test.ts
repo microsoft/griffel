@@ -45,7 +45,7 @@ describe('debugData', () => {
 
     expect(debugData.getCSSRules()).toEqual([
       '.ftgm304{display:block;}',
-      '.f13qh94s{display:-ms-grid;display:grid;}',
+      '.f13qh94s{display:grid;}',
       '.f1oou7ox{margin-left:10px;}',
       '.f1pxv85q{margin-right:10px;}',
     ]);
