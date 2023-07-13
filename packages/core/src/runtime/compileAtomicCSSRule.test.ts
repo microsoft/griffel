@@ -14,7 +14,7 @@ const defaultOptions: Pick<
 };
 
 describe('compileAtomicCSSRule', () => {
-  it.only.each([
+  it.each([
     ['transform', 'none'],
     ['flex-grow', '1'],
     ['flex-shrink', '1'],
