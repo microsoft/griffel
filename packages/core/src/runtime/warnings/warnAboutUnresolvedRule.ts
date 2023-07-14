@@ -1,4 +1,4 @@
-import type { GriffelResetStyle, GriffelStyle } from '../../types';
+import type { GriffelResetStyle, GriffelStyle } from '@griffel/style-types';
 import { logError } from './logError';
 
 export function warnAboutUnresolvedRule(property: string, value: GriffelStyle | GriffelResetStyle) {

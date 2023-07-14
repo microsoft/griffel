@@ -1,8 +1,8 @@
 import hashString from '@emotion/hash';
+import type { GriffelResetStyle, GriffelAnimation } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { RESET_HASH_PREFIX } from '../constants';
-import { GriffelStyle, GriffelResetStyle, GriffelAnimation } from '../types';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
 import { isLayerSelector } from './utils/isLayerSelector';
 import { isNestedSelector } from './utils/isNestedSelector';
@@ -24,7 +24,7 @@ function createStringFromStyles(styles: GriffelResetStyle) {
 
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
-    const value = styles[property as keyof GriffelStyle];
+    const value = styles[property as keyof GriffelResetStyle];
 
     // eslint-disable-next-line eqeqeq
     if (value == null) {

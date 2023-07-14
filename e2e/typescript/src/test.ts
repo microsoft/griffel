@@ -19,7 +19,7 @@ async function performTest(tsVersion: string) {
     await configureYarn({ tempDir, rootDir });
 
     const resolutions = [
-      await packLocalPackage(rootDir, tempDir, '@griffel/core'),
+      await packLocalPackage(rootDir, tempDir, '@griffel/style-types'),
       { packageName: 'typescript', version: tsVersion },
     ];
 
@@ -54,7 +54,7 @@ async function performTest(tsVersion: string) {
     console.log('');
     console.error(
       logSymbols.error,
-      `Building a test project referencing @griffel/core using typescript@${tsVersion} failed.`,
+      `Building a test project referencing @griffel/style-types using typescript@${tsVersion} failed.`,
     );
     console.error(
       `This is most likely because you added an API in @griffel/core or a dependency which uses ` +

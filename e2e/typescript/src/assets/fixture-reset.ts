@@ -1,4 +1,4 @@
-import { GriffelResetStyle } from '@griffel/core';
+import type { GriffelResetStyle } from '@griffel/style-types';
 
 function assertType(style: GriffelResetStyle): GriffelResetStyle {
   return style;

@@ -1,15 +1,9 @@
 import hashString from '@emotion/hash';
+import type { GriffelAnimation, GriffelStyle } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { HASH_PREFIX, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
-import {
-  GriffelStyle,
-  CSSClassesMap,
-  CSSRulesByBucket,
-  StyleBucketName,
-  GriffelAnimation,
-  CSSBucketEntry,
-} from '../types';
+import { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types';
 import { compileAtomicCSSRule, CompileAtomicCSSOptions } from './compileAtomicCSSRule';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';

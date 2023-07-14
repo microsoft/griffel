@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { PaddingInlineInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { PaddingInlineInput } from './types';
 
-type PaddingInlineStyle = Pick<GriffelStylesStrictCSSObject, 'paddingInlineStart' | 'paddingInlineEnd'>;
+type PaddingInlineStyle = Pick<GriffelStyle, 'paddingInlineStart' | 'paddingInlineEnd'>;
 
 /**
  * A function that implements CSS spec conformant expansion for "padding-inline"

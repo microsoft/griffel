@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 
-type BorderLeftStyle = Pick<GriffelStylesStrictCSSObject, 'borderLeftColor' | 'borderLeftStyle' | 'borderLeftWidth'>;
+type BorderLeftStyle = Pick<GriffelStyle, 'borderLeftColor' | 'borderLeftStyle' | 'borderLeftWidth'>;
 
 export function borderLeft(width: BorderWidthInput): BorderLeftStyle;
 export function borderLeft(width: BorderWidthInput, style: BorderStyleInput): BorderLeftStyle;
@@ -20,7 +20,7 @@ export function borderLeft(width: BorderWidthInput, style: BorderStyleInput, col
 export function borderLeft(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderLeftStyle {
   return {
     borderLeftWidth: values[0],
-    ...(values[1] && ({ borderLeftStyle: values[1] } as GriffelStylesStrictCSSObject)),
+    ...(values[1] && ({ borderLeftStyle: values[1] } as BorderLeftStyle)),
     ...(values[2] && { borderLeftColor: values[2] }),
   };
 }

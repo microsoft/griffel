@@ -1,4 +1,5 @@
-import type { GriffelStaticStyles, CSSRulesByBucket } from '../types';
+import type { GriffelStaticStyles } from '@griffel/style-types';
+import type { CSSRulesByBucket } from '../types';
 import { compileCSSRules } from './compileCSSRules';
 import { compileStaticCSS } from './compileStaticCSS';
 

@@ -1,5 +1,5 @@
+import type { GriffelStylesCSSValue, ValueOrArray } from '@griffel/style-types';
 import * as CSS from 'csstype';
-import { GriffelStylesCSSValue, ValueOrArray } from '../types';
 
 export type BorderWidthInput = ValueOrArray<CSS.Property.BorderWidth<GriffelStylesCSSValue>>;
 export type BorderStyleInput = ValueOrArray<CSS.Property.BorderStyle>;

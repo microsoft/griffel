@@ -1,8 +1,9 @@
 import * as CSS from 'csstype';
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { FlexInput } from './types';
 
-type FlexStyle = Pick<GriffelStylesStrictCSSObject, 'flexGrow' | 'flexShrink' | 'flexBasis'>;
+import type { GriffelStyle } from '@griffel/style-types';
+import type { FlexInput } from './types';
+
+type FlexStyle = Pick<GriffelStyle, 'flexGrow' | 'flexShrink' | 'flexBasis'>;
 
 const isUnit = (value: CSS.Property.Flex | undefined) => typeof value === 'string' && /(\d+(\w+|%))/.test(value);
 
@@ -15,7 +16,7 @@ const isAuto = (value: CSS.Property.Flex | undefined) => value === 'auto';
 const isNone = (value: CSS.Property.Flex | undefined) => value === 'none';
 
 const widthReservedKeys = ['content', 'fit-content', 'max-content', 'min-content'] as const;
-type ReservedKeys = typeof widthReservedKeys[number];
+type ReservedKeys = (typeof widthReservedKeys)[number];
 type Width = ReservedKeys | string;
 const isWidth = (value: CSS.Property.Flex | undefined) => widthReservedKeys.some(key => value === key) || isUnit(value);
 
@@ -116,5 +117,5 @@ export function flex(...values: FlexInput): FlexStyle {
       `The value passed to shorthands.flex did not match any flex property specs. The CSS styles were not generated. Please, check the flex documentation.`,
     );
   }
-  return {};
+  return {} as FlexStyle;
 }

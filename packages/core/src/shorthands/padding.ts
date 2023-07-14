@@ -1,8 +1,9 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { generateStyles } from './generateStyles';
-import { PaddingInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
 
-type PaddingStyle = Pick<GriffelStylesStrictCSSObject, 'paddingTop' | 'paddingRight' | 'paddingBottom' | 'paddingLeft'>;
+import { generateStyles } from './generateStyles';
+import type { PaddingInput } from './types';
+
+type PaddingStyle = Pick<GriffelStyle, 'paddingTop' | 'paddingRight' | 'paddingBottom' | 'paddingLeft'>;
 
 export function padding(all: PaddingInput): PaddingStyle;
 export function padding(vertical: PaddingInput, horizontal: PaddingInput): PaddingStyle;

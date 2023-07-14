@@ -1,8 +1,9 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { generateStyles } from './generateStyles';
-import { MarginInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
 
-type MarginStyle = Pick<GriffelStylesStrictCSSObject, 'marginTop' | 'marginRight' | 'marginBottom' | 'marginLeft'>;
+import { generateStyles } from './generateStyles';
+import type { MarginInput } from './types';
+
+type MarginStyle = Pick<GriffelStyle, 'marginTop' | 'marginRight' | 'marginBottom' | 'marginLeft'>;
 
 export function margin(all: MarginInput): MarginStyle;
 export function margin(vertical: MarginInput, horizontal: MarginInput): MarginStyle;

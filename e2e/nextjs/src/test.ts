@@ -20,6 +20,7 @@ async function performTest() {
     await configureYarn({ tempDir, rootDir });
 
     const resolutions = await Promise.all([
+      packLocalPackage(rootDir, tempDir, '@griffel/style-types'),
       packLocalPackage(rootDir, tempDir, '@griffel/core'),
       packLocalPackage(rootDir, tempDir, '@griffel/react'),
       packLocalPackage(rootDir, tempDir, '@griffel/webpack-extraction-plugin'),

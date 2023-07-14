@@ -1,4 +1,5 @@
-import type { GriffelStaticStyle } from '../types';
+import type { GriffelStaticStyle } from '@griffel/style-types';
+
 import { cssifyObject } from './utils/cssifyObject';
 import { compileCSSRules } from './compileCSSRules';
 

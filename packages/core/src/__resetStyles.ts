@@ -1,5 +1,5 @@
 import { DEBUG_RESET_CLASSES } from './constants';
-import type { MakeStylesOptions } from './types';
+import type { MakeResetStylesOptions } from './makeResetStyles';
 
 /**
  * @internal
@@ -7,7 +7,7 @@ import type { MakeStylesOptions } from './types';
 export function __resetStyles(ltrClassName: string, rtlClassName: string | null, cssRules: string[]) {
   const insertionCache: Record<string, boolean> = {};
 
-  function computeClassName(options: MakeStylesOptions): string {
+  function computeClassName(options: MakeResetStylesOptions): string {
     const { dir, renderer } = options;
 
     const isLTR = dir === 'ltr';

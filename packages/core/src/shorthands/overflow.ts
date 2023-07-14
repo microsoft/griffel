@@ -1,7 +1,7 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
-import { OverflowInput } from './types';
+import type { GriffelStyle } from '@griffel/style-types';
+import type { OverflowInput } from './types';
 
-type OverflowStyle = Pick<GriffelStylesStrictCSSObject, 'overflowX' | 'overflowY'>;
+type OverflowStyle = Pick<GriffelStyle, 'overflowX' | 'overflowY'>;
 
 /**
  * A function that implements CSS spec conformant expansion for "overflow"

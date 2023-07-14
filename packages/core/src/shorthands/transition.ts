@@ -1,4 +1,4 @@
-import type { GriffelStylesStrictCSSObject } from '../types';
+import type { GriffelStyle } from '@griffel/style-types';
 import {
   TransitionDelayInput,
   TransitionDurationInput,
@@ -15,7 +15,7 @@ type TransitionInputs = [
 ];
 
 type TransitionStyle = Pick<
-  GriffelStylesStrictCSSObject,
+  GriffelStyle,
   'transitionProperty' | 'transitionDelay' | 'transitionDuration' | 'transitionTimingFunction'
 >;
 

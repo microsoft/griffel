@@ -1,5 +1,11 @@
+import type { GriffelStaticStyles } from '@griffel/style-types';
+
 import { resolveStaticStyleRules } from './runtime/resolveStaticStyleRules';
-import { MakeStaticStylesOptions, GriffelStaticStyles } from './types';
+import type { GriffelRenderer } from './types';
+
+export interface MakeStaticStylesOptions {
+  renderer: GriffelRenderer;
+}
 
 /**
  * Register static css.

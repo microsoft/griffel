@@ -1,6 +1,7 @@
 import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import { MakeStylesOptions, CSSClassesMapBySlot, CSSRulesByBucket } from './types';
+import type { CSSClassesMapBySlot, CSSRulesByBucket } from './types';
+import type { MakeStylesOptions } from './makeStyles';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms.

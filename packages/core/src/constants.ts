@@ -1,4 +1,5 @@
-import { GriffelStylesUnsupportedCSSProperties, LookupItem, SequenceHash } from './types';
+import type { GriffelStylesUnsupportedCSSProperties } from '@griffel/style-types';
+import type { LookupItem, SequenceHash } from './types';
 
 // ----
 
