@@ -1,0 +1,61 @@
+{
+  "name": "@griffel/style-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/style-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "outputPath": "dist/packages/style-types",
+        "tsConfig": "packages/style-types/tsconfig.lib.json",
+        "project": "packages/style-types/package.json",
+        "entryFile": "packages/style-types/src/index.ts",
+        "rollupConfig": "tools/getRollupOptions.js",
+        "compiler": "babel",
+        "external": ["tslib"],
+        "format": ["esm", "cjs"],
+        "skipTypeField": true,
+        "updateBuildableProjectDepsInPackageJson": false,
+        "assets": [
+          {
+            "glob": "packages/style-types/README.md",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/style-types/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/style-types"],
+      "options": {
+        "jestConfig": "packages/style-types/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/style-types",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  }
+}
