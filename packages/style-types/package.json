@@ -10,5 +10,12 @@
   "sideEffects": false,
   "dependencies": {
     "csstype": "^3.1.2"
+  },
+  "typesVersions": {
+    "<4.1": {
+      "src/index.d.ts": [
+        "src/legacy/index.d.ts"
+      ]
+    }
   }
 }

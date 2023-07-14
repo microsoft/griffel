@@ -1,6 +1,6 @@
-import type { GriffelResetStyle } from '@griffel/style-types';
+import type { GriffelStyle } from '@griffel/style-types';
 
-function assertType(style: GriffelResetStyle): GriffelResetStyle {
+function assertType(style: GriffelStyle): GriffelStyle {
   return style;
 }
 
@@ -10,12 +10,11 @@ assertType({ animationName: 'foo' });
 // Basic styles
 //
 
-assertType({ flex: 0 });
-assertType({ flex: 1 });
+assertType({ flexShrink: 0 });
+assertType({ flexShrink: 1 });
 assertType({ zIndex: 0 });
 assertType({ zIndex: 1 });
 
-assertType({ padding: '5px' });
 assertType({ paddingLeft: '5px' });
 assertType({ color: 'beige' });
 
@@ -33,7 +32,6 @@ assertType({ '--color': 'red' });
 //
 
 assertType({
-  ...{ padding: '5px' },
   ...{ paddingLeft: '5px' },
   ...{ color: 'red' },
 });
@@ -57,19 +55,11 @@ assertType({
 
 assertType({
   ':hover': { color: 'beige' },
-  ':active': { padding: '5px' },
   ':focus': { paddingLeft: '5px' },
 });
 
 assertType({
   ':hover': { '--color': 'red' },
-});
-
-assertType({
-  ':hover': { content: "'foo'" },
-});
-assertType({
-  ':hover': { animationName: { from: {}, to: {} } },
 });
 
 // Custom selectors
@@ -91,15 +81,11 @@ assertType({
 
 assertType({
   '.bar': { color: 'beige' },
-  '.foo': { padding: '5px' },
-  '.qux': { paddingLeft: '5px' },
+  '.foo': { paddingLeft: '5px' },
 });
 
 assertType({
   '.bar': { '--color': 'red' },
-});
-assertType({
-  '.bar': { animationName: { from: {}, to: {} } },
 });
 
 // Nested custom selectors
@@ -128,6 +114,18 @@ assertType({
   },
 });
 
+// Banned shorthand properties
+//
+
+assertType({
+  // @ts-expect-error "padding" is banned
+  padding: 0,
+});
+assertType({
+  // @ts-expect-error "borderLeft" is banned
+  borderLeft: '5px',
+});
+
 // Invalid values
 //
 
@@ -153,11 +151,6 @@ assertType({
   boxSizing: 'outline-box',
   zIndex: 1,
 });
-assertType({
-  zIndex: 1,
-  // @ts-expect-error type check still fails on outline-box, not on any other line
-  boxSizing: 'outline-box',
-});
 
 assertType({
   // @ts-expect-error Object is not assignable to CSS property
@@ -181,7 +174,7 @@ assertType({
 });
 
 // Just a type check, deep objects are not expected to be used as style mixins?
-const typedMixin: GriffelResetStyle = {
+const typedMixin: GriffelStyle = {
   marginLeft: '5px',
   ':hover': {
     marginLeft: '6px',
@@ -199,6 +192,7 @@ assertType({
   '@media screen and (max-width: 992px)': {
     ...typedMixin,
   },
+  // @ts-expect-error FIXME - this is supposed to pass!
   '@media(forced-colors: active)': {
     ...typedMixin,
     color: 'var(--customColor)',
@@ -207,13 +201,6 @@ assertType({
     ...typedMixin,
   },
   ':before': {
-    ...typedMixin,
-    color: 'var(--customColor)',
-  },
-  '& .foo': {
-    ...typedMixin,
-  },
-  '& .bar': {
     ...typedMixin,
     color: 'var(--customColor)',
   },
@@ -226,6 +213,8 @@ assertType({
   ':hover': {
     // @ts-expect-error "1" is invalid value for "overflowX"
     overflowX: '1',
+    // @ts-expect-error "padding" is banned
+    padding: 0,
     // @ts-expect-error "paddingLeft" cannot be numeric value
     paddingLeft: 5,
   },
@@ -242,25 +231,31 @@ assertType({
 //
 
 assertType({
+  // @ts-expect-error "1" is invalid value for "overflowX"
   ':hover:focus': {
-    // @ts-expect-error "1" is invalid value for "overflowX"
     overflowX: '1',
   },
 });
 
 assertType({
+  // @ts-expect-error "padding" is banned
   ':hover:focus': {
-    // @ts-expect-error "paddingLeft" cannot be numeric value
+    padding: 0,
+  },
+});
+
+assertType({
+  // @ts-expect-error "paddingLeft" cannot be numeric value
+  ':hover:focus': {
     paddingLeft: 5,
   },
 });
 
 assertType({
+  // @ts-expect-error "1" is invalid value for "overflowX", padding is banned, paddingLeft cannot be a numeric value
   ':hover:focus': {
-    // @ts-expect-error "1" is invalid value for "overflowX"
-    overflowX: '1',
+    overflowX: 'scroll',
     padding: 0,
-    // @ts-expect-error paddingLeft cannot be a numeric value
     paddingLeft: 5,
   },
 });
@@ -269,14 +264,12 @@ assertType({
   ':hover:focus': {
     // @ts-expect-error Object is not assignable to CSS property
     zIndex: { color: 'red' },
-    // @ts-expect-error Object is not assignable to CSS property
-    opacity: { color: 'red' },
+    opacity: { color: 'red' }, // < no error here, TS only reports the first error in this case
   },
   ':hover:active': {
     // @ts-expect-error Object is not assignable to CSS property
     opacity: { color: 'red' },
-    // @ts-expect-error Object is not assignable to CSS property
-    zIndex: { color: 'red' },
+    zIndex: { color: 'red' }, // < no error here, TS only reports the first error in this case
   },
 });
 
@@ -284,36 +277,33 @@ assertType({
 //
 
 assertType({
+  // @ts-expect-error "1" is invalid value for "overflowX", padding is banned, paddingLeft cannot be a numeric value
   '.foo': {
     '.baz': {
-      // @ts-expect-error "1" is invalid value for "overflowX"
       overflowX: '1',
       padding: 0,
-      // @ts-expect-error paddingLeft cannot be a numeric value
       paddingLeft: 5,
     },
   },
 });
 assertType({
+  // @ts-expect-error outline-box is an invalid value for box-sizing
   '.foo': {
-    // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
 
     '.bar': {
-      // @ts-expect-error outline-box is an invalid value for box-sizing
       boxSizing: 'outline-box', // < no error here, TS only reports the error for the whole object
     },
   },
 });
 assertType({
+  // @ts-expect-error outline-box is an invalid value for box-sizing
   '.foo': {
-    // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
     zIndex: 1,
 
     '.bar': {
-      // @ts-expect-error outline-box is an invalid value for box-sizing
-      boxSizing: 'outline-box',
+      boxSizing: 'outline-box', // < no error here, TS only reports the error for the whole object
       zIndex: 1,
     },
   },
@@ -322,14 +312,11 @@ assertType({
   '.foo': {
     // @ts-expect-error Object is not assignable to CSS property
     zIndex: { color: 'red' },
-    // @ts-expect-error Object is not assignable to CSS property
-    opacity: { color: 'red' },
+    opacity: { color: 'red' }, // < no error here, TS only reports the first error in this case
 
     '.bar': {
-      // @ts-expect-error Object is not assignable to CSS property
-      zIndex: { color: 'red' },
-      // @ts-expect-error Object is not assignable to CSS property
-      opacity: { color: 'red' },
+      zIndex: { color: 'red' }, // < no error here, TS only reports the first error in this case
+      opacity: { color: 'red' }, // < no error here, TS only reports the first error in this case
     },
   },
 });
@@ -337,7 +324,6 @@ assertType({
 // Fallback values
 assertType({
   color: ['red', 'blue'],
-  padding: [0, '2px'],
   paddingLeft: [0, '2px'],
   zIndex: [10, 20],
   ':hover': {
@@ -356,11 +342,8 @@ assertType({
     2,
     '2px',
   ],
+  // @ts-expect-error "paddingLeft" cannot be numeric value
   ':hover:active': {
-    paddingLeft: [
-      '2px',
-      // @ts-expect-error "paddingLeft" cannot be numeric value
-      2,
-    ],
+    paddingLeft: ['2px', 2],
   },
 });

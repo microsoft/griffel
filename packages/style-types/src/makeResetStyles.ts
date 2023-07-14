@@ -1,5 +1,5 @@
 import * as CSS from 'csstype';
-import type { GriffelStylesCSSValue, ValueOrArray } from './shared';
+import type { GriffelStylesCSSValue } from './shared';
 
 //
 // Types for makeResetStyles()
@@ -7,45 +7,21 @@ import type { GriffelStylesCSSValue, ValueOrArray } from './shared';
 //
 
 type GriffelResetStylesCSSProperties = Omit<
-  CSS.PropertiesFallback<ValueOrArray<GriffelStylesCSSValue>>,
+  CSS.PropertiesFallback<GriffelStylesCSSValue>,
   // We have custom definition for "animationName"
   'animationName'
 >;
 
-type GriffelResetStylesStrictCSSObject = GriffelResetStylesCSSProperties &
-  GriffelResetStylesCSSPseudos & {
-    animationName?: GriffelResetAnimation | GriffelResetAnimation[] | CSS.Property.Animation;
-  };
+export type GriffelResetStylesStrictCSSObject = GriffelResetStylesCSSProperties &
+  GriffelCSSPseudos & { animationName?: GriffelResetAnimation | GriffelResetAnimation[] | string };
 
-type GriffelResetStylesCSSPseudos = {
-  [Property in CSS.Pseudos]?:
-    | (GriffelResetStylesStrictCSSObject & { content?: string | string[] })
-    | (GriffelResetStylesCSSObjectCustomL1 & { content?: string | string[] });
+type GriffelCSSObjectCustom = {
+  [Property: string]: GriffelResetStyle | GriffelStylesCSSValue;
+} & GriffelResetStylesStrictCSSObject;
+
+type GriffelCSSPseudos = {
+  [Property in CSS.Pseudos]?: GriffelResetStylesStrictCSSObject | GriffelCSSObjectCustom;
 };
 
-//
-// "GriffelStylesCSSObjectCustom*" is a workaround to avoid circular references in types that are breaking TS <4.
-//
-
-type GriffelResetStylesCSSObjectCustomL1 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL2;
-} & GriffelResetStylesStrictCSSObject;
-
-type GriffelResetStylesCSSObjectCustomL2 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL3;
-} & GriffelResetStylesStrictCSSObject;
-
-type GriffelResetStylesCSSObjectCustomL3 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL4;
-} & GriffelResetStylesStrictCSSObject;
-
-type GriffelResetStylesCSSObjectCustomL4 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesCSSObjectCustomL5;
-} & GriffelResetStylesStrictCSSObject;
-
-type GriffelResetStylesCSSObjectCustomL5 = {
-  [Property: string]: string | number | (string | number)[] | undefined | GriffelResetStylesStrictCSSObject;
-} & GriffelResetStylesStrictCSSObject;
-
-export type GriffelResetStyle = GriffelResetStylesStrictCSSObject | GriffelResetStylesCSSObjectCustomL1;
-export type GriffelResetAnimation = Record<'from' | 'to' | string, GriffelResetStyle>;
+export type GriffelResetAnimation = Record<'from' | 'to' | string, GriffelCSSObjectCustom>;
+export type GriffelResetStyle = GriffelResetStylesStrictCSSObject | GriffelCSSObjectCustom;
