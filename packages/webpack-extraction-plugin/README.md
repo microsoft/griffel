@@ -11,6 +11,7 @@ A plugin for Webpack 5 that performs CSS extraction for [`@griffel/react`](../re
 - [When to use it?](#when-to-use-it)
 - [How it works?](#how-it-works)
 - [Usage](#usage)
+  - [`ignoreOrder` option](#ignoreorder-option)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -104,5 +105,32 @@ module.exports = {
       },
     ],
   },
+};
+```
+
+### `ignoreOrder` option
+
+If you use `mini-css-extract-plugin`, you may need to set it to `false` to remove warnings about conflicting order of CSS modules:
+
+```
+WARNING in chunk griffel [mini-css-extract-plugin]
+Conflicting order. Following module has been added:
+* css ./node_modules/css-loader/dist/cjs.js!./node_modules/@griffel/webpack-extraction-plugin/virtual-loader/index.js?style=%2F**%20%40griffel%3Acss-start%20%5Bd%5D%20**%2F%0A.fm40iov%7Bcolor%3A%23ccc%3B%7D%0A%2F**%20%40griffel%3Acss-end%20**%2F%0A!./src/foo-module/baz.js
+  despite it was not able to fulfill desired ordering with these modules:
+* css ./node_modules/css-loader/dist/cjs.js!./node_modules/@griffel/webpack-extraction-plugin/virtual-loader/index.js?style=%2F**%20%40griffel%3Acss-start%20%5Bd%5D%20**%2F%0A.f1e30ogq%7Bcolor%3Ablueviolet%3B%7D%0A%2F**%20%40griffel%3Acss-end%20**%2F%0A!./src/foo-module/qux.js
+  - couldn't fulfill desired order of chunk group(s)
+```
+
+This will not affect the order of CSS modules in the final bundle as Griffel sorts own CSS modules anyway.
+
+```js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  plugins: [
+    new MiniCssExtractPlugin({
+      ignoreOrder: true,
+    }),
+  ],
 };
 ```
