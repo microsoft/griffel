@@ -10,6 +10,15 @@ describe('border', () => {
     });
   });
 
+  it('for a given style', () => {
+    expect(border('none')).toEqual({
+      borderBottomStyle: 'none',
+      borderLeftStyle: 'none',
+      borderRightStyle: 'none',
+      borderTopStyle: 'none',
+    });
+  });
+
   it('for a given width and style', () => {
     expect(border('2px', 'solid')).toEqual({
       borderBottomWidth: '2px',
@@ -23,6 +32,19 @@ describe('border', () => {
     });
   });
 
+  it('for a given style and width', () => {
+    expect(border('solid', '2px')).toEqual({
+      borderBottomStyle: 'solid',
+      borderLeftStyle: 'solid',
+      borderRightStyle: 'solid',
+      borderTopStyle: 'solid',
+      borderBottomWidth: '2px',
+      borderLeftWidth: '2px',
+      borderRightWidth: '2px',
+      borderTopWidth: '2px',
+    });
+  });
+
   it('for a given width, style and color', () => {
     expect(border('2px', 'solid', 'red')).toEqual({
       borderBottomWidth: '2px',
@@ -33,6 +55,23 @@ describe('border', () => {
       borderLeftStyle: 'solid',
       borderRightStyle: 'solid',
       borderTopStyle: 'solid',
+      borderBottomColor: 'red',
+      borderLeftColor: 'red',
+      borderRightColor: 'red',
+      borderTopColor: 'red',
+    });
+  });
+
+  it('for a given style, width and color', () => {
+    expect(border('solid', '2px', 'red')).toEqual({
+      borderBottomStyle: 'solid',
+      borderLeftStyle: 'solid',
+      borderRightStyle: 'solid',
+      borderTopStyle: 'solid',
+      borderBottomWidth: '2px',
+      borderLeftWidth: '2px',
+      borderRightWidth: '2px',
+      borderTopWidth: '2px',
       borderBottomColor: 'red',
       borderLeftColor: 'red',
       borderRightColor: 'red',

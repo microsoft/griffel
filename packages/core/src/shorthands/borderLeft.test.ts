@@ -7,8 +7,21 @@ describe('borderLeft', () => {
     });
   });
 
+  it('for a given style', () => {
+    expect(borderLeft('none')).toEqual({
+      borderLeftStyle: 'none',
+    });
+  });
+
   it('for a given width and style', () => {
     expect(borderLeft('2px', 'solid')).toEqual({
+      borderLeftWidth: '2px',
+      borderLeftStyle: 'solid',
+    });
+  });
+
+  it('for a given style and width', () => {
+    expect(borderLeft('solid', '2px')).toEqual({
       borderLeftWidth: '2px',
       borderLeftStyle: 'solid',
     });
@@ -18,6 +31,14 @@ describe('borderLeft', () => {
     expect(borderLeft('2px', 'solid', 'red')).toEqual({
       borderLeftWidth: '2px',
       borderLeftStyle: 'solid',
+      borderLeftColor: 'red',
+    });
+  });
+
+  it('for a given style, width and color', () => {
+    expect(borderLeft('solid', '2px', 'red')).toEqual({
+      borderLeftStyle: 'solid',
+      borderLeftWidth: '2px',
       borderLeftColor: 'red',
     });
   });
