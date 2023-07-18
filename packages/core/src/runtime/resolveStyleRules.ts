@@ -93,8 +93,9 @@ export function resolveStyleRules(
 
     if (typeof value === 'string' || typeof value === 'number') {
       // uniq key based on a hash of property & selector, used for merging later
-      const key = hashPropertyKey(selectors, media, support, property);
+      const key = hashPropertyKey(selectors, container, media, support, property);
       const className = hashClassName({
+        container,
         media,
         layer,
         value: value.toString(),
@@ -108,6 +109,7 @@ export function resolveStyleRules(
 
       const rtlClassName = flippedInRtl
         ? hashClassName({
+            container,
             value: rtlDefinition.value.toString(),
             property: rtlDefinition.key,
             selectors,
@@ -200,8 +202,9 @@ export function resolveStyleRules(
         continue;
       }
 
-      const key = hashPropertyKey(selectors, media, support, property);
+      const key = hashPropertyKey(selectors, container, media, support, property);
       const className = hashClassName({
+        container,
         media,
         layer,
         value: value.map(v => (v ?? '').toString()).join(';'),
@@ -227,6 +230,7 @@ export function resolveStyleRules(
 
       const rtlClassName = flippedInRtl
         ? hashClassName({
+            container,
             value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
             property: rtlDefinitions[0].key,
             selectors,
@@ -315,6 +319,7 @@ export function resolveStyleRules(
         // The only way to target multiple containers is to nest container queries
         // https://developer.mozilla.org/en-US/docs/Web/CSS/@container#nested_container_queries
         const containerQuery = property.slice(10).trim();
+
         resolveStyleRules(
           value as GriffelStyle,
           selectors,

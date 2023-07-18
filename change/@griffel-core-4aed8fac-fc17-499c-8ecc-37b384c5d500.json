@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: add container queries to hash generation",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

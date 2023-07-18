@@ -47,6 +47,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: StylesB
       renderer.insertCSSRules(cssRules!);
       insertionCache[rendererId] = true;
     }
+
     const classNamesForSlots = isLTR
       ? (ltrClassNamesForSlots as Record<Slots, string>)
       : (rtlClassNamesForSlots as Record<Slots, string>);
