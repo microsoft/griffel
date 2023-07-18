@@ -1,7 +1,7 @@
-import { makeStyles, mergeClasses } from '@griffel/core';
+import { __styles } from '@griffel/core';
 
-console.log(makeStyles, mergeClasses);
+console.log(__styles);
 
 export default {
-  name: 'makeStyles + mergeClasses (runtime)',
+  name: '__styles (makeStyles)',
 };
