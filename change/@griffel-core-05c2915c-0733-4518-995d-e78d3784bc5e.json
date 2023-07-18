@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: rework internals of makeStaticStyles",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

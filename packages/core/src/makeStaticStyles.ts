@@ -16,16 +16,16 @@ export function makeStaticStyles(styles: GriffelStaticStyles | GriffelStaticStyl
   const stylesSet: GriffelStaticStyles[] = Array.isArray(styles) ? styles : [styles];
 
   function useStaticStyles(options: MakeStaticStylesOptions): void {
-    const cacheKey = options.renderer.id;
-    if (styleCache[cacheKey]) {
-      return;
-    }
+    const { renderer } = options;
+    const cacheKey = renderer.id;
 
-    for (const styleRules of stylesSet) {
-      options.renderer.insertCSSRules(resolveStaticStyleRules(styleRules));
+    if (!styleCache[cacheKey]) {
+      renderer.insertCSSRules({
+        // 👇 static rules should be inserted into default bucket
+        d: resolveStaticStyleRules(stylesSet),
+      });
+      styleCache[cacheKey] = true;
     }
-
-    styleCache[cacheKey] = true;
   }
 
   return useStaticStyles;
