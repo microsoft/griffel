@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { PaddingBlockInput } from './types';
+import { validateArguments } from './utils';
 
 type PaddingBlockStyle = Pick<GriffelStyle, 'paddingBlockStart' | 'paddingBlockEnd'>;
 
@@ -13,6 +15,8 @@ type PaddingBlockStyle = Pick<GriffelStyle, 'paddingBlockStart' | 'paddingBlockE
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
  */
 export function paddingBlock(start: PaddingBlockInput, end: PaddingBlockInput = start): PaddingBlockStyle {
+  validateArguments('paddingBlock', arguments);
+
   return {
     paddingBlockStart: start,
     paddingBlockEnd: end,

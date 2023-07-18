@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { InsetInput } from './types';
+import { validateArguments } from './utils';
 
 type InsetStyle = Pick<GriffelStyle, 'top' | 'right' | 'bottom' | 'left'>;
 
@@ -20,7 +22,9 @@ export function inset(top: InsetInput, right: InsetInput, bottom: InsetInput, le
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/inset
  */
 export function inset(...values: InsetInput[]): InsetStyle {
+  validateArguments('inset', arguments);
   const [firstValue, secondValue = firstValue, thirdValue = firstValue, fourthValue = secondValue] = values;
+
   return {
     top: firstValue,
     right: secondValue,

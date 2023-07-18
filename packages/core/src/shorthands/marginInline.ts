@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { MarginInlineInput } from './types';
+import { validateArguments } from './utils';
 
 type MarginInlineStyle = Pick<GriffelStyle, 'marginInlineStart' | 'marginInlineEnd'>;
 
@@ -13,6 +15,8 @@ type MarginInlineStyle = Pick<GriffelStyle, 'marginInlineStart' | 'marginInlineE
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
  */
 export function marginInline(start: MarginInlineInput, end: MarginInlineInput = start): MarginInlineStyle {
+  validateArguments('marginInline', arguments);
+
   return {
     marginInlineStart: start,
     marginInlineEnd: end,

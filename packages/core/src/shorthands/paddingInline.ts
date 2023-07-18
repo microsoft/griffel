@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { PaddingInlineInput } from './types';
+import { validateArguments } from './utils';
 
 type PaddingInlineStyle = Pick<GriffelStyle, 'paddingInlineStart' | 'paddingInlineEnd'>;
 
@@ -13,6 +15,8 @@ type PaddingInlineStyle = Pick<GriffelStyle, 'paddingInlineStart' | 'paddingInli
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline
  */
 export function paddingInline(start: PaddingInlineInput, end: PaddingInlineInput = start): PaddingInlineStyle {
+  validateArguments('paddingInline', arguments);
+
   return {
     paddingInlineStart: start,
     paddingInlineEnd: end,

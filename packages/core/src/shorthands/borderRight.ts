@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
+import { validateArguments } from './utils';
 
 type BorderRightStyle = Pick<GriffelStyle, 'borderRightWidth' | 'borderRightStyle' | 'borderRightColor'>;
 
@@ -22,6 +24,8 @@ export function borderRight(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-right
  */
 export function borderRight(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderRightStyle {
+  validateArguments('borderRight', arguments);
+
   return {
     borderRightWidth: values[0],
     ...(values[1] && ({ borderRightStyle: values[1] } as BorderRightStyle)),

@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
+import { validateArguments } from './utils';
 
 type BorderTopStyle = Pick<GriffelStyle, 'borderTopWidth' | 'borderTopStyle' | 'borderTopColor'>;
 
@@ -18,6 +20,8 @@ export function borderTop(width: BorderWidthInput, style: BorderStyleInput, colo
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-top
  */
 export function borderTop(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderTopStyle {
+  validateArguments('borderTop', arguments);
+
   return {
     borderTopWidth: values[0],
     ...(values[1] && ({ borderTopStyle: values[1] } as BorderTopStyle)),

@@ -2,6 +2,7 @@ import type { GriffelStyle } from '@griffel/style-types';
 
 import { generateStyles } from './generateStyles';
 import type { MarginInput } from './types';
+import { validateArguments } from './utils';
 
 type MarginStyle = Pick<GriffelStyle, 'marginTop' | 'marginRight' | 'marginBottom' | 'marginLeft'>;
 
@@ -22,5 +23,7 @@ export function margin(top: MarginInput, right: MarginInput, bottom: MarginInput
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/margin
  */
 export function margin(...values: MarginInput[]): MarginStyle {
+  validateArguments('margin', arguments);
+
   return generateStyles<MarginStyle>('margin', '', ...values);
 }

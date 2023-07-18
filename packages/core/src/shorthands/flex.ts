@@ -2,6 +2,7 @@ import * as CSS from 'csstype';
 
 import type { GriffelStyle } from '@griffel/style-types';
 import type { FlexInput } from './types';
+import { validateArguments } from './utils';
 
 type FlexStyle = Pick<GriffelStyle, 'flexGrow' | 'flexShrink' | 'flexBasis'>;
 
@@ -31,6 +32,8 @@ const isWidth = (value: CSS.Property.Flex | undefined) => widthReservedKeys.some
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
  */
 export function flex(...values: FlexInput): FlexStyle {
+  validateArguments('flex', arguments);
+
   const isOneValueSyntax = values.length === 1;
   const isTwoValueSyntax = values.length === 2;
   const isThreeValueSyntax = values.length === 3;

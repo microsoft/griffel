@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { BorderRadiusInput } from './types';
+import { validateArguments } from './utils';
 
 type BorderRadiusStyle = Pick<
   GriffelStyle,
@@ -24,6 +26,8 @@ export function borderRadius(
   value3: BorderRadiusInput = value1,
   value4: BorderRadiusInput = value2,
 ): BorderRadiusStyle {
+  validateArguments('borderRadius', arguments);
+
   return {
     borderBottomRightRadius: value3,
     borderBottomLeftRadius: value4,

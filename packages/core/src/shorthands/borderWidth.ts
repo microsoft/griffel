@@ -1,6 +1,8 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import { generateStyles } from './generateStyles';
 import { BorderWidthInput } from './types';
+import { validateArguments } from './utils';
 
 type BorderWidthStyle = Pick<
   GriffelStyle,
@@ -33,5 +35,7 @@ export function borderWidth(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-width
  */
 export function borderWidth(...values: BorderWidthInput[]): BorderWidthStyle {
+  validateArguments('borderWidth', arguments);
+
   return generateStyles<BorderWidthStyle>('border', 'Width', ...values);
 }

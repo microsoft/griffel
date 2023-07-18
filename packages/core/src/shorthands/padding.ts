@@ -2,6 +2,7 @@ import type { GriffelStyle } from '@griffel/style-types';
 
 import { generateStyles } from './generateStyles';
 import type { PaddingInput } from './types';
+import { validateArguments } from './utils';
 
 type PaddingStyle = Pick<GriffelStyle, 'paddingTop' | 'paddingRight' | 'paddingBottom' | 'paddingLeft'>;
 
@@ -22,5 +23,7 @@ export function padding(top: PaddingInput, right: PaddingInput, bottom: PaddingI
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/padding
  */
 export function padding(...values: PaddingInput[]) {
+  validateArguments('padding', arguments);
+
   return generateStyles<PaddingStyle>('padding', '', ...values);
 }

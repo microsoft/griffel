@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
+import { validateArguments } from './utils';
 
 type BorderBottomStyle = Pick<GriffelStyle, 'borderBottomWidth' | 'borderBottomStyle' | 'borderBottomColor'>;
 
@@ -22,6 +24,8 @@ export function borderBottom(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom
  */
 export function borderBottom(...values: [BorderWidthInput, BorderStyleInput?, BorderColorInput?]): BorderBottomStyle {
+  validateArguments('borderBottom', arguments);
+
   return {
     borderBottomWidth: values[0],
     ...(values[1] && ({ borderBottomStyle: values[1] } as BorderBottomStyle)),

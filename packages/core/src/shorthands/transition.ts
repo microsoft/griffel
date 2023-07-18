@@ -1,4 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import {
   TransitionDelayInput,
   TransitionDurationInput,
@@ -6,6 +7,7 @@ import {
   TransitionTimingFunctionInput,
   TransitionGlobalInput,
 } from './types';
+import { validateArguments } from './utils';
 
 type TransitionInputs = [
   TransitionPropertyInput,
@@ -52,6 +54,8 @@ export function transition(values: TransitionInputs[]): TransitionStyle;
 export function transition(
   ...values: [TransitionGlobalInput] | TransitionInputs | [TransitionInputs[]]
 ): TransitionStyle {
+  validateArguments('transition', arguments);
+
   if (isTransitionGlobalInputs(values)) {
     return {
       transitionDelay: values[0],

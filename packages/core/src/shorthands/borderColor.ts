@@ -1,6 +1,8 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import { generateStyles } from './generateStyles';
 import type { BorderColorInput } from './types';
+import { validateArguments } from './utils';
 
 type BorderColorStyle = Pick<
   GriffelStyle,
@@ -33,5 +35,7 @@ export function borderColor(
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-color
  */
 export function borderColor(...values: BorderColorInput[]): BorderColorStyle {
+  validateArguments('borderColor', arguments);
+
   return generateStyles<BorderColorStyle>('border', 'Color', ...values);
 }

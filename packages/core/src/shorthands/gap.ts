@@ -1,5 +1,6 @@
 import type { GriffelStyle } from '@griffel/style-types';
 import type { GapInput } from './types';
+import { validateArguments } from './utils';
 
 type GapStyle = Pick<GriffelStyle, 'columnGap' | 'rowGap'>;
 
@@ -13,6 +14,8 @@ type GapStyle = Pick<GriffelStyle, 'columnGap' | 'rowGap'>;
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/gap
  */
 export function gap(columnGap: GapInput, rowGap: GapInput = columnGap): GapStyle {
+  validateArguments('gap', arguments);
+
   return {
     columnGap,
     rowGap,

@@ -1,5 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
+
 import type { OutlineColorInput, OutlineStyleInput, OutlineWidthInput } from './types';
+import { validateArguments } from './utils';
 
 type OutlineStyle = Pick<GriffelStyle, 'outlineColor' | 'outlineStyle' | 'outlineWidth'>;
 
@@ -23,6 +25,8 @@ export function outline(
   outlineStyle?: OutlineStyleInput,
   outlineColor?: OutlineColorInput,
 ): OutlineStyle {
+  validateArguments('outline', arguments);
+
   return {
     outlineWidth,
     ...(outlineStyle && { outlineStyle }),
