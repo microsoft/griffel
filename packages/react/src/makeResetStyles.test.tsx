@@ -2,11 +2,11 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 
-import { makeStyles } from './makeStyles';
+import { makeResetStyles } from './makeResetStyles';
 
-describe('makeStyles', () => {
+describe('makeResetStyles', () => {
   it('works outside of React components', () => {
-    expect(() => makeStyles({ root: { color: 'red' } })).not.toThrow();
+    expect(() => makeResetStyles({ root: { color: 'red' } })).not.toThrow();
   });
 
   it('throws inside React components', () => {
@@ -14,14 +14,14 @@ describe('makeStyles', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {});
 
     const Example: React.FC = () => {
-      makeStyles({ root: { color: 'red' } });
+      makeResetStyles({ color: 'red' });
       return null;
     };
     const root = createRoot(document.createElement('div'));
 
-    expect(() => act(() => root.render(<Example />))).toThrow(/All makeStyles\(\) calls should be top level/);
+    expect(() => act(() => root.render(<Example />))).toThrow(/All makeResetStyles\(\) calls should be top level/);
 
     // Should not throw outside React components after rendering
-    expect(() => makeStyles({ root: { color: 'red' } })).not.toThrow();
+    expect(() => makeResetStyles({ color: 'red' })).not.toThrow();
   });
 });

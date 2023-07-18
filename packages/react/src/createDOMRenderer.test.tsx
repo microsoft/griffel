@@ -1,7 +1,8 @@
 import { createDOMRenderer, mergeClasses } from '@griffel/core';
 import * as React from 'react';
-import { hydrate } from 'react-dom';
+import { hydrateRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { act } from 'react-dom/test-utils';
 
 import { makeStyles } from './makeStyles';
 import { makeResetStyles } from './makeResetStyles';
@@ -52,6 +53,17 @@ describe('createDOMRenderer', () => {
     );
     const stylesHTML = renderToStaticMarkup(<>{renderToStyleElements(serverRenderer)}</>);
 
+    // Ensure that all styles are inserted into the cache
+    expect(serverRenderer.insertionCache).toMatchInlineSnapshot(`
+      Object {
+        ".f1p9cr64{animation-name:f1kgwxhb;}": "d",
+        ".fe3e8s9{color:red;}": "d",
+        ".rp2atum:hover{color:blue;}": "r",
+        ".rp2atum{color:red;}": "r",
+        "@keyframes f1kgwxhb{from{height:10px;}to{height:20px;}}": "k",
+        "@media screen and (max-width: 992px){.fnao3vb:hover{color:blue;}}": "m",
+      }
+    `);
     // There is no DOM on a server, style nodes should not be present
     expect(document.querySelector('style')).toBe(null);
 
@@ -61,6 +73,7 @@ describe('createDOMRenderer', () => {
     //
 
     const container = document.createElement('div');
+
     document.body.appendChild(container);
 
     container.innerHTML = componentHTML;
@@ -73,13 +86,15 @@ describe('createDOMRenderer', () => {
       jest.spyOn(styleEl.sheet!, 'insertRule'),
     );
 
-    hydrate(
-      // "RendererProvider" is not required there, we need it only for Jest spies
-      <RendererProvider renderer={clientRenderer}>
-        <ExampleComponent />
-      </RendererProvider>,
-      container,
-    );
+    act(() => {
+      hydrateRoot(
+        container,
+        // "RendererProvider" is not required there, we need it only for Jest spies
+        <RendererProvider renderer={clientRenderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+    });
 
     const styleElementsAfterHydration = document.querySelectorAll<HTMLStyleElement>('style');
 

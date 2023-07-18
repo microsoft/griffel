@@ -1,7 +1,9 @@
 import { createDOMRenderer, GriffelRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom/server';
+import { createRoot } from 'react-dom/client';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { act } from 'react-dom/test-utils';
 
 import { makeStyles } from './makeStyles';
 import { makeResetStyles } from './makeResetStyles';
@@ -43,14 +45,17 @@ describe('renderToStyleElements (DOM)', () => {
 
       return <div className={classes.root} />;
     };
+    const root = createRoot(document.createElement('div'));
 
-    ReactDOM.renderToStaticMarkup(
-      <RendererProvider renderer={renderer}>
-        <ExampleComponent />
-      </RendererProvider>,
-    );
+    act(() => {
+      root.render(
+        <RendererProvider renderer={renderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+    });
 
-    expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
+    expect(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
       <style data-make-styles-bucket="d" data-make-styles-rehydration="true">
         .fe3e8s9 {
           color: red;
@@ -71,14 +76,17 @@ describe('renderToStyleElements (DOM)', () => {
     const ExampleComponent: React.FC = () => {
       return <div className={useClassName()} />;
     };
+    const root = createRoot(document.createElement('div'));
 
-    ReactDOM.renderToStaticMarkup(
-      <RendererProvider renderer={renderer}>
-        <ExampleComponent />
-      </RendererProvider>,
-    );
+    act(() => {
+      root.render(
+        <RendererProvider renderer={renderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+    });
 
-    expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
+    expect(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
         <style data-make-styles-bucket="r" data-make-styles-rehydration="true">
           .r1tsu58y {
             color: red;
