@@ -1,4 +1,4 @@
-import { makeStyles } from '@griffel/core';
+import { makeStyles } from '@griffel/react';
 
 console.log(makeStyles);
 

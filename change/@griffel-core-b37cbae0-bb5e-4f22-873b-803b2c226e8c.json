@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: cleanup bundle size fixtures",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
