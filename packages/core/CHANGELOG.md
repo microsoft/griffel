@@ -1,8 +1,18 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 13 Jul 2023 11:31:22 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Jul 2023 07:32:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.13.1
+
+Wed, 19 Jul 2023 07:32:54 GMT
+
+### Patches
+
+- chore: rework internals of makeStaticStyles (olfedias@microsoft.com)
+- fix: add container queries to hash generation (olfedias@microsoft.com)
+- chore: use types from @griffel/style-types (olfedias@microsoft.com)
 
 ## 1.13.0
 

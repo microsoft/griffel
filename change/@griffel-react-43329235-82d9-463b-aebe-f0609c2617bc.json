@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: use modern APIs in tests",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

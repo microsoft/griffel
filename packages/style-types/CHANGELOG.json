@@ -1,0 +1,36 @@
+{
+  "name": "@griffel/style-types",
+  "entries": [
+    {
+      "date": "Wed, 19 Jul 2023 07:32:54 GMT",
+      "tag": "@griffel/style-types_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "0fc42a4200ed2c220a6b2e5bd2503d47aeaa0a1a",
+            "comment": "chore: initial release"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "c9458be32a5047d44332ca15b9eb6c5389bdc522",
+            "comment": "fix: resolve recursive typings issue"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "b4c28f871df20ed62fa47fdf44de854c05ca3e6a",
+            "comment": "there is a change file already"
+          }
+        ]
+      }
+    }
+  ]
+}

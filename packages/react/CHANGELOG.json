@@ -2,6 +2,35 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Wed, 19 Jul 2023 07:32:54 GMT",
+      "tag": "@griffel/react_v1.5.12",
+      "version": "1.5.12",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "2ee1ee7305064beeb7a61fbf50d4fcbba4bb14ba",
+            "comment": "chore: use modern APIs in tests"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "c7fd5334a5486a305f19b3fbf81d9d13260ad51d",
+            "comment": "chore: cleanup bundle size fixtures"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.13.1",
+            "commit": "47f4df96449fc23545eab7c58ede2e55610c637c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Jul 2023 11:31:22 GMT",
       "tag": "@griffel/react_v1.5.11",
       "version": "1.5.11",

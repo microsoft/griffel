@@ -2,6 +2,41 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 19 Jul 2023 07:32:54 GMT",
+      "tag": "@griffel/core_v1.13.1",
+      "version": "1.13.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "0c22d891363f1b6f01ab5ccddd08ce38f632eab6",
+            "comment": "chore: rework internals of makeStaticStyles"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "47f4df96449fc23545eab7c58ede2e55610c637c",
+            "comment": "fix: add container queries to hash generation"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "b4c28f871df20ed62fa47fdf44de854c05ca3e6a",
+            "comment": "chore: use types from @griffel/style-types"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "c7fd5334a5486a305f19b3fbf81d9d13260ad51d",
+            "comment": "chore: cleanup bundle size fixtures"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Jul 2023 11:31:22 GMT",
       "tag": "@griffel/core_v1.13.0",
       "version": "1.13.0",

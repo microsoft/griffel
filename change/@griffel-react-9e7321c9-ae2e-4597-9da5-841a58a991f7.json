@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: cleanup bundle size fixtures",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
