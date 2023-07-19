@@ -434,28 +434,60 @@ describe('resolveStyleRules', () => {
 
     it('handles named container queries', () => {
       const result = resolveStyleRules({ '@container foo (max-width: 1px)': { color: 'red' } });
+
       expect(result).toMatchInlineSnapshot(`
         @container foo (max-width: 1px) {
-          .fe3e8s9 {
+          .f16pkaez {
             color: red;
           }
         }
       `);
-
-      expect(Object.keys(result[1])).toEqual(['c']);
+      expect(result[0]).toMatchInlineSnapshot(`
+        Object {
+          "Blqc43h": "f16pkaez",
+        }
+      `);
     });
 
     it('handles unnamed container queries', () => {
       const result = resolveStyleRules({ '@container (max-width: 1px)': { color: 'red' } });
+
       expect(result).toMatchInlineSnapshot(`
         @container (max-width: 1px) {
-          .fe3e8s9 {
+          .f15adh02 {
             color: red;
           }
         }
       `);
+      expect(result[0]).toMatchInlineSnapshot(`
+        Object {
+          "qc8hou": "f15adh02",
+        }
+      `);
+    });
 
-      expect(Object.keys(result[1])).toEqual(['c']);
+    it("container queries don't collide with other properties", () => {
+      const result = resolveStyleRules({
+        color: 'red',
+        '@container foo (max-width: 1px)': { color: 'red' },
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        .fe3e8s9 {
+          color: red;
+        }
+        @container foo (max-width: 1px) {
+          .f16pkaez {
+            color: red;
+          }
+        }
+      `);
+      expect(result[0]).toMatchInlineSnapshot(`
+        Object {
+          "Blqc43h": "f16pkaez",
+          "sj55zd": "fe3e8s9",
+        }
+      `);
     });
 
     it('handles media queries', () => {
