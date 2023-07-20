@@ -72,7 +72,14 @@ function webpackLoader(
     const resultSourceMap = unstable_keepOriginalCode ? inputSourceMap : result.sourceMap;
 
     if (result.cssRulesByBucket) {
-      const css = Object.entries(result.cssRulesByBucket).reduce((acc, [cssBucketName, cssBucketRules]) => {
+      const entries = Object.entries(result.cssRulesByBucket);
+
+      if (entries.length === 0) {
+        this.callback(null, resultCode, resultSourceMap);
+        return;
+      }
+
+      const css = entries.reduce((acc, [cssBucketName, cssBucketRules]) => {
         if (cssBucketName === 'm') {
           return (
             acc +

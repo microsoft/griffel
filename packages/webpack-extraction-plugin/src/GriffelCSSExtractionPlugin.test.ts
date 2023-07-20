@@ -230,6 +230,7 @@ describe('webpackLoader', () => {
   testFixture('reset');
   testFixture('reset-media');
   testFixture('mixed');
+  testFixture('empty');
 
   // Multiple calls of __styles
   testFixture('multiple');
