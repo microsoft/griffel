@@ -26,6 +26,8 @@ export const styleBucketOrdering: StyleBucketName[] = [
   'h',
   // active
   'a',
+  // at rules for reset styles
+  's',
   // keyframes
   'k',
   // at-rules

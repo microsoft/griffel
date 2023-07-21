@@ -1,7 +1,7 @@
 import { DEBUG_RESET_CLASSES } from './constants';
 import { insertionFactory } from './insertionFactory';
 import type { MakeResetStylesOptions } from './makeResetStyles';
-import type { GriffelInsertionFactory } from './types';
+import type { CSSRulesByBucket, GriffelInsertionFactory } from './types';
 
 /**
  * @internal
@@ -9,7 +9,7 @@ import type { GriffelInsertionFactory } from './types';
 export function __resetStyles(
   ltrClassName: string,
   rtlClassName: string | null,
-  cssRules: string[],
+  cssRules: CSSRulesByBucket | string[],
   factory: GriffelInsertionFactory = insertionFactory,
 ) {
   const insertStyles = factory();
@@ -18,7 +18,7 @@ export function __resetStyles(
     const { dir, renderer } = options;
     const className = dir === 'ltr' ? ltrClassName : rtlClassName || ltrClassName;
 
-    insertStyles(renderer, { r: cssRules });
+    insertStyles(renderer, Array.isArray(cssRules) ? { r: cssRules! } : cssRules!);
 
     if (process.env.NODE_ENV !== 'production') {
       DEBUG_RESET_CLASSES[className] = 1;

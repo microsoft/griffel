@@ -1,9 +1,14 @@
 /** griffel.css **/
-.r13wlxb8 {
-  line-height: 0;
+.rjrhw4c {
+  color: red;
 }
-@media screen and (prefers-reduced-motion: reduce) {
-  .r13wlxb8 {
-    transition-duration: 0.01ms;
+@supports (display: flex) {
+  .rjrhw4c {
+    color: pink;
+  }
+}
+@media (min-width: 100px) {
+  .rjrhw4c {
+    color: blue;
   }
 }

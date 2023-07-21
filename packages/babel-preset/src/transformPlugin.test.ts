@@ -181,6 +181,11 @@ pluginTester({
       fixture: path.resolve(fixturesDir, 'assets-reset-styles', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'assets-reset-styles', 'output.ts'),
     },
+    {
+      title: 'reset: at rules',
+      fixture: path.resolve(fixturesDir, 'reset-styles-at-rules', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'reset-styles-at-rules', 'output.ts'),
+    },
 
     // Imports
     //

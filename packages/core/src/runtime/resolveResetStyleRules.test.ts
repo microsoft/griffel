@@ -102,7 +102,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+      /** bucket "s" */
       @container foo (max-width: 1px) {
         .rmph5rz {
           color: orange;
@@ -119,7 +119,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+      /** bucket "s" */
       @container (max-width: 1px) {
         .r1ph1abo {
           color: orange;
@@ -144,6 +144,7 @@ describe('resolveResetStyleRules', () => {
       .rpycl1b {
         color: red;
       }
+      /** bucket "s" */
       @media (forced-colors: active) {
         .rpycl1b {
           color: orange;
@@ -166,7 +167,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+      /** bucket "s" */
       @layer utilities {
         .rvhnavh {
           color: orange;
@@ -189,7 +190,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+      /** bucket "s" */
       @supports (display: flex) {
         .rxf8lon {
           color: orange;
@@ -213,7 +214,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+      /** bucket "s" */
       @supports (display: flex) {
         .rhd25ja {
           color: pink;

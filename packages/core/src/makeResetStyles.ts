@@ -3,8 +3,7 @@ import type { GriffelResetStyle } from '@griffel/style-types';
 import { DEBUG_RESET_CLASSES } from './constants';
 import { insertionFactory } from './insertionFactory';
 import { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
-import type { GriffelRenderer } from './types';
-import type { GriffelInsertionFactory } from './types';
+import type { CSSRulesByBucket, GriffelRenderer, GriffelInsertionFactory } from './types';
 
 export interface MakeResetStylesOptions {
   dir: 'ltr' | 'rtl';
@@ -17,7 +16,7 @@ export function makeResetStyles(styles: GriffelResetStyle, factory: GriffelInser
   let ltrClassName: string | null = null;
   let rtlClassName: string | null = null;
 
-  let cssRules: string[] | null = null;
+  let cssRules: CSSRulesByBucket | string[] | null = null;
 
   function computeClassName(options: MakeResetStylesOptions): string {
     const { dir, renderer } = options;
@@ -26,7 +25,7 @@ export function makeResetStyles(styles: GriffelResetStyle, factory: GriffelInser
       [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(styles);
     }
 
-    insertStyles(renderer, { r: cssRules! });
+    insertStyles(renderer, Array.isArray(cssRules) ? { r: cssRules! } : cssRules!);
 
     const className = dir === 'ltr' ? ltrClassName : rtlClassName || ltrClassName;
 

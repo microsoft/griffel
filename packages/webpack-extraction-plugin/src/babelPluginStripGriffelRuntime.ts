@@ -47,9 +47,12 @@ function evaluateAndUpdateArgument(
 
     state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, cssRulesByBucket);
   } else if (functionKind === '__resetStyles') {
-    const cssRules = evaluationResult.value as NonNullable<CSSRulesByBucket['r']>;
+    const cssRules = evaluationResult.value as CSSRulesByBucket | string[];
 
-    state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, { r: cssRules });
+    state.cssRulesByBucket = concatCSSRulesByBucket(
+      state.cssRulesByBucket,
+      Array.isArray(cssRules) ? { r: cssRules } : cssRules,
+    );
   }
 
   argumentPath.remove();
@@ -68,7 +71,7 @@ function getFunctionArgumentPath(
   }
 
   if (functionKind === '__resetStyles') {
-    if (argumentPaths.length === 3 && argumentPaths[2].isArrayExpression()) {
+    if (argumentPaths.length === 3 && (argumentPaths[2].isArrayExpression() || argumentPaths[2].isObjectExpression())) {
       return argumentPaths[2];
     }
   }

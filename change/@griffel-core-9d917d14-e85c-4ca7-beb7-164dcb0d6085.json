@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: makeResetStyles emits at rules into a separate bucket",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
