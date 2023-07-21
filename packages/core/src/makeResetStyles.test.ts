@@ -25,6 +25,7 @@ describe('makeResetStyles', () => {
 
     expect(computeClassName({ dir: 'ltr', renderer })).toEqual('r7lmmpp');
     expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "r" **/
       .r7lmmpp {
         color: red;
         flex-direction: row;
@@ -41,6 +42,7 @@ describe('makeResetStyles', () => {
     expect(computeClassName({ dir: 'rtl', renderer })).toEqual('rjhindo');
 
     expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "r" **/
       .rgb6zd6 {
         padding: 40px 20px 10px 5px;
       }

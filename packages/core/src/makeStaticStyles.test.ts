@@ -28,6 +28,7 @@ describe('makeStaticStyles', () => {
     useStyles({ renderer });
 
     expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
       body {
         background: blue;
         transition: all 4s ease;
@@ -58,6 +59,7 @@ describe('makeStaticStyles', () => {
     useStyles({ renderer });
 
     expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
       @font-face {
         font-family: Open Sans;
         src: url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
@@ -75,6 +77,7 @@ describe('makeStaticStyles', () => {
     useStyles({ renderer });
 
     expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
       body {
         background: red;
       }
@@ -102,6 +105,7 @@ describe('makeStaticStyles', () => {
     useStyles2({ renderer });
 
     expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
       body {
         background: blue;
       }
@@ -124,6 +128,7 @@ describe('makeStaticStyles', () => {
     expect(useStyles({ dir: 'ltr', renderer }).root).toBe('___23yvam0_0000000 fy9yzz7 f4ybsrx');
 
     expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
       @font-face {
         font-family: Open Sans;
         src: url("/fonts/OpenSans-Regular-webfont.woff") format("woff");

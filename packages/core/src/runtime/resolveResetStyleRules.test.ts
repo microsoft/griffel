@@ -11,6 +11,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       .r11y0rml {
         color: red;
         overflow-x: hidden;
@@ -22,6 +23,7 @@ describe('resolveResetStyleRules', () => {
     const result = resolveResetStyleRules({ marginLeft: '15px' });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       .rovwgyn {
         margin-left: 15px;
       }
@@ -37,6 +39,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       .rj1urkn {
         color: red;
         color: blue;
@@ -51,6 +54,7 @@ describe('resolveResetStyleRules', () => {
         ':global(body)': { color: 'magenta' },
       }),
     ).toMatchInlineSnapshot(`
+      /** bucket "r" */
       .rzlpwqs {
         color: red;
       }
@@ -67,6 +71,7 @@ describe('resolveResetStyleRules', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
+      /** bucket "r" */
       body .r1i1zh9k {
         color: magenta;
       }
@@ -82,6 +87,7 @@ describe('resolveResetStyleRules', () => {
         },
       }),
     ).toMatchInlineSnapshot(`
+      /** bucket "r" */
       .fui-FluentProvider .rmi35r5 .foo {
         color: orange;
       }
@@ -96,6 +102,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       @container foo (max-width: 1px) {
         .rmph5rz {
           color: orange;
@@ -112,6 +119,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       @container (max-width: 1px) {
         .r1ph1abo {
           color: orange;
@@ -132,6 +140,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       .rpycl1b {
         color: red;
       }
@@ -157,6 +166,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       @layer utilities {
         .rvhnavh {
           color: orange;
@@ -179,6 +189,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       @supports (display: flex) {
         .rxf8lon {
           color: orange;
@@ -202,6 +213,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       @supports (display: flex) {
         .rhd25ja {
           color: pink;
@@ -223,6 +235,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
+      /** bucket "r" */
       .r1s1f2pl:hover {
         color: red;
       }
@@ -242,6 +255,7 @@ describe('resolveResetStyleRules', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
+        /** bucket "r" */
         .reh730q {
           animation-name: foo;
         }
@@ -257,6 +271,7 @@ describe('resolveResetStyleRules', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
+        /** bucket "r" */
         .rgmpmil {
           animation-name: r1kgwxhb;
         }
@@ -289,6 +304,7 @@ describe('resolveResetStyleRules', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
+        /** bucket "r" */
         .rw8vs22 {
           animation-name: r1sekkel, r5j8bii;
         }
