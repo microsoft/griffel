@@ -1,9 +1,4 @@
-import {
-  // @ts-expect-error https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65517
-  LAYER,
-  MEDIA,
-  SUPPORTS,
-} from 'stylis';
+import { LAYER, MEDIA, SUPPORTS } from 'stylis';
 import type { Middleware } from 'stylis';
 
 export const sortClassesInAtRulesPlugin: Middleware = element => {
