@@ -186,6 +186,7 @@ describe('webpackLoader', () => {
   testFixture('basic-rules');
   testFixture('reset');
   testFixture('mixed');
+  testFixture('empty');
 
   // Multiple
   testFixture('multiple');

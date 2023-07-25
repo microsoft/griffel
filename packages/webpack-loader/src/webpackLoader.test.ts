@@ -232,6 +232,7 @@ describe('webpackLoader', () => {
   testFixture('object');
   testFixture('function');
   testFixture('reset');
+  testFixture('empty');
 
   // Integration fixtures for config functionality
   testFixture('config-modules', {
