@@ -1,7 +1,7 @@
 import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { griffelRendererSerializer } from './common/snapshotSerializers';
 import { makeStyles } from './makeStyles';
-import { GriffelRenderer } from './types';
+import type { GriffelInsertionFactory, GriffelRenderer } from './types';
 
 expect.addSnapshotSerializer(griffelRendererSerializer);
 
@@ -175,6 +175,30 @@ describe('makeStyles', () => {
         padding-right: 10px;
       }
     `);
+  });
+
+  it('works with insertionFactory', () => {
+    const insertionFactory: GriffelInsertionFactory = () => {
+      return function (renderer, cssRulesByBucket) {
+        renderer.insertCSSRules(cssRulesByBucket);
+      };
+    };
+    const renderer: Partial<GriffelRenderer> = { insertCSSRules: jest.fn() };
+
+    const computeClasses = makeStyles(
+      {
+        root: { display: 'flex', paddingLeft: '10px' },
+      },
+      insertionFactory,
+    );
+    const classes = computeClasses({ dir: 'ltr', renderer: renderer as GriffelRenderer }).root;
+
+    expect(classes).toMatchInlineSnapshot(`"___qs05so0 f22iagw frdkuqy"`);
+
+    expect(renderer.insertCSSRules).toHaveBeenCalledTimes(1);
+    expect(renderer.insertCSSRules).toHaveBeenCalledWith({
+      d: ['.f22iagw{display:flex;}', '.frdkuqy{padding-left:10px;}', '.f81rol6{padding-right:10px;}'],
+    });
   });
 
   it('handles numeric slot names', () => {
