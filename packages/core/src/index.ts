@@ -102,6 +102,7 @@ export {
   StyleBucketName,
   // Util
   GriffelRenderer,
+  GriffelInsertionFactory,
 } from './types';
 
 // Private exports, are used by devtools

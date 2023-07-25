@@ -1,25 +1,24 @@
 import { DEBUG_RESET_CLASSES } from './constants';
+import { insertionFactory } from './insertionFactory';
 import type { MakeResetStylesOptions } from './makeResetStyles';
+import type { GriffelInsertionFactory } from './types';
 
 /**
  * @internal
  */
-export function __resetStyles(ltrClassName: string, rtlClassName: string | null, cssRules: string[]) {
-  const insertionCache: Record<string, boolean> = {};
+export function __resetStyles(
+  ltrClassName: string,
+  rtlClassName: string | null,
+  cssRules: string[],
+  factory: GriffelInsertionFactory = insertionFactory,
+) {
+  const insertStyles = factory();
 
   function computeClassName(options: MakeResetStylesOptions): string {
     const { dir, renderer } = options;
+    const className = dir === 'ltr' ? ltrClassName : rtlClassName || ltrClassName;
 
-    const isLTR = dir === 'ltr';
-    // As RTL classes are different they should have a different cache key for insertion
-    const rendererId = isLTR ? renderer.id : renderer.id + 'r';
-
-    if (insertionCache[rendererId] === undefined) {
-      renderer.insertCSSRules({ r: cssRules! });
-      insertionCache[rendererId] = true;
-    }
-
-    const className = isLTR ? ltrClassName : rtlClassName || ltrClassName;
+    insertStyles(renderer, { r: cssRules });
 
     if (process.env.NODE_ENV !== 'production') {
       DEBUG_RESET_CLASSES[className] = 1;

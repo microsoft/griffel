@@ -87,6 +87,8 @@ export type CSSRulesByBucket = {
   c?: CSSBucketEntry[];
 };
 
+export type GriffelInsertionFactory = () => (renderer: GriffelRenderer, cssRules: CSSRulesByBucket) => void;
+
 /** @internal */
 export type CSSBucketEntry = string | [string, Record<string, unknown>];
 
