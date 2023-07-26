@@ -4,7 +4,8 @@ import * as prettier from 'prettier';
 
 import { resolveStyleRules } from '../runtime/resolveStyleRules';
 import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
-import type { GriffelRenderer } from '../types';
+import type { CSSRulesByBucket, GriffelRenderer } from '../types';
+import { resolveResetStyleRules } from '../runtime/resolveResetStyleRules';
 
 // eslint-disable-next-line eqeqeq
 const isObject = (value: unknown) => value != null && !Array.isArray(value) && typeof value === 'object';
@@ -27,7 +28,11 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
       if (stylesheet) {
         const cssRules = stylesheet.cssRules() ?? ([] as string[]);
 
-        return [...acc, ...cssRules];
+        if (cssRules.length === 0) {
+          return acc;
+        }
+
+        return [...acc, `/** bucket "${styleEl}" **/`, ...cssRules];
       }
 
       return acc;
@@ -66,11 +71,16 @@ export const griffelResetRulesSerializer: jest.SnapshotSerializerPlugin = {
     return Array.isArray(value);
   },
   print(value) {
+    const format = (cssRules: string[]) => prettier.format(cssRules.join(''), { parser: 'css' }).trim();
+
     /**
      * test function makes sure that value is the guarded type
      */
-    const _value = value as [string, string | null, string[]];
+    const _value = value as ReturnType<typeof resolveResetStyleRules>;
+    const cssRulesByBucket: CSSRulesByBucket = { r: _value[2] };
 
-    return prettier.format(_value[2].join(''), { parser: 'css' }).trim();
+    return Object.entries(cssRulesByBucket)
+      .flatMap(([key, value]) => [`/** bucket "${key}" */`, format(value as string[])])
+      .join('\n');
   },
 };
