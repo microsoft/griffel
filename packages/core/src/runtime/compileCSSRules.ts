@@ -1,8 +1,8 @@
 import { compile, middleware, rulesheet, serialize, stringify } from 'stylis';
 
 import { globalPlugin } from './stylis/globalPlugin';
+import { prefixerPlugin } from './stylis/prefixerPlugin';
 import { sortClassesInAtRulesPlugin } from './stylis/sortClassesInAtRulesPlugin';
-import { prefixer } from './prefixer';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 function noop() {}
@@ -15,8 +15,7 @@ export function compileCSSRules(cssRules: string, sortClassesInAtRules: boolean)
     middleware([
       globalPlugin,
       sortClassesInAtRules ? sortClassesInAtRulesPlugin : noop,
-      // prefixer,
-      prefixer,
+      prefixerPlugin,
       stringify,
 
       // 💡 we are using `.insertRule()` API for DOM operations, which does not support

@@ -1,4 +1,4 @@
-import { prefix } from './prefixer';
+import { prefix } from './prefixerPlugin';
 
 const globalCssValues = ['inherit', 'initial', 'unset', 'revert', 'revert-layer'];
 

@@ -1,6 +1,7 @@
 import type { GriffelAnimation } from '@griffel/style-types';
 import { compile, middleware, serialize, rulesheet, stringify } from 'stylis';
-import { prefixer } from './prefixer';
+
+import { prefixerPlugin } from './stylis/prefixerPlugin';
 import { cssifyObject } from './utils/cssifyObject';
 
 export function compileKeyframeRule(keyframeObject: GriffelAnimation): string {
@@ -25,7 +26,7 @@ export function compileKeyframesCSS(keyframeName: string, keyframeCSS: string): 
     compile(cssRule),
     middleware([
       stringify,
-      prefixer,
+      prefixerPlugin,
       // 💡 we are using `.insertRule()` API for DOM operations, which does not support
       // insertion of multiple CSS rules in a single call. `rulesheet` plugin extracts
       // individual rules to be used with this API

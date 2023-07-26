@@ -9,14 +9,13 @@ import {
   MS,
   MOZ,
   WEBKIT,
-  Element,
   copy,
   serialize,
   DECLARATION,
   RULESET,
   combine,
-  Middleware,
 } from 'stylis';
+import type { Element, Middleware } from 'stylis';
 
 export function prefix(value: string, length: number, children?: Element[]): string {
   switch (hash(value, length)) {
@@ -110,7 +109,7 @@ export function prefix(value: string, length: number, children?: Element[]): str
  * @param {object[]} children
  * @param {function} callback
  */
-export function prefixer(
+export function prefixerPlugin(
   element: Element,
   index: number,
   children: Element[],
