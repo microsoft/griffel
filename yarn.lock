@@ -6576,10 +6576,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/stylis@npm:4.0.2":
-  version: 4.0.2
-  resolution: "@types/stylis@npm:4.0.2"
-  checksum: 5461290afd6e7fbbd713f4896b4c586fa6f3072ef8addcb062feaf112a50168477df98ab474d9b603b19b879696aab6932c5f0bb3cda7472ab9c1622ee7fea60
+"@types/stylis@npm:4.2.0":
+  version: 4.2.0
+  resolution: "@types/stylis@npm:4.2.0"
+  checksum: 02a47584acd2fcb664f7d8270a69686c83752bdfb855f804015d33116a2b09c0b2ac535213a4a7b6d3a78b2915b22b4024cce067ae979beee0e4f8f5fdbc26a9
   languageName: node
   linkType: hard
 
@@ -14203,7 +14203,7 @@ __metadata:
     "@types/react": 18.0.25
     "@types/react-dom": 18.0.9
     "@types/styled-components": 5.1.26
-    "@types/stylis": 4.0.2
+    "@types/stylis": 4.2.0
     "@types/tmp": 0.2.3
     "@types/webpack-env": ^1.17.0
     "@types/yargs": ^17.0.10

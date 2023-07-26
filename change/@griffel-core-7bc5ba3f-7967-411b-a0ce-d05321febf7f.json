@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: remove unused ts-expect-error",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
