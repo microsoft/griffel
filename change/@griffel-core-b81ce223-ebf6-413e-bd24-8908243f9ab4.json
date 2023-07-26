@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: show bucket names in snapshots",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
