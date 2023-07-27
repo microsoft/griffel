@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Inherit more resolve options from webpack config",
+  "packageName": "@griffel/webpack-loader",
+  "email": "miclo@microsoft.com",
+  "dependentChangeType": "patch"
+}
