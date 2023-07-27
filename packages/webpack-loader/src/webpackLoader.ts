@@ -56,10 +56,6 @@ export function webpackLoader(
 
   EvalCache.clearForFile(this.resourcePath);
 
-  const resolveOptionsDefaults: webpack.ResolveOptions = {
-    conditionNames: ['require'],
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-  };
   // ⚠ "this._compilation" limits loaders compatibility, however there seems to be no other way to access Webpack's
   // resolver.
   // There is this.resolve(), but it's asynchronous. Another option is to read the webpack.config.js, but it won't work
@@ -67,10 +63,11 @@ export function webpackLoader(
   const resolveOptionsFromWebpackConfig: webpack.ResolveOptions = this._compilation?.options.resolve || {};
 
   const resolveSync = enhancedResolve.create.sync({
-    ...resolveOptionsDefaults,
     alias: resolveOptionsFromWebpackConfig.alias,
     modules: resolveOptionsFromWebpackConfig.modules,
     plugins: resolveOptionsFromWebpackConfig.plugins,
+    conditionNames: [...(resolveOptionsFromWebpackConfig.conditionNames ?? []), 'require'],
+    extensions: resolveOptionsFromWebpackConfig.extensions ?? ['.js', '.jsx', '.ts', '.tsx', '.json'],
   });
 
   const originalResolveFilename = Module._resolveFilename;
