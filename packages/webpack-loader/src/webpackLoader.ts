@@ -4,10 +4,24 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
+import type { JSONSchema7 } from '@typescript-eslint/utils/dist/json-schema';
 
-export type WebpackLoaderOptions = BabelPluginOptions;
+export type WebpackLoaderOptions = BabelPluginOptions & {
+  inheritResolveOptions?: ('alias' | 'modules' | 'plugins' | 'conditionNames' | 'extensions')[];
+};
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
+
+const optionsSchema: JSONSchema7 = {
+  ...configSchema,
+  properties: {
+    ...configSchema.properties,
+    inheritResolveOptions: {
+      type: 'array',
+      items: { type: 'string', enum: ['alias', 'modules', 'plugins', 'conditionNames', 'extensions'] },
+    },
+  },
+};
 
 export function shouldTransformSourceCode(
   sourceCode: string,
@@ -46,16 +60,20 @@ export function webpackLoader(
   // https://github.com/webpack/webpack/issues/14946
   this.cacheable();
 
-  const options = this.getOptions(configSchema);
+  const { inheritResolveOptions = ['alias', 'modules', 'plugins'], ...babelConfig } = this.getOptions(optionsSchema);
 
   // Early return to handle cases when makeStyles() calls are not present, allows to avoid expensive invocation of Babel
-  if (!shouldTransformSourceCode(sourceCode, options.modules)) {
+  if (!shouldTransformSourceCode(sourceCode, babelConfig.modules)) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }
 
   EvalCache.clearForFile(this.resourcePath);
 
+  const resolveOptionsDefaults: webpack.ResolveOptions = {
+    conditionNames: ['require'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+  };
   // ⚠ "this._compilation" limits loaders compatibility, however there seems to be no other way to access Webpack's
   // resolver.
   // There is this.resolve(), but it's asynchronous. Another option is to read the webpack.config.js, but it won't work
@@ -63,11 +81,13 @@ export function webpackLoader(
   const resolveOptionsFromWebpackConfig: webpack.ResolveOptions = this._compilation?.options.resolve || {};
 
   const resolveSync = enhancedResolve.create.sync({
-    alias: resolveOptionsFromWebpackConfig.alias,
-    modules: resolveOptionsFromWebpackConfig.modules,
-    plugins: resolveOptionsFromWebpackConfig.plugins,
-    conditionNames: [...(resolveOptionsFromWebpackConfig.conditionNames ?? []), 'require'],
-    extensions: resolveOptionsFromWebpackConfig.extensions ?? ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    ...resolveOptionsDefaults,
+    ...Object.fromEntries(
+      inheritResolveOptions.map(resolveOptionKey => [
+        resolveOptionKey,
+        resolveOptionsFromWebpackConfig[resolveOptionKey],
+      ]),
+    ),
   });
 
   const originalResolveFilename = Module._resolveFilename;
@@ -98,7 +118,7 @@ export function webpackLoader(
       enableSourceMaps: this.sourceMap || false,
       inputSourceMap: parseSourceMap(inputSourceMap),
 
-      pluginOptions: options,
+      pluginOptions: babelConfig,
     });
   } catch (err) {
     error = err as Error;
