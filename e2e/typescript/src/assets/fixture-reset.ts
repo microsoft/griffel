@@ -6,6 +6,31 @@ function assertType(style: GriffelResetStyle): GriffelResetStyle {
 
 // Animation
 assertType({ animationName: 'foo' });
+assertType({
+  animationName: {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  },
+});
+assertType({
+  animationName: [
+    {
+      from: { opacity: 0 },
+      to: { opacity: 0 },
+    },
+    {
+      from: { height: 0 },
+      to: { height: '200px' },
+    },
+  ],
+});
+
+assertType({
+  // @ts-expect-error "200" is not a valid CSS value for "height"
+  animationName: {
+    to: { height: 200 },
+  },
+});
 
 // Basic styles
 //

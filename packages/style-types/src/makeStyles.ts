@@ -12,9 +12,12 @@ type GriffelStylesCSSProperties = Omit<
   CSS.PropertiesFallback<GriffelStylesCSSValue>,
   // We have custom definition for "animationName"
   'animationName'
-> & { animationName?: GriffelAnimation | GriffelAnimation[] | string } & Partial<GriffelStylesUnsupportedCSSProperties>;
+> &
+  Partial<GriffelStylesUnsupportedCSSProperties>;
 
-export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties & GriffelCSSPseudos;
+export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties & {
+  animationName?: GriffelAnimation | GriffelAnimation[] | string;
+} & GriffelCSSPseudos;
 
 type GriffelCSSObjectCustom = {
   [Property: string]: GriffelStyle | GriffelStylesCSSValue;
@@ -24,5 +27,5 @@ type GriffelCSSPseudos = {
   [Property in CSS.Pseudos]?: GriffelStylesStrictCSSObject | GriffelCSSObjectCustom;
 };
 
-export type GriffelAnimation = Record<'from' | 'to' | string, GriffelCSSObjectCustom>;
+export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSProperties>;
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelCSSObjectCustom;

@@ -23,5 +23,5 @@ type GriffelCSSPseudos = {
   [Property in CSS.Pseudos]?: GriffelResetStylesStrictCSSObject | GriffelCSSObjectCustom;
 };
 
-export type GriffelResetAnimation = Record<'from' | 'to' | string, GriffelCSSObjectCustom>;
+export type GriffelResetAnimation = Record<'from' | 'to' | string, GriffelResetStylesCSSProperties>;
 export type GriffelResetStyle = GriffelResetStylesStrictCSSObject | GriffelCSSObjectCustom;
