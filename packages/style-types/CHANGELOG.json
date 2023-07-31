@@ -2,6 +2,21 @@
   "name": "@griffel/style-types",
   "entries": [
     {
+      "date": "Mon, 31 Jul 2023 12:18:47 GMT",
+      "tag": "@griffel/style-types_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "fa5f0d726cbdca1cc583ccc7af4578a7f3f6599f",
+            "comment": "fix: update types for \"animationName\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 07:32:54 GMT",
       "tag": "@griffel/style-types_v1.0.0",
       "version": "1.0.0",
