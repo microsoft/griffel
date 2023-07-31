@@ -1,12 +1,13 @@
 import { makeStyles as vanillaMakeStyles } from '@griffel/core';
 import type { GriffelStyle } from '@griffel/core';
 
-import { isInsideComponent } from './utils/isInsideComponent';
+import { insertionFactory } from './insertionFactory';
 import { useRenderer } from './RendererContext';
 import { useTextDirection } from './TextDirectionContext';
+import { isInsideComponent } from './utils/isInsideComponent';
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: Record<Slots, GriffelStyle>) {
-  const getStyles = vanillaMakeStyles(stylesBySlots);
+  const getStyles = vanillaMakeStyles(stylesBySlots, insertionFactory);
 
   if (process.env.NODE_ENV !== 'production') {
     if (isInsideComponent()) {

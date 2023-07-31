@@ -1,6 +1,7 @@
 import { __resetStyles as vanillaResetStyles } from '@griffel/core';
 import type { CSSRulesByBucket } from '@griffel/core';
 
+import { insertionFactory } from './insertionFactory';
 import { useRenderer } from './RendererContext';
 import { useTextDirection } from './TextDirectionContext';
 
@@ -15,7 +16,7 @@ export function __resetStyles(
   rtlClassName: string | null,
   cssRules: CSSRulesByBucket | string[],
 ) {
-  const getStyles = vanillaResetStyles(ltrClassName, rtlClassName, cssRules);
+  const getStyles = vanillaResetStyles(ltrClassName, rtlClassName, cssRules, insertionFactory);
 
   return function useClasses(): string {
     const dir = useTextDirection();

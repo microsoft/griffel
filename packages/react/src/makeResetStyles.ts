@@ -1,12 +1,13 @@
 import { makeResetStyles as vanillaMakeResetStyles } from '@griffel/core';
 import type { GriffelResetStyle } from '@griffel/core';
 
-import { isInsideComponent } from './utils/isInsideComponent';
+import { insertionFactory } from './insertionFactory';
 import { useRenderer } from './RendererContext';
 import { useTextDirection } from './TextDirectionContext';
+import { isInsideComponent } from './utils/isInsideComponent';
 
 export function makeResetStyles(styles: GriffelResetStyle) {
-  const getStyles = vanillaMakeResetStyles(styles);
+  const getStyles = vanillaMakeResetStyles(styles, insertionFactory);
 
   if (process.env.NODE_ENV !== 'production') {
     if (isInsideComponent()) {

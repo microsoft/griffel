@@ -8,6 +8,13 @@ import { makeStyles } from './makeStyles';
 import { makeResetStyles } from './makeResetStyles';
 import { RendererProvider } from './RendererContext';
 import { renderToStyleElements } from './renderToStyleElements';
+import { useInsertionEffect as _useInsertionEffect } from './useInsertionEffect';
+
+jest.mock('./useInsertionEffect', () => ({
+  useInsertionEffect: jest.fn(),
+}));
+
+const useInsertionEffect = _useInsertionEffect as jest.MockedFunction<typeof React.useInsertionEffect>;
 
 describe('createDOMRenderer', () => {
   it('rehydrateCache() avoids double insertion', () => {
@@ -46,12 +53,19 @@ describe('createDOMRenderer', () => {
     // A "server" renders components to static HTML that will be transferred to a client
     //
 
+    // Heads up!
+    // Mock there is need as this test is executed in DOM environment and uses "useInsertionEffect".
+    // However, "useInsertionEffect" will not be called in "renderToStaticMarkup()".
+    useInsertionEffect.mockImplementation(fn => fn());
+
     const componentHTML = renderToStaticMarkup(
       <RendererProvider renderer={serverRenderer}>
         <ExampleComponent />
       </RendererProvider>,
     );
     const stylesHTML = renderToStaticMarkup(<>{renderToStyleElements(serverRenderer)}</>);
+
+    useInsertionEffect.mockImplementation(React.useInsertionEffect);
 
     // Ensure that all styles are inserted into the cache
     expect(serverRenderer.insertionCache).toMatchInlineSnapshot(`
