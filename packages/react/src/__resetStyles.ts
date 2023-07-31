@@ -1,4 +1,5 @@
 import { __resetStyles as vanillaResetStyles } from '@griffel/core';
+import type { CSSRulesByBucket } from '@griffel/core';
 
 import { useRenderer } from './RendererContext';
 import { useTextDirection } from './TextDirectionContext';
@@ -9,7 +10,11 @@ import { useTextDirection } from './TextDirectionContext';
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export function __resetStyles(ltrClassName: string, rtlClassName: string | null, cssRules: string[]) {
+export function __resetStyles(
+  ltrClassName: string,
+  rtlClassName: string | null,
+  cssRules: CSSRulesByBucket | string[],
+) {
   const getStyles = vanillaResetStyles(ltrClassName, rtlClassName, cssRules);
 
   return function useClasses(): string {

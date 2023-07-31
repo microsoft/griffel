@@ -83,6 +83,26 @@ describe('sortClassesInAtRulesPlugin', () => {
         }
       `);
     });
+
+    it('handles @container', () => {
+      const css = `
+        @container utilities {
+          .b { padding-right: 1px; }
+          .a { padding-left: 1px; }
+        }
+      `;
+
+      expect(compileRule(css)).toMatchInlineSnapshot(`
+        @container utilities {
+          .a {
+            padding-left: 1px;
+          }
+          .b {
+            padding-right: 1px;
+          }
+        }
+      `);
+    });
   });
 
   it('handles nested at-rules', () => {

@@ -77,9 +77,10 @@ export const griffelResetRulesSerializer: jest.SnapshotSerializerPlugin = {
      * test function makes sure that value is the guarded type
      */
     const _value = value as ReturnType<typeof resolveResetStyleRules>;
-    const cssRulesByBucket: CSSRulesByBucket = { r: _value[2] };
+    const cssRulesByBucket: CSSRulesByBucket = Array.isArray(_value[2]) ? { r: _value[2] } : _value[2];
 
     return Object.entries(cssRulesByBucket)
+      .filter(([key, value]) => value.length > 0)
       .flatMap(([key, value]) => [`/** bucket "${key}" */`, format(value as string[])])
       .join('\n');
   },

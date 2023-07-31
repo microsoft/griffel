@@ -3,6 +3,7 @@ import type { GriffelResetStyle, GriffelAnimation } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { RESET_HASH_PREFIX } from '../constants';
+import type { CSSRulesByBucket } from '../types';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
 import { isLayerSelector } from './utils/isLayerSelector';
 import { isNestedSelector } from './utils/isNestedSelector';
@@ -10,7 +11,7 @@ import { isSupportQuerySelector } from './utils/isSupportQuerySelector';
 import { isObject } from './utils/isObject';
 import { hyphenateProperty } from './utils/hyphenateProperty';
 import { normalizePseudoSelector } from './compileAtomicCSSRule';
-import { compileCSSRules } from './compileCSSRules';
+import { compileResetCSSRules } from './compileResetCSSRules';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { isContainerQuerySelector } from './utils/isContainerQuerySelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
@@ -135,18 +136,26 @@ function createStringFromStyles(styles: GriffelResetStyle) {
 /**
  * @internal
  */
-export function resolveResetStyleRules(styles: GriffelResetStyle): [string, string | null, string[]] {
+export function resolveResetStyleRules(
+  styles: GriffelResetStyle,
+): [string, string | null, CSSRulesByBucket | string[]] {
   const [ltrRule, rtlRule] = createStringFromStyles(styles);
 
   const ltrClassName = RESET_HASH_PREFIX + hashString(ltrRule);
-  const ltrCSS = compileCSSRules(`.${ltrClassName}{${ltrRule}}`, false);
+  const [ltrCSS, ltrCSSAtRules] = compileResetCSSRules(`.${ltrClassName}{${ltrRule}}`);
+
+  const hasAtRules = ltrCSSAtRules.length > 0;
 
   if (ltrRule === rtlRule) {
-    return [ltrClassName, null, ltrCSS];
+    return [ltrClassName, null, hasAtRules ? { r: ltrCSS, s: ltrCSSAtRules } : ltrCSS];
   }
 
   const rtlClassName = RESET_HASH_PREFIX + hashString(rtlRule);
-  const rtlCSS = compileCSSRules(`.${rtlClassName}{${rtlRule}}`, false);
+  const [rtlCSS, rtlCSSAtRules] = compileResetCSSRules(`.${rtlClassName}{${rtlRule}}`);
 
-  return [ltrClassName, rtlClassName, ltrCSS.concat(rtlCSS)];
+  return [
+    ltrClassName,
+    rtlClassName,
+    hasAtRules ? { r: ltrCSS.concat(rtlCSS), s: ltrCSSAtRules.concat(rtlCSSAtRules) } : ltrCSS.concat(rtlCSS),
+  ];
 }

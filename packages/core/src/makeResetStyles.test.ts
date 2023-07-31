@@ -51,4 +51,25 @@ describe('makeResetStyles', () => {
       }
     `);
   });
+
+  it('handles at rules', () => {
+    const computeClassName = makeResetStyles({
+      color: 'red',
+      '@media (min-width: 100px)': { color: 'blue' },
+    });
+
+    expect(computeClassName({ dir: 'ltr', renderer })).toEqual('rbwcbv2');
+    expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "r" **/
+      .rbwcbv2 {
+        color: red;
+      }
+      /** bucket "s" **/
+      @media (min-width: 100px) {
+        .rbwcbv2 {
+          color: blue;
+        }
+      }
+    `);
+  });
 });

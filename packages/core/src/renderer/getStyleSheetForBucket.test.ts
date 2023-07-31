@@ -54,6 +54,7 @@ describe('getStyleSheetForBucket', () => {
     getStyleSheetForBucket('t', target, null, renderer);
     getStyleSheetForBucket('k', target, null, renderer);
     getStyleSheetForBucket('f', target, null, renderer);
+    getStyleSheetForBucket('s', target, null, renderer);
 
     const styleElements = target.head.querySelectorAll(`[${DATA_BUCKET_ATTR}]`);
     const styleElementOrder = Array.from(styleElements).map(styleElement =>

@@ -77,6 +77,8 @@ export type CSSRulesByBucket = {
   h?: CSSBucketEntry[];
   // active
   a?: CSSBucketEntry[];
+  // at rules for reset
+  s?: CSSBucketEntry[];
   // @keyframes definitions
   k?: CSSBucketEntry[];
   // at-rules (@support, @layer)

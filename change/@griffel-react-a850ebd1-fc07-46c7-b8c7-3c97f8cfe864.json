@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add support for different buckets in makeResetStyles",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
