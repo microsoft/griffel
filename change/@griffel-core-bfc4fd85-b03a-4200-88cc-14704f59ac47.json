@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore(core): move prefixer to stylis directory",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

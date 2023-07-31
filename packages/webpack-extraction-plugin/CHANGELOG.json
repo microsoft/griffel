@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Mon, 31 Jul 2023 09:05:33 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.17",
+      "version": "0.3.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "9e29013645e396ee9af1189641936fa6670a3133",
+            "comment": "fix: do not emit empty CSS files"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "c33da85cf8d176e47fd07012c41574a735753528",
+            "comment": "chore: add support for different buckets in makeResetStyles"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.14.0",
+            "commit": "1d0df068e80f3cb602651f1875edbd625d221c47"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 07:32:54 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.16",
       "version": "0.3.16",

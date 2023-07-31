@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: add support for different buckets in makeResetStyles",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

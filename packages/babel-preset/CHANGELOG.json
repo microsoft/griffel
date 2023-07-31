@@ -2,6 +2,21 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Mon, 31 Jul 2023 09:05:33 GMT",
+      "tag": "@griffel/babel-preset_v1.4.19",
+      "version": "1.4.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.14.0",
+            "commit": "1d0df068e80f3cb602651f1875edbd625d221c47"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 07:32:54 GMT",
       "tag": "@griffel/babel-preset_v1.4.18",
       "version": "1.4.18",

@@ -2,6 +2,33 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Mon, 31 Jul 2023 09:05:33 GMT",
+      "tag": "@griffel/react_v1.5.13",
+      "version": "1.5.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "1d0df068e80f3cb602651f1875edbd625d221c47",
+            "comment": "chore: improve React 18 support by using useInsertionEffect"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "c33da85cf8d176e47fd07012c41574a735753528",
+            "comment": "chore: add support for different buckets in makeResetStyles"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.14.0",
+            "commit": "1d0df068e80f3cb602651f1875edbd625d221c47"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 07:32:54 GMT",
       "tag": "@griffel/react_v1.5.12",
       "version": "1.5.12",

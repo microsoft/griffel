@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: improve React 18 support by using useInsertionEffect",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

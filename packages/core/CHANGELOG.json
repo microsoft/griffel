@@ -2,6 +2,55 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 31 Jul 2023 09:05:33 GMT",
+      "tag": "@griffel/core_v1.14.0",
+      "version": "1.14.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "a1aca05ff590ec6cf81616f5c37549e3a2a3f52f",
+            "comment": "chore: remove unused ts-expect-error"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "a3267efa6d08ff72c4843320e09a1a06d1e35be5",
+            "comment": "chore: show bucket names in snapshots"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "bd37c4fe0b21b33c1d548f7abf1b8c58dd1e5280",
+            "comment": "chore(core): move prefixer to stylis directory"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "9f7710ee6638825ae2c20a240ced14e80dc3032b",
+            "comment": "feat: add API for styles insertion"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "f7c2f6208cac6e5f10a76b9503f0bee94f30df0f",
+            "comment": "feat: support variadic arguments in border* shorthands"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "c33da85cf8d176e47fd07012c41574a735753528",
+            "comment": "fix: makeResetStyles emits at rules into a separate bucket"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 07:32:54 GMT",
       "tag": "@griffel/core_v1.13.1",
       "version": "1.13.1",

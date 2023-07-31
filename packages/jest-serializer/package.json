@@ -1,6 +1,6 @@
 {
   "name": "@griffel/jest-serializer",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "Jest serializer for Griffel",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@griffel/core": "^1.13.1",
+    "@griffel/core": "^1.14.0",
     "tslib": "^2.1.0"
   }
 }

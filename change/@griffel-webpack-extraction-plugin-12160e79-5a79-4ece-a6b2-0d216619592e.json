@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: do not emit empty CSS files",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

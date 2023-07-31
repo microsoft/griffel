@@ -1,8 +1,21 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 19 Jul 2023 07:32:54 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Jul 2023 09:05:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.14.0
+
+Mon, 31 Jul 2023 09:05:33 GMT
+
+### Minor changes
+
+- feat: add API for styles insertion (olfedias@microsoft.com)
+- feat: support variadic arguments in border* shorthands (olfedias@microsoft.com)
+
+### Patches
+
+- fix: makeResetStyles emits at rules into a separate bucket (olfedias@microsoft.com)
 
 ## 1.13.1
 

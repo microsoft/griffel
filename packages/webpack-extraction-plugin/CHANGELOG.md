@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 19 Jul 2023 07:32:54 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Jul 2023 09:05:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.17
+
+Mon, 31 Jul 2023 09:05:33 GMT
+
+### Patches
+
+- fix: do not emit empty CSS files (olfedias@microsoft.com)
+- chore: add support for different buckets in makeResetStyles (olfedias@microsoft.com)
+- Bump @griffel/core to v1.14.0
 
 ## 0.3.16
 

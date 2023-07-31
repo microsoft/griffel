@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: support variadic arguments in border* shorthands",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

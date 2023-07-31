@@ -1,8 +1,18 @@
 # Change Log - @griffel/react
 
-This log was last generated on Wed, 19 Jul 2023 07:32:54 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Jul 2023 09:05:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.13
+
+Mon, 31 Jul 2023 09:05:33 GMT
+
+### Patches
+
+- chore: improve React 18 support by using useInsertionEffect (olfedias@microsoft.com)
+- chore: add support for different buckets in makeResetStyles (olfedias@microsoft.com)
+- Bump @griffel/core to v1.14.0
 
 ## 1.5.12
 
