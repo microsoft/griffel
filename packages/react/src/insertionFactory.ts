@@ -7,16 +7,14 @@ export const insertionFactory: GriffelInsertionFactory = () => {
   const insertionCache: Record<string, boolean> = {};
 
   return function insert(renderer: GriffelRenderer, cssRules: CSSRulesByBucket) {
-    if (useInsertionEffect) {
-      // Even if `useInsertionEffect` is available, we can't use it in SSR as it will not be executed
-      if (canUseDOM()) {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useInsertionEffect(() => {
-          renderer.insertCSSRules(cssRules!);
-        }, [renderer, cssRules]);
+    // Even if `useInsertionEffect` is available, we can use it on a client only as it will not be executed in SSR
+    if (useInsertionEffect && canUseDOM()) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useInsertionEffect(() => {
+        renderer.insertCSSRules(cssRules!);
+      }, [renderer, cssRules]);
 
-        return;
-      }
+      return;
     }
 
     if (insertionCache[renderer.id] === undefined) {
