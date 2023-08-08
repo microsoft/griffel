@@ -159,7 +159,9 @@ module.exports = {
 ```
 
 ### Configuring webpack resolve options
-If your `@griffel/react` modules import other files (eg., a set of common mixins or colors for your app), the loader resolves these using `enhanced-resolve`. By default, it inherits the settings `resolve.alias`, `resolve.modules`, and `resolve.modules` from youe webpack config, while using its own default values for `resolve.extensions` and `resolve.conditionNames`. If you want to change this behavior, you can choose which `resolve` options are inherited from your webpack config.
+If your `@griffel/react` modules import other files (eg., a set of common mixins or colors for your app), the loader resolves these using `enhanced-resolve`. By default, it inherits the settings `resolve.alias`, `resolve.modules`, and `resolve.modules` from your Webpack config, while using its own default values for `resolve.extensions` and `resolve.conditionNames`.
+
+If you want to change this behavior, you can choose which [`resolve` options](https://webpack.js.org/configuration/resolve/) are inherited from your Webpack config.
 ```js
 module.exports = {
   module: {
