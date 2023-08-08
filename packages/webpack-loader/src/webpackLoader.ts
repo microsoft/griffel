@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
-import type { JSONSchema7 } from '@typescript-eslint/utils/dist/json-schema';
+import type { JSONSchema7 } from 'json-schema';
 
 export type WebpackLoaderOptions = BabelPluginOptions & {
   inheritResolveOptions?: ('alias' | 'modules' | 'plugins' | 'conditionNames' | 'extensions')[];
