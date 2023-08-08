@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Inherit more resolve options from webpack config",
+  "comment": "feat: Add 'inheritResolveOptions' to configure resolve options in Webpack",
   "packageName": "@griffel/webpack-loader",
   "email": "miclo@microsoft.com",
   "dependentChangeType": "patch"
