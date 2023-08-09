@@ -1,11 +1,10 @@
-import { configSchema, BabelPluginOptions, EvalCache, Module } from '@griffel/babel-preset';
+import { BabelPluginOptions, EvalCache, Module } from '@griffel/babel-preset';
 import * as enhancedResolve from 'enhanced-resolve';
 import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
 import { optionsSchema } from './schema';
-import type { JSONSchema7 } from 'json-schema';
 
 export type WebpackLoaderOptions = BabelPluginOptions & {
   inheritResolveOptions?: ('alias' | 'modules' | 'plugins' | 'conditionNames' | 'extensions')[];
