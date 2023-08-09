@@ -3,5 +3,6 @@ export const recommendedConfig = {
   rules: {
     '@griffel/hook-naming': 'error',
     '@griffel/no-shorthands': 'error',
+    '@griffel/pseudo-element-naming': 'error',
   },
 };
