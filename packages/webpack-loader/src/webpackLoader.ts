@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
+import { optionsSchema } from './schema';
 import type { JSONSchema7 } from 'json-schema';
 
 export type WebpackLoaderOptions = BabelPluginOptions & {
@@ -11,17 +12,6 @@ export type WebpackLoaderOptions = BabelPluginOptions & {
 };
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
-
-const optionsSchema: JSONSchema7 = {
-  ...configSchema,
-  properties: {
-    ...configSchema.properties,
-    inheritResolveOptions: {
-      type: 'array',
-      items: { type: 'string', enum: ['alias', 'modules', 'plugins', 'conditionNames', 'extensions'] },
-    },
-  },
-};
 
 export function shouldTransformSourceCode(
   sourceCode: string,
