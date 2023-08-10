@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Thu, 10 Aug 2023 09:00:28 GMT",
+      "tag": "@griffel/webpack-loader_v2.1.21",
+      "version": "2.1.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "miclo@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "74950294ac114b26108214ab8a020d04275e2577",
+            "comment": "feat: Add 'inheritResolveOptions' to configure resolve options in Webpack"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Jul 2023 12:18:47 GMT",
       "tag": "@griffel/webpack-loader_v2.1.20",
       "version": "2.1.20",
