@@ -10,7 +10,7 @@ const UNSUPPORTED_PSEUDO_ELEMENTS: Record<string, true> = {
   ':after': true,
 };
 
-function findPseudoElementProperties(
+function findInvalidPseudoElementProperties(
   node: TSESTree.ObjectExpression,
   isRoot = false,
   result: TSESTree.StringLiteral[] = [],
@@ -24,7 +24,7 @@ function findPseudoElementProperties(
       }
 
       if (isObjectExpression(propertyNode.value)) {
-        findPseudoElementProperties(propertyNode.value, false, result);
+        findInvalidPseudoElementProperties(propertyNode.value, false, result);
       }
     }
   }
@@ -59,15 +59,15 @@ export const pseudoElementNamingRule: ReturnType<ReturnType<typeof ESLintUtils.R
           const argument = node.arguments[0];
 
           if (isObjectExpression(argument)) {
-            const pseudoElementProperties = findPseudoElementProperties(argument, true);
+            const invalidPseudoElementProperties = findInvalidPseudoElementProperties(argument, true);
 
-            pseudoElementProperties.forEach(pseudoElementProperty => {
+            invalidPseudoElementProperties.forEach(invalidPseudoElementProperty => {
               context.report({
-                node: pseudoElementProperty,
+                node: invalidPseudoElementProperty,
                 messageId: 'invalidPseudoElementNameFound',
                 fix: function (fixer) {
-                  const start = pseudoElementProperty.range[0] + 1;
-                  const end = pseudoElementProperty.range[1];
+                  const start = invalidPseudoElementProperty.range[0] + 1;
+                  const end = invalidPseudoElementProperty.range[1];
                   return fixer.insertTextBeforeRange([start, end], ':');
                 },
               });
