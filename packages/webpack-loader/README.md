@@ -10,6 +10,7 @@ A loader for Webpack 5 that performs build time transforms for [`@griffel/react`
 - [Usage](#usage)
   - [Handling Griffel re-exports](#handling-griffel-re-exports)
   - [Configuring Babel settings](#configuring-babel-settings)
+  - [Configuring webpack resolve options](#configuring-webpack-resolve-options)
   - [Configuring module evaluation](#configuring-module-evaluation)
 - [Troubleshooting](#troubleshooting)
 
@@ -149,6 +150,29 @@ module.exports = {
               // If your project uses TypeScript
               presets: ['@babel/preset-typescript'],
             },
+          },
+        },
+      },
+    ],
+  },
+};
+```
+
+### Configuring webpack resolve options
+If your `@griffel/react` modules import other files (eg., a set of common mixins or colors for your app), the loader resolves these using `enhanced-resolve`. By default, it inherits the settings `resolve.alias`, `resolve.modules`, and `resolve.modules` from your Webpack config, while using its own default values for `resolve.extensions` and `resolve.conditionNames`.
+
+If you want to change this behavior, you can choose which [`resolve` options](https://webpack.js.org/configuration/resolve/) are inherited from your Webpack config.
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: '@griffel/webpack-loader',
+          options: {
+            inheritResolveOptions: ['alias', 'modules', 'plugins', 'conditionNames'],
           },
         },
       },

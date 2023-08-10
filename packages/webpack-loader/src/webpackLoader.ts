@@ -1,11 +1,14 @@
-import { configSchema, BabelPluginOptions, EvalCache, Module } from '@griffel/babel-preset';
+import { BabelPluginOptions, EvalCache, Module } from '@griffel/babel-preset';
 import * as enhancedResolve from 'enhanced-resolve';
 import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
+import { optionsSchema } from './schema';
 
-export type WebpackLoaderOptions = BabelPluginOptions;
+export type WebpackLoaderOptions = BabelPluginOptions & {
+  inheritResolveOptions?: ('alias' | 'modules' | 'plugins' | 'conditionNames' | 'extensions')[];
+};
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
@@ -46,10 +49,10 @@ export function webpackLoader(
   // https://github.com/webpack/webpack/issues/14946
   this.cacheable();
 
-  const options = this.getOptions(configSchema);
+  const { inheritResolveOptions = ['alias', 'modules', 'plugins'], ...babelConfig } = this.getOptions(optionsSchema);
 
   // Early return to handle cases when makeStyles() calls are not present, allows to avoid expensive invocation of Babel
-  if (!shouldTransformSourceCode(sourceCode, options.modules)) {
+  if (!shouldTransformSourceCode(sourceCode, babelConfig.modules)) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }
@@ -68,9 +71,12 @@ export function webpackLoader(
 
   const resolveSync = enhancedResolve.create.sync({
     ...resolveOptionsDefaults,
-    alias: resolveOptionsFromWebpackConfig.alias,
-    modules: resolveOptionsFromWebpackConfig.modules,
-    plugins: resolveOptionsFromWebpackConfig.plugins,
+    ...Object.fromEntries(
+      inheritResolveOptions.map(resolveOptionKey => [
+        resolveOptionKey,
+        resolveOptionsFromWebpackConfig[resolveOptionKey],
+      ]),
+    ),
   });
 
   const originalResolveFilename = Module._resolveFilename;
@@ -101,7 +107,7 @@ export function webpackLoader(
       enableSourceMaps: this.sourceMap || false,
       inputSourceMap: parseSourceMap(inputSourceMap),
 
-      pluginOptions: options,
+      pluginOptions: babelConfig,
     });
   } catch (err) {
     error = err as Error;

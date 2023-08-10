@@ -257,6 +257,18 @@ describe('webpackLoader', () => {
     },
   });
 
+  // Asserts that "inheritResolveOptions" are handled properly
+  testFixture('webpack-resolve-options', {
+    loaderOptions: {
+      inheritResolveOptions: ['extensions'],
+    },
+    webpackConfig: {
+      resolve: {
+        extensions: ['.ts', '.jsx'],
+      },
+    },
+  });
+
   // Asserts that aliases are resolved properly in Babel plugin with resolve plugins
   testFixture('webpack-resolve-plugins', {
     webpackConfig: {
