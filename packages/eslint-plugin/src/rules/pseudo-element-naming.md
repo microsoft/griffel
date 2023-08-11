@@ -1,6 +1,6 @@
 # Enforce that Pseudo elements start with two colons
 
-Ensures that all Pseudo Elements start with two colons (::before) instead of one colon (:before).
+Ensures that all Pseudo Elements start with two colons (`::before`) instead of one colon (`:before`).
 
 ## Rule Details
 
