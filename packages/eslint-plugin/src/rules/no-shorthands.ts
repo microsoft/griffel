@@ -2,7 +2,7 @@ import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 import * as CSS from 'csstype';
 
 import { createRule } from '../utils/createRule';
-import { isIdentifier, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
+import { isIdentifier, isLiteral, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
 
 export const RULE_NAME = 'no-shorthands';
 
@@ -77,6 +77,64 @@ const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, 
   transition: true,
 };
 
+type ShorthandToArguments = (value: string | number) => string[] | null;
+
+// Matches CSS functions, i.e. `rgb(255, 255, 255)` or `var(--color)`, as well as CSS values, i.e. `1px`, `solid`, and `red`.
+const CSS_FUNCTION_OR_VALUE = /(?:[a-zA-Z]+\(.*\)|[#\w-]+)/g;
+
+/**
+ * Splits a string into an array of CSS functions and values.
+ * If a number is provided, we assume it represents a pixel value.
+ */
+const splitShorthandIntoParts: ShorthandToArguments = value => {
+  if (typeof value !== 'string') {
+    if (value === 0) {
+      value = '0';
+    } else {
+      value = `${value}px`;
+    }
+  }
+  return value.match(CSS_FUNCTION_OR_VALUE);
+};
+
+// Transforms shorthand string into args for griffel shorthands.<name>() function.
+const SHORTHAND_FUNCTIONS: Partial<Record<keyof CSS.StandardShorthandProperties, ShorthandToArguments>> = {
+  border: splitShorthandIntoParts,
+  borderLeft: splitShorthandIntoParts,
+  borderBottom: splitShorthandIntoParts,
+  borderRight: splitShorthandIntoParts,
+  borderTop: splitShorthandIntoParts,
+  borderColor: splitShorthandIntoParts,
+  borderStyle: splitShorthandIntoParts,
+  borderRadius: splitShorthandIntoParts,
+  borderWidth: splitShorthandIntoParts,
+  flex(value) {
+    if (typeof value !== 'string') {
+      // Instead of converting to pixels, convert to flex-grow value.
+      value = value.toString();
+    }
+    return value.match(CSS_FUNCTION_OR_VALUE);
+  },
+  gap: splitShorthandIntoParts,
+  gridArea(value) {
+    if (typeof value !== 'string') {
+      value = value.toString();
+    }
+    // Split every `/` character (and trim whitespace)
+    return value.split(/\s*\/\s*/g);
+  },
+  margin: splitShorthandIntoParts,
+  marginBlock: splitShorthandIntoParts,
+  marginInline: splitShorthandIntoParts,
+  padding: splitShorthandIntoParts,
+  paddingBlock: splitShorthandIntoParts,
+  paddingInline: splitShorthandIntoParts,
+  overflow: splitShorthandIntoParts,
+  inset: splitShorthandIntoParts,
+  outline: splitShorthandIntoParts,
+  textDecoration: splitShorthandIntoParts,
+};
+
 function findShorthandProperties(
   node: TSESTree.ObjectExpression,
   isRoot = false,
@@ -107,14 +165,11 @@ export const noShorthandsRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCrea
       description: 'Disallow using CSS shorthands in makeStyles() calls',
       recommended: 'error',
     },
+    fixable: 'code',
     messages: {
       shorthandFound: 'Usage of shorthands is prohibited',
     },
-    schema: [
-      {
-        type: 'string',
-      },
-    ],
+    schema: [],
   },
   defaultOptions: [],
 
@@ -128,9 +183,27 @@ export const noShorthandsRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCrea
             const shorthandProperties = findShorthandProperties(argument, true);
 
             shorthandProperties.forEach(shorthandProperty => {
+              const propertyNode = shorthandProperty.parent as TSESTree.Property;
+              let autoFixArguments: string[] | null = null;
+              if (isLiteral(propertyNode.value)) {
+                const { value } = propertyNode.value;
+                const shorthandToArguments =
+                  SHORTHAND_FUNCTIONS[shorthandProperty.name as keyof CSS.StandardShorthandProperties];
+                if (shorthandToArguments !== undefined && (typeof value === 'string' || typeof value === 'number')) {
+                  autoFixArguments = shorthandToArguments(value);
+                }
+              }
+
               context.report({
                 node: shorthandProperty,
                 messageId: 'shorthandFound',
+                fix:
+                  autoFixArguments != null
+                    ? fixer => {
+                        const args = autoFixArguments!.map(arg => `'${arg}'`).join(', ');
+                        return fixer.replaceText(propertyNode, `...shorthands.${shorthandProperty.name}(${args})`);
+                      }
+                    : undefined,
               });
             });
           }
