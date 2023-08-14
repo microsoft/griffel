@@ -5,7 +5,9 @@ const { GriffelCssLoaderContextKey } = require('../src/constants');
  * @return {String}
  */
 function virtualLoader() {
-  return this[GriffelCssLoaderContextKey]?.getExtractedCss() ?? '';
+  const type = /** @type {'safe'|'unsafe'} */ (this.resourceQuery.slice(1));
+
+  return this[GriffelCssLoaderContextKey]?.getCSSOutput(type) ?? '';
 }
 
 module.exports = virtualLoader;

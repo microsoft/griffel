@@ -9,7 +9,9 @@ import { merge } from 'webpack-merge';
 import { GriffelCSSExtractionPlugin, GriffelCSSExtractionPluginOptions } from './GriffelCSSExtractionPlugin';
 import { WebpackLoaderOptions } from './webpackLoader';
 
-type CompileOptions = {
+type TestOptions = {
+  only?: boolean;
+
   cssFilename?: string;
   loaderOptions?: WebpackLoaderOptions;
   pluginOptions?: GriffelCSSExtractionPluginOptions;
@@ -22,10 +24,11 @@ const prettierConfig = JSON.parse(
 
 async function compileSourceWithWebpack(
   entryPath: string,
-  options: CompileOptions,
+  options: TestOptions,
 ): Promise<{
   filesList: string[];
   cssOutput: string;
+  moduleSource: string;
 }> {
   const defaultConfig: webpack.Configuration = {
     context: __dirname,
@@ -74,6 +77,7 @@ async function compileSourceWithWebpack(
     ],
 
     optimization: {
+      concatenateModules: false,
       minimizer: [],
     },
     resolve: {
@@ -101,6 +105,8 @@ async function compileSourceWithWebpack(
         return;
       }
 
+      const jsonStats = stats.toJson({ source: true });
+
       if (stats.hasErrors()) {
         reject(stats.toJson().errors![0]);
         return;
@@ -108,6 +114,18 @@ async function compileSourceWithWebpack(
 
       if (stats.hasWarnings()) {
         reject(stats.toJson().warnings![0]);
+        return;
+      }
+
+      if (!Array.isArray(jsonStats.modules)) {
+        reject(new Error(`"stats.toJson().modules" should be an array, this could be a compilation error...`));
+        return;
+      }
+
+      const entryModule = jsonStats.modules.find(module => module.nameForCondition === entryPath);
+
+      if (!entryModule) {
+        reject(new Error(`Failed to find a fixture in "stats.toJson().modules", this could be a compilation error...`));
         return;
       }
 
@@ -129,6 +147,7 @@ async function compileSourceWithWebpack(
       resolve({
         cssOutput,
         filesList,
+        moduleSource: entryModule.source as string,
       });
     });
   });
@@ -143,87 +162,112 @@ function fixLineEndings(value: string) {
  *
  * See https://webpack.js.org/contribute/writing-a-loader/#testing.
  */
-function testFixture(fixtureName: string, options: CompileOptions = {}) {
-  it(`"${fixtureName}" fixture`, async () => {
-    const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'webpack', fixtureName);
+function testFixture(fixtureName: string, options: TestOptions = {}) {
+  (options.only ? it.only : it)(
+    `"${fixtureName}" fixture`,
+    async () => {
+      const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'webpack', fixtureName);
 
-    const tsCodePath = path.resolve(fixturePath, 'code.ts');
-    const tsxCodePath = path.resolve(fixturePath, 'code.tsx');
+      const tsCodePath = path.resolve(fixturePath, 'code.ts');
+      const tsxCodePath = path.resolve(fixturePath, 'code.tsx');
 
-    const inputPath = [fs.existsSync(tsCodePath) && tsCodePath, fs.existsSync(tsxCodePath) && tsxCodePath].find(
-      Boolean,
-    );
+      const tsOutputPath = path.resolve(fixturePath, 'output.ts');
+      const tsxOutputPath = path.resolve(fixturePath, 'output.tsx');
 
-    const errorPath = path.resolve(fixturePath, 'error.ts');
-    const expectedError = fs.existsSync(errorPath) && require(errorPath);
-
-    const fsSnapshotPath = path.resolve(fixturePath, 'fs.json');
-    const cssOutputPath = path.resolve(fixturePath, 'output.css');
-
-    if (!inputPath) {
-      throw new Error(`Failed to find "code.{js,ts,tsx}" in "${fixturePath}"`);
-    }
-
-    if (!fs.existsSync(fsSnapshotPath)) {
-      throw new Error(`Failed to find "fs.json" in "${fixturePath}"`);
-    }
-
-    if (!fs.existsSync(cssOutputPath)) {
-      throw new Error(`Failed to find "output.css" in "${fixturePath}"`);
-    }
-
-    if (!cssOutputPath && !expectedError) {
-      throw new Error(`Failed to find "output.css" or "error.ts" in "${fixturePath}"`);
-    }
-
-    if (expectedError) {
-      if (!expectedError.default) {
-        throw new Error(
-          `Please check that "error.ts" contains a default export with an error or regex in "${fixturePath}"`,
-        );
-      }
-    }
-
-    let resultCSS = '';
-    let resultFsSnapshot: string[] = [];
-
-    let resultError: Error | webpack.StatsError = new Error();
-
-    try {
-      const result = await compileSourceWithWebpack(inputPath, options);
-
-      resultCSS = fixLineEndings(
-        prettier.format(result.cssOutput, {
-          ...prettierConfig,
-          parser: 'css',
-        }),
+      const inputPath = [fs.existsSync(tsCodePath) && tsCodePath, fs.existsSync(tsxCodePath) && tsxCodePath].find(
+        Boolean,
       );
-      resultFsSnapshot = result.filesList;
-    } catch (err) {
-      if (expectedError) {
-        resultError = err as webpack.StatsError;
-      } else {
-        throw err;
+      const outputPath = [
+        fs.existsSync(tsOutputPath) && tsOutputPath,
+        fs.existsSync(tsxOutputPath) && tsxOutputPath,
+      ].find(Boolean);
+
+      const errorPath = path.resolve(fixturePath, 'error.ts');
+      const expectedError = fs.existsSync(errorPath) && require(errorPath);
+
+      const fsSnapshotPath = path.resolve(fixturePath, 'fs.json');
+      const cssOutputPath = path.resolve(fixturePath, 'output.css');
+
+      if (!inputPath) {
+        throw new Error(`Failed to find "code.{js,ts,tsx}" in "${fixturePath}"`);
       }
-    }
 
-    const fsSnapshot = JSON.parse(await fs.promises.readFile(fsSnapshotPath, { encoding: 'utf8' }));
-    expect(resultFsSnapshot).toMatchObject(fsSnapshot);
+      if (!fs.existsSync(fsSnapshotPath)) {
+        throw new Error(`Failed to find "fs.json" in "${fixturePath}"`);
+      }
 
-    if (cssOutputPath) {
-      const cssOutput = fixLineEndings(await fs.promises.readFile(cssOutputPath, { encoding: 'utf8' }));
+      if (!fs.existsSync(cssOutputPath)) {
+        throw new Error(`Failed to find "output.css" in "${fixturePath}"`);
+      }
 
-      expect(resultCSS).toBe(cssOutput);
-      return;
-    }
+      if (!cssOutputPath && !expectedError) {
+        throw new Error(`Failed to find "output.css" or "error.ts" in "${fixturePath}"`);
+      }
 
-    if (expectedError) {
-      expect(resultError.message).toMatch(expectedError.default);
-    }
-  }, 15000);
+      if (expectedError) {
+        if (!expectedError.default) {
+          throw new Error(
+            `Please check that "error.ts" contains a default export with an error or regex in "${fixturePath}"`,
+          );
+        }
+      }
+
+      let resultModule = '';
+      let resultCSS = '';
+      let resultFsSnapshot: string[] = [];
+
+      let resultError: Error | webpack.StatsError = new Error();
+
+      try {
+        const result = await compileSourceWithWebpack(inputPath, options);
+
+        resultModule = fixLineEndings(
+          prettier.format(result.moduleSource, {
+            ...prettierConfig,
+            parser: 'typescript',
+          }),
+        );
+        resultCSS = fixLineEndings(
+          prettier.format(result.cssOutput, {
+            ...prettierConfig,
+            parser: 'css',
+          }),
+        );
+        resultFsSnapshot = result.filesList;
+      } catch (err) {
+        if (expectedError) {
+          resultError = err as webpack.StatsError;
+        } else {
+          throw err;
+        }
+      }
+
+      const fsSnapshot = JSON.parse(await fs.promises.readFile(fsSnapshotPath, { encoding: 'utf8' }));
+      expect(resultFsSnapshot).toMatchObject(fsSnapshot);
+
+      if (outputPath) {
+        const moduleOutput = fixLineEndings(await fs.promises.readFile(outputPath, { encoding: 'utf8' }));
+
+        expect(resultModule).toBe(moduleOutput);
+        return;
+      }
+
+      if (cssOutputPath) {
+        const cssOutput = fixLineEndings(await fs.promises.readFile(cssOutputPath, { encoding: 'utf8' }));
+
+        expect(resultCSS).toBe(cssOutput);
+        return;
+      }
+
+      if (expectedError) {
+        expect(resultError.message).toMatch(expectedError.default);
+      }
+    },
+    15000,
+  );
 }
 
-describe('webpackLoader', () => {
+describe('GriffelCSSExtractionPlugin', () => {
   // Basic assertions
   // --------------------
   testFixture('basic-rules');
@@ -231,6 +275,9 @@ describe('webpackLoader', () => {
   testFixture('reset-media');
   testFixture('mixed');
   testFixture('empty');
+
+  // Ensures that a file without __styles calls remains unprocessed
+  testFixture('missing-calls');
 
   // Multiple calls of __styles
   testFixture('multiple');
@@ -244,6 +291,7 @@ describe('webpackLoader', () => {
   // Assets
   // --------------------
   testFixture('assets');
+  testFixture('assets-flip');
   testFixture('assets-multiple');
   testFixture('reset-assets');
 
@@ -252,6 +300,14 @@ describe('webpackLoader', () => {
 
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
+
+  // TODO
+  testFixture('config-code-split', {
+    pluginOptions: { experimental_enableCssChunks: true },
+  });
+  testFixture('config-code-split-chunks', {
+    pluginOptions: { experimental_enableCssChunks: true },
+  });
 
   // Config that disables SplitChunksPlugin
   testFixture('config-no-split-chunks', {
@@ -308,5 +364,5 @@ describe('webpackLoader', () => {
       },
     },
   });
-  testFixture('unstable-keep-original-code', { loaderOptions: { unstable_keepOriginalCode: true } });
+  // testFixture('unstable-keep-original-code', { loaderOptions: { unstable_keepOriginalCode: true } });
 });

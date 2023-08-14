@@ -1,10 +1,13 @@
 import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
+import * as path from 'path';
 import { Compilation, NormalModule } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
 
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
 import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants';
+
+const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
 
 // Webpack does not export these constants
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
@@ -13,6 +16,7 @@ const OPTIMIZE_CHUNKS_STAGE_ADVANCED = 10;
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
   experimental_resetModuleIndexes?: boolean;
+  experimental_enableCssChunks?: boolean;
   unstable_attachToMainEntryPoint?: boolean;
 };
 
@@ -54,6 +58,18 @@ function isGriffelCSSModule(module: Module): boolean {
       const content = module.content.toString('utf-8');
 
       return content.indexOf('/** @griffel:css-start') !== -1;
+    }
+  }
+
+  return false;
+}
+
+function isUnsafeGriffelCSSModule(module: Module): boolean {
+  if (isCSSModule(module)) {
+    if (Buffer.isBuffer(module.content)) {
+      const content = module.content.toString('utf-8');
+
+      return content.indexOf('/** @griffel:css-unsafe') !== -1;
     }
   }
 
@@ -128,6 +144,7 @@ export class GriffelCSSExtractionPlugin {
   private readonly attachToMainEntryPoint: NonNullable<
     GriffelCSSExtractionPluginOptions['unstable_attachToMainEntryPoint']
   >;
+  private readonly enableCssChunks: NonNullable<GriffelCSSExtractionPluginOptions['experimental_enableCssChunks']>;
   private readonly resetModuleIndexes: NonNullable<
     GriffelCSSExtractionPluginOptions['experimental_resetModuleIndexes']
   >;
@@ -135,6 +152,7 @@ export class GriffelCSSExtractionPlugin {
 
   constructor(options?: GriffelCSSExtractionPluginOptions) {
     this.attachToMainEntryPoint = options?.unstable_attachToMainEntryPoint ?? false;
+    this.enableCssChunks = options?.experimental_enableCssChunks ?? false;
     this.resetModuleIndexes = options?.experimental_resetModuleIndexes ?? false;
 
     this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
@@ -169,7 +187,7 @@ export class GriffelCSSExtractionPlugin {
       compiler.options.optimization.splitChunks.cacheGroups ??= {};
       compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
         name: 'griffel',
-        test: isGriffelCSSModule,
+        test: this.enableCssChunks ? isUnsafeGriffelCSSModule : isGriffelCSSModule,
         chunks: 'all',
         enforce: true,
       };
@@ -182,16 +200,29 @@ export class GriffelCSSExtractionPlugin {
       //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
       const cssByModuleMap = new Map<string, string>();
 
-      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
-        const resourcePath = module.resource;
+      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (_loaderContext, module) => {
+        const loaderContext = _loaderContext as SupplementedLoaderContext;
 
-        (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
-          registerExtractedCss(css: string) {
-            cssByModuleMap.set(resourcePath, css);
+        loaderContext[GriffelCssLoaderContextKey] = {
+          createCSSImport(type, css) {
+            cssByModuleMap.set(loaderContext.resourcePath + ':' + type, `/** @griffel:css-${type} **/\n` + css);
+
+            if (css.length === 0) {
+              return '';
+            }
+
+            const outputFileName = loaderContext.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
+
+            const request = `${outputFileName}!=!${virtualLoaderPath}!${loaderContext.resourcePath}?${type}`;
+            const stringifiedRequest = JSON.stringify(
+              loaderContext.utils.contextify(loaderContext.context || loaderContext.rootContext, request),
+            );
+
+            return `import ${stringifiedRequest};\n`;
           },
-          getExtractedCss() {
-            const css = cssByModuleMap.get(resourcePath) ?? '';
-            cssByModuleMap.delete(resourcePath);
+          getCSSOutput(type: 'safe' | 'unsafe') {
+            const css = cssByModuleMap.get(loaderContext.resourcePath + ':' + type) ?? '';
+            cssByModuleMap.delete(loaderContext.resourcePath + ':' + type);
 
             return css;
           },
@@ -234,6 +265,24 @@ export class GriffelCSSExtractionPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
+          if (this.enableCssChunks) {
+            Object.entries(assets).forEach(([assetName, assetSource]) => {
+              if (!assetName.endsWith('.css')) {
+                return;
+              }
+
+              const cssContent = getAssetSourceContents(assetSource);
+              // TODO: Check that content has Griffel CSS
+              const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
+
+              const cssSource = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
+
+              compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
+            });
+
+            return;
+          }
+
           const griffelChunk = compilation.namedChunks.get('griffel');
 
           if (typeof griffelChunk === 'undefined') {

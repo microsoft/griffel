@@ -17,6 +17,16 @@ export function parseCSSRules(css: string) {
 
   for (const element of elements) {
     if (element.type === COMMENT) {
+      // TODO: better handling of comments
+
+      if (element.value.indexOf('/** @griffel:css-safe') === 0) {
+        continue;
+      }
+
+      if (element.value.indexOf('/** @griffel:css-unsafe') === 0) {
+        continue;
+      }
+
       if (element.value.indexOf('/** @griffel:css-start') === 0) {
         cssBucketName = element.value.charAt(24) as StyleBucketName;
 

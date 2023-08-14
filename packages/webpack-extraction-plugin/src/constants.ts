@@ -4,8 +4,8 @@ export const PLUGIN_NAME = 'GriffelExtractPlugin';
 export const GriffelCssLoaderContextKey = Symbol(`${PLUGIN_NAME}/GriffelCssLoaderContextKey`);
 
 export interface GriffelLoaderContextSupplement {
-  registerExtractedCss(css: string): void;
-  getExtractedCss(): string;
+  createCSSImport(type: 'safe' | 'unsafe', css: string): string;
+  getCSSOutput(type: 'safe' | 'unsafe'): string;
 }
 
 export type SupplementedLoaderContext<Options = unknown> = LoaderContext<Options> & {

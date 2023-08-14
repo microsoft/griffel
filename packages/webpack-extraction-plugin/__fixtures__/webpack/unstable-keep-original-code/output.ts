@@ -16,4 +16,5 @@ export const useClassName = __resetStyles('rjefjbm', 'r7z97ji', [
   '.r7z97ji{color:red;padding-right:4px;}',
 ]);
 
-import './code.griffel.css!=!../../../virtual-loader/index.js!./code.ts';
+import './code.griffel.css!=!../../../virtual-loader/index.js!./code.ts?safe';
+import './code.griffel.css!=!../../../virtual-loader/index.js!./code.ts?unsafe';
