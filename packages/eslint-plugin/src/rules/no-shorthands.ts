@@ -3,6 +3,7 @@ import * as CSS from 'csstype';
 
 import { createRule } from '../utils/createRule';
 import { isIdentifier, isLiteral, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
+import { CSS_FUNCTION_OR_VALUE, splitShorthandIntoParts } from '../utils/shorthands';
 
 export const RULE_NAME = 'no-shorthands';
 
@@ -77,28 +78,8 @@ const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, 
   transition: true,
 };
 
-type ShorthandToArguments = (value: string | number) => string[] | null;
-
-// Matches CSS functions, i.e. `rgb(255, 255, 255)` or `var(--color)`, as well as CSS values, i.e. `1px`, `solid`, and `red`.
-const CSS_FUNCTION_OR_VALUE = /(?:[a-zA-Z]+\(.*\)|[#\w-]+)/g;
-
-/**
- * Splits a string into an array of CSS functions and values.
- * If a number is provided, we assume it represents a pixel value.
- */
-const splitShorthandIntoParts: ShorthandToArguments = value => {
-  if (typeof value !== 'string') {
-    if (value === 0) {
-      value = '0';
-    } else {
-      value = `${value}px`;
-    }
-  }
-  return value.match(CSS_FUNCTION_OR_VALUE);
-};
-
 // Transforms shorthand string into args for griffel shorthands.<name>() function.
-const SHORTHAND_FUNCTIONS: Partial<Record<keyof CSS.StandardShorthandProperties, ShorthandToArguments>> = {
+const SHORTHAND_FUNCTIONS: Partial<Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, typeof splitShorthandIntoParts>> = {
   border: splitShorthandIntoParts,
   borderLeft: splitShorthandIntoParts,
   borderBottom: splitShorthandIntoParts,
@@ -188,7 +169,7 @@ export const noShorthandsRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCrea
               if (isLiteral(propertyNode.value)) {
                 const { value } = propertyNode.value;
                 const shorthandToArguments =
-                  SHORTHAND_FUNCTIONS[shorthandProperty.name as keyof CSS.StandardShorthandProperties];
+                  SHORTHAND_FUNCTIONS[shorthandProperty.name as keyof typeof UNSUPPORTED_CSS_PROPERTIES];
                 if (shorthandToArguments !== undefined && (typeof value === 'string' || typeof value === 'number')) {
                   autoFixArguments = shorthandToArguments(value);
                 }
