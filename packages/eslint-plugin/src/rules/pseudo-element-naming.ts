@@ -5,10 +5,7 @@ import { isStringLiteral, isMakeStylesIdentifier, isObjectExpression, isProperty
 
 export const RULE_NAME = 'pseudo-element-naming';
 
-const PSEUDO_ELEMENTS = [':before', ':after']
-  ':before': true,
-  ':after': true,
-};
+const PSEUDO_ELEMENTS = [':before', ':after'];
 
 function findInvalidPseudoElementProperties(
   node: TSESTree.ObjectExpression,
@@ -18,7 +15,7 @@ function findInvalidPseudoElementProperties(
   for (const propertyNode of node.properties) {
     if (isProperty(propertyNode)) {
       if (isStringLiteral(propertyNode.key) && !isRoot) {
-        if (Object.prototype.hasOwnProperty.call(UNSUPPORTED_PSEUDO_ELEMENTS, propertyNode.key.value)) {
+        if (PSEUDO_ELEMENTS.includes(propertyNode.key.value)) {
           result.push(propertyNode.key);
         }
       }
@@ -68,6 +65,7 @@ export const pseudoElementNamingRule: ReturnType<ReturnType<typeof ESLintUtils.R
                 fix: function (fixer) {
                   const start = invalidPseudoElementProperty.range[0] + 1;
                   const end = invalidPseudoElementProperty.range[1];
+
                   return fixer.insertTextBeforeRange([start, end], ':');
                 },
               });
