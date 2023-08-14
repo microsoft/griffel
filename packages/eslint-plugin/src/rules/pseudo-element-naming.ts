@@ -5,7 +5,7 @@ import { isStringLiteral, isMakeStylesIdentifier, isObjectExpression, isProperty
 
 export const RULE_NAME = 'pseudo-element-naming';
 
-const UNSUPPORTED_PSEUDO_ELEMENTS: Record<string, true> = {
+const PSEUDO_ELEMENTS = [':before', ':after']
   ':before': true,
   ':after': true,
 };

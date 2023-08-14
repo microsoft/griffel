@@ -11,7 +11,7 @@ Examples of **incorrect** code for this rule:
 ```js
 import { makeStyles } from '@griffel/react';
 
-export const makeStyles({
+export const useClasses = makeStyles({
   root: {
     ':before': {},
     ':after': {},
