@@ -3,7 +3,7 @@ import * as CSS from 'csstype';
 
 import { createRule } from '../utils/createRule';
 import { isIdentifier, isLiteral, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
-import { CSS_FUNCTION_OR_VALUE, splitShorthandIntoParts } from '../utils/shorthands';
+import { buildShorthandSplitter } from '../utils/buildShorthandSplitter';
 
 export const RULE_NAME = 'no-shorthands';
 
@@ -78,42 +78,36 @@ const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, 
   transition: true,
 };
 
+const pxSplitter = buildShorthandSplitter({ numberUnit: 'px' });
+
 // Transforms shorthand string into args for griffel shorthands.<name>() function.
-const SHORTHAND_FUNCTIONS: Partial<Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, typeof splitShorthandIntoParts>> = {
-  border: splitShorthandIntoParts,
-  borderLeft: splitShorthandIntoParts,
-  borderBottom: splitShorthandIntoParts,
-  borderRight: splitShorthandIntoParts,
-  borderTop: splitShorthandIntoParts,
-  borderColor: splitShorthandIntoParts,
-  borderStyle: splitShorthandIntoParts,
-  borderRadius: splitShorthandIntoParts,
-  borderWidth: splitShorthandIntoParts,
-  flex(value) {
-    if (typeof value !== 'string') {
-      // Instead of converting to pixels, convert to flex-grow value.
-      value = value.toString();
-    }
-    return value.match(CSS_FUNCTION_OR_VALUE);
-  },
-  gap: splitShorthandIntoParts,
-  gridArea(value) {
-    if (typeof value !== 'string') {
-      value = value.toString();
-    }
-    // Split every `/` character (and trim whitespace)
-    return value.split(/\s*\/\s*/g);
-  },
-  margin: splitShorthandIntoParts,
-  marginBlock: splitShorthandIntoParts,
-  marginInline: splitShorthandIntoParts,
-  padding: splitShorthandIntoParts,
-  paddingBlock: splitShorthandIntoParts,
-  paddingInline: splitShorthandIntoParts,
-  overflow: splitShorthandIntoParts,
-  inset: splitShorthandIntoParts,
-  outline: splitShorthandIntoParts,
-  textDecoration: splitShorthandIntoParts,
+const SHORTHAND_FUNCTIONS: Partial<
+  Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, ReturnType<typeof buildShorthandSplitter>>
+> = {
+  border: pxSplitter,
+  borderLeft: pxSplitter,
+  borderBottom: pxSplitter,
+  borderRight: pxSplitter,
+  borderTop: pxSplitter,
+  borderColor: pxSplitter,
+  borderStyle: pxSplitter,
+  borderRadius: pxSplitter,
+  borderWidth: pxSplitter,
+  // Instead of converting to pixels, convert to flex-grow value.
+  flex: buildShorthandSplitter({ numberUnit: '' }),
+  gap: pxSplitter,
+  // Split every `/` character (and trim whitespace)
+  gridArea: buildShorthandSplitter({ separator: '/' }),
+  margin: pxSplitter,
+  marginBlock: pxSplitter,
+  marginInline: pxSplitter,
+  padding: pxSplitter,
+  paddingBlock: pxSplitter,
+  paddingInline: pxSplitter,
+  overflow: pxSplitter,
+  inset: pxSplitter,
+  outline: pxSplitter,
+  textDecoration: pxSplitter,
 };
 
 function findShorthandProperties(
