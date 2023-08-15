@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add autofix for no-shorthands",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "tigeroakes@microsoft.com",
-  "dependentChangeType": "patch"
-}

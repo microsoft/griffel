@@ -1,8 +1,17 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Fri, 14 Apr 2023 07:58:49 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Aug 2023 14:51:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Tue, 15 Aug 2023 14:51:57 GMT
+
+### Minor changes
+
+- Add autofix for no-shorthands (tigeroakes@microsoft.com)
+- feat: add pseudo element naming rule (levin@uncu.de)
 
 ## 1.2.0
 

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add pseudo element naming rule",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "levin@uncu.de",
-  "dependentChangeType": "patch"
-}

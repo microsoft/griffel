@@ -2,6 +2,27 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Tue, 15 Aug 2023 14:51:57 GMT",
+      "tag": "@griffel/eslint-plugin_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tigeroakes@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "4174c313278b36d2b9b73eee8698c94f1fc76ccc",
+            "comment": "Add autofix for no-shorthands"
+          },
+          {
+            "author": "levin@uncu.de",
+            "package": "@griffel/eslint-plugin",
+            "commit": "df9f3452d1ef0e7c78af41f8d27332b0bddf00f2",
+            "comment": "feat: add pseudo element naming rule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Apr 2023 07:58:49 GMT",
       "tag": "@griffel/eslint-plugin_v1.2.0",
       "version": "1.2.0",
