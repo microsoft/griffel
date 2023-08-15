@@ -181,6 +181,31 @@ module.exports = {
 };
 ```
 
+Alternatively, you can specify custom [`resolve` options](https://webpack.js.org/configuration/resolve/). These values will override any options inherited from your webpack config. This can be particularly important if you use custom `conditionNames` that do not include `require`, which is necessary for transformation.
+```js
+module.exports = {
+  resolve: {
+    conditionNames: ['source', 'import'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: '@griffel/webpack-loader',
+          options: {
+            webpackResolveOptions: {
+              conditionNames: ['source', 'require'],
+            },
+          },
+        },
+      },
+    ],
+  },
+};
+```
+
 ### Configuring module evaluation
 
 ```js
