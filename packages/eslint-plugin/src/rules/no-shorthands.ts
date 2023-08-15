@@ -2,7 +2,8 @@ import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 import * as CSS from 'csstype';
 
 import { createRule } from '../utils/createRule';
-import { isIdentifier, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
+import { isIdentifier, isLiteral, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
+import { buildShorthandSplitter } from '../utils/buildShorthandSplitter';
 
 export const RULE_NAME = 'no-shorthands';
 
@@ -77,6 +78,38 @@ const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, 
   transition: true,
 };
 
+const pxSplitter = buildShorthandSplitter({ numberUnit: 'px' });
+
+// Transforms shorthand string into args for griffel shorthands.<name>() function.
+const SHORTHAND_FUNCTIONS: Partial<
+  Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, ReturnType<typeof buildShorthandSplitter>>
+> = {
+  border: pxSplitter,
+  borderLeft: pxSplitter,
+  borderBottom: pxSplitter,
+  borderRight: pxSplitter,
+  borderTop: pxSplitter,
+  borderColor: pxSplitter,
+  borderStyle: pxSplitter,
+  borderRadius: pxSplitter,
+  borderWidth: pxSplitter,
+  // Instead of converting to pixels, convert to flex-grow value.
+  flex: buildShorthandSplitter({ numberUnit: '' }),
+  gap: pxSplitter,
+  // Split every `/` character (and trim whitespace)
+  gridArea: buildShorthandSplitter({ separator: '/' }),
+  margin: pxSplitter,
+  marginBlock: pxSplitter,
+  marginInline: pxSplitter,
+  padding: pxSplitter,
+  paddingBlock: pxSplitter,
+  paddingInline: pxSplitter,
+  overflow: pxSplitter,
+  inset: pxSplitter,
+  outline: pxSplitter,
+  textDecoration: pxSplitter,
+};
+
 function findShorthandProperties(
   node: TSESTree.ObjectExpression,
   isRoot = false,
@@ -107,14 +140,11 @@ export const noShorthandsRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCrea
       description: 'Disallow using CSS shorthands in makeStyles() calls',
       recommended: 'error',
     },
+    fixable: 'code',
     messages: {
       shorthandFound: 'Usage of shorthands is prohibited',
     },
-    schema: [
-      {
-        type: 'string',
-      },
-    ],
+    schema: [],
   },
   defaultOptions: [],
 
@@ -128,9 +158,27 @@ export const noShorthandsRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCrea
             const shorthandProperties = findShorthandProperties(argument, true);
 
             shorthandProperties.forEach(shorthandProperty => {
+              const propertyNode = shorthandProperty.parent as TSESTree.Property;
+              let autoFixArguments: string[] | null = null;
+              if (isLiteral(propertyNode.value)) {
+                const { value } = propertyNode.value;
+                const shorthandToArguments =
+                  SHORTHAND_FUNCTIONS[shorthandProperty.name as keyof typeof UNSUPPORTED_CSS_PROPERTIES];
+                if (shorthandToArguments !== undefined && (typeof value === 'string' || typeof value === 'number')) {
+                  autoFixArguments = shorthandToArguments(value);
+                }
+              }
+
               context.report({
                 node: shorthandProperty,
                 messageId: 'shorthandFound',
+                fix:
+                  autoFixArguments != null
+                    ? fixer => {
+                        const args = autoFixArguments!.map(arg => `'${arg}'`).join(', ');
+                        return fixer.replaceText(propertyNode, `...shorthands.${shorthandProperty.name}(${args})`);
+                      }
+                    : undefined,
               });
             });
           }
