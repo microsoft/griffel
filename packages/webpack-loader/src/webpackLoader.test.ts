@@ -258,13 +258,25 @@ describe('webpackLoader', () => {
   });
 
   // Asserts that "inheritResolveOptions" are handled properly
-  testFixture('webpack-resolve-options', {
+  testFixture('webpack-inherit-resolve-options', {
     loaderOptions: {
       inheritResolveOptions: ['extensions'],
     },
     webpackConfig: {
       resolve: {
         extensions: ['.ts', '.jsx'],
+      },
+    },
+  });
+
+  // Asserts that "webpackResolveOptions" are handled properly
+  testFixture('webpack-resolve-options', {
+    loaderOptions: {
+      webpackResolveOptions: { conditionNames: ['source', 'require'] },
+    },
+    webpackConfig: {
+      resolve: {
+        conditionNames: ['source', 'import'],
       },
     },
   });
