@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Wed, 16 Aug 2023 09:24:28 GMT",
+      "tag": "@griffel/webpack-loader_v2.2.0",
+      "version": "2.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "miclo@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "198ab2912d01b2315ac131ac5f20395d7c665b6c",
+            "comment": "feat: add webpackResolveOptions to specify custom resolve options"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Aug 2023 09:00:28 GMT",
       "tag": "@griffel/webpack-loader_v2.1.21",
       "version": "2.1.21",

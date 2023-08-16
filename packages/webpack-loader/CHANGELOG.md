@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-loader
 
-This log was last generated on Thu, 10 Aug 2023 09:00:28 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Aug 2023 09:24:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.0
+
+Wed, 16 Aug 2023 09:24:28 GMT
+
+### Minor changes
+
+- feat: add webpackResolveOptions to specify custom resolve options (miclo@microsoft.com)
 
 ## 2.1.21
 
