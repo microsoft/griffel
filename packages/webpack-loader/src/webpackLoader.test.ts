@@ -272,11 +272,8 @@ describe('webpackLoader', () => {
   // Asserts that "webpackResolveOptions" are handled properly
   testFixture('webpack-resolve-options', {
     loaderOptions: {
-      webpackResolveOptions: { conditionNames: ['source', 'require'] },
-    },
-    webpackConfig: {
-      resolve: {
-        conditionNames: ['source', 'import'],
+      webpackResolveOptions: {
+        extensions: ['.ts', '.jsx'],
       },
     },
   });
