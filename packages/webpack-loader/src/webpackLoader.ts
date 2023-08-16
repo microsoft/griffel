@@ -8,6 +8,10 @@ import { optionsSchema } from './schema';
 
 export type WebpackLoaderOptions = BabelPluginOptions & {
   inheritResolveOptions?: ('alias' | 'modules' | 'plugins' | 'conditionNames' | 'extensions')[];
+  webpackResolveOptions?: Pick<
+    Required<webpack.Configuration>['resolve'],
+    'alias' | 'modules' | 'plugins' | 'conditionNames' | 'extensions'
+  >;
 };
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
@@ -49,7 +53,11 @@ export function webpackLoader(
   // https://github.com/webpack/webpack/issues/14946
   this.cacheable();
 
-  const { inheritResolveOptions = ['alias', 'modules', 'plugins'], ...babelConfig } = this.getOptions(optionsSchema);
+  const {
+    inheritResolveOptions = ['alias', 'modules', 'plugins'],
+    webpackResolveOptions,
+    ...babelConfig
+  } = this.getOptions(optionsSchema);
 
   // Early return to handle cases when makeStyles() calls are not present, allows to avoid expensive invocation of Babel
   if (!shouldTransformSourceCode(sourceCode, babelConfig.modules)) {
@@ -77,6 +85,7 @@ export function webpackLoader(
         resolveOptionsFromWebpackConfig[resolveOptionKey],
       ]),
     ),
+    ...webpackResolveOptions,
   });
 
   const originalResolveFilename = Module._resolveFilename;
