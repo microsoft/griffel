@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "Add the ability to specify custom webpack resolve options",
+  "comment": "feat: add webpackResolveOptions to specify custom resolve options",
   "packageName": "@griffel/webpack-loader",
   "email": "miclo@microsoft.com",
   "dependentChangeType": "patch"
