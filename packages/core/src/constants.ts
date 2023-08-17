@@ -28,6 +28,9 @@ export const DEFINITION_LOOKUP_TABLE = getGlobalVar<Record<SequenceHash, LookupI
 /** @internal */
 export const LTR_TO_RTL_LOOKUP = getGlobalVar<Record<string, string>>('LTR_TO_RTL_LOOKUP', {});
 
+/** @internal */
+export const CLASS_PROP_LOOKUP = getGlobalVar<Record<string, string>>('CLASS_PROP_LOOKUP', {});
+
 // ----
 
 /** @internal */

@@ -1,14 +1,17 @@
 import { debugData, isDevToolsEnabled } from './devtools';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 import type { MakeStylesOptions } from './makeStyles';
-import type { CSSClassesMapBySlot } from './types';
+import type { CSSClassesMap, CSSClassesMapBySlot, EllidedCSSClassesMapBySlot } from './types';
+import { CLASS_PROP_LOOKUP } from './constants';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms & DOM insertion.
  *
  * @internal
  */
-export function __css<Slots extends string>(classesMapBySlot: CSSClassesMapBySlot<Slots>) {
+export function __css<Slots extends string>(
+  classesMapBySlot: CSSClassesMapBySlot<Slots> | EllidedCSSClassesMapBySlot<Slots>,
+) {
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;
   let rtlClassNamesForSlots: Record<Slots, string> | null = null;
 
@@ -18,11 +21,11 @@ export function __css<Slots extends string>(classesMapBySlot: CSSClassesMapBySlo
 
     if (isLTR) {
       if (ltrClassNamesForSlots === null) {
-        ltrClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
+        ltrClassNamesForSlots = reducePotentiallyEllidedMapToClassNameForSlots(classesMapBySlot, dir);
       }
     } else {
       if (rtlClassNamesForSlots === null) {
-        rtlClassNamesForSlots = reduceToClassNameForSlots(classesMapBySlot, dir);
+        rtlClassNamesForSlots = reducePotentiallyEllidedMapToClassNameForSlots(classesMapBySlot, dir);
       }
     }
 
@@ -38,4 +41,32 @@ export function __css<Slots extends string>(classesMapBySlot: CSSClassesMapBySlo
   }
 
   return computeClasses;
+}
+
+function reducePotentiallyEllidedMapToClassNameForSlots<Slots extends string | number>(
+  classesMapBySlot: CSSClassesMapBySlot<Slots> | EllidedCSSClassesMapBySlot<Slots>,
+  dir: 'ltr' | 'rtl',
+): Record<Slots, string> {
+  const normalizedClassesMapBySlot = {} as CSSClassesMapBySlot<Slots>;
+  for (const slotName in classesMapBySlot) {
+    const slotEntry = classesMapBySlot[slotName];
+    if (Array.isArray(slotEntry)) {
+      normalizedClassesMapBySlot[slotName] = Object.fromEntries(
+        slotEntry.map(cssClass => {
+          const cssProperty = CLASS_PROP_LOOKUP[cssClass] ?? '';
+
+          if (process.env.NODE_ENV !== 'production' && !cssProperty) {
+            console.error(
+              `Could not find property for extracted CSS class ${cssClass}. Merging multiple classes may lead to unexpected results.`,
+            );
+          }
+
+          return [cssProperty, cssClass];
+        }),
+      );
+    } else {
+      normalizedClassesMapBySlot[slotName] = slotEntry as CSSClassesMap;
+    }
+  }
+  return reduceToClassNameForSlots(normalizedClassesMapBySlot, dir);
 }
