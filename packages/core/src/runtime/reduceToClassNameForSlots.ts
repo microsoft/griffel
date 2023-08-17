@@ -1,4 +1,4 @@
-import { DEFINITION_LOOKUP_TABLE } from '../constants';
+import { DEFINITION_LOOKUP_TABLE, LTR_TO_RTL_LOOKUP } from '../constants';
 import { hashSequence } from './utils/hashSequence';
 import { CSSClassesMapBySlot, CSSClassesMap, CSSClasses } from '../types';
 
@@ -18,7 +18,15 @@ export function reduceToClassName(classMap: CSSClassesMap, dir: 'ltr' | 'rtl'): 
       const hasRTLClassName = Array.isArray(classNameMapping);
 
       if (dir === 'rtl') {
-        className += (hasRTLClassName ? classNameMapping[1] : classNameMapping) + ' ';
+        className +=
+          (hasRTLClassName
+            ? classNameMapping[1]
+            : // WHAT?
+              //   Check the global mapping of LTR class->RTL class when given a single CSS class
+              // WHY?
+              //   In order to optimize bundle size and reduce duplication, the webpack extraction plugin
+              //   generates a runtime module that boostraps LTR_TO_RTL_LOOKUP with the mapping of all LTR->RTL classes
+              LTR_TO_RTL_LOOKUP[classNameMapping] ?? classNameMapping) + ' ';
       } else {
         className += (hasRTLClassName ? classNameMapping[0] : classNameMapping) + ' ';
       }

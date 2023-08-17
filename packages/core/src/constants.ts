@@ -25,6 +25,9 @@ export const DEBUG_RESET_CLASSES = getGlobalVar<Record<string, 1>>('DEBUG_RESET_
 /** @internal */
 export const DEFINITION_LOOKUP_TABLE = getGlobalVar<Record<SequenceHash, LookupItem>>('DEFINITION_LOOKUP_TABLE', {});
 
+/** @internal */
+export const LTR_TO_RTL_LOOKUP = getGlobalVar<Record<string, string>>('LTR_TO_RTL_LOOKUP', {});
+
 // ----
 
 /** @internal */
