@@ -1,4 +1,4 @@
-import { RuntimeGlobals, RuntimeModule, Template } from 'webpack';
+import { RuntimeModule, Template } from 'webpack';
 
 export class GriffelCSSRuntimeModule extends RuntimeModule {
   constructor(
@@ -10,10 +10,9 @@ export class GriffelCSSRuntimeModule extends RuntimeModule {
 
   override generate(): string {
     return Template.asString([
-      `${RuntimeGlobals.global}[Symbol.for('@griffel/CLASS_PROP_LOOKUP')] = ${JSON.stringify(
-        this.cssRuleToPropertyHashMap,
-      )};`,
-      `${RuntimeGlobals.global}[Symbol.for('@griffel/LTR_TO_RTL_LOOKUP')] = ${JSON.stringify(this.ltrToRtlClassMap)};`,
+      `var g = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' : window : global;`,
+      `g[Symbol.for('@griffel/CLASS_PROP_LOOKUP')] = ${JSON.stringify(this.cssRuleToPropertyHashMap)};`,
+      `g[Symbol.for('@griffel/LTR_TO_RTL_LOOKUP')] = ${JSON.stringify(this.ltrToRtlClassMap)};`,
     ]);
   }
 }
