@@ -1,19 +1,19 @@
 import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { addNamed } from '@babel/helper-module-imports';
 import { declare } from '@babel/helper-plugin-utils';
-import type { CSSRulesByBucket } from '@griffel/core';
+import type { CSSClassesMapBySlot, CSSRulesByBucket, EllidedCSSClassesMapBySlot } from '@griffel/core';
 
-type StripRuntimeBabelPluginOptions = Record<string, unknown>;
+type StripRuntimeBabelPluginOptions = { minify?: boolean } & Record<string, unknown>;
 
 type FunctionKinds = '__styles' | '__resetStyles';
 
-type StripRuntimeBabelPluginState = PluginPass & {
-  cssRulesByBucket?: CSSRulesByBucket;
-};
-
 export type StripRuntimeBabelPluginMetadata = {
   cssRulesByBucket?: CSSRulesByBucket;
+  cssRuleToPropertyHashMap?: Record<string, string>;
+  ltrToRtlClassMap?: Record<string, string>;
 };
+
+type StripRuntimeBabelPluginState = PluginPass & StripRuntimeBabelPluginMetadata;
 
 function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRulesByBucket) {
   Object.entries(bucketB).forEach(([cssBucketName, cssBucketEntries]) => {
@@ -32,7 +32,6 @@ function evaluateAndUpdateArgument(
 ) {
   // Returns the styles as a JavaScript object
   const evaluationResult = argumentPath.evaluate();
-
   if (!evaluationResult.confident) {
     throw argumentPath.buildCodeFrameError(
       [
@@ -58,21 +57,63 @@ function evaluateAndUpdateArgument(
   argumentPath.remove();
 }
 
+function minifyCssSlotsArgument(
+  classMapBySlotArgument: NodePath<t.ObjectExpression>,
+  state: StripRuntimeBabelPluginState,
+) {
+  // Returns the styles as a JavaScript object
+  const evaluationResult = classMapBySlotArgument.evaluate();
+  if (!evaluationResult.confident) {
+    throw classMapBySlotArgument.buildCodeFrameError(
+      [
+        `Failed to evaluate slot mapping from "__styles" call.`,
+        'Please report a bug (https://github.com/microsoft/griffel/issues) if this error happens',
+      ].join(' '),
+    );
+  }
+
+  const slotsMap = evaluationResult.value as CSSClassesMapBySlot<string>;
+
+  const ellidedMap: EllidedCSSClassesMapBySlot<string> = Object.fromEntries(
+    Object.entries(slotsMap).map(([slotName, slotEntry]): [string, string[]] => {
+      const ellidedClasses: string[] = [];
+      for (const [propertyHash, classEntry] of Object.entries(slotEntry) as [string, string | [string, string]][]) {
+        const [ltrRule, rtlRule]: [string, string?] = Array.isArray(classEntry) ? classEntry : [classEntry];
+        (state.cssRuleToPropertyHashMap ??= {})[ltrRule] = propertyHash;
+        if (rtlRule) {
+          (state.cssRuleToPropertyHashMap ??= {})[rtlRule] = propertyHash;
+          (state.ltrToRtlClassMap ??= {})[ltrRule] = rtlRule;
+        }
+        ellidedClasses.push(ltrRule);
+      }
+      return [slotName, ellidedClasses];
+    }),
+  );
+
+  classMapBySlotArgument.replaceWithSourceString(JSON.stringify(ellidedMap));
+}
+
 function getFunctionArgumentPath(
   callExpressionPath: NodePath<t.CallExpression>,
   functionKind: FunctionKinds,
-): NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression> | null {
+): {
+  styleDefinitions: NodePath<t.ObjectExpression> | NodePath<t.ArrayExpression>;
+  classMapBySlotArgument?: NodePath<t.ObjectExpression>;
+} | null {
   const argumentPaths = callExpressionPath.get('arguments');
 
   if (functionKind === '__styles') {
     if (argumentPaths.length === 2 && argumentPaths[1].isObjectExpression()) {
-      return argumentPaths[1];
+      return {
+        styleDefinitions: argumentPaths[1],
+        classMapBySlotArgument: argumentPaths[0].isObjectExpression() ? argumentPaths[0] : undefined,
+      };
     }
   }
 
   if (functionKind === '__resetStyles') {
     if (argumentPaths.length === 3 && (argumentPaths[2].isArrayExpression() || argumentPaths[2].isObjectExpression())) {
-      return argumentPaths[2];
+      return { styleDefinitions: argumentPaths[2] };
     }
   }
 
@@ -164,6 +205,7 @@ function updateReferences(
   importSpecifierPath: NodePath<t.ImportSpecifier>,
   importSource: string,
   functionKind: FunctionKinds,
+  minify?: boolean,
 ) {
   const importName = functionKind === '__styles' ? '__css' : '__resetCSS';
   const importIdentifier = addNamed(importSpecifierPath, importName, importSource);
@@ -176,8 +218,12 @@ function updateReferences(
       const argumentPath = getFunctionArgumentPath(callExpressionPath, functionKind);
 
       if (argumentPath) {
-        inlineAssetImports(argumentPath);
-        evaluateAndUpdateArgument(argumentPath, functionKind, state);
+        inlineAssetImports(argumentPath.styleDefinitions);
+        evaluateAndUpdateArgument(argumentPath.styleDefinitions, functionKind, state);
+
+        if (argumentPath.classMapBySlotArgument && minify) {
+          minifyCssSlotsArgument(argumentPath.classMapBySlotArgument, state);
+        }
 
         updateCalleeName(callExpressionPath, importIdentifier.name);
       }
@@ -188,13 +234,16 @@ function updateReferences(
 export const babelPluginStripGriffelRuntime = declare<
   Partial<StripRuntimeBabelPluginOptions>,
   PluginObj<StripRuntimeBabelPluginState>
->(api => {
+>((api, { minify }) => {
   api.assertVersion(7);
 
   return {
     name: '@griffel/webpack-extraction-plugin/babel',
     post() {
       (this.file.metadata as unknown as StripRuntimeBabelPluginMetadata).cssRulesByBucket = this.cssRulesByBucket;
+      (this.file.metadata as unknown as StripRuntimeBabelPluginMetadata).cssRuleToPropertyHashMap =
+        this.cssRuleToPropertyHashMap;
+      (this.file.metadata as unknown as StripRuntimeBabelPluginMetadata).ltrToRtlClassMap = this.ltrToRtlClassMap;
     },
 
     visitor: {
@@ -221,9 +270,9 @@ export const babelPluginStripGriffelRuntime = declare<
               const importSource = importSourcePath.node.value;
 
               if (importedPath.isIdentifier({ name: '__styles' })) {
-                updateReferences(state, path, importSource, '__styles');
+                updateReferences(state, path, importSource, '__styles', minify);
               } else if (importedPath.isIdentifier({ name: '__resetStyles' })) {
-                updateReferences(state, path, importSource, '__resetStyles');
+                updateReferences(state, path, importSource, '__resetStyles', minify);
               }
             },
           });

@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
+import { RegisterMappingsLoaderContextKey, SupplementedLoaderCotext } from './constants';
 
 export type WebpackLoaderOptions = {
   /**
@@ -36,7 +37,7 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
 }
 
 function webpackLoader(
-  this: webpack.LoaderContext<WebpackLoaderOptions>,
+  this: SupplementedLoaderCotext<WebpackLoaderOptions>,
   sourceCode: WebpackLoaderParams[0],
   inputSourceMap: WebpackLoaderParams[1],
 ) {
@@ -55,11 +56,12 @@ function webpackLoader(
 
   let result: TransformResult | null = null;
   let error: Error | null = null;
+  const griffelContext = this[RegisterMappingsLoaderContextKey];
 
   try {
     result = transformSync(sourceCode, {
       filename: path.relative(process.cwd(), this.resourcePath),
-
+      minifyModules: griffelContext?.minify ?? false,
       enableSourceMaps: this.sourceMap || false,
       inputSourceMap: parseSourceMap(inputSourceMap),
     });
@@ -70,9 +72,13 @@ function webpackLoader(
   if (result) {
     const resultCode = unstable_keepOriginalCode ? sourceCode : result.code;
     const resultSourceMap = unstable_keepOriginalCode ? inputSourceMap : result.sourceMap;
+    const { cssRulesByBucket, cssRuleToPropertyHashMap, ltrToRtlClassMap } = result;
+    if (griffelContext?.minify) {
+      griffelContext(cssRuleToPropertyHashMap, ltrToRtlClassMap);
+    }
 
-    if (result.cssRulesByBucket) {
-      const entries = Object.entries(result.cssRulesByBucket);
+    if (cssRulesByBucket) {
+      const entries = Object.entries(cssRulesByBucket);
 
       if (entries.length === 0) {
         this.callback(null, resultCode, resultSourceMap);

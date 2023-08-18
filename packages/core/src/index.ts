@@ -99,6 +99,7 @@ export {
   CSSClassesMapBySlot,
   CSSBucketEntry,
   CSSRulesByBucket,
+  EllidedCSSClassesMapBySlot,
   StyleBucketName,
   // Util
   GriffelRenderer,

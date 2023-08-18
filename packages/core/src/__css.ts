@@ -51,6 +51,12 @@ function reducePotentiallyEllidedMapToClassNameForSlots<Slots extends string | n
   for (const slotName in classesMapBySlot) {
     const slotEntry = classesMapBySlot[slotName];
     if (Array.isArray(slotEntry)) {
+      // WHAT?
+      //   If a slot has an array of class strings, rather than an object mapping properties to classes, we need
+      //   to reconstruct the object for `reduceToClassNameForSlots` so `mergeClasses` can still work
+      // WHY?
+      //   As a bundle size optimization, webpack-extraction-plugin generates a centralized map of CSS class -> property hash
+      //   and specifies only a flat array of CSS classes in the makeStyle modules. This significantly reduces needless duplication.
       normalizedClassesMapBySlot[slotName] = Object.fromEntries(
         slotEntry.map(cssClass => {
           const cssProperty = CLASS_PROP_LOOKUP[cssClass] ?? '';

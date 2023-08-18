@@ -1,9 +1,11 @@
 import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
-import { Compilation } from 'webpack';
+import { Compilation, NormalModule } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
 
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
+import { PLUGIN_NAME, RegisterMappingsLoaderContextKey, type SupplementedLoaderCotext } from './constants';
+import { GriffelCSSRuntimeModule } from './GriffelCSSRuntimeModule';
 
 // Webpack does not export these constants
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
@@ -12,10 +14,9 @@ const OPTIMIZE_CHUNKS_STAGE_ADVANCED = 10;
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
   experimental_resetModuleIndexes?: boolean;
+  experimental_minifyJSModules?: boolean;
   unstable_attachToMainEntryPoint?: boolean;
 };
-
-const PLUGIN_NAME = 'GriffelExtractPlugin';
 
 function attachGriffelChunkToMainEntryPoint(compilation: Compilation, griffelChunk: Chunk) {
   const entryPoints = Array.from(compilation.entrypoints.values());
@@ -133,10 +134,12 @@ export class GriffelCSSExtractionPlugin {
     GriffelCSSExtractionPluginOptions['experimental_resetModuleIndexes']
   >;
   private readonly compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
+  private readonly minifyJSModules: NonNullable<GriffelCSSExtractionPluginOptions['experimental_minifyJSModules']>;
 
   constructor(options?: GriffelCSSExtractionPluginOptions) {
     this.attachToMainEntryPoint = options?.unstable_attachToMainEntryPoint ?? false;
     this.resetModuleIndexes = options?.experimental_resetModuleIndexes ?? false;
+    this.minifyJSModules = options?.experimental_minifyJSModules ?? false;
 
     this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
   }
@@ -177,6 +180,40 @@ export class GriffelCSSExtractionPlugin {
     }
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
+      // WHAT?
+      //   Adds a runtime module specific to the plugin
+      // WHY?
+      //   This runtime module bootstraps the lookup cache from the loader metadata to enable us to eliminate unnecessary duplication
+      const cssRuleToPropertyHashMap: Record<string, string> = {};
+      const ltrToRtlClassMap: Record<string, string> = {};
+      compilation.hooks.additionalTreeRuntimeRequirements.tap(PLUGIN_NAME, entryChunk => {
+        if (
+          this.minifyJSModules &&
+          (Object.keys(cssRuleToPropertyHashMap).length || Object.keys(ltrToRtlClassMap).length)
+        ) {
+          compilation.addRuntimeModule(
+            entryChunk,
+            new GriffelCSSRuntimeModule(cssRuleToPropertyHashMap, ltrToRtlClassMap),
+          );
+        }
+      });
+
+      // WHAT?
+      //   Adds a callback to the loader context
+      // WHY?
+      //   This way we can collect and aggregate metadata from the loader so we can reduce unnecessary duplication
+      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, loaderContext => {
+        const callback = (
+          moduleCssRuleToPropertyHashMap?: Record<string, string>,
+          moduleLtrToRtlClassMap?: Record<string, string>,
+        ) => {
+          Object.assign(cssRuleToPropertyHashMap, moduleCssRuleToPropertyHashMap);
+          Object.assign(ltrToRtlClassMap, moduleLtrToRtlClassMap);
+        };
+        callback.minify = this.minifyJSModules;
+        (loaderContext as SupplementedLoaderCotext)[RegisterMappingsLoaderContextKey] = callback;
+      });
+
       compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
         // WHAT?
         //   Performs module movements between chunks if SplitChunksPlugin is not enabled.

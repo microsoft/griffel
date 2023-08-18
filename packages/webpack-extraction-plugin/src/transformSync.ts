@@ -5,7 +5,7 @@ import { babelPluginStripGriffelRuntime, StripRuntimeBabelPluginMetadata } from 
 
 export type TransformOptions = {
   filename: string;
-
+  minifyModules: boolean;
   inputSourceMap: Babel.TransformOptions['inputSourceMap'];
   enableSourceMaps: boolean;
 };
@@ -13,6 +13,8 @@ export type TransformOptions = {
 export type TransformResult = {
   code: string;
   cssRulesByBucket: CSSRulesByBucket | undefined;
+  cssRuleToPropertyHashMap: Record<string, string> | undefined;
+  ltrToRtlClassMap: Record<string, string> | undefined;
   sourceMap: NonNullable<Babel.BabelFileResult['map']> | undefined;
 };
 
@@ -38,7 +40,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     // Ignore all user's configs and apply only our plugin
     babelrc: false,
     configFile: false,
-    plugins: [babelPluginStripGriffelRuntime],
+    plugins: [[babelPluginStripGriffelRuntime, { minify: options.minifyModules }]],
 
     filename: options.filename,
 
@@ -51,9 +53,14 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     throw new Error(`Failed to transform "${options.filename}" due unknown Babel error...`);
   }
 
+  const metadata = babelFileResult.metadata as unknown as StripRuntimeBabelPluginMetadata;
+  const { cssRulesByBucket, cssRuleToPropertyHashMap, ltrToRtlClassMap } = metadata;
+
   return {
     code: babelFileResult.code as string,
-    cssRulesByBucket: (babelFileResult.metadata as unknown as StripRuntimeBabelPluginMetadata).cssRulesByBucket,
+    cssRulesByBucket,
+    cssRuleToPropertyHashMap,
+    ltrToRtlClassMap,
     sourceMap: babelFileResult.map === null ? undefined : babelFileResult.map,
   };
 }
