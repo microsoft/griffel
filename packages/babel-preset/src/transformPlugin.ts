@@ -2,14 +2,20 @@ import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
-import { resolveStyleRulesForSlots, GriffelStyle, resolveResetStyleRules } from '@griffel/core';
+import {
+  resolveStyleRulesForSlots,
+  GriffelStyle,
+  resolveResetStyleRules,
+  CSSRulesByBucket,
+  CSSClassesMapBySlot,
+} from '@griffel/core';
 import * as path from 'path';
 
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
 import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
 import { dedupeCSSRules } from './utils/dedupeCSSRules';
 import { evaluatePaths } from './utils/evaluatePaths';
-import { BabelPluginOptions } from './types';
+import { BabelPluginOptions, GriffelHookEntries, GriffelResetHookEntries, BabelPluginMetadata } from './types';
 import { validateOptions } from './validateOptions';
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles';
@@ -18,8 +24,17 @@ type BabelPluginState = PluginPass & {
   importDeclarationPaths?: NodePath<t.ImportDeclaration>[];
   requireDeclarationPath?: NodePath<t.VariableDeclarator>;
 
-  definitionPaths?: { functionKind: FunctionKinds; path: NodePath<t.Expression | t.SpreadElement> }[];
+  definitionPaths?: {
+    /** The name of the resulting hook from a Griffel call */
+    hookName: string;
+    /** The type of Griffel call */
+    functionKind: FunctionKinds;
+    /** The code path of the Griffel call  */
+    path: NodePath<t.Expression | t.SpreadElement>;
+  }[];
   calleePaths?: NodePath<t.Identifier>[];
+  cssEntries?: GriffelHookEntries;
+  cssResetEntries?: GriffelResetHookEntries;
 };
 
 function getDefinitionPathFromCallExpression(
@@ -60,6 +75,87 @@ function getCalleeFunctionKind(
   }
 
   return null;
+}
+
+/**
+ * Gets the id of the parent variable declarator
+ */
+function getParentDeclaratorId(path: NodePath<t.CallExpression> | NodePath<t.MemberExpression>): string {
+  const declarator = path.findParent(p => p.isVariableDeclarator());
+  if (declarator?.isVariableDeclarator()) {
+    const id = declarator.get('id');
+    if (id.isIdentifier()) {
+      return id.node.name;
+    }
+  }
+
+  return 'unknownHook';
+}
+
+/**
+ * Extracts CSS rules from evaluated reset styles to metadata
+ */
+function buildCSSResetEntriesMetadata(
+  state: BabelPluginState,
+  cssRules: string[] | CSSRulesByBucket,
+  hookName: string,
+) {
+  state.cssResetEntries ??= {};
+  state.cssResetEntries[hookName] ??= [];
+  if (Array.isArray(cssRules)) {
+    state.cssResetEntries[hookName] = cssRules;
+  } else {
+    for (const [_, bucketEntries] of Object.entries(cssRules)) {
+      for (const bucketEntry of bucketEntries) {
+        if (Array.isArray(bucketEntry)) {
+          state.cssResetEntries[hookName].push(bucketEntry[0]);
+        } else {
+          state.cssResetEntries[hookName].push(bucketEntry);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Extracts CSS rules from evaluated styles to metadata
+ */
+function buildCSSEntriesMetadata(
+  state: BabelPluginState,
+  classnamesMapping: CSSClassesMapBySlot<string>,
+  cssRulesByBucket: CSSRulesByBucket,
+  hookName: string,
+) {
+  const classesBySlot: Record<string, string[]> = {};
+  for (const [slot, cssClassesMap] of Object.entries(classnamesMapping)) {
+    for (const [_, cssClasses] of Object.entries(cssClassesMap)) {
+      classesBySlot[slot] = Array.isArray(cssClasses) ? cssClasses : [cssClasses];
+    }
+  }
+
+  const cssRules: string[] = [];
+  for (const [_, bucketEntries] of Object.entries(cssRulesByBucket)) {
+    for (const bucketEntry of bucketEntries) {
+      if (Array.isArray(bucketEntry)) {
+        cssRules.push(bucketEntry[0]);
+      } else {
+        cssRules.push(bucketEntry);
+      }
+    }
+  }
+
+  state.cssEntries ??= {};
+  state.cssEntries[hookName] ??= {};
+
+  for (const [slot, cssClasses] of Object.entries(classesBySlot)) {
+    for (const cssClass of cssClasses) {
+      const cssRule = cssRules.find(rule => rule.includes(cssClass));
+      if (cssRule) {
+        state.cssEntries[hookName][slot] ??= [];
+        state.cssEntries[hookName][slot].push(cssRule);
+      }
+    }
+  }
 }
 
 /**
@@ -107,6 +203,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
   const pluginOptions: Required<BabelPluginOptions> = {
     babelOptions: {},
+    generateMetadata: false,
     modules: [
       { moduleSource: '@griffel/react', importName: 'makeStyles' },
       { moduleSource: '@fluentui/react-components', importName: 'makeStyles' },
@@ -166,6 +263,8 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               pluginOptions,
             );
 
+            state.cssResetEntries ??= {};
+
             state.definitionPaths.forEach(definitionPath => {
               const callExpressionPath = definitionPath.path.findParent(parentPath =>
                 parentPath.isCallExpression(),
@@ -196,6 +295,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 );
                 const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
+                if (pluginOptions.generateMetadata) {
+                  buildCSSEntriesMetadata(state, classnamesMapping, uniqueCSSRules, definitionPath.hookName);
+                }
+
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
                 callExpressionPath.pushContainer('arguments', [
                   t.valueToNode(classnamesMapping),
@@ -218,6 +321,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                   ),
                 );
 
+                if (pluginOptions.generateMetadata) {
+                  buildCSSResetEntriesMetadata(state, cssRules, definitionPath.hookName);
+                }
+
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
                 callExpressionPath.pushContainer('arguments', [
                   t.valueToNode(ltrClassName),
@@ -228,6 +335,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
               replaceAssetsWithImports(pluginOptions.projectRoot, state.filename!, programPath, callExpressionPath);
             });
+
+            if (pluginOptions.generateMetadata) {
+              (this.file.metadata as unknown as BabelPluginMetadata).cssResetEntries = state.cssResetEntries ?? {};
+              (this.file.metadata as unknown as BabelPluginMetadata).cssEntries = state.cssEntries ?? {};
+            }
           }
 
           state.importDeclarationPaths!.forEach(importDeclarationPath => {
@@ -296,9 +408,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
         if (calleePath.isIdentifier()) {
           const functionKind = getCalleeFunctionKind(calleePath, pluginOptions.modules);
+          const hookName = getParentDeclaratorId(path);
 
           if (functionKind) {
             state.definitionPaths!.push({
+              hookName,
               functionKind,
               path: getDefinitionPathFromCallExpression(functionKind, path),
             });
@@ -343,8 +457,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
           return;
         }
 
+        const hookName = getParentDeclaratorId(expressionPath);
         state.definitionPaths!.push({
           functionKind,
+          hookName,
           path: getDefinitionPathFromCallExpression(functionKind, parentPath),
         });
         state.calleePaths!.push(propertyPath as NodePath<t.Identifier>);

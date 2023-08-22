@@ -2,6 +2,11 @@ import type { TransformOptions } from '@babel/core';
 import type { EvalRule } from '@linaria/babel-preset';
 
 export type BabelPluginOptions = {
+  /**
+   * Returns the evaluated CSS rules in the file result metadata
+   * @default false
+   */
+  generateMetadata?: boolean;
   /** Defines set of modules and imports handled by a transformPlugin. */
   modules?: {
     moduleSource: string;
@@ -25,4 +30,14 @@ export type BabelPluginOptions = {
    * @default process.cwd()
    */
   projectRoot?: string;
+};
+
+type CSSRulesBySlot = Record<string, string[]>;
+
+export type GriffelHookEntries = Record<string, CSSRulesBySlot>;
+export type GriffelResetHookEntries = Record<string, string[]>;
+
+export type BabelPluginMetadata = {
+  cssEntries: GriffelHookEntries;
+  cssResetEntries: GriffelResetHookEntries;
 };
