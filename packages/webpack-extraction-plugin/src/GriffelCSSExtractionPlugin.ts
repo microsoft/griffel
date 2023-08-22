@@ -1,9 +1,16 @@
 import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
-import { Compilation } from 'webpack';
+import { Compilation, NormalModule } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
 
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
+import {
+  GriffelCssModule,
+  GriffelCssModuleKey,
+  PLUGIN_NAME,
+  RegisterMappingsLoaderContextKey,
+  type SupplementedLoaderCotext,
+} from './constants';
 
 // Webpack does not export these constants
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
@@ -14,8 +21,6 @@ export type GriffelCSSExtractionPluginOptions = {
   experimental_resetModuleIndexes?: boolean;
   unstable_attachToMainEntryPoint?: boolean;
 };
-
-const PLUGIN_NAME = 'GriffelExtractPlugin';
 
 function attachGriffelChunkToMainEntryPoint(compilation: Compilation, griffelChunk: Chunk) {
   const entryPoints = Array.from(compilation.entrypoints.values());
@@ -177,6 +182,22 @@ export class GriffelCSSExtractionPlugin {
     }
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
+      // WHAT?
+      //   Adds a callback to the loader context
+      // WHY?
+      //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
+      const cssByModuleMap: Record<string, string> = {};
+      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
+        (loaderContext as SupplementedLoaderCotext)[RegisterMappingsLoaderContextKey] = {
+          registerExtractedCss(css: string) {
+            cssByModuleMap[module.resource] = css;
+          },
+          getExtractedCss() {
+            return cssByModuleMap[module.resource] ?? '';
+          },
+        };
+      });
+
       compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
         // WHAT?
         //   Performs module movements between chunks if SplitChunksPlugin is not enabled.

@@ -1,11 +1,11 @@
+const { RegisterMappingsLoaderContextKey } = require('../src/constants');
+
 /**
- * @this {import('webpack').LoaderContext<{ style?: string }>}
+ * @this {import("../src/constants").SupplementedLoaderCotext}
  * @return {String}
  */
 function virtualLoader() {
-  const { style = '' } = this.getOptions();
-
-  return style;
+  return this[RegisterMappingsLoaderContextKey]?.getExtractedCss() ?? '';
 }
 
 module.exports = virtualLoader;
