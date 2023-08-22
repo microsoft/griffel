@@ -4,13 +4,7 @@ import type { Chunk, Compiler, Module, sources } from 'webpack';
 
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
-import {
-  GriffelCssModule,
-  GriffelCssModuleKey,
-  PLUGIN_NAME,
-  RegisterMappingsLoaderContextKey,
-  type SupplementedLoaderCotext,
-} from './constants';
+import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderCotext } from './constants';
 
 // Webpack does not export these constants
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
@@ -188,7 +182,7 @@ export class GriffelCSSExtractionPlugin {
       //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
       const cssByModuleMap: Record<string, string> = {};
       NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
-        (loaderContext as SupplementedLoaderCotext)[RegisterMappingsLoaderContextKey] = {
+        (loaderContext as SupplementedLoaderCotext)[GriffelCssLoaderContextKey] = {
           registerExtractedCss(css: string) {
             cssByModuleMap[module.resource] = css;
           },

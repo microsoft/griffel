@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
-import { RegisterMappingsLoaderContextKey, SupplementedLoaderCotext } from './constants';
+import { GriffelCssLoaderContextKey, SupplementedLoaderCotext } from './constants';
 
 export type WebpackLoaderOptions = {
   /**
@@ -106,7 +106,7 @@ function webpackLoader(
 
       const outputFileName = this.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
 
-      this[RegisterMappingsLoaderContextKey]?.registerExtractedCss(css);
+      this[GriffelCssLoaderContextKey]?.registerExtractedCss(css);
       const request = `${outputFileName}!=!${virtualLoaderPath}!${this.resourcePath}`;
       const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
 

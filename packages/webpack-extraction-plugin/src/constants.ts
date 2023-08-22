@@ -1,8 +1,7 @@
-import type { LoaderContext, NormalModule } from 'webpack';
+import type { LoaderContext } from 'webpack';
 
 export const PLUGIN_NAME = 'GriffelExtractPlugin';
-export const RegisterMappingsLoaderContextKey = Symbol(`${PLUGIN_NAME}/RegisterMappingsLoaderContextKey`);
-export const GriffelCssModuleKey = Symbol(`${PLUGIN_NAME}/extracted-css`);
+export const GriffelCssLoaderContextKey = Symbol(`${PLUGIN_NAME}/GriffelCssLoaderContextKey`);
 
 export interface GriffelLoaderContextSupplement {
   registerExtractedCss(css: string): void;
@@ -10,9 +9,5 @@ export interface GriffelLoaderContextSupplement {
 }
 
 export type SupplementedLoaderCotext<Options = unknown> = LoaderContext<Options> & {
-  [RegisterMappingsLoaderContextKey]?: GriffelLoaderContextSupplement;
-};
-
-export type GriffelCssModule = NormalModule & {
-  [GriffelCssModuleKey]: string;
+  [GriffelCssLoaderContextKey]?: GriffelLoaderContextSupplement;
 };
