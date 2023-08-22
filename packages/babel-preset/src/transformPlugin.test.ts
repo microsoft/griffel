@@ -1,3 +1,4 @@
+import * as Babel from '@babel/core';
 import pluginTester, { prettierFormatter } from 'babel-plugin-tester';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -265,4 +266,79 @@ pluginTester({
 
   plugin: transformPlugin,
   pluginName: '@griffel/babel-plugin-transform',
+});
+
+// TODO use the plugin tester and all existing fixtures once there is support for that
+// https://github.com/babel-utils/babel-plugin-tester/issues/186
+describe('babel preset', () => {
+  it('should not generate metadata when not configured', () => {
+    const fixture = path.resolve(fixturesDir, 'object', 'code.ts');
+    const code = fs.readFileSync(fixture).toString();
+
+    const babelFileResult = Babel.transformSync(code, {
+      babelrc: false,
+      configFile: false,
+      plugins: [[transformPlugin]],
+      filename: fixture,
+      presets: ['@babel/typescript'],
+    });
+
+    expect(babelFileResult?.metadata).toMatchInlineSnapshot(`Object {}`);
+  });
+
+  it('should generate metadata for makeStyles when configured', () => {
+    const fixture = path.resolve(fixturesDir, 'object', 'code.ts');
+    const code = fs.readFileSync(fixture).toString();
+
+    const babelFileResult = Babel.transformSync(code, {
+      babelrc: false,
+      configFile: false,
+      plugins: [[transformPlugin, { generateMetadata: true }]],
+      filename: fixture,
+      presets: ['@babel/typescript'],
+    });
+
+    expect(babelFileResult?.metadata).toMatchInlineSnapshot(`
+      Object {
+        cssEntries: Object {
+          useStyles: Object {
+            icon: Array [
+              .fjf1xye{margin-left:4px;},
+              .f8zmjen{margin-right:4px;},
+            ],
+            root: Array [
+              .fycuoez{padding-left:4px;},
+              .f8wuabp{padding-right:4px;},
+            ],
+          },
+        },
+        cssResetEntries: Object {},
+      }
+    `);
+  });
+
+  it('should generate metadata for makeResetStyles when configured', () => {
+    const fixture = path.resolve(fixturesDir, 'reset-styles', 'code.ts');
+    const code = fs.readFileSync(fixture).toString();
+
+    const babelFileResult = Babel.transformSync(code, {
+      babelrc: false,
+      configFile: false,
+      plugins: [[transformPlugin, { generateMetadata: true }]],
+      filename: fixture,
+      presets: ['@babel/typescript'],
+    });
+
+    expect(babelFileResult?.metadata).toMatchInlineSnapshot(`
+      Object {
+        cssEntries: Object {},
+        cssResetEntries: Object {
+          useStyles: Array [
+            .rjefjbm{color:red;padding-left:4px;},
+            .r7z97ji{color:red;padding-right:4px;},
+          ],
+        },
+      }
+    `);
+  });
 });
