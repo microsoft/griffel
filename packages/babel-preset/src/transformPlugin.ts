@@ -105,6 +105,7 @@ function buildCSSResetEntriesMetadata(
   if (Array.isArray(cssRules)) {
     state.cssResetEntries[hookName] = cssRules;
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [_, bucketEntries] of Object.entries(cssRules)) {
       for (const bucketEntry of bucketEntries) {
         if (Array.isArray(bucketEntry)) {
@@ -128,12 +129,14 @@ function buildCSSEntriesMetadata(
 ) {
   const classesBySlot: Record<string, string[]> = {};
   for (const [slot, cssClassesMap] of Object.entries(classnamesMapping)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [_, cssClasses] of Object.entries(cssClassesMap)) {
       classesBySlot[slot] = Array.isArray(cssClasses) ? cssClasses : [cssClasses];
     }
   }
 
   const cssRules: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for (const [_, bucketEntries] of Object.entries(cssRulesByBucket)) {
     for (const bucketEntry of bucketEntries) {
       if (Array.isArray(bucketEntry)) {
