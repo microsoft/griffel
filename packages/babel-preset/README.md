@@ -194,20 +194,23 @@ This is intended for programmatic transforms in code so that they can be reused 
 the output styles
 
 ```ts
-  const babelFileResult = Babel.transformFromAstSync(babelAST, sourceCode, {
-    babelrc: false,
-    configFile: false,
-    presets: [[griffelPreset, { generateMetadata: true }]],
+import { griffelPreset, BabelPluginMetadata } from '@griffel/babel-preset';
 
-    filename: options.filename,
 
-    sourceMaps: options.enableSourceMaps,
-    sourceFileName: options.filename,
-    inputSourceMap: options.inputSourceMap,
-  });
+const babelFileResult = Babel.transformFromAstSync(babelAST, sourceCode, {
+  babelrc: false,
+  configFile: false,
+  presets: [[griffelPreset, { generateMetadata: true }]],
 
-  // metadata
-  console.log(babelFileResult.metadata);
+  filename: options.filename,
+
+  sourceMaps: options.enableSourceMaps,
+  sourceFileName: options.filename,
+  inputSourceMap: options.inputSourceMap,
+});
+
+// metadata
+console.log(babelFileResult.metadata as unknown as BabelPluginMetadata);
 ```
 
 ## Troubleshooting
