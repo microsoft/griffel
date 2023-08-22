@@ -13,7 +13,7 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
   - [Configuring module evaluation](#configuring-module-evaluation)
 - [Transforms](#transforms)
 - [Example](#example)
-- [CSS metadata](#css-metadata)
+- [Access CSS output from code](#access-css-output-from-code)
 - [Troubleshooting](#troubleshooting)
   - [Module evaluation](#module-evaluation)
 
@@ -162,9 +162,9 @@ import { __styles } from '@griffel/react';
 const useStyles = __styles(/* resolved styles */);
 ```
 
-## CSS metadata
+## Access CSS output from code
 
-It's possible to configure the preset to return metadata of all the evaluated styles of a file. This
+It's possible to configure the preset to return all the evaluated styles of a file. This
 metadata looks something like below:
 
 ```ts
