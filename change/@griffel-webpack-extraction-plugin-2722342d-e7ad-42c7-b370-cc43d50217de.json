@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Stop inlining the styles in the virtual CSS module request",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "miclo@microsoft.com",
+  "dependentChangeType": "patch"
+}
