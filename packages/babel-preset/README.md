@@ -13,6 +13,7 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
   - [Configuring module evaluation](#configuring-module-evaluation)
 - [Transforms](#transforms)
 - [Example](#example)
+- [Access CSS output from code](#access-css-output-from-code)
 - [Troubleshooting](#troubleshooting)
   - [Module evaluation](#module-evaluation)
 
@@ -159,6 +160,55 @@ roughly to
 import { __styles } from '@griffel/react';
 
 const useStyles = __styles(/* resolved styles */);
+```
+
+## Access CSS output from code
+
+It's possible to configure the preset to return all the evaluated styles of a file. This
+metadata looks something like below:
+
+```ts
+const output = {
+  // makeStyles
+  cssEntries: {
+    // by each hook
+    useStyles1: {
+      // by each slot
+      root: [".fxxxxx { color: 'red' }"],
+    },
+    useStyles2: {
+      root: [".fxxxxx { color: 'red' }"],
+    },
+  },
+  // makeResetStyles
+  cssResetEntries: {
+    // by each hook
+    useResetStyles1: [".fxxxxx { color: 'red' }"],
+    useResetStyles2: [".fxxxxx { color: 'red' }"],
+  },
+};
+```
+
+This is intended for programmatic transforms in code so that they can be reused by other tooling without extra steps to determine
+the output styles
+
+```ts
+import { griffelPreset, BabelPluginMetadata } from '@griffel/babel-preset';
+
+const babelFileResult = Babel.transformFromAstSync(babelAST, sourceCode, {
+  babelrc: false,
+  configFile: false,
+  presets: [[griffelPreset, { generateMetadata: true }]],
+
+  filename: options.filename,
+
+  sourceMaps: options.enableSourceMaps,
+  sourceFileName: options.filename,
+  inputSourceMap: options.inputSourceMap,
+});
+
+// metadata
+console.log(babelFileResult.metadata as unknown as BabelPluginMetadata);
 ```
 
 ## Troubleshooting
