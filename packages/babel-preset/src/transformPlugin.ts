@@ -27,7 +27,7 @@ type BabelPluginState = PluginPass & {
 
   definitionPaths?: {
     /** The name of the resulting hook from a Griffel call */
-    hookName: string;
+    declaratorId: string;
     /** The type of Griffel call */
     functionKind: FunctionKinds;
     /** The code path of the Griffel call  */
@@ -99,12 +99,12 @@ function getParentDeclaratorId(path: NodePath<t.CallExpression> | NodePath<t.Mem
 function buildCSSResetEntriesMetadata(
   state: Required<BabelPluginState>,
   cssRules: string[] | CSSRulesByBucket,
-  hookName: string,
+  declaratorId: string,
 ) {
   const cssRulesByBucket: CSSRulesByBucket = Array.isArray(cssRules) ? { d: cssRules } : cssRules;
-  state.cssResetEntries[hookName] ??= [];
-  for (const bucketEntries of Object.values(cssRulesByBucket)) {
-    for (const bucketEntry of bucketEntries) {
+  state.cssResetEntries[declaratorId] ??= [];
+  state.cssResetEntries[declaratorId] = Object.values(cssRulesByBucket).flatMap(bucketEntries => {
+    return bucketEntries.map(bucketEntry => {
       if (Array.isArray(bucketEntry)) {
         throw new Error(
           `CSS rules in buckets for "makeResetStyles()" should not contain arrays, got: ${JSON.stringify(
@@ -112,9 +112,10 @@ function buildCSSResetEntriesMetadata(
           )})}`,
         );
       }
-      state.cssResetEntries[hookName].push(bucketEntry);
-    }
-  }
+
+      return bucketEntry;
+    });
+  });
 }
 
 /**
@@ -124,7 +125,7 @@ function buildCSSEntriesMetadata(
   state: Required<BabelPluginState>,
   classnamesMapping: CSSClassesMapBySlot<string>,
   cssRulesByBucket: CSSRulesByBucket,
-  hookName: string,
+  declaratorId: string,
 ) {
   const classesBySlot: Record<string, string[]> = Object.fromEntries(
     Object.entries(classnamesMapping).map(([slot, cssClassesMap]) => {
@@ -142,7 +143,7 @@ function buildCSSEntriesMetadata(
     });
   });
 
-  state.cssEntries[hookName] = Object.fromEntries(
+  state.cssEntries[declaratorId] = Object.fromEntries(
     Object.entries(classesBySlot).map(([slot, cssClasses]) => {
       return [
         slot,
@@ -296,7 +297,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                     state as Required<BabelPluginState>,
                     classnamesMapping,
                     uniqueCSSRules,
-                    definitionPath.hookName,
+                    definitionPath.declaratorId,
                   );
                 }
 
@@ -323,7 +324,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 );
 
                 if (pluginOptions.generateMetadata) {
-                  buildCSSResetEntriesMetadata(state as Required<BabelPluginState>, cssRules, definitionPath.hookName);
+                  buildCSSResetEntriesMetadata(
+                    state as Required<BabelPluginState>,
+                    cssRules,
+                    definitionPath.declaratorId,
+                  );
                 }
 
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
@@ -411,11 +416,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
         if (calleePath.isIdentifier()) {
           const functionKind = getCalleeFunctionKind(calleePath, pluginOptions.modules);
-          const hookName = getParentDeclaratorId(path);
+          const declaratorId = getParentDeclaratorId(path);
 
           if (functionKind) {
             state.definitionPaths!.push({
-              hookName,
+              declaratorId,
               functionKind,
               path: getDefinitionPathFromCallExpression(functionKind, path),
             });
@@ -460,10 +465,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
           return;
         }
 
-        const hookName = getParentDeclaratorId(expressionPath);
+        const declaratorId = getParentDeclaratorId(expressionPath);
         state.definitionPaths!.push({
           functionKind,
-          hookName,
+          declaratorId,
           path: getDefinitionPathFromCallExpression(functionKind, parentPath),
         });
         state.calleePaths!.push(propertyPath as NodePath<t.Identifier>);
