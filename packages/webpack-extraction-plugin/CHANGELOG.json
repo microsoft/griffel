@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Mon, 28 Aug 2023 17:17:47 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.3.19",
+      "version": "0.3.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "miclo@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "5865f8ac8953dc0caa5dc47807e8bc9cc6487dae",
+            "comment": "chore: stop inlining the styles in the virtual CSS module request"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Jul 2023 12:18:47 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.3.18",
       "version": "0.3.18",

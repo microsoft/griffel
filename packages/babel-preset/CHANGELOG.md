@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Mon, 31 Jul 2023 12:18:47 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Aug 2023 17:17:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.0
+
+Mon, 28 Aug 2023 17:17:47 GMT
+
+### Minor changes
+
+- feat: Add metadata generation to babel preset (lingfan.gao@microsoft.com)
 
 ## 1.4.20
 

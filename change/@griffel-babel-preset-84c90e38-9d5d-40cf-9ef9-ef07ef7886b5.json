@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: Add metadata generation to babel preset",
-  "packageName": "@griffel/babel-preset",
-  "email": "lingfan.gao@microsoft.com",
-  "dependentChangeType": "patch"
-}

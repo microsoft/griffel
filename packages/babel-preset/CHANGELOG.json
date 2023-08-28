@@ -2,6 +2,21 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Mon, 28 Aug 2023 17:17:47 GMT",
+      "tag": "@griffel/babel-preset_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "lingfan.gao@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "5dec84ba358e6b80d861f8dea626a2cc5a8fdc12",
+            "comment": "feat: Add metadata generation to babel preset"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Jul 2023 12:18:47 GMT",
       "tag": "@griffel/babel-preset_v1.4.20",
       "version": "1.4.20",
