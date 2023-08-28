@@ -180,14 +180,20 @@ export class GriffelCSSExtractionPlugin {
       //   Adds a callback to the loader context
       // WHY?
       //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
-      const cssByModuleMap: Record<string, string> = {};
+      const cssByModuleMap = new Map<string, string>();
+
       NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
+        const resourcePath = module.resource;
+
         (loaderContext as SupplementedLoaderCotext)[GriffelCssLoaderContextKey] = {
           registerExtractedCss(css: string) {
-            cssByModuleMap[module.resource] = css;
+            cssByModuleMap.set(resourcePath, css);
           },
           getExtractedCss() {
-            return cssByModuleMap[module.resource] ?? '';
+            const css = cssByModuleMap.get(resourcePath) ?? '';
+            cssByModuleMap.delete(resourcePath);
+
+            return css;
           },
         };
       });
