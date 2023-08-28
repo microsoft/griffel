@@ -4,7 +4,7 @@ import type { Chunk, Compiler, Module, sources } from 'webpack';
 
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
-import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderCotext } from './constants';
+import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants';
 
 // Webpack does not export these constants
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
@@ -185,7 +185,7 @@ export class GriffelCSSExtractionPlugin {
       NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
         const resourcePath = module.resource;
 
-        (loaderContext as SupplementedLoaderCotext)[GriffelCssLoaderContextKey] = {
+        (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
           registerExtractedCss(css: string) {
             cssByModuleMap.set(resourcePath, css);
           },

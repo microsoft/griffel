@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
-import { GriffelCssLoaderContextKey, SupplementedLoaderCotext } from './constants';
+import { GriffelCssLoaderContextKey, SupplementedLoaderContext } from './constants';
 
 export type WebpackLoaderOptions = {
   /**
@@ -33,7 +33,7 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
 }
 
 function webpackLoader(
-  this: SupplementedLoaderCotext<WebpackLoaderOptions>,
+  this: SupplementedLoaderContext<WebpackLoaderOptions>,
   sourceCode: WebpackLoaderParams[0],
   inputSourceMap: WebpackLoaderParams[1],
 ) {

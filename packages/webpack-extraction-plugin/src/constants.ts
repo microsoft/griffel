@@ -8,6 +8,6 @@ export interface GriffelLoaderContextSupplement {
   getExtractedCss(): string;
 }
 
-export type SupplementedLoaderCotext<Options = unknown> = LoaderContext<Options> & {
+export type SupplementedLoaderContext<Options = unknown> = LoaderContext<Options> & {
   [GriffelCssLoaderContextKey]?: GriffelLoaderContextSupplement;
 };
