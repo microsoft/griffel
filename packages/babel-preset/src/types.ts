@@ -32,12 +32,7 @@ export type BabelPluginOptions = {
   projectRoot?: string;
 };
 
-type CSSRulesBySlot = Record<string, string[]>;
-
-export type GriffelHookEntries = Record<string, CSSRulesBySlot>;
-export type GriffelResetHookEntries = Record<string, string[]>;
-
 export type BabelPluginMetadata = {
-  cssEntries: GriffelHookEntries;
-  cssResetEntries: GriffelResetHookEntries;
+  cssEntries: Record<string, Record<string, string[]>>;
+  cssResetEntries: Record<string, string[]>;
 };

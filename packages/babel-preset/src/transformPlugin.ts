@@ -16,7 +16,7 @@ import { normalizeStyleRules } from './assets/normalizeStyleRules';
 import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
 import { dedupeCSSRules } from './utils/dedupeCSSRules';
 import { evaluatePaths } from './utils/evaluatePaths';
-import { BabelPluginOptions, GriffelHookEntries, GriffelResetHookEntries, BabelPluginMetadata } from './types';
+import { BabelPluginOptions, BabelPluginMetadata } from './types';
 import { validateOptions } from './validateOptions';
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles';
@@ -34,8 +34,8 @@ type BabelPluginState = PluginPass & {
     path: NodePath<t.Expression | t.SpreadElement>;
   }[];
   calleePaths?: NodePath<t.Identifier>[];
-  cssEntries?: GriffelHookEntries;
-  cssResetEntries?: GriffelResetHookEntries;
+  cssEntries?: BabelPluginMetadata['cssEntries'];
+  cssResetEntries?: BabelPluginMetadata['cssResetEntries'];
 };
 
 function getDefinitionPathFromCallExpression(
@@ -336,8 +336,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
             });
 
             if (pluginOptions.generateMetadata) {
-              (this.file.metadata as unknown as BabelPluginMetadata).cssResetEntries = state.cssResetEntries ?? {};
-              (this.file.metadata as unknown as BabelPluginMetadata).cssEntries = state.cssEntries ?? {};
+              Object.assign(this.file.metadata, {
+                cssResetEntries: state.cssResetEntries ?? {},
+                cssEntries: state.cssEntries ?? {},
+              } as BabelPluginMetadata);
             }
           }
 
