@@ -134,12 +134,14 @@ function buildCSSEntriesMetadata(
       ];
     }),
   );
+
   const cssRules: string[] = Object.values(cssRulesByBucket).flatMap(cssRulesByBucket => {
     return cssRulesByBucket.map(bucketEntry => {
       const [cssRule] = normalizeCSSBucketEntry(bucketEntry);
       return cssRule;
     });
   });
+
   state.cssEntries[hookName] = Object.fromEntries(
     Object.entries(classesBySlot).map(([slot, cssClasses]) => {
       return [
