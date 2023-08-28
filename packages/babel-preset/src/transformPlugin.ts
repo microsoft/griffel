@@ -131,7 +131,12 @@ function buildCSSEntriesMetadata(
   for (const [slot, cssClassesMap] of Object.entries(classnamesMapping)) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [_, cssClasses] of Object.entries(cssClassesMap)) {
-      classesBySlot[slot] = Array.isArray(cssClasses) ? cssClasses : [cssClasses];
+      classesBySlot[slot] ??= [];
+      if (Array.isArray(cssClasses)) {
+        classesBySlot[slot].push(...cssClasses);
+      } else {
+        classesBySlot[slot].push(cssClasses);
+      }
     }
   }
 

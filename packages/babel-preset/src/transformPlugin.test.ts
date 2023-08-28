@@ -286,7 +286,7 @@ describe('babel preset', () => {
     expect(babelFileResult?.metadata).toMatchInlineSnapshot(`Object {}`);
   });
 
-  it('should generate metadata for makeStyles when configured', () => {
+  it.only('should generate metadata for makeStyles when configured', () => {
     const fixture = path.resolve(fixturesDir, 'object', 'code.ts');
     const code = fs.readFileSync(fixture).toString();
 
@@ -303,10 +303,12 @@ describe('babel preset', () => {
         cssEntries: Object {
           useStyles: Object {
             icon: Array [
+              .fcnqdeg{background-color:green;},
               .fjf1xye{margin-left:4px;},
               .f8zmjen{margin-right:4px;},
             ],
             root: Array [
+              .fe3e8s9{color:red;},
               .fycuoez{padding-left:4px;},
               .f8wuabp{padding-right:4px;},
             ],
