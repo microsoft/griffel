@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 
 import { transformSync, TransformResult, TransformOptions } from './transformSync';
+import { GriffelCssLoaderContextKey, SupplementedLoaderContext } from './constants';
 
 export type WebpackLoaderOptions = {
   /**
@@ -14,10 +15,6 @@ export type WebpackLoaderOptions = {
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
 const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
-
-function toURIComponent(rule: string): string {
-  return encodeURIComponent(rule).replace(/!/g, '%21');
-}
 
 /**
  * Webpack can also pass sourcemaps as a string, Babel accepts only objects.
@@ -36,7 +33,7 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
 }
 
 function webpackLoader(
-  this: webpack.LoaderContext<WebpackLoaderOptions>,
+  this: SupplementedLoaderContext<WebpackLoaderOptions>,
   sourceCode: WebpackLoaderParams[0],
   inputSourceMap: WebpackLoaderParams[1],
 ) {
@@ -59,7 +56,6 @@ function webpackLoader(
   try {
     result = transformSync(sourceCode, {
       filename: path.relative(process.cwd(), this.resourcePath),
-
       enableSourceMaps: this.sourceMap || false,
       inputSourceMap: parseSourceMap(inputSourceMap),
     });
@@ -70,9 +66,10 @@ function webpackLoader(
   if (result) {
     const resultCode = unstable_keepOriginalCode ? sourceCode : result.code;
     const resultSourceMap = unstable_keepOriginalCode ? inputSourceMap : result.sourceMap;
+    const { cssRulesByBucket } = result;
 
-    if (result.cssRulesByBucket) {
-      const entries = Object.entries(result.cssRulesByBucket);
+    if (cssRulesByBucket) {
+      const entries = Object.entries(cssRulesByBucket);
 
       if (entries.length === 0) {
         this.callback(null, resultCode, resultSourceMap);
@@ -109,7 +106,8 @@ function webpackLoader(
 
       const outputFileName = this.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
 
-      const request = `${outputFileName}!=!${virtualLoaderPath}?style=${toURIComponent(css)}!${this.resourcePath}`;
+      this[GriffelCssLoaderContextKey]?.registerExtractedCss(css);
+      const request = `${outputFileName}!=!${virtualLoaderPath}!${this.resourcePath}`;
       const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
 
       this.callback(null, `${resultCode}\n\nimport ${stringifiedRequest};`, resultSourceMap);

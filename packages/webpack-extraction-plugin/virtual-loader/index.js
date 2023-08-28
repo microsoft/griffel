@@ -1,11 +1,11 @@
+const { GriffelCssLoaderContextKey } = require('../src/constants');
+
 /**
- * @this {import('webpack').LoaderContext<{ style?: string }>}
+ * @this {import("../src/constants").SupplementedLoaderContext}
  * @return {String}
  */
 function virtualLoader() {
-  const { style = '' } = this.getOptions();
-
-  return style;
+  return this[GriffelCssLoaderContextKey]?.getExtractedCss() ?? '';
 }
 
 module.exports = virtualLoader;
