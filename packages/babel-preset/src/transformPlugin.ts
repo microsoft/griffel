@@ -8,6 +8,7 @@ import {
   resolveResetStyleRules,
   CSSRulesByBucket,
   CSSClassesMapBySlot,
+  normalizeCSSBucketEntry,
 } from '@griffel/core';
 import * as path from 'path';
 
@@ -96,24 +97,22 @@ function getParentDeclaratorId(path: NodePath<t.CallExpression> | NodePath<t.Mem
  * Extracts CSS rules from evaluated reset styles to metadata
  */
 function buildCSSResetEntriesMetadata(
-  state: BabelPluginState,
+  state: Required<BabelPluginState>,
   cssRules: string[] | CSSRulesByBucket,
   hookName: string,
 ) {
-  state.cssResetEntries ??= {};
+  const cssRulesByBucket: CSSRulesByBucket = Array.isArray(cssRules) ? { d: cssRules } : cssRules;
   state.cssResetEntries[hookName] ??= [];
-  if (Array.isArray(cssRules)) {
-    state.cssResetEntries[hookName] = cssRules;
-  } else {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const [_, bucketEntries] of Object.entries(cssRules)) {
-      for (const bucketEntry of bucketEntries) {
-        if (Array.isArray(bucketEntry)) {
-          state.cssResetEntries[hookName].push(bucketEntry[0]);
-        } else {
-          state.cssResetEntries[hookName].push(bucketEntry);
-        }
+  for (const bucketEntries of Object.values(cssRulesByBucket)) {
+    for (const bucketEntry of bucketEntries) {
+      if (Array.isArray(bucketEntry)) {
+        throw new Error(
+          `CSS rules in buckets for "makeResetStyles()" should not contain arrays, got: ${JSON.stringify(
+            bucketEntry,
+          )})}`,
+        );
       }
+      state.cssResetEntries[hookName].push(bucketEntry);
     }
   }
 }
@@ -122,48 +121,35 @@ function buildCSSResetEntriesMetadata(
  * Extracts CSS rules from evaluated styles to metadata
  */
 function buildCSSEntriesMetadata(
-  state: BabelPluginState,
+  state: Required<BabelPluginState>,
   classnamesMapping: CSSClassesMapBySlot<string>,
   cssRulesByBucket: CSSRulesByBucket,
   hookName: string,
 ) {
-  const classesBySlot: Record<string, string[]> = {};
-  for (const [slot, cssClassesMap] of Object.entries(classnamesMapping)) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const [_, cssClasses] of Object.entries(cssClassesMap)) {
-      classesBySlot[slot] ??= [];
-      if (Array.isArray(cssClasses)) {
-        classesBySlot[slot].push(...cssClasses);
-      } else {
-        classesBySlot[slot].push(cssClasses);
-      }
-    }
-  }
-
-  const cssRules: string[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  for (const [_, bucketEntries] of Object.entries(cssRulesByBucket)) {
-    for (const bucketEntry of bucketEntries) {
-      if (Array.isArray(bucketEntry)) {
-        cssRules.push(bucketEntry[0]);
-      } else {
-        cssRules.push(bucketEntry);
-      }
-    }
-  }
-
-  state.cssEntries ??= {};
-  state.cssEntries[hookName] ??= {};
-
-  for (const [slot, cssClasses] of Object.entries(classesBySlot)) {
-    for (const cssClass of cssClasses) {
-      const cssRule = cssRules.find(rule => rule.includes(cssClass));
-      if (cssRule) {
-        state.cssEntries[hookName][slot] ??= [];
-        state.cssEntries[hookName][slot].push(cssRule);
-      }
-    }
-  }
+  const classesBySlot: Record<string, string[]> = Object.fromEntries(
+    Object.entries(classnamesMapping).map(([slot, cssClassesMap]) => {
+      return [
+        slot,
+        Object.values(cssClassesMap).flatMap(cssClasses => (Array.isArray(cssClasses) ? cssClasses : [cssClasses])),
+      ];
+    }),
+  );
+  const cssRules: string[] = Object.values(cssRulesByBucket).flatMap(cssRulesByBucket => {
+    return cssRulesByBucket.map(bucketEntry => {
+      const [cssRule] = normalizeCSSBucketEntry(bucketEntry);
+      return cssRule;
+    });
+  });
+  state.cssEntries[hookName] = Object.fromEntries(
+    Object.entries(classesBySlot).map(([slot, cssClasses]) => {
+      return [
+        slot,
+        cssClasses.map(cssClass => {
+          return cssRules.find(rule => rule.includes(cssClass))!;
+        }),
+      ];
+    }),
+  );
 }
 
 /**
@@ -237,6 +223,8 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
       this.importDeclarationPaths = [];
       this.definitionPaths = [];
       this.calleePaths = [];
+      this.cssEntries = {};
+      this.cssResetEntries = {};
     },
 
     visitor: {
@@ -271,8 +259,6 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               pluginOptions,
             );
 
-            state.cssResetEntries ??= {};
-
             state.definitionPaths.forEach(definitionPath => {
               const callExpressionPath = definitionPath.path.findParent(parentPath =>
                 parentPath.isCallExpression(),
@@ -304,7 +290,12 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
                 if (pluginOptions.generateMetadata) {
-                  buildCSSEntriesMetadata(state, classnamesMapping, uniqueCSSRules, definitionPath.hookName);
+                  buildCSSEntriesMetadata(
+                    state as Required<BabelPluginState>,
+                    classnamesMapping,
+                    uniqueCSSRules,
+                    definitionPath.hookName,
+                  );
                 }
 
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
@@ -330,7 +321,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 );
 
                 if (pluginOptions.generateMetadata) {
-                  buildCSSResetEntriesMetadata(state, cssRules, definitionPath.hookName);
+                  buildCSSResetEntriesMetadata(state as Required<BabelPluginState>, cssRules, definitionPath.hookName);
                 }
 
                 (callExpressionPath.get('arguments.0') as NodePath).remove();

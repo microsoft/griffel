@@ -286,7 +286,7 @@ describe('babel preset', () => {
     expect(babelFileResult?.metadata).toMatchInlineSnapshot(`Object {}`);
   });
 
-  it.only('should generate metadata for makeStyles when configured', () => {
+  it('should generate metadata for makeStyles when configured', () => {
     const fixture = path.resolve(fixturesDir, 'object', 'code.ts');
     const code = fs.readFileSync(fixture).toString();
 
