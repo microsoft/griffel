@@ -48,6 +48,10 @@ function webpackLoader(
     return;
   }
 
+  if (!this[GriffelCssLoaderContextKey]) {
+    throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
+  }
+
   const { unstable_keepOriginalCode } = this.getOptions();
 
   let result: TransformResult | null = null;
@@ -104,9 +108,9 @@ function webpackLoader(
         );
       }, '');
 
-      const outputFileName = this.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
+      this[GriffelCssLoaderContextKey].registerExtractedCss(css);
 
-      this[GriffelCssLoaderContextKey]?.registerExtractedCss(css);
+      const outputFileName = this.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
       const request = `${outputFileName}!=!${virtualLoaderPath}!${this.resourcePath}`;
       const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
 
