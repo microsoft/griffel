@@ -30,7 +30,7 @@ describe('sortCSSRules', () => {
       m: [['@media (max-width: 2px) { .yellow { color: blue; } }', { m: '(max-width: 2px)' }]],
     };
 
-    expect(sortCSSRules([setA, setB], () => 0)).toMatchInlineSnapshot(`
+    expect(sortCSSRules([setA, setB], () => 0)[0]).toMatchInlineSnapshot(`
       .baz {
         color: orange;
       }
@@ -60,7 +60,7 @@ describe('sortCSSRules', () => {
       h: ['.foo:hover { color: yellow; }'],
     };
 
-    expect(sortCSSRules([setA, setB], () => 0)).toMatchInlineSnapshot(`
+    expect(sortCSSRules([setA, setB], () => 0)[0]).toMatchInlineSnapshot(`
       .baz {
         color: orange;
       }
@@ -92,7 +92,7 @@ describe('sortCSSRules', () => {
     const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a: string, b: string) =>
       mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
 
-    expect(sortCSSRules([setA, setB], compareMediaQueries)).toMatchInlineSnapshot(`
+    expect(sortCSSRules([setA, setB], compareMediaQueries)[0]).toMatchInlineSnapshot(`
       .foo {
         color: green;
       }

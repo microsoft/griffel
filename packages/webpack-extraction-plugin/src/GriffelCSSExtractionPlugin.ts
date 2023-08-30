@@ -12,6 +12,7 @@ const OPTIMIZE_CHUNKS_STAGE_ADVANCED = 10;
 
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
+  experimental_enableCssChunks?: boolean;
   unstable_attachToMainEntryPoint?: boolean;
 };
 
@@ -98,10 +99,13 @@ export class GriffelCSSExtractionPlugin {
   private readonly attachToMainEntryPoint: NonNullable<
     GriffelCSSExtractionPluginOptions['unstable_attachToMainEntryPoint']
   >;
+  private readonly enableCssChunks: NonNullable<GriffelCSSExtractionPluginOptions['experimental_enableCssChunks']>;
   private readonly compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
 
   constructor(options?: GriffelCSSExtractionPluginOptions) {
     this.attachToMainEntryPoint = options?.unstable_attachToMainEntryPoint ?? false;
+    this.enableCssChunks = options?.experimental_enableCssChunks ?? false;
+
     this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
   }
 
@@ -130,7 +134,7 @@ export class GriffelCSSExtractionPlugin {
     // WHY?
     //  We need to sort CSS rules in the same order as it's done via style buckets. It's not possible in multiple
     //  chunks.
-    if (compiler.options.optimization.splitChunks) {
+    if (compiler.options.optimization.splitChunks && !this.enableCssChunks) {
       compiler.options.optimization.splitChunks.cacheGroups ??= {};
       compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
         name: 'griffel',
@@ -195,6 +199,25 @@ export class GriffelCSSExtractionPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
+          if (this.enableCssChunks) {
+            Object.entries(assets).forEach(([assetName, assetSource]) => {
+              if (!assetName.endsWith('.css')) {
+                return;
+              }
+
+              console.log(assetName);
+              const cssContent = getAssetSourceContents(assetSource);
+              // TODO: Check that content has Griffel CSS
+              const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
+
+              const [cssSource] = sortCSSRules([cssRulesByBucket], this.compareMediaQueries, this.enableCssChunks);
+
+              compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
+            });
+
+            return;
+          }
+
           const griffelChunk = compilation.namedChunks.get('griffel');
 
           if (typeof griffelChunk === 'undefined') {
@@ -212,7 +235,7 @@ export class GriffelCSSExtractionPlugin {
           const cssContent = getAssetSourceContents(cssAssetSource);
           const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-          const cssSource = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
+          const [cssSource] = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
         },

@@ -351,5 +351,9 @@ describe('GriffelCSSExtractionPlugin', () => {
       },
     },
   });
-  testFixture('unstable-keep-original-code', { loaderOptions: { unstable_keepOriginalCode: true } });
+
+  testFixture('config-code-split-chunks', {
+    pluginOptions: { experimental_enableCssChunks: true },
+    only: true,
+  });
 });

@@ -12,8 +12,10 @@ function getCSSMetaFromBucketEntry(entry: CSSBucketEntry): Record<string, unknow
 export function sortCSSRules(
   setOfCSSRules: CSSRulesByBucket[],
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
-): string {
-  return styleBucketOrdering
+  enableCssChunks = false,
+): [string, string[]] {
+  const metadataBuckets: Set<string> = new Set<string>();
+  const css = styleBucketOrdering
     .map(styleBucketName => {
       return {
         styleBucketName,
@@ -39,6 +41,10 @@ export function sortCSSRules(
     })
     .reduce((acc, { styleBucketName, cssBucketEntries }) => {
       if (styleBucketName === 'm') {
+        for (const entry of cssBucketEntries) {
+          metadataBuckets.add(getCSSMetaFromBucketEntry(entry)['m'] as string);
+        }
+
         return (
           acc +
           cssBucketEntries
@@ -53,6 +59,12 @@ export function sortCSSRules(
         );
       }
 
+      if (enableCssChunks && cssBucketEntries.length) {
+        return acc + `@layer ${styleBucketName} { ${cssBucketEntries.join('')} }`;
+      }
+
       return acc + cssBucketEntries.join('');
     }, '');
+
+  return [css, Array.from(metadataBuckets).sort(compareMediaQueries)];
 }
