@@ -293,11 +293,6 @@ describe('webpackLoader', () => {
   // --------------------
   testFixture('with-chunks');
 
-  // A fixture that creates a different modules order in different chunks groups
-  testFixture('with-chunks-order', {
-    pluginOptions: { experimental_resetModuleIndexes: true },
-  });
-
   // Unstable
   // --------------------
   testFixture('unstable-attach-to-main', {
