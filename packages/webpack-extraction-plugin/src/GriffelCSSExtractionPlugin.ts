@@ -1,5 +1,4 @@
 import { defaultCompareMediaQueries, GriffelRenderer, styleBucketOrdering } from '@griffel/core';
-import * as path from 'path';
 import { Compilation, NormalModule } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
 
@@ -135,14 +134,16 @@ export class GriffelCSSExtractionPlugin {
     // WHY?
     //  We need to sort CSS rules in the same order as it's done via style buckets. It's not possible in multiple
     //  chunks.
-    if (compiler.options.optimization.splitChunks && !this.enableCssChunks) {
-      compiler.options.optimization.splitChunks.cacheGroups ??= {};
-      compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
-        name: 'griffel',
-        test: isGriffelCSSModule,
-        chunks: 'all',
-        enforce: true,
-      };
+    if (!this.enableCssChunks) {
+      if (compiler.options.optimization.splitChunks) {
+        compiler.options.optimization.splitChunks.cacheGroups ??= {};
+        compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
+          name: 'griffel',
+          test: isGriffelCSSModule,
+          chunks: 'all',
+          enforce: true,
+        };
+      }
     }
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
@@ -152,10 +153,9 @@ export class GriffelCSSExtractionPlugin {
       //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
       const cssByModuleMap = new Map<string, string>();
 
-      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (_loaderContext, module) => {
-        const loaderContext = _loaderContext as SupplementedLoaderContext;
-
+      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
         const resourcePath = module.resource;
+
         (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
           registerExtractedCss(css: string) {
             cssByModuleMap.set(resourcePath, css);
@@ -174,8 +174,10 @@ export class GriffelCSSExtractionPlugin {
         //   Performs module movements between chunks if SplitChunksPlugin is not enabled.
         // WHY?
         //   The same reason as for SplitChunksPlugin config.
-        if (!compiler.options.optimization.splitChunks) {
-          moveCSSModulesToGriffelChunk(compilation);
+        if (!this.enableCssChunks) {
+          if (!compiler.options.optimization.splitChunks) {
+            moveCSSModulesToGriffelChunk(compilation);
+          }
         }
 
         // WHAT?
