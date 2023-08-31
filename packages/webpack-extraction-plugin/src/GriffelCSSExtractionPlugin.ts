@@ -1,3 +1,4 @@
+import hash from '@emotion/hash';
 import { defaultCompareMediaQueries, GriffelRenderer, styleBucketOrdering } from '@griffel/core';
 import { Compilation, NormalModule } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
@@ -12,7 +13,7 @@ const OPTIMIZE_CHUNKS_STAGE_ADVANCED = 10;
 
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
-  experimental_enableCssChunks?: boolean;
+  experimental_enableCssChunksWithLayers?: boolean;
   unstable_attachToMainEntryPoint?: boolean;
 };
 
@@ -99,12 +100,14 @@ export class GriffelCSSExtractionPlugin {
   private readonly attachToMainEntryPoint: NonNullable<
     GriffelCSSExtractionPluginOptions['unstable_attachToMainEntryPoint']
   >;
-  private readonly enableCssChunks: NonNullable<GriffelCSSExtractionPluginOptions['experimental_enableCssChunks']>;
+  private readonly enableCssChunksWithLayers: NonNullable<
+    GriffelCSSExtractionPluginOptions['experimental_enableCssChunksWithLayers']
+  >;
   private readonly compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
 
   constructor(options?: GriffelCSSExtractionPluginOptions) {
     this.attachToMainEntryPoint = options?.unstable_attachToMainEntryPoint ?? false;
-    this.enableCssChunks = options?.experimental_enableCssChunks ?? false;
+    this.enableCssChunksWithLayers = options?.experimental_enableCssChunksWithLayers ?? false;
 
     this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
   }
@@ -134,7 +137,7 @@ export class GriffelCSSExtractionPlugin {
     // WHY?
     //  We need to sort CSS rules in the same order as it's done via style buckets. It's not possible in multiple
     //  chunks.
-    if (!this.enableCssChunks) {
+    if (!this.enableCssChunksWithLayers) {
       if (compiler.options.optimization.splitChunks) {
         compiler.options.optimization.splitChunks.cacheGroups ??= {};
         compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
@@ -174,7 +177,7 @@ export class GriffelCSSExtractionPlugin {
         //   Performs module movements between chunks if SplitChunksPlugin is not enabled.
         // WHY?
         //   The same reason as for SplitChunksPlugin config.
-        if (!this.enableCssChunks) {
+        if (!this.enableCssChunksWithLayers) {
           if (!compiler.options.optimization.splitChunks) {
             moveCSSModulesToGriffelChunk(compilation);
           }
@@ -203,8 +206,9 @@ export class GriffelCSSExtractionPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
-          if (this.enableCssChunks) {
-            const metadataBuckets: Record<string, string> = {};
+          if (this.enableCssChunksWithLayers) {
+            const allMediaEntries: string[] = [];
+
             Object.entries(assets).forEach(([assetName, assetSource]) => {
               if (!assetName.endsWith('.css')) {
                 return;
@@ -214,40 +218,42 @@ export class GriffelCSSExtractionPlugin {
               // TODO: Check that content has Griffel CSS
               const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-              const [cssSource, metadataBucketsForAsset] = sortCSSRules(
-                [cssRulesByBucket],
-                this.compareMediaQueries,
-                this.enableCssChunks,
-              );
+              const { css, mediaEntries } = sortCSSRules([cssRulesByBucket], {
+                compareMediaQueries: this.compareMediaQueries,
+                enableCssChunks: this.enableCssChunksWithLayers,
+              });
 
-              Object.assign(metadataBuckets, metadataBucketsForAsset);
-
-              compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
+              allMediaEntries.push(...mediaEntries);
+              compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(remainingCSS + css));
             });
 
-            const content = getAssetSourceContents(assets['bundle.css']);
-            const layerOrder: string[] = [...styleBucketOrdering];
-
-            const mediaLayerOrder = Object.entries(metadataBuckets)
-              .sort(([mediaA], [mediaB]) => {
-                return this.compareMediaQueries(mediaA, mediaB);
-              })
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              .map(([_media, layerName]) => layerName);
-
-            const mediaOrderInsertion = layerOrder.findIndex(bucket => bucket === 'm');
-            layerOrder.splice(mediaOrderInsertion, 0, ...mediaLayerOrder);
-
             const entryPoints = Array.from(compilation.entrypoints.values());
-            const mainEntryPoint = entryPoints[0];
-            if (mainEntryPoint) {
-              const mainEntryPointName = mainEntryPoint.options.name;
-              // TODO - is it possible the main entrypoint has no css asset?
-              compilation.updateAsset(
-                `${mainEntryPointName}.css`,
-                new compiler.webpack.sources.RawSource(`@layer ${layerOrder.join(',')};  ${content}`),
-              );
+            const mainEntryPointFiles = entryPoints[0].getFiles();
+            const mainCSSFile = mainEntryPointFiles.find(file => file.endsWith('.css'));
+
+            // TODO - is it possible the main entrypoint has no css asset?
+            if (mainCSSFile) {
+              const content = getAssetSourceContents(assets[mainCSSFile]);
+
+              const mediaOrderInsertion = styleBucketOrdering.findIndex(bucket => bucket === 'm');
+              const layerOrder: string[] = [
+                ...styleBucketOrdering.slice(0, mediaOrderInsertion),
+                ...Array.from(new Set(allMediaEntries))
+                  .sort((mediaA, mediaB) => {
+                    return this.compareMediaQueries(mediaA, mediaB);
+                  })
+                  .map(media => 'm' + hash(media)),
+                ...styleBucketOrdering.slice(mediaOrderInsertion),
+              ];
+
+              if (mainEntryPointFiles) {
+                compilation.updateAsset(
+                  mainCSSFile,
+                  new compiler.webpack.sources.RawSource(`@layer ${layerOrder.join(',')};  ${content}`),
+                );
+              }
             }
+
             return;
           }
 
@@ -268,7 +274,10 @@ export class GriffelCSSExtractionPlugin {
           const cssContent = getAssetSourceContents(cssAssetSource);
           const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-          const [cssSource] = sortCSSRules([cssRulesByBucket], this.compareMediaQueries, this.enableCssChunks);
+          const { css: cssSource } = sortCSSRules([cssRulesByBucket], {
+            compareMediaQueries: this.compareMediaQueries,
+            enableCssChunks: this.enableCssChunksWithLayers,
+          });
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
         },

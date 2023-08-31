@@ -1,3 +1,4 @@
+import hash from '@emotion/hash';
 import { styleBucketOrdering } from '@griffel/core';
 import type { GriffelRenderer, CSSBucketEntry, CSSRulesByBucket } from '@griffel/core';
 
@@ -9,15 +10,15 @@ function getCSSMetaFromBucketEntry(entry: CSSBucketEntry): Record<string, unknow
   return Array.isArray(entry) ? entry[1] : {};
 }
 
-// TODO any way to make this cleaner?
-let mediaBucketCounter = 1;
-const mediaBucketLayerMap: Record<string, string> = {};
+type SortCSSRulesOptions = {
+  compareMediaQueries: GriffelRenderer['compareMediaQueries'];
+  enableCssChunks?: boolean;
+};
 
-export function sortCSSRules(
-  setOfCSSRules: CSSRulesByBucket[],
-  compareMediaQueries: GriffelRenderer['compareMediaQueries'],
-  enableCssChunks = false,
-): [string, Record<string, string>] {
+export function sortCSSRules(setOfCSSRules: CSSRulesByBucket[], options: SortCSSRulesOptions) {
+  const { compareMediaQueries, enableCssChunks = false } = options;
+  const mediaEntries: string[] = [];
+
   const css = styleBucketOrdering
     .map(styleBucketName => {
       return {
@@ -44,18 +45,15 @@ export function sortCSSRules(
     })
     .reduce((acc, { styleBucketName, cssBucketEntries }) => {
       if (styleBucketName === 'm') {
-        if (enableCssChunks && cssBucketEntries.length) {
+        if (enableCssChunks) {
           return (
             acc +
             cssBucketEntries
               .map(bucketEntry => {
-                const mediaBucket = getCSSMetaFromBucketEntry(bucketEntry)['m'] as string;
-                if (!mediaBucketLayerMap[mediaBucket]) {
-                  mediaBucketLayerMap[mediaBucket] = `media-${mediaBucketCounter++}`;
-                }
+                const mediaBucketMeta = getCSSMetaFromBucketEntry(bucketEntry)['m'] as string;
+                mediaEntries.push(mediaBucketMeta);
 
-                const layerName = mediaBucketLayerMap[mediaBucket];
-                return `@layer ${layerName} { ${bucketEntry[0]} }`;
+                return `@layer m${hash(mediaBucketMeta)} { ${bucketEntry[0]} }`;
               })
               .join('')
           );
@@ -82,5 +80,5 @@ export function sortCSSRules(
       return acc + cssBucketEntries.join('');
     }, '');
 
-  return [css, { ...mediaBucketLayerMap }];
+  return { css, mediaEntries };
 }

@@ -302,20 +302,18 @@ describe('GriffelCSSExtractionPlugin', () => {
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
 
   testFixture('enable-css-chunks', {
-    pluginOptions: { experimental_enableCssChunks: true },
-    only: true,
+    pluginOptions: { experimental_enableCssChunksWithLayers: true },
   });
 
   testFixture('enable-css-chunks-media', {
     pluginOptions: {
-      experimental_enableCssChunks: true,
+      experimental_enableCssChunksWithLayers: true,
       compareMediaQueries: (a, b) => {
         const order = ['(min-width: 2px)', '(min-width: 1px)', '(min-width: 3px)'];
 
         return order.indexOf(a) - order.indexOf(b);
       },
     },
-    only: true,
   });
 
   // Config that disables SplitChunksPlugin
