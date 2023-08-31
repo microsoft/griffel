@@ -1,7 +1,6 @@
 import { __styles } from '@griffel/react';
-import './chunkA.css';
 
-export const styles = __styles(
+export default __styles(
   {
     root: { sj55zd: 'fe3e8s9' },
   },

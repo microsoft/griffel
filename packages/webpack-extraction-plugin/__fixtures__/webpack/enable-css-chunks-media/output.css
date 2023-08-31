@@ -1,0 +1,46 @@
+/** bundle.css **/
+@layer r,d,l,v,w,f,i,h,a,s,k,t,media-2,media-1,media-3,m,c;
+@layer media-1 {
+  @media (min-width: 1px) {
+    .fcnqdeg {
+      background-color: green;
+    }
+  }
+}
+@layer media-2 {
+  @media (min-width: 2px) {
+    .fe3e8s9 {
+      color: olive;
+    }
+  }
+}
+/** chunkA.css **/
+@layer media-3 {
+  @media (min-width: 3px) {
+    .fe3e8s9 {
+      color: red;
+    }
+  }
+}
+@layer media-1 {
+  @media (min-width: 1px) {
+    .fe3e8s9 {
+      color: green;
+    }
+  }
+}
+/** chunkB.css **/
+@layer media-2 {
+  @media (min-width: 2px) {
+    .fe3e8s9 {
+      color: red;
+    }
+  }
+}
+@layer media-3 {
+  @media (min-width: 3px) {
+    .fe3e8s9 {
+      color: magenta;
+    }
+  }
+}

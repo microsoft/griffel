@@ -9,12 +9,15 @@ function getCSSMetaFromBucketEntry(entry: CSSBucketEntry): Record<string, unknow
   return Array.isArray(entry) ? entry[1] : {};
 }
 
+// TODO any way to make this cleaner?
+let mediaBucketCounter = 1;
+const mediaBucketLayerMap: Record<string, string> = {};
+
 export function sortCSSRules(
   setOfCSSRules: CSSRulesByBucket[],
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
   enableCssChunks = false,
-): [string, string[]] {
-  const metadataBuckets: Set<string> = new Set<string>();
+): [string, Record<string, string>] {
   const css = styleBucketOrdering
     .map(styleBucketName => {
       return {
@@ -41,8 +44,21 @@ export function sortCSSRules(
     })
     .reduce((acc, { styleBucketName, cssBucketEntries }) => {
       if (styleBucketName === 'm') {
-        for (const entry of cssBucketEntries) {
-          metadataBuckets.add(getCSSMetaFromBucketEntry(entry)['m'] as string);
+        if (enableCssChunks && cssBucketEntries.length) {
+          return (
+            acc +
+            cssBucketEntries
+              .map(bucketEntry => {
+                const mediaBucket = getCSSMetaFromBucketEntry(bucketEntry)['m'] as string;
+                if (!mediaBucketLayerMap[mediaBucket]) {
+                  mediaBucketLayerMap[mediaBucket] = `media-${mediaBucketCounter++}`;
+                }
+
+                const layerName = mediaBucketLayerMap[mediaBucket];
+                return `@layer ${layerName} { ${bucketEntry[0]} }`;
+              })
+              .join('')
+          );
         }
 
         return (
@@ -66,5 +82,5 @@ export function sortCSSRules(
       return acc + cssBucketEntries.join('');
     }, '');
 
-  return [css, Array.from(metadataBuckets).sort(compareMediaQueries)];
+  return [css, { ...mediaBucketLayerMap }];
 }

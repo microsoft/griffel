@@ -12,14 +12,8 @@ export const styles = __styles(
 );
 
 export async function loadStyles() {
-  const { styles: stylesA } = await import(
-    /* webpackChunkName: "chunkA" */
-    './chunkA'
-  );
-  const { styles: stylesB } = await import(
-    /* webpackChunkName: "chunkB" */
-    './chunkB'
-  );
+  const stylesA = await import(/* webpackChunkName: "chunkA" */ './chunkA');
+  const stylesB = await import(/* webpackChunkName: "chunkB" */ './chunkB');
 
   return [stylesA, stylesB];
 }

@@ -1,4 +1,5 @@
-import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
+import { defaultCompareMediaQueries, GriffelRenderer, styleBucketOrdering } from '@griffel/core';
+import * as path from 'path';
 import { Compilation, NormalModule } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
 
@@ -151,9 +152,10 @@ export class GriffelCSSExtractionPlugin {
       //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
       const cssByModuleMap = new Map<string, string>();
 
-      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
-        const resourcePath = module.resource;
+      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (_loaderContext, module) => {
+        const loaderContext = _loaderContext as SupplementedLoaderContext;
 
+        const resourcePath = module.resource;
         (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
           registerExtractedCss(css: string) {
             cssByModuleMap.set(resourcePath, css);
@@ -200,21 +202,50 @@ export class GriffelCSSExtractionPlugin {
         },
         assets => {
           if (this.enableCssChunks) {
+            const metadataBuckets: Record<string, string> = {};
             Object.entries(assets).forEach(([assetName, assetSource]) => {
               if (!assetName.endsWith('.css')) {
                 return;
               }
 
-              console.log(assetName);
               const cssContent = getAssetSourceContents(assetSource);
               // TODO: Check that content has Griffel CSS
               const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-              const [cssSource] = sortCSSRules([cssRulesByBucket], this.compareMediaQueries, this.enableCssChunks);
+              const [cssSource, metadataBucketsForAsset] = sortCSSRules(
+                [cssRulesByBucket],
+                this.compareMediaQueries,
+                this.enableCssChunks,
+              );
+
+              Object.assign(metadataBuckets, metadataBucketsForAsset);
 
               compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
             });
 
+            const content = getAssetSourceContents(assets['bundle.css']);
+            const layerOrder: string[] = [...styleBucketOrdering];
+
+            const mediaLayerOrder = Object.entries(metadataBuckets)
+              .sort(([mediaA], [mediaB]) => {
+                return this.compareMediaQueries(mediaA, mediaB);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              })
+              .map(([_media, layerName]) => layerName);
+
+            const mediaOrderInsertion = layerOrder.findIndex(bucket => bucket === 'm');
+            layerOrder.splice(mediaOrderInsertion, 0, ...mediaLayerOrder);
+
+            const entryPoints = Array.from(compilation.entrypoints.values());
+            const mainEntryPoint = entryPoints[0];
+            if (mainEntryPoint) {
+              const mainEntryPointName = mainEntryPoint.options.name;
+              // TODO - is it possible the main entrypoint has no css asset?
+              compilation.updateAsset(
+                `${mainEntryPointName}.css`,
+                new compiler.webpack.sources.RawSource(`@layer ${layerOrder.join(',')};  ${content}`),
+              );
+            }
             return;
           }
 
@@ -235,7 +266,7 @@ export class GriffelCSSExtractionPlugin {
           const cssContent = getAssetSourceContents(cssAssetSource);
           const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-          const [cssSource] = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
+          const [cssSource] = sortCSSRules([cssRulesByBucket], this.compareMediaQueries, this.enableCssChunks);
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
         },
