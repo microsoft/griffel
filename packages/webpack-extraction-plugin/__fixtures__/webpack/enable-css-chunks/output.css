@@ -5,6 +5,11 @@
     background-color: green;
   }
 }
+@layer h {
+  .fcnqdeg:hover {
+    background-color: orange;
+  }
+}
 /** chunkA.css **/
 @layer d {
   .fe3e8s9 {
@@ -15,5 +20,10 @@
 @layer d {
   .fe3e8s9 {
     color: red;
+  }
+}
+@layer w {
+  .fe3e8s9:focus-within {
+    color: olive;
   }
 }

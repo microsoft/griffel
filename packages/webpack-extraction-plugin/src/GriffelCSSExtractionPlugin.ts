@@ -229,8 +229,8 @@ export class GriffelCSSExtractionPlugin {
             const mediaLayerOrder = Object.entries(metadataBuckets)
               .sort(([mediaA], [mediaB]) => {
                 return this.compareMediaQueries(mediaA, mediaB);
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
               })
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               .map(([_media, layerName]) => layerName);
 
             const mediaOrderInsertion = layerOrder.findIndex(bucket => bucket === 'm');

@@ -8,6 +8,7 @@ export const styles = __styles(
   },
   {
     d: ['.fcnqdeg{background-color:green;}'],
+    h: ['.fcnqdeg:hover{background-color:orange;}'],
   },
 );
 

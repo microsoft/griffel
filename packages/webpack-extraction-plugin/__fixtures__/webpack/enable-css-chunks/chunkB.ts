@@ -6,5 +6,6 @@ export default __styles(
   },
   {
     d: ['.fe3e8s9{color:red;}'],
+    w: ['.fe3e8s9:focus-within{color:olive;}'],
   },
 );
