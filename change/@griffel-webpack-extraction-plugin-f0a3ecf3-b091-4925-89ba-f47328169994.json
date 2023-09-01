@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: remove experimental_resetModuleIndexes",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

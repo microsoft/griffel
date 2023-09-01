@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: refactor tests for @griffel/webpack-extraction-plugin",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
