@@ -9,7 +9,7 @@ const ruleTesterInstance = new TSESLint.RuleTester({
     sourceType: 'module',
   },
 });
-ruleTesterInstance.run('stylelint', rule, {
+ruleTesterInstance.run('css-lint', rule, {
   valid: [],
   invalid: [
     {

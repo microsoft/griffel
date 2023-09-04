@@ -80,23 +80,7 @@ export default createRule<Options, MessageIds>({
       recommended: 'error',
     },
   },
-  defaultOptions: [
-    {
-      generateMetadata: true,
-      modules: [
-        {
-          moduleSource: '@griffel/react',
-          importName: 'makeStyles',
-          resetImportName: 'makeResetStyles',
-        },
-        {
-          moduleSource: '@fluentui/react-components',
-          importName: 'makeStyles',
-          resetImportName: 'makeResetStyles',
-        },
-      ],
-    },
-  ],
+  defaultOptions: [{}],
   create(context) {
     // Map of all style slots to the makeStyles return function name
     const slotPropertiesByDeclaratorId = new Map<string, Map<string, TSESTree.Property>>();
@@ -107,6 +91,7 @@ export default createRule<Options, MessageIds>({
     return {
       'Program:exit'(node) {
         if (!context.getPhysicalFilename) {
+          // TODO add something actionable here
           throw new Error('No physical filename could be found');
         }
 
@@ -115,8 +100,9 @@ export default createRule<Options, MessageIds>({
         const { metadata } = transformSync(source, {
           filename,
           pluginOptions: {
-            generateMetadata: true,
             ...options,
+            // This rule cannot do anything without metadata - always generate them
+            generateMetadata: true,
           },
         });
 
