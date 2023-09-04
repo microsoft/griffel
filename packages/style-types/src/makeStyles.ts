@@ -27,5 +27,8 @@ type GriffelCSSPseudos = {
   [Property in CSS.Pseudos]?: GriffelStylesStrictCSSObject | GriffelCSSObjectCustom;
 };
 
-export type GriffelAnimation = Record<'from' | 'to' | string, GriffelStylesCSSProperties>;
+export type GriffelAnimation = Record<
+  'from' | 'to' | string,
+  GriffelStylesCSSProperties & { [Property in `--${string}`]: string }
+>;
 export type GriffelStyle = GriffelStylesStrictCSSObject | GriffelCSSObjectCustom;

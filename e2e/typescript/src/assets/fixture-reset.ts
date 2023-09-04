@@ -24,11 +24,23 @@ assertType({
     },
   ],
 });
+assertType({
+  animationName: {
+    from: { '--opacity': '0' },
+    to: { '--opacity': '1' },
+  },
+});
 
 assertType({
   // @ts-expect-error "200" is not a valid CSS value for "height"
   animationName: {
     to: { height: 200 },
+  },
+});
+assertType({
+  // @ts-expect-error Only strings can be used as values for CSS variables
+  animationName: {
+    from: { '--opacity': 0 },
   },
 });
 
@@ -95,6 +107,11 @@ assertType({
 });
 assertType({
   ':hover': { animationName: { from: {}, to: {} } },
+});
+
+assertType({
+  // @ts-expect-error Values of selectors can be only objects
+  ':hover': 'red',
 });
 
 // Custom selectors

@@ -76,7 +76,8 @@ async function performTest(tsVersion: string, options: { mode?: 'legacy' | 'mode
 
 (async () => {
   await performTest('3.9', { mode: 'legacy' });
-  await performTest('4.1');
+  await performTest('4.1', { mode: 'legacy' });
+  await performTest('4.3', { mode: 'legacy' });
   await performTest('4.4');
   await performTest('4.9');
   await performTest('5.0');
