@@ -14,6 +14,11 @@ export const isProperty: IsHelper<AST_NODE_TYPES.Property> = ASTUtils.isNodeOfTy
 export function isMakeStylesIdentifier(node: TSESTree.Node | null | undefined): node is TSESTree.Identifier {
   return isIdentifier(node) && node.name === 'makeStyles';
 }
+
+export function isMakeResetStylesIdentifier(node: TSESTree.Node | null | undefined): node is TSESTree.Identifier {
+  return isIdentifier(node) && node.name === 'makeResetStyles';
+}
+
 export function isStringLiteral(node: TSESTree.Node | null | undefined): node is TSESTree.StringLiteral {
   return isLiteral(node) && typeof node.value === 'string';
 }
