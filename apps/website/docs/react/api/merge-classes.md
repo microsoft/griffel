@@ -112,6 +112,25 @@ function App(props) {
 }
 ```
 
+### Combining Griffel classes with custom class strings
+
+You may find yourself in a position where your component accepts classes via props or have global classes that you need applied to the same elements being styled by Griffel. For this, you can also use `mergeStyles`: 
+
+```jsx
+const useClasses = makeStyles({
+  root: { color: 'red' }
+});
+
+function App(props) {
+  const classes = useClasses();
+  const rootClass = mergeClasses(classes.root, "custom-global-class1 custom-global-class2");
+
+  return (
+     <div className={rootClass}>...</div>
+  )
+}
+```
+
 ### Order of arguments matters
 
 The order of classes is important - if two classes apply the same style, the latest class wins. In the example below the background color will be red:
