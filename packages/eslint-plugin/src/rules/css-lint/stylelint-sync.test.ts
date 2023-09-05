@@ -1,6 +1,6 @@
 import { stylelintSync } from './stylelint-sync';
 
-const stylelintcConfigFile = require.resolve('./.stylelintrc.js');
+const stylelintcConfigFile = require.resolve('./.stylelintrc-test.js');
 
 describe('stylelintSync', () => {
   it('should by sync', () => {

@@ -2,7 +2,7 @@ import * as path from 'path';
 import { TSESLint } from '@typescript-eslint/utils';
 import { cssLintRule } from './css-lint';
 
-const stylelintConfigFile = require.resolve('./.stylelintrc.js');
+const stylelintConfigFile = require.resolve('./.stylelintrc-test.js');
 const ruleTesterInstance = new TSESLint.RuleTester({
   parser: path.resolve('./node_modules/@typescript-eslint/parser'),
   parserOptions: {
