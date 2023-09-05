@@ -13,10 +13,10 @@
     "@typescript-eslint/utils": "^5.47.0",
     "csstype": "^3.1.2",
     "synckit": "^0.8.5",
+    "stylelint": "^15.10.3",
     "tslib": "^2.1.0"
   },
   "peerDependencies": {
-    "eslint": "^7.5.0 || ^8.0.0",
-    "stylelint": "15.x"
+    "eslint": "^7.5.0 || ^8.0.0"
   }
 }
