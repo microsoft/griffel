@@ -1,7 +1,8 @@
 import * as path from 'path';
 import { TSESLint } from '@typescript-eslint/utils';
-import rule from './css-lint';
+import { cssLintRule } from './css-lint';
 
+const stylelintConfigFile = require.resolve('./.stylelintrc.js');
 const ruleTesterInstance = new TSESLint.RuleTester({
   parser: path.resolve('./node_modules/@typescript-eslint/parser'),
   parserOptions: {
@@ -9,19 +10,82 @@ const ruleTesterInstance = new TSESLint.RuleTester({
     sourceType: 'module',
   },
 });
-ruleTesterInstance.run('css-lint', rule, {
-  valid: [],
-  invalid: [
+ruleTesterInstance.run('css-lint', cssLintRule, {
+  valid: [
     {
-      name: 'test',
-      errors: [{ messageId: 'foo' }],
+      options: [{ stylelintConfigFile }],
+      name: 'should pass stylelint',
       code: `
       import { makeStyles } from '@griffel/react'
       const useStyles = makeStyles({
         root: {
-          '& div': {
+          ':nth-child(1)': {
             color: 'red',
-            backgroundColor: 'blue',
+          }
+        }
+      })
+      `,
+      filename: './useComponentStyles.styles.ts',
+    },
+  ],
+  invalid: [
+    {
+      options: [{ stylelintConfigFile }],
+      name: 'should fail stylelint (reset)',
+      errors: [
+        {
+          messageId: 'stylelint',
+          data: { stylelint: 'Unexpected unmatchable An+B selector ":nth-child" (selector-anb-no-unmatchable)' },
+        },
+      ],
+      code: `
+      import { makeResetStyles } from '@griffel/react'
+      const useResetStyles = makeResetStyles({
+        ':nth-child(0)': {
+          color: 'red',
+          backgroundColor: 'green',
+        }
+      })
+      `,
+      filename: './useComponentStyles.styles.ts',
+    },
+    {
+      options: [{ stylelintConfigFile }],
+      name: 'should fail stylelint',
+      errors: [
+        {
+          messageId: 'stylelint',
+          data: { stylelint: 'Unexpected unmatchable An+B selector ":nth-child" (selector-anb-no-unmatchable)' },
+        },
+      ],
+      code: `
+      import { makeStyles } from '@griffel/react'
+      const useStyles = makeStyles({
+        root: {
+          ':nth-child(0)': {
+            color: 'red',
+          }
+        }
+      })
+      `,
+      filename: './useComponentStyles.styles.ts',
+    },
+    {
+      options: [{ stylelintConfigFile: stylelintConfigFile }],
+      name: 'should only warn once per error',
+      errors: [
+        {
+          messageId: 'stylelint',
+          data: { stylelint: 'Unexpected unmatchable An+B selector ":nth-child" (selector-anb-no-unmatchable)' },
+        },
+      ],
+      code: `
+      import { makeStyles } from '@griffel/react'
+      const useStyles = makeStyles({
+        root: {
+          ':nth-child(0)': {
+            color: 'red',
+            backgroundColor: 'green',
           }
         }
       })
