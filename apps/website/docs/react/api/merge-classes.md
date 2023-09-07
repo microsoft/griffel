@@ -66,6 +66,10 @@ In CSS the order of the class names doesn't affect the application of styles. If
 
 Griffel performs CSS rule ordering, check [the order of pseudo classes](react/guides/atomic-css#lvfha-order-of-pseudo-classes).
 
+### Merging plain CSS classes
+
+Your component may accept classes via props or have static classes that you need applied to the same elements being styled by Griffel. For this, you can also use `mergeClasses`:
+
 ```jsx
 import { mergeClasses, makeStyles } from '@griffel/react';
 
@@ -109,25 +113,6 @@ function App(props) {
   const correctClasses = mergeClasses(classes.rootA, classes.rootB);
   // 🔴 Never concatenate class strings, returns "class-color-red class-color-blue"
   const wrongClasses = classes.rootA + ' ' + classes.rootB;
-}
-```
-
-### Combining Griffel classes with custom class strings
-
-You may find yourself in a position where your component accepts classes via props or have global classes that you need applied to the same elements being styled by Griffel. For this, you can also use `mergeStyles`: 
-
-```jsx
-const useClasses = makeStyles({
-  root: { color: 'red' }
-});
-
-function App(props) {
-  const classes = useClasses();
-  const rootClass = mergeClasses(classes.root, "custom-global-class1 custom-global-class2");
-
-  return (
-     <div className={rootClass}>...</div>
-  )
 }
 ```
 
