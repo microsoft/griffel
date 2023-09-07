@@ -17,6 +17,7 @@ import { isObject } from './utils/isObject';
 import { getStyleBucketName } from './getStyleBucketName';
 import { hashClassName } from './utils/hashClassName';
 import { hashPropertyKey } from './utils/hashPropertyKey';
+import { trimSelector } from './utils/trimSelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
 
@@ -92,15 +93,17 @@ export function resolveStyleRules(
     }
 
     if (typeof value === 'string' || typeof value === 'number') {
+      const selector = trimSelector(selectors.join(''));
+
       // uniq key based on a hash of property & selector, used for merging later
-      const key = hashPropertyKey(selectors, container, media, support, property);
+      const key = hashPropertyKey(selector, container, media, support, property);
       const className = hashClassName({
         container,
         media,
         layer,
         value: value.toString(),
         support,
-        selectors,
+        selector,
         property,
       });
 
@@ -112,7 +115,7 @@ export function resolveStyleRules(
             container,
             value: rtlDefinition.value.toString(),
             property: rtlDefinition.key,
-            selectors,
+            selector,
             media,
             layer,
             support,
@@ -202,14 +205,16 @@ export function resolveStyleRules(
         continue;
       }
 
-      const key = hashPropertyKey(selectors, container, media, support, property);
+      const selector = trimSelector(selectors.join(''));
+
+      const key = hashPropertyKey(selector, container, media, support, property);
       const className = hashClassName({
         container,
         media,
         layer,
         value: value.map(v => (v ?? '').toString()).join(';'),
         support,
-        selectors,
+        selector,
         property,
       });
 
@@ -233,7 +238,7 @@ export function resolveStyleRules(
             container,
             value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
             property: rtlDefinitions[0].key,
-            selectors,
+            selector,
             layer,
             media,
             support,
