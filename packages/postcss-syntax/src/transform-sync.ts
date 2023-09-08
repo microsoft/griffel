@@ -30,7 +30,10 @@ export default function transformSync(sourceCode: string, options: TransformOpti
     // Ignore all user's configs and apply only our plugin
     babelrc: false,
     configFile: false,
-    presets: [[griffelPreset, options.pluginOptions], locationPreset],
+    presets: [
+      [griffelPreset, options.pluginOptions],
+      [locationPreset, options.pluginOptions],
+    ],
 
     filename: options.filename,
     sourceFileName: options.filename,

@@ -1,13 +1,20 @@
 import * as postcss from 'postcss';
 import transformSync from './transform-sync';
 import { GRIFFEL_DECLARATOR_RAW, GRIFFEL_SLOT_RAW, GRIFFEL_SRC_RAW } from './constants';
+import { BabelPluginOptions } from '@griffel/babel-preset';
 
-export const parse: postcss.Parser = (css, opts) => {
-  const { from: filename = 'postcss-syntax.styles.ts' } = opts ?? {};
+export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document | postcss.Root>, 'from' | 'map'>;
+
+export interface ParserOptions extends PostCSSParserOptions, BabelPluginOptions {}
+
+export const parse = (css: string | { toString(): string }, opts?: ParserOptions) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { from: filename = 'postcss-syntax.styles.ts', map, ...griffelPluginOptions } = opts ?? {};
   const code = css.toString();
   const { metadata } = transformSync(code, {
     filename,
     pluginOptions: {
+      ...griffelPluginOptions,
       generateMetadata: true,
     },
   });
