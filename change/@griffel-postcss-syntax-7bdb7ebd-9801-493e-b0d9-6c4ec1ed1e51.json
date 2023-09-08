@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: entrypoint and preset config fixes",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "lingfan.gao@microsoft.com",
+  "dependentChangeType": "patch"
+}

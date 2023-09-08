@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "Initial release",
+  "packageName": "@griffel/stylelint-config",
+  "email": "lingfan.gao@microsoft.com",
+  "dependentChangeType": "patch"
+}
