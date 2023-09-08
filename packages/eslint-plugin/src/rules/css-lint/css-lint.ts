@@ -1,7 +1,7 @@
 import { ASTUtils, TSESTree } from '@typescript-eslint/utils';
-import { transformSync } from './transform-sync';
 import { BabelPluginOptions } from '@griffel/babel-preset';
 
+import { transformSync } from './transform-sync';
 import {
   isIdentifier,
   isMakeStylesIdentifier,
@@ -10,13 +10,30 @@ import {
   isMakeResetStylesIdentifier,
 } from '../../utils/helpers';
 import { createRule } from '../../utils/createRule';
+import { stylelintSync } from './stylelint-sync';
 
-type Options = [BabelPluginOptions];
+type Options = [BabelPluginOptions & { stylelintConfigFile?: string }];
 
-type MessageIds = 'foo';
+type MessageIds = 'stylelint';
 
-// TODO createRule does not generate docs url properly for sub-directoryjќ
-export default createRule<Options, MessageIds>({
+const lintCSS: (css: string, stylelintConfigFile?: string) => string[] = (css, stylelintConfigFile) => {
+  const uniqueErrors: Record<string /** ruleId */, string> = {};
+  const { error, stylelintErrors } = stylelintSync(css, stylelintConfigFile);
+
+  if (error) {
+    throw new Error(`${error} - this is not expected: please report a bug if it happens`);
+  }
+
+  // Since we can only map errors to the entire style slot, we should report unique errors
+  for (const error of stylelintErrors) {
+    uniqueErrors[error.rule] = error.text;
+  }
+
+  return Object.values(uniqueErrors);
+};
+
+// TODO createRule does not generate docs url properly for sub-directory
+export const cssLintRule = createRule<Options, MessageIds>({
   name: 'css-lint',
   meta: {
     type: 'problem',
@@ -24,6 +41,11 @@ export default createRule<Options, MessageIds>({
       {
         type: 'object',
         properties: {
+          stylelintConfigFile: {
+            type: 'string',
+            description:
+              'Path to a .stylelintrc config file. By default, stylelint will try to find a config file in a parent directory',
+          },
           generateMetadata: {
             type: 'boolean',
           },
@@ -73,7 +95,7 @@ export default createRule<Options, MessageIds>({
       },
     ],
     messages: {
-      foo: 'WIP - not ready yet',
+      stylelint: 'stylelint: {{stylelint}}',
     },
     docs: {
       description: 'WIP - not ready yet',
@@ -86,13 +108,14 @@ export default createRule<Options, MessageIds>({
     const slotPropertiesByDeclaratorId = new Map<string, Map<string, TSESTree.Property>>();
     // map of all styles to the return of the makeResetStyles function name
     const resetEntriesByDeclaratorId = new Map<string, TSESTree.CallExpression>();
-    const options = context.options[0];
+    const { stylelintConfigFile, ...pluginOptions } = context.options[0];
 
     return {
       'Program:exit'(node) {
         if (!context.getPhysicalFilename) {
-          // TODO add something actionable here
-          throw new Error('No physical filename could be found');
+          throw new Error(
+            'No physical filename could be found - this is not expected: please report this to Griffel authors',
+          );
         }
 
         const filename = context.getPhysicalFilename();
@@ -100,7 +123,7 @@ export default createRule<Options, MessageIds>({
         const { metadata } = transformSync(source, {
           filename,
           pluginOptions: {
-            ...options,
+            ...pluginOptions,
             // This rule cannot do anything without metadata - always generate them
             generateMetadata: true,
           },
@@ -109,22 +132,21 @@ export default createRule<Options, MessageIds>({
         const { cssEntries, cssResetEntries } = metadata;
 
         for (const [declaratorId, cssRulesBySlot] of Object.entries(cssEntries)) {
-          for (const [slotName /** rules */] of Object.entries(cssRulesBySlot)) {
-            // TODO add actual css linting
-            const errors: object[] = [{}];
-            if (Object.keys(errors).length) {
-              const property = slotPropertiesByDeclaratorId.get(declaratorId)?.get(slotName);
-              context.report({ messageId: 'foo', node: property ?? node });
+          for (const [slotName, rules] of Object.entries(cssRulesBySlot)) {
+            const errors = lintCSS(rules.join(''), stylelintConfigFile);
+
+            const property = slotPropertiesByDeclaratorId.get(declaratorId)?.get(slotName);
+            for (const error of errors) {
+              context.report({ messageId: 'stylelint', node: property ?? node, data: { stylelint: error } });
             }
           }
         }
 
-        for (const resetDeclarator in cssResetEntries) {
-          const errors: object[] = [{}];
-          // TODO add actual css linting
-          if (Object.keys(errors).length) {
-            const property = resetEntriesByDeclaratorId.get(resetDeclarator);
-            context.report({ messageId: 'foo', node: property ?? node });
+        for (const [resetDeclarator, [resetCSS]] of Object.entries(cssResetEntries)) {
+          const errors = lintCSS(resetCSS, stylelintConfigFile);
+          const property = resetEntriesByDeclaratorId.get(resetDeclarator);
+          for (const error of Object.values(errors)) {
+            context.report({ messageId: 'stylelint', node: property ?? node, data: { stylelint: error } });
           }
         }
       },
