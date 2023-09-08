@@ -22,7 +22,7 @@ that is used internally, we've created the a factory to return the custom syntax
 import { createSyntax } from '@griffel/postcss-syntax';
 const syntax = createSyntax({
   modules: [
-    { importSource: '@myScope/griffel', importName: 'createStyles' },
+    { moduleSource: '@myScope/griffel', importName: 'createStyles' },
   ]
 })
 ```
