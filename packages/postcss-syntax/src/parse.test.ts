@@ -57,7 +57,9 @@ export const useStyles = foo({
 `;
       const root = parse(fixture, {
         from: 'fixture.styles.ts',
-        modules: [{ moduleSource: '@foo/foo', importName: 'foo' }],
+        griffelPreset: {
+          modules: [{ moduleSource: '@foo/foo', importName: 'foo' }],
+        },
       });
       expect(format(root.toString())).toMatchInlineSnapshot(`
               ".fe3e8s9 {
@@ -203,7 +205,9 @@ export const useResetStyles = foo({
 `;
       const root = parse(fixture, {
         from: 'fixture.styles.ts',
-        modules: [{ moduleSource: '@foo/foo', importName: 'makeStyles', resetImportName: 'foo' }],
+        griffelPreset: {
+          modules: [{ moduleSource: '@foo/foo', importName: 'makeStyles', resetImportName: 'foo' }],
+        },
       });
       expect(format(root.toString())).toMatchInlineSnapshot(`
         ".rbe9p1m {
