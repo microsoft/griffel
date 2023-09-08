@@ -1,0 +1,55 @@
+{
+  "name": "@griffel/postcss-syntax",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/postcss-syntax/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/postcss-syntax/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/postcss-syntax"],
+      "options": {
+        "jestConfig": "packages/postcss-syntax/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/postcss-syntax",
+        "tsConfig": "packages/postcss-syntax/tsconfig.lib.json",
+        "packageJson": "packages/postcss-syntax/package.json",
+        "main": "packages/postcss-syntax/src/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
+        "assets": [
+          "packages/postcss-syntax/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/babel-preset",
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}

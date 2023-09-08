@@ -11,6 +11,7 @@
     "@griffel/eslint-plugin": "packages/eslint-plugin",
     "@griffel/jest-serializer": "packages/jest-serializer",
     "@griffel/next-extraction-plugin": "packages/next-extraction-plugin",
+    "@griffel/postcss-syntax": "packages/postcss-syntax",
     "@griffel/react": "packages/react",
     "@griffel/style-types": "packages/style-types",
     "@griffel/webpack-extraction-plugin": "packages/webpack-extraction-plugin",
