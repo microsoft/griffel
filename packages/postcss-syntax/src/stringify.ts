@@ -4,7 +4,6 @@ import { GRIFFEL_SRC_RAW } from './constants';
 export const stringify: postcss.Stringifier = root => {
   const originalSource = root.raw(GRIFFEL_SRC_RAW);
   if (originalSource) {
-    console.log(originalSource);
     return originalSource;
   }
 

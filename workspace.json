@@ -13,6 +13,7 @@
     "@griffel/next-extraction-plugin": "packages/next-extraction-plugin",
     "@griffel/postcss-syntax": "packages/postcss-syntax",
     "@griffel/react": "packages/react",
+    "@griffel/stylelint-config": "packages/stylelint-config",
     "@griffel/style-types": "packages/style-types",
     "@griffel/webpack-extraction-plugin": "packages/webpack-extraction-plugin",
     "@griffel/webpack-loader": "packages/webpack-loader",

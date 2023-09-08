@@ -12,6 +12,5 @@
     "@griffel/babel-preset": "^1.5.0",
     "@babel/helper-plugin-utils": "^7.12.13",
     "postcss": "^8.4.29"
-  },
-  "main": "index.js"
+  }
 }
