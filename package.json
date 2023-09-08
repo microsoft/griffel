@@ -114,6 +114,7 @@
     "nano-staged": "0.5.0",
     "next": "12.2.4",
     "nx": "15.3.3",
+    "postcss": "^8.4.29",
     "prettier": "2.8.2",
     "prism-react-renderer": "1.2.1",
     "react": "18.2.0",

@@ -66,6 +66,10 @@ In CSS the order of the class names doesn't affect the application of styles. If
 
 Griffel performs CSS rule ordering, check [the order of pseudo classes](react/guides/atomic-css#lvfha-order-of-pseudo-classes).
 
+### Merging plain CSS classes
+
+Your component may accept classes via props or have static classes that you need applied to the same elements being styled by Griffel. For this, you can also use `mergeClasses`:
+
 ```jsx
 import { mergeClasses, makeStyles } from '@griffel/react';
 
