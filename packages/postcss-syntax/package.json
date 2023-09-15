@@ -1,6 +1,6 @@
 {
   "name": "@griffel/postcss-syntax",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "postcss syntax for Griffel",
   "license": "MIT",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.13",
-    "@griffel/babel-preset": "^1.5.0",
+    "@griffel/babel-preset": "^1.5.1",
     "@babel/helper-plugin-utils": "^7.12.13",
     "postcss": "^8.4.29"
   },

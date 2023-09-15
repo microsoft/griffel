@@ -1,0 +1,26 @@
+{
+  "name": "@griffel/postcss-syntax",
+  "entries": [
+    {
+      "date": "Fri, 15 Sep 2023 08:08:42 GMT",
+      "tag": "@griffel/postcss-syntax_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "94875f1120268cf1912a420cc4b66cfb01e702b9",
+            "comment": "feat: Initial release"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/postcss-syntax",
+            "comment": "Bump @griffel/babel-preset to v1.5.1",
+            "commit": "744403e2d046701dc82b02460a60e1680bb60f2e"
+          }
+        ]
+      }
+    }
+  ]
+}

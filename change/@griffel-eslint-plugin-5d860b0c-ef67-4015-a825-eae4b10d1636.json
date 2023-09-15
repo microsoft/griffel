@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "feat(eslint-plugin): Adds WIP rule for css linting",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "lingfan.gao@microsoft.com",
-  "dependentChangeType": "none"
-}

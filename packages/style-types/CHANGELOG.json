@@ -2,6 +2,21 @@
   "name": "@griffel/style-types",
   "entries": [
     {
+      "date": "Fri, 15 Sep 2023 08:08:43 GMT",
+      "tag": "@griffel/style-types_v1.0.2",
+      "version": "1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "2f9d1cd192ea5da49f9a6076e2668f95fa92e689",
+            "comment": "fix: allow CSS variables in animationName, stricter types for selectors"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Jul 2023 12:18:47 GMT",
       "tag": "@griffel/style-types_v1.0.1",
       "version": "1.0.1",

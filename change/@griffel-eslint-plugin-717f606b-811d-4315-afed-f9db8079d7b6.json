@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: integrate stylelint to css-lint rule",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "lingfan.gao@microsoft.com",
-  "dependentChangeType": "patch"
-}

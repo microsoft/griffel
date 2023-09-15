@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "feat: Initial release",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}

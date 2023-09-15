@@ -1,8 +1,17 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Mon, 28 Aug 2023 17:17:47 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Sep 2023 08:08:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.1
+
+Fri, 15 Sep 2023 08:08:42 GMT
+
+### Patches
+
+- chore: bump @linaria/babel-preset (olfedias@microsoft.com)
+- Bump @griffel/core to v1.14.2
 
 ## 1.5.0
 

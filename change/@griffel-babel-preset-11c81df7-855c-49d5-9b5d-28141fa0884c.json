@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump @linaria/babel-preset",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

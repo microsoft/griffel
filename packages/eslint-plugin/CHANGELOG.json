@@ -2,6 +2,35 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Fri, 15 Sep 2023 08:08:42 GMT",
+      "tag": "@griffel/eslint-plugin_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "lingfan.gao@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "b7433557968cd03e7fdd8d23439646c81e613d92",
+            "comment": "feat(eslint-plugin): Adds WIP rule for css linting"
+          }
+        ],
+        "minor": [
+          {
+            "author": "lingfan.gao@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "5fdc049120a7426864edc46b1b73c91cec0ba060",
+            "comment": "feat: integrate stylelint to css-lint rule"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/eslint-plugin",
+            "comment": "Bump @griffel/babel-preset to v1.5.1",
+            "commit": "744403e2d046701dc82b02460a60e1680bb60f2e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Aug 2023 14:51:57 GMT",
       "tag": "@griffel/eslint-plugin_v1.3.0",
       "version": "1.3.0",

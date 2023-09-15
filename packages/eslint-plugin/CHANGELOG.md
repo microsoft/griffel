@@ -1,8 +1,17 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Tue, 15 Aug 2023 14:51:57 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Sep 2023 08:08:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.0
+
+Fri, 15 Sep 2023 08:08:42 GMT
+
+### Minor changes
+
+- feat: integrate stylelint to css-lint rule (lingfan.gao@microsoft.com)
+- Bump @griffel/babel-preset to v1.5.1
 
 ## 1.3.0
 

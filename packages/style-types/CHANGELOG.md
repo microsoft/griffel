@@ -1,8 +1,16 @@
 # Change Log - @griffel/style-types
 
-This log was last generated on Mon, 31 Jul 2023 12:18:47 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Sep 2023 08:08:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.2
+
+Fri, 15 Sep 2023 08:08:43 GMT
+
+### Patches
+
+- fix: allow CSS variables in animationName, stricter types for selectors (olfedias@microsoft.com)
 
 ## 1.0.1
 
