@@ -14,7 +14,7 @@
     "@babel/template": "^7.12.13",
     "@babel/traverse": "^7.12.13",
     "@griffel/core": "^1.14.1",
-    "@linaria/babel-preset": "^3.0.0-beta.23",
+    "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
     "ajv": "^8.4.0",
     "stylis": "^4.2.0",
