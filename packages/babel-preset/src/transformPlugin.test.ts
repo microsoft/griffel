@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { transformPlugin } from './transformPlugin';
+import { BabelPluginMetadata } from './types';
 
 const prettierConfig = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '../../../.prettierrc'), { encoding: 'utf-8' }),
@@ -284,6 +285,20 @@ describe('babel preset', () => {
     });
 
     expect(babelFileResult?.metadata).toMatchInlineSnapshot(`Object {}`);
+  });
+
+  it('should return empty metadata when file contains no griffel code', () => {
+    const code = 'export {}';
+    const babelFileResult = Babel.transformSync(code, {
+      babelrc: false,
+      configFile: false,
+      plugins: [[transformPlugin, { generateMetadata: true }]],
+      filename: 'test.js',
+      presets: ['@babel/typescript'],
+    });
+
+    expect((babelFileResult?.metadata as BabelPluginMetadata | undefined)?.cssEntries).toEqual({});
+    expect((babelFileResult?.metadata as BabelPluginMetadata | undefined)?.cssResetEntries).toEqual({});
   });
 
   it('should generate metadata for makeStyles when configured', () => {

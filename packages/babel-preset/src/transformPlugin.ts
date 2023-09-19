@@ -228,6 +228,13 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
       this.calleePaths = [];
       this.cssEntries = {};
       this.cssResetEntries = {};
+
+      if (pluginOptions.generateMetadata) {
+        Object.assign(this.file.metadata, {
+          cssResetEntries: {},
+          cssEntries: {},
+        } as BabelPluginMetadata);
+      }
     },
 
     visitor: {
