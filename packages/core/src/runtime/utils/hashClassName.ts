@@ -4,7 +4,7 @@ import { HASH_PREFIX } from '../../constants';
 interface HashedClassNameParts {
   property: string;
   value: string;
-  selectors: string[];
+  selector: string;
   media: string;
   layer: string;
   support: string;
@@ -16,12 +16,20 @@ export function hashClassName({
   media,
   layer,
   property,
-  selectors,
+  selector,
   support,
   value,
 }: HashedClassNameParts): string {
-  // Trimming of value is required to generate consistent hashes
-  const classNameHash = hashString(selectors.join('') + container + media + layer + support + property + value.trim());
+  const classNameHash = hashString(
+    selector +
+      container +
+      media +
+      layer +
+      support +
+      property +
+      // Trimming of value is required to generate consistent hashes
+      value.trim(),
+  );
 
   return HASH_PREFIX + classNameHash;
 }

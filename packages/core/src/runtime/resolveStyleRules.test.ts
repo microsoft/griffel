@@ -121,6 +121,29 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('trims ">" selectors to generate the same classes', () => {
+      const resultA = resolveStyleRules({ '> div': { color: 'blue' } });
+      const resultB = resolveStyleRules({ '>div': { color: 'blue' } });
+
+      expect(resultA[0]).toEqual(resultB[0]);
+      expect(resultA[0]).toMatchInlineSnapshot(`
+        Object {
+          "B9q554f": "f1plvi8r",
+        }
+      `);
+
+      expect(resultA).toMatchInlineSnapshot(`
+        .f1plvi8r > div {
+          color: blue;
+        }
+      `);
+      expect(resultB).toMatchInlineSnapshot(`
+        .f1plvi8r > div {
+          color: blue;
+        }
+      `);
+    });
+
     it('hyphenates camelcased CSS properties', () => {
       expect(
         resolveStyleRules({
@@ -362,7 +385,7 @@ describe('resolveStyleRules', () => {
       `);
 
       expect(resolveStyleRules({ '> div': { color: 'green' } })).toMatchInlineSnapshot(`
-        .f18wx08q > div {
+        .f1fdorc0 > div {
           color: green;
         }
       `);
@@ -392,7 +415,7 @@ describe('resolveStyleRules', () => {
 
     it('handles complex nested selectors', () => {
       expect(resolveStyleRules({ '& > :first-child': { '& svg': { color: 'red' } } })).toMatchInlineSnapshot(`
-        .fxfx2ih > :first-child svg {
+        .fkngkdt > :first-child svg {
           color: red;
         }
       `);

@@ -2,14 +2,14 @@ import hash from '@emotion/hash';
 import { PropertyHash } from '../../types';
 
 export function hashPropertyKey(
-  selectors: string[],
+  selector: string,
   container: string,
   media: string,
   support: string,
   property: string,
 ): PropertyHash {
   // uniq key based on property & selector, used for merging later
-  const computedKey = selectors.join('') + container + media + support + property;
+  const computedKey = selector + container + media + support + property;
 
   // "key" can be really long as it includes selectors, we use hashes to reduce sizes of keys
   // ".foo :hover" => "abcd"
@@ -25,7 +25,7 @@ export function hashPropertyKey(
   const startsWithNumber = firstCharCode >= 48 && firstCharCode <= 57;
 
   if (startsWithNumber) {
-    return String.fromCharCode(firstCharCode + 17) + hashedKey.substr(1);
+    return String.fromCharCode(firstCharCode + 17) + hashedKey.slice(1);
   }
 
   return hashedKey;
