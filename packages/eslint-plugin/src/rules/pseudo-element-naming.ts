@@ -1,7 +1,7 @@
 import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 
 import { createRule } from '../utils/createRule';
-import { isStringLiteral, isMakeStylesIdentifier, isObjectExpression, isProperty } from '../utils/helpers';
+import { isMakeStylesCallExpression, isObjectExpression, isProperty, isStringLiteral } from '../utils/helpers';
 
 export const RULE_NAME = 'pseudo-element-naming';
 
@@ -52,11 +52,11 @@ export const pseudoElementNamingRule: ReturnType<ReturnType<typeof ESLintUtils.R
   create(context) {
     return {
       CallExpression(node) {
-        if (isMakeStylesIdentifier(node.callee)) {
-          const argument = node.arguments[0];
-
-          if (isObjectExpression(argument)) {
-            const invalidPseudoElementProperties = findInvalidPseudoElementProperties(argument, true);
+        const argument = node.arguments[0];
+        if (isObjectExpression(argument)) {
+          const isMakeStyles = isMakeStylesCallExpression(node, 'makeStyles');
+          if (isMakeStyles || isMakeStylesCallExpression(node, 'makeResetStyles')) {
+            const invalidPseudoElementProperties = findInvalidPseudoElementProperties(argument, isMakeStyles);
 
             invalidPseudoElementProperties.forEach(invalidPseudoElementProperty => {
               context.report({

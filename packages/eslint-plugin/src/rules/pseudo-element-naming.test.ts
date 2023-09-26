@@ -26,10 +26,14 @@ export const useStyles = makeStyles({
     {
       name: 'with Valid Pseudo Element',
       code: `
-    import { makeStyles } from '@griffel/react';
+    import { makeResetStyles, makeStyles } from '@griffel/react';
 
     export const useStyles = makeStyles({
       root: { '::before': { backgroundColor: 'red' } },
+    });
+
+    export const useStyles = makeResetStyles({
+      '::before': { backgroundColor: 'red' }
     });
     `,
     },
@@ -58,6 +62,22 @@ export const useStyles = makeStyles({
     import { makeStyles } from '@griffel/react';
     export const useStyles = makeStyles({
       root: { '::before': { backgroundColor: 'red' } },
+    });
+    `,
+      errors: [{ messageId: 'invalidPseudoElementNameFound' }],
+    },
+    {
+      name: 'Invalid Pseudo Element in makeResetStyles',
+      code: `
+    import { makeResetStyles } from '@griffel/react';
+    export const useStyles = makeResetStyles({
+      ':before': { backgroundColor: 'red' },
+    });
+    `,
+      output: `
+    import { makeResetStyles } from '@griffel/react';
+    export const useStyles = makeResetStyles({
+      '::before': { backgroundColor: 'red' },
     });
     `,
       errors: [{ messageId: 'invalidPseudoElementNameFound' }],
