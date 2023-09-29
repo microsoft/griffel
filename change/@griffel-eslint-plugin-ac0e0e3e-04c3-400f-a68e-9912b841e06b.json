@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: remove unstable-css-lint rule",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
