@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
 import { createRule } from '../utils/createRule';
-import { isIdentifier, isMakeStylesIdentifier } from '../utils/helpers';
+import { isIdentifier, isMakeStylesCallExpression } from '../utils/helpers';
 
 export const RULE_NAME = 'hook-naming';
 
@@ -27,7 +27,11 @@ export const hookNamingRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreato
   create(context) {
     return {
       VariableDeclarator(node) {
-        if (node.init !== null && node.init.type === 'CallExpression' && isMakeStylesIdentifier(node.init.callee)) {
+        if (
+          node.init !== null &&
+          node.init.type === 'CallExpression' &&
+          isMakeStylesCallExpression(node.init, 'makeStyles', 'makeStaticStyles', 'makeResetStyles')
+        ) {
           const { id } = node;
           if (isIdentifier(id) && !id.name.startsWith('use')) {
             context.report({

@@ -14,12 +14,32 @@ const ruleTester = new TSESLint.RuleTester({
 ruleTester.run(RULE_NAME, hookNamingRule, {
   valid: [
     {
-      name: 'named useStyles',
+      name: 'named useStyles from makeStyles',
       code: `
 import { makeStyles } from '@griffel/react';
 
 export const useStyles = makeStyles({
   root: { backgroundColor: 'red' },
+});
+`,
+    },
+    {
+      name: 'named useStyles from makeStaticStyles',
+      code: `
+import { makeStaticStyles } from '@griffel/react';
+
+export const useStyles = makeStaticStyles({
+  body: { backgroundColor: 'red' },
+});
+`,
+    },
+    {
+      name: 'named useStyles from makeResetStyles',
+      code: `
+import { makeResetStyles } from '@griffel/react';
+
+export const useClass = makeResetStyles({
+  backgroundColor: 'red'
 });
 `,
     },
@@ -57,6 +77,28 @@ export const styles = makeStyles({
   root: {
     ':hover': { backgroundColor: 'red' }
   },
+});
+`,
+      errors: [{ messageId: 'invalidMakeStylesHookNameFound' }],
+    },
+    {
+      name: 'named with get from makeStaticStyles',
+      code: `
+import { makeStaticStyles } from '@griffel/react';
+
+export const getStyles = makeStaticStyles({
+  body: { backgroundColor: 'red' },
+});
+`,
+      errors: [{ messageId: 'invalidMakeStylesHookNameFound' }],
+    },
+    {
+      name: 'name is only class from makeResetStyles',
+      code: `
+import { makeResetStyles } from '@griffel/react';
+
+export const className = makeResetStyles({
+  backgroundColor: 'red'
 });
 `,
       errors: [{ messageId: 'invalidMakeStylesHookNameFound' }],

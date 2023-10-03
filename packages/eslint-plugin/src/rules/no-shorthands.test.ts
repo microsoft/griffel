@@ -33,6 +33,20 @@ export const useStyles = makeStyles({
 });
 `,
     },
+    {
+      name: 'CSS shorthands can be used in makeResetStyles and makeStaticStyles',
+      code: `
+import { makeResetStyles, makeStaticStyles } from '@griffel/react';
+
+export const useClass = makeResetStyles({
+  background: 'red'
+});
+
+export const useStyles = makeStaticStyles({
+  body: { background: 'red' }
+})
+`,
+    },
   ],
 
   invalid: [

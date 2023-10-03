@@ -1,5 +1,6 @@
 import { createRule } from '../utils/createRule';
 import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
+import { isMakeStylesCallExpression } from '../utils/helpers';
 
 const MATCHING_PACKAGES = new Set(['@fluentui/react-components', '@griffel/core', '@griffel/react']);
 const STYLES_FILE_PATTERN = /^.*\.(styles)\.[j|t]s$/;
@@ -28,23 +29,13 @@ function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
       if ('imported' in specifier) {
         return (
           specifier.imported.name === 'makeStyles' || // import { makeStyles } from
+          specifier.imported.name === 'makeStaticStyles' || // import { makeStaticStyles } from
           specifier.imported.name === 'makeResetStyles' // import { makeResetStyles } from
         );
       }
 
       return false;
     }).length > 0
-  );
-}
-
-/**
- * @param callExpression CallExpression node in AST
- * @returns if this is a makeStyles call or not
- */
-function isMakeStyleCallExpression({ callee }: TSESTree.CallExpression) {
-  return (
-    ('name' in callee && callee.name === 'makeStyles') || // makeStyles({})
-    ('property' in callee && 'name' in callee.property && callee.property.name === 'makeStyles') // something.makeStyles({})
   );
 }
 
@@ -69,7 +60,7 @@ export const stylesFileRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreato
     const fileName = context.getFilename();
 
     let isMakeStylesImported = false;
-    const makeStylesDeclarations = []; // contains constants from makeStyles calls: `const useStyles = makeStyles({})`
+    const makeStylesDeclarations: string[] = []; // contains constants from makeStyles calls: `const useStyles = makeStyles({})`
 
     return {
       ImportDeclaration(node) {
@@ -78,7 +69,10 @@ export const stylesFileRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreato
         }
       },
       CallExpression(node) {
-        if (isMakeStylesImported && isMakeStyleCallExpression(node)) {
+        if (
+          isMakeStylesImported &&
+          isMakeStylesCallExpression(node, 'makeStyles', 'makeStaticStyles', 'makeResetStyles')
+        ) {
           if (!isStylesFile(fileName)) {
             context.report({
               messageId: 'foundMakeStylesUsage',
@@ -93,7 +87,7 @@ export const stylesFileRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreato
             if (
               isMakeStylesImported &&
               declaration.init?.type === 'CallExpression' &&
-              isMakeStyleCallExpression(declaration.init)
+              isMakeStylesCallExpression(declaration.init, 'makeStyles', 'makeStaticStyles', 'makeResetStyles')
             ) {
               if (declaration.id.type === 'Identifier') {
                 makeStylesDeclarations.push(declaration.id.name);
