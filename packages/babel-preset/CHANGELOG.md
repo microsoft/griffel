@@ -1,8 +1,17 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Fri, 15 Sep 2023 08:08:42 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Oct 2023 19:09:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.2
+
+Tue, 03 Oct 2023 19:09:32 GMT
+
+### Patches
+
+- fix: metadata entries should be defined by default (lingfan.gao@microsoft.com)
+- Bump @griffel/core to v1.14.3
 
 ## 1.5.1
 

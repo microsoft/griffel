@@ -1,8 +1,20 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Fri, 15 Sep 2023 08:08:42 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Oct 2023 19:09:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.0
+
+Tue, 03 Oct 2023 19:09:32 GMT
+
+### Minor changes
+
+- feat: update all rules to lint makeResetStyles and makeStaticStyles (tigeroakes@microsoft.com)
+
+### Patches
+
+- chore: remove unstable-css-lint rule (olfedias@microsoft.com)
 
 ## 1.4.0
 

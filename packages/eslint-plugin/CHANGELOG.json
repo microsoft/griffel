@@ -2,6 +2,29 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Tue, 03 Oct 2023 19:09:32 GMT",
+      "tag": "@griffel/eslint-plugin_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tigeroakes@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "1476e34bd093df1132181acfebbb8c51922d5c8b",
+            "comment": "feat: update all rules to lint makeResetStyles and makeStaticStyles"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "49c1a7cd276b62bd4a6237604c21dee87d567dd3",
+            "comment": "chore: remove unstable-css-lint rule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Sep 2023 08:08:42 GMT",
       "tag": "@griffel/eslint-plugin_v1.4.0",
       "version": "1.4.0",

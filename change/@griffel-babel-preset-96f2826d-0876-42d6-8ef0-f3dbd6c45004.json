@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: metadata entries should be defined by default",
-  "packageName": "@griffel/babel-preset",
-  "email": "lingfan.gao@microsoft.com",
-  "dependentChangeType": "patch"
-}

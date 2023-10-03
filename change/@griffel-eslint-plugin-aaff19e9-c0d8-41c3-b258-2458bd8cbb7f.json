@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: update all rules to lint makeResetStyles and makeStaticStyles",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "tigeroakes@microsoft.com",
-  "dependentChangeType": "patch"
-}
