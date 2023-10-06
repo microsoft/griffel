@@ -65,6 +65,11 @@ pluginTester({
       fixture: path.resolve(fixturesDir, 'keyframes', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'keyframes', 'output.ts'),
     },
+    {
+      title: 'syntax: reset (null values)',
+      fixture: path.resolve(fixturesDir, 'object-reset', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'object-reset', 'output.ts'),
+    },
 
     // Assets
     //

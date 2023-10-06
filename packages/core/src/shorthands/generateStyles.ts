@@ -7,7 +7,7 @@ const positionMap = ['Top', 'Right', 'Bottom', 'Left'];
 export function generateStyles<Styles extends GriffelStyle>(
   property: DirectionalProperties,
   suffix: '' | 'Color' | 'Style' | 'Width',
-  ...values: ValueOrArray<GriffelStylesCSSValue>[]
+  ...values: ValueOrArray<GriffelStylesCSSValue | null>[]
 ): Styles {
   const [firstValue, secondValue = firstValue, thirdValue = firstValue, fourthValue = secondValue] = values;
   const valuesWithDefaults = [firstValue, secondValue, thirdValue, fourthValue];

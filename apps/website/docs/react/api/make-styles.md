@@ -260,6 +260,37 @@ const useClasses = makeStyles({
 });
 ```
 
+### `null` values
+
+You can set a `null` value, this is useful when you want to merge classes to remove a property:
+
+```js
+import { makeStyles, mergeClasses } from '@griffel/react';
+
+const useClassesA = makeStyles({
+  root: {
+    color: 'red',
+    backgroundColor: 'blue',
+  },
+});
+const useClassesB = makeStyles({
+  root: {
+    color: null,
+  },
+});
+
+function Component() {
+  const classesA = useClassesA();
+  const classesB = useClassesB();
+
+  // 💡 After merging, the `color` property will be removed
+  const className = mergeClasses(classesA.root, classesB.root);
+
+  // 💡 If `null` value is set, it won't be added to the class
+  return <div className={classesA} />;
+}
+```
+
 ### CSS Fallback Properties
 
 Griffel supports CSS fallback properties in order to support older browsers.

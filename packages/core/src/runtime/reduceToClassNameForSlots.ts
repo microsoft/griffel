@@ -7,25 +7,34 @@ import type { CSSClassesMapBySlot, CSSClassesMap, CSSClasses } from '../types';
  *
  * @private
  */
-export function reduceToClassName(classMap: CSSClassesMap, dir: 'ltr' | 'rtl'): string {
-  let className = '';
+export function reduceToClassName(classMap: CSSClassesMap, dir: 'ltr' | 'rtl'): [string, string] {
+  // - `classString` is a string of classnames separated by a space, used to output classes
+  // - `hashString` is a string of classnames separated by a space, used to generate a hash
+  //
+  // `hashString` is needed to handle `null` values in a class map as they don't produce any classes.
+  let classString = '';
+  let hashString = '';
 
   // eslint-disable-next-line guard-for-in
   for (const propertyHash in classMap) {
     const classNameMapping: CSSClasses = classMap[propertyHash];
 
-    if (classNameMapping) {
-      const hasRTLClassName = Array.isArray(classNameMapping);
-
-      if (dir === 'rtl') {
-        className += (hasRTLClassName ? classNameMapping[1] : classNameMapping) + ' ';
-      } else {
-        className += (hasRTLClassName ? classNameMapping[0] : classNameMapping) + ' ';
-      }
+    if (classNameMapping === null) {
+      hashString += propertyHash + ' ';
+      continue;
     }
+
+    const hasRTLClassName = Array.isArray(classNameMapping);
+    const className =
+      dir === 'rtl'
+        ? (hasRTLClassName ? classNameMapping[1] : classNameMapping) + ' '
+        : (hasRTLClassName ? classNameMapping[0] : classNameMapping) + ' ';
+
+    classString += className;
+    hashString += className;
   }
 
-  return className.slice(0, -1);
+  return [classString.slice(0, -1), hashString.slice(0, -1)];
 }
 
 /**
@@ -42,16 +51,16 @@ export function reduceToClassNameForSlots<Slots extends string | number>(
 
   // eslint-disable-next-line guard-for-in
   for (const slotName in classesMapBySlot) {
-    const slotClasses = reduceToClassName(classesMapBySlot[slotName], dir);
+    const [slotClasses, slotClassesHash] = reduceToClassName(classesMapBySlot[slotName], dir);
 
     // Handles a case when there are no classes in a set i.e. "makeStyles({ root: {} })"
-    if (slotClasses === '') {
+    if (slotClassesHash === '') {
       classNamesForSlots[slotName] = '';
       continue;
     }
 
-    const sequenceHash = hashSequence(slotClasses, dir);
-    const resultSlotClasses = sequenceHash + ' ' + slotClasses;
+    const sequenceHash = hashSequence(slotClassesHash, dir);
+    const resultSlotClasses = sequenceHash + (slotClasses === '' ? '' : ' ' + slotClasses);
 
     DEFINITION_LOOKUP_TABLE[sequenceHash] = [classesMapBySlot[slotName], dir];
     classNamesForSlots[slotName] = resultSlotClasses;

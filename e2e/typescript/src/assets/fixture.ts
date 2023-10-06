@@ -65,6 +65,19 @@ assertType({ zIndex: 'var(--qux)' });
 
 assertType({ '--color': 'red' });
 
+// null
+//
+
+assertType({ color: null });
+assertType({ '--color': null });
+
+assertType({
+  ':hover': { color: null },
+
+  '& .foo': { color: null },
+  ':hover:focus': { color: null },
+});
+
 // Mixins
 //
 

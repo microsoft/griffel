@@ -20,7 +20,7 @@ export type GriffelStylesStrictCSSObject = GriffelStylesCSSProperties & {
 } & GriffelCSSPseudos;
 
 type GriffelCSSObjectCustom = {
-  [Property: string]: GriffelStyle | GriffelStylesCSSValue;
+  [Property: string]: GriffelStyle | GriffelStylesCSSValue | null;
 } & GriffelStylesStrictCSSObject;
 
 type GriffelCSSPseudos = {

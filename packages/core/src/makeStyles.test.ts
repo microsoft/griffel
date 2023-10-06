@@ -229,6 +229,23 @@ describe('makeStyles', () => {
     `);
   });
 
+  it('handles "null" for rules removal', () => {
+    const computeClassesA = makeStyles({ root: { color: null } });
+    const computeClassesB = makeStyles({ root: { backgroundColor: null } });
+    const computeClassesC = makeStyles({ root: { color: null, backgroundColor: '10px' } });
+
+    expect(computeClassesA({ dir: 'ltr', renderer }).root).toEqual('___1oss4e0');
+    expect(computeClassesB({ dir: 'ltr', renderer }).root).toEqual('___wi64bx0');
+    expect(computeClassesC({ dir: 'ltr', renderer }).root).toEqual('___1919hol fihdeyh');
+
+    expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
+      .fihdeyh {
+        background-color: 10px;
+      }
+    `);
+  });
+
   it.each<'test' | 'development'>(['test', 'development'])(
     'in non-production mode, hashes include debug information',
     env => {

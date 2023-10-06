@@ -25,7 +25,7 @@ import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedP
 function pushToClassesMap(
   classesMap: CSSClassesMap,
   propertyKey: string,
-  ltrClassname: string,
+  ltrClassname: string | null,
   rtlClassname: string | undefined,
 ) {
   classesMap[propertyKey] = rtlClassname ? [ltrClassname!, rtlClassname] : ltrClassname;
@@ -88,8 +88,16 @@ export function resolveStyleRules(
 
     const value = styles[property as keyof GriffelStyle];
 
-    // eslint-disable-next-line eqeqeq
-    if (value == null) {
+    if (typeof value === 'undefined') {
+      continue;
+    }
+
+    if (value === null) {
+      const selector = trimSelector(selectors.join(''));
+      // uniq key based on a hash of property & selector, used for merging later
+      const key = hashPropertyKey(selector, container, media, support, property);
+
+      pushToClassesMap(cssClassesMap, key, null, undefined);
       continue;
     }
 

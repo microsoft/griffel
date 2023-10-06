@@ -7,6 +7,7 @@ import { makeResetStyles } from './makeResetStyles';
 
 function removeSequenceHash(classNames: string) {
   const indexOfSequence = classNames.indexOf(SEQUENCE_PREFIX);
+
   if (indexOfSequence === -1) {
     return classNames;
   }
@@ -211,12 +212,29 @@ describe('mergeClasses', () => {
       expect(mergeClasses(rtlClassName1, rtlClassName2)).toMatchInlineSnapshot('fe3e8s9 f81rol6');
     });
   });
+
+  describe('resets of styles', () => {
+    it('handles resets', () => {
+      const computeClassesA = makeStyles({ root: { color: 'red', display: 'flex' } });
+      const computeClassesB = makeStyles({ root: { backgroundColor: 'orange', color: null } });
+      const computeClassesC = makeStyles({ root: { display: null } });
+
+      const classNameA = computeClassesA(options).root;
+      const classNameB = computeClassesB(options).root;
+      const classNameC = computeClassesC(options).root;
+
+      expect(mergeClasses(classNameA, classNameB)).toMatchInlineSnapshot(`f22iagw ftu9nv0`);
+      expect(mergeClasses(classNameA, classNameC)).toMatchInlineSnapshot(`fe3e8s9`);
+      expect(mergeClasses(classNameA, classNameB, classNameC)).toMatchInlineSnapshot(`ftu9nv0`);
+    });
+  });
 });
 
 describe('merges classes and generates sequence hashes', () => {
   it('development', () => {
     jest.isolateModules(() => {
       process.env.NODE_ENV = 'development';
+
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { mergeClasses } = require('./mergeClasses');
       // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -229,6 +247,7 @@ describe('merges classes and generates sequence hashes', () => {
   it('production', async () => {
     jest.isolateModules(() => {
       process.env.NODE_ENV = 'production';
+
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { mergeClasses } = require('./mergeClasses');
       // eslint-disable-next-line @typescript-eslint/no-var-requires
