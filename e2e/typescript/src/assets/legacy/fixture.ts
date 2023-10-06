@@ -197,11 +197,9 @@ assertType({
     ...typedMixin,
     color: 'var(--customColor)',
   },
-  // @ts-expect-error FIXME - this is supposed to pass!
   ':after': {
     ...typedMixin,
   },
-  // @ts-expect-error FIXME - this is supposed to pass!
   ':before': {
     ...typedMixin,
     color: 'var(--customColor)',
