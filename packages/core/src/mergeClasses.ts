@@ -157,11 +157,11 @@ export function mergeClasses(): string {
     [{}].concat(sequenceMappings),
   );
 
-  let atomicClassNames = reduceToClassName(resultDefinitions, dir!);
+  const [className, classHash] = reduceToClassName(resultDefinitions, dir!);
 
   // Each merge of classes generates a new sequence of atomic classes that needs to be registered
-  const newSequenceHash = hashSequence(atomicClassNames, dir!, sequencesIds);
-  atomicClassNames = newSequenceHash + ' ' + atomicClassNames;
+  const newSequenceHash = hashSequence(classHash, dir!, sequencesIds);
+  const atomicClassNames = newSequenceHash + ' ' + className;
 
   mergeClassesCachedResults[sequenceMatch] = atomicClassNames;
   DEFINITION_LOOKUP_TABLE[newSequenceHash] = [resultDefinitions, dir!];

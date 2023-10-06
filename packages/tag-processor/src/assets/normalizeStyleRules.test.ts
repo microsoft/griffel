@@ -184,4 +184,20 @@ describe('normalizeStyleRules', () => {
       },
     });
   });
+
+  it('handles "null"', () => {
+    expect(
+      normalizeStyleRules(
+        path.posix,
+        {
+          root: '/home/projects/foo',
+          filename: '/home/projects/foo/src/styles/Component.styles.ts',
+        },
+
+        { root: { color: null } },
+      ),
+    ).toEqual({
+      root: { color: null },
+    });
+  });
 });

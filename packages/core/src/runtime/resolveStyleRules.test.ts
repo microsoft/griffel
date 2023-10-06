@@ -8,7 +8,7 @@ expect.addSnapshotSerializer(griffelRulesSerializer);
 function getFirstClassName([resolvedClassesForSlot]: [CSSClassesMap, CSSRulesByBucket]): string {
   const className: CSSClasses = resolvedClassesForSlot[Object.keys(resolvedClassesForSlot)[0]];
 
-  return Array.isArray(className) ? className[0] : className;
+  return Array.isArray(className) ? className[0] : className ?? '';
 }
 
 describe('resolveStyleRules', () => {
@@ -860,6 +860,15 @@ describe('resolveStyleRules', () => {
           animation-duration: 5s;
         }
       `);
+    });
+  });
+
+  describe('reset', () => {
+    it('"null" emits an empty class', () => {
+      expect(resolveStyleRules({ color: 'red', paddingLeft: null })).toEqual([
+        { sj55zd: 'fe3e8s9', uwmqm3: null },
+        { d: ['.fe3e8s9{color:red;}'] },
+      ]);
     });
   });
 

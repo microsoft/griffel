@@ -122,11 +122,14 @@ function buildCSSEntriesMetadata(
   cssRulesByBucket: CSSRulesByBucket,
   declaratorId: string,
 ) {
-  const classesBySlot: Record<string, string[]> = Object.fromEntries(
+  const classesBySlot: Record<string, [null] | [string] | [string, string]> = Object.fromEntries(
     Object.entries(classnamesMapping).map(([slot, cssClassesMap]) => {
       return [
         slot,
-        Object.values(cssClassesMap).flatMap(cssClasses => (Array.isArray(cssClasses) ? cssClasses : [cssClasses])),
+        Object.values(cssClassesMap).flatMap(cssClasses => (Array.isArray(cssClasses) ? cssClasses : [cssClasses])) as
+          | [null]
+          | [string]
+          | [string, string],
       ];
     }),
   );
@@ -143,6 +146,10 @@ function buildCSSEntriesMetadata(
       return [
         slot,
         cssClasses.map(cssClass => {
+          if (cssClass === null) {
+            return '';
+          }
+
           return cssRules.find(rule => rule.includes(cssClass))!;
         }),
       ];
