@@ -8,6 +8,8 @@ import OutputTitle from '@site/src/components/OutputTitle'
 
 Creates styles with a global selector. This is especially useful for CSS resets, for example [normalize.css](https://github.com/necolas/normalize.css/).
 
+`makeStaticStyles` returns [a React hook](https://reactjs.org/docs/hooks-intro.html) that should be called inside a component.
+
 ## Defining styles with objects
 
 ```js
