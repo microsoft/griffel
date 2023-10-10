@@ -100,3 +100,44 @@ function App() {
   return <div />;
 }
 ```
+
+:::note
+
+`makeStaticStyles` supports the use of [shorthands](/react/api/shorthands) and does not have the same limitation as `makeStyles()`.
+
+:::
+
+## Usage with `makeStyles`
+
+```tsx
+import { makeStyles, makeStaticStyles, mergeClasses, shorthands } from "@griffel/react";
+
+const useStaticStyles = makeStaticStyles({
+  body: { color: "red", padding: "5px" }
+});
+
+const useClasses = makeStyles({
+  primary: { color: "blue" },
+  circular: {
+    ...shorthands.padding("500px"),
+    ...shorthands.borderRadius("0px")
+  }
+});
+
+export default function App(props) {
+  useStaticStyles();
+  const classes = useClasses();
+
+  return (
+    <>
+      <h1>Hello World!</h1>
+      <button
+        className={mergeClasses(
+          props.primary && classes.primary,
+          props.circular && classes.circular
+        )}
+      />
+    </>
+  );
+}
+```
