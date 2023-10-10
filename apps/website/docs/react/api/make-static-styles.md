@@ -8,6 +8,8 @@ import OutputTitle from '@site/src/components/OutputTitle'
 
 Creates styles with a global selector. This is especially useful for CSS resets, for example [normalize.css](https://github.com/necolas/normalize.css/).
 
+`makeStaticStyles` returns [a React hook](https://reactjs.org/docs/hooks-intro.html) that should be called inside a component.
+
 ## Defining styles with objects
 
 ```js
@@ -96,5 +98,38 @@ function App() {
   useStaticStyles2();
 
   return <div />;
+}
+```
+
+:::note
+
+`makeStaticStyles` supports the use of [shorthands](/react/api/shorthands) and does not have the same limitation as `makeStyles()`.
+
+:::
+
+## Usage with `makeStyles`
+
+```tsx
+import { makeStyles, makeStaticStyles, shorthands } from '@griffel/react';
+
+const useStaticStyles = makeStaticStyles({
+  body: {
+    color: 'red',
+    padding: '5px',
+  },
+});
+
+const useClasses = makeStyles({
+  primaryText: {
+    color: 'blue',
+    ...shorthands.padding('5px'),
+  },
+});
+
+export default function App(props) {
+  useStaticStyles();
+  const classes = useClasses();
+
+  return <p className={props.primaryText}>Hello world</p>;
 }
 ```
