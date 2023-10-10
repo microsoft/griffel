@@ -111,21 +111,25 @@ function App() {
 
 ```tsx
 import { makeStyles, makeStaticStyles, shorthands } from '@griffel/react';
+
 const useStaticStyles = makeStaticStyles({
   body: {
     color: 'red',
     padding: '5px',
   },
 });
+
 const useClasses = makeStyles({
   primaryText: {
     color: 'blue',
     ...shorthands.padding('5px'),
   },
 });
+
 export default function App(props) {
   useStaticStyles();
   const classes = useClasses();
+
   return <p className={props.primaryText}>Hello world</p>;
 }
 ```
