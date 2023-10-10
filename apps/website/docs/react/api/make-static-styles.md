@@ -110,34 +110,22 @@ function App() {
 ## Usage with `makeStyles`
 
 ```tsx
-import { makeStyles, makeStaticStyles, mergeClasses, shorthands } from "@griffel/react";
-
+import { makeStyles, makeStaticStyles, shorthands } from '@griffel/react';
 const useStaticStyles = makeStaticStyles({
-  body: { color: "red", padding: "5px" }
+  body: {
+    color: 'red',
+    padding: '5px',
+  },
 });
-
 const useClasses = makeStyles({
-  primary: { color: "blue" },
-  circular: {
-    ...shorthands.padding("500px"),
-    ...shorthands.borderRadius("0px")
-  }
+  primaryText: {
+    color: 'blue',
+    ...shorthands.padding('5px'),
+  },
 });
-
 export default function App(props) {
   useStaticStyles();
   const classes = useClasses();
-
-  return (
-    <>
-      <h1>Hello World!</h1>
-      <button
-        className={mergeClasses(
-          props.primary && classes.primary,
-          props.circular && classes.circular
-        )}
-      />
-    </>
-  );
+  return <p className={props.primaryText}>Hello world</p>;
 }
 ```
