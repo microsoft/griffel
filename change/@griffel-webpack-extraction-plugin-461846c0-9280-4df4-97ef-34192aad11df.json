@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat(webpack-extraction-plugin): add compat for Rspack",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -17,7 +17,7 @@ async function performTest() {
   let tempDir: string;
 
   try {
-    tempDir = createTempDir('nextjs');
+    tempDir = createTempDir('rspack');
 
     await copyAssets({ assetsPath: path.resolve(__dirname, 'assets'), tempDir });
     await configureYarn({ tempDir, rootDir });
@@ -28,16 +28,15 @@ async function performTest() {
       packLocalPackage(rootDir, tempDir, '@griffel/react'),
       packLocalPackage(rootDir, tempDir, '@griffel/webpack-extraction-plugin'),
       packLocalPackage(rootDir, tempDir, '@griffel/webpack-loader'),
-      packLocalPackage(rootDir, tempDir, '@griffel/next-extraction-plugin'),
     ]);
 
-    const nextRawVersion = await sh(`yarn next -v`, rootDir, true);
-    const nextVersion = nextRawVersion.split('v')[1].trim();
+    const rspackVersion = (await sh(`yarn rspack --version`, rootDir, true)).trim();
 
-    console.log(logSymbols.info, 'Using Next.js', nextVersion);
+    console.log(logSymbols.info, 'Using Rspack', rspackVersion);
+    console.log(logSymbols.info, 'Installing packages...');
 
     await installPackages({
-      packages: ['next', 'react', 'react-dom', 'typescript', '@types/react', '@types/node'],
+      packages: ['@rspack/cli', 'react', 'react-dom'],
       resolutions,
       tempDir,
       rootDir,
@@ -49,34 +48,32 @@ async function performTest() {
   }
 
   try {
-    await sh(`yarn next build`, tempDir);
+    await sh(`yarn rspack`, tempDir);
 
-    console.log(logSymbols.success, `Example project was successfully built with Next.js`);
+    console.log(logSymbols.success, `Example project was successfully built with Rspack`);
   } catch (e) {
     console.error(e);
 
     console.log('');
-    console.error(logSymbols.error, `Building a test project Next.js failed.`);
+    console.error(logSymbols.error, `Building a test project with Rspack failed.`);
 
     process.exit(1);
   }
 
   try {
-    const cssFilesPath = path.resolve(tempDir, '.next', 'static', 'css');
-    const cssFiles = await fs.promises.readdir(cssFilesPath);
+    const distDir = path.resolve(tempDir, 'dist');
+    const distFiles = await fs.promises.readdir(distDir);
 
-    if (cssFiles.length === 0) {
-      throw new Error(`Failed to find CSS files in "${cssFilesPath}"`);
-    }
+    const cssFilename = distFiles.find(filename => filename.endsWith('griffel.css'));
 
-    if (cssFiles.length > 1) {
-      throw new Error(`There are CSS files (${cssFiles.length}) than expected in "${cssFilesPath}"`);
+    if (!cssFilename) {
+      throw new Error(`Failed to find any matching CSS file in "${distDir}"`);
     }
 
     await compareSnapshots({
       type: 'css',
       snapshotFile: path.resolve(__dirname, 'snapshots', 'output.css'),
-      resultFile: path.resolve(cssFilesPath, cssFiles[0]),
+      resultFile: path.resolve(distDir, cssFilename),
     });
 
     console.log(logSymbols.success, `Example project contains the same CSS as a snapshot`);
@@ -86,7 +83,7 @@ async function performTest() {
     console.error(e);
 
     console.log('');
-    console.error(logSymbols.error, `Validating CSS produced by Next.js build failed.`);
+    console.error(logSymbols.error, `Validating CSS produced by Rspack build failed.`);
 
     process.exit(1);
   }
