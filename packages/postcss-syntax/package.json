@@ -8,9 +8,9 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@babel/core": "^7.12.13",
+    "@babel/core": "^7.23.2",
     "@griffel/babel-preset": "^1.5.2",
-    "@babel/helper-plugin-utils": "^7.12.13",
+    "@babel/helper-plugin-utils": "^7.22.5",
     "postcss": "^8.4.29"
   },
   "main": "index.js"
