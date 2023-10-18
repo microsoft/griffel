@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Tue, 03 Oct 2023 19:09:32 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 09:11:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.0
+
+Wed, 18 Oct 2023 09:11:01 GMT
+
+### Minor changes
+
+- feat(webpack-extraction-plugin): add compat for Rspack (olfedias@microsoft.com)
 
 ## 0.3.22
 
