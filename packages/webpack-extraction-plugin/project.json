@@ -36,7 +36,7 @@
             "output": "."
           },
           {
-            "glob": "*.js",
+            "glob": "*.(css|js)",
             "input": "packages/webpack-extraction-plugin/virtual-loader",
             "output": "./virtual-loader"
           }

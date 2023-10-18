@@ -106,6 +106,8 @@ export class GriffelCSSExtractionPlugin {
   }
 
   apply(compiler: Compiler): void {
+    const IS_RSPACK = Object.prototype.hasOwnProperty.call(compiler.webpack, 'rspackVersion');
+
     // WHAT?
     //   Prevents ".griffel.css" files from being tree shaken by forcing "sideEffects" setting.
     // WHY?
@@ -113,17 +115,23 @@ export class GriffelCSSExtractionPlugin {
     //   will have paths relative to source file. To identify what files have side effects Webpack relies on
     //   "sideEffects" field in "package.json" and NPM packages usually have "sideEffects: false" that will trigger
     //   Webpack to shake out generated CSS.
-    compiler.hooks.normalModuleFactory.tap(PLUGIN_NAME, nmf => {
-      nmf.hooks.createModule.tap(
-        PLUGIN_NAME,
-        // @ts-expect-error CreateData is typed as 'object'...
-        (createData: { matchResource?: string; settings: { sideEffects?: boolean } }) => {
-          if (createData.matchResource && createData.matchResource.endsWith('.griffel.css')) {
-            createData.settings.sideEffects = true;
-          }
-        },
-      );
-    });
+
+    // @ Rspack compat:
+    // "createModule" in "normalModuleFactory" is not supported by Rspack
+    // https://github.com/web-infra-dev/rspack/blob/e52601e059fff1f0cdc4e9328746fb3ae6c3ecb2/packages/rspack/src/NormalModuleFactory.ts#L53
+    if (!IS_RSPACK) {
+      compiler.hooks.normalModuleFactory.tap(PLUGIN_NAME, nmf => {
+        nmf.hooks.createModule.tap(
+          PLUGIN_NAME,
+          // @ts-expect-error CreateData is typed as 'object'...
+          (createData: { matchResource?: string; settings: { sideEffects?: boolean } }) => {
+            if (createData.matchResource && createData.matchResource.endsWith('.griffel.css')) {
+              createData.settings.sideEffects = true;
+            }
+          },
+        );
+      });
+    }
 
     // WHAT?
     //  Forces all modules emitted by an extraction loader to be moved in a single chunk by SplitChunksPlugin config.
@@ -134,58 +142,85 @@ export class GriffelCSSExtractionPlugin {
       compiler.options.optimization.splitChunks.cacheGroups ??= {};
       compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
         name: 'griffel',
-        test: isGriffelCSSModule,
+        // @ Rspack compat:
+        // Rspack does not support functions in test due performance concerns
+        // https://github.com/web-infra-dev/rspack/issues/3425#issuecomment-1577890202
+        test: IS_RSPACK ? /griffel\.css/ : isGriffelCSSModule,
         chunks: 'all',
         enforce: true,
       };
     }
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
-      // WHAT?
-      //   Adds a callback to the loader context
-      // WHY?
-      //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
-      const cssByModuleMap = new Map<string, string>();
-
-      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
-        const resourcePath = module.resource;
-
-        (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
-          registerExtractedCss(css: string) {
-            cssByModuleMap.set(resourcePath, css);
-          },
-          getExtractedCss() {
-            const css = cssByModuleMap.get(resourcePath) ?? '';
-            cssByModuleMap.delete(resourcePath);
-
-            return css;
-          },
-        };
-      });
-
-      compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
+      // @ Rspack compat
+      // As Rspack does not support functions in "splitChunks.cacheGroups" we have to emit modules differently
+      // and can't rely on this approach due
+      if (!IS_RSPACK) {
         // WHAT?
-        //   Performs module movements between chunks if SplitChunksPlugin is not enabled.
+        //   Adds a callback to the loader context
         // WHY?
-        //   The same reason as for SplitChunksPlugin config.
-        if (!compiler.options.optimization.splitChunks) {
-          moveCSSModulesToGriffelChunk(compilation);
+        //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
+        const cssByModuleMap = new Map<string, string>();
+
+        NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
+          const resourcePath = module.resource;
+
+          (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
+            registerExtractedCss(css: string) {
+              cssByModuleMap.set(resourcePath, css);
+            },
+            getExtractedCss() {
+              const css = cssByModuleMap.get(resourcePath) ?? '';
+              cssByModuleMap.delete(resourcePath);
+
+              return css;
+            },
+          };
+        });
+      }
+
+      // WHAT?
+      //   Performs module movements between chunks if SplitChunksPlugin is not enabled.
+      // WHY?
+      //   The same reason as for SplitChunksPlugin config.
+      if (!compiler.options.optimization.splitChunks) {
+        // @ Rspack compat
+        // Rspack does not support adding chunks in the same as Webpack, we force usage of "optimization.splitChunks"
+        if (IS_RSPACK) {
+          throw new Error(
+            [
+              'You are using Rspack, but don\'t have "optimization.splitChunks" enabled.',
+              '"optimization.splitChunks" should be enabled for "@griffel/webpack-extraction-plugin" to function properly.',
+            ].join(' '),
+          );
         }
 
-        // WHAT?
-        //  Disconnects Griffel chunk from other chunks, so Griffel chunk cannot be loaded async. Also connects with
-        //  the main entrypoint in config.
-        // WHY?
-        //  This is scenario required by one of MS teams. Will be removed in the future.
-        if (this.attachToMainEntryPoint) {
+        compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
+          moveCSSModulesToGriffelChunk(compilation);
+        });
+      }
+
+      // WHAT?
+      //  Disconnects Griffel chunk from other chunks, so Griffel chunk cannot be loaded async. Also connects with
+      //  the main entrypoint in config.
+      // WHY?
+      //  This is scenario required by one of MS teams. Will be removed in the future.
+      if (this.attachToMainEntryPoint) {
+        // @ Rspack compat
+        // We don't support this scenario for Rspack yet.
+        if (IS_RSPACK) {
+          throw new Error('You are using Rspack, "attachToMainEntryPoint" option is supported only with Webpack.');
+        }
+
+        compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
           const griffelChunk = compilation.namedChunks.get('griffel');
 
           if (typeof griffelChunk !== 'undefined') {
             griffelChunk.disconnectFromGroups();
             attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
           }
-        }
-      });
+        });
+      }
 
       // WHAT?
       //  Takes a CSS file from Griffel chunks and sorts CSS inside it.
@@ -195,13 +230,23 @@ export class GriffelCSSExtractionPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
-          const griffelChunk = compilation.namedChunks.get('griffel');
+          let cssAssetDetails;
 
-          if (typeof griffelChunk === 'undefined') {
-            return;
+          // @ Rspack compat
+          // "compilation.namedChunks.get()" explodes with Rspack
+          if (IS_RSPACK) {
+            cssAssetDetails = Object.entries(assets).find(
+              ([assetName]) => assetName.endsWith('.css') && assetName.includes('griffel'),
+            );
+          } else {
+            const griffelChunk = compilation.namedChunks.get('griffel');
+
+            if (typeof griffelChunk === 'undefined') {
+              return;
+            }
+
+            cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
           }
-
-          const cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
 
           if (typeof cssAssetDetails === 'undefined') {
             return;

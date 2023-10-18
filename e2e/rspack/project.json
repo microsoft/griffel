@@ -1,0 +1,27 @@
+{
+  "name": "@griffel/e2e-rspack",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "e2e/rspack/src",
+  "projectType": "library",
+  "implicitDependencies": ["@griffel/webpack-loader"],
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "dependsOn": [{ "target": "build", "projects": "dependencies" }],
+      "options": {
+        "cwd": "e2e/rspack",
+        "commands": [{ "command": "ts-node src/test.ts" }],
+        "outputPath": []
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "e2e/rspack",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}

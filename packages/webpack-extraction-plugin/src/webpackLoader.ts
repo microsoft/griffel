@@ -15,6 +15,7 @@ export type WebpackLoaderOptions = {
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
 const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
+const virtualCSSFilePath = path.resolve(__dirname, '..', 'virtual-loader', 'griffel.css');
 
 /**
  * Webpack can also pass sourcemaps as a string, Babel accepts only objects.
@@ -30,6 +31,10 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
   } catch (err) {
     return undefined;
   }
+}
+
+function toURIComponent(rule: string): string {
+  return encodeURIComponent(rule).replace(/!/g, '%21');
 }
 
 function webpackLoader(
@@ -48,8 +53,14 @@ function webpackLoader(
     return;
   }
 
-  if (!this[GriffelCssLoaderContextKey]) {
-    throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
+  const IS_RSPACK = !this.webpack;
+
+  // @ Rspack compat:
+  // We don't use the trick with loader context as assets are generated differently
+  if (!IS_RSPACK) {
+    if (!this[GriffelCssLoaderContextKey]) {
+      throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
+    }
   }
 
   const { unstable_keepOriginalCode } = this.getOptions();
@@ -108,7 +119,15 @@ function webpackLoader(
         );
       }, '');
 
-      this[GriffelCssLoaderContextKey].registerExtractedCss(css);
+      if (IS_RSPACK) {
+        const request = `griffel.css!=!${virtualLoaderPath}!${virtualCSSFilePath}?style=${toURIComponent(css)}`;
+        const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
+
+        this.callback(null, `${resultCode}\n\nimport ${stringifiedRequest};`, resultSourceMap);
+        return;
+      }
+
+      this[GriffelCssLoaderContextKey]?.registerExtractedCss(css);
 
       const outputFileName = this.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
       const request = `${outputFileName}!=!${virtualLoaderPath}!${this.resourcePath}`;
