@@ -8,11 +8,11 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@babel/core": "^7.12.13",
-    "@babel/generator": "^7.12.13",
-    "@babel/helper-plugin-utils": "^7.12.13",
-    "@babel/template": "^7.12.13",
-    "@babel/traverse": "^7.12.13",
+    "@babel/core": "^7.23.2",
+    "@babel/generator": "^7.23.0",
+    "@babel/helper-plugin-utils": "^7.22.5",
+    "@babel/template": "^7.22.15",
+    "@babel/traverse": "^7.23.2",
     "@griffel/core": "^1.14.3",
     "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
