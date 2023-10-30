@@ -39,7 +39,7 @@ describe('compileAtomicCSSRule', () => {
     ['clip-path', 'circle(40%)'],
     ['width', 'fit-content'],
     ['width', 'min-block-size'],
-    ['background-clip', 'text'],
+    ['background-clip', 'content-box'],
     ['animation', '3s linear 1s slidein;'],
     ['animation-delay', '3s'],
     ['animation-direction', 'normal'],

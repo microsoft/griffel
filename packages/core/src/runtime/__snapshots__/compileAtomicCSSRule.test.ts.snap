@@ -72,9 +72,9 @@ Array [
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix background-clip:text 1`] = `
+exports[`compileAtomicCSSRule does not prefix background-clip:content-box 1`] = `
 Array [
-  ".foo{background-clip:text;}",
+  ".foo{background-clip:content-box;}",
 ]
 `;
 
