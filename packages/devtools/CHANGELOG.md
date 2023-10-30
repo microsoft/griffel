@@ -1,8 +1,16 @@
 # Change Log - @griffel/devtools
 
-This log was last generated on Tue, 03 Oct 2023 19:09:32 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Oct 2023 14:08:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.23
+
+Mon, 30 Oct 2023 14:08:55 GMT
+
+### Patches
+
+- Bump @griffel/react to v1.5.17
 
 ## 0.2.22
 

@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 30 Oct 2023 14:08:55 GMT",
+      "tag": "@griffel/core_v1.14.4",
+      "version": "1.14.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "f001ae503d75d7ddcf70d0633e2f51111b70ed45",
+            "comment": "fix: restore prefixing for \"background-clip: text\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Oct 2023 19:09:32 GMT",
       "tag": "@griffel/core_v1.14.3",
       "version": "1.14.3",

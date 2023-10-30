@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump Babel dependencies",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 18 Oct 2023 09:11:01 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Oct 2023 14:08:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.1
+
+Mon, 30 Oct 2023 14:08:55 GMT
+
+### Patches
+
+- chore: bump Babel dependencies (olfedias@microsoft.com)
+- Bump @griffel/core to v1.14.4
 
 ## 0.4.0
 

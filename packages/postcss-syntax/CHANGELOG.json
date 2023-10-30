@@ -2,6 +2,27 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Mon, 30 Oct 2023 14:08:55 GMT",
+      "tag": "@griffel/postcss-syntax_v1.0.2",
+      "version": "1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "d286d4776d846609a051e273d42dc507f1946204",
+            "comment": "chore: bump Babel dependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/postcss-syntax",
+            "comment": "Bump @griffel/babel-preset to v1.5.3",
+            "commit": "f001ae503d75d7ddcf70d0633e2f51111b70ed45"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Oct 2023 19:09:32 GMT",
       "tag": "@griffel/postcss-syntax_v1.0.1",
       "version": "1.0.1",

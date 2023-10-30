@@ -2,6 +2,27 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Mon, 30 Oct 2023 14:08:55 GMT",
+      "tag": "@griffel/webpack-loader_v2.2.4",
+      "version": "2.2.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "d286d4776d846609a051e273d42dc507f1946204",
+            "comment": "chore: bump Babel dependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.5.3",
+            "commit": "f001ae503d75d7ddcf70d0633e2f51111b70ed45"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Oct 2023 19:09:32 GMT",
       "tag": "@griffel/webpack-loader_v2.2.3",
       "version": "2.2.3",
