@@ -26,7 +26,7 @@ export function prefix(value: string, length: number, children?: Element[]): str
     case 3191:
     case 6645:
     case 3005:
-    // mask, mask-image, mask-(mode|clip|size), mask-(repeat|origin), mask-position, mask-composite,
+    // mask, mask-image, mask-(mode|clip|size), mask-(repeat|origin), mask-position, mask-composite
     case 6391:
     case 5879:
     case 5623:
@@ -34,6 +34,13 @@ export function prefix(value: string, length: number, children?: Element[]): str
     case 4599:
     case 4855:
       return WEBKIT + value + value;
+    // background-clip: text
+    case 4215:
+      switch (charat(value, length + 1)) {
+        case 116:
+          return WEBKIT + value + value;
+      }
+      break;
     // tab-size
     case 4789:
       return MOZ + value + value;

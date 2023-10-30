@@ -20,6 +20,17 @@ describe('prefix', () => {
       );
     });
 
+    test('background-clip', () => {
+      expect(prefix(`background-clip:border-box;`, 15)).toMatchInlineSnapshot(`"background-clip:border-box;"`);
+      expect(prefix(`background-clip:padding-box;`, 15)).toMatchInlineSnapshot(`"background-clip:padding-box;"`);
+      expect(prefix(`background-clip:content-box;`, 15)).toMatchInlineSnapshot(`"background-clip:content-box;"`);
+
+      // Prefixes only "text" value
+      expect(prefix(`background-clip:text;`, 15)).toMatchInlineSnapshot(
+        `"-webkit-background-clip:text;background-clip:text;"`,
+      );
+    });
+
     test('text', () => {
       expect(prefix(`text-align:left;`, 10)).toEqual([`text-align:left;`].join(''));
       expect(prefix(`text-transform:none;`, 14)).toEqual([`text-transform:none;`].join(''));
@@ -259,10 +270,6 @@ describe('prefix', () => {
       expect(prefix(`max-width:max(150px, 200px);`, 9)).toMatchInlineSnapshot(`"max-width:max(150px, 200px);"`);
       expect(prefix(`min-height:max(100px, 50px);`, 10)).toMatchInlineSnapshot(`"min-height:max(100px, 50px);"`);
       expect(prefix(`max-height:min(150px, 200px);`, 10)).toMatchInlineSnapshot(`"max-height:min(150px, 200px);"`);
-    });
-
-    test('background-clip', () => {
-      expect(prefix(`background-clip:text;`, 15)).toMatchInlineSnapshot(`"background-clip:text;"`);
     });
 
     test('animation', () => {
