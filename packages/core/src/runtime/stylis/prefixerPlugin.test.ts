@@ -31,6 +31,15 @@ describe('prefix', () => {
       );
     });
 
+    test('backdrop-filter', () => {
+      expect(prefix(`backdrop-filter:blur(10px);`, 15)).toMatchInlineSnapshot(
+        `"-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);"`,
+      );
+      expect(prefix(`backdrop-filter:invert(80%);`, 15)).toMatchInlineSnapshot(
+        `"-webkit-backdrop-filter:invert(80%);backdrop-filter:invert(80%);"`,
+      );
+    });
+
     test('text', () => {
       expect(prefix(`text-align:left;`, 10)).toEqual([`text-align:left;`].join(''));
       expect(prefix(`text-transform:none;`, 14)).toEqual([`text-transform:none;`].join(''));
