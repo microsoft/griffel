@@ -139,13 +139,13 @@ describe('prefix', () => {
 
     test('user-select', () => {
       expect(prefix(`user-select:none;`, 11)).toEqual(
-        [`-webkit-user-select:none;`, `-moz-user-select:none;`, `-ms-user-select:none;`, `user-select:none;`].join(''),
+        [`-webkit-user-select:none;`, `-moz-user-select:none;`, `user-select:none;`].join(''),
       );
     });
 
     test('appearance', () => {
       expect(prefix(`appearance:none;`, 10)).toEqual(
-        [`-webkit-appearance:none;`, `-moz-appearance:none;`, `-ms-appearance:none;`, `appearance:none;`].join(''),
+        [`-webkit-appearance:none;`, `-moz-appearance:none;`, `appearance:none;`].join(''),
       );
     });
 

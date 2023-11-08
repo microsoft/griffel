@@ -6,7 +6,6 @@ import {
   indexof,
   replace,
   match,
-  MS,
   MOZ,
   WEBKIT,
   copy,
@@ -48,7 +47,7 @@ export function prefix(value: string, length: number, children?: Element[]): str
     case 5349:
     case 4246:
     case 6968:
-      return WEBKIT + value + MOZ + value + MS + value + value;
+      return WEBKIT + value + MOZ + value + value;
     // cursor
     // @ts-expect-error fall through is intentional here
     case 6187:
@@ -153,9 +152,6 @@ export function prefixerPlugin(
                       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                       // @ts-ignore
                       copy(element, { props: [replace(value, /:(plac\w+)/, ':' + MOZ + '$1')] }),
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      copy(element, { props: [replace(value, /:(plac\w+)/, MS + 'input-$1')] }),
                     ],
                     callback,
                   );
