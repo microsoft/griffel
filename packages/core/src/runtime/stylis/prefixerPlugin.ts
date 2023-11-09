@@ -21,7 +21,7 @@ export function prefix(value: string, length: number, children?: Element[]): str
     // color-adjust
     case 5103:
       return WEBKIT + 'print-' + value + value;
-    //   backface-visibility, column, box-decoration-break
+    // backface-visibility, column, box-decoration-break
     case 3191:
     case 6645:
     case 3005:
@@ -33,11 +33,17 @@ export function prefix(value: string, length: number, children?: Element[]): str
     case 4599:
     case 4855:
       return WEBKIT + value + value;
-    // background-clip: text
+    // backdrop-filter, background-clip: text
     case 4215:
-      switch (charat(value, length + 1)) {
-        case 116:
-          return WEBKIT + value + value;
+      // Additional check on "backdrop-(f)ilter" to prevent conflict with "background-clip"
+      // https://github.com/thysultan/stylis/issues/292
+      if (charat(value, 9) === 102) {
+        return WEBKIT + value + value;
+      }
+
+      // background-clip: text
+      if (charat(value, length + 1) === 116) {
+        return WEBKIT + value + value;
       }
       break;
     // tab-size
