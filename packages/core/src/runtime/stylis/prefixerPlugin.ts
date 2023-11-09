@@ -37,6 +37,7 @@ export function prefix(value: string, length: number, children?: Element[]): str
     // backdrop-filter, background-clip: text
     case 4215:
       // Additional check on "backdrop-(f)ilter" to prevent conflict with "background-clip"
+      // https://github.com/thysultan/stylis/issues/292
       if (charat(value, 9) === 102) {
         return WEBKIT + value + value;
       }
