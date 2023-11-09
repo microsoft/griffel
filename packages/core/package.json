@@ -1,6 +1,6 @@
 {
   "name": "@griffel/core",
-  "version": "1.14.4",
+  "version": "1.15.0",
   "description": "DOM implementation of Atomic CSS-in-JS",
   "license": "MIT",
   "repository": {

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: remove prefixing for \"ms-\"",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

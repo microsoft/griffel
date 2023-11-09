@@ -1,8 +1,20 @@
 # Change Log - @griffel/core
 
-This log was last generated on Mon, 30 Oct 2023 14:08:55 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Nov 2023 14:35:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.15.0
+
+Thu, 09 Nov 2023 14:35:07 GMT
+
+### Minor changes
+
+- feat: add prefixing for "backdrop-filter" (olfedias@microsoft.com)
+
+### Patches
+
+- chore: remove prefixing for "ms-" (olfedias@microsoft.com)
 
 ## 1.14.4
 
