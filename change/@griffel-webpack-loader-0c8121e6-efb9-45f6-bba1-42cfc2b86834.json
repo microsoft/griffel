@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Replace null inputSourceMap with undefined",
+  "comment": "fix: replace null inputSourceMap with undefined",
   "packageName": "@griffel/webpack-loader",
   "email": "alinazaieva@microsoft.com",
   "dependentChangeType": "patch"
