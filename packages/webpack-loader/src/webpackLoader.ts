@@ -29,13 +29,17 @@ export function shouldTransformSourceCode(
 }
 
 /**
- * Webpack can also pass sourcemaps as a string, Babel accepts only objects.
+ * Webpack can also pass sourcemaps as a string or null, Babel accepts only objects, boolean and undefined.
  * See https://github.com/babel/babel-loader/pull/889.
  */
 function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOptions['inputSourceMap'] {
   try {
     if (typeof inputSourceMap === 'string') {
       return JSON.parse(inputSourceMap) as TransformOptions['inputSourceMap'];
+    }
+
+    if (inputSourceMap === null) {
+      return undefined;
     }
 
     return inputSourceMap as TransformOptions['inputSourceMap'];
