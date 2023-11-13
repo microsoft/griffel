@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-loader
 
-This log was last generated on Thu, 09 Nov 2023 14:35:07 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Nov 2023 15:16:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.6
+
+Mon, 13 Nov 2023 15:16:05 GMT
+
+### Patches
+
+- fix: replace null inputSourceMap with undefined (alinazaieva@microsoft.com)
 
 ## 2.2.5
 

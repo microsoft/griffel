@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: replace null inputSourceMap with undefined",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

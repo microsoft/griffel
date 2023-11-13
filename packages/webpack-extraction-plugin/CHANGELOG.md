@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Thu, 09 Nov 2023 14:35:07 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Nov 2023 15:16:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.3
+
+Mon, 13 Nov 2023 15:16:05 GMT
+
+### Patches
+
+- fix: replace null inputSourceMap with undefined (olfedias@microsoft.com)
 
 ## 0.4.2
 

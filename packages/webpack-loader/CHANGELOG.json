@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Mon, 13 Nov 2023 15:16:05 GMT",
+      "tag": "@griffel/webpack-loader_v2.2.6",
+      "version": "2.2.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "alinazaieva@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "dbbdcb6cdacb4ee3200b0dbb4a6e4da7fd443805",
+            "comment": "fix: replace null inputSourceMap with undefined"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Nov 2023 14:35:07 GMT",
       "tag": "@griffel/webpack-loader_v2.2.5",
       "version": "2.2.5",
