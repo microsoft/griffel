@@ -13,12 +13,12 @@ jobs:
     if: ${{ contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch' }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           cache: 'yarn'
-          node-version: '16'
+          node-version: '18'
 
       - run: yarn install --immutable
       - run: yarn nx run-many --target=build --projects=@griffel/website --parallel --max-parallel=3

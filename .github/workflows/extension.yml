@@ -17,7 +17,7 @@ jobs:
       status: ${{ steps.verify-extension-changed.outputs.any_changed }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Verify extension has changed
         uses: tj-actions/changed-files@v23.1
@@ -32,12 +32,12 @@ jobs:
     if: ${{ needs.check.outputs.status == 'true' || github.event_name == 'workflow_dispatch' }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           cache: 'yarn'
-          node-version: '16'
+          node-version: '18'
 
       - run: yarn install --immutable
       - run: yarn nx run-many --target=build --projects=@griffel/devtools --parallel --max-parallel=3
