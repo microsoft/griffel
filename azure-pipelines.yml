@@ -41,22 +41,22 @@ extends:
               - script: |
                   echo "##vso[task.setvariable variable=shellopts]braceexpand:hashall:interactive-comments:errexit:errtrace"
                 displayName: Force exit on error (bash)
-         
+
               - task: NodeTool@0
                 inputs:
-                  versionSpec: '16.x'
+                  versionSpec: '18.x'
                   checkLatest: true
                 displayName: 'Install Node.js'
-         
+
               - script: yarn install --frozen-lockfile
                 displayName: Install dependencies
-         
+
               - script: |
                   git config user.name "Fluent UI Build"
                   git config user.email "fluentui-internal@service.microsoft.com"
                   git remote set-url origin https://$(githubUser):$(githubPAT)@github.com/microsoft/griffel.git
                 displayName: Authenticate git for pushes
-         
+
               - script: |
                   yarn beachball publish -b origin/main --access public -y -n $(npmToken)
                   git reset --hard origin/main
