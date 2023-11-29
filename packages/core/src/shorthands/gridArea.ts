@@ -11,10 +11,10 @@ function isValidGridAreaInput(value: GridAreaInput) {
 
 // A custom-ident can be an alpha-numeric string including dash (-), underscore, escaped (\) characters, and escaped unicode
 const customIdentRegEx = /^[a-zA-Z0-9\-_\\#;]+$/;
-const nonCustomIdentRegEx = /^-moz-initial$|^auto$|^initial$|^inherit$|^revert$|^unset$|^span \d+$|\d.*/;
+const nonCustomIdentRegEx = /^-moz-initial$|^auto$|^initial$|^inherit$|^revert$|^unset$|^span \d+$|^\d.*/;
 
 // See https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident
-function isCustomIdent(value: GridAreaInput | undefined): boolean {
+export function isCustomIdent(value: GridAreaInput | undefined): boolean {
   return (
     value !== undefined && typeof value === 'string' && customIdentRegEx.test(value) && !nonCustomIdentRegEx.test(value)
   );
