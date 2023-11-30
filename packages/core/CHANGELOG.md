@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 09 Nov 2023 14:35:07 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Nov 2023 16:42:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.15.1
+
+Thu, 30 Nov 2023 16:42:15 GMT
+
+### Patches
+
+- fix: improve detection of custom idents in shorthands.gridArea() (olfedias@microsoft.com)
 
 ## 1.15.0
 

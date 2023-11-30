@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Thu, 30 Nov 2023 16:42:15 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.4.4",
+      "version": "0.4.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.15.1",
+            "commit": "7d72d1eb3439ef8423fe958035a1525da1822750"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Nov 2023 15:16:05 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.4.3",
       "version": "0.4.3",

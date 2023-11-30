@@ -2,6 +2,21 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Thu, 30 Nov 2023 16:42:15 GMT",
+      "tag": "@griffel/devtools_v0.2.25",
+      "version": "0.2.25",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.5.19",
+            "commit": "7d72d1eb3439ef8423fe958035a1525da1822750"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Nov 2023 14:35:07 GMT",
       "tag": "@griffel/devtools_v0.2.24",
       "version": "0.2.24",
