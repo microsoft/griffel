@@ -1,4 +1,14 @@
-import { gridArea } from './gridArea';
+import { gridArea, isCustomIdent } from './gridArea';
+
+it('isCustomIdent', () => {
+  expect(isCustomIdent('auto')).toBe(false);
+  expect(isCustomIdent(2)).toBe(false);
+  expect(isCustomIdent('2')).toBe(false);
+  expect(isCustomIdent('2 span')).toBe(false);
+
+  expect(isCustomIdent('areaA')).toBe(true);
+  expect(isCustomIdent('area1')).toBe(true);
+});
 
 describe('gridArea(all)', () => {
   it('for auto', () => {
