@@ -1,0 +1,49 @@
+{
+  "root": "packages/tag-processor",
+  "sourceRoot": "packages/tag-processor/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/tag-processor/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/tag-processor"],
+      "options": {
+        "jestConfig": "packages/tag-processor/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/tag-processor",
+        "tsConfig": "packages/tag-processor/tsconfig.lib.json",
+        "packageJson": "packages/tag-processor/package.json",
+        "main": "packages/tag-processor/src/index.ts",
+        "assets": [
+          "packages/tag-processor/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "packages/tag-processor",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}

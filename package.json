@@ -26,6 +26,7 @@
     "type-check": "nx affected --target=type-check"
   },
   "devDependencies": {
+    "@babel/generator": "^7.23.0",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "7.23.2",
     "@codesandbox/sandpack-react": "1.18.4",
@@ -73,6 +74,7 @@
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.0",
     "@uifabric/merge-styles": "7.19.1",
+    "@wyw-in-js/processor-utils": "^0.2.2",
     "babel-jest": "28.1.3",
     "babel-loader": "8.1.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
