@@ -114,7 +114,7 @@
     "monosize": "0.0.9",
     "monosize-storage-upstash": "0.0.8",
     "nano-staged": "0.5.0",
-    "next": "12.2.4",
+    "next": "13.5.1",
     "nx": "15.3.3",
     "postcss": "^8.4.31",
     "prettier": "2.8.2",
