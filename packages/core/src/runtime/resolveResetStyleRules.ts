@@ -127,7 +127,7 @@ function createStringFromStyles(styles: GriffelResetStyle) {
       }
     }
 
-    warnAboutUnresolvedRule(property, value);
+    warnAboutUnresolvedRule(property, value as GriffelResetStyle);
   }
 
   return [ltrCSS, rtlCSS];

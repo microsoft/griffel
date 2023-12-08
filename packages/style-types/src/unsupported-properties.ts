@@ -10,6 +10,8 @@ export interface GriffelStylesUnsupportedCSSProperties extends Record<keyof CSS.
   all: never;
   /** @deprecated Use corresponding longhand properties such as `animationName` and `animationDuration` instead. */
   animation: never;
+  /** @deprecated Use corresponding longhand properties such as `animationRangeStart` and `animationRangeEnd` instead. */
+  animationRange: never;
   /** @deprecated Use corresponding longhand properties such as `backgroundImage` and `backgroundSize` instead. */
   background: never;
   /** @deprecated Use corresponding longhand properties `backgroundPositionX` and `backgroundPositionY` instead. */
@@ -138,4 +140,6 @@ export interface GriffelStylesUnsupportedCSSProperties extends Record<keyof CSS.
   textEmphasis: never;
   /** @deprecated Use `shorthands.transition()` instead. */
   transition: never;
+  /** @deprecated Use corresponding longhand properties such as `viewTimelineName` and `viewTimelineAxis` instead. */
+  viewTimeline: never;
 }
