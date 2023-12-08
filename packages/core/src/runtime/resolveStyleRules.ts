@@ -249,7 +249,7 @@ export function resolveStyleRules(
         ? {
             rtlClassName,
             rtlProperty: rtlDefinitions[0].key,
-            rtlValue: rtlDefinitions.map(d => d.value) as Array<string | number>,
+            rtlValue: rtlDefinitions.map(d => d.value) as unknown as Array<string | number>,
           }
         : undefined;
 
@@ -262,7 +262,7 @@ export function resolveStyleRules(
         property,
         support,
         container,
-        value: value as Array<string | number>,
+        value: value as unknown as Array<string | number>,
         ...rtlCompileOptions,
       });
 

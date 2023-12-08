@@ -64,6 +64,7 @@ export const LOOKUP_DIR_INDEX = 1;
 export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof GriffelStylesUnsupportedCSSProperties, 1> = {
   all: 1,
   animation: 1,
+  animationRange: 1,
   background: 1,
   backgroundPosition: 1,
   border: 1,
@@ -128,4 +129,5 @@ export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof GriffelStylesUnsupportedCS
   textDecoration: 1,
   textEmphasis: 1,
   transition: 1,
+  viewTimeline: 1,
 } as const;

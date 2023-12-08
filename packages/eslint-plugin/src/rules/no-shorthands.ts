@@ -12,6 +12,7 @@ export const RULE_NAME = 'no-shorthands';
 const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, true> = {
   all: true,
   animation: true,
+  animationRange: true,
   background: true,
   backgroundPosition: true,
   border: true,
@@ -76,6 +77,7 @@ const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, 
   textDecoration: true,
   textEmphasis: true,
   transition: true,
+  viewTimeline: true,
 };
 
 const pxSplitter = buildShorthandSplitter({ numberUnit: 'px' });
