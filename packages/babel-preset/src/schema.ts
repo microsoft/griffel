@@ -9,21 +9,6 @@ export const configSchema: JSONSchema7 = {
     generateMetadata: {
       type: 'boolean',
     },
-    modules: {
-      type: 'array',
-      items: {
-        type: 'object',
-        required: ['moduleSource', 'importName'],
-        properties: {
-          moduleSource: {
-            type: 'string',
-          },
-          importName: {
-            type: 'string',
-          },
-        },
-      },
-    },
     babelOptions: {
       type: 'object',
       properties: {
@@ -47,9 +32,6 @@ export const configSchema: JSONSchema7 = {
           test: {},
         },
       },
-    },
-    projectRoot: {
-      type: 'string',
     },
   },
   additionalProperties: false,

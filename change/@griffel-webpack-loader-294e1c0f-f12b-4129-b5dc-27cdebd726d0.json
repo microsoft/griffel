@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "BREAKING: migrate to to wyw-in-js",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

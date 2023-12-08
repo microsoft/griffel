@@ -13,14 +13,14 @@ import TabItem from '@theme/TabItem';
 <TabItem value="yarn" label="Yarn">
 
 ```shell
-yarn add --dev @griffel/babel-preset
+yarn add --dev @griffel/babel-preset @griffel/tag-processor
 ```
 
 </TabItem>
 <TabItem value="npm" label="NPM">
 
 ```shell
-npm install --save-dev @griffel/babel-preset
+npm install --save-dev @griffel/babel-preset @griffel/tag-processor
 ```
 
 </TabItem>

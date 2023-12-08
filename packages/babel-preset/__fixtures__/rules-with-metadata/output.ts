@@ -1,5 +1,5 @@
-import { __styles } from '@griffel/react';
-export const useStyles = __styles(
+import { __styles as _styles } from '@griffel/react';
+export const useStyles = /*#__PURE__*/ _styles(
   {
     media: {
       Bulngiv: 'fr5o61b',
