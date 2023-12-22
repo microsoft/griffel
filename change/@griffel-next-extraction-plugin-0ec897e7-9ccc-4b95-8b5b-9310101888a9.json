@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "chore: require Next.js 13 or 14",
+  "packageName": "@griffel/next-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

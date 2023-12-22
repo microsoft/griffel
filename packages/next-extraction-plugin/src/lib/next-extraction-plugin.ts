@@ -87,7 +87,6 @@ export const withGriffelCSSExtraction =
                 isClient: !isServer,
                 isServer,
                 isDevelopment: dev,
-                future: nextConfig.future || {},
                 experimental: nextConfig.experimental || {},
               } as ConfigurationContext,
               () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev), undefined),
