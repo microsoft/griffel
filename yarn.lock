@@ -6830,21 +6830,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.0.9":
-  version: 18.0.9
-  resolution: "@types/react-dom@npm:18.0.9"
+"@types/react-dom@npm:18.2.18, @types/react-dom@npm:^18.0.0":
+  version: 18.2.18
+  resolution: "@types/react-dom@npm:18.2.18"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 642dd910e6195944d9f911479a99851a73f34b99c7876128562e2d11e9f1af5f37d7fa81029d08738804f9964126f25ae1ccc36b88af2dafe9509edb1bc48f47
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^18.0.0":
-  version: 18.0.10
-  resolution: "@types/react-dom@npm:18.0.10"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: fbc4ea2eb2e5fff8716bd323f850904f3aec1cbb257bf0799a23111b6d98b83c5b7e58b96c4bdd11033004668424672fd29f7412160bb0cdf2305066de1ce300
+  checksum: 4ef7725b4cebd4a32e049097ddfdfd855a178e63ead97ab6d3084872e7d6c1acd71aa923488123cd1015f0e0b11489d2b44f674a1df8fe82d7827eabbec6dbf1
   languageName: node
   linkType: hard
 
@@ -6880,14 +6871,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.25":
-  version: 18.0.25
-  resolution: "@types/react@npm:18.0.25"
+"@types/react@npm:*, @types/react@npm:18.2.45":
+  version: 18.2.45
+  resolution: "@types/react@npm:18.2.45"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 2575450a4d4889cd7161037bf3d4567e25fe336abc2169fa9fa33c868a232d30bbac5e34f1a9d0a4f878c3f04b3126fae699497b53906bdf323b97d02c5ba91b
+  checksum: bd27fd8a959fa776965997af89cb04e43e7868416850fdff421b5539f389efa35acae3d55915c9f32d7b00fb388550302bf8a7f06010abf9ad431e5bf58cb774
   languageName: node
   linkType: hard
 
@@ -14870,8 +14861,8 @@ __metadata:
     "@types/lz-string": "npm:1.3.34"
     "@types/mini-css-extract-plugin": "npm:2.5.1"
     "@types/node": "npm:18.11.9"
-    "@types/react": "npm:18.0.25"
-    "@types/react-dom": "npm:18.0.9"
+    "@types/react": "npm:18.2.45"
+    "@types/react-dom": "npm:18.2.18"
     "@types/styled-components": "npm:5.1.26"
     "@types/stylis": "npm:4.2.0"
     "@types/tmp": "npm:0.2.3"
