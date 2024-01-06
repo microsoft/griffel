@@ -14,6 +14,13 @@ const SUPPORTS_CONSTRUCTABLE_STYLESHEETS: boolean = (() => {
   }
 })();
 
+export interface CreateShadowDomRendererOptions {
+  /**
+   * If specified, a renderer will insert created CSSStyleSheets after this CSSStyleSheet.
+   */
+  insertionPoint?: ExtendedCSSStyleSheet;
+}
+
 let rendererId = 0;
 
 function getCSSStyleSheetForBucket(
@@ -54,12 +61,14 @@ function insertBefore<T extends CSSStyleSheet | ExtendedCSSStyleSheet>(
   return [...arr.slice(0, index), sheetToInsert, ...arr.slice(index)];
 }
 
-export function createShadowDOMRenderer(shadowRoot: ShadowRoot) {
+export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateShadowDomRendererOptions = {}) {
   if (!SUPPORTS_CONSTRUCTABLE_STYLESHEETS) {
     return createFallbackRenderer(shadowRoot) as GriffelRenderer & {
       adoptedStyleSheets?: never;
     };
   }
+
+  const { insertionPoint } = options;
 
   const cssSheetsCache: Record<string, ExtendedCSSStyleSheet> = {};
   const renderer: GriffelShadowDOMRenderer = {
@@ -83,7 +92,7 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot) {
             metadata,
 
             styleSheet => {
-              const targetStyleSheet = findInsertionPoint(renderer, styleSheet);
+              const targetStyleSheet = findInsertionPoint(renderer, styleSheet, insertionPoint);
 
               renderer.adoptedStyleSheets = insertBefore(renderer.adoptedStyleSheets, styleSheet, targetStyleSheet);
               shadowRoot.adoptedStyleSheets = insertBefore(shadowRoot.adoptedStyleSheets, styleSheet, targetStyleSheet);

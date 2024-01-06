@@ -11,6 +11,7 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
 export function findInsertionPoint(
   renderer: GriffelShadowDOMRenderer,
   styleSheet: ExtendedCSSStyleSheet,
+  insertionPoint?: ExtendedCSSStyleSheet,
 ): ExtendedCSSStyleSheet | null {
   let styleSheets = renderer.adoptedStyleSheets;
   const targetOrder = styleBucketOrderingMap[styleSheet.bucketName];
@@ -31,8 +32,12 @@ export function findInsertionPoint(
     const styleElement = styleSheets[i];
 
     if (comparer(styleElement) > 0) {
-      return styleSheets[i + 1] ?? null;
+      return styleSheets[i + 1] ?? insertionPoint ?? null;
     }
+  }
+
+  if (insertionPoint) {
+    return insertionPoint;
   }
 
   if (styleSheets.length > 0) {
