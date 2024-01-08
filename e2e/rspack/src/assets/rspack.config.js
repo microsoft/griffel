@@ -4,7 +4,7 @@ const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plug
 const path = require('path');
 
 /**
- * @type {import('@rspack/cli').Configuration}
+ * @type {import('@rspack/core').Configuration}
  */
 const config = {
   mode: 'production',

@@ -1,24 +1,18 @@
 import { SourceMapConsumer, MappedPosition, RawSourceMap } from 'source-map-js';
 
 export const resources: Promise<chrome.devtools.inspectedWindow.Resource[]> = new Promise(resolve => {
-  if (chrome.devtools) {
-    chrome.devtools.inspectedWindow.getResources(currResources => {
-      resolve(currResources);
-    });
+  chrome.devtools.inspectedWindow.getResources(currResources => {
+    resolve(currResources);
+  });
+});
+chrome.devtools.inspectedWindow.onResourceAdded.addListener(async resource => {
+  if (!resource.url.startsWith('debugger')) {
+    (await resources).push(resource);
   }
 });
 
-if (chrome.devtools) {
-  chrome.devtools.inspectedWindow.onResourceAdded.addListener(async resource => {
-    if (!resource.url.startsWith('debugger')) {
-      (await resources).push(resource);
-    }
-  });
-}
-
 export async function getOriginalPosition(sourceMapJSON: RawSourceMap, sourceLoc: MappedPosition) {
   const { source, line, column } = sourceLoc;
-
   try {
     const sourceMapConsumer = new SourceMapConsumer(sourceMapJSON);
     const result = sourceMapConsumer.originalPositionFor({ line, column });

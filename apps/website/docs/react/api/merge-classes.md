@@ -64,7 +64,7 @@ Compared to native CSS, the order of arguments in `mergeClasses()` affects the r
 
 In CSS the order of the class names doesn't affect the application of styles. If you have issues with style specificity or ordering, look at the generated CSS rather than the class names.
 
-Griffel performs CSS rule ordering, check [the order of pseudo classes](/react/guides/atomic-css#lvfha-order-of-pseudo-classes).
+Griffel performs CSS rule ordering, check [the order of pseudo classes](react/guides/atomic-css#lvfha-order-of-pseudo-classes).
 
 ### Merging plain CSS classes
 

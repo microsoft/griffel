@@ -14,10 +14,6 @@ export type WebpackLoaderOptions = BabelPluginOptions & {
   >;
 };
 
-type ResolveOptions = Pick<
-  enhancedResolve.ResolveOptionsOptionalFS,
-  'alias' | 'conditionNames' | 'extensions' | 'modules' | 'plugins'
->;
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
 export function shouldTransformSourceCode(
@@ -75,7 +71,7 @@ export function webpackLoader(
 
   EvalCache.clearForFile(this.resourcePath);
 
-  const resolveOptionsDefaults: ResolveOptions = {
+  const resolveOptionsDefaults: webpack.ResolveOptions = {
     conditionNames: ['require'],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   };
@@ -93,7 +89,7 @@ export function webpackLoader(
         resolveOptionsFromWebpackConfig[resolveOptionKey],
       ]),
     ),
-    ...(webpackResolveOptions as ResolveOptions),
+    ...webpackResolveOptions,
   });
 
   const originalResolveFilename = Module._resolveFilename;

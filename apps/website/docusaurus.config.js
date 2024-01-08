@@ -1,10 +1,10 @@
 // @ts-check
 
-const { themes } = require('prism-react-renderer');
+const vsDarkTheme = require('prism-react-renderer/themes/vsDark');
 const prismTheme = {
-  ...themes.vsDark,
+  ...vsDarkTheme,
   plain: {
-    ...themes.vsDark.plain,
+    ...vsDarkTheme.plain,
     backgroundColor: '#000',
   },
 };

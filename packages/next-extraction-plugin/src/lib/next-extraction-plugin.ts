@@ -60,14 +60,9 @@ export const withGriffelCSSExtraction =
           config.module?.rules?.find(
             rule =>
               typeof rule === 'object' &&
-              rule !== null &&
               Array.isArray(rule.oneOf) &&
               rule.oneOf.some(
-                setRule =>
-                  setRule &&
-                  setRule.test instanceof RegExp &&
-                  typeof setRule.test.test === 'function' &&
-                  setRule.test.test('filename.css'),
+                ({ test }) => test instanceof RegExp && typeof test.test === 'function' && test.test('filename.css'),
               ),
           ) as RuleSetRule
         )?.oneOf;

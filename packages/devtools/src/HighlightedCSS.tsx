@@ -1,5 +1,5 @@
 import { makeStyles, shorthands } from '@griffel/react';
-import { PrismTheme, Highlight } from 'prism-react-renderer';
+import Highlight, { defaultProps, PrismTheme } from 'prism-react-renderer';
 import * as React from 'react';
 
 import { tokens } from './themes';
@@ -65,7 +65,7 @@ export const HighlightedCSS: React.FC<{ code: string }> = ({ code }) => {
   const { colorIndicator } = useColorIndicatorStyles();
 
   return (
-    <Highlight code={code} language="css" theme={customTheme}>
+    <Highlight {...defaultProps} code={code} language="css" theme={customTheme}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={{ ...style, display: 'inline-block', textDecorationLine: 'inherit' }}>
           {tokens.map((line, i) => (
