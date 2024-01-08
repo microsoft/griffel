@@ -71,7 +71,7 @@ export const SlotCSSRules: React.FC<{ slot: string; atomicRules: AtomicRules[]; 
   const jumpToSourceHandler = sourceURL
     ? (e: React.SyntheticEvent) => {
         e.stopPropagation();
-        openOriginalCode(sourceURL);
+        openOriginalCode(sourceURL).then(() => {});
       }
     : undefined;
 
