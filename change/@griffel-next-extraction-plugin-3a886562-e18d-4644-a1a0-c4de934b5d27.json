@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: improve checks on .rules",
+  "packageName": "@griffel/next-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
