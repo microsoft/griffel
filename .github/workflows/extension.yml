@@ -18,9 +18,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Verify extension has changed
-        uses: tj-actions/changed-files@v23.1
+        uses: tj-actions/changed-files@v41
         id: verify-extension-changed
         with:
           files: |
