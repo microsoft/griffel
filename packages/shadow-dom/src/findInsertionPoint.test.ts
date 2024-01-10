@@ -32,15 +32,6 @@ describe('findInsertionPoint', () => {
     expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
   });
 
-  // it('handles insertionPoint in otherwise empty array', () => {
-  //   const insertionPoint = new CSSStyleSheet() as ExtendedCSSStyleSheet;
-
-  //   const renderer = createRendererMock([]);
-  //   const styleSheet = createStyleSheetMock('d', {});
-
-  //   expect(findInsertionPoint(renderer, styleSheet, insertionPoint)).toBe(insertionPoint);
-  // });
-
   it('finds a position at beginning', () => {
     const renderer = createRendererMock([
       createStyleSheetMock('d', {}),
@@ -73,15 +64,6 @@ describe('findInsertionPoint', () => {
 
       expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
     });
-
-    // it('handles insertionPoint in otherwise empty array', () => {
-    //   const insertionPoint = new CSSStyleSheet() as ExtendedCSSStyleSheet;
-
-    //   const renderer = createRendererMock([]);
-    //   const styleSheet = createStyleSheetMock('m', { m: '(max-width: 3px)' });
-
-    //   expect(findInsertionPoint(renderer, styleSheet, insertionPoint)).toBe(insertionPoint);
-    // });
 
     it('finds a position at beginning', () => {
       const renderer = createRendererMock([createStyleSheetMock('c', {})]);
