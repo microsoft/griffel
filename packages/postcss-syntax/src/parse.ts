@@ -5,16 +5,18 @@ import { BabelPluginOptions } from '@griffel/babel-preset';
 
 export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document | postcss.Root>, 'from' | 'map'>;
 
-export interface ParserOptions extends PostCSSParserOptions, BabelPluginOptions {}
+export interface ParserOptions extends PostCSSParserOptions {
+  griffelPreset?: BabelPluginOptions;
+}
 
 export const parse = (css: string | { toString(): string }, opts?: ParserOptions) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { from: filename = 'postcss-syntax.styles.ts', map, ...griffelPluginOptions } = opts ?? {};
+  const { from: filename = 'postcss-syntax.styles.ts', griffelPreset } = opts ?? {};
+
   const code = css.toString();
   const { metadata } = transformSync(code, {
     filename,
     pluginOptions: {
-      ...griffelPluginOptions,
+      ...griffelPreset,
       generateMetadata: true,
     },
   });

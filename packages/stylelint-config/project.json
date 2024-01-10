@@ -1,0 +1,55 @@
+{
+  "name": "@griffel/stylelint-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/stylelint-config/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/stylelint-config/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/stylelint-config"],
+      "options": {
+        "jestConfig": "packages/stylelint-config/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/stylelint-config",
+        "tsConfig": "packages/stylelint-config/tsconfig.lib.json",
+        "packageJson": "packages/stylelint-config/package.json",
+        "main": "packages/stylelint-config/src/index.ts",
+        "updateBuildableProjectDepsInPackageJson": false,
+        "assets": [
+          "packages/stylelint-config/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/babel-preset",
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}
