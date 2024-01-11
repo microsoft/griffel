@@ -1,4 +1,5 @@
-import { AST_NODE_TYPES, ASTUtils, TSESTree } from '@typescript-eslint/utils';
+import type { TSESTree } from '@typescript-eslint/utils';
+import { AST_NODE_TYPES, ASTUtils } from '@typescript-eslint/utils';
 
 type IsHelper<NodeType extends AST_NODE_TYPES> = (node: TSESTree.Node | null | undefined) => node is TSESTree.Node & {
   type: NodeType;

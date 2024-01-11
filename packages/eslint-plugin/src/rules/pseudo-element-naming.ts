@@ -1,4 +1,4 @@
-import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
+import type { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 
 import { createRule } from '../utils/createRule';
 import { isMakeStylesCallExpression, isObjectExpression, isProperty, isStringLiteral } from '../utils/helpers';

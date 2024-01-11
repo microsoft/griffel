@@ -1,6 +1,6 @@
-import { PluginObj, PluginPass, types as t, ConfigAPI } from '@babel/core';
+import type { PluginObj, PluginPass, types as t, ConfigAPI } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
-import { BabelPluginOptions } from '@griffel/babel-preset';
+import type { BabelPluginOptions } from '@griffel/babel-preset';
 
 export interface LocationPluginState extends PluginPass {
   locations?: Record<string, Record<string, t.SourceLocation>>;

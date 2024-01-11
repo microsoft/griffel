@@ -1,4 +1,4 @@
-import { ESLintUtils } from '@typescript-eslint/utils';
+import type { ESLintUtils } from '@typescript-eslint/utils';
 
 import { createRule } from '../utils/createRule';
 import { isIdentifier, isMakeStylesCallExpression } from '../utils/helpers';

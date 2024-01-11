@@ -1,5 +1,5 @@
-import { CSSClasses, LookupItem } from '../types';
-import { DebugAtomicClassName, DebugSequence } from './types';
+import type { CSSClasses, LookupItem } from '../types';
+import type { DebugAtomicClassName, DebugSequence } from './types';
 
 function getDirectionalClassName(classes: CSSClasses, direction: 'ltr' | 'rtl'): string {
   return Array.isArray(classes) ? (direction === 'rtl' ? classes[1] : classes[0]) : classes;

@@ -1,5 +1,5 @@
 import hash from '@emotion/hash';
-import { PropertyHash } from '../../types';
+import type { PropertyHash } from '../../types';
 
 export function hashPropertyKey(
   selector: string,

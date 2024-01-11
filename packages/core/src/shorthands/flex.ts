@@ -1,4 +1,4 @@
-import * as CSS from 'csstype';
+import type * as CSS from 'csstype';
 
 import type { GriffelStyle } from '@griffel/style-types';
 import type { FlexInput } from './types';

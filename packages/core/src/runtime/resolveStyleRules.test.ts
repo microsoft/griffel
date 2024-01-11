@@ -1,6 +1,6 @@
 import { griffelRulesSerializer } from '../common/snapshotSerializers';
 import { resolveStyleRules } from './resolveStyleRules';
-import { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
+import type { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
 import { UNSUPPORTED_CSS_PROPERTIES } from '..';
 
 expect.addSnapshotSerializer(griffelRulesSerializer);

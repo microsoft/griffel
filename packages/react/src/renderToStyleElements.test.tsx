@@ -1,4 +1,5 @@
-import { createDOMRenderer, GriffelRenderer } from '@griffel/core';
+import type { GriffelRenderer } from '@griffel/core';
+import { createDOMRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';

@@ -1,5 +1,5 @@
 import { DATA_BUCKET_ATTR } from '../constants';
-import { IsomorphicStyleSheet, StyleBucketName } from '../types';
+import type { IsomorphicStyleSheet, StyleBucketName } from '../types';
 
 export function createIsomorphicStyleSheet(
   styleElement: HTMLStyleElement | undefined,

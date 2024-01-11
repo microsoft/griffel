@@ -1,7 +1,7 @@
 import type { GriffelAnimation, GriffelResetStyle, GriffelStyle } from '@griffel/core';
 import { tokenize } from 'stylis';
 
-import { FileContext } from '../types';
+import type { FileContext } from '../types';
 
 /**
  * Linaria v4 emits absolute paths for assets, we normalize these paths to be relative from the project root to be the

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Story } from '@storybook/react';
+import type { Story } from '@storybook/react';
 
 import { createDOMRenderer } from '@griffel/core';
 import { makeStyles, RendererProvider, shorthands } from '../';

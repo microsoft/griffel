@@ -1,8 +1,10 @@
-import { NodePath, types as t } from '@babel/core';
-import { Scope } from '@babel/traverse';
-import * as template from '@babel/template';
+import { types as t } from '@babel/core';
+import type { NodePath } from '@babel/core';
 import generator from '@babel/generator';
-import { Module, StrictOptions } from '@linaria/babel-preset';
+import * as template from '@babel/template';
+import type { Scope } from '@babel/traverse';
+import type { StrictOptions } from '@linaria/babel-preset';
+import { Module } from '@linaria/babel-preset';
 
 import type { BabelPluginOptions } from '../types';
 

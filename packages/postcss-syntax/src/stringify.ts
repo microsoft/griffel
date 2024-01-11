@@ -1,4 +1,4 @@
-import * as postcss from 'postcss';
+import type * as postcss from 'postcss';
 import { GRIFFEL_SRC_RAW } from './constants';
 
 export const stringify: postcss.Stringifier = root => {

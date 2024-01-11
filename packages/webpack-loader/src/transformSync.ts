@@ -1,5 +1,6 @@
 import * as Babel from '@babel/core';
-import griffelPreset, { BabelPluginOptions } from '@griffel/babel-preset';
+import type { BabelPluginOptions } from '@griffel/babel-preset';
+import griffelPreset from '@griffel/babel-preset';
 
 export type TransformOptions = {
   filename: string;

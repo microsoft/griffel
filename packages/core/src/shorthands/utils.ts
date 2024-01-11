@@ -1,5 +1,5 @@
 import type { GriffelStylesCSSValue } from '@griffel/style-types';
-import * as CSS from 'csstype';
+import type * as CSS from 'csstype';
 
 const LINE_STYLES: CSS.DataType.LineStyle[] = [
   'none',

@@ -1,5 +1,5 @@
 import { createRule } from '../utils/createRule';
-import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
+import type { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
 import { isMakeStylesCallExpression } from '../utils/helpers';
 
 const MATCHING_PACKAGES = new Set(['@fluentui/react-components', '@griffel/core', '@griffel/react']);

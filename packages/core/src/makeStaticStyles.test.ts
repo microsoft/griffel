@@ -2,7 +2,7 @@ import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { griffelRendererSerializer } from './common/snapshotSerializers';
 import { makeStaticStyles } from './makeStaticStyles';
 import { makeStyles } from './makeStyles';
-import { GriffelRenderer } from './types';
+import type { GriffelRenderer } from './types';
 
 expect.addSnapshotSerializer(griffelRendererSerializer);
 

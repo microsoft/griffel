@@ -1,5 +1,5 @@
-import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
-import * as CSS from 'csstype';
+import type { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
+import type * as CSS from 'csstype';
 
 import { createRule } from '../utils/createRule';
 import { isIdentifier, isLiteral, isMakeStylesCallExpression, isObjectExpression, isProperty } from '../utils/helpers';

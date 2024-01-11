@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { transformPlugin } from './transformPlugin';
-import { BabelPluginMetadata } from './types';
+import type { BabelPluginMetadata } from './types';
 
 const prettierConfig = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '../../../.prettierrc'), { encoding: 'utf-8' }),

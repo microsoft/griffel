@@ -1,7 +1,8 @@
 import * as Babel from '@babel/core';
 import type { CSSRulesByBucket } from '@griffel/core';
 
-import { babelPluginStripGriffelRuntime, StripRuntimeBabelPluginMetadata } from './babelPluginStripGriffelRuntime';
+import type { StripRuntimeBabelPluginMetadata } from './babelPluginStripGriffelRuntime';
+import { babelPluginStripGriffelRuntime } from './babelPluginStripGriffelRuntime';
 
 export type TransformOptions = {
   filename: string;

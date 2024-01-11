@@ -1,4 +1,4 @@
-import { SequenceHash } from '../types';
+import type { SequenceHash } from '../types';
 
 declare global {
   interface Window {

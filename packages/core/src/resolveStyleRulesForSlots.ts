@@ -1,7 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
 
 import { resolveStyleRules } from './runtime/resolveStyleRules';
-import { CSSClassesMapBySlot, CSSRulesByBucket, StyleBucketName, StylesBySlots } from './types';
+import type { CSSClassesMapBySlot, CSSRulesByBucket, StyleBucketName, StylesBySlots } from './types';
 
 /**
  * Calls resolveStyleRules() for each slot, is also used by build time transform.

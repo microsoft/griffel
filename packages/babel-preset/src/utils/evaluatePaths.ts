@@ -1,4 +1,4 @@
-import { NodePath, types as t } from '@babel/core';
+import type { NodePath, types as t } from '@babel/core';
 
 import type { BabelPluginOptions } from '../types';
 import { evaluatePathsInVM } from './evaluatePathsInVM';

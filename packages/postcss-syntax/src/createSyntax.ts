@@ -1,7 +1,8 @@
-import * as postcss from 'postcss';
+import type { BabelPluginOptions } from '@griffel/babel-preset';
+import type * as postcss from 'postcss';
+
 import { parse } from './parse';
 import { stringify } from './stringify';
-import { BabelPluginOptions } from '@griffel/babel-preset';
 
 /**
  * Creates a custom syntax with configured options for @griffel/babel-preset

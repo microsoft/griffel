@@ -1,9 +1,11 @@
 import { normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
-import * as webpack from 'webpack';
+import type * as webpack from 'webpack';
 
-import { transformSync, TransformResult, TransformOptions } from './transformSync';
-import { GriffelCssLoaderContextKey, SupplementedLoaderContext } from './constants';
+import type { TransformResult, TransformOptions } from './transformSync';
+import { transformSync } from './transformSync';
+import type { SupplementedLoaderContext } from './constants';
+import { GriffelCssLoaderContextKey } from './constants';
 
 export type WebpackLoaderOptions = {
   /**

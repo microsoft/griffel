@@ -1,6 +1,8 @@
 import * as Babel from '@babel/core';
-import griffelPreset, { BabelPluginMetadata, BabelPluginOptions } from '@griffel/babel-preset';
-import locationPreset, { LocationPluginMetadata } from './location-preset';
+import type { BabelPluginMetadata, BabelPluginOptions } from '@griffel/babel-preset';
+import griffelPreset from '@griffel/babel-preset';
+import type { LocationPluginMetadata } from './location-preset';
+import locationPreset from './location-preset';
 
 export type TransformOptions = {
   filename: string;

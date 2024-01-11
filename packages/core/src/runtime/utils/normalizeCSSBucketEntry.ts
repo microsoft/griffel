@@ -1,4 +1,4 @@
-import { CSSBucketEntry } from '../../types';
+import type { CSSBucketEntry } from '../../types';
 
 /**
  * @internal

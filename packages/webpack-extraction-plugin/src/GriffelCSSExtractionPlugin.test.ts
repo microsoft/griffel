@@ -6,8 +6,9 @@ import * as prettier from 'prettier';
 import * as webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import { GriffelCSSExtractionPlugin, GriffelCSSExtractionPluginOptions } from './GriffelCSSExtractionPlugin';
-import { WebpackLoaderOptions } from './webpackLoader';
+import type { GriffelCSSExtractionPluginOptions } from './GriffelCSSExtractionPlugin';
+import { GriffelCSSExtractionPlugin } from './GriffelCSSExtractionPlugin';
+import type { WebpackLoaderOptions } from './webpackLoader';
 
 type TestOptions = {
   only?: boolean;

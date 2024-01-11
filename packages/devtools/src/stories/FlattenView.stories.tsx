@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Story } from '@storybook/react';
 import type { DebugResult } from '@griffel/core';
+import type { Story } from '@storybook/react';
 
 import { FlattenView } from '../FlattenView';
 import { darkTheme, lightTheme } from '../themes';

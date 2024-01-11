@@ -1,4 +1,5 @@
-import { compileAtomicCSSRule, CompileAtomicCSSOptions, normalizePseudoSelector } from './compileAtomicCSSRule';
+import { compileAtomicCSSRule, normalizePseudoSelector } from './compileAtomicCSSRule';
+import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule';
 
 const defaultOptions: Pick<
   CompileAtomicCSSOptions,
