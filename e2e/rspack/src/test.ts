@@ -36,7 +36,7 @@ async function performTest() {
     console.log(logSymbols.info, 'Installing packages...');
 
     await installPackages({
-      packages: ['@rspack/cli', 'react', 'react-dom'],
+      packages: ['@rspack/cli', '@rspack/core', 'react', 'react-dom'],
       resolutions,
       tempDir,
       rootDir,
