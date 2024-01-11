@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: bump `enhanced-resolve` & improve internal types",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
