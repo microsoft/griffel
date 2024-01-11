@@ -50,10 +50,6 @@ export function findShadowRootInsertionPoint(
 ): CSSStyleSheet | null {
   const styleSheets = shadowRoot.adoptedStyleSheets;
 
-  if (renderer.adoptedStyleSheets.length < 1) {
-    return insertionPoint ? styleSheets[styleSheets.indexOf(insertionPoint) + 1] : null;
-  }
-
   if (rendererTargetStyleSheet) {
     return styleSheets[styleSheets.indexOf(rendererTargetStyleSheet)];
   }
