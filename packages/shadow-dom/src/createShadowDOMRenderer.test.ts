@@ -1,7 +1,38 @@
 import { createShadowDOMRenderer } from './createShadowDOMRenderer';
-import { ExtendedCSSStyleSheet } from './types';
+import type { ExtendedCSSStyleSheet } from './types';
 
 type CSSStyleSheetWithId = CSSStyleSheet & { id: string };
+
+function createSheetWithId(id: string) {
+  const sheet = new CSSStyleSheet() as CSSStyleSheetWithId;
+  sheet.id = id;
+
+  return sheet;
+}
+
+expect.addSnapshotSerializer({
+  test(value) {
+    return Array.isArray(value);
+  },
+  print(value) {
+    /**
+     * test function makes sure that value is the guarded type
+     */
+    const _value = value as Array<ExtendedCSSStyleSheet | CSSStyleSheetWithId | CSSStyleSheet>;
+
+    return JSON.stringify(
+      _value.map(sheet => ({
+        ...(Object.hasOwnProperty.call(sheet, 'bucketName') && {
+          bucketName: (sheet as ExtendedCSSStyleSheet).bucketName,
+          metadata: (sheet as ExtendedCSSStyleSheet).metadata,
+        }),
+        ...(Object.hasOwnProperty.call(sheet, 'id') && { id: (sheet as CSSStyleSheetWithId).id }),
+      })),
+      null,
+      2,
+    );
+  },
+});
 
 describe('createShadowDOMRenderer', () => {
   it('returns a renderer', () => {
@@ -42,194 +73,127 @@ describe('createShadowDOMRenderer', () => {
 
       renderer.insertCSSRules({ t: ['a {}'] });
 
-      expect(renderer.adoptedStyleSheets?.map(sheet => ({ bucketName: sheet.bucketName, metadata: sheet.metadata })))
-        .toMatchInlineSnapshot(`
-        Array [
-          Object {
+      expect(renderer.adoptedStyleSheets).toMatchInlineSnapshot(`
+        [
+          {
             "bucketName": "d",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "l",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "v",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "f",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "h",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "a",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "t",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "m",
-            "metadata": Object {
-              "m": "(forced-colors: active)",
-            },
+            "metadata": {
+              "m": "(forced-colors: active)"
+            }
           },
-          Object {
+          {
             "bucketName": "m",
-            "metadata": Object {
-              "m": "(prefers-reduced-motion)",
-            },
+            "metadata": {
+              "m": "(prefers-reduced-motion)"
+            }
+          }
+        ]
+      `);
+    });
+
+    it('inserts sheets after other sheets', () => {
+      const other1 = createSheetWithId('other1');
+      const other2 = createSheetWithId('other2');
+
+      shadowRoot.adoptedStyleSheets = [other1, other2];
+      renderer = createShadowDOMRenderer(shadowRoot);
+
+      renderer.insertCSSRules({ d: ['a {}'] });
+      renderer.insertCSSRules({ t: ['a {}'] });
+
+      expect(shadowRoot.adoptedStyleSheets).toMatchInlineSnapshot(`
+        [
+          {
+            "id": "other1"
           },
+          {
+            "id": "other2"
+          },
+          {
+            "bucketName": "d",
+            "metadata": {}
+          },
+          {
+            "bucketName": "t",
+            "metadata": {}
+          }
         ]
       `);
     });
 
     it('inserts styles in the correct order with insertionPoint', () => {
-      const other1 = new CSSStyleSheet() as CSSStyleSheetWithId;
-      other1.id = 'other1';
+      const other1 = createSheetWithId('other1');
+      const other2 = createSheetWithId('other2');
+      const insertionPoint = createSheetWithId('insertionPoint');
 
-      const other2 = new CSSStyleSheet() as CSSStyleSheetWithId;
-      other2.id = 'other2';
-
-      const insertionPoint = new CSSStyleSheet() as CSSStyleSheetWithId;
-      insertionPoint.id = 'insertionPoint';
       shadowRoot.adoptedStyleSheets = [other1, insertionPoint, other2];
 
       renderer = createShadowDOMRenderer(shadowRoot, {
-        insertionPoint: insertionPoint as unknown as ExtendedCSSStyleSheet,
+        insertionPoint,
       });
 
       renderer.insertCSSRules({ d: ['a {}'] });
       renderer.insertCSSRules({ t: ['a {}'] });
-
-      renderer.insertCSSRules({
-        m: [[`a {}`, { m: '(forced-colors: active)' }]],
-      });
-      renderer.insertCSSRules({
-        m: [[`a {}`, { m: '(prefers-reduced-motion)' }]],
-      });
-
       renderer.insertCSSRules({ h: ['a {}'] });
       renderer.insertCSSRules({ f: ['a {}'] });
-      renderer.insertCSSRules({ a: ['a {}'] });
-      renderer.insertCSSRules({ v: ['a {}'] });
-      renderer.insertCSSRules({ l: ['a {}'] });
 
-      renderer.insertCSSRules({ t: ['a {}'] });
-
-      expect(renderer.adoptedStyleSheets?.map(sheet => ({ bucketName: sheet.bucketName, metadata: sheet.metadata })))
-        .toMatchInlineSnapshot(`
-        Array [
-          Object {
+      expect(shadowRoot.adoptedStyleSheets).toMatchInlineSnapshot(`
+        [
+          {
+            "id": "other1"
+          },
+          {
+            "id": "insertionPoint"
+          },
+          {
             "bucketName": "d",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
-            "bucketName": "l",
-            "metadata": Object {},
-          },
-          Object {
-            "bucketName": "v",
-            "metadata": Object {},
-          },
-          Object {
+          {
             "bucketName": "f",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
+          {
             "bucketName": "h",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
-            "bucketName": "a",
-            "metadata": Object {},
-          },
-          Object {
+          {
             "bucketName": "t",
-            "metadata": Object {},
+            "metadata": {}
           },
-          Object {
-            "bucketName": "m",
-            "metadata": Object {
-              "m": "(forced-colors: active)",
-            },
-          },
-          Object {
-            "bucketName": "m",
-            "metadata": Object {
-              "m": "(prefers-reduced-motion)",
-            },
-          },
+          {
+            "id": "other2"
+          }
         ]
       `);
-
-      const res = shadowRoot.adoptedStyleSheets?.map(sheet => {
-        if ('bucketName' in sheet) {
-          const eSheet = sheet as ExtendedCSSStyleSheet;
-          return { bucketName: eSheet.bucketName, metadata: eSheet.metadata };
-        } else {
-          return { id: (sheet as unknown as CSSStyleSheetWithId).id };
-        }
-      });
-
-      expect(res).toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "id": "other1",
-            },
-            Object {
-              "id": "insertionPoint",
-            },
-            Object {
-              "bucketName": "d",
-              "metadata": Object {},
-            },
-            Object {
-              "bucketName": "l",
-              "metadata": Object {},
-            },
-            Object {
-              "bucketName": "v",
-              "metadata": Object {},
-            },
-            Object {
-              "bucketName": "f",
-              "metadata": Object {},
-            },
-            Object {
-              "bucketName": "h",
-              "metadata": Object {},
-            },
-            Object {
-              "bucketName": "a",
-              "metadata": Object {},
-            },
-            Object {
-              "bucketName": "t",
-              "metadata": Object {},
-            },
-            Object {
-              "bucketName": "m",
-              "metadata": Object {
-                "m": "(forced-colors: active)",
-              },
-            },
-            Object {
-              "bucketName": "m",
-              "metadata": Object {
-                "m": "(prefers-reduced-motion)",
-              },
-            },
-            Object {
-              "id": "other2",
-            },
-          ]
-        `);
     });
   });
 });
