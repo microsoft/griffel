@@ -1,6 +1,6 @@
-import { CSSRulesByBucket } from '../types';
-import { createDOMRenderer } from './createDOMRenderer';
 import { griffelRendererSerializer } from '../common/snapshotSerializers';
+import type { CSSRulesByBucket } from '../types';
+import { createDOMRenderer } from './createDOMRenderer';
 
 expect.addSnapshotSerializer(griffelRendererSerializer);
 

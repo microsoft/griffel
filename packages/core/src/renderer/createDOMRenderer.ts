@@ -1,6 +1,6 @@
 import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
 import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
-import { GriffelRenderer, StyleBucketName } from '../types';
+import type { GriffelRenderer, StyleBucketName } from '../types';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket';
 import { safeInsertRule } from './safeInsertRule';
 

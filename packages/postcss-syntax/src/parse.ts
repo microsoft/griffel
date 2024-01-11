@@ -1,7 +1,7 @@
 import * as postcss from 'postcss';
 import transformSync from './transform-sync';
 import { GRIFFEL_DECLARATOR_RAW, GRIFFEL_SLOT_RAW, GRIFFEL_SRC_RAW } from './constants';
-import { BabelPluginOptions } from '@griffel/babel-preset';
+import type { BabelPluginOptions } from '@griffel/babel-preset';
 
 export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document | postcss.Root>, 'from' | 'map'>;
 

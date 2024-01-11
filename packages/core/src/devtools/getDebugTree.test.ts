@@ -1,8 +1,8 @@
 import { SEQUENCE_PREFIX } from '../constants';
 import { makeStyles } from '../makeStyles';
+import type { MakeStylesOptions } from '../makeStyles';
 import { mergeClasses } from '../mergeClasses';
 import { createDOMRenderer } from '../renderer/createDOMRenderer';
-import { MakeStylesOptions } from '../makeStyles';
 import { getDebugTree } from './getDebugTree';
 
 jest.mock('./isDevToolsEnabled', () => ({

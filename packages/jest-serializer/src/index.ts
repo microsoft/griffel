@@ -1,4 +1,5 @@
-import { DEBUG_RESET_CLASSES, DEFINITION_LOOKUP_TABLE, CSSClasses } from '@griffel/core';
+import type { CSSClasses } from '@griffel/core';
+import { DEBUG_RESET_CLASSES, DEFINITION_LOOKUP_TABLE } from '@griffel/core';
 
 export function print(val: unknown) {
   /**

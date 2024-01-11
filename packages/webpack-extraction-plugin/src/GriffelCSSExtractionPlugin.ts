@@ -1,4 +1,5 @@
-import { defaultCompareMediaQueries, GriffelRenderer } from '@griffel/core';
+import type { GriffelRenderer } from '@griffel/core';
+import { defaultCompareMediaQueries } from '@griffel/core';
 import { Compilation, NormalModule } from 'webpack';
 import type { Chunk, Compiler, Module, sources } from 'webpack';
 

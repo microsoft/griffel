@@ -1,7 +1,7 @@
 import type { Evaluator } from '@linaria/babel-preset';
 
 import { validateOptions } from './validateOptions';
-import { BabelPluginOptions } from './types';
+import type { BabelPluginOptions } from './types';
 
 describe('validateOptions', () => {
   describe('modules', () => {

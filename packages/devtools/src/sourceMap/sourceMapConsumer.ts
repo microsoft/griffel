@@ -1,4 +1,5 @@
-import { SourceMapConsumer, MappedPosition, RawSourceMap } from 'source-map-js';
+import type { MappedPosition, RawSourceMap } from 'source-map-js';
+import { SourceMapConsumer } from 'source-map-js';
 
 export const resources: Promise<chrome.devtools.inspectedWindow.Resource[]> = new Promise(resolve => {
   chrome.devtools.inspectedWindow.getResources(currResources => {

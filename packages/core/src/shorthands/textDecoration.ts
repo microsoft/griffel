@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import {
+import type {
   TextDecorationColorInput,
   TextDecorationLineInput,
   TextDecorationStyleInput,

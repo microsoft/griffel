@@ -1,5 +1,6 @@
 import { makeStyles, shorthands } from '@griffel/react';
-import Highlight, { defaultProps, PrismTheme } from 'prism-react-renderer';
+import type { PrismTheme } from 'prism-react-renderer';
+import Highlight, { defaultProps } from 'prism-react-renderer';
 import * as React from 'react';
 
 import { tokens } from './themes';

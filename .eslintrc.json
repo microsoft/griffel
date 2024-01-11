@@ -12,6 +12,14 @@
     }
   },
   "rules": {
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "disallowTypeAnnotations": false,
+        "fixStyle": "separate-type-imports",
+        "prefer": "type-imports"
+      }
+    ],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": false }],
     "jest/no-focused-tests": "error"
   },

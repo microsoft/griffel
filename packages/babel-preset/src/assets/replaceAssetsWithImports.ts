@@ -1,4 +1,5 @@
-import { NodePath, traverse, types as t } from '@babel/core';
+import type { NodePath } from '@babel/core';
+import { traverse, types as t } from '@babel/core';
 import * as path from 'path';
 import { tokenize } from 'stylis';
 

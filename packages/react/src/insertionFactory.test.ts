@@ -2,7 +2,7 @@ import type { GriffelRenderer } from '@griffel/core';
 
 import { insertionFactory } from './insertionFactory';
 import { useInsertionEffect as _useInsertionEffect } from './useInsertionEffect';
-import * as React from 'react';
+import type * as React from 'react';
 
 jest.mock('./useInsertionEffect', () => ({
   useInsertionEffect: jest.fn().mockImplementation(fn => fn()),

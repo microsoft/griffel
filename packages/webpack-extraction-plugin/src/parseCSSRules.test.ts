@@ -1,5 +1,5 @@
 import { parseCSSRules } from './parseCSSRules';
-import { CSSRulesByBucket } from '@griffel/core';
+import type { CSSRulesByBucket } from '@griffel/core';
 
 function removeEmptyBuckets(cssRulesByBucket: CSSRulesByBucket) {
   return Object.fromEntries(Object.entries(cssRulesByBucket).filter(([, bucketEntries]) => bucketEntries.length > 0));

@@ -1,5 +1,5 @@
-import { GriffelStyle, resolveStyleRulesForSlots } from '@griffel/core';
-import type { CSSClassesMapBySlot, CSSRulesByBucket } from '@griffel/core';
+import { resolveStyleRulesForSlots } from '@griffel/core';
+import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStyle } from '@griffel/core';
 import type { ValueCache } from '@wyw-in-js/processor-utils';
 
 import { createRuleLiteral } from './assets/createRuleLiteral';

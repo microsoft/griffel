@@ -5,7 +5,7 @@ import type { ValueCache } from '@wyw-in-js/processor-utils';
 import { createRuleLiteral } from './assets/createRuleLiteral';
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
 import BaseGriffelProcessor from './BaseGriffelProcessor';
-import { FileContext } from './types';
+import type { FileContext } from './types';
 
 export default class MakeResetStylesProcessor extends BaseGriffelProcessor {
   #ltrClassName: string | null = null;

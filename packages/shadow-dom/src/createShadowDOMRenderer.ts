@@ -2,7 +2,7 @@ import { normalizeCSSBucketEntry, safeInsertRule } from '@griffel/core';
 import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
 
 import { createFallbackRenderer } from './createFallbackRenderer';
-import { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
+import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
 import { findInsertionPoint } from './findInsertionPoint';
 
 const SUPPORTS_CONSTRUCTABLE_STYLESHEETS: boolean = (() => {

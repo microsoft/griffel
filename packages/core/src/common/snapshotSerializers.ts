@@ -2,10 +2,10 @@
 
 import * as prettier from 'prettier';
 
-import { resolveStyleRules } from '../runtime/resolveStyleRules';
+import type { resolveStyleRules } from '../runtime/resolveStyleRules';
 import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
 import type { CSSRulesByBucket, GriffelRenderer } from '../types';
-import { resolveResetStyleRules } from '../runtime/resolveResetStyleRules';
+import type { resolveResetStyleRules } from '../runtime/resolveResetStyleRules';
 
 // eslint-disable-next-line eqeqeq
 const isObject = (value: unknown) => value != null && !Array.isArray(value) && typeof value === 'object';

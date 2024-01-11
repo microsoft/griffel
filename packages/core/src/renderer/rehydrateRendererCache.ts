@@ -1,4 +1,4 @@
-import { GriffelRenderer, StyleBucketName } from '../types';
+import type { GriffelRenderer, StyleBucketName } from '../types';
 import { createIsomorphicStyleSheetFromElement } from './createIsomorphicStyleSheet';
 import { isDevToolsEnabled, debugData } from '../devtools';
 

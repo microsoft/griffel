@@ -1,22 +1,17 @@
-import { NodePath, PluginObj, PluginPass, types as t } from '@babel/core';
+import type { NodePath, PluginObj, PluginPass } from '@babel/core';
+import { types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
-import {
-  resolveStyleRulesForSlots,
-  GriffelStyle,
-  resolveResetStyleRules,
-  CSSRulesByBucket,
-  CSSClassesMapBySlot,
-  normalizeCSSBucketEntry,
-} from '@griffel/core';
+import type { GriffelStyle, CSSRulesByBucket, CSSClassesMapBySlot } from '@griffel/core';
+import { resolveStyleRulesForSlots, resolveResetStyleRules, normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
 
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
 import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
 import { dedupeCSSRules } from './utils/dedupeCSSRules';
 import { evaluatePaths } from './utils/evaluatePaths';
-import { BabelPluginOptions, BabelPluginMetadata } from './types';
+import type { BabelPluginOptions, BabelPluginMetadata } from './types';
 import { validateOptions } from './validateOptions';
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles';

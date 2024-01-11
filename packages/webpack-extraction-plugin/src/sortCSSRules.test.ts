@@ -1,4 +1,4 @@
-import { CSSRulesByBucket, GriffelRenderer } from '@griffel/core';
+import type { CSSRulesByBucket, GriffelRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
 
 import { sortCSSRules } from './sortCSSRules';

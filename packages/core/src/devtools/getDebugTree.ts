@@ -1,7 +1,7 @@
 import { DEFINITION_LOOKUP_TABLE } from '../constants';
-import { LookupItem, SequenceHash } from '../types';
+import type { LookupItem, SequenceHash } from '../types';
 import { debugData } from './store';
-import { DebugSequence } from './types';
+import type { DebugSequence } from './types';
 import { getDebugClassNames } from './utils';
 
 export function getDebugTree(debugSequenceHash: SequenceHash, parentNode?: DebugSequence) {

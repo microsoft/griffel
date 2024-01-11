@@ -1,5 +1,5 @@
 import { DATA_BUCKET_ATTR } from '../constants';
-import { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
+import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
 /**

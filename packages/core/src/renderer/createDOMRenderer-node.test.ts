@@ -4,7 +4,7 @@
 
 // 👆 this is intentionally to test in SSR like environment
 
-import { CSSRulesByBucket } from '../types';
+import type { CSSRulesByBucket } from '../types';
 import { createDOMRenderer } from './createDOMRenderer';
 
 describe('createDOMRenderer', () => {

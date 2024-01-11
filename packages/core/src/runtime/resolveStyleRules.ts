@@ -3,8 +3,9 @@ import type { GriffelAnimation, GriffelStyle } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { HASH_PREFIX, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
-import { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types';
-import { compileAtomicCSSRule, CompileAtomicCSSOptions } from './compileAtomicCSSRule';
+import type { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types';
+import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule';
+import { compileAtomicCSSRule } from './compileAtomicCSSRule';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';

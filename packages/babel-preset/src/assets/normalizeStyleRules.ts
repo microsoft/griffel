@@ -1,4 +1,4 @@
-import { GriffelAnimation, GriffelStyle } from '@griffel/core';
+import type { GriffelAnimation, GriffelStyle } from '@griffel/core';
 import { tokenize } from 'stylis';
 
 import { isAssetUrl } from './isAssetUrl';
