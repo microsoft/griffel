@@ -43,7 +43,6 @@ export function findInsertionPoint(
 }
 
 export function findShadowRootInsertionPoint(
-  renderer: GriffelShadowDOMRenderer,
   shadowRoot: ShadowRoot,
   rendererTargetStyleSheet: ExtendedCSSStyleSheet | null,
   insertionPoint?: CSSStyleSheet,
@@ -51,17 +50,17 @@ export function findShadowRootInsertionPoint(
   const styleSheets = shadowRoot.adoptedStyleSheets;
 
   if (rendererTargetStyleSheet) {
-    return styleSheets[styleSheets.indexOf(rendererTargetStyleSheet)];
+    return styleSheets[styleSheets.indexOf(rendererTargetStyleSheet)] ?? null;
   }
 
   if (insertionPoint) {
     let i = styleSheets.indexOf(insertionPoint) + 1;
     let targetSheet = styleSheets[i];
-    while ('bucketName' in targetSheet) {
+    while (targetSheet && 'bucketName' in targetSheet) {
       targetSheet = styleSheets[i++];
     }
 
-    return targetSheet;
+    return targetSheet ?? null;
   }
 
   return null;

@@ -93,12 +93,7 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateS
 
             styleSheet => {
               const targetStyleSheet = findInsertionPoint(renderer, styleSheet);
-              const shadowRootTargetSheet = findShadowRootInsertionPoint(
-                renderer,
-                shadowRoot,
-                targetStyleSheet,
-                insertionPoint,
-              );
+              const shadowRootTargetSheet = findShadowRootInsertionPoint(shadowRoot, targetStyleSheet, insertionPoint);
 
               renderer.adoptedStyleSheets = insertBefore(renderer.adoptedStyleSheets, styleSheet, targetStyleSheet);
               shadowRoot.adoptedStyleSheets = insertBefore(
