@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: fix getOriginalPosition() to work in Storybook",
+  "packageName": "@griffel/devtools",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
