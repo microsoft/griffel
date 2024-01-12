@@ -1,8 +1,17 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 30 Nov 2023 16:42:15 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jan 2024 11:08:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.15.2
+
+Fri, 12 Jan 2024 11:08:40 GMT
+
+### Patches
+
+- chore: bump csstype (olfedias@microsoft.com)
+- Bump @griffel/style-types to v1.0.3
 
 ## 1.15.1
 

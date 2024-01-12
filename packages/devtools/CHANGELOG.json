@@ -2,6 +2,41 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Fri, 12 Jan 2024 11:08:40 GMT",
+      "tag": "@griffel/devtools_v0.2.26",
+      "version": "0.2.26",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "1594e428f0902da615ff8d9e86ae4512ce9f0389",
+            "comment": "chore: enable \"@typescript-eslint/consistent-type-imports\" lint rule"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "8b9a354f0474894b9b0922a1d0fc468668b9cdfc",
+            "comment": "chore: fix getOriginalPosition() to work in Storybook"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "a9615bdffbca009d460338b532e76d29605a5f31",
+            "comment": "chore: use newer version of react-prism"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.5.20",
+            "commit": "0d2e5506d6b9bc9d7e4a102b88c2bb25eff9a34d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Nov 2023 16:42:15 GMT",
       "tag": "@griffel/devtools_v0.2.25",
       "version": "0.2.25",

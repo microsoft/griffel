@@ -2,6 +2,29 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Fri, 12 Jan 2024 11:08:40 GMT",
+      "tag": "@griffel/jest-serializer_v1.1.22",
+      "version": "1.1.22",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "1594e428f0902da615ff8d9e86ae4512ce9f0389",
+            "comment": "chore: enable \"@typescript-eslint/consistent-type-imports\" lint rule"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.15.2",
+            "commit": "0d2e5506d6b9bc9d7e4a102b88c2bb25eff9a34d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Nov 2023 16:42:15 GMT",
       "tag": "@griffel/jest-serializer_v1.1.21",
       "version": "1.1.21",

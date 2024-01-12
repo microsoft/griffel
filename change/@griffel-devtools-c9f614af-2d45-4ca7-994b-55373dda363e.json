@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: use newer version of react-prism",
-  "packageName": "@griffel/devtools",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

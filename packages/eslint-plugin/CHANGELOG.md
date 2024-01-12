@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Tue, 03 Oct 2023 19:09:32 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jan 2024 11:08:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.1
+
+Fri, 12 Jan 2024 11:08:40 GMT
+
+### Patches
+
+- chore: bump csstype (olfedias@microsoft.com)
 
 ## 1.5.0
 

@@ -2,6 +2,29 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Fri, 12 Jan 2024 11:08:40 GMT",
+      "tag": "@griffel/eslint-plugin_v1.5.1",
+      "version": "1.5.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "1594e428f0902da615ff8d9e86ae4512ce9f0389",
+            "comment": "chore: enable \"@typescript-eslint/consistent-type-imports\" lint rule"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "adf1a0d691656d5aea75c57d65939bb16d3368c8",
+            "comment": "chore: bump csstype"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Oct 2023 19:09:32 GMT",
       "tag": "@griffel/eslint-plugin_v1.5.0",
       "version": "1.5.0",

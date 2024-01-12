@@ -2,6 +2,35 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Fri, 12 Jan 2024 11:08:40 GMT",
+      "tag": "@griffel/core_v1.15.2",
+      "version": "1.15.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "adf1a0d691656d5aea75c57d65939bb16d3368c8",
+            "comment": "chore: bump csstype"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/core",
+            "comment": "Bump @griffel/style-types to v1.0.3",
+            "commit": "0d2e5506d6b9bc9d7e4a102b88c2bb25eff9a34d"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "1594e428f0902da615ff8d9e86ae4512ce9f0389",
+            "comment": "chore: enable \"@typescript-eslint/consistent-type-imports\" lint rule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Nov 2023 16:42:15 GMT",
       "tag": "@griffel/core_v1.15.1",
       "version": "1.15.1",

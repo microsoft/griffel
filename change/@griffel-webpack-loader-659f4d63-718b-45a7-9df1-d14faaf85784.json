@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: enable \"@typescript-eslint/consistent-type-imports\" lint rule",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

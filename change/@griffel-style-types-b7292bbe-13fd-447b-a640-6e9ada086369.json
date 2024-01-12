@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump csstype",
-  "packageName": "@griffel/style-types",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

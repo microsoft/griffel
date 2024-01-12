@@ -2,6 +2,35 @@
   "name": "@griffel/next-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 12 Jan 2024 11:08:40 GMT",
+      "tag": "@griffel/next-extraction-plugin_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/next-extraction-plugin",
+            "commit": "f134bc6056599a78cf27b71dec854224a162ee22",
+            "comment": "chore: require Next.js 13 or 14"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/next-extraction-plugin",
+            "comment": "Bump @griffel/webpack-extraction-plugin to v0.4.5",
+            "commit": "0d2e5506d6b9bc9d7e4a102b88c2bb25eff9a34d"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/next-extraction-plugin",
+            "commit": "5f2a0e43eb2ff94914904b54bd474cd1af948b6f",
+            "comment": "chore: improve checks on .rules"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Nov 2023 16:42:15 GMT",
       "tag": "@griffel/next-extraction-plugin_v0.0.36",
       "version": "0.0.36",

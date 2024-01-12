@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add insertionPoint API to @griffel/shadow-dom",
-  "packageName": "@griffel/shadow-dom",
-  "email": "seanmonahan@microsoft.com",
-  "dependentChangeType": "patch"
-}

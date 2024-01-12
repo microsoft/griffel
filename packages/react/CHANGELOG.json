@@ -2,6 +2,27 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Fri, 12 Jan 2024 11:08:40 GMT",
+      "tag": "@griffel/react_v1.5.20",
+      "version": "1.5.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "795246bca544bb3085a4488e93bcc9b2f3339a84",
+            "comment": "chore: add \"wyw-in-js\" field for tag processor"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.15.2",
+            "commit": "0d2e5506d6b9bc9d7e4a102b88c2bb25eff9a34d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Nov 2023 16:42:15 GMT",
       "tag": "@griffel/react_v1.5.19",
       "version": "1.5.19",

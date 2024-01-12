@@ -1,8 +1,16 @@
 # Change Log - @griffel/style-types
 
-This log was last generated on Fri, 15 Sep 2023 08:08:43 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jan 2024 11:08:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.3
+
+Fri, 12 Jan 2024 11:08:40 GMT
+
+### Patches
+
+- chore: bump csstype (olfedias@microsoft.com)
 
 ## 1.0.2
 
