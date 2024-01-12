@@ -47,3 +47,7 @@ export const ComponentStyles: Story<{ primary: boolean }> = args => {
 ComponentStyles.args = {
   primary: false,
 };
+
+export default {
+  title: 'Component styles',
+};

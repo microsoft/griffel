@@ -5,14 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/postcss-syntax/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/postcss-syntax"],
       "options": {
         "jestConfig": "packages/postcss-syntax/jest.config.ts",
@@ -20,14 +20,14 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/postcss-syntax",
         "tsConfig": "packages/postcss-syntax/tsconfig.lib.json",
+        "skipTypeField": true,
         "packageJson": "packages/postcss-syntax/package.json",
         "main": "packages/postcss-syntax/src/index.ts",
-        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/postcss-syntax/README.md",
           {
@@ -42,13 +42,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/babel-preset",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ],
-        "outputPath": []
-      }
+        "commands": [{ "command": "tsc -b --pretty" }]
+      },
+      "outputs": []
     }
   },
   "tags": []

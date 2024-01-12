@@ -5,14 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/webpack-loader/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/webpack-loader"],
       "options": {
         "jestConfig": "packages/webpack-loader/jest.config.ts",
@@ -20,14 +20,14 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/webpack-loader",
         "tsConfig": "packages/webpack-loader/tsconfig.lib.json",
+        "skipTypeField": true,
         "packageJson": "packages/webpack-loader/package.json",
         "main": "packages/webpack-loader/src/index.ts",
-        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/webpack-loader/README.md",
           {
@@ -42,9 +42,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/webpack-loader",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
+        "commands": [{ "command": "tsc -b --pretty" }]
+      },
+      "outputs": []
     }
   },
   "tags": []

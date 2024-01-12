@@ -5,14 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/webpack-extraction-plugin/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/webpack-extraction-plugin"],
       "options": {
         "jestConfig": "packages/webpack-extraction-plugin/jest.config.ts",
@@ -20,14 +20,14 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/webpack-extraction-plugin",
         "tsConfig": "packages/webpack-extraction-plugin/tsconfig.lib.json",
+        "skipTypeField": true,
         "packageJson": "packages/webpack-extraction-plugin/package.json",
         "main": "packages/webpack-extraction-plugin/src/index.ts",
-        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/webpack-extraction-plugin/README.md",
           {
@@ -47,9 +47,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/webpack-extraction-plugin",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
+        "commands": [{ "command": "tsc -b --pretty" }]
+      },
+      "outputs": []
     }
   },
   "tags": []

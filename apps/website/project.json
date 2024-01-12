@@ -8,9 +8,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/website",
-        "commands": [{ "command": "docusaurus build --out-dir ../../dist/apps/website" }],
-        "outputPath": ["dist/apps/website"]
-      }
+        "commands": [{ "command": "docusaurus build --out-dir ../../dist/apps/website" }]
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/website"]
     },
     "serve": {
       "executor": "nx:run-commands",

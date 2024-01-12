@@ -6,20 +6,19 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/rollup:rollup",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "buildableProjectDepsInPackageJsonType": "dependencies",
         "outputPath": "dist/packages/core",
         "tsConfig": "packages/core/tsconfig.lib.json",
+        "skipTypeField": true,
+        "skipTypeCheck": true,
         "project": "packages/core/package.json",
         "entryFile": "packages/core/src/index.ts",
         "rollupConfig": "tools/getRollupOptions.js",
         "compiler": "babel",
         "external": ["tslib"],
         "format": ["esm", "cjs"],
-        "skipTypeField": true,
-        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           {
             "glob": "packages/core/README.md",
@@ -35,14 +34,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/core/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/core"],
       "options": {
         "jestConfig": "packages/core/jest.config.ts",
@@ -51,7 +50,7 @@
     },
     "bundle-size": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "target": "build", "projects": "self" }],
+      "dependsOn": [{ "target": "build" }],
       "options": {
         "cwd": "packages/core",
         "commands": [{ "command": "monosize measure" }]
@@ -61,9 +60,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/core",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
+        "commands": [{ "command": "tsc -b --pretty" }]
+      },
+      "outputs": []
     }
   }
 }

@@ -6,20 +6,19 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/rollup:rollup",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "buildableProjectDepsInPackageJsonType": "dependencies",
         "outputPath": "dist/packages/shadow-dom",
         "tsConfig": "packages/shadow-dom/tsconfig.lib.json",
+        "skipTypeField": true,
+        "skipTypeCheck": true,
         "project": "packages/shadow-dom/package.json",
         "entryFile": "packages/shadow-dom/src/index.ts",
         "compiler": "babel",
-        "rollupConfig": ["@nrwl/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
-        "updateBuildableProjectDepsInPackageJson": false,
+        "rollupConfig": ["@nx/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
         "external": ["tslib"],
         "format": ["esm", "cjs"],
-        "skipTypeField": true,
         "assets": [
           {
             "glob": "packages/shadow-dom/README.md",
@@ -35,14 +34,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/shadow-dom/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/shadow-dom"],
       "options": {
         "jestConfig": "packages/shadow-dom/jest.config.ts",
@@ -53,8 +52,7 @@
       "executor": "nx:run-commands",
       "dependsOn": [
         {
-          "target": "build",
-          "projects": "self"
+          "target": "build"
         }
       ],
       "options": {
@@ -67,9 +65,8 @@
       }
     },
     "storybook": {
-      "executor": "@nrwl/storybook:storybook",
+      "executor": "@nx/storybook:storybook",
       "options": {
-        "uiFramework": "@storybook/react",
         "port": 4400,
         "configDir": "packages/shadow-dom/.storybook"
       },
@@ -80,10 +77,9 @@
       }
     },
     "build-storybook": {
-      "executor": "@nrwl/storybook:build",
+      "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}"],
       "options": {
-        "uiFramework": "@storybook/react",
         "configDir": "packages/shadow-dom/.storybook",
         "outputDir": "dist/storybook/@griffel/shadow-dom"
       },
@@ -101,9 +97,9 @@
           {
             "command": "tsc -b --pretty"
           }
-        ],
-        "outputPath": []
-      }
+        ]
+      },
+      "outputs": []
     }
   }
 }

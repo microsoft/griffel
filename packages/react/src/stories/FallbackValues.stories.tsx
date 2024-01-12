@@ -45,3 +45,7 @@ export const FallbackValues: Story = () => {
     </div>
   );
 };
+
+export default {
+  title: 'Fallback values',
+};

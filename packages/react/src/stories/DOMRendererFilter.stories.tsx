@@ -60,3 +60,7 @@ export const DOMRendererFilter: Story<{ filterEnabled: boolean }> = ({ filterEna
 DOMRendererFilter.args = {
   filterEnabled: true,
 };
+
+export default {
+  title: 'unstable_filterCSSRule',
+};

@@ -5,14 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/babel-preset/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/babel-preset"],
       "options": {
         "jestConfig": "packages/babel-preset/jest.config.ts",
@@ -20,14 +20,14 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/babel-preset",
         "tsConfig": "packages/babel-preset/tsconfig.lib.json",
+        "skipTypeField": true,
         "packageJson": "packages/babel-preset/package.json",
         "main": "packages/babel-preset/src/index.ts",
-        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/babel-preset/README.md",
           {
@@ -42,9 +42,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/babel-preset",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
+        "commands": [{ "command": "tsc -b --pretty" }]
+      },
+      "outputs": []
     }
   },
   "tags": []

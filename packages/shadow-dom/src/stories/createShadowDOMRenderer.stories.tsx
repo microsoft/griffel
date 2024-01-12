@@ -74,3 +74,7 @@ export const CreateShadowDOMRenderer = () => {
     </root.div>
   );
 };
+
+export default {
+  title: 'createShadowDOMRenderer()',
+};
