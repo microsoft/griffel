@@ -1,6 +1,8 @@
-import { createRule } from '../utils/createRule';
-import type { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
+import { ESLintUtils } from '@typescript-eslint/utils';
+import type { TSESTree } from '@typescript-eslint/utils';
+
 import { isMakeStylesCallExpression } from '../utils/helpers';
+import { getDocsUrl } from '../utils/getDocsUrl';
 
 const MATCHING_PACKAGES = new Set(['@fluentui/react-components', '@griffel/core', '@griffel/react']);
 const STYLES_FILE_PATTERN = /^.*\.(styles)\.[j|t]s$/;
@@ -41,12 +43,12 @@ function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
 
 export const RULE_NAME = 'styles-file';
 
-export const stylesFileRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreator>> = createRule({
+export const stylesFileRule = ESLintUtils.RuleCreator(getDocsUrl)({
   name: RULE_NAME,
   meta: {
     docs: {
       description: 'Enforce that hooks returned from makeStyles() calls are placed in a .styles.ts file',
-      recommended: 'error',
+      recommended: 'recommended',
     },
     messages: {
       foundMakeStylesUsage:

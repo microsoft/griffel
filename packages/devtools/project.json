@@ -33,7 +33,8 @@
             "input": ".",
             "output": "."
           }
-        ]
+        ],
+        "webpackConfig": "packages/devtools/webpack.config.js"
       },
       "configurations": {
         "production": {
@@ -65,18 +66,14 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/devtools/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/devtools"],
       "options": {
-        "jestConfig": "packages/devtools/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/devtools/jest.config.ts"
       }
     },
     "type-check": {

@@ -57,7 +57,14 @@
       "rules": {}
     },
     {
-      "files": ["**/__fixtures__/**/*", "**/*.stories.ts", "**/*.stories.tsx", "**/*.test.ts", "**/*.test.tsx"],
+      "files": [
+        "**/__fixtures__/**/*",
+        "**/*.stories.ts",
+        "**/*.stories.tsx",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/jest.setup.js"
+      ],
       "rules": {
         "import/no-extraneous-dependencies": "off"
       }

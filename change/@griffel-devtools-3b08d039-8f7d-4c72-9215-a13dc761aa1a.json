@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: bump to Nx@17.2.8",
+  "packageName": "@griffel/devtools",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

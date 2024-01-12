@@ -6,7 +6,7 @@ const componentFileName = 'packages/components/components-foo/foo.tsx';
 const stylesFileName = 'packages/components/components-foo/foo.styles.ts';
 
 const ruleTester = new TSESLint.RuleTester({
-  parser: path.resolve('./node_modules/@typescript-eslint/parser'),
+  parser: path.resolve('./node_modules/@typescript-eslint/parser/dist'),
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',

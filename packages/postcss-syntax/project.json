@@ -5,18 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/postcss-syntax/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/postcss-syntax"],
       "options": {
-        "jestConfig": "packages/postcss-syntax/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/postcss-syntax/jest.config.ts"
       }
     },
     "build": {

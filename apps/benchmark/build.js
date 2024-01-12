@@ -12,24 +12,34 @@ const argv = yargs(process.argv)
 
 const outDir = path.resolve(__dirname, '../../dist/apps/benchmark/');
 
+/** @type {esbuild.Plugin} */
+const WatchRebuildPlugin = {
+  name: 'watch-rebuild',
+  setup(build) {
+    build.onEnd(result => {
+      if (result.errors.length === 0) {
+        console.log('Rebuild was successful, watching for changes...');
+      }
+
+      console.log(`Reuild ended with ${result.errors.length} errors`);
+      console.log(
+        [result.errors, result.warnings]
+          .flat()
+          .map(e => e.text)
+          .join('\n'),
+      );
+    });
+  },
+};
+
 esbuild
   .build({
     entryPoints: ['./src/index.tsx'],
     outfile: path.join(outDir, 'bundle.js'),
     minify: true,
     bundle: true,
-    plugins: [ImportGlobPlugin()],
-    ...(argv.watch && {
-      watch: {
-        onRebuild(error, result) {
-          if (error) {
-            console.error('watch build failed:', error);
-          } else {
-            console.log('watch build succeeded:', result);
-          }
-        },
-      },
-    }),
+
+    plugins: /** @type {esbuild.Plugin[]} */ ([argv.watch && WatchRebuildPlugin, ImportGlobPlugin()].filter(Boolean)),
   })
   .then(() => {
     if (argv.watch) {

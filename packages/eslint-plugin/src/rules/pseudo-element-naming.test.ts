@@ -4,7 +4,7 @@ import * as path from 'path';
 import { pseudoElementNamingRule, RULE_NAME } from './pseudo-element-naming';
 
 const ruleTester = new TSESLint.RuleTester({
-  parser: path.resolve('./node_modules/@typescript-eslint/parser'),
+  parser: path.resolve('./node_modules/@typescript-eslint/parser/dist'),
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
