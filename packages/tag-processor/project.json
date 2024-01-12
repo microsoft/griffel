@@ -1,5 +1,6 @@
 {
-  "root": "packages/tag-processor",
+  "name": "@griffel/tag-processor",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/tag-processor/src",
   "projectType": "library",
   "targets": {
@@ -40,7 +41,11 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "cwd": "packages/tag-processor",
-        "commands": [{ "command": "tsc -b --pretty" }],
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ],
         "outputPath": []
       }
     }

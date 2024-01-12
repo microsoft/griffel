@@ -1,5 +1,5 @@
 diff --git a/src/executors/rollup/lib/update-package-json.js b/src/executors/rollup/lib/update-package-json.js
-index 3bb0d36249b3f8ae8ad3f7932d6b1713a7cec101..848ebb1b85fcb7038fef12073e7ff41f00a431df 100644
+index 48283ecf5c190a40e0659ad448bc541163805574..e710c225a164d1ab970303eec7bcf2cd4101a0a4 100644
 --- a/src/executors/rollup/lib/update-package-json.js
 +++ b/src/executors/rollup/lib/update-package-json.js
 @@ -17,14 +17,14 @@ function updatePackageJson(options, context, target, dependencies, packageJson)
@@ -20,10 +20,10 @@ index 3bb0d36249b3f8ae8ad3f7932d6b1713a7cec101..848ebb1b85fcb7038fef12073e7ff41f
      }
      if (!options.skipTypeField) {
 diff --git a/src/executors/rollup/rollup.impl.js b/src/executors/rollup/rollup.impl.js
-index 9f31b3b69501963e632ca960545dc2411f9e4f1f..7aa1c8ed6403d8aab28fa13e6f1082bbe4b296fa 100644
+index 2ca97d37c2fa1fa54d3372e8200054cdf343ac08..6849b7a14ee91f6374385d22de9a5dda758354a7 100644
 --- a/src/executors/rollup/rollup.impl.js
 +++ b/src/executors/rollup/rollup.impl.js
-@@ -195,8 +195,8 @@ function createRollupOptions(options, dependencies, context, packageJson, source
+@@ -196,8 +196,8 @@ function createRollupOptions(options, dependencies, context, packageJson, source
                  format,
                  dir: `${options.outputPath}`,
                  name: (0, devkit_1.names)(context.projectName).className,

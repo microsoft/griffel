@@ -1,6 +1,4 @@
 module.exports = {
-  stories: [],
-  addons: ['@storybook/addon-essentials'],
   babel: async options => {
     return {
       ...options,

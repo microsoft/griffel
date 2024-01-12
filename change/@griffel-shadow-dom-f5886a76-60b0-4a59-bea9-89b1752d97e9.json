@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: bump to Nx@15.9.7",
+  "packageName": "@griffel/shadow-dom",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
