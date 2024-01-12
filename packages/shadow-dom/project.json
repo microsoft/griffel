@@ -71,9 +71,7 @@
       "options": {
         "uiFramework": "@storybook/react",
         "port": 4400,
-        "config": {
-          "configFolder": "packages/shadow-dom/.storybook"
-        }
+        "configDir": "packages/shadow-dom/.storybook"
       },
       "configurations": {
         "ci": {
@@ -83,13 +81,11 @@
     },
     "build-storybook": {
       "executor": "@nrwl/storybook:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{options.outputDir}"],
       "options": {
         "uiFramework": "@storybook/react",
-        "outputPath": "dist/storybook/@griffel/shadow-dom",
-        "config": {
-          "configFolder": "packages/shadow-dom/.storybook"
-        }
+        "configDir": "packages/shadow-dom/.storybook",
+        "outputDir": "dist/storybook/@griffel/shadow-dom"
       },
       "configurations": {
         "ci": {
@@ -101,7 +97,11 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/shadow-dom",
-        "commands": [{ "command": "tsc -b --pretty" }],
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ],
         "outputPath": []
       }
     }

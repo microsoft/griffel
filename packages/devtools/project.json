@@ -83,7 +83,11 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/devtools",
-        "commands": [{ "command": "tsc -b --pretty" }],
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ],
         "outputPath": []
       }
     },
@@ -92,7 +96,11 @@
       "options": {
         "cwd": ".",
         "parallel": false,
-        "commands": [{ "command": " nx build @griffel/devtools --skip-nx-cache --configuration=development --watch" }]
+        "commands": [
+          {
+            "command": " nx build @griffel/devtools --skip-nx-cache --configuration=development --watch"
+          }
+        ]
       }
     },
     "storybook": {
@@ -100,9 +108,7 @@
       "options": {
         "uiFramework": "@storybook/react",
         "port": 4400,
-        "config": {
-          "configFolder": "packages/devtools/.storybook"
-        }
+        "configDir": "packages/devtools/.storybook"
       },
       "configurations": {
         "ci": {
@@ -112,13 +118,11 @@
     },
     "build-storybook": {
       "executor": "@nrwl/storybook:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{options.outputDir}"],
       "options": {
         "uiFramework": "@storybook/react",
-        "outputPath": "dist/storybook/@griffel/devtools",
-        "config": {
-          "configFolder": "packages/devtools/.storybook"
-        }
+        "configDir": "packages/devtools/.storybook",
+        "outputDir": "dist/storybook/@griffel/devtools"
       },
       "configurations": {
         "ci": {
