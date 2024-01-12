@@ -34,19 +34,13 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/shadow-dom/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/shadow-dom"],
-      "options": {
-        "jestConfig": "packages/shadow-dom/jest.config.ts",
-        "passWithNoTests": true
-      }
+      "options": { "jestConfig": "packages/shadow-dom/jest.config.ts" }
     },
     "bundle-size": {
       "executor": "nx:run-commands",

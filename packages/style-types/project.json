@@ -33,29 +33,21 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/style-types/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/style-types"],
       "options": {
-        "jestConfig": "packages/style-types/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/style-types/jest.config.ts"
       }
     },
     "type-check": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/style-types",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
+        "commands": [{ "command": "tsc -b --pretty" }]
       },
       "outputs": []
     }

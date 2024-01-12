@@ -1,9 +1,9 @@
 {
+  "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
   "env": {
     "webextensions": true
   },
-  "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -11,7 +11,7 @@
         "import/no-extraneous-dependencies": [
           "error",
           {
-            "devDependencies": ["**/*.ts", "**/*.tsx"],
+            "devDependencies": ["**/*.ts", "**/*.tsx", "**/webpack.config.js"],
             "packageDir": [".", "./packages/devtools"]
           }
         ]

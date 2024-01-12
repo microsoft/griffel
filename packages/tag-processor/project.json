@@ -5,18 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/tag-processor/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/tag-processor"],
       "options": {
-        "jestConfig": "packages/tag-processor/jest.config.js",
-        "passWithNoTests": true
+        "jestConfig": "packages/tag-processor/jest.config.js"
       }
     },
     "build": {

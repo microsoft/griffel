@@ -5,18 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/eslint-plugin/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/eslint-plugin"],
       "options": {
-        "jestConfig": "packages/eslint-plugin/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/eslint-plugin/jest.config.ts"
       }
     },
     "build": {

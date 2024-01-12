@@ -1,9 +1,10 @@
-import type { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
+import { ESLintUtils } from '@typescript-eslint/utils';
+import type { TSESTree } from '@typescript-eslint/utils';
 import type * as CSS from 'csstype';
 
-import { createRule } from '../utils/createRule';
 import { isIdentifier, isLiteral, isMakeStylesCallExpression, isObjectExpression, isProperty } from '../utils/helpers';
 import { buildShorthandSplitter } from '../utils/buildShorthandSplitter';
+import { getDocsUrl } from '../utils/getDocsUrl';
 
 export const RULE_NAME = 'no-shorthands';
 
@@ -134,13 +135,13 @@ function findShorthandProperties(
   return result;
 }
 
-export const noShorthandsRule: ReturnType<ReturnType<typeof ESLintUtils.RuleCreator>> = createRule({
+export const noShorthandsRule = ESLintUtils.RuleCreator(getDocsUrl)({
   name: RULE_NAME,
   meta: {
     type: 'problem',
     docs: {
       description: 'Disallow using CSS shorthands in makeStyles() calls',
-      recommended: 'error',
+      recommended: 'recommended',
     },
     fixable: 'code',
     messages: {

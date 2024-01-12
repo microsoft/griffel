@@ -5,18 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/next-extraction-plugin/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/next-extraction-plugin"],
       "options": {
-        "jestConfig": "packages/next-extraction-plugin/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/next-extraction-plugin/jest.config.ts"
       }
     },
     "build": {

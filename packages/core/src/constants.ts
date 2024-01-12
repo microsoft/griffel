@@ -8,6 +8,7 @@ import type { LookupItem, SequenceHash } from './types';
 // Any change in them should happen only in a MAJOR version. If it happens,
 // please change "__NAMESPACE_PREFIX__" to include a version.
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const __GLOBAL__: any = typeof window === 'undefined' ? global : window;
 const __NAMESPACE_PREFIX__ = '@griffel/';
 
