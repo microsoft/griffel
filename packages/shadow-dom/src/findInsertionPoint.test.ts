@@ -1,6 +1,6 @@
 import type { StyleBucketName } from '@griffel/core';
 
-import { findInsertionPoint } from './findInsertionPoint';
+import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint';
 import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
 
 function createRendererMock(adoptedStyleSheets: ExtendedCSSStyleSheet[]) {
@@ -117,5 +117,71 @@ describe('findInsertionPoint', () => {
       expect(resultA).toHaveProperty('bucketName', 'm');
       expect(resultA).toHaveProperty('metadata.m', '(prefers-reduced-motion: reduce)');
     });
+  });
+});
+
+describe('findShadowRootInsertionPoint', () => {
+  let shadowRoot: ShadowRoot;
+  beforeEach(() => {
+    shadowRoot = document.createElement('div').attachShadow({ mode: 'open' });
+
+    // jsdom doesn't support adoptedStyleSheets yet
+    shadowRoot.adoptedStyleSheets = [];
+  });
+
+  it('finds a position in empty array with no insertion point', () => {
+    const styleSheet = createStyleSheetMock('d', {});
+
+    expect(findShadowRootInsertionPoint(shadowRoot, styleSheet)).toBe(null);
+  });
+
+  it('finds a position in array with insertion point', () => {
+    const insertionPoint = new CSSStyleSheet();
+    const griffelSheet = createStyleSheetMock('d', {});
+    shadowRoot.adoptedStyleSheets = [insertionPoint, griffelSheet];
+
+    expect(findShadowRootInsertionPoint(shadowRoot, griffelSheet, insertionPoint)).toBe(griffelSheet);
+  });
+
+  it('finds the insertion point', () => {
+    const insertionPoint = new CSSStyleSheet();
+    shadowRoot.adoptedStyleSheets = [insertionPoint];
+
+    expect(findShadowRootInsertionPoint(shadowRoot, null, insertionPoint)).toBe(null);
+  });
+
+  it('finds the insertion point at the beginning', () => {
+    const insertionPoint = new CSSStyleSheet();
+    const afterSheet = new CSSStyleSheet();
+    shadowRoot.adoptedStyleSheets = [insertionPoint, afterSheet];
+
+    expect(findShadowRootInsertionPoint(shadowRoot, null, insertionPoint)).toBe(afterSheet);
+  });
+
+  it('finds the insertion point at the end', () => {
+    const insertionPoint = new CSSStyleSheet();
+    const beforeSheet = new CSSStyleSheet();
+    shadowRoot.adoptedStyleSheets = [beforeSheet, insertionPoint];
+
+    expect(findShadowRootInsertionPoint(shadowRoot, null, insertionPoint)).toBe(null);
+  });
+
+  it('finds the insertion point in the middle', () => {
+    const insertionPoint = new CSSStyleSheet();
+    const beforeSheet = new CSSStyleSheet();
+    const afterSheet = new CSSStyleSheet();
+    shadowRoot.adoptedStyleSheets = [beforeSheet, insertionPoint, afterSheet];
+
+    expect(findShadowRootInsertionPoint(shadowRoot, null, insertionPoint)).toBe(afterSheet);
+  });
+
+  it('finds the insertion point when other Griffel stylesheets are present', () => {
+    const insertionPoint = new CSSStyleSheet();
+    const beforeSheet = new CSSStyleSheet();
+    const afterSheet = new CSSStyleSheet();
+    const griffelSheet = createStyleSheetMock('d', {});
+    shadowRoot.adoptedStyleSheets = [beforeSheet, insertionPoint, griffelSheet, afterSheet];
+
+    expect(findShadowRootInsertionPoint(shadowRoot, null, insertionPoint)).toBe(afterSheet);
   });
 });

@@ -3,7 +3,7 @@ import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
 
 import { createFallbackRenderer } from './createFallbackRenderer';
 import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
-import { findInsertionPoint } from './findInsertionPoint';
+import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint';
 
 const SUPPORTS_CONSTRUCTABLE_STYLESHEETS: boolean = (() => {
   try {
@@ -13,6 +13,13 @@ const SUPPORTS_CONSTRUCTABLE_STYLESHEETS: boolean = (() => {
     return false;
   }
 })();
+
+export interface CreateShadowDomRendererOptions {
+  /**
+   * If specified, a renderer will insert created CSSStyleSheets after this CSSStyleSheet.
+   */
+  insertionPoint?: CSSStyleSheet;
+}
 
 let rendererId = 0;
 
@@ -54,12 +61,14 @@ function insertBefore<T extends CSSStyleSheet | ExtendedCSSStyleSheet>(
   return [...arr.slice(0, index), sheetToInsert, ...arr.slice(index)];
 }
 
-export function createShadowDOMRenderer(shadowRoot: ShadowRoot) {
+export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateShadowDomRendererOptions = {}) {
   if (!SUPPORTS_CONSTRUCTABLE_STYLESHEETS) {
     return createFallbackRenderer(shadowRoot) as GriffelRenderer & {
       adoptedStyleSheets?: never;
     };
   }
+
+  const { insertionPoint } = options;
 
   const cssSheetsCache: Record<string, ExtendedCSSStyleSheet> = {};
   const renderer: GriffelShadowDOMRenderer = {
@@ -84,9 +93,14 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot) {
 
             styleSheet => {
               const targetStyleSheet = findInsertionPoint(renderer, styleSheet);
+              const shadowRootTargetSheet = findShadowRootInsertionPoint(shadowRoot, targetStyleSheet, insertionPoint);
 
               renderer.adoptedStyleSheets = insertBefore(renderer.adoptedStyleSheets, styleSheet, targetStyleSheet);
-              shadowRoot.adoptedStyleSheets = insertBefore(shadowRoot.adoptedStyleSheets, styleSheet, targetStyleSheet);
+              shadowRoot.adoptedStyleSheets = insertBefore(
+                shadowRoot.adoptedStyleSheets,
+                styleSheet,
+                shadowRootTargetSheet,
+              );
             },
           );
 

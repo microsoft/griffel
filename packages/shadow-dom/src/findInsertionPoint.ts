@@ -41,3 +41,27 @@ export function findInsertionPoint(
 
   return null;
 }
+
+export function findShadowRootInsertionPoint(
+  shadowRoot: ShadowRoot,
+  rendererTargetStyleSheet: ExtendedCSSStyleSheet | null,
+  insertionPoint?: CSSStyleSheet,
+): CSSStyleSheet | null {
+  const styleSheets = shadowRoot.adoptedStyleSheets;
+
+  if (rendererTargetStyleSheet) {
+    return styleSheets[styleSheets.indexOf(rendererTargetStyleSheet)] ?? null;
+  }
+
+  if (insertionPoint) {
+    let i = styleSheets.indexOf(insertionPoint) + 1;
+    let targetSheet = styleSheets[i];
+    while (targetSheet && 'bucketName' in targetSheet) {
+      targetSheet = styleSheets[i++];
+    }
+
+    return targetSheet ?? null;
+  }
+
+  return null;
+}
