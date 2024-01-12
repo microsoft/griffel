@@ -3,7 +3,7 @@ export default {
   displayName: 'react',
   preset: '../../jest.preset.js',
   transform: {
-    '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nrwl/react/babel'] }],
+    '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/react/babel'] }],
   },
   globals: {
     IS_REACT_ACT_ENVIRONMENT: true,

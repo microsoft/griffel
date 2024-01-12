@@ -6,20 +6,18 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/rollup:rollup",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "buildableProjectDepsInPackageJsonType": "dependencies",
         "outputPath": "dist/packages/style-types",
         "tsConfig": "packages/style-types/tsconfig.lib.json",
+        "skipTypeCheck": true,
         "project": "packages/style-types/package.json",
         "entryFile": "packages/style-types/src/index.ts",
         "rollupConfig": "tools/getRollupOptions.js",
         "compiler": "babel",
         "external": ["tslib"],
         "format": ["esm", "cjs"],
-        "skipTypeField": true,
-        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           {
             "glob": "packages/style-types/README.md",
@@ -35,14 +33,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/style-types/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/style-types"],
       "options": {
         "jestConfig": "packages/style-types/jest.config.ts",
@@ -53,9 +51,13 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/style-types",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
+      },
+      "outputs": []
     }
   }
 }

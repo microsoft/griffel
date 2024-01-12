@@ -5,4 +5,7 @@ module.exports = {
       presets: [...options.presets, '@babel/typescript'],
     };
   },
+  core: {},
+  stories: [],
+  addons: [],
 };

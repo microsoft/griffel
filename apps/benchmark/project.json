@@ -8,9 +8,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/benchmark",
-        "commands": [{ "command": "node ./build.js" }],
-        "outputPath": ["dist/apps/benchmark"]
-      }
+        "commands": [{ "command": "node ./build.js" }]
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/benchmark"]
     },
     "watch": {
       "executor": "nx:run-commands",

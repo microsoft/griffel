@@ -1,0 +1,4 @@
+{
+  "plugins": ["annotate-pure-calls"],
+  "presets": ["@nx/js/babel"]
+}

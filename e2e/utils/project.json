@@ -8,9 +8,9 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "e2e/utils",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
+        "commands": [{ "command": "tsc -b --pretty" }]
+      },
+      "outputs": []
     }
   },
   "tags": []

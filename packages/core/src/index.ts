@@ -94,7 +94,7 @@ export type {
   // Internal types
 } from '@griffel/style-types';
 
-export {
+export type {
   CSSClasses,
   CSSClassesMapBySlot,
   CSSBucketEntry,

@@ -6,7 +6,7 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -15,6 +15,7 @@
         "index": "packages/devtools/src/index.html",
         "main": "packages/devtools/src/index.tsx",
         "tsConfig": "packages/devtools/tsconfig.lib.json",
+        "skipTypeField": true,
         "packageJson": "packages/devtools/package.json",
         "assets": [
           {
@@ -51,8 +52,7 @@
       "executor": "nx:run-commands",
       "dependsOn": [
         {
-          "target": "build",
-          "projects": "self"
+          "target": "build"
         }
       ],
       "options": {
@@ -65,14 +65,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/devtools/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/devtools"],
       "options": {
         "jestConfig": "packages/devtools/jest.config.ts",
@@ -87,9 +87,9 @@
           {
             "command": "tsc -b --pretty"
           }
-        ],
-        "outputPath": []
-      }
+        ]
+      },
+      "outputs": []
     },
     "watch": {
       "executor": "nx:run-commands",
@@ -104,9 +104,8 @@
       }
     },
     "storybook": {
-      "executor": "@nrwl/storybook:storybook",
+      "executor": "@nx/storybook:storybook",
       "options": {
-        "uiFramework": "@storybook/react",
         "port": 4400,
         "configDir": "packages/devtools/.storybook"
       },
@@ -117,10 +116,9 @@
       }
     },
     "build-storybook": {
-      "executor": "@nrwl/storybook:build",
+      "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}"],
       "options": {
-        "uiFramework": "@storybook/react",
         "configDir": "packages/devtools/.storybook",
         "outputDir": "dist/storybook/@griffel/devtools"
       },

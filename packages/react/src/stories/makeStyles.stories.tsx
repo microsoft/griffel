@@ -7,8 +7,12 @@ const useStyles = makeStyles({
   },
 });
 
-export const Default = () => {
+export const MakeStyles = () => {
   const classes = useStyles();
 
   return <div className={classes.root}>no stories yet</div>;
+};
+
+export default {
+  title: 'MakeStyles',
 };

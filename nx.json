@@ -1,13 +1,4 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "extends": "nx/presets/core.json",
-  "npmScope": "griffel",
-  "affected": {
-    "defaultBase": "main"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
@@ -15,6 +6,15 @@
         "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook", "type-check"]
       }
     }
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "extends": "nx/presets/core.json",
+  "npmScope": "griffel",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "cli": {
+    "defaultCollection": "@nx/workspace"
   },
   "targetDefaults": {
     "build": {
@@ -25,7 +25,7 @@
     }
   },
   "pluginsConfig": {
-    "@nrwl/js": {
+    "@nx/js": {
       "analyzeSourceFiles": true
     }
   }

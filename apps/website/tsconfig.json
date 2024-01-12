@@ -14,10 +14,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "types": [
+      "../../node_modules/@docusaurus/module-type-aliases",
+      "../../node_modules/@docusaurus/theme-classic",
       "environment",
       "static-assets",
-      "@docusaurus/module-type-aliases",
-      "@docusaurus/theme-classic",
       "webpack-env"
     ]
   },

@@ -3,6 +3,7 @@ import * as React from 'react';
 
 const getClassName = (customStyles: IStyle) => {
   return mergeStyles([
+    // @ts-expect-error Typings of v7 are not compatible with latest TS
     {
       alignItems: 'stretch',
       borderWidth: '0px',

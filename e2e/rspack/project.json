@@ -7,12 +7,12 @@
   "targets": {
     "test": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "target": "build", "projects": "dependencies" }],
+      "dependsOn": [{ "target": "build", "dependencies": true }],
       "options": {
         "cwd": "e2e/rspack",
-        "commands": [{ "command": "ts-node src/test.ts" }],
-        "outputPath": []
-      }
+        "commands": [{ "command": "ts-node src/test.ts" }]
+      },
+      "outputs": []
     },
     "type-check": {
       "executor": "nx:run-commands",
