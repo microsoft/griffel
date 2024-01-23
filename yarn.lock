@@ -14418,6 +14418,7 @@ __metadata:
     lz-string: "npm:1.4.4"
     memfs: "npm:3.4.12"
     mini-css-extract-plugin: "npm:2.6.0"
+    module-alias: "npm:^2.2.3"
     monosize: "npm:0.0.9"
     monosize-storage-upstash: "npm:0.0.8"
     nano-staged: "npm:0.5.0"
@@ -19200,6 +19201,13 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: d71b8dcd4b5af2fe13ecf3bd24070263489404fe216488c5ba7e38ece1f54daf219e72a833a3a2dc404331e870e9f44963a33399589490956bff003a3404d3b2
+  languageName: node
+  linkType: hard
+
+"module-alias@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "module-alias@npm:2.2.3"
+  checksum: 43bdf125f30a6967dedd97005693fd73b9535c6770e46c890b1a87b791df358b2d5b28951b3ebaf47092b645575eeee10388735d9f6866873cb8e87c153d1fa2
   languageName: node
   linkType: hard
 

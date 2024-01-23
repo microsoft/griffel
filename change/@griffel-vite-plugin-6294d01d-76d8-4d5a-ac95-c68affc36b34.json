@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: add tests for Vite plugin",
+  "packageName": "@griffel/vite-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

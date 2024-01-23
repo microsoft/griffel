@@ -112,6 +112,7 @@
     "lz-string": "1.4.4",
     "memfs": "3.4.12",
     "mini-css-extract-plugin": "2.6.0",
+    "module-alias": "^2.2.3",
     "monosize": "0.0.9",
     "monosize-storage-upstash": "0.0.8",
     "nano-staged": "0.5.0",
