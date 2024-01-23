@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "chore: initial release",
+  "packageName": "@griffel/vite-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
