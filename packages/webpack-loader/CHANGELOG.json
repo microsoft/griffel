@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Tue, 23 Jan 2024 11:03:15 GMT",
+      "tag": "@griffel/webpack-loader_v2.2.8",
+      "version": "2.2.8",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "9c0b1acf69a4645331d1623b1f0b5484ce5d2cc9",
+            "comment": "chore: bump to Nx@15.9.7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jan 2024 11:08:40 GMT",
       "tag": "@griffel/webpack-loader_v2.2.8",
       "version": "2.2.8",

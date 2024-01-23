@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump to Nx@16.10.0",
-  "packageName": "@griffel/style-types",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

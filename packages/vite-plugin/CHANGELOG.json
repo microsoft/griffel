@@ -1,0 +1,28 @@
+{
+  "name": "@griffel/vite-plugin",
+  "entries": [
+    {
+      "date": "Tue, 23 Jan 2024 11:03:15 GMT",
+      "tag": "@griffel/vite-plugin_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "3d8d4f3ff2c4af4425952fda2d52d483e042630a",
+            "comment": "chore: initial release"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "c0b189809ce3245549257cee7e12b0d4eda726f5",
+            "comment": "chore: add tests for Vite plugin"
+          }
+        ]
+      }
+    }
+  ]
+}

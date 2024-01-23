@@ -2,6 +2,21 @@
   "name": "@griffel/tag-processor",
   "entries": [
     {
+      "date": "Tue, 23 Jan 2024 11:03:15 GMT",
+      "tag": "@griffel/tag-processor_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/tag-processor",
+            "commit": "3d8d4f3ff2c4af4425952fda2d52d483e042630a",
+            "comment": "chore: bump @wyw-in-js/processor-utils"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jan 2024 11:08:40 GMT",
       "tag": "@griffel/tag-processor_v1.0.0",
       "version": "1.0.0",

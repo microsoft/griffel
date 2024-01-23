@@ -2,6 +2,33 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Tue, 23 Jan 2024 11:03:15 GMT",
+      "tag": "@griffel/devtools_v0.2.26",
+      "version": "0.2.26",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "1a226dc4d52466d55e234e6ee7c4977845d8944b",
+            "comment": "chore: bump to Nx@16.10.0"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "cb5a11705b70fb2bf0aa2dc71412177062a2d7e3",
+            "comment": "chore: bump to Nx@17.2.8"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "9c0b1acf69a4645331d1623b1f0b5484ce5d2cc9",
+            "comment": "chore: bump to Nx@15.9.7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jan 2024 11:08:40 GMT",
       "tag": "@griffel/devtools_v0.2.26",
       "version": "0.2.26",

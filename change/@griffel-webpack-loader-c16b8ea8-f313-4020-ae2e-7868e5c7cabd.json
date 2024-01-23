@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump to Nx@15.9.7",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump to Nx@15.9.7",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

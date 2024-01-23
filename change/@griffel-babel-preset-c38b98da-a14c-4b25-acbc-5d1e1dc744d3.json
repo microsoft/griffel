@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump Nx to 15.9.7",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump @typescript-eslint/utils",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
