@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Fri, 12 Jan 2024 11:08:40 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Jan 2024 10:01:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.5.0
+
+Fri, 26 Jan 2024 10:01:06 GMT
+
+### Minor changes
+
+- feat: add "unstable_attachToEntryPoint" option (olfedias@microsoft.com)
 
 ## 0.4.5
 

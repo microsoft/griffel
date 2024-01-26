@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 26 Jan 2024 10:01:06 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.0",
+      "version": "0.5.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "b7180a73848f6c3aa277716d5c3411024d946197",
+            "comment": "feat: add \"unstable_attachToEntryPoint\" option"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jan 2024 11:03:15 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.4.5",
       "version": "0.4.5",

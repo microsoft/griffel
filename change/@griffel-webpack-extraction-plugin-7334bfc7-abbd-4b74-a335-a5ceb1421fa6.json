@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add \"unstable_attachToEntryPoint\" option",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
