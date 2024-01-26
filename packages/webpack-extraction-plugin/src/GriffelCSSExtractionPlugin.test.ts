@@ -345,7 +345,7 @@ describe('GriffelCSSExtractionPlugin', () => {
   // Unstable
   // --------------------
   testFixture('unstable-attach-to-main', {
-    pluginOptions: { unstable_attachToMainEntryPoint: true },
+    pluginOptions: { unstable_attachToEntryPoint: 'main' },
     webpackConfig: {
       entry: {
         bundleB: path.resolve(__dirname, '..', '__fixtures__', 'webpack', 'unstable-attach-to-main', 'codeB.ts'),

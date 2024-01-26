@@ -11,19 +11,31 @@ import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
 const OPTIMIZE_CHUNKS_STAGE_ADVANCED = 10;
 
+type EntryPoint = Compilation['entrypoints'] extends Map<unknown, infer I> ? I : never;
+
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
-  unstable_attachToMainEntryPoint?: boolean;
+
+  /** Specifies if the CSS extracted from Griffel calls should be attached to a specific chunk with an entrypoint. */
+  unstable_attachToEntryPoint?: string | ((chunk: EntryPoint) => boolean);
 };
 
-function attachGriffelChunkToMainEntryPoint(compilation: Compilation, griffelChunk: Chunk) {
+function attachGriffelChunkToAnotherChunk(
+  compilation: Compilation,
+  griffelChunk: Chunk,
+  attachToEntryPoint: string | ((chunk: EntryPoint) => boolean),
+) {
   const entryPoints = Array.from(compilation.entrypoints.values());
 
   if (entryPoints.length === 0) {
     return;
   }
 
-  const mainEntryPoint = entryPoints[0];
+  const searchFn =
+    typeof attachToEntryPoint === 'string'
+      ? (chunk: EntryPoint) => chunk.name === attachToEntryPoint
+      : attachToEntryPoint;
+  const mainEntryPoint = entryPoints.find(searchFn) ?? entryPoints[0];
   const targetChunk = mainEntryPoint.getEntrypointChunk();
 
   targetChunk.split(griffelChunk);
@@ -96,13 +108,11 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
 export class GriffelCSSExtractionPlugin {
   static loader = require.resolve('./webpackLoader');
 
-  private readonly attachToMainEntryPoint: NonNullable<
-    GriffelCSSExtractionPluginOptions['unstable_attachToMainEntryPoint']
-  >;
+  private readonly attachToEntryPoint: GriffelCSSExtractionPluginOptions['unstable_attachToEntryPoint'];
   private readonly compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
 
   constructor(options?: GriffelCSSExtractionPluginOptions) {
-    this.attachToMainEntryPoint = options?.unstable_attachToMainEntryPoint ?? false;
+    this.attachToEntryPoint = options?.unstable_attachToEntryPoint;
     this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
   }
 
@@ -203,10 +213,10 @@ export class GriffelCSSExtractionPlugin {
 
       // WHAT?
       //  Disconnects Griffel chunk from other chunks, so Griffel chunk cannot be loaded async. Also connects with
-      //  the main entrypoint in config.
+      //  the specified chunk.
       // WHY?
       //  This is scenario required by one of MS teams. Will be removed in the future.
-      if (this.attachToMainEntryPoint) {
+      if (this.attachToEntryPoint) {
         // @ Rspack compat
         // We don't support this scenario for Rspack yet.
         if (IS_RSPACK) {
@@ -218,7 +228,7 @@ export class GriffelCSSExtractionPlugin {
 
           if (typeof griffelChunk !== 'undefined') {
             griffelChunk.disconnectFromGroups();
-            attachGriffelChunkToMainEntryPoint(compilation, griffelChunk);
+            attachGriffelChunkToAnotherChunk(compilation, griffelChunk, this.attachToEntryPoint!);
           }
         });
       }
