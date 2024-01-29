@@ -95,6 +95,24 @@ export const useStyles = makeStyles({
       errors: [{ messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }],
     },
     {
+      name: 'border shorthand with template string',
+      code: `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  root: { borderRight: ${'`1px solid ${tokens.colorNeutralStroke1}`'} },
+});
+`,
+      output: `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  root: { ...shorthands.borderRight(${'`1px`, `solid`, `${tokens.colorNeutralStroke1}`'}) },
+});
+`,
+      errors: [{ messageId: 'shorthandFound' }],
+    },
+    {
       name: 'flex shorthand',
       code: `
 import { makeStyles } from '@griffel/react';
@@ -102,6 +120,7 @@ import { makeStyles } from '@griffel/react';
 export const useStyles = makeStyles({
   root: { flex: '1 2 30px' },
   icon: { flex: 0 },
+  content: { flex: '1 !important' },
 });
 `,
       output: `
@@ -110,9 +129,10 @@ import { makeStyles } from '@griffel/react';
 export const useStyles = makeStyles({
   root: { ...shorthands.flex('1', '2', '30px') },
   icon: { ...shorthands.flex('0') },
+  content: { ...shorthands.flex('1 !important') },
 });
 `,
-      errors: [{ messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }],
+      errors: [{ messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }],
     },
     {
       name: 'margin shorthand',

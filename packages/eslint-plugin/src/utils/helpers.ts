@@ -14,6 +14,9 @@ export const isObjectExpression: IsHelper<AST_NODE_TYPES.ObjectExpression> = AST
   AST_NODE_TYPES.ObjectExpression,
 );
 export const isProperty: IsHelper<AST_NODE_TYPES.Property> = ASTUtils.isNodeOfType(AST_NODE_TYPES.Property);
+export const isTemplateLiteral: IsHelper<AST_NODE_TYPES.TemplateLiteral> = ASTUtils.isNodeOfType(
+  AST_NODE_TYPES.TemplateLiteral,
+);
 
 export function isStringLiteral(node: TSESTree.Node | null | undefined): node is TSESTree.StringLiteral {
   return isLiteral(node) && typeof node.value === 'string';

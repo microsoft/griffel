@@ -1,4 +1,4 @@
-import { buildShorthandSplitter } from './buildShorthandSplitter';
+import { buildShorthandSplitter } from './shorthandToArguments';
 
 describe('buildShorthandSplitter', () => {
   test('should convert numbers to px', () => {
@@ -15,6 +15,14 @@ describe('buildShorthandSplitter', () => {
     expect(splitter('1px solid')).toEqual(['1px', 'solid']);
     expect(splitter('1px')).toEqual(['1px']);
     expect(splitter('1 2 30px')).toEqual(['1', '2', '30px']);
+  });
+
+  test('should ignore leading and trailing spaces', () => {
+    const splitter = buildShorthandSplitter();
+    expect(splitter(' 1px solid black ')).toEqual(['1px', 'solid', 'black']);
+    expect(splitter(' 1px solid  ')).toEqual(['1px', 'solid']);
+    expect(splitter('   1px')).toEqual(['1px']);
+    expect(splitter('  1 2 30px ')).toEqual(['1', '2', '30px']);
   });
 
   test('should split around slashes', () => {
@@ -40,5 +48,11 @@ describe('buildShorthandSplitter', () => {
       'rgba(0 0 0 / 0.5)',
       'rgb(0, 0, 0)',
     ]);
+  });
+
+  test('should split !important across longhands', () => {
+    const splitter = buildShorthandSplitter();
+    expect(splitter('1px !important')).toEqual(['1px !important']);
+    expect(splitter('1px solid !important')).toEqual(['1px !important', 'solid !important']);
   });
 });
