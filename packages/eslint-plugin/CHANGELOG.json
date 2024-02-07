@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Wed, 07 Feb 2024 09:33:35 GMT",
+      "tag": "@griffel/eslint-plugin_v1.6.0",
+      "version": "1.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tigeroakes@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "bd2fb28c785c45cb112c440c1ddd02431293bc2f",
+            "comment": "Add linter rule for invalid shorthand arguments"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jan 2024 11:03:15 GMT",
       "tag": "@griffel/eslint-plugin_v1.5.2",
       "version": "1.5.2",

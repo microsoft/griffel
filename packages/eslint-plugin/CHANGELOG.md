@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Tue, 23 Jan 2024 11:03:15 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Feb 2024 09:33:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.0
+
+Wed, 07 Feb 2024 09:33:35 GMT
+
+### Minor changes
+
+- Add linter rule for invalid shorthand arguments (tigeroakes@microsoft.com)
 
 ## 1.5.2
 
