@@ -1,117 +1,12 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
-import type { TSESTree } from '@typescript-eslint/utils';
-import type * as CSS from 'csstype';
+import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 
-import { isIdentifier, isLiteral, isMakeStylesCallExpression, isObjectExpression, isProperty } from '../utils/helpers';
-import { buildShorthandSplitter } from '../utils/buildShorthandSplitter';
+import { isIdentifier, isMakeStylesCallExpression, isObjectExpression, isProperty } from '../utils/helpers';
+import { UNSUPPORTED_CSS_PROPERTIES, shorthandToArguments } from '../utils/shorthandToArguments';
 import { getDocsUrl } from '../utils/getDocsUrl';
+import { getShorthandValue, joinShorthandArguments } from '../utils/getShorthandValue';
 
 export const RULE_NAME = 'no-shorthands';
-
-// This collection is a map simply for faster access when checking if a CSS property is unsupported
-// @griffel/core has the same definition, but ESLint plugin should not depend on it
-const UNSUPPORTED_CSS_PROPERTIES: Record<keyof CSS.StandardShorthandProperties, true> = {
-  all: true,
-  animation: true,
-  animationRange: true,
-  background: true,
-  backgroundPosition: true,
-  border: true,
-  borderBlock: true,
-  borderBlockEnd: true,
-  borderBlockStart: true,
-  borderBottom: true,
-  borderColor: true,
-  borderImage: true,
-  borderInline: true,
-  borderInlineEnd: true,
-  borderInlineStart: true,
-  borderLeft: true,
-  borderRadius: true,
-  borderRight: true,
-  borderStyle: true,
-  borderTop: true,
-  borderWidth: true,
-  caret: true,
-  columns: true,
-  columnRule: true,
-  containIntrinsicSize: true,
-  container: true,
-  flex: true,
-  flexFlow: true,
-  font: true,
-  gap: true,
-  grid: true,
-  gridArea: true,
-  gridColumn: true,
-  gridRow: true,
-  gridTemplate: true,
-  inset: true,
-  insetBlock: true,
-  insetInline: true,
-  lineClamp: true,
-  listStyle: true,
-  margin: true,
-  marginBlock: true,
-  marginInline: true,
-  mask: true,
-  maskBorder: true,
-  motion: true,
-  offset: true,
-  outline: true,
-  overflow: true,
-  overscrollBehavior: true,
-  padding: true,
-  paddingBlock: true,
-  paddingInline: true,
-  placeItems: true,
-  placeContent: true,
-  placeSelf: true,
-  scrollMargin: true,
-  scrollMarginBlock: true,
-  scrollMarginInline: true,
-  scrollPadding: true,
-  scrollPaddingBlock: true,
-  scrollPaddingInline: true,
-  scrollSnapMargin: true,
-  scrollTimeline: true,
-  textDecoration: true,
-  textEmphasis: true,
-  transition: true,
-  viewTimeline: true,
-};
-
-const pxSplitter = buildShorthandSplitter({ numberUnit: 'px' });
-
-// Transforms shorthand string into args for griffel shorthands.<name>() function.
-const SHORTHAND_FUNCTIONS: Partial<
-  Record<keyof typeof UNSUPPORTED_CSS_PROPERTIES, ReturnType<typeof buildShorthandSplitter>>
-> = {
-  border: pxSplitter,
-  borderLeft: pxSplitter,
-  borderBottom: pxSplitter,
-  borderRight: pxSplitter,
-  borderTop: pxSplitter,
-  borderColor: pxSplitter,
-  borderStyle: pxSplitter,
-  borderRadius: pxSplitter,
-  borderWidth: pxSplitter,
-  // Instead of converting to pixels, convert to flex-grow value.
-  flex: buildShorthandSplitter({ numberUnit: '' }),
-  gap: pxSplitter,
-  // Split every `/` character (and trim whitespace)
-  gridArea: buildShorthandSplitter({ separator: '/' }),
-  margin: pxSplitter,
-  marginBlock: pxSplitter,
-  marginInline: pxSplitter,
-  padding: pxSplitter,
-  paddingBlock: pxSplitter,
-  paddingInline: pxSplitter,
-  overflow: pxSplitter,
-  inset: pxSplitter,
-  outline: pxSplitter,
-  textDecoration: pxSplitter,
-};
 
 function findShorthandProperties(
   node: TSESTree.ObjectExpression,
@@ -152,6 +47,7 @@ export const noShorthandsRule = ESLintUtils.RuleCreator(getDocsUrl)({
   defaultOptions: [],
 
   create(context) {
+    const sourceCode = context.getSourceCode();
     return {
       CallExpression(node) {
         if (isMakeStylesCallExpression(node, 'makeStyles')) {
@@ -162,26 +58,24 @@ export const noShorthandsRule = ESLintUtils.RuleCreator(getDocsUrl)({
 
             shorthandProperties.forEach(shorthandProperty => {
               const propertyNode = shorthandProperty.parent as TSESTree.Property;
-              let autoFixArguments: string[] | null = null;
-              if (isLiteral(propertyNode.value)) {
-                const { value } = propertyNode.value;
-                const shorthandToArguments =
-                  SHORTHAND_FUNCTIONS[shorthandProperty.name as keyof typeof UNSUPPORTED_CSS_PROPERTIES];
-                if (shorthandToArguments !== undefined && (typeof value === 'string' || typeof value === 'number')) {
-                  autoFixArguments = shorthandToArguments(value);
+              const shorthandLiteral = getShorthandValue(propertyNode.value, sourceCode);
+
+              // Try to create an auto-fixer for the shorthand property.
+              let fix: TSESLint.ReportFixFunction | undefined;
+              if (shorthandLiteral) {
+                const autoFixArguments = shorthandToArguments(shorthandProperty.name, shorthandLiteral.value);
+                if (autoFixArguments != null) {
+                  fix = fixer => {
+                    const args = joinShorthandArguments(autoFixArguments, shorthandLiteral.quote);
+                    return fixer.replaceText(propertyNode, `...shorthands.${shorthandProperty.name}(${args})`);
+                  };
                 }
               }
 
               context.report({
                 node: shorthandProperty,
                 messageId: 'shorthandFound',
-                fix:
-                  autoFixArguments != null
-                    ? fixer => {
-                        const args = autoFixArguments!.map(arg => `'${arg}'`).join(', ');
-                        return fixer.replaceText(propertyNode, `...shorthands.${shorthandProperty.name}(${args})`);
-                      }
-                    : undefined,
+                fix,
               });
             });
           }
