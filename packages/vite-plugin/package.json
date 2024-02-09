@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Vite plugin for Griffel",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
