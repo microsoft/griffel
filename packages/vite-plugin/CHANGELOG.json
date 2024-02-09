@@ -2,6 +2,21 @@
   "name": "@griffel/vite-plugin",
   "entries": [
     {
+      "date": "Fri, 09 Feb 2024 10:32:16 GMT",
+      "tag": "@griffel/vite-plugin_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "de8ca05b78028c7f434658dcee5d6c45a81134fd",
+            "comment": "fix: bundle ESM instead of CJS"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jan 2024 11:03:15 GMT",
       "tag": "@griffel/vite-plugin_v0.1.0",
       "version": "0.1.0",
