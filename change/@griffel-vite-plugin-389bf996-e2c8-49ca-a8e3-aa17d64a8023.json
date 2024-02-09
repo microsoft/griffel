@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: bundle ESM instead of CJS",
+  "packageName": "@griffel/vite-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
