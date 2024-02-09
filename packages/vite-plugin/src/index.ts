@@ -1,1 +1,1 @@
-export { vitePlugin as default } from './vitePlugin';
+export { default } from '@wyw-in-js/vite';

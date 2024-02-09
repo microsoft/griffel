@@ -27,10 +27,11 @@ After installation, add the plugin to your `vite.config.js`:
 import { defineConfig } from 'vite';
 import griffel from '@griffel/vite-plugin';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   // ...
-  plugins: [griffel()],
-});
+  plugins: [
+    // We recommend using the plugin only in production builds to get optimized output
+    command === 'build' && griffel(),
+  ],
+}));
 ```
-
-

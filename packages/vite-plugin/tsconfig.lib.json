@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ES2022",
     "outDir": "../../dist/out-tsc",
     "declaration": true,
     "types": ["node", "environment"]
