@@ -47,7 +47,7 @@ export function normalizeStyleRules(
 ): Record<string /* slot */, GriffelStyle> {
   return Object.fromEntries(
     Object.entries(stylesBySlots).map(([key, value]) => {
-      if (typeof value === 'undefined') {
+      if (typeof value === 'undefined' || value === null) {
         return [key, value];
       }
 

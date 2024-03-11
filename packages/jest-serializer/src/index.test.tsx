@@ -7,7 +7,7 @@ import { print, test } from './index';
 expect.addSnapshotSerializer({ print, test });
 
 const useStyles1 = makeStyles({
-  root: { color: 'var(--colorNeutralForeground1)' },
+  root: { color: 'var(--colorNeutralForeground1)', backgroundColor: null },
   paddingLeft: { paddingLeft: '10px' },
 });
 

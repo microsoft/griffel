@@ -1,17 +1,23 @@
 import type * as CSS from 'csstype';
 
-import type { GriffelStylesCSSValue } from './shared';
+import type { Fallback, GriffelStylesCSSValue } from './shared';
 import type { GriffelStylesUnsupportedCSSProperties } from './unsupported-properties';
+
+type NullableEntries<T> = {
+  [P in keyof T]: T[P] | null;
+};
 
 //
 // Types for makeStyles()
 // ---
 //
 
-type GriffelStylesCSSProperties = Omit<
-  CSS.PropertiesFallback<GriffelStylesCSSValue>,
-  // We have custom definition for "animationName"
-  'animationName'
+type GriffelStylesCSSProperties = NullableEntries<
+  Omit<
+    Fallback<CSS.Properties<GriffelStylesCSSValue>>,
+    // We have custom definition for "animationName"
+    'animationName'
+  >
 > &
   Partial<GriffelStylesUnsupportedCSSProperties>;
 
