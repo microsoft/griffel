@@ -52,16 +52,24 @@ describe('renderToStyleElements (node)', () => {
       );
 
       expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-              <style data-make-styles-bucket="d" data-make-styles-rehydration="true">
-                .fe3e8s9 {
-                  color: red;
-                }</style
-              ><style data-make-styles-bucket="h" data-make-styles-rehydration="true">
-                .f14hep94:hover {
-                  color: pink;
-                }
-              </style>
-          `);
+        <style
+          data-make-styles-bucket="d"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .fe3e8s9 {
+            color: red;
+          }</style
+        ><style
+          data-make-styles-bucket="h"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .f14hep94:hover {
+            color: pink;
+          }
+        </style>
+      `);
     });
 
     it('handles @at rules', () => {
@@ -98,24 +106,29 @@ describe('renderToStyleElements (node)', () => {
       );
 
       expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-              <style data-make-styles-bucket="t" data-make-styles-rehydration="true">
-                @supports (display: grid) {
-                  .f1ofq0jl {
-                    color: red;
-                  }
-                }</style
-              ><style
-                media="screen and (max-width: 992px)"
-                data-make-styles-bucket="m"
-                data-make-styles-rehydration="true"
-              >
-                @media screen and (max-width: 992px) {
-                  .fnao3vb:hover {
-                    color: blue;
-                  }
-                }
-              </style>
-          `);
+        <style
+          data-make-styles-bucket="t"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @supports (display: grid) {
+            .f1ofq0jl {
+              color: red;
+            }
+          }</style
+        ><style
+          media="screen and (max-width: 992px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media screen and (max-width: 992px) {
+            .fnao3vb:hover {
+              color: blue;
+            }
+          }
+        </style>
+      `);
     });
 
     it('handles media query order', () => {
@@ -159,58 +172,70 @@ describe('renderToStyleElements (node)', () => {
       );
 
       expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-              <style data-make-styles-bucket="d" data-make-styles-rehydration="true">
-                .fe3e8s9 {
-                  color: red;
-                }</style
-              ><style data-make-styles-bucket="t" data-make-styles-rehydration="true">
-                @supports (display: grid) {
-                  .f1vq01kz {
-                    color: green;
-                  }
-                }</style
-              ><style
-                media="(max-width: 1px)"
-                data-make-styles-bucket="m"
-                data-make-styles-rehydration="true"
-              >
-                @media (max-width: 1px) {
-                  .f1f7njb2:hover {
-                    color: blue;
-                  }
-                }</style
-              ><style
-                media="(max-width: 2px)"
-                data-make-styles-bucket="m"
-                data-make-styles-rehydration="true"
-              >
-                @media (max-width: 2px) {
-                  .f1c6999y:hover {
-                    color: blue;
-                  }
-                }</style
-              ><style
-                media="(max-width: 3px)"
-                data-make-styles-bucket="m"
-                data-make-styles-rehydration="true"
-              >
-                @media (max-width: 3px) {
-                  .f1qdcc3n:hover {
-                    color: blue;
-                  }
-                }</style
-              ><style
-                media="(max-width: 4px)"
-                data-make-styles-bucket="m"
-                data-make-styles-rehydration="true"
-              >
-                @media (max-width: 4px) {
-                  .f1b4up97:hover {
-                    color: blue;
-                  }
-                }
-              </style>
-          `);
+        <style
+          data-make-styles-bucket="d"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .fe3e8s9 {
+            color: red;
+          }</style
+        ><style
+          data-make-styles-bucket="t"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @supports (display: grid) {
+            .f1vq01kz {
+              color: green;
+            }
+          }</style
+        ><style
+          media="(max-width: 1px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 1px) {
+            .f1f7njb2:hover {
+              color: blue;
+            }
+          }</style
+        ><style
+          media="(max-width: 2px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 2px) {
+            .f1c6999y:hover {
+              color: blue;
+            }
+          }</style
+        ><style
+          media="(max-width: 3px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 3px) {
+            .f1qdcc3n:hover {
+              color: blue;
+            }
+          }</style
+        ><style
+          media="(max-width: 4px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 4px) {
+            .f1b4up97:hover {
+              color: blue;
+            }
+          }
+        </style>
+      `);
     });
 
     it('handles keyframes', () => {
@@ -241,32 +266,40 @@ describe('renderToStyleElements (node)', () => {
       );
 
       expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-              <style data-make-styles-bucket="d" data-make-styles-rehydration="true">
-                .f1g6ul6r {
-                  animation-name: f1q8eu9e;
-                }
-                .f1fp4ujf {
-                  animation-name: f55c0se;
-                }</style
-              ><style data-make-styles-bucket="k" data-make-styles-rehydration="true">
-                @keyframes f1q8eu9e {
-                  from {
-                    transform: rotate(0deg);
-                  }
-                  to {
-                    transform: rotate(360deg);
-                  }
-                }
-                @keyframes f55c0se {
-                  from {
-                    transform: rotate(0deg);
-                  }
-                  to {
-                    transform: rotate(-360deg);
-                  }
-                }
-              </style>
-          `);
+        <style
+          data-make-styles-bucket="d"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .f1g6ul6r {
+            animation-name: f1q8eu9e;
+          }
+          .f1fp4ujf {
+            animation-name: f55c0se;
+          }</style
+        ><style
+          data-make-styles-bucket="k"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @keyframes f1q8eu9e {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+          @keyframes f55c0se {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(-360deg);
+            }
+          }
+        </style>
+      `);
     });
   });
 
@@ -288,7 +321,11 @@ describe('renderToStyleElements (node)', () => {
       );
 
       expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style data-make-styles-bucket="r" data-make-styles-rehydration="true">
+        <style
+          data-make-styles-bucket="r"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
           .r1tsu58y {
             color: red;
           }

@@ -1,4 +1,4 @@
-import { DATA_BUCKET_ATTR } from '../constants';
+import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants';
 import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
@@ -38,11 +38,22 @@ export const styleBucketOrdering: StyleBucketName[] = [
   'c',
 ];
 
-// avoid repeatedly calling `indexOf`to determine order during new insertions
+// avoid repeatedly calling `indexOf` to determine order during new insertions
 const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
   acc[cur as StyleBucketName] = j;
   return acc;
 }, {} as Record<StyleBucketName, number>);
+
+export function getStyleSheetKey(bucketName: StyleBucketName, media: string, priority: number): string {
+  return (bucketName === 'm' ? bucketName + media : bucketName) + priority;
+}
+
+export function getStyleSheetKeyFromElement(styleEl: HTMLStyleElement): string {
+  const bucketName = styleEl.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName;
+  const priority = styleEl.getAttribute(DATA_PRIORITY_ATTR) ?? '0';
+
+  return (bucketName === 'm' ? bucketName + styleEl.media : bucketName) + priority;
+}
 
 /**
  * Lazily adds a `<style>` bucket to the `<head>`. This will ensure that the style buckets are ordered.
@@ -55,13 +66,17 @@ export function getStyleSheetForBucket(
   metadata: Record<string, unknown> = {},
 ): IsomorphicStyleSheet {
   const isMediaBucket = bucketName === 'm';
-  const stylesheetKey: StyleBucketName | string = isMediaBucket ? ((bucketName + metadata['m']) as string) : bucketName;
+
+  const media = (metadata['m'] as string | undefined) ?? '0';
+  const priority = (metadata['p'] as number | undefined) ?? 0;
+
+  const stylesheetKey = getStyleSheetKey(bucketName, media, priority);
 
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = targetDocument && targetDocument.createElement('style');
-    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, {
+    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, priority, {
       ...renderer.styleElementAttributes,
-      ...(isMediaBucket && { media: metadata['m'] as string }),
+      ...(isMediaBucket && { media }),
     });
 
     renderer.stylesheets[stylesheetKey] = stylesheet;
@@ -75,6 +90,17 @@ export function getStyleSheetForBucket(
   }
 
   return renderer.stylesheets[stylesheetKey]!;
+}
+
+function isSameInsertionKey(
+  element: HTMLStyleElement,
+  bucketName: StyleBucketName,
+  metadata: Record<string, unknown>,
+): boolean {
+  const targetKey = bucketName + ((metadata['m'] as string | undefined) ?? '');
+  const elementKey = element.getAttribute(DATA_BUCKET_ATTR) + (element.media ?? '');
+
+  return targetKey === elementKey;
 }
 
 /**
@@ -92,19 +118,23 @@ function findInsertionPoint(
   insertionPoint: HTMLElement | null,
   targetBucket: StyleBucketName,
   renderer: GriffelRenderer,
-  metadata?: Record<string, unknown>,
+  metadata: Record<string, unknown> = {},
 ): Node | null {
   const targetOrder = styleBucketOrderingMap[targetBucket];
+
+  const media = (metadata['m'] as string | undefined) ?? '';
+  const priority = (metadata['p'] as number | undefined) ?? 0;
 
   // Similar to javascript sort comparators where
   // a positive value is increasing sort order
   // a negative value is decreasing sort order
   let comparer: (el: HTMLStyleElement) => number = el =>
     targetOrder - styleBucketOrderingMap[el.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName];
+  const priorityComparer = (el: HTMLStyleElement) => priority - Number(el.getAttribute('data-priority'));
 
   let styleElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
 
-  if (targetBucket === 'm' && metadata) {
+  if (targetBucket === 'm') {
     const mediaElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(
       `[${DATA_BUCKET_ATTR}="${targetBucket}"]`,
     );
@@ -113,7 +143,7 @@ function findInsertionPoint(
     // if there are other media buckets already on the page
     if (mediaElements.length) {
       styleElements = mediaElements;
-      comparer = (el: HTMLStyleElement) => renderer.compareMediaQueries(metadata['m'] as string, el.media);
+      comparer = (el: HTMLStyleElement) => renderer.compareMediaQueries(media, el.media);
     }
   }
 
@@ -122,6 +152,12 @@ function findInsertionPoint(
 
   while (index >= 0) {
     const styleElement = styleElements.item(index);
+
+    if (isSameInsertionKey(styleElement, targetBucket, metadata)) {
+      if (priorityComparer(styleElement) > 0) {
+        return styleElement.nextSibling;
+      }
+    }
 
     if (comparer(styleElement) > 0) {
       return styleElement.nextSibling;

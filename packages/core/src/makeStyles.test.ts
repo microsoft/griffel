@@ -162,7 +162,11 @@ describe('makeStyles', () => {
     // Classes emitted by different renderers can be the same
     expect(classesA).toBe(classesB);
     // Style elements should be different for different renderers
-    expect(rendererA.stylesheets.d).not.toBe(rendererB.stylesheets.d);
+    expect(rendererA.stylesheets['d0']).toBeInstanceOf(Object);
+    expect(rendererB.stylesheets['d0']).toBeInstanceOf(Object);
+
+    expect(Object.keys(rendererA.stylesheets)).toEqual(Object.keys(rendererB.stylesheets));
+    expect(rendererA.stylesheets['d0']).not.toBe(rendererB.stylesheets['d0']);
 
     expect(rendererA).toMatchInlineSnapshot(`
       /** bucket "d" **/

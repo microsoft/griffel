@@ -23,15 +23,60 @@ describe('getStyleSheetForBucket', () => {
       HTMLCollection [
         <style
           data-make-styles-bucket="r"
+          data-priority="0"
         />,
         <style
           data-make-styles-bucket="d"
+          data-priority="0"
         />,
         <style
           data-make-styles-bucket="l"
+          data-priority="0"
         />,
         <style
           data-make-styles-bucket="a"
+          data-priority="0"
+        />,
+      ]
+    `);
+  });
+
+  it('creates elements order & respects priority', () => {
+    const target = createFakeDocument();
+    const renderer = createDOMRenderer();
+
+    getStyleSheetForBucket('a', target, null, renderer, { p: -1 });
+    getStyleSheetForBucket('a', target, null, renderer);
+    getStyleSheetForBucket('a', target, null, renderer, { p: -2 });
+    getStyleSheetForBucket('d', target, null, renderer);
+    getStyleSheetForBucket('d', target, null, renderer, { p: -1 });
+    getStyleSheetForBucket('d', target, null, renderer, { p: -2 });
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-make-styles-bucket="d"
+          data-priority="-2"
+        />,
+        <style
+          data-make-styles-bucket="d"
+          data-priority="-1"
+        />,
+        <style
+          data-make-styles-bucket="d"
+          data-priority="0"
+        />,
+        <style
+          data-make-styles-bucket="a"
+          data-priority="-2"
+        />,
+        <style
+          data-make-styles-bucket="a"
+          data-priority="-1"
+        />,
+        <style
+          data-make-styles-bucket="a"
+          data-priority="0"
         />,
       ]
     `);
@@ -78,20 +123,25 @@ describe('getStyleSheetForBucket', () => {
       HTMLCollection [
         <style
           data-make-styles-bucket="d"
+          data-priority="0"
         />,
         <style
           data-make-styles-bucket="t"
+          data-priority="0"
         />,
         <style
           data-make-styles-bucket="m"
+          data-priority="0"
           media="(forced-colors: active)"
         />,
         <style
           data-make-styles-bucket="m"
+          data-priority="0"
           media="screen and (prefers-reduced-motion: reduce)"
         />,
         <style
           data-make-styles-bucket="c"
+          data-priority="0"
         />,
       ]
     `);
@@ -186,9 +236,11 @@ describe('getStyleSheetForBucket', () => {
         />,
         <style
           data-make-styles-bucket="r"
+          data-priority="0"
         />,
         <style
           data-make-styles-bucket="d"
+          data-priority="0"
         />,
         <style
           data-test="C"
