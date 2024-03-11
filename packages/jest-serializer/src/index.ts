@@ -53,7 +53,7 @@ export function print(val: unknown) {
 
 export function test(val: unknown) {
   if (typeof val === 'string') {
-    return lookupRegex()?.test(val) ?? false;
+    return val.split(' ').some(v => DEBUG_RESET_CLASSES[v] || DEFINITION_LOOKUP_TABLE[v]);
   }
   return false;
 }
