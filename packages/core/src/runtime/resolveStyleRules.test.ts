@@ -27,6 +27,7 @@ describe('resolveStyleRules', () => {
       property => {
         // Doesn't matter what the value is, just that the resulting objects are empty
         const res = resolveStyleRules({ [property]: 'dummy' as unknown as undefined });
+
         expect(res).toHaveLength(2);
         expect(res[0]).toEqual({});
         expect(res[1]).toEqual({});
@@ -170,9 +171,26 @@ describe('resolveStyleRules', () => {
     });
 
     it('performs vendor prefixing', () => {
-      expect(resolveStyleRules({ display: 'flex' })).toMatchInlineSnapshot(`
-        .f22iagw {
-          display: flex;
+      expect(resolveStyleRules({ colorAdjust: 'initial' })).toMatchInlineSnapshot(`
+        .fhfx5oh {
+          -webkit-print-color-adjust: initial;
+          color-adjust: initial;
+        }
+      `);
+    });
+
+    it('supports shorthands', () => {
+      expect(
+        resolveStyleRules({
+          padding: '5px',
+          margin: '5px',
+        }),
+      ).toMatchInlineSnapshot(`
+        .f18ktai2 {
+          padding: 5px;
+        }
+        .f155w6da {
+          margin: 5px;
         }
       `);
     });
@@ -281,6 +299,15 @@ describe('resolveStyleRules', () => {
           left: 5px;
         }
       `);
+      expect(resolveStyleRules({ borderRight: `5px solid red /* @noflip */`, borderBottom: `3px dotted blue` }))
+        .toMatchInlineSnapshot(`
+        .fq3r367 {
+          border-right: 5px solid red;
+        }
+        .fmdogq2 {
+          border-bottom: 3px dotted blue;
+        }
+      `);
     });
 
     it('handles media queries with flipping values', () => {
@@ -311,6 +338,15 @@ describe('resolveStyleRules', () => {
       classnamesSet.add(getFirstClassName(resolveStyleRules({ left: '5px /* @noflip */' })));
 
       expect(classnamesSet.size).toBe(2);
+    });
+
+    it('handles fallback values in shorthands', () => {
+      const result = resolveStyleRules({
+        padding: ['5px', '10px'],
+      });
+
+      expect(result[0]).toEqual({ B0ocmuz: 'f1nz02y', Byoj8tv: 0, uwmqm3: 0, z189sj: 0, z8tnut: 0 });
+      expect(result[1]).toEqual({ d: [['.f1nz02y{padding:5px;padding:10px;}', { p: -1 }]] });
     });
 
     it('handles fallback values in RTL', () => {
@@ -886,6 +922,73 @@ describe('resolveStyleRules', () => {
 
       expect(caseA[0]).toEqual(caseB[0]);
       expect(caseA[1]).toEqual(caseB[1]);
+    });
+
+    it('includes metadata for CSS shorthands', () => {
+      const resultA = resolveStyleRules({ padding: '10px' });
+      const resultB = resolveStyleRules({ ':hover': { padding: '10px' } });
+      const resultC = resolveStyleRules({ borderRight: `5px solid red /* @noflip */`, borderBottom: `5px solid red` });
+
+      expect(resultA[0]).toMatchInlineSnapshot(`
+        Object {
+          "B0ocmuz": "fbhmu18",
+          "Byoj8tv": 0,
+          "uwmqm3": 0,
+          "z189sj": 0,
+          "z8tnut": 0,
+        }
+      `);
+      expect(resultB[0]).toMatchInlineSnapshot(`
+        Object {
+          "B1bh7kg": 0,
+          "Brv18ce": 0,
+          "jh8l1e": 0,
+          "rev0xb": "f139k7i5",
+          "z9904h": 0,
+        }
+      `);
+      expect(resultC[0]).toMatchInlineSnapshot(`
+        Object {
+          "B9xav0g": 0,
+          "Bekrc4i": 0,
+          "Bgfg5da": "f171p8tk",
+          "Bn0qgzm": 0,
+          "h3c5rm": 0,
+          "oivjwe": 0,
+          "u1mtju": "fq3r367",
+          "vrafjx": 0,
+        }
+      `);
+    });
+  });
+
+  describe('metadata', () => {
+    it('does not include metadata in the output by default', () => {
+      const result = resolveStyleRules({ color: 'red' });
+
+      expect(result[1]).toEqual({ d: ['.fe3e8s9{color:red;}'] });
+    });
+
+    it('includes metadata for CSS shorthands', () => {
+      const result = resolveStyleRules({ padding: '10px' });
+
+      expect(result[1]).toEqual({ d: [['.fbhmu18{padding:10px;}', { p: -1 }]] });
+    });
+
+    it('includes metadata for media queries', () => {
+      const result = resolveStyleRules({
+        '@media screen': {
+          color: 'red',
+          padding: '10px',
+        },
+      });
+
+      expect(result[1]).toEqual({
+        m: [
+          ['@media screen{.f101iwbs{color:red;}}', { m: 'screen' }],
+          ['@media screen{.fqfls7b{padding:10px;}}', { m: 'screen', p: -1 }],
+        ],
+      });
     });
   });
 });

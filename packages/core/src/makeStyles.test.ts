@@ -66,6 +66,32 @@ describe('makeStyles', () => {
     `);
   });
 
+  it('works with CSS shorthands', () => {
+    const computeClasses = makeStyles({
+      root: {
+        backgroundColor: 'red',
+        border: '3px solid black',
+        padding: '10px',
+      },
+    });
+
+    expect(computeClasses({ dir: 'ltr', renderer }).root).toMatchInlineSnapshot(`"___1vg1v8m f3xbvq9 f4wmytw fbhmu18"`);
+    expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" {"data-priority":"0"} **/
+      .f3xbvq9 {
+        background-color: red;
+      }
+      /** bucket "d" {"data-priority":"-2"} **/
+      .f4wmytw {
+        border: 3px solid black;
+      }
+      /** bucket "d" {"data-priority":"-1"} **/
+      .fbhmu18 {
+        padding: 10px;
+      }
+    `);
+  });
+
   it('handles RTL for styles', () => {
     const computeClasses = makeStyles({
       root: {

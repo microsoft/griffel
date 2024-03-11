@@ -114,18 +114,6 @@ assertType({
   },
 });
 
-// Banned shorthand properties
-//
-
-assertType({
-  // @ts-expect-error "padding" is banned
-  padding: 0,
-});
-assertType({
-  // @ts-expect-error "borderLeft" is banned
-  borderLeft: '5px',
-});
-
 // Invalid values
 //
 
@@ -213,8 +201,6 @@ assertType({
   ':hover': {
     // @ts-expect-error "1" is invalid value for "overflowX"
     overflowX: '1',
-    // @ts-expect-error "padding" is banned
-    padding: 0,
     // @ts-expect-error "paddingLeft" cannot be numeric value
     paddingLeft: 5,
   },
@@ -234,13 +220,6 @@ assertType({
   // @ts-expect-error "1" is invalid value for "overflowX"
   ':hover:focus': {
     overflowX: '1',
-  },
-});
-
-assertType({
-  // @ts-expect-error "padding" is banned
-  ':hover:focus': {
-    padding: 0,
   },
 });
 
