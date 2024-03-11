@@ -1,4 +1,3 @@
-import { normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
 import type * as webpack from 'webpack';
 
@@ -6,6 +5,7 @@ import type { TransformResult, TransformOptions } from './transformSync';
 import { transformSync } from './transformSync';
 import type { SupplementedLoaderContext } from './constants';
 import { GriffelCssLoaderContextKey } from './constants';
+import { generateCSSRules } from './generateCSSRules';
 
 export type WebpackLoaderOptions = {
   /**
@@ -90,40 +90,12 @@ function webpackLoader(
     const { cssRulesByBucket } = result;
 
     if (cssRulesByBucket) {
-      const entries = Object.entries(cssRulesByBucket);
+      const css = generateCSSRules(cssRulesByBucket);
 
-      if (entries.length === 0) {
+      if (css.length === 0) {
         this.callback(null, resultCode, resultSourceMap);
         return;
       }
-
-      const css = entries.reduce((acc, [cssBucketName, cssBucketRules]) => {
-        if (cssBucketName === 'm') {
-          return (
-            acc +
-            cssBucketRules
-              .map(entry => {
-                return [
-                  `/** @griffel:css-start [${cssBucketName}] [${JSON.stringify(entry[1])}] **/`,
-                  normalizeCSSBucketEntry(entry)[0],
-                  `/** @griffel:css-end **/`,
-                  '',
-                ].join('\n');
-              })
-              .join('')
-          );
-        }
-
-        return (
-          acc +
-          [
-            `/** @griffel:css-start [${cssBucketName}] **/`,
-            cssBucketRules.flatMap(entry => normalizeCSSBucketEntry(entry)).join(''),
-            `/** @griffel:css-end **/`,
-            '',
-          ].join('\n')
-        );
-      }, '');
 
       if (IS_RSPACK) {
         const request = `griffel.css!=!${virtualLoaderPath}!${virtualCSSFilePath}?style=${toURIComponent(css)}`;
