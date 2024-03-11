@@ -110,8 +110,10 @@ describe('sortCSSRules', () => {
     const setA: CSSRulesByBucket = {
       d: ['.prio0 { color: orange; }', ['.prio-1 { margin: 0; }', { p: -1 }]],
       f: ['.prio0:focus { color: pink; }'],
+      h: [['.prio-1:hover { padding: 0; }', { p: -1 }]],
     };
     const setB: CSSRulesByBucket = {
+      r: ['.reset { margin: 0; padding: 0 }'],
       d: [
         ['.prio-3 { border: 3px solid red; }', { p: -3 }],
         ['.prio-2 { background: green; }', { p: -2 }],
@@ -120,14 +122,15 @@ describe('sortCSSRules', () => {
     };
 
     expect(sortCSSRules([setA, setB], () => 0)).toMatchInlineSnapshot(`
+      .reset {
+        margin: 0;
+        padding: 0;
+      }
       .prio-3 {
         border: 3px solid red;
       }
       .prio-2 {
         background: green;
-      }
-      .prio-1:focus {
-        padding: 0;
       }
       .prio-1 {
         margin: 0;
@@ -135,8 +138,14 @@ describe('sortCSSRules', () => {
       .prio0 {
         color: orange;
       }
+      .prio-1:focus {
+        padding: 0;
+      }
       .prio0:focus {
         color: pink;
+      }
+      .prio-1:hover {
+        padding: 0;
       }
     `);
   });

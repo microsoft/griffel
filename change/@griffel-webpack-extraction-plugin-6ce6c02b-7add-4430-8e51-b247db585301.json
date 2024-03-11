@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: fix sorting of buckets in sortCSSRules()",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
