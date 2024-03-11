@@ -1,4 +1,4 @@
-import { makeResetStyles, makeStyles, shorthands } from '@griffel/react';
+import { makeResetStyles, makeStyles } from '@griffel/react';
 // @ts-expect-error It's a fake module resolved via aliases
 import { colors } from 'fake-colors';
 
@@ -16,10 +16,10 @@ const useClasses = makeStyles({
     },
   },
   slot: {
-    ...shorthands.border('2px', 'dashed', 'magenta'),
-    ...shorthands.borderRadius('5px'),
-    ...shorthands.gap('5px'),
-    ...shorthands.padding('10px'),
+    border: '2px dashed magenta',
+    borderRadius: '5px',
+    gap: '5px',
+    padding: '10px',
   },
 });
 
