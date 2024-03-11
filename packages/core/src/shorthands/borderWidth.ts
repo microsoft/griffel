@@ -25,6 +25,8 @@ export function borderWidth(
 /**
  * A function that implements CSS spec conformant expansion for "borderWidth"
  *
+ * @deprecated Just use the "borderWidth" property directly, TODO link
+ *
  * @example
  *   borderWidth('10px')
  *   borderWidth('10px', '5px')

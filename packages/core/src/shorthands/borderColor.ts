@@ -24,6 +24,8 @@ export function borderColor(
 /**
  * A function that implements CSS spec conformant expansion for "borderColor"
  *
+ * @deprecated Just use the "borderColor" property directly, TODO link
+ *
  * @example
  *  borderColor('red')
  *  borderColor('red', 'blue')

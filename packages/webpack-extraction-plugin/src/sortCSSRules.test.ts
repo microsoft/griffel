@@ -76,6 +76,34 @@ describe('sortCSSRules', () => {
     `);
   });
 
+  it('sorts rules by buckets & priority', () => {
+    const setA: CSSRulesByBucket = {
+      d: ['.baz { color: orange; }'],
+      f: ['.foo:focus { color: pink; }'],
+    };
+    const setB: CSSRulesByBucket = {
+      d: [
+        ['.f1vilie2{border:3px solid red;}', { p: -2 }],
+        ['.f65sxns{background:green;}', { p: -2 }],
+      ],
+    };
+
+    expect(sortCSSRules([setA, setB], () => 0)).toMatchInlineSnapshot(`
+      .f1vilie2 {
+        border: 3px solid red;
+      }
+      .f65sxns {
+        background: green;
+      }
+      .baz {
+        color: orange;
+      }
+      .foo:focus {
+        color: pink;
+      }
+    `);
+  });
+
   it('sorts media queries', () => {
     const setA: CSSRulesByBucket = {
       m: [

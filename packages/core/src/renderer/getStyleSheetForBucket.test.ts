@@ -37,6 +37,45 @@ describe('getStyleSheetForBucket', () => {
     `);
   });
 
+  it('creates elements order & respects priority', () => {
+    const target = createFakeDocument();
+    const renderer = createDOMRenderer();
+
+    getStyleSheetForBucket('a', target, null, renderer, { p: -1 });
+    getStyleSheetForBucket('a', target, null, renderer);
+    getStyleSheetForBucket('a', target, null, renderer, { p: -2 });
+    getStyleSheetForBucket('d', target, null, renderer);
+    getStyleSheetForBucket('d', target, null, renderer, { p: -1 });
+    getStyleSheetForBucket('d', target, null, renderer, { p: -2 });
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-make-styles-bucket="d"
+          data-priority="-2"
+        />,
+        <style
+          data-make-styles-bucket="d"
+          data-priority="-1"
+        />,
+        <style
+          data-make-styles-bucket="d"
+        />,
+        <style
+          data-make-styles-bucket="a"
+          data-priority="-2"
+        />,
+        <style
+          data-make-styles-bucket="a"
+          data-priority="-1"
+        />,
+        <style
+          data-make-styles-bucket="a"
+        />,
+      ]
+    `);
+  });
+
   it('sets "data-make-styles-bucket" attribute in order', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();

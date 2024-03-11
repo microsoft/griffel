@@ -24,6 +24,8 @@ export function borderStyle(
 /**
  * A function that implements CSS spec conformant expansion for "borderStyle"
  *
+ * @deprecated Just use the "borderStyle" property directly, TODO link
+ *
  * @example
  *  borderStyle('solid')
  *  borderStyle('solid', 'dashed')

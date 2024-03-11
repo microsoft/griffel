@@ -3,7 +3,9 @@ import type { GriffelStyle } from '@griffel/style-types';
 import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 import { isBorderStyle } from './utils';
 
-type BorderLeftStyle = Pick<GriffelStyle, 'borderLeftColor' | 'borderLeftStyle' | 'borderLeftWidth'>;
+type BorderLeftStyle =
+  | Pick<GriffelStyle, 'borderLeftColor' | 'borderLeftStyle' | 'borderLeftWidth'>
+  | Pick<GriffelStyle, 'borderLeft'>;
 
 export function borderLeft(width: BorderWidthInput): BorderLeftStyle;
 export function borderLeft(style: BorderStyleInput): BorderLeftStyle;
@@ -14,6 +16,8 @@ export function borderLeft(style: BorderStyleInput, width: BorderWidthInput, col
 
 /**
  * A function that implements expansion for "border-left", it's simplified - check usage examples.
+ *
+ * @deprecated Use the "borderLeft" property directly, TODO link
  *
  * @example
  *  borderLeft('2px')
@@ -28,17 +32,23 @@ export function borderLeft(style: BorderStyleInput, width: BorderWidthInput, col
 export function borderLeft(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]
 ): BorderLeftStyle {
-  if (isBorderStyle(values[0])) {
+  if (values.some(value => Array.isArray(value))) {
+    if (isBorderStyle(values[0])) {
+      return {
+        borderLeftStyle: values[0],
+        ...(values[1] && ({ borderLeftWidth: values[1] } as BorderLeftStyle)),
+        ...(values[2] && { borderLeftColor: values[2] }),
+      };
+    }
+
     return {
-      borderLeftStyle: values[0],
-      ...(values[1] && ({ borderLeftWidth: values[1] } as BorderLeftStyle)),
+      borderLeftWidth: values[0],
+      ...(values[1] && ({ borderLeftStyle: values[1] } as BorderLeftStyle)),
       ...(values[2] && { borderLeftColor: values[2] }),
     };
   }
 
   return {
-    borderLeftWidth: values[0],
-    ...(values[1] && ({ borderLeftStyle: values[1] } as BorderLeftStyle)),
-    ...(values[2] && { borderLeftColor: values[2] }),
+    borderLeft: values.join(' '),
   };
 }

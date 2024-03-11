@@ -35,6 +35,9 @@ describe('parseCSSRules', () => {
     /** @griffel:css-start [d] **/
     .fe3e8s9 { color: red; }
     /** @griffel:css-end **/
+    /** @griffel:css-start [d] [{"p":-2}] **/
+    .f65sxns{background:green;}
+    /** @griffel:css-end **/
     /** @griffel:css-start [m] [{"m":"screen and (max-width: 100px)"}] **/
     @media screen and (max-width: 100px) { .fr5o61b{ color:red; } }
     /** @griffel:css-end **/
@@ -48,6 +51,12 @@ describe('parseCSSRules', () => {
       Object {
         "d": Array [
           ".fe3e8s9{color:red;}",
+          Array [
+            ".f65sxns{background:green;}",
+            Object {
+              "p": -2,
+            },
+          ],
         ],
         "m": Array [
           Array [

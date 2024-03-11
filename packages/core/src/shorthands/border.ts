@@ -6,21 +6,23 @@ import { borderColor } from './borderColor';
 import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 import { isBorderStyle } from './utils';
 
-type BorderStyle = Pick<
-  GriffelStyle,
-  | 'borderTopColor'
-  | 'borderTopStyle'
-  | 'borderTopWidth'
-  | 'borderRightColor'
-  | 'borderRightStyle'
-  | 'borderRightWidth'
-  | 'borderBottomColor'
-  | 'borderBottomStyle'
-  | 'borderBottomWidth'
-  | 'borderLeftColor'
-  | 'borderLeftStyle'
-  | 'borderLeftWidth'
->;
+type BorderStyle =
+  | Pick<
+      GriffelStyle,
+      | 'borderTopColor'
+      | 'borderTopStyle'
+      | 'borderTopWidth'
+      | 'borderRightColor'
+      | 'borderRightStyle'
+      | 'borderRightWidth'
+      | 'borderBottomColor'
+      | 'borderBottomStyle'
+      | 'borderBottomWidth'
+      | 'borderLeftColor'
+      | 'borderLeftStyle'
+      | 'borderLeftWidth'
+    >
+  | Pick<GriffelStyle, 'border'>;
 
 export function border(width: BorderWidthInput): BorderStyle;
 export function border(width: BorderWidthInput, style: BorderStyleInput): BorderStyle;
@@ -28,6 +30,8 @@ export function border(width: BorderWidthInput, style: BorderStyleInput, color: 
 
 /**
  * A function that implements expansion for "border" to all sides of an element, it's simplified - check usage examples.
+ *
+ * @deprecated Just use the "border" property directly, TODO link
  *
  * @example
  *  border('2px')
@@ -42,17 +46,23 @@ export function border(width: BorderWidthInput, style: BorderStyleInput, color: 
 export function border(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]
 ): BorderStyle {
-  if (isBorderStyle(values[0])) {
+  if (values.some(value => Array.isArray(value))) {
+    if (isBorderStyle(values[0])) {
+      return {
+        ...borderStyle(values[0]),
+        ...(values[1] && borderWidth(values[1])),
+        ...(values[2] && borderColor(values[2])),
+      };
+    }
+
     return {
-      ...borderStyle(values[0]),
-      ...(values[1] && borderWidth(values[1])),
+      ...borderWidth(values[0]),
+      ...(values[1] && borderStyle(values[1] as BorderStyleInput)),
       ...(values[2] && borderColor(values[2])),
     };
   }
 
   return {
-    ...borderWidth(values[0]),
-    ...(values[1] && borderStyle(values[1] as BorderStyleInput)),
-    ...(values[2] && borderColor(values[2])),
+    border: `${values[0]}${values[1] ? ` ${values[1]}` : ''}${values[2] ? ` ${values[2]}` : ''}`,
   };
 }

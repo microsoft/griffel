@@ -5,11 +5,17 @@ export function createIsomorphicStyleSheet(
   styleElement: HTMLStyleElement | undefined,
   bucketName: StyleBucketName,
   elementAttributes: Record<string, string>,
+  priority?: number,
 ): IsomorphicStyleSheet {
   // no CSSStyleSheet in SSR, just append rules here for server render
   const __cssRulesForSSR: string[] = [];
 
   elementAttributes[DATA_BUCKET_ATTR] = bucketName;
+
+  if (priority !== undefined) {
+    elementAttributes['data-priority'] = String(priority);
+  }
+
   if (styleElement) {
     for (const attrName in elementAttributes) {
       styleElement.setAttribute(attrName, elementAttributes[attrName]);
