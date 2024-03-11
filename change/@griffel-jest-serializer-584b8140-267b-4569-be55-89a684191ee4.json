@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: improve performance of serializer test function",
+  "packageName": "@griffel/jest-serializer",
+  "email": "reubenrakete@microsoft.com",
+  "dependentChangeType": "patch"
+}
