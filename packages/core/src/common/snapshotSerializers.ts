@@ -2,6 +2,7 @@
 
 import * as prettier from 'prettier';
 
+import { DATA_BUCKET_ATTR } from '../constants';
 import type { resolveStyleRules } from '../runtime/resolveStyleRules';
 import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
 import type { CSSRulesByBucket, GriffelRenderer } from '../types';
@@ -27,12 +28,19 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
 
       if (stylesheet) {
         const cssRules = stylesheet.cssRules() ?? ([] as string[]);
+        const attributes = Object.entries(stylesheet.elementAttributes).filter(([key]) => key !== DATA_BUCKET_ATTR);
 
         if (cssRules.length === 0) {
           return acc;
         }
 
-        return [...acc, `/** bucket "${styleEl.slice(0, 1)}" **/`, ...cssRules];
+        return [
+          ...acc,
+          `/** bucket "${styleEl.slice(0, 1)}"${
+            attributes.length > 0 ? ' ' + JSON.stringify(Object.fromEntries(attributes)) : ''
+          } **/`,
+          ...cssRules,
+        ];
       }
 
       return acc;
