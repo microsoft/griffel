@@ -1,0 +1,36 @@
+{
+  "name": "@griffel/update-shorthands",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/update-shorthands/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/update-shorthands",
+        "commands": [{ "command": "ts-node src/index.ts" }]
+      },
+      "outputs": []
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/tools/update-shorthands"],
+      "options": {
+        "jestConfig": "tools/update-shorthands/jest.config.ts"
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/update-shorthands",
+        "commands": [{ "command": "tsc -b --pretty" }]
+      },
+      "outputs": []
+    }
+  },
+  "tags": []
+}

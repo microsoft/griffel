@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "declaration": false,
+    "types": ["node", "environment"]
+  },
+  "exclude": ["__fixtures__/*/*.ts", "**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
+  "include": ["**/*.ts"]
+}
