@@ -125,10 +125,22 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
 
 const extractGrifellBabelPluginOptions = (opts: ParserOptions = {}) => {
   const { babelOptions, evaluationRules, generateMetadata, modules } = opts;
-  return {
-    babelOptions,
-    evaluationRules,
-    generateMetadata,
-    modules,
-  };
+  const babelPluginOptions: BabelPluginOptions = {};
+  if (babelOptions) {
+    babelPluginOptions.babelOptions = babelOptions;
+  }
+
+  if (evaluationRules) {
+    babelPluginOptions.evaluationRules = evaluationRules;
+  }
+
+  if (generateMetadata) {
+    babelPluginOptions.generateMetadata = generateMetadata;
+  }
+
+  if (modules) {
+    babelPluginOptions.modules = modules;
+  }
+
+  return babelPluginOptions;
 };
