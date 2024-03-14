@@ -8,8 +8,8 @@ export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document 
 export interface ParserOptions extends PostCSSParserOptions, BabelPluginOptions {}
 
 export const parse = (css: string | { toString(): string }, opts?: ParserOptions) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { from: filename = 'postcss-syntax.styles.ts', map, ...griffelPluginOptions } = opts ?? {};
+  const { from: filename = 'postcss-syntax.styles.ts' } = opts ?? {};
+  const griffelPluginOptions = extractGrifellBabelPluginOptions(opts);
   const code = css.toString();
   const { metadata } = transformSync(code, {
     filename,
@@ -121,4 +121,14 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
 
   doc.raws[GRIFFEL_SRC_RAW] = css;
   return doc;
+};
+
+const extractGrifellBabelPluginOptions = (opts: ParserOptions = {}) => {
+  const { babelOptions, evaluationRules, generateMetadata, modules } = opts;
+  return {
+    babelOptions,
+    evaluationRules,
+    generateMetadata,
+    modules,
+  };
 };
