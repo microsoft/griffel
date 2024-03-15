@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: Remove console.log",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "lingfangao@hotmail.com",
+  "dependentChangeType": "patch"
+}
