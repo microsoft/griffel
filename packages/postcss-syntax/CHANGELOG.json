@@ -2,6 +2,21 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Fri, 15 Mar 2024 11:30:24 GMT",
+      "tag": "@griffel/postcss-syntax_v1.0.6",
+      "version": "1.0.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "1baf5d0580f5d49a248f0300a6e4b135c09df049",
+            "comment": "fix: entrypoint to be correct path"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jan 2024 11:03:15 GMT",
       "tag": "@griffel/postcss-syntax_v1.0.5",
       "version": "1.0.5",

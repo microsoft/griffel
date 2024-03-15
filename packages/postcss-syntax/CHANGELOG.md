@@ -1,8 +1,16 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Fri, 12 Jan 2024 11:08:40 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Mar 2024 11:30:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.6
+
+Fri, 15 Mar 2024 11:30:24 GMT
+
+### Patches
+
+- fix: entrypoint to be correct path (lingfangao@hotmail.com)
 
 ## 1.0.5
 
