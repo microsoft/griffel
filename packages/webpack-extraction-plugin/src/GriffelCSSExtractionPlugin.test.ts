@@ -250,14 +250,12 @@ function testFixture(fixtureName: string, options: TestOptions = {}) {
         const moduleOutput = fixLineEndings(await fs.promises.readFile(outputPath, { encoding: 'utf8' }));
 
         expect(resultModule).toBe(moduleOutput);
-        return;
       }
 
       if (cssOutputPath) {
         const cssOutput = fixLineEndings(await fs.promises.readFile(cssOutputPath, { encoding: 'utf8' }));
 
         expect(resultCSS).toBe(cssOutput);
-        return;
       }
 
       if (expectedError) {

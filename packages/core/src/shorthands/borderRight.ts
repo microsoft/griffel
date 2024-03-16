@@ -3,7 +3,9 @@ import type { GriffelStyle } from '@griffel/style-types';
 import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 import { isBorderStyle } from './utils';
 
-type BorderRightStyle = Pick<GriffelStyle, 'borderRightWidth' | 'borderRightStyle' | 'borderRightColor'>;
+type BorderRightStyle =
+  | Pick<GriffelStyle, 'borderRightWidth' | 'borderRightStyle' | 'borderRightColor'>
+  | Pick<GriffelStyle, 'borderRight'>;
 
 export function borderRight(width: BorderWidthInput): BorderRightStyle;
 export function borderRight(style: BorderStyleInput): BorderRightStyle;
@@ -23,6 +25,8 @@ export function borderRight(
 /**
  * A function that implements expansion for "border-right", it's simplified - check usage examples.
  *
+ * @deprecated Use the "borderRight" property directly, TODO link
+ *
  * @example
  *  borderRight('2px')
  *  borderRight('solid')
@@ -36,17 +40,23 @@ export function borderRight(
 export function borderRight(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]
 ): BorderRightStyle {
-  if (isBorderStyle(values[0])) {
+  if (values.some(value => Array.isArray(value))) {
+    if (isBorderStyle(values[0])) {
+      return {
+        borderRightStyle: values[0],
+        ...(values[1] && { borderRightWidth: values[1] }),
+        ...(values[2] && { borderRightColor: values[2] }),
+      };
+    }
+
     return {
-      borderRightStyle: values[0],
-      ...(values[1] && { borderRightWidth: values[1] }),
+      borderRightWidth: values[0],
+      ...(values[1] && ({ borderRightStyle: values[1] } as BorderRightStyle)),
       ...(values[2] && { borderRightColor: values[2] }),
     };
   }
 
   return {
-    borderRightWidth: values[0],
-    ...(values[1] && ({ borderRightStyle: values[1] } as BorderRightStyle)),
-    ...(values[2] && { borderRightColor: values[2] }),
+    borderRight: values.join(' '),
   };
 }

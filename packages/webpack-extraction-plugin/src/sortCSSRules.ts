@@ -9,6 +9,10 @@ function getCSSMetaFromBucketEntry(entry: CSSBucketEntry): Record<string, unknow
   return Array.isArray(entry) ? entry[1] : {};
 }
 
+function getRulePriority(entry: CSSBucketEntry): number {
+  return (getCSSMetaFromBucketEntry(entry)['p'] as number | undefined) ?? 0;
+}
+
 export function sortCSSRules(
   setOfCSSRules: CSSRulesByBucket[],
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
@@ -53,6 +57,14 @@ export function sortCSSRules(
         );
       }
 
-      return acc + cssBucketEntries.join('');
+      return (
+        acc +
+        cssBucketEntries
+          .sort((entryA, entryB) => {
+            return getRulePriority(entryA) - getRulePriority(entryB);
+          })
+          .map(entry => getCSSRuleFromBucketEntry(entry))
+          .join('')
+      );
     }, '');
 }

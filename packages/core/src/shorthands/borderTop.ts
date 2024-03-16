@@ -3,7 +3,9 @@ import type { GriffelStyle } from '@griffel/style-types';
 import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 import { isBorderStyle } from './utils';
 
-type BorderTopStyle = Pick<GriffelStyle, 'borderTopColor' | 'borderTopStyle' | 'borderTopWidth'>;
+type BorderTopStyle =
+  | Pick<GriffelStyle, 'borderTopColor' | 'borderTopStyle' | 'borderTopWidth'>
+  | Pick<GriffelStyle, 'borderTop'>;
 
 export function borderTop(width: BorderWidthInput): BorderTopStyle;
 export function borderTop(style: BorderStyleInput): BorderTopStyle;
@@ -13,7 +15,9 @@ export function borderTop(width: BorderWidthInput, style: BorderStyleInput, colo
 export function borderTop(style: BorderStyleInput, width: BorderWidthInput, color: BorderColorInput): BorderTopStyle;
 
 /**
- * A function that implements expansion for "border-Top", it's simplified - check usage examples.
+ * A function that implements expansion for "border-top", it's simplified - check usage examples.
+ *
+ * @deprecated Use the "borderTop" property directly, TODO link
  *
  * @example
  *  borderTop('2px')
@@ -28,17 +32,23 @@ export function borderTop(style: BorderStyleInput, width: BorderWidthInput, colo
 export function borderTop(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]
 ): BorderTopStyle {
-  if (isBorderStyle(values[0])) {
+  if (values.some(value => Array.isArray(value))) {
+    if (isBorderStyle(values[0])) {
+      return {
+        borderTopStyle: values[0],
+        ...(values[1] && ({ borderTopWidth: values[1] } as BorderTopStyle)),
+        ...(values[2] && { borderTopColor: values[2] }),
+      };
+    }
+
     return {
-      borderTopStyle: values[0],
-      ...(values[1] && ({ borderTopWidth: values[1] } as BorderTopStyle)),
+      borderTopWidth: values[0],
+      ...(values[1] && ({ borderTopStyle: values[1] } as BorderTopStyle)),
       ...(values[2] && { borderTopColor: values[2] }),
     };
   }
 
   return {
-    borderTopWidth: values[0],
-    ...(values[1] && ({ borderTopStyle: values[1] } as BorderTopStyle)),
-    ...(values[2] && { borderTopColor: values[2] }),
+    borderTop: values.join(' '),
   };
 }

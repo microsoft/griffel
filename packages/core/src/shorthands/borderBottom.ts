@@ -3,7 +3,9 @@ import type { GriffelStyle } from '@griffel/style-types';
 import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
 import { isBorderStyle } from './utils';
 
-type BorderBottomStyle = Pick<GriffelStyle, 'borderBottomColor' | 'borderBottomStyle' | 'borderBottomWidth'>;
+type BorderBottomStyle =
+  | Pick<GriffelStyle, 'borderBottomColor' | 'borderBottomStyle' | 'borderBottomWidth'>
+  | Pick<GriffelStyle, 'borderBottom'>;
 
 export function borderBottom(width: BorderWidthInput): BorderBottomStyle;
 export function borderBottom(style: BorderStyleInput): BorderBottomStyle;
@@ -21,7 +23,9 @@ export function borderBottom(
 ): BorderBottomStyle;
 
 /**
- * A function that implements expansion for "border-Bottom", it's simplified - check usage examples.
+ * A function that implements expansion for "border-bottom", it's simplified - check usage examples.
+ *
+ * @deprecated Just use the "borderBottom" property directly, TODO link
  *
  * @example
  *  borderBottom('2px')
@@ -36,17 +40,23 @@ export function borderBottom(
 export function borderBottom(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]
 ): BorderBottomStyle {
-  if (isBorderStyle(values[0])) {
+  if (values.some(value => Array.isArray(value))) {
+    if (isBorderStyle(values[0])) {
+      return {
+        borderBottomStyle: values[0],
+        ...(values[1] && ({ borderBottomWidth: values[1] } as BorderBottomStyle)),
+        ...(values[2] && { borderBottomColor: values[2] }),
+      };
+    }
+
     return {
-      borderBottomStyle: values[0],
-      ...(values[1] && ({ borderBottomWidth: values[1] } as BorderBottomStyle)),
+      borderBottomWidth: values[0],
+      ...(values[1] && ({ borderBottomStyle: values[1] } as BorderBottomStyle)),
       ...(values[2] && { borderBottomColor: values[2] }),
     };
   }
 
   return {
-    borderBottomWidth: values[0],
-    ...(values[1] && ({ borderBottomStyle: values[1] } as BorderBottomStyle)),
-    ...(values[2] && { borderBottomColor: values[2] }),
+    borderBottom: `${values[0]}${values[1] ? ` ${values[1]}` : ''}${values[2] ? ` ${values[2]}` : ''}`,
   };
 }

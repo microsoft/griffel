@@ -65,6 +65,32 @@ describe('makeStyles', () => {
     `);
   });
 
+  it('works with CSS shorthands', () => {
+    const computeClasses = makeStyles({
+      root: {
+        backgroundColor: 'red',
+        border: '3px solid black',
+        padding: '10px',
+      },
+    });
+
+    expect(computeClasses({ dir: 'ltr', renderer }).root).toMatchInlineSnapshot(`"___5n63o80 f3xbvq9 f4wmytw fbhmu18"`);
+    expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
+      .f3xbvq9 {
+        background-color: red;
+      }
+      /** bucket "d" {"data-priority":"-2"} **/
+      .f4wmytw {
+        border: 3px solid black;
+      }
+      /** bucket "d" {"data-priority":"-1"} **/
+      .fbhmu18 {
+        padding: 10px;
+      }
+    `);
+  });
+
   it('handles RTL for styles', () => {
     const computeClasses = makeStyles({
       root: {
@@ -225,6 +251,23 @@ describe('makeStyles', () => {
       /** bucket "d" **/
       .fe3e8s9 {
         color: red;
+      }
+    `);
+  });
+
+  it('handles "null" for rules removal', () => {
+    const computeClassesA = makeStyles({ root: { color: null } });
+    const computeClassesB = makeStyles({ root: { backgroundColor: null } });
+    const computeClassesC = makeStyles({ root: { color: null, backgroundColor: '10px' } });
+
+    expect(computeClassesA({ dir: 'ltr', renderer }).root).toEqual('___17d5swi');
+    expect(computeClassesB({ dir: 'ltr', renderer }).root).toEqual('___1pbj4r6');
+    expect(computeClassesC({ dir: 'ltr', renderer }).root).toEqual('___70oiix0 fihdeyh');
+
+    expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
+      .fihdeyh {
+        background-color: 10px;
       }
     `);
   });

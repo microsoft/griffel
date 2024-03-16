@@ -3,7 +3,7 @@ import type * as CSS from 'csstype';
 import type { GriffelStyle } from '@griffel/style-types';
 import type { FlexInput } from './types';
 
-type FlexStyle = Pick<GriffelStyle, 'flexGrow' | 'flexShrink' | 'flexBasis'>;
+type FlexStyle = Pick<GriffelStyle, 'flexGrow' | 'flexShrink' | 'flexBasis'> | Pick<GriffelStyle, 'flex'>;
 
 const isUnit = (value: CSS.Property.Flex | undefined) => typeof value === 'string' && /(\d+(\w+|%))/.test(value);
 
@@ -23,6 +23,8 @@ const isWidth = (value: CSS.Property.Flex | undefined) => widthReservedKeys.some
 /**
  * A function that implements CSS spec conformant expansion for "flex".
  *
+ * @deprecated Use the "flex" property directly, TODO link
+ *
  * @example
  *   flex('auto')
  *   flex(1, '2.5rem')
@@ -31,91 +33,97 @@ const isWidth = (value: CSS.Property.Flex | undefined) => widthReservedKeys.some
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
  */
 export function flex(...values: FlexInput): FlexStyle {
-  const isOneValueSyntax = values.length === 1;
-  const isTwoValueSyntax = values.length === 2;
-  const isThreeValueSyntax = values.length === 3;
+  if (values.some(value => Array.isArray(value))) {
+    const isOneValueSyntax = values.length === 1;
+    const isTwoValueSyntax = values.length === 2;
+    const isThreeValueSyntax = values.length === 3;
 
-  if (isOneValueSyntax) {
-    const [firstValue] = values;
+    if (isOneValueSyntax) {
+      const [firstValue] = values;
 
-    if (isInitial(firstValue)) {
-      return {
-        flexGrow: 0,
-        flexShrink: 1,
-        flexBasis: 'auto',
-      };
+      if (isInitial(firstValue)) {
+        return {
+          flexGrow: 0,
+          flexShrink: 1,
+          flexBasis: 'auto',
+        };
+      }
+
+      if (isAuto(firstValue)) {
+        return {
+          flexGrow: 1,
+          flexShrink: 1,
+          flexBasis: 'auto',
+        };
+      }
+
+      if (isNone(firstValue)) {
+        return {
+          flexGrow: 0,
+          flexShrink: 0,
+          flexBasis: 'auto',
+        };
+      }
+
+      if (isUnitless(firstValue)) {
+        return {
+          flexGrow: firstValue as number,
+          flexShrink: 1,
+          flexBasis: 0,
+        };
+      }
+
+      if (isWidth(firstValue)) {
+        return {
+          flexGrow: 1,
+          flexShrink: 1,
+          flexBasis: firstValue as Width,
+        };
+      }
     }
 
-    if (isAuto(firstValue)) {
-      return {
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: 'auto',
-      };
+    if (isTwoValueSyntax) {
+      const [firstValue, secondValue] = values;
+
+      if (isUnitless(secondValue)) {
+        return {
+          flexGrow: firstValue,
+          flexShrink: secondValue,
+          flexBasis: 0,
+        };
+      }
+
+      if (isWidth(secondValue)) {
+        return {
+          flexGrow: firstValue,
+          flexShrink: 1,
+          flexBasis: secondValue as Width,
+        };
+      }
     }
 
-    if (isNone(firstValue)) {
-      return {
-        flexGrow: 0,
-        flexShrink: 0,
-        flexBasis: 'auto',
-      };
+    if (isThreeValueSyntax) {
+      const [firstValue, secondValue, thirdValue] = values;
+
+      if (isUnitless(firstValue) && isUnitless(secondValue) && (isAuto(thirdValue) || isWidth(thirdValue))) {
+        return {
+          flexGrow: firstValue,
+          flexShrink: secondValue,
+          flexBasis: thirdValue as Width,
+        };
+      }
     }
 
-    if (isUnitless(firstValue)) {
-      return {
-        flexGrow: firstValue as number,
-        flexShrink: 1,
-        flexBasis: 0,
-      };
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.error(
+        `The value passed to shorthands.flex did not match any flex property specs. The CSS styles were not generated. Please, check the flex documentation.`,
+      );
     }
-
-    if (isWidth(firstValue)) {
-      return {
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: firstValue as Width,
-      };
-    }
+    return {} as FlexStyle;
   }
 
-  if (isTwoValueSyntax) {
-    const [firstValue, secondValue] = values;
-
-    if (isUnitless(secondValue)) {
-      return {
-        flexGrow: firstValue,
-        flexShrink: secondValue,
-        flexBasis: 0,
-      };
-    }
-
-    if (isWidth(secondValue)) {
-      return {
-        flexGrow: firstValue,
-        flexShrink: 1,
-        flexBasis: secondValue as Width,
-      };
-    }
-  }
-
-  if (isThreeValueSyntax) {
-    const [firstValue, secondValue, thirdValue] = values;
-
-    if (isUnitless(firstValue) && isUnitless(secondValue) && (isAuto(thirdValue) || isWidth(thirdValue))) {
-      return {
-        flexGrow: firstValue,
-        flexShrink: secondValue,
-        flexBasis: thirdValue as Width,
-      };
-    }
-  }
-
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
-    console.error(
-      `The value passed to shorthands.flex did not match any flex property specs. The CSS styles were not generated. Please, check the flex documentation.`,
-    );
-  }
-  return {} as FlexStyle;
+  return {
+    flex: values.join(' '),
+  };
 }

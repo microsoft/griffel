@@ -1,10 +1,12 @@
 import type { GriffelStyle } from '@griffel/style-types';
 import type { MarginBlockInput } from './types';
 
-type MarginBlockStyle = Pick<GriffelStyle, 'marginBlockStart' | 'marginBlockEnd'>;
+type MarginBlockStyle = Pick<GriffelStyle, 'marginBlockStart' | 'marginBlockEnd'> | Pick<GriffelStyle, 'marginBlock'>;
 
 /**
  * A function that implements CSS spec conformant expansion for "margin-block"
+ *
+ * @deprecated Use the "marginBlock" property directly, TODO link
  *
  * @example
  *   marginBlock('10px')
@@ -13,8 +15,20 @@ type MarginBlockStyle = Pick<GriffelStyle, 'marginBlockStart' | 'marginBlockEnd'
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
  */
 export function marginBlock(start: MarginBlockInput, end: MarginBlockInput = start): MarginBlockStyle {
+  if (Array.isArray(start) || Array.isArray(end)) {
+    return {
+      marginBlockStart: start,
+      marginBlockEnd: end,
+    };
+  }
+
+  if (start === end) {
+    return {
+      marginBlock: start,
+    };
+  }
+
   return {
-    marginBlockStart: start,
-    marginBlockEnd: end,
+    marginBlock: `${start} ${end}`,
   };
 }

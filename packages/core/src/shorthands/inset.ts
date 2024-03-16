@@ -1,7 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
 import type { InsetInput } from './types';
 
-type InsetStyle = Pick<GriffelStyle, 'top' | 'right' | 'bottom' | 'left'>;
+type InsetStyle = Pick<GriffelStyle, 'top' | 'right' | 'bottom' | 'left'> | Pick<GriffelStyle, 'inset'>;
 
 export function inset(all: InsetInput): InsetStyle;
 export function inset(vertical: InsetInput, horizontal: InsetInput): InsetStyle;
@@ -21,10 +21,27 @@ export function inset(top: InsetInput, right: InsetInput, bottom: InsetInput, le
  */
 export function inset(...values: InsetInput[]): InsetStyle {
   const [firstValue, secondValue = firstValue, thirdValue = firstValue, fourthValue = secondValue] = values;
-  return {
-    top: firstValue,
-    right: secondValue,
-    bottom: thirdValue,
-    left: fourthValue,
-  };
+
+  if (values.some(value => Array.isArray(value))) {
+    return {
+      top: firstValue,
+      right: secondValue,
+      bottom: thirdValue,
+      left: fourthValue,
+    };
+  }
+
+  if (firstValue === secondValue && firstValue === thirdValue && firstValue === fourthValue) {
+    return { inset: firstValue };
+  }
+
+  if (firstValue === thirdValue && secondValue === fourthValue) {
+    return { inset: `${firstValue} ${secondValue}` };
+  }
+
+  if (secondValue === fourthValue) {
+    return { inset: `${firstValue} ${secondValue} ${thirdValue}` };
+  }
+
+  return { inset: `${firstValue} ${secondValue} ${thirdValue} ${fourthValue}` };
 }

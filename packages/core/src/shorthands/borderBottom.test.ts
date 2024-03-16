@@ -3,43 +3,37 @@ import { borderBottom } from './borderBottom';
 describe('borderBottom', () => {
   it('for a given width', () => {
     expect(borderBottom('2px')).toEqual({
-      borderBottomWidth: '2px',
+      borderBottom: '2px',
     });
   });
 
   it('for a given style', () => {
     expect(borderBottom('none')).toEqual({
-      borderBottomStyle: 'none',
+      borderBottom: 'none',
     });
   });
 
   it('for a given width and style', () => {
     expect(borderBottom('2px', 'solid')).toEqual({
-      borderBottomWidth: '2px',
-      borderBottomStyle: 'solid',
+      borderBottom: '2px solid',
     });
   });
 
   it('for a given style and width', () => {
     expect(borderBottom('solid', '2px')).toEqual({
-      borderBottomWidth: '2px',
-      borderBottomStyle: 'solid',
+      borderBottom: 'solid 2px',
     });
   });
 
   it('for a given width, style and color', () => {
     expect(borderBottom('2px', 'solid', 'red')).toEqual({
-      borderBottomWidth: '2px',
-      borderBottomStyle: 'solid',
-      borderBottomColor: 'red',
+      borderBottom: '2px solid red',
     });
   });
 
   it('for a given style, width and color', () => {
     expect(borderBottom('solid', '2px', 'red')).toEqual({
-      borderBottomStyle: 'solid',
-      borderBottomWidth: '2px',
-      borderBottomColor: 'red',
+      borderBottom: 'solid 2px red',
     });
   });
 

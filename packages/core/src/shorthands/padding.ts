@@ -13,6 +13,8 @@ export function padding(top: PaddingInput, right: PaddingInput, bottom: PaddingI
 /**
  * A function that implements CSS spec conformant expansion for "padding"
  *
+ * @deprecated Just use the "padding" property directly, TODO link
+ *
  * @example
  *   padding('10px')
  *   padding('10px', '5px')

@@ -97,31 +97,20 @@ function webpackLoader(
         return;
       }
 
+      // TODO: make this smarter
       const css = entries.reduce((acc, [cssBucketName, cssBucketRules]) => {
-        if (cssBucketName === 'm') {
-          return (
-            acc +
-            cssBucketRules
-              .map(entry => {
-                return [
-                  `/** @griffel:css-start [${cssBucketName}] [${JSON.stringify(entry[1])}] **/`,
-                  normalizeCSSBucketEntry(entry)[0],
-                  `/** @griffel:css-end **/`,
-                  '',
-                ].join('\n');
-              })
-              .join('')
-          );
-        }
-
         return (
           acc +
-          [
-            `/** @griffel:css-start [${cssBucketName}] **/`,
-            cssBucketRules.flatMap(entry => normalizeCSSBucketEntry(entry)).join(''),
-            `/** @griffel:css-end **/`,
-            '',
-          ].join('\n')
+          cssBucketRules
+            .map(entry => {
+              return [
+                `/** @griffel:css-start [${cssBucketName}] [${JSON.stringify(entry[1])}] **/`,
+                normalizeCSSBucketEntry(entry)[0],
+                `/** @griffel:css-end **/`,
+                '',
+              ].join('\n');
+            })
+            .join('')
         );
       }, '');
 

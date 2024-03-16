@@ -2,7 +2,7 @@ import hashString from '@emotion/hash';
 import type { GriffelAnimation, GriffelStyle } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
-import { HASH_PREFIX, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
+import { HASH_PREFIX } from '../constants';
 import type { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types';
 import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule';
 import { compileAtomicCSSRule } from './compileAtomicCSSRule';
@@ -21,19 +21,30 @@ import { hashPropertyKey } from './utils/hashPropertyKey';
 import { trimSelector } from './utils/trimSelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
+import { shorthands } from './shorthands';
+
+function computePropertyPriority(property: string): number | undefined {
+  // @ts-expect-error TODO FIX ME
+  if (shorthands[property]) {
+    // @ts-expect-error TODO FIX ME
+    return shorthands[property][0];
+  }
+
+  return 0;
+}
 
 function pushToClassesMap(
   classesMap: CSSClassesMap,
   propertyKey: string,
-  ltrClassname: string,
+  ltrClassname: string | null,
   rtlClassname: string | undefined,
 ) {
   classesMap[propertyKey] = rtlClassname ? [ltrClassname!, rtlClassname] : ltrClassname;
 }
 
-function createBucketEntry(cssRule: string, metadata: Record<string, unknown> | undefined): CSSBucketEntry {
-  if (metadata) {
-    return [cssRule, metadata];
+function createBucketEntry(cssRule: string, metadata: [string, unknown][]): CSSBucketEntry {
+  if (metadata.length > 0) {
+    return [cssRule, Object.fromEntries(metadata)];
   }
 
   return cssRule;
@@ -45,10 +56,16 @@ function pushToCSSRules(
   ltrCSS: string | undefined,
   rtlCSS: string | undefined,
   media: string | undefined,
+  priority: number | undefined,
 ) {
-  let metadata: Record<string, unknown> | undefined;
+  const metadata: [string, unknown][] = [];
+
+  if (priority !== 0) {
+    metadata.push(['p', priority]);
+  }
+
   if (styleBucketName === 'm' && media) {
-    metadata = { m: media };
+    metadata.push(['m', media]);
   }
 
   cssRulesByBucket[styleBucketName] ??= [];
@@ -81,20 +98,47 @@ export function resolveStyleRules(
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
     // eslint-disable-next-line no-prototype-builtins
-    if (UNSUPPORTED_CSS_PROPERTIES.hasOwnProperty(property)) {
+    if (property === 'all') {
       warnAboutUnsupportedProperties(property, styles[property as keyof GriffelStyle]);
       continue;
     }
 
     const value = styles[property as keyof GriffelStyle];
 
-    // eslint-disable-next-line eqeqeq
-    if (value == null) {
+    if (typeof value === 'undefined') {
+      // TODO: log warning
+      continue;
+    }
+
+    if (value === null) {
+      const selector = trimSelector(selectors.join(''));
+      // uniq key based on a hash of property & selector, used for merging later
+      const key = hashPropertyKey(selector, container, media, support, property);
+
+      pushToClassesMap(cssClassesMap, key, null, undefined);
       continue;
     }
 
     if (typeof value === 'string' || typeof value === 'number') {
       const selector = trimSelector(selectors.join(''));
+      // @ts-expect-error TODO FIX ME
+      const shorthand = shorthands[property as keyof GriffelStyle];
+
+      if (shorthand) {
+        // @ts-expect-error TODO FIX ME
+        const shorthandResetStyles = Object.fromEntries(shorthand[1].map(p => [p, null]));
+
+        resolveStyleRules(
+          shorthandResetStyles,
+          selectors,
+          media,
+          layer,
+          support,
+          container,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      }
 
       // uniq key based on a hash of property & selector, used for merging later
       const key = hashPropertyKey(selector, container, media, support, property);
@@ -144,7 +188,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media, computePropertyPriority(property));
     } else if (property === 'animationName') {
       const animationNameValue = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
 
@@ -177,6 +221,7 @@ export function resolveStyleRules(
             keyframeRules[i],
             rtlKeyframeRules[i],
             media,
+            computePropertyPriority(property),
           );
         }
 
@@ -268,7 +313,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media, computePropertyPriority(property));
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(

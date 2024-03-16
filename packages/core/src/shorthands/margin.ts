@@ -13,6 +13,8 @@ export function margin(top: MarginInput, right: MarginInput, bottom: MarginInput
 /**
  * A function that implements CSS spec conformant expansion for "margin"
  *
+ * @deprecated Just use the "margin" property directly, TODO link
+ *
  * @example
  *   margin('10px')
  *   margin('10px', '5px')
