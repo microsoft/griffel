@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Tue, 19 Mar 2024 15:27:35 GMT",
+      "tag": "@griffel/eslint-plugin_v1.6.2",
+      "version": "1.6.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "a8f219aff658a24a43fa5e2d20d7d06c9045574d",
+            "comment": "fix: update export in @griffel/eslint-plugin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Mar 2024 15:08:56 GMT",
       "tag": "@griffel/eslint-plugin_v1.6.1",
       "version": "1.6.1",

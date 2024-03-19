@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Tue, 19 Mar 2024 15:08:56 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Mar 2024 15:27:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.2
+
+Tue, 19 Mar 2024 15:27:35 GMT
+
+### Patches
+
+- fix: update export in @griffel/eslint-plugin (olfedias@microsoft.com)
 
 ## 1.6.1
 

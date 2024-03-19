@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: update export in @griffel/eslint-plugin",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
