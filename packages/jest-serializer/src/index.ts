@@ -36,6 +36,7 @@ export function print(val: unknown) {
 
       return Array.isArray(classes) ? classes.join('|') : classes;
     });
+
     regexParts.push(name, ...rules);
   }
   /**
@@ -48,12 +49,14 @@ export function print(val: unknown) {
   /**
    * Trim whitespace from className
    */
-  return `"${valStrippedClassNames.replace(/(class|className)="([^"]*)\s+"/, '$1="$2"')}"`;
+  return `"${valStrippedClassNames.replace(/(?:class|className)="(.*)"/, (match, p1) =>
+    match.replace(p1, p1.trim()),
+  )}"`;
 }
 
 export function test(val: unknown) {
   if (typeof val === 'string') {
-    return lookupRegex()?.test(val) ?? false;
+    return val.split(' ').some(v => DEBUG_RESET_CLASSES[v] || DEFINITION_LOOKUP_TABLE[v]);
   }
   return false;
 }

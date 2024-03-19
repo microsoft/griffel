@@ -44,7 +44,7 @@ const TestResetComponent: React.FC<{ id?: string }> = ({ id }) => {
   const classes = useStyles1();
   const baseClassName = useBaseStyles();
 
-  const className = mergeClasses('class-a', classes.paddingLeft, baseClassName, 'class-b');
+  const className = mergeClasses('class-a', baseClassName, classes.paddingLeft, 'class-b');
 
   return <div data-testid={id} className={className} />;
 };
@@ -103,13 +103,19 @@ describe('serializer', () => {
         class="class-a class-b"
       />
     `);
+
+    expect(render(<div className="foo bar" />).container.firstChild).toMatchInlineSnapshot(`
+      <div
+        class="foo bar"
+      />
+    `);
   });
 
   it('handles HTML strings', () => {
     expect(render(<TestResetComponent />).container.innerHTML).toMatchInlineSnapshot(
       `"<div class="class-a class-b"></div>"`,
     );
-    expect(render(<TestResetComponent />).container.innerHTML).toMatchInlineSnapshot(
+    expect(render(<TestComponent />).container.innerHTML).toMatchInlineSnapshot(
       `"<div class="class-a class-b"></div>"`,
     );
   });
