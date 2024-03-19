@@ -4,7 +4,7 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node16",
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
