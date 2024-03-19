@@ -1,6 +1,6 @@
 import type * as CSS from 'csstype';
 
-import type { GriffelStylesCSSValue } from './shared';
+import type { Fallback, GriffelStylesCSSValue } from './shared';
 import type { GriffelStylesUnsupportedCSSProperties } from './unsupported-properties';
 
 //
@@ -9,7 +9,7 @@ import type { GriffelStylesUnsupportedCSSProperties } from './unsupported-proper
 //
 
 type GriffelStylesCSSProperties = Omit<
-  CSS.PropertiesFallback<GriffelStylesCSSValue>,
+  Fallback<CSS.Properties<GriffelStylesCSSValue>>,
   // We have custom definition for "animationName"
   'animationName'
 > &
