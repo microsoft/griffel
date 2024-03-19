@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Tue, 19 Mar 2024 15:08:56 GMT",
+      "tag": "@griffel/eslint-plugin_v1.6.1",
+      "version": "1.6.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "eceeb13c2dc0d76a1c2c6eafc1c26f9283ec0384",
+            "comment": "fix: build @griffel/eslint-plugin as CJS"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Feb 2024 09:33:35 GMT",
       "tag": "@griffel/eslint-plugin_v1.6.0",
       "version": "1.6.0",
