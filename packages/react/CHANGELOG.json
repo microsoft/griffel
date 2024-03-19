@@ -2,6 +2,21 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Tue, 19 Mar 2024 11:33:53 GMT",
+      "tag": "@griffel/react_v1.5.21",
+      "version": "1.5.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.15.3",
+            "commit": "95326c52b330ad9d286fad926f2aa26914c39061"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jan 2024 11:03:15 GMT",
       "tag": "@griffel/react_v1.5.20",
       "version": "1.5.20",

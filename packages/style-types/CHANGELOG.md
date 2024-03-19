@@ -1,8 +1,16 @@
 # Change Log - @griffel/style-types
 
-This log was last generated on Fri, 12 Jan 2024 11:08:40 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Mar 2024 11:33:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.4
+
+Tue, 19 Mar 2024 11:33:53 GMT
+
+### Patches
+
+- fix: use custom fallback type for properties (olfedias@microsoft.com)
 
 ## 1.0.3
 

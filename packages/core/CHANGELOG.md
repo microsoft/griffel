@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Fri, 12 Jan 2024 11:08:40 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Mar 2024 11:33:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.15.3
+
+Tue, 19 Mar 2024 11:33:53 GMT
+
+### Patches
+
+- Bump @griffel/style-types to v1.0.4
 
 ## 1.15.2
 
