@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: improve error reporting",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
