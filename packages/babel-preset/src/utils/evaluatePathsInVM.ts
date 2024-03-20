@@ -81,6 +81,10 @@ function addPreval(path: NodePath<t.Program>, lazyDeps: Array<t.Expression | t.S
   );
 }
 
+function isError(e: unknown): e is Error {
+  return Object.prototype.toString.call(e) === '[object Error]';
+}
+
 /**
  * Evaluates passed paths in Node environment to resolve all lazy values.
  */
@@ -107,7 +111,12 @@ export function evaluatePathsInVM(
 
   for (let i = 0; i < nodePaths.length; i++) {
     const nodePath = nodePaths[i];
+    const result = results[i];
 
-    nodePath.replaceWith(t.valueToNode(results[i]));
+    if (isError(result)) {
+      throw result;
+    }
+
+    nodePath.replaceWith(t.valueToNode(result));
   }
 }

@@ -254,6 +254,11 @@ pluginTester({
       error: /function accepts only a single param/,
     },
     {
+      title: 'errors: throws on undefined',
+      fixture: path.resolve(fixturesDir, 'error-on-undefined', 'fixture.ts'),
+      error: /Cannot read properties of undefined/,
+    },
+    {
       title: 'errors: throws on invalid config',
       fixture: path.resolve(fixturesDir, 'error-config-babel-options', 'fixture.ts'),
       pluginOptions: {
