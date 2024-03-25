@@ -4,6 +4,8 @@ import { stringify } from './stringify';
 export { parse, stringify };
 export { createSyntax } from './createSyntax';
 
+export { postProcessor } from './postProcessor';
+
 export default {
   parse,
   stringify,
