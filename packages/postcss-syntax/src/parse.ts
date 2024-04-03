@@ -1,6 +1,12 @@
 import * as postcss from 'postcss';
 import transformSync from './transform-sync';
-import { GRIFFEL_DECLARATOR_RAW, GRIFFEL_SLOT_RAW, GRIFFEL_SRC_RAW } from './constants';
+import {
+  GRIFFEL_DECLARATOR_LOCATION_RAW,
+  GRIFFEL_DECLARATOR_RAW,
+  GRIFFEL_SLOT_LOCATION_RAW,
+  GRIFFEL_SLOT_RAW,
+  GRIFFEL_SRC_RAW,
+} from './constants';
 import type { BabelPluginOptions } from '@griffel/babel-preset';
 
 export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document | postcss.Root>, 'from' | 'map'>;
@@ -21,85 +27,35 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
 
   const { cssEntries, cssResetEntries, resetLocations, locations } = metadata;
 
-  const cssRuleNodes = Object.entries(cssEntries)
-    .map(([declarator, slots]) => {
-      return Object.entries(slots).reduce((arr, [slot, rules]) => {
-        if (!locations[declarator][slot]) {
-          throw new Error(`No code location for ${declarator}:${slot} - please report a bug`);
-        }
+  const cssRuleKeys: string[] = [];
+  const cssRules: string[] = [];
 
-        const location = locations[declarator][slot];
-
-        const nodes = rules.map(rule => {
-          const root = postcss.parse(rule);
-          root.walk(node => {
-            node.raws[GRIFFEL_SLOT_RAW] = slot;
-            node.raws[GRIFFEL_DECLARATOR_RAW] = declarator;
-
-            if (!node.source) {
-              return;
-            }
-
-            // There's currently no way to to map generated CSS to original JS code
-            // Mapping each node to the original slot is probably the best we can do for now
-            node.source.end = {
-              offset: 0,
-              column: location.end.column,
-              line: location.end.line,
-            };
-
-            node.source.start = {
-              offset: 0,
-              column: location.start.column,
-              line: location.start.line,
-            };
-          });
-
-          return root.nodes[0];
-        });
-        return [...arr, ...nodes];
-      }, [] as postcss.ChildNode[]);
-    })
-    .flat();
-
-  const cssResetRuleNodes = Object.entries(cssResetEntries).map(([declarator, [resetRule]]) => {
-    if (!resetLocations[declarator]) {
-      throw new Error(`No code location for ${declarator} - please report a bug`);
-    }
-
-    const location = resetLocations[declarator];
-
-    const root = postcss.parse(resetRule);
-    root.walk(node => {
-      node.raws[GRIFFEL_DECLARATOR_RAW] = declarator;
-
-      if (!node.source) {
-        return;
-      }
-
-      // There's currently no way to to map generated CSS to original JS code through Griffel AOT
-      // Mapping each node to the original slot is probably the best we can do for now
-      node.source.end = {
-        offset: 0,
-        column: location.end.column,
-        line: location.end.line,
-      };
-
-      node.source.start = {
-        offset: 0,
-        column: location.start.column,
-        line: location.start.line,
-      };
+  Object.entries(cssEntries).map(([declarator, slots]) => {
+    Object.entries(slots).map(([slot, rules]) => {
+      cssRuleKeys.push(`${declarator} ${slot}`);
+      cssRules.push(rules.join(''));
     });
-
-    return root.nodes[0];
   });
 
-  const root = new postcss.Root();
-  const allNodes = cssRuleNodes.concat(cssResetRuleNodes);
-  for (const rule of allNodes) {
-    root.append(rule);
-  }
+  Object.entries(cssResetEntries).map(([declarator, resetRules]) => {
+    cssRuleKeys.push(`${declarator}`);
+    cssRules.push(resetRules.join(''));
+  });
+
+  const root = postcss.parse(cssRules.join('\n'));
+  root.walk(node => {
+    if (!node.source || node.source.start === undefined) {
+      return;
+    }
+    const [declarator, slot] = cssRuleKeys[node.source.start.line - 1].split(' ');
+    node.raws[GRIFFEL_DECLARATOR_RAW] = declarator;
+    if (slot) {
+      node.raws[GRIFFEL_SLOT_RAW] = slot;
+      node.raws[GRIFFEL_SLOT_LOCATION_RAW] = locations[declarator][slot];
+    } else {
+      node.raws[GRIFFEL_DECLARATOR_LOCATION_RAW] = resetLocations[declarator];
+    }
+  });
 
   const doc = new postcss.Document();
 
