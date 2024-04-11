@@ -5,4 +5,5 @@ export type GriffelStylesCSSValue = string | 0;
  * @see https://github.com/frenic/csstype/blob/master/src/typescript.ts#L73
  */
 export type Fallback<T> = { [P in keyof T]: T[P] | NonNullable<T[P]>[] };
+
 export type ValueOrArray<T> = T | Array<T>;

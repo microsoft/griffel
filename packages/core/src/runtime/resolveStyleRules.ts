@@ -18,10 +18,10 @@ import { isObject } from './utils/isObject';
 import { getStyleBucketName } from './getStyleBucketName';
 import { hashClassName } from './utils/hashClassName';
 import { hashPropertyKey } from './utils/hashPropertyKey';
+import { isResetValue } from './utils/isResetValue';
 import { trimSelector } from './utils/trimSelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
-import { isUnsetValue } from './utils/isUnsetValue';
 
 function pushToClassesMap(
   classesMap: CSSClassesMap,
@@ -94,7 +94,7 @@ export function resolveStyleRules(
       continue;
     }
 
-    if (isUnsetValue(value)) {
+    if (isResetValue(value)) {
       const selector = trimSelector(selectors.join(''));
       // uniq key based on a hash of property & selector, used for merging later
       const key = hashPropertyKey(selector, container, media, support, property);

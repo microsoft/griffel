@@ -260,12 +260,12 @@ const useClasses = makeStyles({
 });
 ```
 
-### Using `UNSET`
+### Using `RESET`
 
-You can set a `UNSET` value, unlike "unset" in CSS - it will remove a property and won't generate a CSS rule:
+You can set `RESET` value to remove a property (it won't generate a CSS rule unlike `initial` or `unset`):
 
 ```js
-import { makeStyles, mergeClasses, UNSET } from '@griffel/react';
+import { makeStyles, mergeClasses, RESET } from '@griffel/react';
 
 const useClassesA = makeStyles({
   root: {
@@ -275,7 +275,7 @@ const useClassesA = makeStyles({
 });
 const useClassesB = makeStyles({
   root: {
-    color: UNSET,
+    color: RESET,
   },
 });
 
@@ -286,7 +286,7 @@ function Component() {
   // 💡 After merging, the `color` property will be removed
   const className = mergeClasses(classesA.root, classesB.root);
 
-  // 💡 If `UNSET` value is set, it won't be added to the class
+  // 💡 If `RESET` value is set, it won't be added to the class
   return <div className={classesA} />;
 }
 ```

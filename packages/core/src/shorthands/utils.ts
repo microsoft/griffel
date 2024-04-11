@@ -14,8 +14,6 @@ const LINE_STYLES: CSS.DataType.LineStyle[] = [
   'outset',
 ];
 
-export function isBorderStyle(
-  value: GriffelStylesCSSValue | GriffelStylesCSSValue[] | null,
-): value is CSS.DataType.LineStyle {
+export function isBorderStyle(value: GriffelStylesCSSValue | GriffelStylesCSSValue[]): value is CSS.DataType.LineStyle {
   return LINE_STYLES.includes(value as CSS.DataType.LineStyle);
 }

@@ -1,7 +1,7 @@
 import { griffelRulesSerializer } from '../common/snapshotSerializers';
 import { resolveStyleRules } from './resolveStyleRules';
 import type { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
-import { UNSET, UNSUPPORTED_CSS_PROPERTIES } from '..';
+import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '..';
 
 expect.addSnapshotSerializer(griffelRulesSerializer);
 
@@ -864,8 +864,8 @@ describe('resolveStyleRules', () => {
   });
 
   describe('reset', () => {
-    it('"RESET_STYLE_VALUE" emits an empty class', () => {
-      expect(resolveStyleRules({ color: 'red', paddingLeft: UNSET })).toEqual([
+    it('"RESET" emits an empty class', () => {
+      expect(resolveStyleRules({ color: 'red', paddingLeft: RESET })).toEqual([
         { sj55zd: 'fe3e8s9', uwmqm3: 0 },
         { d: ['.fe3e8s9{color:red;}'] },
       ]);

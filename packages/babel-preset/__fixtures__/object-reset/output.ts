@@ -1,5 +1,5 @@
 import { __styles } from '@griffel/react';
-export const UNSET = 'DO_NOT_USE_DIRECTLY: @griffel/unset' as unknown as 'unset';
+export const RESET = 'DO_NOT_USE_DIRECTLY: @griffel/reset-value' as unknown as 'unset';
 export const useStyles = __styles(
   {
     root: {

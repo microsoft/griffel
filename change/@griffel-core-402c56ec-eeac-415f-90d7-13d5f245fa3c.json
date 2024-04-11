@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "feat: add support for `UNSET`",
+  "comment": "feat: add support for `RESET`",
   "packageName": "@griffel/core",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"

@@ -138,6 +138,6 @@ export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof GriffelStylesUnsupportedCS
  *
  * @link https://griffel.js.org/react/api/make-styles
  *
- * Do not use the value directly, use `UNSET` constant instead.
+ * Do not use the value directly, use `RESET` constant instead.
  */
-export const UNSET = 'DO_NOT_USE_DIRECTLY: @griffel/unset' as unknown as 'unset';
+export const RESET = 'DO_NOT_USE_DIRECTLY: @griffel/reset-value' as unknown as 'unset';

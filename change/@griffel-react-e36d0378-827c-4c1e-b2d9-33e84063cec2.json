@@ -1,7 +1,7 @@
 {
   "type": "patch",
-  "comment": "chore: handle `RESET` value",
-  "packageName": "@griffel/jest-serializer",
+  "comment": "feat: add support for `RESET`",
+  "packageName": "@griffel/react",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"
 }
