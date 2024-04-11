@@ -18,6 +18,7 @@ import { isObject } from './utils/isObject';
 import { getStyleBucketName } from './getStyleBucketName';
 import { hashClassName } from './utils/hashClassName';
 import { hashPropertyKey } from './utils/hashPropertyKey';
+import { isResetValue } from './utils/isResetValue';
 import { trimSelector } from './utils/trimSelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
@@ -25,10 +26,10 @@ import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedP
 function pushToClassesMap(
   classesMap: CSSClassesMap,
   propertyKey: string,
-  ltrClassname: string,
+  ltrClassname: string | 0,
   rtlClassname: string | undefined,
 ) {
-  classesMap[propertyKey] = rtlClassname ? [ltrClassname!, rtlClassname] : ltrClassname;
+  classesMap[propertyKey] = rtlClassname ? [ltrClassname as string, rtlClassname] : ltrClassname;
 }
 
 function createBucketEntry(cssRule: string, metadata: Record<string, unknown> | undefined): CSSBucketEntry {
@@ -90,6 +91,15 @@ export function resolveStyleRules(
 
     // eslint-disable-next-line eqeqeq
     if (value == null) {
+      continue;
+    }
+
+    if (isResetValue(value)) {
+      const selector = trimSelector(selectors.join(''));
+      // uniq key based on a hash of property & selector, used for merging later
+      const key = hashPropertyKey(selector, container, media, support, property);
+
+      pushToClassesMap(cssClassesMap, key, 0, undefined);
       continue;
     }
 

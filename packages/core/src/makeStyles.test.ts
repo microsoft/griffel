@@ -1,3 +1,4 @@
+import { RESET } from './constants';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { griffelRendererSerializer } from './common/snapshotSerializers';
 import { makeStyles } from './makeStyles';
@@ -225,6 +226,23 @@ describe('makeStyles', () => {
       /** bucket "d" **/
       .fe3e8s9 {
         color: red;
+      }
+    `);
+  });
+
+  it('handles "RESET" for rules removal', () => {
+    const computeClassesA = makeStyles({ root: { color: RESET } });
+    const computeClassesB = makeStyles({ root: { backgroundColor: RESET } });
+    const computeClassesC = makeStyles({ root: { color: RESET, backgroundColor: '10px' } });
+
+    expect(computeClassesA({ dir: 'ltr', renderer }).root).toEqual('___1oss4e0');
+    expect(computeClassesB({ dir: 'ltr', renderer }).root).toEqual('___wi64bx0');
+    expect(computeClassesC({ dir: 'ltr', renderer }).root).toEqual('___1919hol fihdeyh');
+
+    expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" **/
+      .fihdeyh {
+        background-color: 10px;
       }
     `);
   });

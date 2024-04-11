@@ -1,4 +1,4 @@
-export { shorthands, mergeClasses, createDOMRenderer } from '@griffel/core';
+export { RESET, shorthands, mergeClasses, createDOMRenderer } from '@griffel/core';
 export type { GriffelStyle, GriffelResetStyle, CreateDOMRendererOptions, GriffelRenderer } from '@griffel/core';
 
 export { makeStyles } from './makeStyles';

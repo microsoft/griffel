@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: handle `RESET` during compilation",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -151,20 +151,19 @@ export function mergeClasses(): string {
   }
 
   // eslint-disable-next-line prefer-spread
-  const resultDefinitions = Object.assign.apply<ObjectConstructor, CSSClassesMap[], CSSClassesMap>(
+  const resultClassesMap = Object.assign.apply<ObjectConstructor, CSSClassesMap[], CSSClassesMap>(
     Object,
     // .assign() mutates the first object, we can't mutate mappings as it will produce invalid results later
     [{}].concat(sequenceMappings),
   );
-
-  let atomicClassNames = reduceToClassName(resultDefinitions, dir!);
+  const [atomicClasses, classesMapHash] = reduceToClassName(resultClassesMap, dir!);
 
   // Each merge of classes generates a new sequence of atomic classes that needs to be registered
-  const newSequenceHash = hashSequence(atomicClassNames, dir!, sequencesIds);
-  atomicClassNames = newSequenceHash + ' ' + atomicClassNames;
+  const newSequenceHash = hashSequence(classesMapHash, dir!, sequencesIds);
+  const newClassName = newSequenceHash + ' ' + atomicClasses;
 
-  mergeClassesCachedResults[sequenceMatch] = atomicClassNames;
-  DEFINITION_LOOKUP_TABLE[newSequenceHash] = [resultDefinitions, dir!];
+  mergeClassesCachedResults[sequenceMatch] = newClassName;
+  DEFINITION_LOOKUP_TABLE[newSequenceHash] = [resultClassesMap, dir!];
 
-  return resultClassName + atomicClassNames;
+  return resultClassName + newClassName;
 }

@@ -31,12 +31,19 @@ export function print(val: unknown) {
      * @example
      * rules = ["f16th3vw", "frdkuqy0", "fat0sn40", "fjseox00"]
      */
-    const rules = Object.keys(definitions).map(key => {
+    const rules = Object.keys(definitions).reduce((acc, key) => {
       const classes: CSSClasses = definitions[key];
 
-      return Array.isArray(classes) ? classes.join('|') : classes;
-    });
+      if (typeof classes === 'string') {
+        acc.push(classes);
+      }
 
+      if (Array.isArray(classes)) {
+        acc.push(classes[0], classes[1]);
+      }
+
+      return acc;
+    }, [] as string[]);
     regexParts.push(name, ...rules);
   }
   /**

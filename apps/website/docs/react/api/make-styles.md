@@ -260,6 +260,37 @@ const useClasses = makeStyles({
 });
 ```
 
+### Using `RESET`
+
+You can set `RESET` value to remove a property (it won't generate a CSS rule unlike `initial` or `unset`):
+
+```js
+import { makeStyles, mergeClasses, RESET } from '@griffel/react';
+
+const useClassesA = makeStyles({
+  root: {
+    color: 'red',
+    backgroundColor: 'blue',
+  },
+});
+const useClassesB = makeStyles({
+  root: {
+    color: RESET,
+  },
+});
+
+function Component() {
+  const classesA = useClassesA();
+  const classesB = useClassesB();
+
+  // 💡 After merging, the `color` property will be removed
+  const className = mergeClasses(classesA.root, classesB.root);
+
+  // 💡 If `RESET` value is set, it won't be added to the class
+  return <div className={classesA} />;
+}
+```
+
 ### CSS Fallback Properties
 
 Griffel supports CSS fallback properties in order to support older browsers.

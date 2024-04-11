@@ -1,4 +1,6 @@
+import { RESET } from '@griffel/core';
 import * as path from 'path';
+
 import { normalizeStyleRule, normalizeStyleRules } from './normalizeStyleRules';
 
 describe('normalizeStyleRule', () => {
@@ -182,6 +184,22 @@ describe('normalizeStyleRules', () => {
       root: {
         animationName: [{ from: { height: '20px' }, to: { height: '10px' } }],
       },
+    });
+  });
+
+  it('handles "RESET"', () => {
+    expect(
+      normalizeStyleRules(
+        path.posix,
+        {
+          root: '/home/projects/foo',
+          filename: '/home/projects/foo/src/styles/Component.styles.ts',
+        },
+
+        { root: { color: RESET } },
+      ),
+    ).toEqual({
+      root: { color: RESET },
     });
   });
 });

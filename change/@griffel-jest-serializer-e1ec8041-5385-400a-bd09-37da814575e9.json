@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: handle `RESET` value",
+  "packageName": "@griffel/jest-serializer",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

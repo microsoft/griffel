@@ -126,7 +126,15 @@ function buildCSSEntriesMetadata(
     Object.entries(classnamesMapping).map(([slot, cssClassesMap]) => {
       return [
         slot,
-        Object.values(cssClassesMap).flatMap(cssClasses => (Array.isArray(cssClasses) ? cssClasses : [cssClasses])),
+        Object.values(cssClassesMap).reduce<string[]>((acc, cssClasses) => {
+          if (typeof cssClasses === 'string') {
+            acc.push(cssClasses);
+          } else if (Array.isArray(cssClasses)) {
+            acc.push(...cssClasses);
+          }
+
+          return acc;
+        }, []),
       ];
     }),
   );
