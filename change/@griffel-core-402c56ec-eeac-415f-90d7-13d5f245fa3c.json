@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "feat: add support for `null` values",
+  "comment": "feat: add support for `UNSET`",
   "packageName": "@griffel/core",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"

@@ -21,14 +21,15 @@ import { hashPropertyKey } from './utils/hashPropertyKey';
 import { trimSelector } from './utils/trimSelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
+import { isUnsetValue } from './utils/isUnsetValue';
 
 function pushToClassesMap(
   classesMap: CSSClassesMap,
   propertyKey: string,
-  ltrClassname: string | null,
+  ltrClassname: string | 0,
   rtlClassname: string | undefined,
 ) {
-  classesMap[propertyKey] = rtlClassname ? [ltrClassname!, rtlClassname] : ltrClassname;
+  classesMap[propertyKey] = rtlClassname ? [ltrClassname as string, rtlClassname] : ltrClassname;
 }
 
 function createBucketEntry(cssRule: string, metadata: Record<string, unknown> | undefined): CSSBucketEntry {
@@ -88,16 +89,17 @@ export function resolveStyleRules(
 
     const value = styles[property as keyof GriffelStyle];
 
-    if (typeof value === 'undefined') {
+    // eslint-disable-next-line eqeqeq
+    if (value == null) {
       continue;
     }
 
-    if (value === null) {
+    if (isUnsetValue(value)) {
       const selector = trimSelector(selectors.join(''));
       // uniq key based on a hash of property & selector, used for merging later
       const key = hashPropertyKey(selector, container, media, support, property);
 
-      pushToClassesMap(cssClassesMap, key, null, undefined);
+      pushToClassesMap(cssClassesMap, key, 0, undefined);
       continue;
     }
 

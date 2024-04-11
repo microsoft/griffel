@@ -1,3 +1,4 @@
+import { UNSET } from './constants';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { griffelRendererSerializer } from './common/snapshotSerializers';
 import { makeStyles } from './makeStyles';
@@ -229,10 +230,10 @@ describe('makeStyles', () => {
     `);
   });
 
-  it('handles "null" for rules removal', () => {
-    const computeClassesA = makeStyles({ root: { color: null } });
-    const computeClassesB = makeStyles({ root: { backgroundColor: null } });
-    const computeClassesC = makeStyles({ root: { color: null, backgroundColor: '10px' } });
+  it('handles "RESET_STYLE_VALUE" for rules removal', () => {
+    const computeClassesA = makeStyles({ root: { color: UNSET } });
+    const computeClassesB = makeStyles({ root: { backgroundColor: UNSET } });
+    const computeClassesC = makeStyles({ root: { color: UNSET, backgroundColor: '10px' } });
 
     expect(computeClassesA({ dir: 'ltr', renderer }).root).toEqual('___1oss4e0');
     expect(computeClassesB({ dir: 'ltr', renderer }).root).toEqual('___wi64bx0');

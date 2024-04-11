@@ -22,13 +22,13 @@ describe('reduceToClassName', () => {
     expect(reduceToClassName(classMap, 'rtl')).toEqual(['classB', 'classB']);
   });
 
-  it('handles "null" values', () => {
+  it('handles "0" values', () => {
     const classMapA: CSSClassesMap = {
-      propHash: null,
+      propHash: 0,
     };
     const classMapB: CSSClassesMap = {
       propHashA: 'classA',
-      propHashB: null,
+      propHashB: 0,
       propHashC: 'classC',
     };
 
@@ -57,17 +57,17 @@ describe('reduceToClassNameForSlots', () => {
     });
   });
 
-  it('handles "null"', () => {
+  it('handles "0"', () => {
     const classesMapBySlot = {
       slotA: {
-        propHashA: null,
+        propHashA: 0 as const,
       },
       slotB: {
-        propHashA: null,
+        propHashA: 0 as const,
         propHashB: 'classB',
       },
       slotC: {
-        propHashC: null,
+        propHashC: 0 as const,
       },
     };
     const result = reduceToClassNameForSlots(classesMapBySlot, 'ltr');

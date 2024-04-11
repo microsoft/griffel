@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { makeResetStyles, makeStyles, mergeClasses, TextDirectionProvider } from '@griffel/react';
+import { UNSET, makeResetStyles, makeStyles, mergeClasses, TextDirectionProvider } from '@griffel/react';
 import { render } from '@testing-library/react';
 
 import { print, test } from './index';
@@ -7,7 +7,7 @@ import { print, test } from './index';
 expect.addSnapshotSerializer({ print, test });
 
 const useStyles1 = makeStyles({
-  root: { color: 'var(--colorNeutralForeground1)', backgroundColor: null },
+  root: { color: 'var(--colorNeutralForeground1)', backgroundColor: UNSET },
   paddingLeft: { paddingLeft: '10px' },
 });
 

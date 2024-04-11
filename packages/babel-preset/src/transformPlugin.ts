@@ -128,7 +128,7 @@ function buildCSSEntriesMetadata(
         slot,
         Object.values(cssClassesMap).reduce<string[]>((acc, cssClasses) => {
           if (typeof cssClasses === 'string') {
-            acc.push(cssClasses ?? '');
+            acc.push(cssClasses);
           } else if (Array.isArray(cssClasses)) {
             acc.push(...cssClasses);
           }
@@ -151,10 +151,6 @@ function buildCSSEntriesMetadata(
       return [
         slot,
         cssClasses.map(cssClass => {
-          if (cssClass === null) {
-            return '';
-          }
-
           return cssRules.find(rule => rule.includes(cssClass))!;
         }),
       ];

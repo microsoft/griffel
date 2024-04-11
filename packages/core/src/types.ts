@@ -53,7 +53,10 @@ export type StyleBucketName = keyof CSSRulesByBucket;
 export type SequenceHash = string;
 export type PropertyHash = string;
 
-export type CSSClasses = null | /* ltrClassName */ string | [/* ltrClassName */ string, /* rtlClassName */ string];
+export type CSSClasses =
+  | string /* ltrClassName */
+  | 0 /* ltrClassName: reset value */
+  | [string /* ltrClassName */, string /* rtlClassName */];
 
 export type CSSClassesMap = Record<PropertyHash, CSSClasses>;
 export type CSSClassesMapBySlot<Slots extends string | number> = Record<Slots, CSSClassesMap>;

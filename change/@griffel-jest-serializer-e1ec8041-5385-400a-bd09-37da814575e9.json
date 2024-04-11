@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "chore: handle `null` values",
+  "comment": "chore: handle `UNSET` value",
   "packageName": "@griffel/jest-serializer",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"

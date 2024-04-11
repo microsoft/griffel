@@ -132,3 +132,12 @@ export const UNSUPPORTED_CSS_PROPERTIES: Record<keyof GriffelStylesUnsupportedCS
   transition: 1,
   viewTimeline: 1,
 } as const;
+
+/**
+ * Removes a CSS property from the style object.
+ *
+ * @link https://griffel.js.org/react/api/make-styles
+ *
+ * Do not use the value directly, use `UNSET` constant instead.
+ */
+export const UNSET = 'DO_NOT_USE_DIRECTLY: @griffel/unset' as unknown as 'unset';

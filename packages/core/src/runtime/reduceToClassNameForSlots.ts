@@ -19,7 +19,7 @@ export function reduceToClassName(classMap: CSSClassesMap, dir: 'ltr' | 'rtl'): 
   for (const propertyHash in classMap) {
     const classNameMapping: CSSClasses = classMap[propertyHash];
 
-    if (classNameMapping === null) {
+    if (classNameMapping === 0) {
       hashString += propertyHash + ' ';
       continue;
     }

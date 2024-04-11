@@ -30,17 +30,7 @@ const isWidth = (value: CSS.Property.Flex | undefined) => widthReservedKeys.some
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
  */
-export function flex(..._values: FlexInput): FlexStyle {
-  if (_values.some(value => value === null)) {
-    if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
-      console.error(`The value passed to shorthands.flex() is "null", it's not supported by the function.`);
-    }
-    return {};
-  }
-
-  const values = _values as [CSS.Property.Flex, CSS.Property.Flex?, CSS.Property.Flex?];
-
+export function flex(...values: FlexInput): FlexStyle {
   const isOneValueSyntax = values.length === 1;
   const isTwoValueSyntax = values.length === 2;
   const isThreeValueSyntax = values.length === 3;

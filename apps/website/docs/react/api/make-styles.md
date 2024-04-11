@@ -260,12 +260,12 @@ const useClasses = makeStyles({
 });
 ```
 
-### `null` values
+### Using `UNSET`
 
-You can set a `null` value, this is useful when you want to merge classes to remove a property:
+You can set a `UNSET` value, unlike "unset" in CSS - it will remove a property and won't generate a CSS rule:
 
 ```js
-import { makeStyles, mergeClasses } from '@griffel/react';
+import { makeStyles, mergeClasses, UNSET } from '@griffel/react';
 
 const useClassesA = makeStyles({
   root: {
@@ -275,7 +275,7 @@ const useClassesA = makeStyles({
 });
 const useClassesB = makeStyles({
   root: {
-    color: null,
+    color: UNSET,
   },
 });
 
@@ -286,7 +286,7 @@ function Component() {
   // 💡 After merging, the `color` property will be removed
   const className = mergeClasses(classesA.root, classesB.root);
 
-  // 💡 If `null` value is set, it won't be added to the class
+  // 💡 If `UNSET` value is set, it won't be added to the class
   return <div className={classesA} />;
 }
 ```

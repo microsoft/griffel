@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "chore: handle `null` values for compilation",
+  "comment": "chore: handle `UNSET` during compilation",
   "packageName": "@griffel/babel-preset",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"

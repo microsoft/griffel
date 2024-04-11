@@ -2,7 +2,7 @@ import { mergeClasses } from './mergeClasses';
 import { makeStyles } from './makeStyles';
 import type { MakeStylesOptions } from './makeStyles';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
-import { SEQUENCE_PREFIX, SEQUENCE_SIZE } from './constants';
+import { UNSET, SEQUENCE_PREFIX, SEQUENCE_SIZE } from './constants';
 import { makeResetStyles } from './makeResetStyles';
 
 function removeSequenceHash(classNames: string) {
@@ -216,8 +216,8 @@ describe('mergeClasses', () => {
   describe('resets of styles', () => {
     it('handles resets', () => {
       const computeClassesA = makeStyles({ root: { color: 'red', display: 'flex' } });
-      const computeClassesB = makeStyles({ root: { backgroundColor: 'orange', color: null } });
-      const computeClassesC = makeStyles({ root: { display: null } });
+      const computeClassesB = makeStyles({ root: { backgroundColor: 'orange', color: UNSET } });
+      const computeClassesC = makeStyles({ root: { display: UNSET } });
 
       const classNameA = computeClassesA(options).root;
       const classNameB = computeClassesB(options).root;

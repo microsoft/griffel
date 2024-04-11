@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "chore: handle `null` values",
+  "comment": "chore: handle `UNSET` during compilation",
   "packageName": "@griffel/tag-processor",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"

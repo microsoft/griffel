@@ -1,4 +1,6 @@
 import * as path from 'path';
+import { UNSET } from '@griffel/core';
+
 import { normalizeStyleRule, normalizeStyleRules } from './normalizeStyleRules';
 
 describe('normalizeStyleRule', () => {
@@ -185,7 +187,7 @@ describe('normalizeStyleRules', () => {
     });
   });
 
-  it('handles "null"', () => {
+  it('handles "RESET_VALUE"', () => {
     expect(
       normalizeStyleRules(
         path.posix,
@@ -194,10 +196,10 @@ describe('normalizeStyleRules', () => {
           filename: '/home/projects/foo/src/styles/Component.styles.ts',
         },
 
-        { root: { color: null } },
+        { root: { color: UNSET } },
       ),
     ).toEqual({
-      root: { color: null },
+      root: { color: UNSET },
     });
   });
 });
