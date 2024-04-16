@@ -66,7 +66,7 @@ export function flex(...values: FlexInput): FlexStyle {
       return {
         flexGrow: firstValue as number,
         flexShrink: 1,
-        flexBasis: 0,
+        flexBasis: '0%',
       };
     }
 
@@ -86,7 +86,7 @@ export function flex(...values: FlexInput): FlexStyle {
       return {
         flexGrow: firstValue,
         flexShrink: secondValue,
-        flexBasis: 0,
+        flexBasis: '0%',
       };
     }
 
