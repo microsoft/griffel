@@ -235,6 +235,12 @@ describe('webpackLoader', () => {
   testFixture('empty');
 
   // Integration fixtures for config functionality
+  testFixture('config-classname-hash-salt', {
+    loaderOptions: {
+      classNameHashSalt: 'HASH_SALT',
+    },
+  });
+
   testFixture('config-modules', {
     loaderOptions: {
       modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],

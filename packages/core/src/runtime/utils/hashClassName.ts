@@ -6,14 +6,16 @@ import type { AtRules } from './types';
 interface HashedClassNameParts {
   property: string;
   value: string;
+  salt: string;
   selector: string;
 }
 
-export function hashClassName({ property, selector, value }: HashedClassNameParts, atRules: AtRules): string {
+export function hashClassName({ property, selector, salt, value }: HashedClassNameParts, atRules: AtRules): string {
   return (
     HASH_PREFIX +
     hashString(
-      selector +
+      salt +
+        selector +
         atRules.container +
         atRules.media +
         atRules.layer +

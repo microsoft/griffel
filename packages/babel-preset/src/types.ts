@@ -2,6 +2,8 @@ import type { TransformOptions } from '@babel/core';
 import type { EvalRule } from '@linaria/babel-preset';
 
 export type BabelPluginOptions = {
+  classNameHashSalt?: string;
+
   /**
    * Returns the evaluated CSS rules in the file result metadata
    * @default false
