@@ -7,6 +7,7 @@ import type { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry }
 import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule';
 import { compileAtomicCSSRule } from './compileAtomicCSSRule';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
+import { shorthands } from './shorthands';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery';
 import { isMediaQuerySelector } from './utils/isMediaQuerySelector';
 import { isLayerSelector } from './utils/isLayerSelector';
@@ -20,9 +21,9 @@ import { hashClassName } from './utils/hashClassName';
 import { hashPropertyKey } from './utils/hashPropertyKey';
 import { isResetValue } from './utils/isResetValue';
 import { trimSelector } from './utils/trimSelector';
+import type { AtRules } from './utils/types';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
-import { shorthands } from './shorthands';
 
 function getShorthandDefinition(property: string): [number, string[]] | undefined {
   return shorthands[property as keyof typeof shorthands];
@@ -86,10 +87,12 @@ function pushToCSSRules(
 export function resolveStyleRules(
   styles: GriffelStyle,
   selectors: string[] = [],
-  media = '',
-  layer = '',
-  support = '',
-  container = '',
+  atRules: AtRules = {
+    container: '',
+    layer: '',
+    media: '',
+    supports: '',
+  },
   cssClassesMap: CSSClassesMap = {},
   cssRulesByBucket: CSSRulesByBucket = {},
   rtlValue?: string,
@@ -112,7 +115,7 @@ export function resolveStyleRules(
     if (isResetValue(value)) {
       const selector = trimSelector(selectors.join(''));
       // uniq key based on a hash of property & selector, used for merging later
-      const key = hashPropertyKey(selector, container, media, support, property);
+      const key = hashPropertyKey(selector, property, atRules);
 
       pushToClassesMap(cssClassesMap, key, 0, undefined);
       continue;
@@ -126,43 +129,32 @@ export function resolveStyleRules(
         const shorthandProperties = shorthand[1];
         const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
 
-        resolveStyleRules(
-          shorthandResetStyles,
-          selectors,
-          media,
-          layer,
-          support,
-          container,
-          cssClassesMap,
-          cssRulesByBucket,
-        );
+        resolveStyleRules(shorthandResetStyles, selectors, atRules, cssClassesMap, cssRulesByBucket);
       }
 
       // uniq key based on a hash of property & selector, used for merging later
-      const key = hashPropertyKey(selector, container, media, support, property);
-      const className = hashClassName({
-        container,
-        media,
-        layer,
-        value: value.toString(),
-        support,
-        selector,
-        property,
-      });
+      const key = hashPropertyKey(selector, property, atRules);
+      const className = hashClassName(
+        {
+          value: value.toString(),
+          selector,
+          property,
+        },
+        atRules,
+      );
 
       const rtlDefinition = (rtlValue && { key: property, value: rtlValue }) || convertProperty(property, value);
       const flippedInRtl = rtlDefinition.key !== property || rtlDefinition.value !== value;
 
       const rtlClassName = flippedInRtl
-        ? hashClassName({
-            container,
-            value: rtlDefinition.value.toString(),
-            property: rtlDefinition.key,
-            selector,
-            media,
-            layer,
-            support,
-          })
+        ? hashClassName(
+            {
+              value: rtlDefinition.value.toString(),
+              property: rtlDefinition.key,
+              selector,
+            },
+            atRules,
+          )
         : undefined;
       const rtlCompileOptions: Partial<CompileAtomicCSSOptions> | undefined = flippedInRtl
         ? {
@@ -172,21 +164,27 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(selectors, layer, media, support, container);
-      const [ltrCSS, rtlCSS] = compileAtomicCSSRule({
-        className,
-        media,
-        layer,
-        selectors,
-        property,
-        support,
-        container,
-        value,
-        ...rtlCompileOptions,
-      });
+      const styleBucketName = getStyleBucketName(selectors, atRules);
+      const [ltrCSS, rtlCSS] = compileAtomicCSSRule(
+        {
+          className,
+          selectors,
+          property,
+          value,
+          ...rtlCompileOptions,
+        },
+        atRules,
+      );
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media, computePropertyPriority(shorthand));
+      pushToCSSRules(
+        cssRulesByBucket,
+        styleBucketName,
+        ltrCSS,
+        rtlCSS,
+        atRules.media,
+        computePropertyPriority(shorthand),
+      );
     } else if (property === 'animationName') {
       const animationNameValue = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
 
@@ -218,7 +216,7 @@ export function resolveStyleRules(
             'k',
             keyframeRules[i],
             rtlKeyframeRules[i],
-            media,
+            atRules.media,
             // keyframes always have default priority
             0,
           );
@@ -231,10 +229,7 @@ export function resolveStyleRules(
       resolveStyleRules(
         { animationName: animationNames.join(', ') },
         selectors,
-        media,
-        layer,
-        support,
-        container,
+        atRules,
         cssClassesMap,
         cssRulesByBucket,
         rtlAnimationNames.join(', '),
@@ -257,28 +252,18 @@ export function resolveStyleRules(
         const shorthandProperties = shorthand[1];
         const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
 
-        resolveStyleRules(
-          shorthandResetStyles,
-          selectors,
-          media,
-          layer,
-          support,
-          container,
-          cssClassesMap,
-          cssRulesByBucket,
-        );
+        resolveStyleRules(shorthandResetStyles, selectors, atRules, cssClassesMap, cssRulesByBucket);
       }
 
-      const key = hashPropertyKey(selector, container, media, support, property);
-      const className = hashClassName({
-        container,
-        media,
-        layer,
-        value: value.map(v => (v ?? '').toString()).join(';'),
-        support,
-        selector,
-        property,
-      });
+      const key = hashPropertyKey(selector, property, atRules);
+      const className = hashClassName(
+        {
+          value: value.map(v => (v ?? '').toString()).join(';'),
+          selector,
+          property,
+        },
+        atRules,
+      );
 
       const rtlDefinitions = value.map(v => convertProperty(property, v!));
 
@@ -296,15 +281,14 @@ export function resolveStyleRules(
       const flippedInRtl = rtlDefinitions[0].key !== property || rtlDefinitions.some((v, i) => v.value !== value[i]);
 
       const rtlClassName = flippedInRtl
-        ? hashClassName({
-            container,
-            value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
-            property: rtlDefinitions[0].key,
-            selector,
-            layer,
-            media,
-            support,
-          })
+        ? hashClassName(
+            {
+              value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
+              property: rtlDefinitions[0].key,
+              selector,
+            },
+            atRules,
+          )
         : undefined;
 
       const rtlCompileOptions: Partial<CompileAtomicCSSOptions> | undefined = flippedInRtl
@@ -315,69 +299,63 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(selectors, layer, media, support, container);
-      const [ltrCSS, rtlCSS] = compileAtomicCSSRule({
-        className,
-        media,
-        layer,
-        selectors,
-        property,
-        support,
-        container,
-        value: value as unknown as Array<string | number>,
-        ...rtlCompileOptions,
-      });
+      const styleBucketName = getStyleBucketName(selectors, atRules);
+      const [ltrCSS, rtlCSS] = compileAtomicCSSRule(
+        {
+          className,
+          selectors,
+          property,
+          value: value as unknown as Array<string | number>,
+          ...rtlCompileOptions,
+        },
+        atRules,
+      );
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media, computePropertyPriority(shorthand));
+      pushToCSSRules(
+        cssRulesByBucket,
+        styleBucketName,
+        ltrCSS,
+        rtlCSS,
+        atRules.media,
+        computePropertyPriority(shorthand),
+      );
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(
           value as GriffelStyle,
           selectors.concat(normalizeNestedProperty(property)),
-          media,
-          layer,
-          support,
-          container,
+          atRules,
           cssClassesMap,
           cssRulesByBucket,
         );
       } else if (isMediaQuerySelector(property)) {
-        const combinedMediaQuery = generateCombinedQuery(media, property.slice(6).trim());
+        const combinedMediaQuery = generateCombinedQuery(atRules.media, property.slice(6).trim());
 
         resolveStyleRules(
           value as GriffelStyle,
           selectors,
-          combinedMediaQuery,
-          layer,
-          support,
-          container,
+          { ...atRules, media: combinedMediaQuery },
           cssClassesMap,
           cssRulesByBucket,
         );
       } else if (isLayerSelector(property)) {
-        const combinedLayerQuery = (layer ? `${layer}.` : '') + property.slice(6).trim();
+        const combinedLayerQuery = (atRules.layer ? `${atRules.layer}.` : '') + property.slice(6).trim();
 
         resolveStyleRules(
           value as GriffelStyle,
           selectors,
-          media,
-          combinedLayerQuery,
-          support,
-          container,
+          { ...atRules, layer: combinedLayerQuery },
           cssClassesMap,
           cssRulesByBucket,
         );
       } else if (isSupportQuerySelector(property)) {
-        const combinedSupportQuery = generateCombinedQuery(support, property.slice(9).trim());
+        const combinedSupportQuery = generateCombinedQuery(atRules.supports, property.slice(9).trim());
 
         resolveStyleRules(
           value as GriffelStyle,
           selectors,
-          media,
-          layer,
-          combinedSupportQuery,
-          container,
+          { ...atRules, supports: combinedSupportQuery },
           cssClassesMap,
           cssRulesByBucket,
         );
@@ -390,10 +368,7 @@ export function resolveStyleRules(
         resolveStyleRules(
           value as GriffelStyle,
           selectors,
-          media,
-          layer,
-          support,
-          containerQuery,
+          { ...atRules, container: containerQuery },
           cssClassesMap,
           cssRulesByBucket,
         );
