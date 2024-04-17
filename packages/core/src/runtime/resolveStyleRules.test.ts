@@ -1,7 +1,7 @@
 import { griffelRulesSerializer } from '../common/snapshotSerializers';
-import { resolveStyleRules } from './resolveStyleRules';
+import { HASH_PREFIX, RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
 import type { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
-import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '..';
+import { resolveStyleRules } from './resolveStyleRules';
 
 expect.addSnapshotSerializer(griffelRulesSerializer);
 
@@ -26,7 +26,7 @@ describe('resolveStyleRules', () => {
       'strips unsupported `%s` css property when not in production',
       property => {
         // Doesn't matter what the value is, just that the resulting objects are empty
-        const res = resolveStyleRules({ [property]: 'dummy' as unknown as undefined });
+        const res = resolveStyleRules(HASH_PREFIX, { [property]: 'dummy' as unknown as undefined });
         expect(res).toHaveLength(2);
         expect(res[0]).toEqual({});
         expect(res[1]).toEqual({});
@@ -38,15 +38,15 @@ describe('resolveStyleRules', () => {
     it('generates unique classnames for pseudo selectors', () => {
       const classnamesSet = new Set<string>();
 
-      classnamesSet.add(getFirstClassName(resolveStyleRules({ color: 'red' })));
-      classnamesSet.add(getFirstClassName(resolveStyleRules({ ':hover': { color: 'red' } })));
+      classnamesSet.add(getFirstClassName(resolveStyleRules(HASH_PREFIX, { color: 'red' })));
+      classnamesSet.add(getFirstClassName(resolveStyleRules(HASH_PREFIX, { ':hover': { color: 'red' } })));
 
       classnamesSet.add(
-        getFirstClassName(resolveStyleRules({ '@media screen and (max-width: 992px)': { color: 'red' } })),
+        getFirstClassName(resolveStyleRules(HASH_PREFIX, { '@media screen and (max-width: 992px)': { color: 'red' } })),
       );
       classnamesSet.add(
         getFirstClassName(
-          resolveStyleRules({
+          resolveStyleRules(HASH_PREFIX, {
             '@media screen and (max-width: 992px)': {
               ':hover': { color: 'red' },
             },
@@ -56,14 +56,14 @@ describe('resolveStyleRules', () => {
 
       classnamesSet.add(
         getFirstClassName(
-          resolveStyleRules({
+          resolveStyleRules(HASH_PREFIX, {
             '@supports (display: grid)': { color: 'red' },
           }),
         ),
       );
       classnamesSet.add(
         getFirstClassName(
-          resolveStyleRules({
+          resolveStyleRules(HASH_PREFIX, {
             '@supports (display: grid)': {
               ':hover': { color: 'red' },
             },
@@ -73,7 +73,7 @@ describe('resolveStyleRules', () => {
 
       classnamesSet.add(
         getFirstClassName(
-          resolveStyleRules({
+          resolveStyleRules(HASH_PREFIX, {
             '@supports (display: grid)': {
               '@media screen and (max-width: 992px)': {
                 ':hover': { color: 'red' },
@@ -87,7 +87,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('skips invalid rules', () => {
-      const [, cssRules] = resolveStyleRules({ color: '' });
+      const [, cssRules] = resolveStyleRules(HASH_PREFIX, { color: '' });
 
       expect(cssRules).toEqual({ d: [] });
     });
@@ -95,7 +95,7 @@ describe('resolveStyleRules', () => {
 
   describe('css', () => {
     it('resolves a single rule', () => {
-      expect(resolveStyleRules({ color: 'red' })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { color: 'red' })).toMatchInlineSnapshot(`
         .fe3e8s9 {
           color: red;
         }
@@ -103,7 +103,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('resolves multiple rules', () => {
-      expect(resolveStyleRules({ backgroundColor: 'green', color: 'red' })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { backgroundColor: 'green', color: 'red' })).toMatchInlineSnapshot(`
         .fcnqdeg {
           background-color: green;
         }
@@ -114,7 +114,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('trims values to generate the same classes', () => {
-      expect(resolveStyleRules({ color: 'red ' /* ends with a space */ })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { color: 'red ' /* ends with a space */ })).toMatchInlineSnapshot(`
         .fe3e8s9 {
           color: red;
         }
@@ -122,8 +122,8 @@ describe('resolveStyleRules', () => {
     });
 
     it('trims ">" selectors to generate the same classes', () => {
-      const resultA = resolveStyleRules({ '> div': { color: 'blue' } });
-      const resultB = resolveStyleRules({ '>div': { color: 'blue' } });
+      const resultA = resolveStyleRules(HASH_PREFIX, { '> div': { color: 'blue' } });
+      const resultB = resolveStyleRules(HASH_PREFIX, { '>div': { color: 'blue' } });
 
       expect(resultA[0]).toEqual(resultB[0]);
       expect(resultA[0]).toMatchInlineSnapshot(`
@@ -146,7 +146,7 @@ describe('resolveStyleRules', () => {
 
     it('hyphenates camelcased CSS properties', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           '--foo': 'var(--bar)',
           '--fooBar': 'var(--barBaz)',
 
@@ -170,7 +170,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('performs vendor prefixing', () => {
-      expect(resolveStyleRules({ display: 'flex' })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { display: 'flex' })).toMatchInlineSnapshot(`
         .f22iagw {
           display: flex;
         }
@@ -179,7 +179,7 @@ describe('resolveStyleRules', () => {
 
     it('handles falsy values', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           zIndex: 1,
           position: null as unknown as undefined,
           top: undefined,
@@ -192,7 +192,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles fallback values', () => {
-      const actual = resolveStyleRules({ color: ['red', 'blue'] });
+      const actual = resolveStyleRules(HASH_PREFIX, { color: ['red', 'blue'] });
       expect(actual).toMatchInlineSnapshot(`
         .f15e90lz {
           color: red;
@@ -205,7 +205,7 @@ describe('resolveStyleRules', () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       const warn = jest.spyOn(console, 'warn').mockImplementationOnce(() => {});
 
-      const actual = resolveStyleRules({ color: [] });
+      const actual = resolveStyleRules(HASH_PREFIX, { color: [] });
       expect(actual).toMatchInlineSnapshot(``); /* empty result */
 
       expect(warn).toHaveBeenCalledWith(
@@ -217,7 +217,7 @@ describe('resolveStyleRules', () => {
 
     describe('handles RTL', () => {
       it('property flipping', () => {
-        expect(resolveStyleRules({ left: '5px' })).toMatchInlineSnapshot(`
+        expect(resolveStyleRules(HASH_PREFIX, { left: '5px' })).toMatchInlineSnapshot(`
           .f5b3q4t {
             left: 5px;
           }
@@ -229,7 +229,7 @@ describe('resolveStyleRules', () => {
 
       it('boxShadow with strings', () => {
         expect(
-          resolveStyleRules({
+          resolveStyleRules(HASH_PREFIX, {
             boxShadow: 'inset 2rem 0rem 0.4rem -1rem #eee',
           }),
         ).toMatchInlineSnapshot(`
@@ -244,7 +244,7 @@ describe('resolveStyleRules', () => {
 
       it('boxShadow with CSS variable', () => {
         expect(
-          resolveStyleRules({
+          resolveStyleRules(HASH_PREFIX, {
             boxShadow: 'inset 2rem 0rem 0.4rem -1rem var(--colorToken)',
           }),
         ).toMatchInlineSnapshot(`
@@ -259,7 +259,7 @@ describe('resolveStyleRules', () => {
 
       it('boxShadow with multiple values', () => {
         expect(
-          resolveStyleRules({
+          resolveStyleRules(HASH_PREFIX, {
             boxShadow: 'inset 2rem 0rem 0.4rem -1rem var(--colorToken), 4px 0rem 0.4rem 2rem var(--anotherToken)',
           }),
         ).toMatchInlineSnapshot(`
@@ -276,7 +276,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles RTL @noflip', () => {
-      expect(resolveStyleRules({ left: '5px /* @noflip */' })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { left: '5px /* @noflip */' })).toMatchInlineSnapshot(`
         .fm76jd0 {
           left: 5px;
         }
@@ -285,7 +285,7 @@ describe('resolveStyleRules', () => {
 
     it('handles media queries with flipping values', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           '@media screen and (max-width: 992px)': {
             textAlign: 'left',
           },
@@ -307,15 +307,15 @@ describe('resolveStyleRules', () => {
 
       // Definitions with @noflip cannot be reused to usual ones as expected RTL styles will be different
 
-      classnamesSet.add(getFirstClassName(resolveStyleRules({ left: '5px' })));
-      classnamesSet.add(getFirstClassName(resolveStyleRules({ left: '5px /* @noflip */' })));
+      classnamesSet.add(getFirstClassName(resolveStyleRules(HASH_PREFIX, { left: '5px' })));
+      classnamesSet.add(getFirstClassName(resolveStyleRules(HASH_PREFIX, { left: '5px /* @noflip */' })));
 
       expect(classnamesSet.size).toBe(2);
     });
 
     it('handles fallback values in RTL', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           left: ['5px', '10px'],
           float: ['initial', 'left'],
         }),
@@ -344,7 +344,7 @@ describe('resolveStyleRules', () => {
       const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
 
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           left: ['5px /* @noflip */', '10px'],
           color: 'red',
         }),
@@ -362,51 +362,51 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles nested selectors', () => {
-      expect(resolveStyleRules({ ':hover': { color: 'red' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { ':hover': { color: 'red' } })).toMatchInlineSnapshot(`
         .faf35ka:hover {
           color: red;
         }
       `);
-      expect(resolveStyleRules({ '::after': { content: '""' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '::after': { content: '""' } })).toMatchInlineSnapshot(`
         .f13zj6fq::after {
           content: "";
         }
       `);
 
-      expect(resolveStyleRules({ '[data-fluent="true"]': { color: 'green' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '[data-fluent="true"]': { color: 'green' } })).toMatchInlineSnapshot(`
         .fcopvey[data-fluent="true"] {
           color: green;
         }
       `);
-      expect(resolveStyleRules({ '& [data-fluent="true"]': { color: 'green' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '& [data-fluent="true"]': { color: 'green' } })).toMatchInlineSnapshot(`
         .f1k5aqsk [data-fluent="true"] {
           color: green;
         }
       `);
 
-      expect(resolveStyleRules({ '> div': { color: 'green' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '> div': { color: 'green' } })).toMatchInlineSnapshot(`
         .f1fdorc0 > div {
           color: green;
         }
       `);
 
-      expect(resolveStyleRules({ '& .foo': { color: 'green' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '& .foo': { color: 'green' } })).toMatchInlineSnapshot(`
         .f15f830o .foo {
           color: green;
         }
       `);
-      expect(resolveStyleRules({ '&.foo': { color: 'green' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '&.foo': { color: 'green' } })).toMatchInlineSnapshot(`
         .fe1zdmy.foo {
           color: green;
         }
       `);
 
-      expect(resolveStyleRules({ '& #foo': { color: 'green' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '& #foo': { color: 'green' } })).toMatchInlineSnapshot(`
         .fie1itf #foo {
           color: green;
         }
       `);
-      expect(resolveStyleRules({ '&#foo': { color: 'green' } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '&#foo': { color: 'green' } })).toMatchInlineSnapshot(`
         .fwxog6r#foo {
           color: green;
         }
@@ -414,7 +414,8 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles complex nested selectors', () => {
-      expect(resolveStyleRules({ '& > :first-child': { '& svg': { color: 'red' } } })).toMatchInlineSnapshot(`
+      expect(resolveStyleRules(HASH_PREFIX, { '& > :first-child': { '& svg': { color: 'red' } } }))
+        .toMatchInlineSnapshot(`
         .fkngkdt > :first-child svg {
           color: red;
         }
@@ -423,7 +424,7 @@ describe('resolveStyleRules', () => {
 
     it('handles comma-separated selectors', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           ':active,:focus-within': {
             paddingLeft: '10px',
           },
@@ -440,7 +441,7 @@ describe('resolveStyleRules', () => {
       `);
 
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           ':hover,:focus-within': {
             '::before': {
               color: 'orange',
@@ -456,7 +457,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles named container queries', () => {
-      const result = resolveStyleRules({ '@container foo (max-width: 1px)': { color: 'red' } });
+      const result = resolveStyleRules(HASH_PREFIX, { '@container foo (max-width: 1px)': { color: 'red' } });
 
       expect(result).toMatchInlineSnapshot(`
         @container foo (max-width: 1px) {
@@ -473,7 +474,7 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles unnamed container queries', () => {
-      const result = resolveStyleRules({ '@container (max-width: 1px)': { color: 'red' } });
+      const result = resolveStyleRules(HASH_PREFIX, { '@container (max-width: 1px)': { color: 'red' } });
 
       expect(result).toMatchInlineSnapshot(`
         @container (max-width: 1px) {
@@ -490,7 +491,7 @@ describe('resolveStyleRules', () => {
     });
 
     it("container queries don't collide with other properties", () => {
-      const result = resolveStyleRules({
+      const result = resolveStyleRules(HASH_PREFIX, {
         color: 'red',
         '@container foo (max-width: 1px)': { color: 'red' },
       });
@@ -515,7 +516,7 @@ describe('resolveStyleRules', () => {
 
     it('handles media queries', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           color: 'green',
           '@media screen and (max-width: 992px)': { color: 'red' },
         }),
@@ -533,7 +534,7 @@ describe('resolveStyleRules', () => {
 
     it('handles media queries with pseudo selectors', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           color: 'green',
           '@media screen and (max-width: 992px)': {
             ':hover': {
@@ -555,7 +556,7 @@ describe('resolveStyleRules', () => {
 
     it('handles nested media queries', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           color: 'red',
           '@media screen and (max-width: 992px)': {
             color: 'red',
@@ -581,7 +582,7 @@ describe('resolveStyleRules', () => {
 
     it('handles layer queries', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           color: 'green',
           '@layer color': { color: 'red' },
         }),
@@ -599,7 +600,7 @@ describe('resolveStyleRules', () => {
 
     it('handles layer queries with dots', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           '@layer framework.utilities': { color: 'red' },
         }),
       ).toMatchInlineSnapshot(`
@@ -612,7 +613,7 @@ describe('resolveStyleRules', () => {
     });
     it('handles layer queries with pseudo selectors', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           color: 'green',
           '@layer color': {
             ':hover': {
@@ -634,7 +635,7 @@ describe('resolveStyleRules', () => {
 
     it('handles nested layer queries', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           color: 'red',
           '@layer color': {
             color: 'red',
@@ -660,7 +661,7 @@ describe('resolveStyleRules', () => {
 
     it('handles supports queries', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           '@supports (display:block)': { color: 'green' },
         }),
       ).toMatchInlineSnapshot(`
@@ -674,7 +675,7 @@ describe('resolveStyleRules', () => {
 
     it('handles :global selector', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           ':global(body)': {
             ':focus': {
               color: 'green',
@@ -695,7 +696,7 @@ describe('resolveStyleRules', () => {
         }
       `);
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           ':global(body):focus': { color: 'pink' },
           ':global(body) :focus': { color: 'green' },
           ':global(body) :focus:hover': { color: 'blue' },
@@ -719,7 +720,7 @@ describe('resolveStyleRules', () => {
 
     it('supports :global as a nested selector', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           ':focus': { ':global(body)': { color: 'green' } },
         }),
       ).toMatchInlineSnapshot(`
@@ -733,7 +734,7 @@ describe('resolveStyleRules', () => {
   describe('keyframes', () => {
     it('allows to define string as animationName', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           animationName: 'fade-in slide-out',
           animationIterationCount: 'infinite',
           animationDuration: '5s',
@@ -753,7 +754,7 @@ describe('resolveStyleRules', () => {
 
     it('allows to define object as animationName', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           animationName: {
             from: {
               transform: 'rotate(0deg)',
@@ -799,7 +800,7 @@ describe('resolveStyleRules', () => {
 
     it('allows to define array as animationName', () => {
       expect(
-        resolveStyleRules({
+        resolveStyleRules(HASH_PREFIX, {
           animationName: [
             {
               from: {
@@ -865,7 +866,7 @@ describe('resolveStyleRules', () => {
 
   describe('reset', () => {
     it('"RESET" emits an empty class', () => {
-      expect(resolveStyleRules({ color: 'red', paddingLeft: RESET })).toEqual([
+      expect(resolveStyleRules(HASH_PREFIX, { color: 'red', paddingLeft: RESET })).toEqual([
         { sj55zd: 'fe3e8s9', uwmqm3: 0 },
         { d: ['.fe3e8s9{color:red;}'] },
       ]);
@@ -874,15 +875,15 @@ describe('resolveStyleRules', () => {
 
   describe('output', () => {
     it('contains less members for properties that do not depend on text direction', () => {
-      expect(resolveStyleRules({ color: 'red', paddingLeft: '10px' })[0]).toEqual({
+      expect(resolveStyleRules(HASH_PREFIX, { color: 'red', paddingLeft: '10px' })[0]).toEqual({
         sj55zd: 'fe3e8s9',
         uwmqm3: ['frdkuqy', 'f81rol6'],
       });
     });
 
     it('handles "&" in pseudo selectors equally', () => {
-      const caseA = resolveStyleRules({ ':hover': { color: 'red' } });
-      const caseB = resolveStyleRules({ '&:hover': { color: 'red' } });
+      const caseA = resolveStyleRules(HASH_PREFIX, { ':hover': { color: 'red' } });
+      const caseB = resolveStyleRules(HASH_PREFIX, { '&:hover': { color: 'red' } });
 
       expect(caseA[0]).toEqual(caseB[0]);
       expect(caseA[1]).toEqual(caseB[1]);

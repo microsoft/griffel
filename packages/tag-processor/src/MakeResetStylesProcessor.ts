@@ -16,6 +16,7 @@ export default class MakeResetStylesProcessor extends BaseGriffelProcessor {
     const styles = valueCache.get(this.expressionName) as GriffelResetStyle;
 
     [this.#ltrClassName, this.#rtlClassName, this.#cssRules] = resolveResetStyleRules(
+      '',
       // Heads up!
       // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
       // results across different build targets.

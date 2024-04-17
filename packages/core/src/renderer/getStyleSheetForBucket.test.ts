@@ -14,24 +14,28 @@ describe('getStyleSheetForBucket', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();
 
-    getStyleSheetForBucket('l', target, null, renderer);
-    getStyleSheetForBucket('r', target, null, renderer);
-    getStyleSheetForBucket('a', target, null, renderer);
-    getStyleSheetForBucket('d', target, null, renderer);
+    getStyleSheetForBucket('', 'l', target, null, renderer);
+    getStyleSheetForBucket('', 'r', target, null, renderer);
+    getStyleSheetForBucket('', 'a', target, null, renderer);
+    getStyleSheetForBucket('', 'd', target, null, renderer);
 
     expect(target.head.children).toMatchInlineSnapshot(`
       HTMLCollection [
         <style
           data-make-styles-bucket="r"
+          data-prefix=""
         />,
         <style
           data-make-styles-bucket="d"
+          data-prefix=""
         />,
         <style
           data-make-styles-bucket="l"
+          data-prefix=""
         />,
         <style
           data-make-styles-bucket="a"
+          data-prefix=""
         />,
       ]
     `);
@@ -41,20 +45,20 @@ describe('getStyleSheetForBucket', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();
 
-    getStyleSheetForBucket('r', target, null, renderer);
-    getStyleSheetForBucket('l', target, null, renderer);
-    getStyleSheetForBucket('d', target, null, renderer);
-    getStyleSheetForBucket('v', target, null, renderer);
-    getStyleSheetForBucket('a', target, null, renderer);
-    getStyleSheetForBucket('c', target, null, renderer);
-    getStyleSheetForBucket('i', target, null, renderer);
-    getStyleSheetForBucket('h', target, null, renderer);
-    getStyleSheetForBucket('m', target, null, renderer);
-    getStyleSheetForBucket('w', target, null, renderer);
-    getStyleSheetForBucket('t', target, null, renderer);
-    getStyleSheetForBucket('k', target, null, renderer);
-    getStyleSheetForBucket('f', target, null, renderer);
-    getStyleSheetForBucket('s', target, null, renderer);
+    getStyleSheetForBucket('', 'r', target, null, renderer);
+    getStyleSheetForBucket('', 'l', target, null, renderer);
+    getStyleSheetForBucket('', 'd', target, null, renderer);
+    getStyleSheetForBucket('', 'v', target, null, renderer);
+    getStyleSheetForBucket('', 'a', target, null, renderer);
+    getStyleSheetForBucket('', 'c', target, null, renderer);
+    getStyleSheetForBucket('', 'i', target, null, renderer);
+    getStyleSheetForBucket('', 'h', target, null, renderer);
+    getStyleSheetForBucket('', 'm', target, null, renderer);
+    getStyleSheetForBucket('', 'w', target, null, renderer);
+    getStyleSheetForBucket('', 't', target, null, renderer);
+    getStyleSheetForBucket('', 'k', target, null, renderer);
+    getStyleSheetForBucket('', 'f', target, null, renderer);
+    getStyleSheetForBucket('', 's', target, null, renderer);
 
     const styleElements = target.head.querySelectorAll(`[${DATA_BUCKET_ATTR}]`);
     const styleElementOrder = Array.from(styleElements).map(styleElement =>
@@ -67,31 +71,36 @@ describe('getStyleSheetForBucket', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();
 
-    getStyleSheetForBucket('d', target, null, renderer);
-    getStyleSheetForBucket('t', target, null, renderer);
-    getStyleSheetForBucket('c', target, null, renderer);
+    getStyleSheetForBucket('', 'd', target, null, renderer);
+    getStyleSheetForBucket('', 't', target, null, renderer);
+    getStyleSheetForBucket('', 'c', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, null, renderer, { m: 'screen and (prefers-reduced-motion: reduce)' });
-    getStyleSheetForBucket('m', target, null, renderer, { m: '(forced-colors: active)' });
+    getStyleSheetForBucket('', 'm', target, null, renderer, { m: 'screen and (prefers-reduced-motion: reduce)' });
+    getStyleSheetForBucket('', 'm', target, null, renderer, { m: '(forced-colors: active)' });
 
     expect(target.head.children).toMatchInlineSnapshot(`
       HTMLCollection [
         <style
           data-make-styles-bucket="d"
+          data-prefix=""
         />,
         <style
           data-make-styles-bucket="t"
+          data-prefix=""
         />,
         <style
           data-make-styles-bucket="m"
+          data-prefix=""
           media="(forced-colors: active)"
         />,
         <style
           data-make-styles-bucket="m"
+          data-prefix=""
           media="screen and (prefers-reduced-motion: reduce)"
         />,
         <style
           data-make-styles-bucket="c"
+          data-prefix=""
         />,
       ]
     `);
@@ -106,27 +115,27 @@ describe('getStyleSheetForBucket', () => {
       },
     });
 
-    getStyleSheetForBucket('l', target, null, renderer);
-    getStyleSheetForBucket('d', target, null, renderer);
-    getStyleSheetForBucket('v', target, null, renderer);
+    getStyleSheetForBucket('', 'l', target, null, renderer);
+    getStyleSheetForBucket('', 'd', target, null, renderer);
+    getStyleSheetForBucket('', 'v', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 3px)' });
+    getStyleSheetForBucket('', 'm', target, null, renderer, { m: '(max-width: 3px)' });
 
-    getStyleSheetForBucket('a', target, null, renderer);
-    getStyleSheetForBucket('i', target, null, renderer);
+    getStyleSheetForBucket('', 'a', target, null, renderer);
+    getStyleSheetForBucket('', 'i', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 1px)' });
+    getStyleSheetForBucket('', 'm', target, null, renderer, { m: '(max-width: 1px)' });
 
-    getStyleSheetForBucket('h', target, null, renderer);
+    getStyleSheetForBucket('', 'h', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 4px)' });
+    getStyleSheetForBucket('', 'm', target, null, renderer, { m: '(max-width: 4px)' });
 
-    getStyleSheetForBucket('w', target, null, renderer);
-    getStyleSheetForBucket('t', target, null, renderer);
-    getStyleSheetForBucket('k', target, null, renderer);
-    getStyleSheetForBucket('f', target, null, renderer);
+    getStyleSheetForBucket('', 'w', target, null, renderer);
+    getStyleSheetForBucket('', 't', target, null, renderer);
+    getStyleSheetForBucket('', 'k', target, null, renderer);
+    getStyleSheetForBucket('', 'f', target, null, renderer);
 
-    getStyleSheetForBucket('m', target, null, renderer, { m: '(max-width: 2px)' });
+    getStyleSheetForBucket('', 'm', target, null, renderer, { m: '(max-width: 2px)' });
 
     const styleElements = target.head.querySelectorAll(`[${DATA_BUCKET_ATTR}]`);
     const styleElementOrder = Array.from(styleElements).map(styleElement =>
@@ -173,8 +182,8 @@ describe('getStyleSheetForBucket', () => {
     target.head.appendChild(elementB);
     target.head.appendChild(elementC);
 
-    getStyleSheetForBucket('r', target, elementB, renderer);
-    getStyleSheetForBucket('d', target, elementB, renderer);
+    getStyleSheetForBucket('', 'r', target, elementB, renderer);
+    getStyleSheetForBucket('', 'd', target, elementB, renderer);
 
     expect(target.head.children).toMatchInlineSnapshot(`
       HTMLCollection [
@@ -186,9 +195,11 @@ describe('getStyleSheetForBucket', () => {
         />,
         <style
           data-make-styles-bucket="r"
+          data-prefix=""
         />,
         <style
           data-make-styles-bucket="d"
+          data-prefix=""
         />,
         <style
           data-test="C"

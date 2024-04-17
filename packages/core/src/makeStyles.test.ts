@@ -258,4 +258,27 @@ describe('makeStyles', () => {
       expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___afhpfp0_0000000 fe3e8s9');
     },
   );
+
+  describe('renderer', () => {
+    it('uses "classNamePrefix', () => {
+      const rendererWithPrefix = createDOMRenderer(document, { classNamePrefix: 'test' });
+      const computeClassesA = makeStyles({ root: { color: 'red', paddingLeft: '10px' } });
+
+      expect(computeClassesA({ dir: 'ltr', renderer: rendererWithPrefix }).root).toMatchInlineSnapshot(
+        `"___izb4q10 teste3e8s9 testrdkuqy"`,
+      );
+      expect(rendererWithPrefix).toMatchInlineSnapshot(`
+        /** bucket "d" **/
+        .teste3e8s9 {
+          color: red;
+        }
+        .testrdkuqy {
+          padding-left: 10px;
+        }
+        .test81rol6 {
+          padding-right: 10px;
+        }
+      `);
+    });
+  });
 });

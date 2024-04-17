@@ -7,6 +7,8 @@ import { safeInsertRule } from './safeInsertRule';
 let lastIndex = 0;
 
 export interface CreateDOMRendererOptions {
+  classNamePrefix?: string;
+
   /**
    * If specified, a renderer will insert created style tags after this element.
    */
@@ -50,12 +52,14 @@ export function createDOMRenderer(
   options: CreateDOMRendererOptions = {},
 ): GriffelRenderer {
   const {
+    classNamePrefix,
     unstable_filterCSSRule,
     insertionPoint,
     styleElementAttributes,
     compareMediaQueries = defaultCompareMediaQueries,
   } = options;
   const renderer: GriffelRenderer = {
+    classNamePrefix,
     insertionCache: {},
     stylesheets: {},
     styleElementAttributes: Object.freeze(styleElementAttributes),
@@ -72,6 +76,7 @@ export function createDOMRenderer(
         for (let i = 0, l = cssRulesForBucket.length; i < l; i++) {
           const [ruleCSS, metadata] = normalizeCSSBucketEntry(cssRulesForBucket[i]);
           const sheet = getStyleSheetForBucket(
+            classNamePrefix || '',
             styleBucketName as StyleBucketName,
             targetDocument,
             insertionPoint || null,

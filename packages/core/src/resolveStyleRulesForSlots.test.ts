@@ -1,3 +1,4 @@
+import { HASH_PREFIX } from './constants';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import type { StylesBySlots } from './types';
 
@@ -8,7 +9,7 @@ describe('resolveStyleRulesForSlots', () => {
       icon: { color: 'blue', backgroundColor: 'lightblue' },
     };
 
-    expect(resolveStyleRulesForSlots(stylesBySlots)).toMatchInlineSnapshot(`
+    expect(resolveStyleRulesForSlots(HASH_PREFIX, stylesBySlots)).toMatchInlineSnapshot(`
       Array [
         Object {
           "icon": Object {

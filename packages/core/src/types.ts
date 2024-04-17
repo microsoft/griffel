@@ -23,6 +23,11 @@ export interface GriffelRenderer {
   /**
    * @private
    */
+  classNamePrefix?: string;
+
+  /**
+   * @private
+   */
   insertionCache: Record<string, StyleBucketName>;
 
   /**

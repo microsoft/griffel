@@ -1,4 +1,4 @@
-import { DATA_BUCKET_ATTR } from '../constants';
+import { DATA_BUCKET_ATTR, DATA_CLASSNAME_PREFIX_ATTR } from '../constants';
 import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
@@ -48,6 +48,7 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
  * Lazily adds a `<style>` bucket to the `<head>`. This will ensure that the style buckets are ordered.
  */
 export function getStyleSheetForBucket(
+  classNamePrefix: string,
   bucketName: StyleBucketName,
   targetDocument: Document | undefined,
   insertionPoint: HTMLElement | null,
@@ -59,7 +60,7 @@ export function getStyleSheetForBucket(
 
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = targetDocument && targetDocument.createElement('style');
-    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, {
+    const stylesheet = createIsomorphicStyleSheet(tag, classNamePrefix, bucketName, {
       ...renderer.styleElementAttributes,
       ...(isMediaBucket && { media: metadata['m'] as string }),
     });
@@ -69,7 +70,7 @@ export function getStyleSheetForBucket(
     if (targetDocument && tag) {
       targetDocument.head.insertBefore(
         tag,
-        findInsertionPoint(targetDocument, insertionPoint, bucketName, renderer, metadata),
+        findInsertionPoint(targetDocument, insertionPoint, classNamePrefix, bucketName, renderer, metadata),
       );
     }
   }
@@ -82,6 +83,7 @@ export function getStyleSheetForBucket(
  *
  * @param targetDocument - A document
  * @param insertionPoint - An element that will be used as an initial insertion point
+ * @param classNamePrefix
  * @param targetBucket - The bucket that should be inserted to DOM
  * @param renderer - Griffel renderer
  * @param metadata - metadata for CSS rule
@@ -90,6 +92,7 @@ export function getStyleSheetForBucket(
 function findInsertionPoint(
   targetDocument: Document,
   insertionPoint: HTMLElement | null,
+  classNamePrefix: string,
   targetBucket: StyleBucketName,
   renderer: GriffelRenderer,
   metadata?: Record<string, unknown>,
@@ -102,11 +105,13 @@ function findInsertionPoint(
   let comparer: (el: HTMLStyleElement) => number = el =>
     targetOrder - styleBucketOrderingMap[el.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName];
 
-  let styleElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
+  let styleElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(
+    `[${DATA_CLASSNAME_PREFIX_ATTR}="${classNamePrefix}"][${DATA_BUCKET_ATTR}]`,
+  );
 
   if (targetBucket === 'm' && metadata) {
     const mediaElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(
-      `[${DATA_BUCKET_ATTR}="${targetBucket}"]`,
+      `[${DATA_CLASSNAME_PREFIX_ATTR}="${classNamePrefix}"][${DATA_BUCKET_ATTR}="${targetBucket}"]`,
     );
 
     // only reduce the scope of the search and change comparer

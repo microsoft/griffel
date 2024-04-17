@@ -153,6 +153,14 @@ pluginTester({
     //
     //
     {
+      title: 'config: classNamePrefix',
+      fixture: path.resolve(fixturesDir, 'config-classname-prefix', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'config-classname-prefix', 'output.ts'),
+      pluginOptions: {
+        classNamePrefix: 'p',
+      },
+    },
+    {
       title: 'config: babelOptions',
       fixture: path.resolve(fixturesDir, 'config-babel-options', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'config-babel-options', 'output.ts'),

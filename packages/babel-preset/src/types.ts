@@ -2,11 +2,14 @@ import type { TransformOptions } from '@babel/core';
 import type { EvalRule } from '@linaria/babel-preset';
 
 export type BabelPluginOptions = {
+  classNamePrefix?: string;
+
   /**
    * Returns the evaluated CSS rules in the file result metadata
    * @default false
    */
   generateMetadata?: boolean;
+
   /** Defines set of modules and imports handled by a transformPlugin. */
   modules?: {
     moduleSource: string;

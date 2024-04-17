@@ -69,6 +69,7 @@ function pushToCSSRules(
  * @internal
  */
 export function resolveStyleRules(
+  prefix: string,
   styles: GriffelStyle,
   selectors: string[] = [],
   media = '',
@@ -112,6 +113,7 @@ export function resolveStyleRules(
         container,
         media,
         layer,
+        prefix,
         value: value.toString(),
         support,
         selector,
@@ -126,6 +128,7 @@ export function resolveStyleRules(
             container,
             value: rtlDefinition.value.toString(),
             property: rtlDefinition.key,
+            prefix,
             selector,
             media,
             layer,
@@ -195,6 +198,7 @@ export function resolveStyleRules(
       }
 
       resolveStyleRules(
+        prefix,
         { animationName: animationNames.join(', ') },
         selectors,
         media,
@@ -223,6 +227,7 @@ export function resolveStyleRules(
         container,
         media,
         layer,
+        prefix,
         value: value.map(v => (v ?? '').toString()).join(';'),
         support,
         selector,
@@ -249,6 +254,7 @@ export function resolveStyleRules(
             container,
             value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
             property: rtlDefinitions[0].key,
+            prefix,
             selector,
             layer,
             media,
@@ -282,6 +288,7 @@ export function resolveStyleRules(
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(
+          prefix,
           value as GriffelStyle,
           selectors.concat(normalizeNestedProperty(property)),
           media,
@@ -295,6 +302,7 @@ export function resolveStyleRules(
         const combinedMediaQuery = generateCombinedQuery(media, property.slice(6).trim());
 
         resolveStyleRules(
+          prefix,
           value as GriffelStyle,
           selectors,
           combinedMediaQuery,
@@ -308,6 +316,7 @@ export function resolveStyleRules(
         const combinedLayerQuery = (layer ? `${layer}.` : '') + property.slice(6).trim();
 
         resolveStyleRules(
+          prefix,
           value as GriffelStyle,
           selectors,
           media,
@@ -321,6 +330,7 @@ export function resolveStyleRules(
         const combinedSupportQuery = generateCombinedQuery(support, property.slice(9).trim());
 
         resolveStyleRules(
+          prefix,
           value as GriffelStyle,
           selectors,
           media,
@@ -337,6 +347,7 @@ export function resolveStyleRules(
         const containerQuery = property.slice(10).trim();
 
         resolveStyleRules(
+          prefix,
           value as GriffelStyle,
           selectors,
           media,

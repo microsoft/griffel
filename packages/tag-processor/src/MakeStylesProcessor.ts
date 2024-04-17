@@ -1,4 +1,4 @@
-import { resolveStyleRulesForSlots } from '@griffel/core';
+import { HASH_PREFIX, resolveStyleRulesForSlots } from '@griffel/core';
 import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelStyle } from '@griffel/core';
 import type { ValueCache } from '@wyw-in-js/processor-utils';
 
@@ -16,6 +16,7 @@ export default class MakeStylesProcessor extends BaseGriffelProcessor {
     const stylesBySlots = valueCache.get(this.expressionName) as Record<string /* slot */, GriffelStyle>;
 
     [this.#cssClassMap, this.#cssRulesByBucket] = resolveStyleRulesForSlots(
+      HASH_PREFIX,
       // Heads up!
       // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
       // results across different build targets.

@@ -1,9 +1,15 @@
+import { HASH_PREFIX } from './constants';
 import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools';
 import { insertionFactory } from './insertionFactory';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelRenderer, StylesBySlots } from './types';
-import type { GriffelInsertionFactory } from './types';
+import type {
+  CSSClassesMapBySlot,
+  CSSRulesByBucket,
+  GriffelInsertionFactory,
+  GriffelRenderer,
+  StylesBySlots,
+} from './types';
 
 export interface MakeStylesOptions {
   dir: 'ltr' | 'rtl';
@@ -31,7 +37,7 @@ export function makeStyles<Slots extends string | number>(
     const { dir, renderer } = options;
 
     if (classesMapBySlot === null) {
-      [classesMapBySlot, cssRules] = resolveStyleRulesForSlots(stylesBySlots);
+      [classesMapBySlot, cssRules] = resolveStyleRulesForSlots(renderer.classNamePrefix || HASH_PREFIX, stylesBySlots);
     }
 
     const isLTR = dir === 'ltr';

@@ -1,8 +1,9 @@
-import { DATA_BUCKET_ATTR } from '../constants';
+import { DATA_BUCKET_ATTR, DATA_CLASSNAME_PREFIX_ATTR } from '../constants';
 import type { IsomorphicStyleSheet, StyleBucketName } from '../types';
 
 export function createIsomorphicStyleSheet(
   styleElement: HTMLStyleElement | undefined,
+  classNamePrefix: string,
   bucketName: StyleBucketName,
   elementAttributes: Record<string, string>,
 ): IsomorphicStyleSheet {
@@ -10,6 +11,8 @@ export function createIsomorphicStyleSheet(
   const __cssRulesForSSR: string[] = [];
 
   elementAttributes[DATA_BUCKET_ATTR] = bucketName;
+  elementAttributes[DATA_CLASSNAME_PREFIX_ATTR] = classNamePrefix;
+
   if (styleElement) {
     for (const attrName in elementAttributes) {
       styleElement.setAttribute(attrName, elementAttributes[attrName]);
@@ -46,6 +49,7 @@ export function createIsomorphicStyleSheetFromElement(element: HTMLStyleElement)
   }, {} as Record<string, string>);
   const stylesheet = createIsomorphicStyleSheet(
     element,
+    elementAttributes[DATA_CLASSNAME_PREFIX_ATTR],
     elementAttributes[DATA_BUCKET_ATTR] as StyleBucketName,
     elementAttributes,
   );

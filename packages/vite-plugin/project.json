@@ -10,6 +10,7 @@
     },
     "test": {
       "executor": "nx:run-commands",
+      "dependsOn": [{ "target": "build", "dependencies": true }],
       "options": {
         "cwd": "packages/vite-plugin",
         "commands": [{ "command": "node --test **/*.test.mjs" }],

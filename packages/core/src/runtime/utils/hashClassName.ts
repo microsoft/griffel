@@ -1,7 +1,7 @@
 import hashString from '@emotion/hash';
-import { HASH_PREFIX } from '../../constants';
 
 interface HashedClassNameParts {
+  prefix: string;
   property: string;
   value: string;
   selector: string;
@@ -16,6 +16,7 @@ export function hashClassName({
   media,
   layer,
   property,
+  prefix,
   selector,
   support,
   value,
@@ -31,5 +32,5 @@ export function hashClassName({
       value.trim(),
   );
 
-  return HASH_PREFIX + classNameHash;
+  return prefix + classNameHash;
 }

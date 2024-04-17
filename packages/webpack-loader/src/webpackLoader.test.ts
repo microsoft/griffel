@@ -235,6 +235,12 @@ describe('webpackLoader', () => {
   testFixture('empty');
 
   // Integration fixtures for config functionality
+  testFixture('config-classname-prefix', {
+    loaderOptions: {
+      classNamePrefix: 'p',
+    },
+  });
+
   testFixture('config-modules', {
     loaderOptions: {
       modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],

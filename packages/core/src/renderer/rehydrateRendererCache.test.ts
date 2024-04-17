@@ -1,4 +1,4 @@
-import { DATA_BUCKET_ATTR } from '../constants';
+import { DATA_BUCKET_ATTR, DATA_CLASSNAME_PREFIX_ATTR } from '../constants';
 import { createDOMRenderer } from './createDOMRenderer';
 import { rehydrateRendererCache } from './rehydrateRendererCache';
 
@@ -7,6 +7,7 @@ describe('rehydrateRendererCache', () => {
     const renderer = createDOMRenderer(document);
     const styleElement = document.createElement('style');
     styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_CLASSNAME_PREFIX_ATTR, '');
     document.head.appendChild(styleElement);
     styleElement.textContent = '.foo { color: red; }';
 
@@ -24,6 +25,7 @@ describe('rehydrateRendererCache', () => {
     const styleElement = document.createElement('style');
     document.head.appendChild(styleElement);
     styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_CLASSNAME_PREFIX_ATTR, '');
 
     rehydrateRendererCache(renderer, document);
 
@@ -32,6 +34,7 @@ describe('rehydrateRendererCache', () => {
     expect(renderer.stylesheets.d?.elementAttributes).toMatchInlineSnapshot(`
       Object {
         "data-make-styles-bucket": "d",
+        "data-prefix": "",
       }
     `);
   });

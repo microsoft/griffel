@@ -4,7 +4,7 @@ import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
 import type { GriffelStyle, CSSRulesByBucket, CSSClassesMapBySlot } from '@griffel/core';
-import { resolveStyleRulesForSlots, resolveResetStyleRules, normalizeCSSBucketEntry } from '@griffel/core';
+import { HASH_PREFIX, resolveStyleRulesForSlots, resolveResetStyleRules, normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
 
 import { normalizeStyleRules } from './assets/normalizeStyleRules';
@@ -97,6 +97,7 @@ function buildCSSResetEntriesMetadata(
   declaratorId: string,
 ) {
   const cssRulesByBucket: CSSRulesByBucket = Array.isArray(cssRules) ? { d: cssRules } : cssRules;
+
   state.cssResetEntries[declaratorId] ??= [];
   state.cssResetEntries[declaratorId] = Object.values(cssRulesByBucket).flatMap(bucketEntries => {
     return bucketEntries.map(bucketEntry => {
@@ -202,6 +203,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
   api.assertVersion(7);
 
   const pluginOptions: Required<BabelPluginOptions> = {
+    classNamePrefix: HASH_PREFIX,
     babelOptions: {},
     generateMetadata: false,
     modules: [
@@ -289,6 +291,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               if (definitionPath.functionKind === 'makeStyles') {
                 const stylesBySlots: Record<string /* slot */, GriffelStyle> = evaluationResult.value;
                 const [classnamesMapping, cssRulesByBucket] = resolveStyleRulesForSlots(
+                  pluginOptions.classNamePrefix,
                   // Heads up!
                   // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
                   // results across different build targets.
@@ -321,6 +324,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               if (definitionPath.functionKind === 'makeResetStyles') {
                 const styles: GriffelStyle = evaluationResult.value;
                 const [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(
+                  pluginOptions.classNamePrefix === HASH_PREFIX ? '' : pluginOptions.classNamePrefix,
                   // Heads up!
                   // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic
                   // results across different build targets.

@@ -5,7 +5,7 @@ expect.addSnapshotSerializer(griffelResetRulesSerializer);
 
 describe('resolveResetStyleRules', () => {
   it('handles base rules', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       color: 'red',
       overflowX: 'hidden',
     });
@@ -20,7 +20,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles RTL', () => {
-    const result = resolveResetStyleRules({ marginLeft: '15px' });
+    const result = resolveResetStyleRules('', { marginLeft: '15px' });
 
     expect(result).toMatchInlineSnapshot(`
       /** bucket "r" */
@@ -34,7 +34,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles fallback values', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       color: ['red', 'blue'],
     });
 
@@ -49,7 +49,7 @@ describe('resolveResetStyleRules', () => {
 
   it('handles :global() selector', () => {
     expect(
-      resolveResetStyleRules({
+      resolveResetStyleRules('', {
         color: 'red',
         ':global(body)': { color: 'magenta' },
       }),
@@ -64,7 +64,7 @@ describe('resolveResetStyleRules', () => {
     `);
 
     expect(
-      resolveResetStyleRules({
+      resolveResetStyleRules('', {
         ':global(body)': {
           color: 'magenta',
           ':focus': { color: 'pink' },
@@ -81,7 +81,7 @@ describe('resolveResetStyleRules', () => {
     `);
 
     expect(
-      resolveResetStyleRules({
+      resolveResetStyleRules('', {
         ':global(.fui-FluentProvider)': {
           '& .foo': { color: 'orange' },
         },
@@ -95,7 +95,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles named container queries', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       '@container foo (max-width: 1px)': {
         color: 'orange',
       },
@@ -112,7 +112,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles unnamed container queries', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       '@container (max-width: 1px)': {
         color: 'orange',
       },
@@ -129,7 +129,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles media queries', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       color: 'red',
       '@media (forced-colors: active)': {
         color: 'orange',
@@ -157,7 +157,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles layer queries', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       '@layer utilities': {
         color: 'orange',
         ':focus': {
@@ -180,7 +180,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles support queries', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       '@supports (display: flex)': {
         color: 'orange',
         ':focus': {
@@ -203,7 +203,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles nested queries queries', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       '@supports (display: flex)': {
         color: 'pink',
 
@@ -229,7 +229,7 @@ describe('resolveResetStyleRules', () => {
   });
 
   it('handles nested selectors', () => {
-    const result = resolveResetStyleRules({
+    const result = resolveResetStyleRules('', {
       ':hover': { color: 'red' },
       '& :focus': { color: 'red' },
       '&.foo': { color: 'red' },
@@ -251,7 +251,7 @@ describe('resolveResetStyleRules', () => {
 
   describe('animationName', () => {
     it('supports strings', () => {
-      const result = resolveResetStyleRules({
+      const result = resolveResetStyleRules('', {
         animationName: 'foo',
       });
 
@@ -264,7 +264,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     it('supports objects', () => {
-      const result = resolveResetStyleRules({
+      const result = resolveResetStyleRules('', {
         animationName: {
           from: { height: '10px' },
           to: { height: '20px' },
@@ -291,7 +291,7 @@ describe('resolveResetStyleRules', () => {
     });
 
     it('supports arrays', () => {
-      const result = resolveResetStyleRules({
+      const result = resolveResetStyleRules('', {
         animationName: [
           {
             from: { top: 0 },

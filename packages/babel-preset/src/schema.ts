@@ -6,6 +6,9 @@ export const configSchema: JSONSchema7 = {
 
   type: 'object',
   properties: {
+    classNamePrefix: {
+      type: 'string',
+    },
     generateMetadata: {
       type: 'boolean',
     },
