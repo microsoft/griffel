@@ -1,9 +1,9 @@
-import { normalizeCSSBucketEntry, safeInsertRule } from '@griffel/core';
+import { getStyleSheetKey, normalizeCSSBucketEntry, safeInsertRule } from '@griffel/core';
 import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
 
 import { createFallbackRenderer } from './createFallbackRenderer';
-import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
 import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint';
+import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
 
 const SUPPORTS_CONSTRUCTABLE_STYLESHEETS: boolean = (() => {
   try {
@@ -31,8 +31,11 @@ function getCSSStyleSheetForBucket(
 
   onStyleSheetInsert: (stylesheet: ExtendedCSSStyleSheet) => void,
 ): ExtendedCSSStyleSheet {
-  const isMediaBucket = bucketName === 'm';
-  const styleSheetKey: StyleBucketName | string = isMediaBucket ? ((bucketName + metadata['m']) as string) : bucketName;
+  const styleSheetKey = getStyleSheetKey(
+    bucketName,
+    (metadata['m'] as string | undefined) ?? '',
+    (metadata['p'] as number | undefined) ?? 0,
+  );
 
   if (!cssSheetsCache[styleSheetKey]) {
     const styleSheet = new CSSStyleSheet() as ExtendedCSSStyleSheet;

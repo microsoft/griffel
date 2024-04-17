@@ -73,7 +73,7 @@ export { __resetCSS } from './__resetCSS';
 export { __resetStyles } from './__resetStyles';
 
 export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry';
-export { styleBucketOrdering } from './renderer/getStyleSheetForBucket';
+export { styleBucketOrdering, getStyleSheetKey } from './renderer/getStyleSheetForBucket';
 export { defaultCompareMediaQueries } from './renderer/createDOMRenderer';
 export { getStyleBucketName } from './runtime/getStyleBucketName';
 export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
