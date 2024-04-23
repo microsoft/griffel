@@ -44,7 +44,7 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
   return acc;
 }, {} as Record<StyleBucketName, number>);
 
-export function getStyleSheetKey(bucketName: StyleBucketName, media: string, priority: number): string {
+export function getStyleSheetKey(bucketName: StyleBucketName, media: string, priority: number | string): string {
   return (bucketName === 'm' ? bucketName + media : bucketName) + priority;
 }
 
@@ -52,7 +52,7 @@ export function getStyleSheetKeyFromElement(styleEl: HTMLStyleElement): string {
   const bucketName = styleEl.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName;
   const priority = styleEl.getAttribute(DATA_PRIORITY_ATTR) ?? '0';
 
-  return (bucketName === 'm' ? bucketName + styleEl.media : bucketName) + priority;
+  return getStyleSheetKey(bucketName, styleEl.media, priority);
 }
 
 /**
@@ -130,8 +130,6 @@ function findInsertionPoint(
   // a negative value is decreasing sort order
   let comparer: (el: HTMLStyleElement) => number = el =>
     targetOrder - styleBucketOrderingMap[el.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName];
-  const priorityComparer = (el: HTMLStyleElement) => priority - Number(el.getAttribute('data-priority'));
-
   let styleElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
 
   if (targetBucket === 'm') {
@@ -147,19 +145,21 @@ function findInsertionPoint(
     }
   }
 
+  const comparerWithPriority: (el: HTMLStyleElement) => number = el => {
+    if (isSameInsertionKey(el, targetBucket, metadata)) {
+      return priority - Number(el.getAttribute('data-priority'));
+    }
+
+    return comparer(el);
+  };
+
   const length = styleElements.length;
   let index = length - 1;
 
   while (index >= 0) {
     const styleElement = styleElements.item(index);
 
-    if (isSameInsertionKey(styleElement, targetBucket, metadata)) {
-      if (priorityComparer(styleElement) > 0) {
-        return styleElement.nextSibling;
-      }
-    }
-
-    if (comparer(styleElement) > 0) {
+    if (comparerWithPriority(styleElement) > 0) {
       return styleElement.nextSibling;
     }
 
