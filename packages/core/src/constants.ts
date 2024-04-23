@@ -32,6 +32,9 @@ export const DEFINITION_LOOKUP_TABLE = getGlobalVar<Record<SequenceHash, LookupI
 export const DATA_BUCKET_ATTR = 'data-make-styles-bucket';
 
 /** @internal */
+export const DATA_PRIORITY_ATTR = 'data-priority';
+
+/** @internal */
 export const HASH_PREFIX = 'f';
 
 /** @internal */

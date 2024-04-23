@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add support for priority in CSS rules",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

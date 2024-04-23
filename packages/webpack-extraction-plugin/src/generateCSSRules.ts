@@ -14,7 +14,7 @@ export function generateCSSRules(cssRulesByBucket: CSSRulesByBucket): string {
     for (const bucketEntry of cssBucketEntries) {
       const [cssRule, metadata] = normalizeCSSBucketEntry(bucketEntry);
 
-      const metadataAsJSON = JSON.stringify(metadata ?? {});
+      const metadataAsJSON = JSON.stringify(metadata ?? null);
       const entryKey = `${cssBucketName}-${metadataAsJSON}`;
 
       if (lastEntryKey !== entryKey) {
@@ -22,7 +22,7 @@ export function generateCSSRules(cssRulesByBucket: CSSRulesByBucket): string {
           cssLines.push('/** @griffel:css-end **/');
         }
 
-        cssLines.push(`/** @griffel:css-start [${cssBucketName}] [${metadataAsJSON}] **/`);
+        cssLines.push(`/** @griffel:css-start [${cssBucketName}] ${metadataAsJSON} **/`);
         lastEntryKey = entryKey;
       }
 

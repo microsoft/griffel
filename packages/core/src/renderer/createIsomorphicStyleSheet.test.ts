@@ -2,7 +2,7 @@ import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
 describe('createIsomorphicStyleElement', () => {
   it('should insert css rule', () => {
-    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', {});
+    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', 0, {});
     stylesheet.insertRule(".foo { color: 'red' }");
     expect(stylesheet.cssRules()).toMatchInlineSnapshot(`
       Array [
@@ -12,11 +12,12 @@ describe('createIsomorphicStyleElement', () => {
   });
 
   it('should set element attributes', () => {
-    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', { 'data-foo': 'foo' });
+    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', 0, { 'data-foo': 'foo' });
     expect(stylesheet.elementAttributes).toMatchInlineSnapshot(`
       Object {
         "data-foo": "foo",
         "data-make-styles-bucket": "d",
+        "data-priority": "0",
       }
     `);
 
@@ -24,6 +25,7 @@ describe('createIsomorphicStyleElement', () => {
       <style
         data-foo="foo"
         data-make-styles-bucket="d"
+        data-priority="0"
       />
     `);
 
@@ -36,11 +38,12 @@ describe('createIsomorphicStyleElement', () => {
   });
 
   it('should create HTML style element', () => {
-    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', {});
+    const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', 0, {});
     expect(stylesheet.element).not.toBeUndefined();
     expect(stylesheet.element).toMatchInlineSnapshot(`
       <style
         data-make-styles-bucket="d"
+        data-priority="0"
       />
     `);
   });

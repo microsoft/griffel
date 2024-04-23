@@ -32,7 +32,7 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
           return acc;
         }
 
-        return [...acc, `/** bucket "${styleEl}" **/`, ...cssRules];
+        return [...acc, `/** bucket "${styleEl.slice(0, 1)}" **/`, ...cssRules];
       }
 
       return acc;

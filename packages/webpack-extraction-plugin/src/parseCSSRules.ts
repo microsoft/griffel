@@ -19,10 +19,7 @@ export function parseCSSRules(css: string) {
     if (element.type === COMMENT) {
       if (element.value.indexOf('/** @griffel:css-start') === 0) {
         cssBucketName = element.value.charAt(24) as StyleBucketName;
-
-        if (cssBucketName === 'm') {
-          cssMeta = JSON.parse(element.value.slice(28, -5));
-        }
+        cssMeta = JSON.parse(element.value.slice(27, -4));
 
         continue;
       }
@@ -37,7 +34,7 @@ export function parseCSSRules(css: string) {
 
     if (cssBucketName) {
       const cssRule = serialize([element], stringify);
-      const bucketEntry: CSSBucketEntry = cssBucketName === 'm' ? [cssRule, cssMeta!] : cssRule;
+      const bucketEntry: CSSBucketEntry = cssMeta ? [cssRule, cssMeta!] : cssRule;
 
       cssRulesByBucket[cssBucketName].push(bucketEntry);
       continue;

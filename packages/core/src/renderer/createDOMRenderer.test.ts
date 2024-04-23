@@ -72,11 +72,13 @@ describe('createDOMRenderer', () => {
       HTMLCollection [
         <style
           data-make-styles-bucket="d"
+          data-priority="0"
           foo-bar="baz"
           nonce="random"
         />,
         <style
           data-make-styles-bucket="h"
+          data-priority="0"
           foo-bar="baz"
           nonce="random"
         />,
@@ -113,9 +115,11 @@ describe('createDOMRenderer', () => {
         />,
         <style
           data-make-styles-bucket="d"
+          data-priority="0"
         />,
         <style
           data-make-styles-bucket="h"
+          data-priority="0"
         />,
         <style
           data-test="B"

@@ -1,15 +1,18 @@
-import { DATA_BUCKET_ATTR } from '../constants';
+import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants';
 import type { IsomorphicStyleSheet, StyleBucketName } from '../types';
 
 export function createIsomorphicStyleSheet(
   styleElement: HTMLStyleElement | undefined,
   bucketName: StyleBucketName,
+  priority: number,
   elementAttributes: Record<string, string>,
 ): IsomorphicStyleSheet {
   // no CSSStyleSheet in SSR, just append rules here for server render
   const __cssRulesForSSR: string[] = [];
 
   elementAttributes[DATA_BUCKET_ATTR] = bucketName;
+  elementAttributes[DATA_PRIORITY_ATTR] = String(priority);
+
   if (styleElement) {
     for (const attrName in elementAttributes) {
       styleElement.setAttribute(attrName, elementAttributes[attrName]);
@@ -47,6 +50,7 @@ export function createIsomorphicStyleSheetFromElement(element: HTMLStyleElement)
   const stylesheet = createIsomorphicStyleSheet(
     element,
     elementAttributes[DATA_BUCKET_ATTR] as StyleBucketName,
+    Number(elementAttributes[DATA_PRIORITY_ATTR]),
     elementAttributes,
   );
   return stylesheet;

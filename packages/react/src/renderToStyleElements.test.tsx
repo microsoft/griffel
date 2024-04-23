@@ -57,11 +57,19 @@ describe('renderToStyleElements (DOM)', () => {
     });
 
     expect(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-      <style data-make-styles-bucket="d" data-make-styles-rehydration="true">
+      <style
+        data-make-styles-bucket="d"
+        data-priority="0"
+        data-make-styles-rehydration="true"
+      >
         .fe3e8s9 {
           color: red;
         }</style
-      ><style data-make-styles-bucket="h" data-make-styles-rehydration="true">
+      ><style
+        data-make-styles-bucket="h"
+        data-priority="0"
+        data-make-styles-rehydration="true"
+      >
         .f1ej289o:hover {
           color: green;
         }
@@ -88,14 +96,18 @@ describe('renderToStyleElements (DOM)', () => {
     });
 
     expect(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style data-make-styles-bucket="r" data-make-styles-rehydration="true">
-          .r1tsu58y {
-            color: red;
-          }
-          .r1tsu58y:hover {
-            color: pink;
-          }
-        </style>
-      `);
+      <style
+        data-make-styles-bucket="r"
+        data-priority="0"
+        data-make-styles-rehydration="true"
+      >
+        .r1tsu58y {
+          color: red;
+        }
+        .r1tsu58y:hover {
+          color: pink;
+        }
+      </style>
+    `);
   });
 });
