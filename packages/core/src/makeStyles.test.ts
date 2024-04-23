@@ -34,7 +34,7 @@ describe('makeStyles', () => {
     expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___afhpfp0 fe3e8s9');
 
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .fe3e8s9 {
         color: red;
       }
@@ -52,14 +52,14 @@ describe('makeStyles', () => {
 
     expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___20fshm0 fe3e8s9 f1euv43f f10q6zxg');
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .fe3e8s9 {
         color: red;
       }
       .f1euv43f {
         position: absolute;
       }
-      /** bucket "h" **/
+      /** bucket "h" {"data-priority":"0"} **/
       .f10q6zxg:hover {
         color: blue;
       }
@@ -81,7 +81,7 @@ describe('makeStyles', () => {
     expect(rtlClasses).toEqual('___7x57i00 f81rol6 f19krssl');
 
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .frdkuqy {
         padding-left: 10px;
       }
@@ -115,7 +115,7 @@ describe('makeStyles', () => {
     expect(computeClasses({ dir: 'rtl', renderer }).root).toBe('___3kh5ri0 f1fp4ujf f1cpbl36 f1t9cprh');
 
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "k" **/
+      /** bucket "k" {"data-priority":"0"} **/
       @keyframes f1q8eu9e {
         from {
           transform: rotate(0deg);
@@ -132,7 +132,7 @@ describe('makeStyles', () => {
           transform: rotate(-360deg);
         }
       }
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .f1g6ul6r {
         animation-name: f1q8eu9e;
       }
@@ -169,7 +169,7 @@ describe('makeStyles', () => {
     expect(rendererA.stylesheets['d0']).not.toBe(rendererB.stylesheets['d0']);
 
     expect(rendererA).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .f22iagw {
         display: flex;
       }
@@ -181,7 +181,7 @@ describe('makeStyles', () => {
       }
     `);
     expect(rendererB).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .f22iagw {
         display: flex;
       }
@@ -227,7 +227,7 @@ describe('makeStyles', () => {
     expect(computeClasses({ dir: 'ltr', renderer })[42]).toEqual('___afhpfp0 fe3e8s9');
 
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .fe3e8s9 {
         color: red;
       }
@@ -244,7 +244,7 @@ describe('makeStyles', () => {
     expect(computeClassesC({ dir: 'ltr', renderer }).root).toEqual('___1919hol fihdeyh');
 
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .fihdeyh {
         background-color: 10px;
       }

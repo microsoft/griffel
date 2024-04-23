@@ -25,7 +25,7 @@ describe('makeResetStyles', () => {
 
     expect(computeClassName({ dir: 'ltr', renderer })).toEqual('r7lmmpp');
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "r" **/
+      /** bucket "r" {"data-priority":"0"} **/
       .r7lmmpp {
         color: red;
         flex-direction: row;
@@ -42,7 +42,7 @@ describe('makeResetStyles', () => {
     expect(computeClassName({ dir: 'rtl', renderer })).toEqual('rjhindo');
 
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "r" **/
+      /** bucket "r" {"data-priority":"0"} **/
       .rgb6zd6 {
         padding: 40px 20px 10px 5px;
       }
@@ -60,11 +60,11 @@ describe('makeResetStyles', () => {
 
     expect(computeClassName({ dir: 'ltr', renderer })).toEqual('rbwcbv2');
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "r" **/
+      /** bucket "r" {"data-priority":"0"} **/
       .rbwcbv2 {
         color: red;
       }
-      /** bucket "s" **/
+      /** bucket "s" {"data-priority":"0"} **/
       @media (min-width: 100px) {
         .rbwcbv2 {
           color: blue;

@@ -23,7 +23,7 @@ describe('createDOMRenderer', () => {
     renderer.insertCSSRules(cssRules);
 
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" **/
+      /** bucket "d" {"data-priority":"0"} **/
       .foo {
         background-color: red;
       }
@@ -45,7 +45,7 @@ describe('createDOMRenderer', () => {
 
     renderer.insertCSSRules(cssRules);
     expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "t" **/
+      /** bucket "t" {"data-priority":"0"} **/
       .foo {
         background-color: red;
       }
