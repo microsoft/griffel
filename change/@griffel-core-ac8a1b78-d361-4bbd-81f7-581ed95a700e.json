@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "chore: export getStyleSheetKey() for internal usage",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -8,29 +8,46 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
   return acc;
 }, {} as Record<StyleBucketName, number>);
 
+function isSameInsertionKey(sheetA: ExtendedCSSStyleSheet, sheetB: ExtendedCSSStyleSheet): boolean {
+  const targetKey = sheetA.bucketName + ((sheetA.metadata['m'] as string | undefined) ?? '');
+  const elementKey = sheetB.bucketName + ((sheetB.metadata['m'] as string | undefined) ?? '');
+
+  return targetKey === elementKey;
+}
+
 export function findInsertionPoint(
   renderer: GriffelShadowDOMRenderer,
-  styleSheet: ExtendedCSSStyleSheet,
+  targetStyleSheet: ExtendedCSSStyleSheet,
 ): ExtendedCSSStyleSheet | null {
   let styleSheets = renderer.adoptedStyleSheets;
-  const targetOrder = styleBucketOrderingMap[styleSheet.bucketName];
+
+  const targetOrder = styleBucketOrderingMap[targetStyleSheet.bucketName];
+  const targetPriority = (targetStyleSheet.metadata['p'] as number | undefined) ?? 0;
 
   let comparer = (sheet: ExtendedCSSStyleSheet): number => targetOrder - styleBucketOrderingMap[sheet.bucketName];
 
-  if (styleSheet.bucketName === 'm' && styleSheet.metadata) {
+  if (targetStyleSheet.bucketName === 'm' && targetStyleSheet.metadata) {
     const mediaElements = renderer.adoptedStyleSheets.filter(styleSheet => styleSheet.bucketName === 'm');
 
     if (mediaElements.length) {
       styleSheets = mediaElements;
       comparer = sheet =>
-        renderer.compareMediaQueries(styleSheet.metadata['m'] as string, sheet.metadata['m'] as string);
+        renderer.compareMediaQueries(targetStyleSheet.metadata['m'] as string, sheet.metadata['m'] as string);
     }
   }
 
-  for (let l = styleSheets.length, i = l - 1; i >= 0; i--) {
-    const styleElement = styleSheets[i];
+  const comparerWithPriority = (sheet: ExtendedCSSStyleSheet): number => {
+    if (isSameInsertionKey(sheet, targetStyleSheet)) {
+      return targetPriority - ((sheet.metadata['p'] as number | undefined) ?? 0);
+    }
 
-    if (comparer(styleElement) > 0) {
+    return comparer(sheet);
+  };
+
+  for (let l = styleSheets.length, i = l - 1; i >= 0; i--) {
+    const styleSheet = styleSheets[i];
+
+    if (comparerWithPriority(styleSheet) > 0) {
       return styleSheets[i + 1] ?? null;
     }
   }

@@ -35,24 +35,22 @@ expect.addSnapshotSerializer({
 });
 
 describe('createShadowDOMRenderer', () => {
-  it('returns a renderer', () => {
-    const shadowRoot = document.createElement('div').attachShadow({ mode: 'open' });
+  let shadowRoot: ShadowRoot;
+  let renderer: ReturnType<typeof createShadowDOMRenderer>;
 
+  beforeEach(() => {
+    shadowRoot = document.createElement('div').attachShadow({ mode: 'open' });
+
+    // jsdom doesn't support adoptedStyleSheets yet
+    shadowRoot.adoptedStyleSheets = [];
+  });
+
+  it('returns a renderer', () => {
     expect(createShadowDOMRenderer(shadowRoot)).toHaveProperty('adoptedStyleSheets');
   });
 
-  describe('CSS insertion', () => {
-    let shadowRoot: ShadowRoot;
-    let renderer: ReturnType<typeof createShadowDOMRenderer>;
-
-    beforeEach(() => {
-      shadowRoot = document.createElement('div').attachShadow({ mode: 'open' });
-
-      // jsdom doesn't support adoptedStyleSheets yet
-      shadowRoot.adoptedStyleSheets = [];
-    });
-
-    it('inserts styles in the correct order', () => {
+  describe('sheets ordering', () => {
+    it('handles bucket order', () => {
       renderer = createShadowDOMRenderer(shadowRoot);
 
       renderer.insertCSSRules({ d: ['a {}'] });
@@ -119,7 +117,55 @@ describe('createShadowDOMRenderer', () => {
       `);
     });
 
-    it('inserts sheets after other sheets', () => {
+    it('handles priorities of CSS rules', () => {
+      renderer = createShadowDOMRenderer(shadowRoot);
+
+      renderer.insertCSSRules({
+        d: ['.prio0 {}', ['.prio-2 {}', { p: -2 }], ['.prio-1 {}', { p: -1 }], ['.prio-3 {}', { p: -3 }]],
+      });
+      renderer.insertCSSRules({ f: ['.prio0:focus {}', ['.prio-1:focus {}', { p: -1 }]] });
+
+      expect(renderer.adoptedStyleSheets).toMatchInlineSnapshot(`
+        [
+          {
+            "bucketName": "d",
+            "metadata": {
+              "p": -3
+            }
+          },
+          {
+            "bucketName": "d",
+            "metadata": {
+              "p": -2
+            }
+          },
+          {
+            "bucketName": "d",
+            "metadata": {
+              "p": -1
+            }
+          },
+          {
+            "bucketName": "d",
+            "metadata": {}
+          },
+          {
+            "bucketName": "f",
+            "metadata": {
+              "p": -1
+            }
+          },
+          {
+            "bucketName": "f",
+            "metadata": {}
+          }
+        ]
+      `);
+    });
+  });
+
+  describe('insertionPoint', () => {
+    it('inserts sheets after other sheets by default', () => {
       const other1 = createSheetWithId('other1');
       const other2 = createSheetWithId('other2');
 
