@@ -90,6 +90,11 @@ export const useStyles = makeStyles({
 `;
       const root = parse(fixture, { from: 'fixture.styles.ts' });
 
+      expect(root.toString()).toMatchInlineSnapshot(`
+        ".fe3e8s9{color:red;}
+        .f163i14w{color:blue;}"
+      `);
+
       root.walk(node => {
         const slot = node.raw(GRIFFEL_SLOT_RAW);
         expect(['slot1', 'slot2']).toContain(slot);
@@ -144,6 +149,12 @@ export const useStyles2 = makeStyles({
 })
 `;
       const root = parse(fixture, { from: 'fixture.styles.ts' });
+
+      expect(root.toString()).toMatchInlineSnapshot(`
+        ".fe3e8s9{color:red;}
+        .fe3e8s9{color:red;}"
+      `);
+
       root.walk(node => {
         const declarator = node.raw(GRIFFEL_DECLARATOR_RAW);
         expect(['useStyles1', 'useStyles2']).toContain(declarator);
@@ -253,6 +264,12 @@ export const useResetStyles2 = makeResetStyles({
 })
 `;
       const root = parse(fixture, { from: 'fixture.styles.ts' });
+
+      expect(root.toString()).toMatchInlineSnapshot(`
+        ".rbe9p1m{color:red;background-color:green;}
+        .r1j8igii{color:blue;background-color:yellow;}"
+      `);
+
       root.walk(node => {
         const declarator = node.raw(GRIFFEL_DECLARATOR_RAW);
         expect(['useResetStyles1', 'useResetStyles2']).toContain(declarator);

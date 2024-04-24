@@ -13,6 +13,10 @@ export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document 
 
 export interface ParserOptions extends PostCSSParserOptions, BabelPluginOptions {}
 
+/**
+ * Generates CSS rules from a JavaScript file. Each slot in `makeStyles` and each `makeResetStyles` will be one line in the output.
+ * It returns a PostCSS AST that parses the generated CSS rules and attaches information about the source location for each slot in the original JavaScript file.
+ */
 export const parse = (css: string | { toString(): string }, opts?: ParserOptions) => {
   const { from: filename = 'postcss-syntax.styles.ts' } = opts ?? {};
   const griffelPluginOptions = extractGrifellBabelPluginOptions(opts);
@@ -27,27 +31,25 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
 
   const { cssEntries, cssResetEntries, resetLocations, locations } = metadata;
 
-  const cssRuleKeys: string[] = [];
-  const cssRules: string[] = [];
+  // Each key-value pair represents CSS rules per slot (makeStyles) or per declarator (makeResetStyles).
+  const cssRulesMap = new Map<string, string>();
 
-  Object.entries(cssEntries).map(([declarator, slots]) => {
-    Object.entries(slots).map(([slot, rules]) => {
-      cssRuleKeys.push(`${declarator} ${slot}`);
-      cssRules.push(rules.join(''));
+  Object.entries(cssEntries).forEach(([declarator, slots]) => {
+    Object.entries(slots).forEach(([slot, rules]) => {
+      cssRulesMap.set(`${declarator} ${slot}`, rules.join(''));
     });
   });
 
-  Object.entries(cssResetEntries).map(([declarator, resetRules]) => {
-    cssRuleKeys.push(`${declarator}`);
-    cssRules.push(resetRules.join(''));
+  Object.entries(cssResetEntries).forEach(([declarator, resetRules]) => {
+    cssRulesMap.set(declarator, resetRules.join(''));
   });
 
-  const root = postcss.parse(cssRules.join('\n'));
+  const root = postcss.parse(Array.from(cssRulesMap.values()).join('\n'));
   root.walk(node => {
     if (!node.source || node.source.start === undefined) {
       return;
     }
-    const [declarator, slot] = cssRuleKeys[node.source.start.line - 1].split(' ');
+    const [declarator, slot] = Array.from(cssRulesMap.keys())[node.source.start.line - 1].split(' ');
     node.raws[GRIFFEL_DECLARATOR_RAW] = declarator;
     if (slot) {
       node.raws[GRIFFEL_SLOT_RAW] = slot;
