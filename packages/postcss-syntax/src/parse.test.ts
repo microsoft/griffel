@@ -6,7 +6,6 @@ import {
   GRIFFEL_SRC_RAW,
 } from './constants';
 import { parse } from './parse';
-import * as prettier from 'prettier';
 
 describe('parse', () => {
   describe('makeStyles', () => {
