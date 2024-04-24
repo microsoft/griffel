@@ -5,13 +5,13 @@ import { fetchMdnData } from './fetchMdnData';
 import { fileTemplate } from './fileTemplate';
 import { assignShorthandPriority } from './assignShorthandPriority';
 import { filterShorthandsProperties } from './filterShorthandsProperties';
-import { mergeShorthandProperties } from './mergeShorthandProperties';
+import { prepareProperties } from './prepareProperties';
 
 async function updateShorthands() {
   const data = await fetchMdnData();
 
-  const shorthandProperties = filterShorthandsProperties(data);
-  const mergedShorthandProperties = mergeShorthandProperties(shorthandProperties);
+  const filteredMdnData = filterShorthandsProperties(data);
+  const mergedShorthandProperties = prepareProperties(filteredMdnData);
   const shorthands = assignShorthandPriority(mergedShorthandProperties);
 
   const outputPath = path.resolve(__dirname, '..', '..', '..', 'packages', 'core', 'src', 'runtime', 'shorthands.ts');

@@ -12,7 +12,7 @@ describe('filterShorthandsProperties', () => {
         computed: ['border-color-top'],
         status: 'standard',
       },
-      'margin-top': {
+      margin: {
         computed: ['margin-top'],
         status: 'standard',
       },
@@ -27,8 +27,14 @@ describe('filterShorthandsProperties', () => {
     };
 
     expect(filterShorthandsProperties(data)).toEqual({
-      border: [-1, []],
-      marginTop: [-1, ['marginTop']],
+      border: {
+        computed: [],
+        status: 'standard',
+      },
+      margin: {
+        computed: ['margin-top'],
+        status: 'standard',
+      },
     });
   });
 });

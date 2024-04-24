@@ -1,6 +1,6 @@
 // import { UNSUPPORTED_CSS_PROPERTIES } from '@griffel/core';
 
-import type { CSSShorthands, MdnData } from './types';
+import type { MdnData, MdnShorthandProperty } from './types';
 import { isShorthandProperty, isVendorProperty, toCamelCase } from './utils';
 
 // TODO: use UNSUPPORTED_CSS_PROPERTIES from @griffel/core
@@ -20,21 +20,24 @@ const UNSUPPORTED_CSS_PROPERTIES = {
 };
 
 function isSupportedShorthand(property: string): boolean {
-  return !Object.prototype.hasOwnProperty.call(UNSUPPORTED_CSS_PROPERTIES, property);
+  return !Object.prototype.hasOwnProperty.call(UNSUPPORTED_CSS_PROPERTIES, toCamelCase(property));
 }
 
 export function filterShorthandsProperties(data: MdnData) {
-  return Object.entries(data).reduce((acc, [property, value]) => {
+  const filteredData: Record<string, MdnShorthandProperty> = {};
+
+  for (const [property, value] of Object.entries(data)) {
     if (value.status === 'obsolete' || isVendorProperty(property) || !isShorthandProperty(value)) {
-      return acc;
+      continue;
     }
 
-    const propertyName = toCamelCase(property);
-
-    if (isSupportedShorthand(propertyName)) {
-      acc[propertyName] = [-1, value.computed.map(toCamelCase).filter(isSupportedShorthand)];
+    if (isSupportedShorthand(property)) {
+      filteredData[property] = {
+        computed: value.computed.filter(isSupportedShorthand),
+        status: value.status,
+      };
     }
+  }
 
-    return acc;
-  }, {} as CSSShorthands);
+  return filteredData;
 }
