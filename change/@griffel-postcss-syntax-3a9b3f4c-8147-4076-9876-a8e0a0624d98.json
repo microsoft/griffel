@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "update parser ",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
