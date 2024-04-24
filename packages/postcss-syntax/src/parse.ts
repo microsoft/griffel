@@ -15,7 +15,7 @@ export interface ParserOptions extends PostCSSParserOptions, BabelPluginOptions 
 
 /**
  * Generates CSS rules from a JavaScript file. Each slot in `makeStyles` and each `makeResetStyles` will be one line in the output.
- * It returns a PostCSS AST that parses the generated CSS rules and attaches information about the source location for each slot in the original JavaScript file.
+ * It returns a PostCSS AST that parses the generated CSS rules. For each node in AST, attaches information about its related slot location from the original js file.
  */
 export const parse = (css: string | { toString(): string }, opts?: ParserOptions) => {
   const { from: filename = 'postcss-syntax.styles.ts' } = opts ?? {};
