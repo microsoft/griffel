@@ -10,7 +10,7 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
 
 function isSameInsertionKey(sheetA: ExtendedCSSStyleSheet, sheetB: ExtendedCSSStyleSheet): boolean {
   const targetKey = sheetA.bucketName + ((sheetA.metadata['m'] as string | undefined) ?? '');
-  const elementKey = sheetB.bucketName + ((sheetA.metadata['m'] as string | undefined) ?? '');
+  const elementKey = sheetB.bucketName + ((sheetB.metadata['m'] as string | undefined) ?? '');
 
   return targetKey === elementKey;
 }
@@ -25,8 +25,6 @@ export function findInsertionPoint(
   const targetPriority = (targetStyleSheet.metadata['p'] as number | undefined) ?? 0;
 
   let comparer = (sheet: ExtendedCSSStyleSheet): number => targetOrder - styleBucketOrderingMap[sheet.bucketName];
-  const priorityComparer = (sheet: ExtendedCSSStyleSheet) =>
-    targetPriority - ((sheet.metadata['p'] as number | undefined) ?? 0);
 
   if (targetStyleSheet.bucketName === 'm' && targetStyleSheet.metadata) {
     const mediaElements = renderer.adoptedStyleSheets.filter(styleSheet => styleSheet.bucketName === 'm');
@@ -38,16 +36,18 @@ export function findInsertionPoint(
     }
   }
 
+  const comparerWithPriority = (sheet: ExtendedCSSStyleSheet): number => {
+    if (isSameInsertionKey(sheet, targetStyleSheet)) {
+      return targetPriority - ((sheet.metadata['p'] as number | undefined) ?? 0);
+    }
+
+    return comparer(sheet);
+  };
+
   for (let l = styleSheets.length, i = l - 1; i >= 0; i--) {
     const styleSheet = styleSheets[i];
 
-    if (isSameInsertionKey(styleSheet, targetStyleSheet)) {
-      if (priorityComparer(styleSheet) > 0) {
-        return styleSheets[i + 1] ?? null;
-      }
-    }
-
-    if (comparer(styleSheet) > 0) {
+    if (comparerWithPriority(styleSheet) > 0) {
       return styleSheets[i + 1] ?? null;
     }
   }
