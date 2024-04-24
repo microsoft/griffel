@@ -1,10 +1,12 @@
-import { GRIFFEL_DECLARATOR_RAW, GRIFFEL_SLOT_RAW, GRIFFEL_SRC_RAW } from './constants';
+import {
+  GRIFFEL_DECLARATOR_LOCATION_RAW,
+  GRIFFEL_DECLARATOR_RAW,
+  GRIFFEL_SLOT_LOCATION_RAW,
+  GRIFFEL_SLOT_RAW,
+  GRIFFEL_SRC_RAW,
+} from './constants';
 import { parse } from './parse';
 import * as prettier from 'prettier';
-
-const format = (css: string) => {
-  return prettier.format(css, { parser: 'css' });
-};
 
 describe('parse', () => {
   describe('makeStyles', () => {
@@ -25,18 +27,17 @@ export const useStyles = makeStyles({
 })
 `;
       const root = parse(fixture, { from: 'fixture.styles.ts' });
-      expect(format(root.toString())).toMatchInlineSnapshot(`
-              ".fe3e8s9 {
-                color: red;
-              }
-              .fcnqdeg {
-                background-color: green;
-              }
-              .fvjh0tl {
-                margin-top: 4px;
-              }
-              "
-          `);
+      expect(root.toString()).toMatchInlineSnapshot(
+        `".fe3e8s9{color:red;}.fcnqdeg{background-color:green;}.fvjh0tl{margin-top:4px;}"`,
+      );
+      root.walk(node => {
+        expect(node.raw(GRIFFEL_DECLARATOR_RAW)).toEqual('useStyles');
+        expect(node.raw(GRIFFEL_SLOT_RAW)).toEqual('root');
+        expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+          start: { line: 9, column: 2, index: 134 },
+          end: { line: 13, column: 3, index: 208 },
+        });
+      });
     });
 
     it('should handle different module source', () => {
@@ -59,27 +60,17 @@ export const useStyles = foo({
         from: 'fixture.styles.ts',
         modules: [{ moduleSource: '@foo/foo', importName: 'foo' }],
       });
-      expect(format(root.toString())).toMatchInlineSnapshot(`
-              ".fe3e8s9 {
-                color: red;
-              }
-              .fcnqdeg {
-                background-color: green;
-              }
-              .fvjh0tl {
-                margin-top: 4px;
-              }
-              "
-          `);
+      expect(root.toString()).toMatchInlineSnapshot(
+        `".fe3e8s9{color:red;}.fcnqdeg{background-color:green;}.fvjh0tl{margin-top:4px;}"`,
+      );
 
       root.walk(node => {
         expect(node.raw(GRIFFEL_DECLARATOR_RAW)).toEqual('useStyles');
         expect(node.raw(GRIFFEL_SLOT_RAW)).toEqual('root');
-
-        if (node.source) {
-          expect(node.source.start).toEqual({ offset: 0, column: 2, line: 9 });
-          expect(node.source.end).toEqual({ offset: 0, column: 3, line: 13 });
-        }
+        expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+          start: { line: 9, column: 2, index: 113 },
+          end: { line: 13, column: 3, index: 187 },
+        });
       });
     });
 
@@ -103,17 +94,17 @@ export const useStyles = makeStyles({
         const slot = node.raw(GRIFFEL_SLOT_RAW);
         expect(['slot1', 'slot2']).toContain(slot);
 
-        if (node.source) {
-          // This test will depend on the source fixture and its indentation
-          if (slot === 'slot1') {
-            expect(node.source.start).toEqual({ offset: 0, column: 2, line: 5 });
-            expect(node.source.end).toEqual({ offset: 0, column: 3, line: 7 });
-          }
-
-          if (slot === 'slot2') {
-            expect(node.source.start).toEqual({ offset: 0, column: 2, line: 9 });
-            expect(node.source.end).toEqual({ offset: 0, column: 3, line: 11 });
-          }
+        if (slot === 'slot1') {
+          expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+            start: { line: 5, column: 2, index: 87 },
+            end: { line: 7, column: 3, index: 117 },
+          });
+        }
+        if (slot === 'slot2') {
+          expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+            start: { line: 9, column: 2, index: 122 },
+            end: { line: 11, column: 3, index: 153 },
+          });
         }
       });
     });
@@ -157,16 +148,18 @@ export const useStyles2 = makeStyles({
         const declarator = node.raw(GRIFFEL_DECLARATOR_RAW);
         expect(['useStyles1', 'useStyles2']).toContain(declarator);
 
-        if (node.source) {
-          if (declarator === 'useStyles1') {
-            expect(node.source.start).toEqual({ offset: 0, column: 2, line: 5 });
-            expect(node.source.end).toEqual({ offset: 0, column: 3, line: 7 });
-          }
+        if (declarator === 'useStyles1') {
+          expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+            start: { line: 5, column: 2, index: 88 },
+            end: { line: 7, column: 3, index: 117 },
+          });
+        }
 
-          if (declarator === 'useStyles2') {
-            expect(node.source.start).toEqual({ offset: 0, column: 2, line: 11 });
-            expect(node.source.end).toEqual({ offset: 0, column: 3, line: 13 });
-          }
+        if (declarator === 'useStyles2') {
+          expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+            start: { line: 11, column: 2, index: 164 },
+            end: { line: 13, column: 3, index: 193 },
+          });
         }
       });
     });
@@ -183,13 +176,7 @@ export const useResetStyles = makeResetStyles({
 })
 `;
       const root = parse(fixture, { from: 'fixture.styles.ts' });
-      expect(format(root.toString())).toMatchInlineSnapshot(`
-        ".rbe9p1m {
-          color: red;
-          background-color: green;
-        }
-        "
-      `);
+      expect(root.toString()).toMatchInlineSnapshot(`".rbe9p1m{color:red;background-color:green;}"`);
     });
 
     it('should handle different module source', () => {
@@ -205,21 +192,14 @@ export const useResetStyles = foo({
         from: 'fixture.styles.ts',
         modules: [{ moduleSource: '@foo/foo', importName: 'makeStyles', resetImportName: 'foo' }],
       });
-      expect(format(root.toString())).toMatchInlineSnapshot(`
-        ".rbe9p1m {
-          color: red;
-          background-color: green;
-        }
-        "
-      `);
-
+      expect(root.toString()).toMatchInlineSnapshot(`".rbe9p1m{color:red;background-color:green;}"`);
       root.walk(node => {
         expect(node.raw(GRIFFEL_DECLARATOR_RAW)).toEqual('useResetStyles');
 
-        if (node.source) {
-          expect(node.source.start).toEqual({ offset: 0, column: 34, line: 4 });
-          expect(node.source.end).toEqual({ offset: 0, column: 1, line: 7 });
-        }
+        expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
+          start: { line: 4, column: 34, index: 68 },
+          end: { line: 7, column: 1, index: 115 },
+        });
       });
     });
 
@@ -238,11 +218,10 @@ export const useResetStyles = makeResetStyles({
         const declarator = node.raw(GRIFFEL_DECLARATOR_RAW);
         expect(declarator).toEqual('useResetStyles');
 
-        if (node.source) {
-          // This test will depend on the source fixture and its indentation
-          expect(node.source.start).toEqual({ offset: 0, column: 46, line: 4 });
-          expect(node.source.end).toEqual({ offset: 0, column: 1, line: 7 });
-        }
+        expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
+          start: { line: 4, column: 46, index: 98 },
+          end: { line: 7, column: 1, index: 145 },
+        });
       });
     });
 
@@ -278,16 +257,18 @@ export const useResetStyles2 = makeResetStyles({
         const declarator = node.raw(GRIFFEL_DECLARATOR_RAW);
         expect(['useResetStyles1', 'useResetStyles2']).toContain(declarator);
 
-        if (node.source) {
-          if (declarator === 'useResetStyles1') {
-            expect(node.source.start).toEqual({ offset: 0, column: 47, line: 4 });
-            expect(node.source.end).toEqual({ offset: 0, column: 1, line: 7 });
-          }
+        if (declarator === 'useResetStyles1') {
+          expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
+            start: { line: 4, column: 47, index: 99 },
+            end: { line: 7, column: 1, index: 146 },
+          });
+        }
 
-          if (declarator === 'useResetStyles2') {
-            expect(node.source.start).toEqual({ offset: 0, column: 47, line: 9 });
-            expect(node.source.end).toEqual({ offset: 0, column: 1, line: 12 });
-          }
+        if (declarator === 'useResetStyles2') {
+          expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
+            start: { line: 9, column: 47, index: 196 },
+            end: { line: 12, column: 1, index: 245 },
+          });
         }
       });
     });
