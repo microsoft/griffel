@@ -31,25 +31,27 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
 
   const { cssEntries, cssResetEntries, resetLocations, locations } = metadata;
 
-  // Each key-value pair represents CSS rules per slot (makeStyles) or per declarator (makeResetStyles).
-  const cssRulesMap = new Map<string, string>();
+  const cssRuleSlotNames: string[] = [];
+  const cssRules: string[] = [];
 
-  Object.entries(cssEntries).forEach(([declarator, slots]) => {
-    Object.entries(slots).forEach(([slot, rules]) => {
-      cssRulesMap.set(`${declarator} ${slot}`, rules.join(''));
+  Object.entries(cssEntries).map(([declarator, slots]) => {
+    Object.entries(slots).map(([slot, rules]) => {
+      cssRuleSlotNames.push(`${declarator} ${slot}`);
+      cssRules.push(rules.join(''));
     });
   });
 
-  Object.entries(cssResetEntries).forEach(([declarator, resetRules]) => {
-    cssRulesMap.set(declarator, resetRules.join(''));
+  Object.entries(cssResetEntries).map(([declarator, resetRules]) => {
+    cssRuleSlotNames.push(`${declarator}`);
+    cssRules.push(resetRules.join(''));
   });
 
-  const root = postcss.parse(Array.from(cssRulesMap.values()).join('\n'));
+  const root = postcss.parse(cssRules.join('\n'));
   root.walk(node => {
     if (!node.source || node.source.start === undefined) {
       return;
     }
-    const [declarator, slot] = Array.from(cssRulesMap.keys())[node.source.start.line - 1].split(' ');
+    const [declarator, slot] = cssRuleSlotNames[node.source.start.line - 1].split(' ');
     node.raws[GRIFFEL_DECLARATOR_RAW] = declarator;
     if (slot) {
       node.raws[GRIFFEL_SLOT_RAW] = slot;
