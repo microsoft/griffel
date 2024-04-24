@@ -59,26 +59,8 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
     }
   });
 
-  const doc = new postcss.Document();
-
-  root.parent = doc;
-  // https://github.com/callstack/linaria/blob/911b59b0b8bb7de2accce63ece528841f2b29f4a/packages/postcss-linaria/src/parse.ts#L180
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  root.document = doc;
-  doc.nodes.push(root);
-
-  doc.source = {
-    input: new postcss.Input(code),
-    start: {
-      line: 1,
-      column: 1,
-      offset: 0,
-    },
-  };
-
-  doc.raws[GRIFFEL_SRC_RAW] = css;
-  return doc;
+  root.raws[GRIFFEL_SRC_RAW] = css;
+  return root;
 };
 
 const extractGrifellBabelPluginOptions = (opts: ParserOptions = {}) => {
