@@ -2,7 +2,7 @@ import hashString from '@emotion/hash';
 import type { GriffelAnimation, GriffelStyle } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
-import { HASH_PREFIX, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
+import { HASH_PREFIX, RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
 import type { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types';
 import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule';
 import { compileAtomicCSSRule } from './compileAtomicCSSRule';
@@ -22,6 +22,15 @@ import { isResetValue } from './utils/isResetValue';
 import { trimSelector } from './utils/trimSelector';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
+import { shorthands } from './shorthands';
+
+function getShorthandDefinition(property: string): [number, string[]] | undefined {
+  return shorthands[property as keyof typeof shorthands];
+}
+
+function computePropertyPriority(shorthand: [number, string[]] | undefined): number {
+  return shorthand?.[0] ?? 0;
+}
 
 function pushToClassesMap(
   classesMap: CSSClassesMap,
@@ -32,9 +41,9 @@ function pushToClassesMap(
   classesMap[propertyKey] = rtlClassname ? [ltrClassname as string, rtlClassname] : ltrClassname;
 }
 
-function createBucketEntry(cssRule: string, metadata: Record<string, unknown> | undefined): CSSBucketEntry {
-  if (metadata) {
-    return [cssRule, metadata];
+function createBucketEntry(cssRule: string, metadata: [string, unknown][]): CSSBucketEntry {
+  if (metadata.length > 0) {
+    return [cssRule, Object.fromEntries(metadata)];
   }
 
   return cssRule;
@@ -46,10 +55,16 @@ function pushToCSSRules(
   ltrCSS: string | undefined,
   rtlCSS: string | undefined,
   media: string | undefined,
+  priority: number,
 ) {
-  let metadata: Record<string, unknown> | undefined;
+  const metadata: [string, unknown][] = [];
+
+  if (priority !== 0) {
+    metadata.push(['p', priority]);
+  }
+
   if (styleBucketName === 'm' && media) {
-    metadata = { m: media };
+    metadata.push(['m', media]);
   }
 
   cssRulesByBucket[styleBucketName] ??= [];
@@ -105,6 +120,23 @@ export function resolveStyleRules(
 
     if (typeof value === 'string' || typeof value === 'number') {
       const selector = trimSelector(selectors.join(''));
+      const shorthand = getShorthandDefinition(property);
+
+      if (shorthand) {
+        const shorthandProperties = shorthand[1];
+        const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
+
+        resolveStyleRules(
+          shorthandResetStyles,
+          selectors,
+          media,
+          layer,
+          support,
+          container,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      }
 
       // uniq key based on a hash of property & selector, used for merging later
       const key = hashPropertyKey(selector, container, media, support, property);
@@ -154,7 +186,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media, computePropertyPriority(shorthand));
     } else if (property === 'animationName') {
       const animationNameValue = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
 
@@ -187,6 +219,8 @@ export function resolveStyleRules(
             keyframeRules[i],
             rtlKeyframeRules[i],
             media,
+            // keyframes always have default priority
+            0,
           );
         }
 
@@ -217,6 +251,23 @@ export function resolveStyleRules(
       }
 
       const selector = trimSelector(selectors.join(''));
+      const shorthand = getShorthandDefinition(property);
+
+      if (shorthand) {
+        const shorthandProperties = shorthand[1];
+        const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
+
+        resolveStyleRules(
+          shorthandResetStyles,
+          selectors,
+          media,
+          layer,
+          support,
+          container,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      }
 
       const key = hashPropertyKey(selector, container, media, support, property);
       const className = hashClassName({
@@ -278,7 +329,7 @@ export function resolveStyleRules(
       });
 
       pushToClassesMap(cssClassesMap, key, className, rtlClassName);
-      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media);
+      pushToCSSRules(cssRulesByBucket, styleBucketName, ltrCSS, rtlCSS, media, computePropertyPriority(shorthand));
     } else if (isObject(value)) {
       if (isNestedSelector(property)) {
         resolveStyleRules(

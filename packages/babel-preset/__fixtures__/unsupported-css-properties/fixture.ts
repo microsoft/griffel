@@ -5,18 +5,12 @@ export const useStyles = makeStyles({
   // resulting output should be empty anyway
   root: {
     // @ts-expect-error unsupported css properties should be stripped
-    background: 'value',
+    all: 'initial',
     // @ts-expect-error unsupported css properties should be stripped
-    border: 'value',
+    borderColor: 'value',
     // @ts-expect-error unsupported css properties should be stripped
-    borderRadius: 'value',
+    borderStyle: 'value',
     // @ts-expect-error unsupported css properties should be stripped
-    gap: 'value',
-    // @ts-expect-error unsupported css properties should be stripped
-    grid: 'value',
-    // @ts-expect-error unsupported css properties should be stripped
-    margin: 'value',
-    // @ts-expect-error unsupported css properties should be stripped
-    padding: 'value',
+    borderWidth: 'value',
   },
 });

@@ -66,6 +66,11 @@ pluginTester({
       outputFixture: path.resolve(fixturesDir, 'keyframes', 'output.ts'),
     },
     {
+      title: 'syntax: CSS shorthands',
+      fixture: path.resolve(fixturesDir, 'object-shorthands', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'object-shorthands', 'output.ts'),
+    },
+    {
       title: 'syntax: reset (null values)',
       fixture: path.resolve(fixturesDir, 'object-reset', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'object-reset', 'output.ts'),
