@@ -24,6 +24,8 @@ export function borderLeft(style: BorderStyleInput, width: BorderWidthInput, col
  *  borderLeft('solid', '2px', 'red')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-left
+ *
+ * @deprecated Just use `{ borderLeft: '2px solid red' }` instead as Griffel supports CSS shorthands now
  */
 export function borderLeft(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]

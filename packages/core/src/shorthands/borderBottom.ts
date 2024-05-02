@@ -31,7 +31,9 @@ export function borderBottom(
  *  borderBottom('2px', 'solid', 'red')
  *  borderBottom('solid', '2px', 'red')
  *
- * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-Bottom
+ * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom
+ *
+ * @deprecated Just use `{ borderBottom: '2px solid red' }` instead as Griffel supports CSS shorthands now
  */
 export function borderBottom(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]

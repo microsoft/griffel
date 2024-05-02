@@ -29,6 +29,8 @@ const isWidth = (value: CSS.Property.Flex | undefined) => widthReservedKeys.some
  *   flex(0, 0, 'auto')
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
+ *
+ * @deprecated Just use `{ flex: '1 1 0' }` instead as Griffel supports CSS shorthands now
  */
 export function flex(...values: FlexInput): FlexStyle {
   const isOneValueSyntax = values.length === 1;

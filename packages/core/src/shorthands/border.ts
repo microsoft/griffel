@@ -38,6 +38,8 @@ export function border(width: BorderWidthInput, style: BorderStyleInput, color: 
  *  border('solid', '2px', 'red')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border
+ *
+ * @deprecated Just use `{ border: '2px solid red' }` instead as Griffel supports CSS shorthands now
  */
 export function border(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]

@@ -18,6 +18,8 @@ export function inset(top: InsetInput, right: InsetInput, bottom: InsetInput, le
  *   inset('1px', 0, '3px', '4px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/inset
+ *
+ * @deprecated Just use `{ inset: '10px 5px 8px 4px' }` instead as Griffel supports CSS shorthands now
  */
 export function inset(...values: InsetInput[]): InsetStyle {
   const [firstValue, secondValue = firstValue, thirdValue = firstValue, fourthValue = secondValue] = values;

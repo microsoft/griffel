@@ -11,6 +11,8 @@ type MarginInlineStyle = Pick<GriffelStyle, 'marginInlineStart' | 'marginInlineE
  *   marginInline('10px', '5px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline
+ *
+ * @deprecated Just use `{ marginInline: '10px' }` instead as Griffel supports CSS shorthands now
  */
 export function marginInline(start: MarginInlineInput, end: MarginInlineInput = start): MarginInlineStyle {
   return {

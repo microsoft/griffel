@@ -23,7 +23,9 @@ export function borderTop(style: BorderStyleInput, width: BorderWidthInput, colo
  *  borderTop('2px', 'solid', 'red')
  *  borderTop('solid', '2px', 'red')
  *
- * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-Top
+ * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-top
+ *
+ * @deprecated Just use `{ borderTop: '2px solid red' }` instead as Griffel supports CSS shorthands now
  */
 export function borderTop(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]

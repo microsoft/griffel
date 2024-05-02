@@ -32,6 +32,8 @@ export function borderRight(
  *  borderRight('solid', '2px', 'red')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-right
+ *
+ * @deprecated Just use `{ borderRight: '2px solid red' }` instead as Griffel supports CSS shorthands now
  */
 export function borderRight(
   ...values: [BorderWidthInput | BorderStyleInput, (BorderWidthInput | BorderStyleInput)?, BorderColorInput?]

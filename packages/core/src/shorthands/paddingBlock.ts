@@ -11,6 +11,8 @@ type PaddingBlockStyle = Pick<GriffelStyle, 'paddingBlockStart' | 'paddingBlockE
  *   paddingBlock('10px', '5px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block
+ *
+ * @deprecated Just use `{ paddingBlock: '10px' }` instead as Griffel supports CSS shorthands now
  */
 export function paddingBlock(start: PaddingBlockInput, end: PaddingBlockInput = start): PaddingBlockStyle {
   return {

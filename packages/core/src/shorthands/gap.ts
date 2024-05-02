@@ -11,6 +11,8 @@ type GapStyle = Pick<GriffelStyle, 'columnGap' | 'rowGap'>;
  *   gap('10px', '5px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/gap
+ *
+ * @deprecated Just use `{ gap: '10px 5px' }` instead as Griffel supports CSS shorthands now
  */
 export function gap(columnGap: GapInput, rowGap: GapInput = columnGap): GapStyle {
   return {

@@ -1,19 +1,17 @@
-import { makeStyles, shorthands } from '@griffel/core';
+import { makeStyles } from '@griffel/core';
 
 export default makeStyles({
   one: {
-    ...shorthands.padding('1px'),
+    padding: '1px',
   },
   two: {
-    ...shorthands.padding('2px', '2px'),
+    padding: '1px 2px',
   },
-
   three: {
-    ...shorthands.padding('3px', '3px'),
+    padding: '1px 2px 3px',
   },
-
   four: {
-    ...shorthands.padding('4px', '4px', '5px'),
+    padding: '1px 2px 3px 4px',
   },
 });
 

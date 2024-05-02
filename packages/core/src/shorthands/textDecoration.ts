@@ -38,6 +38,8 @@ export function textDecoration(
  *  textDecoration('underline', 'dotted', 'red', '2px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration
+ *
+ * @deprecated Just use `{ textDecoration: 'underline dotted red 2px' }` instead as Griffel supports CSS shorthands now
  */
 export function textDecoration(
   value: TextDecorationLineInput | TextDecorationStyleInput,

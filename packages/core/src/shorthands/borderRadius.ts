@@ -17,6 +17,8 @@ type BorderRadiusStyle = Pick<
  *   borderRadius('1px', 0, '3px', '4px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
+ *
+ * @deprecated Just use `{ borderRadius: '10px 5% 8px 4px' }` instead as Griffel supports CSS shorthands now
  */
 export function borderRadius(
   value1: BorderRadiusInput,

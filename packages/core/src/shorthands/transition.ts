@@ -48,6 +48,8 @@ export function transition(values: TransitionInputs[]): TransitionStyle;
  * ])
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+ *
+ * @deprecated Just use `{ transition: 'margin-right 4s 1s ease-in' }` instead as Griffel supports CSS shorthands now
  */
 export function transition(
   ...values: [TransitionGlobalInput] | TransitionInputs | [TransitionInputs[]]

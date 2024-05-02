@@ -40,6 +40,8 @@ export function gridArea(
  *   gridArea(2, 4, 1, 3)
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area
+ *
+ * @deprecated Just use `{ gridArea: '2 / 4 / 1 / 3' }` instead as Griffel supports CSS shorthands now
  */
 export function gridArea(...values: GridAreaInput[]): GridAreaStyle {
   // if any value is not valid, then do not apply the CSS.
