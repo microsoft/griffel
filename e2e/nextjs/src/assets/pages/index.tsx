@@ -1,4 +1,4 @@
-import { makeStyles, shorthands } from '@griffel/react';
+import { makeStyles } from '@griffel/react';
 import Head from 'next/head';
 import * as React from 'react';
 
@@ -10,10 +10,10 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     width: '200px',
 
-    ...shorthands.border('2px', 'dashed', 'magenta'),
-    ...shorthands.borderRadius('5px'),
-    ...shorthands.gap('5px'),
-    ...shorthands.padding('10px'),
+    border: '2px dashed magenta',
+    borderRadius: '5px',
+    gap: '5px',
+    padding: '10px',
   },
 });
 
