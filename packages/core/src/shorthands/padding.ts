@@ -20,6 +20,8 @@ export function padding(top: PaddingInput, right: PaddingInput, bottom: PaddingI
  *   padding('1px', 0, '3px', '4px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/padding
+ *
+ * @deprecated Just use `{ padding: '10px 5px 8px 4px' }` instead as Griffel supports CSS shorthands now
  */
 export function padding(...values: PaddingInput[]) {
   return generateStyles<PaddingStyle>('padding', '', ...values);

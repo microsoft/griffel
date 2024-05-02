@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: deprecate the most of shorthands.* functions",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

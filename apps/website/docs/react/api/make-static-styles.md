@@ -101,12 +101,6 @@ function App() {
 }
 ```
 
-:::note
-
-`makeStaticStyles` supports the use of [shorthands](/react/api/shorthands) and does not have the same limitation as `makeStyles()`.
-
-:::
-
 ## Usage with `makeStyles`
 
 ```tsx
@@ -122,7 +116,7 @@ const useStaticStyles = makeStaticStyles({
 const useClasses = makeStyles({
   primaryText: {
     color: 'blue',
-    ...shorthands.padding('5px'),
+    padding: '10px',
   },
 });
 

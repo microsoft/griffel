@@ -17,6 +17,7 @@ export function outline(width: OutlineWidthInput, style: OutlineStyleInput, colo
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/outline
  *
+ * @deprecated Just use `{ outline: '2px solid red' }` instead as Griffel supports CSS shorthands now
  */
 export function outline(
   outlineWidth: OutlineWidthInput,

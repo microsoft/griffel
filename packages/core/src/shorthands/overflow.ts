@@ -11,6 +11,8 @@ type OverflowStyle = Pick<GriffelStyle, 'overflowX' | 'overflowY'>;
  *   overflow('hidden', 'scroll')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
+ *
+ * @deprecated Just use `{ overflow: 'hidden scroll' }` instead as Griffel supports CSS shorthands now
  */
 export function overflow(overflowX: OverflowInput, overflowY: OverflowInput = overflowX): OverflowStyle {
   return {

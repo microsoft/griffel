@@ -11,6 +11,8 @@ type MarginBlockStyle = Pick<GriffelStyle, 'marginBlockStart' | 'marginBlockEnd'
  *   marginBlock('10px', '5px')
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block
+ *
+ * @deprecated Just use `{ marginBlock: '10px' }` instead as Griffel supports CSS shorthands now
  */
 export function marginBlock(start: MarginBlockInput, end: MarginBlockInput = start): MarginBlockStyle {
   return {

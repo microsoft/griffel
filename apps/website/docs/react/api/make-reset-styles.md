@@ -37,16 +37,10 @@ const useClass = makeResetStyles({
 }
 ```
 
-:::note
-
-By its nature `makeResetStyles` allows the use of [CSS shorthands](/react/guides/limitations#css-shorthands-are-not-supported) and does not have the same limitation as `makeStyles()`.
-
-:::
-
 ## Usage with `makeStyles`
 
 ```jsx
-import { makeStyles, makeResetStyles, shorthands } from '@griffel/react';
+import { makeStyles, makeResetStyles } from '@griffel/react';
 import { mergeClasses } from './mergeClasses';
 
 const useBaseClass = makeResetStyles({
@@ -58,8 +52,8 @@ const useBaseClass = makeResetStyles({
 const useClasses = makeStyles({
   primary: { color: 'blue' },
   circular: {
-    ...shorthands.padding('5px'),
-    ...shorthands.borderRadius('5px'),
+    padding: '5px',
+    borderRadius: '5px',
   },
 });
 
