@@ -2,6 +2,39 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Thu, 02 May 2024 14:07:14 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.2",
+      "version": "0.5.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "e514e2f9e83d9ee62290eaa262bece8bb0956e34",
+            "comment": "chore: add support for priority in CSS rules"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "11bab861ec8214f53d4d958398a4cb50f71e085e",
+            "comment": "fix: fix sorting of buckets in sortCSSRules()"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "7d27e6075f2d0647256fcc489e1e369696347e05",
+            "comment": "chore: improve CSS generation"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.16.0",
+            "commit": "9745935b1bd28b02ee7c19d9195883e8454f0810"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Mar 2024 11:33:53 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.1",
       "version": "0.5.1",

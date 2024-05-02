@@ -2,6 +2,27 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Thu, 02 May 2024 14:07:14 GMT",
+      "tag": "@griffel/jest-serializer_v1.1.24",
+      "version": "1.1.24",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "062a9d5bc3903f0ce7a3450403b19b622caab05d",
+            "comment": "chore: handle `RESET` value"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.16.0",
+            "commit": "9745935b1bd28b02ee7c19d9195883e8454f0810"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Mar 2024 11:33:53 GMT",
       "tag": "@griffel/jest-serializer_v1.1.23",
       "version": "1.1.23",

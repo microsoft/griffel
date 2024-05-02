@@ -2,6 +2,61 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 02 May 2024 14:07:14 GMT",
+      "tag": "@griffel/core_v1.16.0",
+      "version": "1.16.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "062a9d5bc3903f0ce7a3450403b19b622caab05d",
+            "comment": "feat: add support for `RESET`"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "b4ed7ac5ab5b490e7a1b38a214c92af359aa3206",
+            "comment": "chore: export getStyleSheetKey() for internal usage"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "0f2eb5e6f199314b47c5a6cb0ef652f3eaa9ea08",
+            "comment": "feat: add support for shorthands"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/core",
+            "comment": "Bump @griffel/style-types to v1.1.0",
+            "commit": "9745935b1bd28b02ee7c19d9195883e8454f0810"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "e514e2f9e83d9ee62290eaa262bece8bb0956e34",
+            "comment": "chore: add support for priority in CSS rules"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "e7e8d0610cdf86359513affe1c8ba91b5de15f5c",
+            "comment": "chore: deprecate the most of shorthands.* functions"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "74dd47bf165dee7b3f752ba8939961c7e1a5b1ef",
+            "comment": "chore: update serializer"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Mar 2024 11:33:53 GMT",
       "tag": "@griffel/core_v1.15.3",
       "version": "1.15.3",

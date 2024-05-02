@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add support for shorthands",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

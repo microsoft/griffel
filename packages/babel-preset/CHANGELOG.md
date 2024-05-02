@@ -1,8 +1,18 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Tue, 19 Mar 2024 11:33:53 GMT and should not be manually modified.
+This log was last generated on Thu, 02 May 2024 14:07:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.8
+
+Thu, 02 May 2024 14:07:14 GMT
+
+### Patches
+
+- chore: improve error reporting (olfedias@microsoft.com)
+- chore: handle `RESET` during compilation (olfedias@microsoft.com)
+- Bump @griffel/core to v1.16.0
 
 ## 1.5.7
 

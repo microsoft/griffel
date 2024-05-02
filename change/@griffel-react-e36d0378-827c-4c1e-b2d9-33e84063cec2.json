@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "feat: add support for `RESET`",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

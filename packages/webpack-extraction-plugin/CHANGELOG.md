@@ -1,8 +1,19 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Tue, 19 Mar 2024 11:33:53 GMT and should not be manually modified.
+This log was last generated on Thu, 02 May 2024 14:07:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.5.2
+
+Thu, 02 May 2024 14:07:14 GMT
+
+### Patches
+
+- chore: add support for priority in CSS rules (olfedias@microsoft.com)
+- fix: fix sorting of buckets in sortCSSRules() (olfedias@microsoft.com)
+- chore: improve CSS generation (olfedias@microsoft.com)
+- Bump @griffel/core to v1.16.0
 
 ## 0.5.1
 

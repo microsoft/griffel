@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-This log was last generated on Tue, 19 Mar 2024 11:33:53 GMT and should not be manually modified.
+This log was last generated on Thu, 02 May 2024 14:07:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.22
+
+Thu, 02 May 2024 14:07:14 GMT
+
+### Patches
+
+- feat: add support for `RESET` (olfedias@microsoft.com)
+- Bump @griffel/core to v1.16.0
 
 ## 1.5.21
 

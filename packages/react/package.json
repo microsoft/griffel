@@ -1,6 +1,6 @@
 {
   "name": "@griffel/react",
-  "version": "1.5.21",
+  "version": "1.5.22",
   "description": "React implementation of Atomic CSS-in-JS",
   "license": "MIT",
   "repository": {
@@ -15,7 +15,7 @@
     }
   },
   "dependencies": {
-    "@griffel/core": "^1.15.3",
+    "@griffel/core": "^1.16.0",
     "tslib": "^2.1.0"
   },
   "peerDependencies": {

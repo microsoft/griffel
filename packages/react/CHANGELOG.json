@@ -2,6 +2,27 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 02 May 2024 14:07:14 GMT",
+      "tag": "@griffel/react_v1.5.22",
+      "version": "1.5.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "062a9d5bc3903f0ce7a3450403b19b622caab05d",
+            "comment": "feat: add support for `RESET`"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.16.0",
+            "commit": "9745935b1bd28b02ee7c19d9195883e8454f0810"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Mar 2024 11:33:53 GMT",
       "tag": "@griffel/react_v1.5.21",
       "version": "1.5.21",

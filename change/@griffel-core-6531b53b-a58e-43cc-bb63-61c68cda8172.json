@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: add support for priority in CSS rules",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

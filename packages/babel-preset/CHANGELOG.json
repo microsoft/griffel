@@ -2,6 +2,33 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Thu, 02 May 2024 14:07:14 GMT",
+      "tag": "@griffel/babel-preset_v1.5.8",
+      "version": "1.5.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "7eb2fec2e84b606fa92ddc8a1775a74ce8ad3a43",
+            "comment": "chore: improve error reporting"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "062a9d5bc3903f0ce7a3450403b19b622caab05d",
+            "comment": "chore: handle `RESET` during compilation"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.16.0",
+            "commit": "9745935b1bd28b02ee7c19d9195883e8454f0810"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Mar 2024 11:33:53 GMT",
       "tag": "@griffel/babel-preset_v1.5.7",
       "version": "1.5.7",
