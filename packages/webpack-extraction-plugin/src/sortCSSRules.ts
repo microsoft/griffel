@@ -35,11 +35,11 @@ export function sortCSSRules(
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
 ): string {
   return getUniqueRulesFromSets(setOfCSSRules)
+    .sort((entryA, entryB) => entryA.priority - entryB.priority)
     .sort(
       (entryA, entryB) =>
         styleBucketOrderingMap[entryA.styleBucketName] - styleBucketOrderingMap[entryB.styleBucketName],
     )
-    .sort((entryA, entryB) => entryA.priority - entryB.priority)
     .sort((entryA, entryB) => compareMediaQueries(entryA.media, entryB.media))
     .map(entry => entry.cssRule)
     .join('');
