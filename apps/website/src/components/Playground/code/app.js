@@ -1,5 +1,5 @@
 import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/base16/summerfruit-dark.css';
+import 'highlight.js/styles/night-owl.css';
 import beautify from 'js-beautify';
 import React from 'react';
 import css from 'highlight.js/lib/languages/css';
@@ -7,21 +7,22 @@ import styles from './styles';
 hljs.registerLanguage('css', css);
 
 // Style reset
+const backgroundColor = '#000';
 Object.assign(document.body.style, {
-  // matches "highlight.js" theme
-  background: '#151515',
+  background: backgroundColor,
   margin: 0,
 });
 
 export default function App() {
   const [rules, setRules] = React.useState('');
+  /** @type {React.MutableRefObject<HTMLElement | null>} */
   const ref = React.useRef(null);
 
   React.useEffect(() => {
     const styleTag = document.createElement('style');
     document.head.append(styleTag);
 
-    /** @type import('@griffel/core').GriffelRenderer */
+    /** @type {import('@griffel/core').GriffelRenderer} */
     const playgroundRenderer = {
       id: 'playground',
       insertCSSRules(cssRules) {
@@ -62,17 +63,15 @@ export default function App() {
     };
   }, []);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (ref.current) {
-      hljs.highlightElement(ref.current);
+      ref.current.innerHTML = hljs.highlight(rules, { language: 'css' }).value;
     }
   }, [rules]);
 
   return (
     <pre style={{ margin: 0 }}>
-      <code ref={ref} className="language-css">
-        {rules}
-      </code>
+      <code className="hljs" ref={ref} style={{ background: backgroundColor }} />
     </pre>
   );
 }

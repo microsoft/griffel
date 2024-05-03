@@ -1,6 +1,12 @@
 import React from 'react';
-import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from '@codesandbox/sandpack-react';
-import { oceanBlue } from '@codesandbox/sandpack-themes';
+import {
+  SandpackProvider,
+  SandpackLayout,
+  SandpackCodeEditor,
+  SandpackPreview,
+  type SandpackTheme,
+} from '@codesandbox/sandpack-react';
+import { nightOwl } from '@codesandbox/sandpack-themes';
 import { useLocation } from '@docusaurus/router';
 
 import AppCode from './code/app';
@@ -9,6 +15,18 @@ import { PlaygroundUrl } from './PlaygroundUrl';
 import { PlaygroundShare } from './PlaygroundShare';
 
 const ctx = require.context('./code/templates', false, /\.js$/);
+const theme: SandpackTheme = {
+  ...nightOwl,
+  colors: {
+    ...nightOwl.colors,
+    surface1: '#000',
+    surface2: '#000',
+  },
+  font: {
+    ...nightOwl.font,
+    size: '14px',
+  },
+};
 
 const templates: Record<string, string> = ctx.keys().reduce((acc, modulePath) => {
   if (modulePath.includes('app')) {
@@ -29,7 +47,7 @@ export default function Playground() {
   return (
     <>
       <SandpackProvider
-        theme={oceanBlue}
+        theme={theme}
         template="react"
         files={{
           '/App.js': {
