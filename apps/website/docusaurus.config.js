@@ -2,9 +2,9 @@
 
 const { themes } = require('prism-react-renderer');
 const prismTheme = {
-  ...themes.vsDark,
+  ...themes.nightOwl,
   plain: {
-    ...themes.vsDark.plain,
+    ...themes.nightOwl.plain,
     backgroundColor: '#000',
   },
 };
