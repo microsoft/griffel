@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Update `parse` to generate css rules one line per slot(makeStyles)/declaration(makeResetStyles)",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -98,9 +98,6 @@ const plugin = declare<LocationPluginOptions, PluginObj<LocationPluginState>>((a
             state.locations[declaratorId][key.node.name] = {
               ...property.node.loc,
             };
-            state.locations[declaratorId][key.node.name] = {
-              ...property.node.loc,
-            };
           });
         }
 
