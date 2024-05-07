@@ -1,8 +1,16 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Thu, 02 May 2024 14:07:14 GMT and should not be manually modified.
+This log was last generated on Tue, 07 May 2024 12:51:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Tue, 07 May 2024 12:51:34 GMT
+
+### Minor changes
+
+- Update `parse` to generate css rules one line per slot(makeStyles)/declaration(makeResetStyles) (yuanboxue@microsoft.com)
 
 ## 1.0.8
 

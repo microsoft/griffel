@@ -2,6 +2,21 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Tue, 07 May 2024 12:51:34 GMT",
+      "tag": "@griffel/postcss-syntax_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "8f670a597ac5acc5d91c4c8bcc592a92dd31d190",
+            "comment": "Update `parse` to generate css rules one line per slot(makeStyles)/declaration(makeResetStyles)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 May 2024 14:07:14 GMT",
       "tag": "@griffel/postcss-syntax_v1.0.8",
       "version": "1.0.8",
