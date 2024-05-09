@@ -11,7 +11,7 @@ import type { BabelPluginOptions } from '@griffel/babel-preset';
 
 export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document | postcss.Root>, 'from' | 'map'>;
 
-export interface ParserOptions extends PostCSSParserOptions, BabelPluginOptions {}
+export interface ParserOptions extends Pick<PostCSSParserOptions, 'from'>, BabelPluginOptions {}
 
 /**
  * Generates CSS rules from a JavaScript file. Each slot in `makeStyles` and each `makeResetStyles` will be one line in the output.
@@ -19,7 +19,7 @@ export interface ParserOptions extends PostCSSParserOptions, BabelPluginOptions 
  */
 export const parse = (css: string | { toString(): string }, opts?: ParserOptions) => {
   const { from: filename = 'postcss-syntax.styles.ts' } = opts ?? {};
-  const griffelPluginOptions = extractGrifellBabelPluginOptions(opts);
+  const griffelPluginOptions = extractGriffelBabelPluginOptions(opts);
   const code = css.toString();
   const { metadata } = transformSync(code, {
     filename,
@@ -65,7 +65,7 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
   return root;
 };
 
-const extractGrifellBabelPluginOptions = (opts: ParserOptions = {}) => {
+const extractGriffelBabelPluginOptions = (opts: ParserOptions = {}) => {
   const { babelOptions, evaluationRules, generateMetadata, modules } = opts;
   const babelPluginOptions: BabelPluginOptions = {};
   if (babelOptions) {
