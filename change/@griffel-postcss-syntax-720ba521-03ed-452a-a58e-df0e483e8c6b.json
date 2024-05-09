@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: add plugins/presets from options.babelOptions ",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
