@@ -1,4 +1,4 @@
-import transformSync, { TransformOptions } from './transform-sync';
+import transformSync, { type TransformOptions } from './transform-sync';
 
 describe('transformSync', () => {
   it('should parse TS and return metadata that contains css location', () => {
