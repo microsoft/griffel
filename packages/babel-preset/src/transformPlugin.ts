@@ -124,18 +124,15 @@ function buildCSSEntriesMetadata(
 ) {
   const classesBySlot: Record<string, string[]> = Object.fromEntries(
     Object.entries(classnamesMapping).map(([slot, cssClassesMap]) => {
-      return [
-        slot,
-        Object.values(cssClassesMap).reduce<string[]>((acc, cssClasses) => {
-          if (typeof cssClasses === 'string') {
-            acc.push(cssClasses);
-          } else if (Array.isArray(cssClasses)) {
-            acc.push(...cssClasses);
-          }
-
-          return acc;
-        }, []),
-      ];
+      const uniqueClasses = new Set<string>();
+      Object.values(cssClassesMap).forEach(cssClasses => {
+        if (typeof cssClasses === 'string') {
+          uniqueClasses.add(cssClasses);
+        } else if (Array.isArray(cssClasses)) {
+          cssClasses.forEach(cssClass => uniqueClasses.add(cssClass));
+        }
+      });
+      return [slot, Array.from(uniqueClasses)];
     }),
   );
 
