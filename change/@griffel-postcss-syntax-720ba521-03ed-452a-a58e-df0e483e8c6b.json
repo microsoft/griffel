@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: use plugins/presets from options.babelOptions to transform source.",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}

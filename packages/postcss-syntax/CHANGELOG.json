@@ -2,6 +2,27 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Fri, 10 May 2024 10:13:20 GMT",
+      "tag": "@griffel/postcss-syntax_v1.1.1",
+      "version": "1.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "1767ae3771caabf21f33155d913d4c03d9bff89a",
+            "comment": "fix: use plugins/presets from options.babelOptions to transform source."
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/postcss-syntax",
+            "comment": "Bump @griffel/babel-preset to v1.5.9",
+            "commit": "7e45352b83480964b3c9e6f9a76e5797eb028e8c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 May 2024 12:51:34 GMT",
       "tag": "@griffel/postcss-syntax_v1.1.0",
       "version": "1.1.0",

@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Thu, 02 May 2024 14:07:14 GMT and should not be manually modified.
+This log was last generated on Fri, 10 May 2024 10:13:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.9
+
+Fri, 10 May 2024 10:13:20 GMT
+
+### Patches
+
+- fix: remove duplicated styles from the generated metadata (yuanboxue@microsoft.com)
 
 ## 1.5.8
 
