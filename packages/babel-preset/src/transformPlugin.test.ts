@@ -373,4 +373,39 @@ describe('babel preset', () => {
       }
     `);
   });
+
+  it('should generate metadata for makeResetStyles when configured', () => {
+    const code = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  root: {
+    paddingLeft: '4px',
+    paddingRight: '4px',
+  },
+});
+    `;
+
+    const babelFileResult = Babel.transformSync(code, {
+      babelrc: false,
+      configFile: false,
+      plugins: [[transformPlugin, { generateMetadata: true }]],
+      filename: 'test.js',
+      presets: ['@babel/typescript'],
+    });
+
+    expect(babelFileResult?.metadata).toMatchInlineSnapshot(`
+      Object {
+        cssEntries: Object {
+          useStyles: Object {
+            root: Array [
+              .fycuoez{padding-left:4px;},
+              .f8wuabp{padding-right:4px;},
+            ],
+          },
+        },
+        cssResetEntries: Object {},
+      }
+    `);
+  });
 });
