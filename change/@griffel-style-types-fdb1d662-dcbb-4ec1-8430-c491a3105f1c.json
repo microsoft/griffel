@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "updated the type of GriffelStaticStyle to support array of fallback css properties",
+  "packageName": "@griffel/style-types",
+  "email": "chhabrashubhdeep@gmail.com",
+  "dependentChangeType": "patch"
+}
