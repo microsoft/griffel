@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "added fallback values support in makeStaticStyles",
-  "packageName": "@griffel/style-types",
-  "email": "chhabrashubhdeep@gmail.com",
-  "dependentChangeType": "patch"
-}
