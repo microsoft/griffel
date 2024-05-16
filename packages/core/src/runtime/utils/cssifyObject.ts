@@ -7,12 +7,15 @@ export function cssifyObject(style: GriffelStyle | GriffelStaticStyle) {
   // eslint-disable-next-line guard-for-in
   for (const property in style) {
     const value = style[property as keyof GriffelStyle];
-
-    if (typeof value !== 'string' && typeof value !== 'number') {
+    if (typeof value === 'string' || typeof value === 'number') {
+      css += hyphenateProperty(property) + ':' + value + ';';
       continue;
     }
-
-    css += hyphenateProperty(property) + ':' + value + ';';
+    if (Array.isArray(value)) {
+      for (const arrValue of value) {
+        css += hyphenateProperty(property) + ':' + arrValue + ';';
+      }
+    }
   }
 
   return css;
