@@ -1,4 +1,5 @@
 import type { StyleBucketName } from '../types';
+import type { AtRules } from './utils/types';
 
 /**
  * Maps the long pseudo name to the short pseudo name. Pseudos that match here will be ordered, everything else will
@@ -42,23 +43,17 @@ const pseudosMap: Record<string, StyleBucketName | undefined> = {
  *
  * @internal
  */
-export function getStyleBucketName(
-  selectors: string[],
-  layer: string,
-  media: string,
-  support: string,
-  container: string,
-): StyleBucketName {
-  if (media) {
+export function getStyleBucketName(selectors: string[], atRules: AtRules): StyleBucketName {
+  if (atRules.media) {
     return 'm';
   }
 
-  // We are grouping all the at-rules like @supports etc under `t` bucket.
-  if (layer || support) {
+  // We are grouping all the at-rules like @supports etc. under `t` bucket.
+  if (atRules.layer || atRules.supports) {
     return 't';
   }
 
-  if (container) {
+  if (atRules.container) {
     return 'c';
   }
 

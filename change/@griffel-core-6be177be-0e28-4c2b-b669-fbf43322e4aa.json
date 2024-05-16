@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: refactor at rules to be a separate param in functions",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

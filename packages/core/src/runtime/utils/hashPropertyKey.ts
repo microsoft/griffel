@@ -1,15 +1,11 @@
 import hash from '@emotion/hash';
-import type { PropertyHash } from '../../types';
 
-export function hashPropertyKey(
-  selector: string,
-  container: string,
-  media: string,
-  support: string,
-  property: string,
-): PropertyHash {
+import type { PropertyHash } from '../../types';
+import type { AtRules } from './types';
+
+export function hashPropertyKey(selector: string, property: string, atRules: AtRules): PropertyHash {
   // uniq key based on property & selector, used for merging later
-  const computedKey = selector + container + media + support + property;
+  const computedKey = selector + atRules.container + atRules.media + atRules.supports + property;
 
   // "key" can be really long as it includes selectors, we use hashes to reduce sizes of keys
   // ".foo :hover" => "abcd"

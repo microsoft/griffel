@@ -1,15 +1,11 @@
 import { hyphenateProperty } from './utils/hyphenateProperty';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
+import type { AtRules } from './utils/types';
 import { compileCSSRules } from './compileCSSRules';
 
 export interface CompileAtomicCSSOptions {
   className: string;
-
   selectors: string[];
-  media: string;
-  layer: string;
-  support: string;
-  container: string;
 
   property: string;
   value: number | string | Array<number | string>;
@@ -55,20 +51,10 @@ function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudo
 
 export function compileAtomicCSSRule(
   options: CompileAtomicCSSOptions,
+  atRules: AtRules,
 ): [string? /* ltr definition */, string? /* rtl definition */] {
-  const {
-    className,
-    media,
-    layer,
-    selectors,
-    support,
-    property,
-    rtlClassName,
-    rtlProperty,
-    rtlValue,
-    value,
-    container,
-  } = options;
+  const { className, selectors, property, rtlClassName, rtlProperty, rtlValue, value } = options;
+  const { container, layer, media, supports } = atRules;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
@@ -94,8 +80,8 @@ export function compileAtomicCSSRule(
     cssRule = `@layer ${layer} { ${cssRule} }`;
   }
 
-  if (support) {
-    cssRule = `@supports ${support} { ${cssRule} }`;
+  if (supports) {
+    cssRule = `@supports ${supports} { ${cssRule} }`;
   }
 
   if (container) {
