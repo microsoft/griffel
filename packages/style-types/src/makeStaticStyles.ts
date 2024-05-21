@@ -1,4 +1,5 @@
 import type * as CSS from 'csstype';
+import type { GriffelStylesCSSValue, Fallback } from './shared';
 
 //
 // Types for makeStaticStyles()
@@ -6,7 +7,7 @@ import type * as CSS from 'csstype';
 //
 
 export type GriffelStaticStyle = {
-  [key: string]: CSS.Properties &
+  [key: string]: (CSS.Properties | Fallback<CSS.Properties<GriffelStylesCSSValue>>) &
     // TODO Questionable: how else would users target their own children?
     Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 } & {

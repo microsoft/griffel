@@ -141,4 +141,23 @@ describe('makeStaticStyles', () => {
       }
     `);
   });
+
+  it('fallback values', () => {
+    const useStyles = makeStaticStyles({
+      body: {
+        background: 'blue',
+        overflowY: ['scroll', 'hidden'],
+      },
+    });
+
+    useStyles({ renderer });
+
+    expect(renderer).toMatchInlineSnapshot(`
+      /** bucket "d" {"data-priority":"0"} **/
+      body {
+        background: blue;
+        overflow-y: hidden;
+      }
+    `);
+  });
 });

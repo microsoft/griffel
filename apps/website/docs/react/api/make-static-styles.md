@@ -127,3 +127,35 @@ export default function App(props) {
   return <p className={props.primaryText}>Hello world</p>;
 }
 ```
+
+## CSS Fallback Properties
+
+Griffel supports CSS fallback properties in order to support older browsers.
+
+Any CSS property accepts an array of values which are all added to the styles.
+Every browser will use the latest valid value (which might be a different one in different browsers, based on supported CSS in that browser):
+
+```js
+import { makeStaticStyles } from '@griffel/react';
+
+const useClasses = makeStaticStyles({
+  body: {
+    overflowY: ['scroll', 'overlay'],
+  },
+});
+
+function App() {
+  useStaticStyles();
+
+  return <div />;
+}
+```
+
+<OutputTitle>Produces following CSS...</OutputTitle>
+
+```css
+body {
+  overflow-y: scroll; /* Fallback for browsers which do not support overflow: overlay */
+  overflow-y: overlay; /* Used by browsers which support overflow: overlay */
+}
+```
