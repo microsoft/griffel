@@ -200,6 +200,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
 
   const pluginOptions: Required<BabelPluginOptions> = {
     babelOptions: {},
+    classNameHashSalt: '',
     generateMetadata: false,
     modules: [
       { moduleSource: '@griffel/react', importName: 'makeStyles' },
@@ -296,6 +297,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                     state.filename as string,
                     stylesBySlots,
                   ),
+                  options.classNameHashSalt,
                 );
                 const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
@@ -328,6 +330,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                     state.filename as string,
                     styles,
                   ),
+                  options.classNameHashSalt,
                 );
 
                 if (pluginOptions.generateMetadata) {

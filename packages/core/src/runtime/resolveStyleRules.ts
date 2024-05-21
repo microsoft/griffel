@@ -86,6 +86,7 @@ function pushToCSSRules(
  */
 export function resolveStyleRules(
   styles: GriffelStyle,
+  classNameHashSalt: string = '',
   selectors: string[] = [],
   atRules: AtRules = {
     container: '',
@@ -129,7 +130,7 @@ export function resolveStyleRules(
         const shorthandProperties = shorthand[1];
         const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
 
-        resolveStyleRules(shorthandResetStyles, selectors, atRules, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(shorthandResetStyles, classNameHashSalt, selectors, atRules, cssClassesMap, cssRulesByBucket);
       }
 
       // uniq key based on a hash of property & selector, used for merging later
@@ -137,6 +138,7 @@ export function resolveStyleRules(
       const className = hashClassName(
         {
           value: value.toString(),
+          salt: classNameHashSalt,
           selector,
           property,
         },
@@ -151,6 +153,7 @@ export function resolveStyleRules(
             {
               value: rtlDefinition.value.toString(),
               property: rtlDefinition.key,
+              salt: classNameHashSalt,
               selector,
             },
             atRules,
@@ -228,6 +231,7 @@ export function resolveStyleRules(
 
       resolveStyleRules(
         { animationName: animationNames.join(', ') },
+        classNameHashSalt,
         selectors,
         atRules,
         cssClassesMap,
@@ -252,13 +256,14 @@ export function resolveStyleRules(
         const shorthandProperties = shorthand[1];
         const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
 
-        resolveStyleRules(shorthandResetStyles, selectors, atRules, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(shorthandResetStyles, classNameHashSalt, selectors, atRules, cssClassesMap, cssRulesByBucket);
       }
 
       const key = hashPropertyKey(selector, property, atRules);
       const className = hashClassName(
         {
           value: value.map(v => (v ?? '').toString()).join(';'),
+          salt: classNameHashSalt,
           selector,
           property,
         },
@@ -266,7 +271,6 @@ export function resolveStyleRules(
       );
 
       const rtlDefinitions = value.map(v => convertProperty(property, v!));
-
       const rtlPropertyConsistent = !rtlDefinitions.some(v => v.key !== rtlDefinitions[0].key);
 
       if (!rtlPropertyConsistent) {
@@ -284,6 +288,7 @@ export function resolveStyleRules(
         ? hashClassName(
             {
               value: rtlDefinitions.map(v => (v?.value ?? '').toString()).join(';'),
+              salt: classNameHashSalt,
               property: rtlDefinitions[0].key,
               selector,
             },
@@ -324,6 +329,7 @@ export function resolveStyleRules(
       if (isNestedSelector(property)) {
         resolveStyleRules(
           value as GriffelStyle,
+          classNameHashSalt,
           selectors.concat(normalizeNestedProperty(property)),
           atRules,
           cssClassesMap,
@@ -334,6 +340,7 @@ export function resolveStyleRules(
 
         resolveStyleRules(
           value as GriffelStyle,
+          classNameHashSalt,
           selectors,
           { ...atRules, media: combinedMediaQuery },
           cssClassesMap,
@@ -344,6 +351,7 @@ export function resolveStyleRules(
 
         resolveStyleRules(
           value as GriffelStyle,
+          classNameHashSalt,
           selectors,
           { ...atRules, layer: combinedLayerQuery },
           cssClassesMap,
@@ -354,6 +362,7 @@ export function resolveStyleRules(
 
         resolveStyleRules(
           value as GriffelStyle,
+          classNameHashSalt,
           selectors,
           { ...atRules, supports: combinedSupportQuery },
           cssClassesMap,
@@ -367,6 +376,7 @@ export function resolveStyleRules(
 
         resolveStyleRules(
           value as GriffelStyle,
+          classNameHashSalt,
           selectors,
           { ...atRules, container: containerQuery },
           cssClassesMap,

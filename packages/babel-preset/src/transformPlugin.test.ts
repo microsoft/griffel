@@ -158,6 +158,14 @@ pluginTester({
     //
     //
     {
+      title: 'config: classNameHashSalt',
+      fixture: path.resolve(fixturesDir, 'config-classname-hash-salt', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'config-classname-hash-salt', 'output.ts'),
+      pluginOptions: {
+        classNameHashSalt: 'prefix',
+      },
+    },
+    {
       title: 'config: babelOptions',
       fixture: path.resolve(fixturesDir, 'config-babel-options', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'config-babel-options', 'output.ts'),

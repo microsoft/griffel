@@ -138,10 +138,11 @@ function createStringFromStyles(styles: GriffelResetStyle) {
  */
 export function resolveResetStyleRules(
   styles: GriffelResetStyle,
+  classNameHashSalt: string = '',
 ): [string, string | null, CSSRulesByBucket | string[]] {
   const [ltrRule, rtlRule] = createStringFromStyles(styles);
 
-  const ltrClassName = RESET_HASH_PREFIX + hashString(ltrRule);
+  const ltrClassName = RESET_HASH_PREFIX + hashString(classNameHashSalt + ltrRule);
   const [ltrCSS, ltrCSSAtRules] = compileResetCSSRules(`.${ltrClassName}{${ltrRule}}`);
 
   const hasAtRules = ltrCSSAtRules.length > 0;
@@ -150,7 +151,7 @@ export function resolveResetStyleRules(
     return [ltrClassName, null, hasAtRules ? { r: ltrCSS, s: ltrCSSAtRules } : ltrCSS];
   }
 
-  const rtlClassName = RESET_HASH_PREFIX + hashString(rtlRule);
+  const rtlClassName = RESET_HASH_PREFIX + hashString(classNameHashSalt + rtlRule);
   const [rtlCSS, rtlCSSAtRules] = compileResetCSSRules(`.${rtlClassName}{${rtlRule}}`);
 
   return [

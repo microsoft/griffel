@@ -7,11 +7,13 @@ import type { CSSClassesMapBySlot, CSSRulesByBucket, StyleBucketName, StylesBySl
  * Calls resolveStyleRules() for each slot, is also used by build time transform.
  *
  * @param stylesBySlots - An object with makeStyles rules where a key is a slot name
+ * @param classNameHashSalt - A salt for classes hash
  *
  * @return - A tuple with an object classnames mapping where a key is a slot name and an array with CSS rules
  */
 export function resolveStyleRulesForSlots<Slots extends string | number>(
   stylesBySlots: StylesBySlots<Slots>,
+  classNameHashSalt: string = '',
 ): [CSSClassesMapBySlot<Slots>, CSSRulesByBucket] {
   const classesMapBySlot = {} as CSSClassesMapBySlot<Slots>;
   const cssRules: CSSRulesByBucket = {};
@@ -19,7 +21,7 @@ export function resolveStyleRulesForSlots<Slots extends string | number>(
   // eslint-disable-next-line guard-for-in
   for (const slotName in stylesBySlots) {
     const slotStyles: GriffelStyle = stylesBySlots[slotName];
-    const [cssClassMap, cssRulesByBucket] = resolveStyleRules(slotStyles);
+    const [cssClassMap, cssRulesByBucket] = resolveStyleRules(slotStyles, classNameHashSalt);
 
     classesMapBySlot[slotName] = cssClassMap;
 
