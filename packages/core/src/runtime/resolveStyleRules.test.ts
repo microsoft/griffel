@@ -319,11 +319,11 @@ describe('resolveStyleRules', () => {
         }),
       ).toMatchInlineSnapshot(`
         @media screen and (max-width: 992px) {
-          .f1el5hyx {
-            text-align: left;
-          }
-          .f1qqk4p1 {
+          .f1avj2xq {
             text-align: right;
+          }
+          .f1bxmk0a {
+            text-align: left;
           }
         }
       `);
@@ -560,7 +560,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @media screen and (max-width: 992px) {
-          .f2bvvla {
+          .f15as2e {
             color: red;
           }
         }
@@ -582,7 +582,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @media screen and (max-width: 992px) {
-          .fuy1c5o:hover {
+          .f1951wvx:hover {
             color: red;
           }
         }
@@ -603,12 +603,12 @@ describe('resolveStyleRules', () => {
           color: red;
         }
         @media screen and (max-width: 992px) {
-          .f2bvvla {
+          .f15as2e {
             color: red;
           }
         }
         @media screen and (max-width: 992px) and (min-width: 100px) {
-          .f1imqg8u {
+          .fnnlhvt {
             color: red;
           }
         }
@@ -985,8 +985,8 @@ describe('resolveStyleRules', () => {
 
       expect(result[1]).toEqual({
         m: [
-          ['@media screen{.f1f7xnks{color:red;}}', { m: 'screen' }],
-          ['@media screen{.f1pegaf3{padding:10px;}}', { m: 'screen', p: -1 }],
+          ['@media screen{.f12pk7j4{color:red;}}', { m: 'screen' }],
+          ['@media screen{.f1eoyco2{padding:10px;}}', { m: 'screen', p: -1 }],
         ],
       });
     });

@@ -24,7 +24,7 @@ describe('hashClassName', () => {
     const hashB = hashClassName(defaultOptions, { ...defaultAtRules, media: '(min-width: 500px)' });
 
     expect(hashA).toMatchInlineSnapshot(`"f18ymuke"`);
-    expect(hashB).toMatchInlineSnapshot(`"f16oyr76"`);
+    expect(hashB).toMatchInlineSnapshot(`"f1hoxic9"`);
     expect(hashA).not.toBe(hashB);
   });
 

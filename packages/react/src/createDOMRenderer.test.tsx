@@ -75,7 +75,7 @@ describe('createDOMRenderer', () => {
         ".rp2atum:hover{color:blue;}": "r",
         ".rp2atum{color:red;}": "r",
         "@keyframes f1kgwxhb{from{height:10px;}to{height:20px;}}": "k",
-        "@media screen and (max-width: 992px){.f1lksov6:hover{color:blue;}}": "m",
+        "@media screen and (max-width: 992px){.fzd6x39:hover{color:blue;}}": "m",
       }
     `);
     // There is no DOM on a server, style nodes should not be present

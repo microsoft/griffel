@@ -16,7 +16,7 @@ describe('hashPropertyKey', () => {
     const hashB = hashPropertyKey('', 'color', { ...defaultAtRules, media: '(min-width: 500px)' });
 
     expect(hashA).toMatchInlineSnapshot(`"Bhkzl7a"`);
-    expect(hashB).toMatchInlineSnapshot(`"zc7s4b"`);
+    expect(hashB).toMatchInlineSnapshot(`"B3v6anr"`);
     expect(hashA).not.toBe(hashB);
   });
 });

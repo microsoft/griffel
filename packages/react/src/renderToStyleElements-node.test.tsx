@@ -123,7 +123,7 @@ describe('renderToStyleElements (node)', () => {
           data-make-styles-rehydration="true"
         >
           @media screen and (max-width: 992px) {
-            .f1lksov6:hover {
+            .fzd6x39:hover {
               color: blue;
             }
           }
@@ -197,7 +197,7 @@ describe('renderToStyleElements (node)', () => {
           data-make-styles-rehydration="true"
         >
           @media (max-width: 1px) {
-            .faiyvxi:hover {
+            .f13d6lhy:hover {
               color: blue;
             }
           }</style
@@ -208,7 +208,7 @@ describe('renderToStyleElements (node)', () => {
           data-make-styles-rehydration="true"
         >
           @media (max-width: 2px) {
-            .f1i64cxd:hover {
+            .f1b07yzi:hover {
               color: blue;
             }
           }</style
@@ -219,7 +219,7 @@ describe('renderToStyleElements (node)', () => {
           data-make-styles-rehydration="true"
         >
           @media (max-width: 3px) {
-            .f132yv2m:hover {
+            .f1cy3850:hover {
               color: blue;
             }
           }</style
@@ -230,7 +230,7 @@ describe('renderToStyleElements (node)', () => {
           data-make-styles-rehydration="true"
         >
           @media (max-width: 4px) {
-            .f1i44wst:hover {
+            .fyvg8w:hover {
               color: blue;
             }
           }
