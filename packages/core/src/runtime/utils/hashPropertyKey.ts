@@ -10,7 +10,7 @@ function addAtRulePrefix(atRule: string, prefix: string): string {
 export function atRulesToString(atRules: AtRules): string {
   return (
     addAtRulePrefix(atRules.container, 'c') +
-    addAtRulePrefix(atRules.media, 'l') +
+    addAtRulePrefix(atRules.media, 'm') +
     addAtRulePrefix(atRules.layer, 'l') +
     addAtRulePrefix(atRules.supports, 's')
   );
