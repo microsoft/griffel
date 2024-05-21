@@ -47,4 +47,20 @@ describe('resolveStaticStyleRules', () => {
       ]
     `);
   });
+
+  it('handles fallbacks', () => {
+    expect(
+      resolveStaticStyleRules([
+        {
+          body: {
+            display: ['flex', '-webkit-flex'],
+          },
+        },
+      ]),
+    ).toMatchInlineSnapshot(`
+      Array [
+        "body{display:flex;display:-webkit-flex;}",
+      ]
+    `);
+  });
 });

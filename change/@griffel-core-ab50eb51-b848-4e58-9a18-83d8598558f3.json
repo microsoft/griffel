@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "added fallback values support in makeStaticStyles",
+  "comment": "feat: add fallback values support in makeStaticStyles",
   "packageName": "@griffel/core",
   "email": "chhabrashubhdeep@gmail.com",
   "dependentChangeType": "patch"
