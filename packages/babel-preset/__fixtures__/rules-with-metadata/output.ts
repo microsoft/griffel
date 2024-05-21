@@ -2,13 +2,13 @@ import { __styles } from '@griffel/react';
 export const useStyles = __styles(
   {
     media: {
-      Bulngiv: 'fr5o61b',
+      Be2dmvj: 'foh03df',
     },
   },
   {
     m: [
       [
-        '@media screen and (max-width: 100px){.fr5o61b{color:red;}}',
+        '@media screen and (max-width: 100px){.foh03df{color:red;}}',
         {
           m: 'screen and (max-width: 100px)',
         },
