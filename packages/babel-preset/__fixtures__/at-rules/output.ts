@@ -2,21 +2,21 @@ import { __styles } from '@griffel/react';
 export const useStyles = __styles(
   {
     root: {
-      cvzfql: ['f13wceqr', 'fmtq1hn'],
-      g42fl4: ['fmtq1hn', 'f13wceqr'],
-      B6rh290: ['f16pi78z', 'fem5dos'],
-      rth2jb: ['fem5dos', 'f16pi78z'],
+      wbkd2a: ['fgefjy', 'f1h4p6a1'],
+      Dt0rau: ['f1h4p6a1', 'fgefjy'],
+      k2kg1z: ['f1dyc5nu', 'f1kq3x14'],
+      Blnc60a: ['f1kq3x14', 'f1dyc5nu'],
     },
   },
   {
     m: [
       [
-        '@media (min-width: 600px){.f13wceqr{padding-left:4px;}.fmtq1hn{padding-right:4px;}}',
+        '@media (min-width: 600px){.f1h4p6a1{padding-right:4px;}.fgefjy{padding-left:4px;}}',
         {
           m: '(min-width: 600px)',
         },
       ],
     ],
-    t: ['@supports (display: flex){.f16pi78z{padding-left:4px;}.fem5dos{padding-right:4px;}}'],
+    t: ['@supports (display: flex){.f1dyc5nu{padding-left:4px;}.f1kq3x14{padding-right:4px;}}'],
   },
 );

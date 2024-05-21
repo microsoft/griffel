@@ -319,10 +319,10 @@ describe('resolveStyleRules', () => {
         }),
       ).toMatchInlineSnapshot(`
         @media screen and (max-width: 992px) {
-          .f133ge8t {
+          .f1avj2xq {
             text-align: right;
           }
-          .f1f6067w {
+          .f1bxmk0a {
             text-align: left;
           }
         }
@@ -496,14 +496,14 @@ describe('resolveStyleRules', () => {
 
       expect(result).toMatchInlineSnapshot(`
         @container foo (max-width: 1px) {
-          .f16pkaez {
+          .fbmp7kx {
             color: red;
           }
         }
       `);
       expect(result[0]).toMatchInlineSnapshot(`
         Object {
-          "Blqc43h": "f16pkaez",
+          "b7rg5g": "fbmp7kx",
         }
       `);
     });
@@ -513,14 +513,14 @@ describe('resolveStyleRules', () => {
 
       expect(result).toMatchInlineSnapshot(`
         @container (max-width: 1px) {
-          .f15adh02 {
+          .f4ivup9 {
             color: red;
           }
         }
       `);
       expect(result[0]).toMatchInlineSnapshot(`
         Object {
-          "qc8hou": "f15adh02",
+          "pmeytk": "f4ivup9",
         }
       `);
     });
@@ -536,14 +536,14 @@ describe('resolveStyleRules', () => {
           color: red;
         }
         @container foo (max-width: 1px) {
-          .f16pkaez {
+          .fbmp7kx {
             color: red;
           }
         }
       `);
       expect(result[0]).toMatchInlineSnapshot(`
         Object {
-          "Blqc43h": "f16pkaez",
+          "b7rg5g": "fbmp7kx",
           "sj55zd": "fe3e8s9",
         }
       `);
@@ -560,7 +560,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @media screen and (max-width: 992px) {
-          .f1ojdyje {
+          .f15as2e {
             color: red;
           }
         }
@@ -582,7 +582,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @media screen and (max-width: 992px) {
-          .f7wpa5l:hover {
+          .f1951wvx:hover {
             color: red;
           }
         }
@@ -603,12 +603,12 @@ describe('resolveStyleRules', () => {
           color: red;
         }
         @media screen and (max-width: 992px) {
-          .f1ojdyje {
+          .f15as2e {
             color: red;
           }
         }
         @media screen and (max-width: 992px) and (min-width: 100px) {
-          .f19a6424 {
+          .fnnlhvt {
             color: red;
           }
         }
@@ -626,7 +626,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @layer color {
-          .f1hjcal7 {
+          .f1al6es7 {
             color: red;
           }
         }
@@ -640,7 +640,7 @@ describe('resolveStyleRules', () => {
         }),
       ).toMatchInlineSnapshot(`
         @layer framework.utilities {
-          .faxdetk {
+          .f12ei13l {
             color: red;
           }
         }
@@ -661,7 +661,7 @@ describe('resolveStyleRules', () => {
           color: green;
         }
         @layer color {
-          .f1jv0g3z:hover {
+          .f1hrbkey:hover {
             color: red;
           }
         }
@@ -682,12 +682,12 @@ describe('resolveStyleRules', () => {
           color: red;
         }
         @layer color {
-          .f1hjcal7 {
+          .f1al6es7 {
             color: red;
           }
         }
         @layer color.theme {
-          .f132c7g3 {
+          .f1mzin3h {
             color: red;
           }
         }
@@ -701,7 +701,7 @@ describe('resolveStyleRules', () => {
         }),
       ).toMatchInlineSnapshot(`
         @supports (display: block) {
-          .f1yofsfp {
+          .fp97nsu {
             color: green;
           }
         }
@@ -985,8 +985,8 @@ describe('resolveStyleRules', () => {
 
       expect(result[1]).toEqual({
         m: [
-          ['@media screen{.f101iwbs{color:red;}}', { m: 'screen' }],
-          ['@media screen{.fqfls7b{padding:10px;}}', { m: 'screen', p: -1 }],
+          ['@media screen{.f12pk7j4{color:red;}}', { m: 'screen' }],
+          ['@media screen{.f1eoyco2{padding:10px;}}', { m: 'screen', p: -1 }],
         ],
       });
     });

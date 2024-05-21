@@ -1,6 +1,7 @@
 import hashString from '@emotion/hash';
 
 import { HASH_PREFIX } from '../../constants';
+import { atRulesToString } from './hashPropertyKey';
 import type { AtRules } from './types';
 
 interface HashedClassNameParts {
@@ -16,10 +17,7 @@ export function hashClassName({ property, selector, salt, value }: HashedClassNa
     hashString(
       salt +
         selector +
-        atRules.container +
-        atRules.media +
-        atRules.layer +
-        atRules.supports +
+        atRulesToString(atRules) +
         property +
         // Trimming of value is required to generate consistent hashes
         value.trim(),
