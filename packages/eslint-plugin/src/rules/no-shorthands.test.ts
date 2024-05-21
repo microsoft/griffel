@@ -56,7 +56,14 @@ export const useStyles = makeStaticStyles({
 import { makeStyles } from '@griffel/react';
 
 export const useStyles = makeStyles({
-  root: { background: 'red' },
+  root: { borderWidth: '2px' },
+});
+`,
+      output: `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  root: { ...shorthands.borderWidth('2px') },
 });
 `,
       errors: [{ messageId: 'shorthandFound' }],
@@ -68,111 +75,56 @@ import { makeStyles } from '@griffel/react';
 
 export const useStyles = makeStyles({
   root: {
-    ':hover': { background: 'red' }
+    ':hover': { borderWidth: '2px' }
+  },
+});
+`,
+      output: `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  root: {
+    ':hover': { ...shorthands.borderWidth('2px') }
   },
 });
 `,
       errors: [{ messageId: 'shorthandFound' }],
     },
     {
-      name: 'border shorthand',
+      name: 'borderColor shorthand',
       code: `
 import { makeStyles } from '@griffel/react';
 
 export const useStyles = makeStyles({
-  root: { border: '1px solid rgb(0 0 0)' },
-  icon: { borderLeft: '1px solid' },
+  root: { borderColor: 'rgb(0 0 0)' },
 });
 `,
       output: `
 import { makeStyles } from '@griffel/react';
 
 export const useStyles = makeStyles({
-  root: { ...shorthands.border('1px', 'solid', 'rgb(0 0 0)') },
-  icon: { ...shorthands.borderLeft('1px', 'solid') },
-});
-`,
-      errors: [{ messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }],
-    },
-    {
-      name: 'border shorthand with template string',
-      code: `
-import { makeStyles } from '@griffel/react';
-
-export const useStyles = makeStyles({
-  root: { borderRight: ${'`1px solid ${tokens.colorNeutralStroke1}`'} },
-});
-`,
-      output: `
-import { makeStyles } from '@griffel/react';
-
-export const useStyles = makeStyles({
-  root: { ...shorthands.borderRight(${'`1px`, `solid`, `${tokens.colorNeutralStroke1}`'}) },
+  root: { ...shorthands.borderColor('rgb(0 0 0)') },
 });
 `,
       errors: [{ messageId: 'shorthandFound' }],
     },
     {
-      name: 'flex shorthand',
+      name: 'borderColor shorthand with template string',
       code: `
 import { makeStyles } from '@griffel/react';
 
 export const useStyles = makeStyles({
-  root: { flex: '1 2 30px' },
-  icon: { flex: 0 },
-  content: { flex: '1 !important' },
+  root: { borderColor: ${'`${tokens.colorNeutralStroke1}`'} },
 });
 `,
       output: `
 import { makeStyles } from '@griffel/react';
 
 export const useStyles = makeStyles({
-  root: { ...shorthands.flex('1', '2', '30px') },
-  icon: { ...shorthands.flex('0') },
-  content: { ...shorthands.flex('1 !important') },
+  root: { ...shorthands.borderColor(${'`${tokens.colorNeutralStroke1}`'}) },
 });
 `,
-      errors: [{ messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }],
-    },
-    {
-      name: 'margin shorthand',
-      code: `
-import { makeStyles } from '@griffel/react';
-
-export const useStyles = makeStyles({
-  root: { margin: '1em var(--margin-x) 30px' },
-  icon: { margin: 20 },
-});
-`,
-      output: `
-import { makeStyles } from '@griffel/react';
-
-export const useStyles = makeStyles({
-  root: { ...shorthands.margin('1em', 'var(--margin-x)', '30px') },
-  icon: { ...shorthands.margin('20px') },
-});
-`,
-      errors: [{ messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }],
-    },
-    {
-      name: 'grid-area shorthand',
-      code: `
-import { makeStyles } from '@griffel/react';
-
-export const useStyles = makeStyles({
-  root: { gridArea: 'box' },
-  icon: { gridArea: '1 icon / span 2' },
-});
-`,
-      output: `
-import { makeStyles } from '@griffel/react';
-
-export const useStyles = makeStyles({
-  root: { ...shorthands.gridArea('box') },
-  icon: { ...shorthands.gridArea('1 icon', 'span 2') },
-});
-`,
-      errors: [{ messageId: 'shorthandFound' }, { messageId: 'shorthandFound' }],
+      errors: [{ messageId: 'shorthandFound' }],
     },
   ],
 });
