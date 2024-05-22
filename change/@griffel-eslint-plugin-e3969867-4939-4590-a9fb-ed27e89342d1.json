@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix(eslint-plugin): update the list of unsupported shorthands",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
