@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add \"classNameHashSalt\" for AOT",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

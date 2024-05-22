@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Wed, 22 May 2024 08:24:17 GMT",
+      "tag": "@griffel/eslint-plugin_v1.6.3",
+      "version": "1.6.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "6ae570dbbd711a5e95184004f5d4d98a8ffa2df3",
+            "comment": "fix(eslint-plugin): update the list of unsupported shorthands"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Mar 2024 15:27:35 GMT",
       "tag": "@griffel/eslint-plugin_v1.6.2",
       "version": "1.6.2",

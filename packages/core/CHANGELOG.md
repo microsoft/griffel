@@ -1,8 +1,23 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 02 May 2024 14:07:14 GMT and should not be manually modified.
+This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.17.0
+
+Wed, 22 May 2024 08:24:17 GMT
+
+### Minor changes
+
+- feat: add "classNameHashSalt" for AOT (olfedias@microsoft.com)
+- feat: add fallback values support in makeStaticStyles (chhabrashubhdeep@gmail.com)
+- Bump @griffel/style-types to v1.2.0
+
+### Patches
+
+- fix(core): fix hash collisions with at rules (olfedias@microsoft.com)
+- chore: refactor at rules to be a separate param in functions (olfedias@microsoft.com)
 
 ## 1.16.0
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix(core): fix hash collisions with at rules",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

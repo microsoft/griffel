@@ -1,8 +1,16 @@
 # Change Log - @griffel/style-types
 
-This log was last generated on Thu, 02 May 2024 14:07:14 GMT and should not be manually modified.
+This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.0
+
+Wed, 22 May 2024 08:24:17 GMT
+
+### Minor changes
+
+- feat: add support for fallback values in GriffelStaticStyle (chhabrashubhdeep@gmail.com)
 
 ## 1.1.0
 

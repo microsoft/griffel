@@ -2,6 +2,27 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Wed, 22 May 2024 08:24:17 GMT",
+      "tag": "@griffel/babel-preset_v1.6.0",
+      "version": "1.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "1a56464e77f603906e113179d6ce732f9b5b9998",
+            "comment": "feat: add \"classNameHashSalt\" for AOT"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.17.0",
+            "commit": "6ae570dbbd711a5e95184004f5d4d98a8ffa2df3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 May 2024 10:13:20 GMT",
       "tag": "@griffel/babel-preset_v1.5.9",
       "version": "1.5.9",

@@ -1,8 +1,17 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Fri, 10 May 2024 10:13:20 GMT and should not be manually modified.
+This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.0
+
+Wed, 22 May 2024 08:24:17 GMT
+
+### Minor changes
+
+- feat: add "classNameHashSalt" for AOT (olfedias@microsoft.com)
+- Bump @griffel/core to v1.17.0
 
 ## 1.5.9
 

@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Tue, 19 Mar 2024 15:27:35 GMT and should not be manually modified.
+This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.3
+
+Wed, 22 May 2024 08:24:17 GMT
+
+### Patches
+
+- fix(eslint-plugin): update the list of unsupported shorthands (olfedias@microsoft.com)
 
 ## 1.6.2
 

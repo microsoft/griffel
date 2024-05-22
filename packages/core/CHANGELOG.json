@@ -2,6 +2,47 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 22 May 2024 08:24:17 GMT",
+      "tag": "@griffel/core_v1.17.0",
+      "version": "1.17.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "1a56464e77f603906e113179d6ce732f9b5b9998",
+            "comment": "feat: add \"classNameHashSalt\" for AOT"
+          },
+          {
+            "author": "chhabrashubhdeep@gmail.com",
+            "package": "@griffel/core",
+            "commit": "f545363cc35245722381f1ec1524f60b7175f3d1",
+            "comment": "feat: add fallback values support in makeStaticStyles"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/core",
+            "comment": "Bump @griffel/style-types to v1.2.0",
+            "commit": "6ae570dbbd711a5e95184004f5d4d98a8ffa2df3"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "80ca330e9b475d9d95b13c421fe7df2513ae08c7",
+            "comment": "fix(core): fix hash collisions with at rules"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "3cac9f0799024e21e4efa5439dd90d91732b4fff",
+            "comment": "chore: refactor at rules to be a separate param in functions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 May 2024 14:07:14 GMT",
       "tag": "@griffel/core_v1.16.0",
       "version": "1.16.0",
