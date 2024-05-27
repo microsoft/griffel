@@ -48,7 +48,7 @@ export default class MakeStylesProcessor extends BaseGriffelProcessor {
                 createRuleLiteral(this.path, t, this.context as FileContext, cssRule, addAssetImport),
                 t.objectExpression(
                   Object.entries(metadata).map(([key, value]) =>
-                    t.objectProperty(t.identifier(key), t.stringLiteral(value as string)),
+                    t.objectProperty(t.identifier(key), t.valueToNode(value)),
                   ),
                 ),
               ]);
