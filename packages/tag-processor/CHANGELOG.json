@@ -2,6 +2,21 @@
   "name": "@griffel/tag-processor",
   "entries": [
     {
+      "date": "Mon, 27 May 2024 12:12:23 GMT",
+      "tag": "@griffel/tag-processor_v1.0.5",
+      "version": "1.0.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/tag-processor",
+            "commit": "26dd4c256dd8ecc6e2b72a73e38f7831c4cfad96",
+            "comment": "fix: fix handling of meta"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 May 2024 08:24:17 GMT",
       "tag": "@griffel/tag-processor_v1.0.4",
       "version": "1.0.4",

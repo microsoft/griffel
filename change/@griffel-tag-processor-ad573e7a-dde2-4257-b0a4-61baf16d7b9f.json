@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: fix handling of meta",
-  "packageName": "@griffel/tag-processor",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,16 @@
 # Change Log - @griffel/tag-processor
 
-This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
+This log was last generated on Mon, 27 May 2024 12:12:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.5
+
+Mon, 27 May 2024 12:12:23 GMT
+
+### Patches
+
+- fix: fix handling of meta (olfedias@microsoft.com)
 
 ## 1.0.4
 
