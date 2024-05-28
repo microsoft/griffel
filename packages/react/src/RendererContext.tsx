@@ -28,6 +28,8 @@ const RendererContext = React.createContext<GriffelRenderer>(createDOMRenderer()
  * @public
  */
 export const RendererProvider: React.FC<RendererProviderProps> = ({ children, renderer, targetDocument }) => {
+  'use no memo';
+
   if (canUseDOM()) {
     // This if statement technically breaks the rules of hooks, but is safe because the condition never changes after
     // mounting.
