@@ -8,23 +8,23 @@ import empty from './empty.jpg';
 export const useStyles = __styles(
   {
     rootA: {
-      Bcmaq0h: 'fnwsaxv',
+      Bcmaq0h: 'f1679hrc',
     },
     rootB: {
-      Bcmaq0h: 'fnwsaxv',
+      Bcmaq0h: 'f1679hrc',
     },
     rootC: {
-      Bcmaq0h: 'f1ryfumh',
+      Bcmaq0h: 'f9o9pwl',
     },
     assetWithHash: {
-      Bhu2qc9: 'fv04sme',
+      Bhu2qc9: 'f1a9657d',
     },
   },
   {
     d: [
-      `.fnwsaxv{background-image:url(${_asset});}`,
-      `.f1ryfumh{background-image:url(${_asset2});}`,
-      `.fv04sme{filter:url(${_asset3}#a);}`,
+      `.f1679hrc{background-image:url(${_asset});}`,
+      `.f9o9pwl{background-image:url(${_asset2});}`,
+      `.f1a9657d{filter:url(${_asset3}#a);}`,
     ],
   },
 );
