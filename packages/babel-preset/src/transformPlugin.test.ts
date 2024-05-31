@@ -35,7 +35,7 @@ pluginTester({
     //
 
     // Fixtures
-    //
+    // (AOT = Ahead of Time) mode
     //
     {
       title: 'duplicated imports',
@@ -285,6 +285,46 @@ pluginTester({
         },
       },
       error: /Validation failed for passed config/,
+    },
+
+    // Fixtures
+    // (CSS extraction)
+    //
+
+    {
+      title: 'basic (makeStyles)',
+      fixture: path.resolve(fixturesDir, 'css', 'basic', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'css', 'basic', 'output.ts'),
+      pluginOptions: {
+        mode: 'css-extraction',
+      },
+    },
+
+    {
+      title: 'basic (makeResetStyles)',
+      fixture: path.resolve(fixturesDir, 'css', 'reset', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'css', 'reset', 'output.ts'),
+      pluginOptions: {
+        mode: 'css-extraction',
+      },
+    },
+
+    {
+      title: 'multiple declarations (makeStyles)',
+      fixture: path.resolve(fixturesDir, 'css', 'multiple', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'css', 'multiple', 'output.ts'),
+      pluginOptions: {
+        mode: 'css-extraction',
+      },
+    },
+
+    {
+      title: 'mixed (makeStyles + makeResetStyles)',
+      fixture: path.resolve(fixturesDir, 'css', 'mixed', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'css', 'mixed', 'output.ts'),
+      pluginOptions: {
+        mode: 'css-extraction',
+      },
     },
   ],
 

@@ -16,6 +16,8 @@ export type BabelPluginOptions = {
     resetImportName?: string;
   }[];
 
+  mode?: 'aot' | 'css-extraction';
+
   /**
    * If you need to specify custom Babel configuration, you can pass them here. These options will be used by the
    * transformPlugin when parsing and evaluating modules.

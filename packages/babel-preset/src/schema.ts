@@ -6,6 +6,10 @@ export const configSchema: JSONSchema7 = {
 
   type: 'object',
   properties: {
+    mode: {
+      type: 'string',
+      enum: ['aot', 'css-extraction'],
+    },
     classNameHashSalt: {
       type: 'string',
     },

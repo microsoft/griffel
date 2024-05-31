@@ -213,6 +213,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         action: 'ignore',
       },
     ],
+    mode: 'aot',
     projectRoot: process.cwd(),
 
     ...options,
@@ -311,10 +312,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 }
 
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
-                callExpressionPath.pushContainer('arguments', [
-                  t.valueToNode(classnamesMapping),
-                  t.valueToNode(uniqueCSSRules),
-                ]);
+                callExpressionPath.pushContainer('arguments', [t.valueToNode(classnamesMapping)]);
+
+                if (pluginOptions.mode === 'aot') {
+                  callExpressionPath.pushContainer('arguments', [t.valueToNode(uniqueCSSRules)]);
+                }
               }
 
               if (definitionPath.functionKind === 'makeResetStyles') {
@@ -345,8 +347,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 callExpressionPath.pushContainer('arguments', [
                   t.valueToNode(ltrClassName),
                   t.valueToNode(rtlClassName),
-                  t.valueToNode(cssRules),
                 ]);
+
+                if (pluginOptions.mode === 'aot') {
+                  callExpressionPath.pushContainer('arguments', [t.valueToNode(cssRules)]);
+                }
               }
 
               replaceAssetsWithImports(pluginOptions.projectRoot, state.filename!, programPath, callExpressionPath);
@@ -375,9 +380,9 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                   }
 
                   if (importedPath.isIdentifier({ name: module.importName })) {
-                    specifier.replaceWith(t.identifier('__styles'));
+                    specifier.replaceWith(t.identifier(pluginOptions.mode === 'aot' ? '__styles' : '__css'));
                   } else if (importedPath.isIdentifier({ name: module.resetImportName || 'makeResetStyles' })) {
-                    specifier.replaceWith(t.identifier('__resetStyles'));
+                    specifier.replaceWith(t.identifier(pluginOptions.mode === 'aot' ? '__resetStyles' : '__resetCSS'));
                   }
                 }
               }
@@ -387,11 +392,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
           if (state.calleePaths) {
             state.calleePaths.forEach(calleePath => {
               if (calleePath.node.name === 'makeResetStyles') {
-                calleePath.replaceWith(t.identifier('__resetStyles'));
+                calleePath.replaceWith(t.identifier(pluginOptions.mode === 'aot' ? '__resetStyles' : '__resetCSS'));
                 return;
               }
 
-              calleePath.replaceWith(t.identifier('__styles'));
+              calleePath.replaceWith(t.identifier(pluginOptions.mode === 'aot' ? '__styles' : '__css'));
             });
           }
         },
