@@ -228,104 +228,120 @@ describe('shouldTransformSourceCode', () => {
 });
 
 describe('webpackLoader', () => {
-  // Integration fixtures for base functionality, all scenarios are tested in "@griffel/babel-preset"
-  testFixture('object');
-  testFixture('function');
-  testFixture('reset');
-  testFixture('empty');
+  describe('AOT fixtures', () => {
+    // Integration fixtures for base functionality, all scenarios are tested in "@griffel/babel-preset"
+    testFixture('aot/object');
+    testFixture('aot/function');
+    testFixture('aot/reset');
+    testFixture('aot/empty');
 
-  // Integration fixtures for config functionality
-  testFixture('config-classname-hash-salt', {
-    loaderOptions: {
-      classNameHashSalt: 'HASH_SALT',
-    },
-  });
-
-  testFixture('config-modules', {
-    loaderOptions: {
-      modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],
-    },
-    webpackConfig: {
-      externals: {
-        'react-make-styles': 'Griffel',
+    // Integration fixtures for config functionality
+    testFixture('aot/config-classname-hash-salt', {
+      loaderOptions: {
+        classNameHashSalt: 'HASH_SALT',
       },
-    },
-  });
+    });
 
-  // Asserts that aliases are resolved properly in Babel plugin
-  testFixture('webpack-aliases', {
-    webpackConfig: {
-      resolve: {
-        alias: {
-          'non-existing-color-module': path.resolve(__dirname, '..', '__fixtures__', 'webpack-aliases', 'color.ts'),
+    testFixture('aot/config-modules', {
+      loaderOptions: {
+        modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],
+      },
+      webpackConfig: {
+        externals: {
+          'react-make-styles': 'Griffel',
         },
       },
-    },
-  });
+    });
 
-  // Asserts that "inheritResolveOptions" are handled properly
-  testFixture('webpack-inherit-resolve-options', {
-    loaderOptions: {
-      inheritResolveOptions: ['extensions'],
-    },
-    webpackConfig: {
-      resolve: {
-        extensions: ['.ts', '.jsx'],
-      },
-    },
-  });
-
-  // Asserts that "webpackResolveOptions" are handled properly
-  testFixture('webpack-resolve-options', {
-    loaderOptions: {
-      webpackResolveOptions: {
-        extensions: ['.ts', '.jsx'],
-      },
-    },
-  });
-
-  // Asserts that aliases are resolved properly in Babel plugin with resolve plugins
-  testFixture('webpack-resolve-plugins', {
-    webpackConfig: {
-      resolve: {
-        plugins: [
-          {
-            // Simple plugin that will detect the non-existent module we are testing for and replace with
-            // correct path from the fixture
-            apply: function (resolver) {
-              const target = resolver.ensureHook('resolve');
-
-              resolver.getHook('before-resolve').tapAsync('ResolveFallback', (request, resolveContext, callback) => {
-                if (request.request === 'non-existing-color-module') {
-                  const obj = {
-                    directory: request.directory,
-                    path: request.path,
-                    query: request.query,
-                    request: path.resolve(__dirname, '..', '__fixtures__', 'webpack-resolve-plugins', 'color.ts'),
-                  };
-                  return resolver.doResolve(target, obj, null, resolveContext, callback);
-                }
-
-                callback();
-              });
-            },
+    // Asserts that aliases are resolved properly in Babel plugin
+    testFixture('aot/webpack-aliases', {
+      webpackConfig: {
+        resolve: {
+          alias: {
+            'non-existing-color-module': path.resolve(
+              __dirname,
+              '..',
+              '__fixtures__',
+              'aot',
+              'webpack-aliases',
+              'color.ts',
+            ),
           },
-        ],
+        },
       },
-    },
-  });
+    });
 
-  // Asserts handling errors from Babel plugin
-  testFixture('error-argument-count');
-  // Asserts errors in loader's config
-  testFixture('error-config', {
-    loaderOptions: {
-      babelOptions: {
-        // @ts-expect-error "plugins" should be an array, an object is passed to test schema
-        plugins: {},
+    // Asserts that "inheritResolveOptions" are handled properly
+    testFixture('aot/webpack-inherit-resolve-options', {
+      loaderOptions: {
+        inheritResolveOptions: ['extensions'],
       },
-    },
+      webpackConfig: {
+        resolve: {
+          extensions: ['.ts', '.jsx'],
+        },
+      },
+    });
+
+    // Asserts that "webpackResolveOptions" are handled properly
+    testFixture('aot/webpack-resolve-options', {
+      loaderOptions: {
+        webpackResolveOptions: {
+          extensions: ['.ts', '.jsx'],
+        },
+      },
+    });
+
+    // Asserts that aliases are resolved properly in Babel plugin with resolve plugins
+    testFixture('aot/webpack-resolve-plugins', {
+      webpackConfig: {
+        resolve: {
+          plugins: [
+            {
+              // Simple plugin that will detect the non-existent module we are testing for and replace with
+              // correct path from the fixture
+              apply: function (resolver) {
+                const target = resolver.ensureHook('resolve');
+
+                resolver.getHook('before-resolve').tapAsync('ResolveFallback', (request, resolveContext, callback) => {
+                  if (request.request === 'non-existing-color-module') {
+                    const obj = {
+                      directory: request.directory,
+                      path: request.path,
+                      query: request.query,
+                      request: path.resolve(
+                        __dirname,
+                        '..',
+                        '__fixtures__',
+                        'aot',
+                        'webpack-resolve-plugins',
+                        'color.ts',
+                      ),
+                    };
+                    return resolver.doResolve(target, obj, null, resolveContext, callback);
+                  }
+
+                  callback();
+                });
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    // Asserts handling errors from Babel plugin
+    testFixture('aot/error-argument-count');
+    // Asserts errors in loader's config
+    testFixture('aot/error-config', {
+      loaderOptions: {
+        babelOptions: {
+          // @ts-expect-error "plugins" should be an array, an object is passed to test schema
+          plugins: {},
+        },
+      },
+    });
+    // Asserts errors in loader functionality
+    testFixture('aot/error-syntax');
   });
-  // Asserts errors in loader functionality
-  testFixture('error-syntax');
 });
