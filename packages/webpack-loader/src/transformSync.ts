@@ -1,6 +1,7 @@
 import * as Babel from '@babel/core';
 import type { BabelPluginOptions } from '@griffel/babel-preset';
-import griffelPreset from '@griffel/babel-preset';
+import griffelPreset, { BabelPluginMetadata } from '@griffel/babel-preset';
+import { type CSSRulesByBucket } from '@griffel/core';
 
 export type TransformOptions = {
   filename: string;
@@ -13,6 +14,7 @@ export type TransformOptions = {
 
 export type TransformResult = {
   code: string;
+  cssRulesByBucket: CSSRulesByBucket | undefined;
   sourceMap: NonNullable<Babel.BabelFileResult['map']> | undefined;
 };
 
@@ -53,6 +55,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
   return {
     code: babelFileResult.code as string,
+    cssRulesByBucket: (babelFileResult.metadata as unknown as BabelPluginMetadata).cssRulesByBucket,
     sourceMap: babelFileResult.map === null ? undefined : babelFileResult.map,
   };
 }
