@@ -1,5 +1,6 @@
 import type { TransformOptions } from '@babel/core';
 import type { EvalRule } from '@linaria/babel-preset';
+import type { CSSRulesByBucket } from '@griffel/core';
 
 export type BabelPluginOptions = {
   classNameHashSalt?: string;
@@ -39,4 +40,6 @@ export type BabelPluginOptions = {
 export type BabelPluginMetadata = {
   cssEntries: Record<string, Record<string, string[]>>;
   cssResetEntries: Record<string, string[]>;
+
+  cssRulesByBucket?: CSSRulesByBucket | undefined;
 };

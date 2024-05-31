@@ -4,9 +4,11 @@ import * as enhancedResolve from 'enhanced-resolve';
 import * as path from 'path';
 import type * as webpack from 'webpack';
 
+import { GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants';
+import { generateCSSRules } from './generateCSSRules';
+import { optionsSchema } from './schema';
 import type { TransformResult, TransformOptions } from './transformSync';
 import { transformSync } from './transformSync';
-import { optionsSchema } from './schema';
 
 export type WebpackLoaderOptions = BabelPluginOptions & {
   inheritResolveOptions?: ('alias' | 'modules' | 'plugins' | 'conditionNames' | 'extensions')[];
@@ -21,6 +23,9 @@ type ResolveOptions = Pick<
   'alias' | 'conditionNames' | 'extensions' | 'modules' | 'plugins'
 >;
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
+
+const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
+const virtualCSSFilePath = path.resolve(__dirname, '..', 'virtual-loader', 'griffel.css');
 
 export function shouldTransformSourceCode(
   sourceCode: string,
@@ -54,8 +59,12 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
   }
 }
 
+function toURIComponent(rule: string): string {
+  return encodeURIComponent(rule).replace(/!/g, '%21');
+}
+
 export function webpackLoader(
-  this: webpack.LoaderContext<WebpackLoaderOptions>,
+  this: SupplementedLoaderContext<WebpackLoaderOptions>,
   sourceCode: WebpackLoaderParams[0],
   inputSourceMap: WebpackLoaderParams[1],
 ) {
@@ -136,7 +145,50 @@ export function webpackLoader(
   }
 
   if (result) {
-    this.callback(null, result.code, result.sourceMap);
+    // TODO: fix me
+    const unstable_keepOriginalCode = false;
+
+    const resultCode = unstable_keepOriginalCode ? sourceCode : result.code;
+    const resultSourceMap = unstable_keepOriginalCode ? inputSourceMap : result.sourceMap;
+    const { cssRulesByBucket } = result;
+
+    if (babelConfig.mode === 'css-extraction' && cssRulesByBucket) {
+      const IS_RSPACK = !this.webpack;
+
+      // @ Rspack compat:
+      // We don't use the trick with loader context as assets are generated differently
+      if (!IS_RSPACK) {
+        if (!this[GriffelCssLoaderContextKey]) {
+          throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
+        }
+      }
+
+      const css = generateCSSRules(cssRulesByBucket);
+
+      if (css.length === 0) {
+        this.callback(null, resultCode, resultSourceMap);
+        return;
+      }
+
+      if (IS_RSPACK) {
+        const request = `griffel.css!=!${virtualLoaderPath}!${virtualCSSFilePath}?style=${toURIComponent(css)}`;
+        const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
+
+        this.callback(null, `${resultCode}\n\nimport ${stringifiedRequest};`, resultSourceMap);
+        return;
+      }
+
+      this[GriffelCssLoaderContextKey]?.registerExtractedCss(css);
+
+      const outputFileName = this.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
+      const request = `${outputFileName}!=!${virtualLoaderPath}!${this.resourcePath}`;
+      const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
+
+      this.callback(null, `${resultCode}\n\nimport ${stringifiedRequest};`, resultSourceMap);
+      return;
+    }
+
+    this.callback(null, resultCode, resultSourceMap);
     return;
   }
 

@@ -13,6 +13,9 @@ import { dedupeCSSRules } from './utils/dedupeCSSRules';
 import { evaluatePaths } from './utils/evaluatePaths';
 import type { BabelPluginOptions, BabelPluginMetadata } from './types';
 import { validateOptions } from './validateOptions';
+import { absolutePathToRelative } from './assets/absolutePathToRelative';
+import { tokenize } from 'stylis';
+import { isAssetUrl } from './assets/isAssetUrl';
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles';
 
@@ -31,6 +34,8 @@ type BabelPluginState = PluginPass & {
   calleePaths?: NodePath<t.Identifier>[];
   cssEntries?: BabelPluginMetadata['cssEntries'];
   cssResetEntries?: BabelPluginMetadata['cssResetEntries'];
+
+  cssRulesByBucket?: CSSRulesByBucket;
 };
 
 function getDefinitionPathFromCallExpression(
@@ -195,6 +200,67 @@ function isRequireDeclarator(
   return false;
 }
 
+function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRulesByBucket) {
+  Object.entries(bucketB).forEach(([cssBucketName, cssBucketEntries]) => {
+    bucketA[cssBucketName as keyof CSSRulesByBucket] = cssBucketEntries.concat(
+      bucketA[cssBucketName as keyof CSSRulesByBucket] || [],
+    );
+  });
+
+  return bucketA;
+}
+
+function inlineAssetImports({
+  cssRulesByBucket,
+  importPath,
+  filename,
+  projectRoot,
+}: {
+  cssRulesByBucket: CSSRulesByBucket;
+  importPath: string;
+  filename: string;
+  projectRoot: string;
+}) {
+  Object.entries(cssRulesByBucket).forEach(([cssBucketName, cssBucketEntries]) => {
+    cssBucketEntries.forEach((bucketEntry, index) => {
+      const [cssRule, metadata] = normalizeCSSBucketEntry(bucketEntry);
+
+      if (cssRule.indexOf('url(') === -1) {
+        return;
+      }
+
+      const tokens = tokenize(cssRule);
+      let newCSSRule = '';
+
+      for (let i = 0, l = tokens.length; i < l; i++) {
+        newCSSRule += tokens[i];
+
+        if (tokens[i] === 'url') {
+          const url = tokens[i + 1].slice(1, -1);
+
+          if (isAssetUrl(url)) {
+            const [pathname, hash] = url.split('#');
+            const relativePath = absolutePathToRelative(path, projectRoot, filename, pathname);
+
+            newCSSRule += `(${relativePath}${hash ? `#${hash}` : ''})`;
+            i++;
+          }
+        }
+      }
+
+      if (Array.isArray(bucketEntry)) {
+        // @ts-expect-error TODO: fix me
+        cssRulesByBucket[cssBucketName][index] = [newCSSRule, metadata];
+      } else {
+        // @ts-expect-error TODO: fix me
+        cssRulesByBucket[cssBucketName][index] = newCSSRule;
+      }
+    });
+  });
+
+  return cssRulesByBucket;
+}
+
 export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<BabelPluginState>>((api, options) => {
   api.assertVersion(7);
 
@@ -235,6 +301,18 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         Object.assign(this.file.metadata, {
           cssResetEntries: {},
           cssEntries: {},
+        } as BabelPluginMetadata);
+      }
+    },
+    post() {
+      if (pluginOptions.mode === 'css-extraction') {
+        Object.assign(this.file.metadata, {
+          cssRulesByBucket: inlineAssetImports({
+            cssRulesByBucket: this.cssRulesByBucket!,
+            importPath: path.relative(this.filename!, pluginOptions.projectRoot),
+            filename: this.filename!,
+            projectRoot: pluginOptions.projectRoot,
+          }),
         } as BabelPluginMetadata);
       }
     },
@@ -311,6 +389,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                   );
                 }
 
+                if (pluginOptions.mode === 'css-extraction') {
+                  state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, cssRulesByBucket);
+                }
+
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
                 callExpressionPath.pushContainer('arguments', [t.valueToNode(classnamesMapping)]);
 
@@ -343,6 +425,13 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                   );
                 }
 
+                if (pluginOptions.mode === 'css-extraction') {
+                  state.cssRulesByBucket = concatCSSRulesByBucket(
+                    state.cssRulesByBucket,
+                    Array.isArray(cssRules) ? { r: cssRules } : cssRules,
+                  );
+                }
+
                 (callExpressionPath.get('arguments.0') as NodePath).remove();
                 callExpressionPath.pushContainer('arguments', [
                   t.valueToNode(ltrClassName),
@@ -354,7 +443,9 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 }
               }
 
-              replaceAssetsWithImports(pluginOptions.projectRoot, state.filename!, programPath, callExpressionPath);
+              if (pluginOptions.mode === 'aot') {
+                replaceAssetsWithImports(pluginOptions.projectRoot, state.filename!, programPath, callExpressionPath);
+              }
             });
 
             if (pluginOptions.generateMetadata) {

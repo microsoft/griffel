@@ -1,0 +1,51 @@
+/** griffel.css **/
+.fe3e8s9 {
+  color: red;
+}
+.f1h7u52p {
+  animation-name: f5j8bii;
+}
+.fotbnap:link {
+  color: orange;
+}
+.fyi94ye:visited {
+  color: purple;
+}
+.ftbb72r:focus-within {
+  color: pink;
+}
+.fh9mp3k:focus {
+  color: blue;
+}
+.f1essijy:focus-visible {
+  color: salmon;
+}
+.fsp9ihd:hover {
+  color: yellow;
+}
+.flqvnfu:active {
+  color: black;
+}
+@keyframes f5j8bii {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@supports (display: table-cell) {
+  .fraqsfm {
+    color: red;
+  }
+}
+@layer color {
+  .f1al6es7 {
+    color: red;
+  }
+}
+@media (forced-colors: active) {
+  .fqoinyl {
+    color: magenta;
+  }
+}
