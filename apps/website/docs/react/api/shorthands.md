@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # shorthands
 
-`shorthands` provides a set of functions to mimic [CSS shorthands](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) and improve developer experience as [_some_ of CSS shorthands are not supported](/react/guides/limitations#css-shorthands-are-not-supported) by Griffel. For example:
+`shorthands` provides a set of functions to mimic [CSS shorthands](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) and improve developer experience as [_some_ of CSS shorthands are not supported](/react/guides/limitations#some-of-css-shorthands-are-not-supported) by Griffel. For example:
 
 ```tsx
 import { makeStyles, shorthands } from '@griffel/react';

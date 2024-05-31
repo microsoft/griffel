@@ -6,7 +6,6 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Install](#install)
-- [When to use it?](#when-to-use-it)
 - [Usage](#usage)
   - [Importing Griffel from custom packages](#importing-griffel-from-custom-packages)
   - [Configuring Babel settings](#configuring-babel-settings)
@@ -19,6 +18,9 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+> [!CAUTION]
+> We don't recommend to use this preset directly, it's intended to be used by other tools like [webpack loader](../webpack-loader) or [Vite plugin](../vite-plugin).
+
 ## Install
 
 ```bash
@@ -26,11 +28,6 @@ yarn add --dev @griffel/babel-preset
 # or
 npm install --save-dev @griffel/babel-preset
 ```
-
-## When to use it?
-
-- For library developers, please use the Babel preset (this package)
-- For application developers, please use [`@griffel/webpack-loader`](../webpack-loader)
 
 ## Usage
 

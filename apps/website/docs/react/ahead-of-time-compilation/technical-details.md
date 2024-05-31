@@ -143,4 +143,4 @@ In the example above, in order to transform the `styles.js` file, the code needs
 Griffel uses style evaluation from [Linaria](https://linaria.dev/).
 The build-time evaluation happens as a part of the Babel transforms in Griffel. All styles that require evaluation will be batched and done in single evaluation context.
 Linaria's Babel config is separate to any config used by the application.
-Therefore, additional language features may require [extra configuration](/react/ahead-of-time-compilation/with-babel#configuration).
+Therefore, additional language features may require [extra configuration](/react/ahead-of-time-compilation/with-webpack#configuration).
