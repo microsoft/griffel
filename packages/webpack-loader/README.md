@@ -6,7 +6,6 @@ A loader for Webpack 5 that performs build time transforms for [`@griffel/react`
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Install](#install)
-- [When to use it?](#when-to-use-it)
 - [Usage](#usage)
   - [Handling Griffel re-exports](#handling-griffel-re-exports)
   - [Configuring Babel settings](#configuring-babel-settings)
@@ -23,11 +22,6 @@ yarn add --dev @griffel/webpack-loader
 # or
 npm install --save-dev @griffel/webpack-loader
 ```
-
-## When to use it?
-
-- For library developers, please use [`@griffel/babel-preset`](../babel-preset)
-- For application developers, please use Webpack loader (this package)
 
 ## Usage
 
@@ -159,9 +153,11 @@ module.exports = {
 ```
 
 ### Configuring webpack resolve options
+
 If your `@griffel/react` modules import other files (eg., a set of common mixins or colors for your app), the loader resolves these using `enhanced-resolve`. By default, it inherits the settings `resolve.alias`, `resolve.modules`, and `resolve.modules` from your Webpack config, while using its own default values for `resolve.extensions` and `resolve.conditionNames`.
 
 If you want to change this behavior, you can choose which [`resolve` options](https://webpack.js.org/configuration/resolve/) are inherited from your Webpack config.
+
 ```js
 module.exports = {
   module: {
@@ -182,6 +178,7 @@ module.exports = {
 ```
 
 Alternatively, you can specify custom [`resolve` options](https://webpack.js.org/configuration/resolve/). These values will override any options inherited from your webpack config. This can be particularly important if you use custom `conditionNames` that do not include `require`, which is necessary for transformation.
+
 ```js
 module.exports = {
   resolve: {

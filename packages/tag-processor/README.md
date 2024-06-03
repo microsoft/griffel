@@ -21,10 +21,7 @@ npm install --save-dev @griffel/tag-processor
 
 ## How to use it?
 
-This package cannot be used solely, it should be paired with `@griffel/babel-preset` or `@griffel/webpack-loader`
-
-- For library developers, please use [`@griffel/babel-preset`](../babel-preset)
-- For application developers, please use [`@griffel/webpack-loader`](../webpack-loader)
+This package cannot be used solely, it should be paired with `@griffel/vite-plugin` or other tools that support WyW-in-js.
 
 ### Handling Griffel re-exports
 

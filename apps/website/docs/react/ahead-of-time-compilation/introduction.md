@@ -10,5 +10,5 @@ Griffel only does the expensive runtime on the first render of the component. Th
 
 ## What to use?
 
-- For library developers, please use [Babel preset](/react/ahead-of-time-compilation/with-babel)
-- For application developers, please use [Webpack loader](/react/ahead-of-time-compilation/with-webpack) (supports Next.js)
+- [Webpack loader](/react/ahead-of-time-compilation/with-webpack) (supports Next.js)
+- [Vite plugin](/react/ahead-of-time-compilation/with-vite)

@@ -29,7 +29,7 @@ It's designed to be used only in applications.
 
 ## How it works?
 
-This plugin relies on assets transformed by [`@griffel/babel-preset`](../babel-preset) or [`@griffel/webpack-loader`](../webpack-loader). Usage of these utilities is a **prerequisite**.
+This plugin relies on assets transformed by [`@griffel/webpack-loader`](../webpack-loader). Usage of these utilities is a **prerequisite**.
 
 The plugin transforms code to remove generated CSS from JavaScript files and create CSS assets.
 
