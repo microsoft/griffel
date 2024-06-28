@@ -1,5 +1,4 @@
-import { __css as _css } from '@griffel/react';
-import { __styles } from '@griffel/react';
+import { __styles, __css as _css } from '@griffel/react';
 export const useStyles = _css({
   root: {
     Bcmaq0h: 'fnwsaxv',

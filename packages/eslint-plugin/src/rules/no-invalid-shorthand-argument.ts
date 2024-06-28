@@ -11,7 +11,7 @@ export const RULE_NAME = 'no-invalid-shorthand-argument';
 /**
  * Check if the node represents is a shorthand and return the name.
  */
-function getShorthandName(node: TSESTree.LeftHandSideExpression): string | undefined {
+function getShorthandName(node: TSESTree.LeftHandSideExpression | TSESTree.Expression): string | undefined {
   if (
     isMemberExpression(node) &&
     isIdentifier(node.object) &&
@@ -20,6 +20,7 @@ function getShorthandName(node: TSESTree.LeftHandSideExpression): string | undef
   ) {
     return node.property.name;
   }
+
   return undefined;
 }
 
@@ -42,13 +43,17 @@ export const noInvalidShorthandArgumentRule = ESLintUtils.RuleCreator(getDocsUrl
 
   create(context) {
     const sourceCode = context.getSourceCode();
+
     return {
       CallExpression(node) {
         const shorthandName = getShorthandName(node.callee);
+
         if (shorthandName && node.arguments.length === 1) {
           const shorthandLiteral = getShorthandValue(node.arguments[0], sourceCode);
+
           if (shorthandLiteral) {
             const autoFixArguments = shorthandToArguments(shorthandName, shorthandLiteral.value);
+
             if (autoFixArguments != null && autoFixArguments.length > 1) {
               context.report({
                 node,
