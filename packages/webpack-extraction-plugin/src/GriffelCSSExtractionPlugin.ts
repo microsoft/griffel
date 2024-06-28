@@ -1,8 +1,8 @@
 import type { GriffelRenderer } from '@griffel/core';
 import { defaultCompareMediaQueries } from '@griffel/core';
-import { Compilation, NormalModule } from 'webpack';
-import type { Chunk, Compiler, Module, sources } from 'webpack';
+import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
+import { getBundlerRuntime } from './getBundlerRuntime';
 import { parseCSSRules } from './parseCSSRules';
 import { sortCSSRules } from './sortCSSRules';
 import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants';
@@ -118,6 +118,7 @@ export class GriffelCSSExtractionPlugin {
 
   apply(compiler: Compiler): void {
     const IS_RSPACK = Object.prototype.hasOwnProperty.call(compiler.webpack, 'rspackVersion');
+    const { Compilation, NormalModule } = getBundlerRuntime(IS_RSPACK ? 'rspack' : 'webpack');
 
     // WHAT?
     //   Prevents ".griffel.css" files from being tree shaken by forcing "sideEffects" setting.
