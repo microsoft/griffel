@@ -6,6 +6,6 @@
     "declaration": true,
     "types": ["node", "environment"]
   },
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts", "jest.setup.ts"],
   "include": ["**/*.ts"]
 }

@@ -4,7 +4,7 @@
     "jsx": "react",
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "types": ["jest", "node", "environment", "@testing-library/jest-dom"]
+    "types": ["jest", "node", "environment"]
   },
   "include": [
     "**/*.test.ts",
@@ -16,6 +16,7 @@
     "**/*.test.jsx",
     "**/*.spec.jsx",
     "**/*.d.ts",
-    "jest.config.ts"
+    "jest.config.ts",
+    "jest.setup.ts"
   ]
 }
