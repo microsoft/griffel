@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Story } from '@storybook/react';
+import type { StoryFn } from '@storybook/react';
 
 import { makeStyles, shorthands, TextDirectionProvider } from '../';
 
@@ -32,7 +32,7 @@ const FallbackTest = ({ isRtl = false }) => {
   );
 };
 
-export const FallbackValues: Story = () => {
+export const FallbackValues: StoryFn = () => {
   return (
     <div>
       <FallbackTest />
