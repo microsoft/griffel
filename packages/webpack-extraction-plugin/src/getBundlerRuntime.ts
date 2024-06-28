@@ -9,6 +9,7 @@ let bundlerRuntime: BundlerRuntime | null = null;
 
 export function getBundlerRuntime(type: 'webpack' | 'rspack'): BundlerRuntime {
   if (bundlerRuntime === null) {
+    // eslint-disable-next-line import/no-extraneous-dependencies
     bundlerRuntime = type === 'webpack' ? require('webpack') : require('@rspack/core');
   }
 
