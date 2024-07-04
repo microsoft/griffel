@@ -7,7 +7,10 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.3.1",
+  "engines": {
+    "node": ">=20"
+  },
   "nano-staged": {
     "**/*.{js,json,ts,tsx}": "prettier --write",
     "**/*.{md}": "doctoc -u"
