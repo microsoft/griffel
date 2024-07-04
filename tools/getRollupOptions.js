@@ -7,6 +7,8 @@ function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options)
       preserveModulesRoot: 'src',
       // Enables sourcemaps
       sourcemap: true,
+      // Add interop for CJS
+      ...(output.format === 'cjs' && { interop: 'compat' }),
     }));
 
     return options;
