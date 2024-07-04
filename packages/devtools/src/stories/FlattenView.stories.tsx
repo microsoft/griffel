@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { DebugResult } from '@griffel/core';
-import type { Story } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 
 import { FlattenView } from '../FlattenView';
 import { darkTheme, lightTheme } from '../themes';
@@ -96,26 +96,28 @@ const debugResultRoot: DebugResult = {
   ],
 };
 
-export const Default: Story<{ theme: 'dark' | 'light' }> = ({ theme }) => {
-  const tokens = theme === 'dark' ? darkTheme : lightTheme;
+export const Default: StoryObj<{ theme: 'dark' | 'light' }> = {
+  render: ({ theme }) => {
+    const tokens = theme === 'dark' ? darkTheme : lightTheme;
 
-  return (
-    <div
-      style={{
-        ...tokens,
-        border: '3px solid gray',
-        width: 400,
-        height: 600,
-        overflowY: 'auto',
-      }}
-    >
-      <FlattenView debugResultRoot={debugResultRoot} />
-    </div>
-  );
-};
+    return (
+      <div
+        style={{
+          ...tokens,
+          border: '3px solid gray',
+          width: 400,
+          height: 600,
+          overflowY: 'auto',
+        }}
+      >
+        <FlattenView debugResultRoot={debugResultRoot} />
+      </div>
+    );
+  },
 
-Default.args = {
-  theme: 'light',
+  args: {
+    theme: 'light',
+  },
 };
 
 export default {
