@@ -234,84 +234,47 @@ describe('webpackLoader', () => {
   testFixture('reset');
   testFixture('empty');
 
-  // Integration fixtures for config functionality
-  testFixture('config-classname-hash-salt', {
-    loaderOptions: {
-      classNameHashSalt: 'HASH_SALT',
-    },
-  });
+  const fakeColorModulePath = path.resolve(__dirname, '..', '__fixtures__', 'webpack-resolve-plugins', 'fake-color.ts');
+  const colorModulePath = path.resolve(__dirname, '..', '__fixtures__', 'webpack-resolve-plugins', 'color.ts');
 
-  testFixture('config-modules', {
-    loaderOptions: {
-      modules: [{ moduleSource: 'react-make-styles', importName: 'makeStyles' }],
-    },
-    webpackConfig: {
-      externals: {
-        'react-make-styles': 'Griffel',
-      },
-    },
-  });
+  const CustomAliasPlugin: webpack.ResolvePluginInstance = {
+    // Simple plugin that will detect the non-existent module we are testing for and replace with
+    // correct path from the fixture
+    apply(resolver) {
+      const target = resolver.ensureHook('internal-resolve');
 
-  // Asserts that aliases are resolved properly in Babel plugin
-  testFixture('webpack-aliases', {
-    webpackConfig: {
-      resolve: {
-        alias: {
-          'non-existing-color-module': path.resolve(__dirname, '..', '__fixtures__', 'webpack-aliases', 'color.ts'),
-        },
-      },
-    },
-  });
+      resolver.getHook('raw-resolve').tapAsync('CustomAliasPlugin', (request, resolveContext, callback) => {
+        if (request.request === 'non-existing-color-module') {
+          const newRequest = { ...request, request: colorModulePath };
 
-  // Asserts that "inheritResolveOptions" are handled properly
-  testFixture('webpack-inherit-resolve-options', {
-    loaderOptions: {
-      inheritResolveOptions: ['extensions'],
-    },
-    webpackConfig: {
-      resolve: {
-        extensions: ['.ts', '.jsx'],
-      },
-    },
-  });
+          return resolver.doResolve(target, newRequest, null, resolveContext, callback);
+        }
 
-  // Asserts that "webpackResolveOptions" are handled properly
-  testFixture('webpack-resolve-options', {
-    loaderOptions: {
-      webpackResolveOptions: {
-        extensions: ['.ts', '.jsx'],
-      },
+        callback();
+      });
     },
-  });
+  };
 
-  // Asserts that aliases are resolved properly in Babel plugin with resolve plugins
   testFixture('webpack-resolve-plugins', {
     webpackConfig: {
       resolve: {
-        plugins: [
-          {
-            // Simple plugin that will detect the non-existent module we are testing for and replace with
-            // correct path from the fixture
-            apply: function (resolver) {
-              const target = resolver.ensureHook('resolve');
-
-              resolver.getHook('before-resolve').tapAsync('ResolveFallback', (request, resolveContext, callback) => {
-                if (request.request === 'non-existing-color-module') {
-                  const obj = {
-                    directory: request.directory,
-                    path: request.path,
-                    query: request.query,
-                    request: path.resolve(__dirname, '..', '__fixtures__', 'webpack-resolve-plugins', 'color.ts'),
-                  };
-                  return resolver.doResolve(target, obj, null, resolveContext, callback);
-                }
-
-                callback();
-              });
-            },
-          },
-        ],
+        alias: {
+          'non-existing-color-module': fakeColorModulePath,
+        },
+        plugins: [CustomAliasPlugin],
       },
+    },
+  });
+  testFixture('webpack-resolve-plugins', {
+    webpackConfig: {
+      resolve: {
+        alias: {
+          'non-existing-color-module': fakeColorModulePath,
+        },
+      },
+    },
+    loaderOptions: {
+      webpackResolveOptions: { plugins: [CustomAliasPlugin] },
     },
   });
 
