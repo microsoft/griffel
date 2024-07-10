@@ -34,8 +34,7 @@ jobs:
       - name: Compare results with "main" branch
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          yarn monosize compare-reports --branch main --output markdown
-          cp node_modules/monosize/dist/monosize.md monosize.md
+          npx monosize compare-reports --branch main --output markdown --quiet > monosize.md
 
       - name: Save PR number
         run: echo ${{ github.event.number }} > pr.txt
