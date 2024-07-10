@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: remove development warnings from production code",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

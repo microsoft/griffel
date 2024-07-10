@@ -2,7 +2,7 @@ import type { GriffelStyle } from '@griffel/style-types';
 import { logError } from './logError';
 
 export function warnAboutUnsupportedProperties(property: string, value: GriffelStyle[keyof GriffelStyle]) {
-  logError(
+  const message = /*#__PURE__*/ (() =>
     [
       `@griffel/react: You are using unsupported shorthand CSS property "${property}". ` +
         `Please check your "makeStyles" calls, there *should not* be following:`,
@@ -11,6 +11,7 @@ export function warnAboutUnsupportedProperties(property: string, value: GriffelS
       ' '.repeat(2) + `})`,
       '',
       'Learn why CSS shorthands are not supported: https://aka.ms/griffel-css-shorthands',
-    ].join('\n'),
-  );
+    ].join('\n'))();
+
+  logError(message);
 }
