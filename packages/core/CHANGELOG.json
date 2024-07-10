@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 10 Jul 2024 14:36:29 GMT",
+      "tag": "@griffel/core_v1.17.1",
+      "version": "1.17.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "15496655df98b9d8e8f505b461cc6dbd12e3122e",
+            "comment": "chore: remove development warnings from production code"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 May 2024 08:24:17 GMT",
       "tag": "@griffel/core_v1.17.0",
       "version": "1.17.0",

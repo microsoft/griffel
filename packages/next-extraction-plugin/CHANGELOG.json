@@ -2,6 +2,21 @@
   "name": "@griffel/next-extraction-plugin",
   "entries": [
     {
+      "date": "Wed, 10 Jul 2024 14:36:29 GMT",
+      "tag": "@griffel/next-extraction-plugin_v0.1.5",
+      "version": "0.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/next-extraction-plugin",
+            "comment": "Bump @griffel/webpack-extraction-plugin to v0.5.4",
+            "commit": "15496655df98b9d8e8f505b461cc6dbd12e3122e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 May 2024 08:24:17 GMT",
       "tag": "@griffel/next-extraction-plugin_v0.1.4",
       "version": "0.1.4",

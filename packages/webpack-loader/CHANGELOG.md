@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-loader
 
-This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jul 2024 14:36:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.13
+
+Wed, 10 Jul 2024 14:36:29 GMT
+
+### Patches
+
+- fix(webpack-loader): fix schema for webpackResolveOptions.plugins (olfedias@microsoft.com)
+- Bump @griffel/babel-preset to v1.6.1
 
 ## 2.2.12
 

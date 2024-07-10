@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Wed, 10 Jul 2024 14:36:29 GMT",
+      "tag": "@griffel/eslint-plugin_v1.6.4",
+      "version": "1.6.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "c20560331a66071494a207a4b36ebc93fdcf6406",
+            "comment": "chore: bump @typescript-eslint/utils"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 May 2024 08:24:17 GMT",
       "tag": "@griffel/eslint-plugin_v1.6.3",
       "version": "1.6.3",

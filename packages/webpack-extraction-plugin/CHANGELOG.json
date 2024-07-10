@@ -2,6 +2,27 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Wed, 10 Jul 2024 14:36:29 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.4",
+      "version": "0.5.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "82ce7a8ffd3f08e89a042982a42f42b056610a2b",
+            "comment": "chore: improve compat with Rspack"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.17.1",
+            "commit": "15496655df98b9d8e8f505b461cc6dbd12e3122e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 May 2024 08:24:17 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.3",
       "version": "0.5.3",

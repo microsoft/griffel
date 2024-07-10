@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jul 2024 14:36:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.5.4
+
+Wed, 10 Jul 2024 14:36:29 GMT
+
+### Patches
+
+- chore: improve compat with Rspack (olfedias@microsoft.com)
+- Bump @griffel/core to v1.17.1
 
 ## 0.5.3
 

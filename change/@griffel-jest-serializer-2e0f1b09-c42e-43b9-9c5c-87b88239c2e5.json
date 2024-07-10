@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump Nx to 19.3.2",
-  "packageName": "@griffel/jest-serializer",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

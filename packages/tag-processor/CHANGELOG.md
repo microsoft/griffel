@@ -1,8 +1,16 @@
 # Change Log - @griffel/tag-processor
 
-This log was last generated on Mon, 27 May 2024 12:12:23 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jul 2024 14:36:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.6
+
+Wed, 10 Jul 2024 14:36:29 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.17.1
 
 ## 1.0.5
 

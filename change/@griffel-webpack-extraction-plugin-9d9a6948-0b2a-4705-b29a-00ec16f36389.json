@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: improve compat with Rspack",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

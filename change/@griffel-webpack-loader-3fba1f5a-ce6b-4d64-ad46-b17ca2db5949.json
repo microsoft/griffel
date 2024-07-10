@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix(webpack-loader): fix schema for webpackResolveOptions.plugins",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
