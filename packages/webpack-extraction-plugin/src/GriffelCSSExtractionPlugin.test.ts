@@ -91,7 +91,7 @@ async function compileSourceWithWebpack(
 
   const virtualFsVolume = createFsFromVolume(new Volume());
 
-  compiler.outputFileSystem = virtualFsVolume;
+  compiler.outputFileSystem = virtualFsVolume as NonNullable<webpack.Compiler['outputFileSystem']>;
   compiler.outputFileSystem.join = path.join.bind(path);
 
   return new Promise((resolve, reject) => {
