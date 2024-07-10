@@ -37,10 +37,8 @@ export const optionsSchema: JSONSchema7 = {
         extensions: { type: 'array', items: { type: 'string' } },
         modules: { type: 'array', items: { type: 'string' } },
         plugins: {
-          oneOf: [
-            { type: 'string', enum: ['...'] },
-            { type: 'object', additionalProperties: true },
-          ],
+          type: 'array',
+          items: { type: 'object' },
         },
       },
     },
