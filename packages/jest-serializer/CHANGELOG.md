@@ -1,8 +1,16 @@
 # Change Log - @griffel/jest-serializer
 
-This log was last generated on Fri, 12 Jul 2024 07:39:18 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jul 2024 13:04:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.28
+
+Fri, 12 Jul 2024 13:04:35 GMT
+
+### Patches
+
+- fix: fix reset class handling (olfedias@microsoft.com)
 
 ## 1.1.27
 
