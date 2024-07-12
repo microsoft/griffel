@@ -1,8 +1,16 @@
 # Change Log - @griffel/jest-serializer
 
-This log was last generated on Wed, 10 Jul 2024 14:36:29 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jul 2024 07:39:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.27
+
+Fri, 12 Jul 2024 07:39:18 GMT
+
+### Patches
+
+- fix: improve trailing space handling (olfedias@microsoft.com)
 
 ## 1.1.26
 

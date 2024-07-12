@@ -1,6 +1,6 @@
 {
   "name": "@griffel/jest-serializer",
-  "version": "1.1.26",
+  "version": "1.1.27",
   "description": "Jest serializer for Griffel",
   "license": "MIT",
   "repository": {
