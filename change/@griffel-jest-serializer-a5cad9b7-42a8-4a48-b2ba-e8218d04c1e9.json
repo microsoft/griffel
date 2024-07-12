@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: fix reset class handling",
+  "packageName": "@griffel/jest-serializer",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

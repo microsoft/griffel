@@ -19,9 +19,12 @@ const useStyles3 = makeStyles({
   display: { display: 'none' },
 });
 
-const useBaseStyles = makeResetStyles({
+const useResetStylesA = makeResetStyles({
   color: 'red',
   marginLeft: '20px',
+});
+const useResetStylesB = makeResetStyles({
+  color: 'blue',
 });
 
 const TestComponent: React.FC<{ id?: string }> = ({ id }) => {
@@ -42,13 +45,15 @@ const TestComponent: React.FC<{ id?: string }> = ({ id }) => {
 
 const TestResetComponent: React.FC<{ id?: string; children?: React.ReactNode }> = ({ id, children }) => {
   const classes = useStyles1();
-  const baseClassName = useBaseStyles();
+  const resetClassNameA = useResetStylesA();
+  const resetClassNameB = useResetStylesB();
 
-  const className = mergeClasses('class-reset-a', baseClassName, classes.paddingLeft, 'class-reset-b');
+  const rootClassName = mergeClasses('class-reset-a', resetClassNameA, classes.paddingLeft, 'class-reset-b');
+  const innerClassName = mergeClasses('class-reset-inner', resetClassNameB);
 
   return (
-    <div data-testid={id} className={className}>
-      {children}
+    <div data-testid={id} className={rootClassName}>
+      <div className={innerClassName}>{children}</div>
     </div>
   );
 };
@@ -95,7 +100,11 @@ describe('serializer', () => {
     expect(render(<TestResetComponent />).container.firstChild).toMatchInlineSnapshot(`
       <div
         class="class-reset-a class-reset-b"
-      />
+      >
+        <div
+          class="class-reset-inner"
+        />
+      </div>
     `);
 
     expect(render(<TestComponent />, { wrapper: RtlWrapper }).container.firstChild).toMatchInlineSnapshot(`
@@ -107,7 +116,11 @@ describe('serializer', () => {
     expect(render(<TestResetComponent />, { wrapper: RtlWrapper }).container.firstChild).toMatchInlineSnapshot(`
       <div
         class="class-reset-a class-reset-b"
-      />
+      >
+        <div
+          class="class-reset-inner"
+        />
+      </div>
     `);
 
     expect(render(<div className="foo bar" />).container.firstChild).toMatchInlineSnapshot(`
@@ -119,7 +132,7 @@ describe('serializer', () => {
 
   it('handles HTML strings', () => {
     expect(render(<TestResetComponent />).container.innerHTML).toMatchInlineSnapshot(
-      `"<div class="class-reset-a class-reset-b"></div>"`,
+      `"<div class="class-reset-a class-reset-b"><div class="class-reset-inner"></div></div>"`,
     );
     expect(render(<TestComponent />).container.innerHTML).toMatchInlineSnapshot(
       `"<div class="class-a class-b" data-test-attr="true"></div>"`,
@@ -138,9 +151,13 @@ describe('serializer', () => {
         class="class-reset-a class-reset-b"
       >
         <div
-          class="class-a class-b"
-          data-test-attr="true"
-        />
+          class="class-reset-inner"
+        >
+          <div
+            class="class-a class-b"
+            data-test-attr="true"
+          />
+        </div>
       </div>
     `);
 
@@ -151,7 +168,7 @@ describe('serializer', () => {
         </TestResetComponent>,
       ).container.innerHTML,
     ).toMatchInlineSnapshot(
-      `"<div class="class-reset-a class-reset-b"><div class="class-a class-b" data-test-attr="true"></div></div>"`,
+      `"<div class="class-reset-a class-reset-b"><div class="class-reset-inner"><div class="class-a class-b" data-test-attr="true"></div></div></div>"`,
     );
   });
 

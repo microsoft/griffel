@@ -1,5 +1,5 @@
 import type { CSSClasses } from '@griffel/core';
-import { DEBUG_RESET_CLASSES, DEFINITION_LOOKUP_TABLE, SEQUENCE_PREFIX } from '@griffel/core';
+import { DEBUG_RESET_CLASSES, DEFINITION_LOOKUP_TABLE, SEQUENCE_PREFIX, RESET_HASH_PREFIX } from '@griffel/core';
 
 export function print(val: unknown) {
   /**
@@ -64,11 +64,13 @@ export function print(val: unknown) {
 function isRegisteredSequence(value: string) {
   // Heads up!
   // There will be a lot of strings that will be tested here, assert only if it's a sequence-like string
+
   if (value.indexOf(SEQUENCE_PREFIX) === 0) {
-    return (
-      Object.prototype.hasOwnProperty.call(DEFINITION_LOOKUP_TABLE, value) ||
-      Object.prototype.hasOwnProperty.call(DEBUG_RESET_CLASSES, value)
-    );
+    return Object.prototype.hasOwnProperty.call(DEFINITION_LOOKUP_TABLE, value);
+  }
+
+  if (value[0] === RESET_HASH_PREFIX) {
+    return Object.prototype.hasOwnProperty.call(DEBUG_RESET_CLASSES, value);
   }
 
   return false;
