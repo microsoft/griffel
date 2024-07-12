@@ -1,5 +1,5 @@
 import type { CSSClasses } from '@griffel/core';
-import { DEBUG_RESET_CLASSES, DEFINITION_LOOKUP_TABLE } from '@griffel/core';
+import { DEBUG_RESET_CLASSES, DEFINITION_LOOKUP_TABLE, SEQUENCE_PREFIX } from '@griffel/core';
 
 export function print(val: unknown) {
   /**
@@ -56,15 +56,29 @@ export function print(val: unknown) {
   /**
    * Trim whitespace from className
    */
-  return `"${valStrippedClassNames.replace(/(?:class|className)="(.*)"/, (match, p1) =>
+  return `"${valStrippedClassNames.replace(/(?:class|className)="([^"]+)"/g, (match, p1) =>
     match.replace(p1, p1.trim()),
   )}"`;
 }
 
+function isRegisteredSequence(value: string) {
+  // Heads up!
+  // There will be a lot of strings that will be tested here, assert only if it's a sequence-like string
+  if (value.indexOf(SEQUENCE_PREFIX) === 0) {
+    return (
+      Object.prototype.hasOwnProperty.call(DEFINITION_LOOKUP_TABLE, value) ||
+      Object.prototype.hasOwnProperty.call(DEBUG_RESET_CLASSES, value)
+    );
+  }
+
+  return false;
+}
+
 export function test(val: unknown) {
   if (typeof val === 'string') {
-    return val.split(' ').some(v => DEBUG_RESET_CLASSES[v] || DEFINITION_LOOKUP_TABLE[v]);
+    return val.split(' ').some(v => isRegisteredSequence(v));
   }
+
   return false;
 }
 

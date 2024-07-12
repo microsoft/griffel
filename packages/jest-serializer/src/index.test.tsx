@@ -37,16 +37,20 @@ const TestComponent: React.FC<{ id?: string }> = ({ id }) => {
     'class-b',
   );
 
-  return <div data-testid={id} className={styles} />;
+  return <div data-testid={id} className={styles} data-test-attr="true" />;
 };
 
-const TestResetComponent: React.FC<{ id?: string }> = ({ id }) => {
+const TestResetComponent: React.FC<{ id?: string; children?: React.ReactNode }> = ({ id, children }) => {
   const classes = useStyles1();
   const baseClassName = useBaseStyles();
 
-  const className = mergeClasses('class-a', baseClassName, classes.paddingLeft, 'class-b');
+  const className = mergeClasses('class-reset-a', baseClassName, classes.paddingLeft, 'class-reset-b');
 
-  return <div data-testid={id} className={className} />;
+  return (
+    <div data-testid={id} className={className}>
+      {children}
+    </div>
+  );
 };
 
 const RtlWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -85,22 +89,24 @@ describe('serializer', () => {
     expect(render(<TestComponent />).container.firstChild).toMatchInlineSnapshot(`
       <div
         class="class-a class-b"
+        data-test-attr="true"
       />
     `);
     expect(render(<TestResetComponent />).container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="class-a class-b"
+        class="class-reset-a class-reset-b"
       />
     `);
 
     expect(render(<TestComponent />, { wrapper: RtlWrapper }).container.firstChild).toMatchInlineSnapshot(`
       <div
         class="class-a class-b"
+        data-test-attr="true"
       />
     `);
     expect(render(<TestResetComponent />, { wrapper: RtlWrapper }).container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="class-a class-b"
+        class="class-reset-a class-reset-b"
       />
     `);
 
@@ -113,10 +119,49 @@ describe('serializer', () => {
 
   it('handles HTML strings', () => {
     expect(render(<TestResetComponent />).container.innerHTML).toMatchInlineSnapshot(
-      `"<div class="class-a class-b"></div>"`,
+      `"<div class="class-reset-a class-reset-b"></div>"`,
     );
     expect(render(<TestComponent />).container.innerHTML).toMatchInlineSnapshot(
-      `"<div class="class-a class-b"></div>"`,
+      `"<div class="class-a class-b" data-test-attr="true"></div>"`,
     );
+  });
+
+  it('handles nested elements', () => {
+    expect(
+      render(
+        <TestResetComponent>
+          <TestComponent />
+        </TestResetComponent>,
+      ).container.firstChild,
+    ).toMatchInlineSnapshot(`
+      <div
+        class="class-reset-a class-reset-b"
+      >
+        <div
+          class="class-a class-b"
+          data-test-attr="true"
+        />
+      </div>
+    `);
+
+    expect(
+      render(
+        <TestResetComponent>
+          <TestComponent />
+        </TestResetComponent>,
+      ).container.innerHTML,
+    ).toMatchInlineSnapshot(
+      `"<div class="class-reset-a class-reset-b"><div class="class-a class-b" data-test-attr="true"></div></div>"`,
+    );
+  });
+
+  it('does not assert on non-sequence strings', () => {
+    expect({
+      toString: () => 'class="foo"',
+    }).toMatchInlineSnapshot(`
+      Object {
+        "toString": [Function],
+      }
+    `);
   });
 });

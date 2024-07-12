@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: improve trailing space handling",
+  "packageName": "@griffel/jest-serializer",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
