@@ -72,4 +72,18 @@ describe('makeResetStyles', () => {
       }
     `);
   });
+
+  describe('classNameHashSalt', () => {
+    it('applies a salt to the hash', () => {
+      const rendererWithSalt = createDOMRenderer(document, { classNameHashSalt: 'salt' });
+
+      const resultWithSalt = makeResetStyles({ color: 'red' })({ dir: 'ltr', renderer });
+      const resultWithoutSalt = makeResetStyles({ color: 'red' })({ dir: 'ltr', renderer: rendererWithSalt });
+
+      expect(resultWithSalt).toMatchInlineSnapshot(`"rtokvmb"`);
+      expect(resultWithoutSalt).toMatchInlineSnapshot(`"r1fkucf3"`);
+
+      expect(resultWithSalt).not.toBe(resultWithoutSalt);
+    });
+  });
 });

@@ -8,6 +8,14 @@ let lastIndex = 0;
 
 export interface CreateDOMRendererOptions {
   /**
+   * A salt that will be added for hashed classes. Should be the same for all renderers in the same application
+   * (bundle).
+   *
+   * @see https://github.com/microsoft/griffel/issues/453
+   */
+  classNameHashSalt?: string;
+
+  /**
    * If specified, a renderer will insert created style tags after this element.
    */
   insertionPoint?: HTMLElement;
@@ -50,12 +58,14 @@ export function createDOMRenderer(
   options: CreateDOMRendererOptions = {},
 ): GriffelRenderer {
   const {
+    classNameHashSalt,
     unstable_filterCSSRule,
     insertionPoint,
     styleElementAttributes,
     compareMediaQueries = defaultCompareMediaQueries,
   } = options;
   const renderer: GriffelRenderer = {
+    classNameHashSalt,
     insertionCache: {},
     stylesheets: {},
     styleElementAttributes: Object.freeze(styleElementAttributes),

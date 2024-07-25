@@ -17,12 +17,31 @@ export function makeResetStyles(styles: GriffelResetStyle, factory: GriffelInser
   let rtlClassName: string | null = null;
 
   let cssRules: CSSRulesByBucket | string[] | null = null;
+  let classNameHashSalt: string;
 
   function computeClassName(options: MakeResetStylesOptions): string {
     const { dir, renderer } = options;
 
     if (ltrClassName === null) {
-      [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(styles);
+      [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(styles, renderer.classNameHashSalt);
+
+      if (process.env.NODE_ENV !== 'production') {
+        if (renderer.classNameHashSalt) {
+          if (classNameHashSalt !== renderer.classNameHashSalt) {
+            console.error(
+              [
+                '@griffel/core:',
+                '\n\n',
+                'A provided renderer has different "classNameHashSalt".',
+                'This is not supported and WILL cause issues with classnames generation.',
+                'Ensure that all renderers created with "createDOMRenderer()" have the same "classNameHashSalt".',
+              ].join(' '),
+            );
+          }
+
+          classNameHashSalt = renderer.classNameHashSalt;
+        }
+      }
     }
 
     insertStyles(renderer, Array.isArray(cssRules) ? { r: cssRules! } : cssRules!);
