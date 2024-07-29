@@ -28,7 +28,7 @@ A salt that will be added for generated hashed classes. Check [microsoft/griffel
 
 :::caution Use with caution
 
-Should be the same for all renderers in the same application (bundle).
+There cannot be more than **one single** hash salt in the same application (bundle) 
 
 :::
 
