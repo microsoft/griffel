@@ -277,6 +277,23 @@ describe('makeStyles', () => {
     `);
   });
 
+  describe('classNameHashSalt', () => {
+    it('applies a salt to the hash', () => {
+      const rendererWithSalt = createDOMRenderer(document, { classNameHashSalt: 'salt' });
+
+      const computeClassesWithSalt = makeStyles({ root: { color: 'red' } });
+      const computeClassesWithoutSalt = makeStyles({ root: { color: 'red' } });
+
+      const resultWithSalt = computeClassesWithSalt({ dir: 'ltr', renderer }).root;
+      const resultWithoutSalt = computeClassesWithoutSalt({ dir: 'ltr', renderer: rendererWithSalt }).root;
+
+      expect(resultWithSalt).toMatchInlineSnapshot(`"___afhpfp0 fe3e8s9"`);
+      expect(resultWithoutSalt).toMatchInlineSnapshot(`"___eoxc7a0 fl2dfm4"`);
+
+      expect(resultWithSalt).not.toBe(resultWithoutSalt);
+    });
+  });
+
   it.each<'test' | 'development'>(['test', 'development'])(
     'in non-production mode, hashes include debug information',
     env => {

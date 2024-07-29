@@ -23,6 +23,11 @@ export interface GriffelRenderer {
   /**
    * @private
    */
+  classNameHashSalt?: string;
+
+  /**
+   * @private
+   */
   insertionCache: Record<string, StyleBucketName>;
 
   /**

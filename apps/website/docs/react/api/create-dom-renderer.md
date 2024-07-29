@@ -22,6 +22,16 @@ function App(props) {
 }
 ```
 
+### classNameHashSalt
+
+A salt that will be added for generated hashed classes. Check [microsoft/griffel#453](https://github.com/microsoft/griffel/issues/453) for an example use case.
+
+:::caution Use with caution
+
+There cannot be more than **one single** hash salt in the same application (bundle) 
+
+:::
+
 ### compareMediaQueries
 
 A function with the same signature as sort functions in e.g. `Array.prototype.sort` for dynamically sorting media queries. Maps over an array of media query strings.

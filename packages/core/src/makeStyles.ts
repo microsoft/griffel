@@ -27,11 +27,31 @@ export function makeStyles<Slots extends string | number>(
     sourceURL = getSourceURLfromError();
   }
 
+  let classNameHashSalt: string;
+
   function computeClasses(options: MakeStylesOptions): Record<Slots, string> {
     const { dir, renderer } = options;
 
     if (classesMapBySlot === null) {
-      [classesMapBySlot, cssRules] = resolveStyleRulesForSlots(stylesBySlots);
+      [classesMapBySlot, cssRules] = resolveStyleRulesForSlots(stylesBySlots, renderer.classNameHashSalt);
+
+      if (process.env.NODE_ENV !== 'production') {
+        if (renderer.classNameHashSalt) {
+          if (classNameHashSalt !== renderer.classNameHashSalt) {
+            console.error(
+              [
+                '@griffel/core:',
+                '\n\n',
+                'A provided renderer has different "classNameHashSalt".',
+                'This is not supported and WILL cause issues with classnames generation.',
+                'Ensure that all renderers created with "createDOMRenderer()" have the same "classNameHashSalt".',
+              ].join(' '),
+            );
+          }
+
+          classNameHashSalt = renderer.classNameHashSalt;
+        }
+      }
     }
 
     const isLTR = dir === 'ltr';
