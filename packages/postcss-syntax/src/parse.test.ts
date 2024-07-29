@@ -173,6 +173,31 @@ export const useStyles2 = makeStyles({
         }
       });
     });
+
+    it('should transform disable comment directive to stylelint disable', () => {
+      const fixture = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  root: {
+    color: 'red',
+    backgroundColor: 'green',
+  },
+
+  // griffel-csslint-disable foo
+  // griffel-csslint-disable bar
+  slot: {
+      color: 'blue',
+      backgroundColor: 'red',
+  }
+})
+`;
+      const root = parse(fixture, { from: 'fixture.styles.ts' });
+      expect(root.toString()).toMatchInlineSnapshot(`
+        ".fe3e8s9{color:red;}.fcnqdeg{background-color:green;}
+        .f163i14w{color:blue;}.f3xbvq9{background-color:red;} /* stylelint-disable-line foo,bar */"
+      `);
+    });
   });
 
   describe('makeResetStyles', () => {
@@ -287,6 +312,23 @@ export const useResetStyles2 = makeResetStyles({
           });
         }
       });
+    });
+
+    it('should transform disable comment directive to stylelint disable', () => {
+      const fixture = `
+import { makeResetStyles } from '@griffel/react';
+
+// griffel-csslint-disable foo
+// griffel-csslint-disable bar
+export const useResetStyles = makeResetStyles({
+  color: 'pink',
+  backgroundColor: 'magenta',
+})
+`;
+      const root = parse(fixture, { from: 'fixture.styles.ts' });
+      expect(root.toString()).toMatchInlineSnapshot(
+        `".r70kha3{color:pink;background-color:magenta;} /* stylelint-disable-line foo,bar */"`,
+      );
     });
   });
 });
