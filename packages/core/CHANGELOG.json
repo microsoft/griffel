@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 29 Jul 2024 07:31:53 GMT",
+      "tag": "@griffel/core_v1.18.0",
+      "version": "1.18.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "aa24116ea5cf763ee7f56363067a5c386c4c2222",
+            "comment": "feat: add \"classNameHashSalt\" option"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jul 2024 14:36:29 GMT",
       "tag": "@griffel/core_v1.17.1",
       "version": "1.17.1",

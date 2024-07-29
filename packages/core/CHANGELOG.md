@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 10 Jul 2024 14:36:29 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Jul 2024 07:31:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.18.0
+
+Mon, 29 Jul 2024 07:31:53 GMT
+
+### Minor changes
+
+- feat: add "classNameHashSalt" option (olfedias@microsoft.com)
 
 ## 1.17.1
 

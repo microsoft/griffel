@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add \"classNameHashSalt\" option",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
