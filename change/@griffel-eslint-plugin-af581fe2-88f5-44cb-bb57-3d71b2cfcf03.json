@@ -1,0 +1,7 @@
+{
+  "comment": "Fix eslint-plugin README",
+  "type": "patch",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "tigeroakes@microsoft.com",
+  "dependentChangeType": "patch"
+}
