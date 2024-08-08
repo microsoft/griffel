@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: make RendererProvider compatible with React Compiler",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
