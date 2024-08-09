@@ -1,7 +1,9 @@
+import type { GriffelStyle } from '@griffel/style-types';
+
 import { griffelRulesSerializer } from '../common/snapshotSerializers';
-import { resolveStyleRules } from './resolveStyleRules';
+import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants';
 import type { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
-import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '..';
+import { resolveStyleRules } from './resolveStyleRules';
 
 expect.addSnapshotSerializer(griffelRulesSerializer);
 
@@ -26,7 +28,7 @@ describe('resolveStyleRules', () => {
       'strips unsupported `%s` css property when not in production',
       property => {
         // Doesn't matter what the value is, just that the resulting objects are empty
-        const res = resolveStyleRules({ [property]: 'dummy' as unknown as undefined });
+        const res = resolveStyleRules({ [property]: 'dummy' } as unknown as GriffelStyle);
 
         expect(res).toHaveLength(2);
         expect(res[0]).toEqual({});
