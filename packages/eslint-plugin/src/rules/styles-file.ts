@@ -1,44 +1,12 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
-import type { TSESTree } from '@typescript-eslint/utils';
 
-import { isMakeStylesCallExpression } from '../utils/helpers';
+import { isMakeStylesCallExpression, isMakeStylesImport } from '../utils/helpers';
 import { getDocsUrl } from '../utils/getDocsUrl';
 
-const MATCHING_PACKAGES = new Set(['@fluentui/react-components', '@griffel/core', '@griffel/react']);
 const STYLES_FILE_PATTERN = /^.*\.(styles)\.[j|t]s$/;
-
-function isMatchingPackage(packageName: string) {
-  return MATCHING_PACKAGES.has(packageName);
-}
 
 function isStylesFile(fileName: string) {
   return STYLES_FILE_PATTERN.test(fileName);
-}
-
-/**
- * @param node - import node from AST
- * @returns true if makeStyles is imported, or if the entire library is imported. Otherwise returns false
- */
-function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
-  return (
-    isMatchingPackage(node.source.value) &&
-    node.specifiers.filter(specifier => {
-      // import * as ... from
-      if (specifier.type === 'ImportNamespaceSpecifier') {
-        return true;
-      }
-
-      if ('imported' in specifier) {
-        return (
-          specifier.imported.name === 'makeStyles' || // import { makeStyles } from
-          specifier.imported.name === 'makeStaticStyles' || // import { makeStaticStyles } from
-          specifier.imported.name === 'makeResetStyles' // import { makeResetStyles } from
-        );
-      }
-
-      return false;
-    }).length > 0
-  );
 }
 
 export const RULE_NAME = 'styles-file';

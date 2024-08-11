@@ -34,20 +34,62 @@ export function isMakeStylesCallExpression(
   node: TSESTree.CallExpression,
   ...functionNames: [MakeStylesName, ...MakeStylesName[]]
 ): boolean {
+  return getMakeStylesCallExpression(node, ...functionNames) !== null;
+}
+
+export function getMakeStylesCallExpression(
+  node: TSESTree.CallExpression,
+  ...functionNames: [MakeStylesName, ...MakeStylesName[]]
+) {
   const { callee } = node;
   const names: ReadonlySet<string> = new Set(functionNames);
 
-  if (isIdentifier(callee)) {
+  if (isIdentifier(callee) && names.has(callee.name)) {
     // makeStyles({})
-    return names.has(callee.name);
+    return callee.name;
   } else if (isMemberExpression(callee)) {
-    return (
-      // something.makeStyles({})
-      (isIdentifier(callee.property) && names.has(callee.property.name)) ||
-      // something['makeStyles']({})
-      (isStringLiteral(callee.property) && names.has(callee.property.value))
-    );
-  } else {
-    return false;
+    // something.makeStyles({})
+    if (isIdentifier(callee.property) && names.has(callee.property.name)) {
+      return callee.property.name;
+    }
+
+    // something['makeStyles']({})
+    if (isStringLiteral(callee.property) && names.has(callee.property.value)) {
+      return callee.property.value;
+    }
   }
+
+  return null;
+}
+
+const MATCHING_PACKAGES = new Set(['@fluentui/react-components', '@griffel/core', '@griffel/react']);
+
+function isMatchingPackage(packageName: string) {
+  return MATCHING_PACKAGES.has(packageName);
+}
+
+/**
+ * @param node - import node from AST
+ * @returns true if makeStyles is imported, or if the entire library is imported. Otherwise returns false
+ */
+export function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
+  return (
+    isMatchingPackage(node.source.value) &&
+    node.specifiers.filter(specifier => {
+      // import * as ... from
+      if (specifier.type === 'ImportNamespaceSpecifier') {
+        return true;
+      }
+
+      if ('imported' in specifier) {
+        return (
+          specifier.imported.name === 'makeStyles' || // import { makeStyles } from
+          specifier.imported.name === 'makeStaticStyles' || // import { makeStaticStyles } from
+          specifier.imported.name === 'makeResetStyles' // import { makeResetStyles } from
+        );
+      }
+
+      return false;
+    }).length > 0
+  );
 }

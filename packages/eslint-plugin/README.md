@@ -23,7 +23,7 @@ Add `@griffel` to the plugins section and `plugin:@griffel/recommended` to the e
 
 ## Shareable configurations
 
-This plugin exports recommended configuration that enforce good practices, but you can use only uses that are required for your use case:
+This plugin exports recommended configuration that enforce good practices, but you can choose to use only the ones that are necessary for your use case:
 
 ```json
 {
@@ -48,4 +48,6 @@ You can find more info about enabled rules in the [Supported Rules section](#sup
 | [`@griffel/no-invalid-shorthand-arguments`](./src/rules/no-invalid-shorthand-arguments.md) | All shorthands must not use space separators, and instead pass in multiple arguments                            | ✅  |
 | [`@griffel/no-shorthands`](./src/rules/no-shorthands.md)                                   | Enforce usage of CSS longhands                                                                                  | ✅  |
 | [`@griffel/styles-file`](./src/rules/styles-file.md)                                       | Ensures that all `makeStyles()` and `makeResetStyles()` calls are placed in a `.styles.js` or `.styles.ts` file | ❌  |
+limitations) | ❌ |
 | [`@griffel/pseudo-element-naming`](./src/rules/pseudo-element-naming.md)                   | Ensures that all Pseudo Elements start with two colons                                                          | ✅  |
+| [`@griffel/top-level-styles`](./src/rules/top-level-styles.md)                    | Ensures that all `makeStyles()`, `makeResetStyles()` and `makeStaticStyles()` calls are written in the top level of a file to discourage developer misuse.
