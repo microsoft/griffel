@@ -37,8 +37,6 @@ export const stylesFileRule = ESLintUtils.RuleCreator(getDocsUrl)({
           }
           const methodName = getMakeStylesCallExpression(node, 'makeStyles', 'makeStaticStyles', 'makeResetStyles');
           if (methodName) {
-            console.log('callExpression');
-
             context.report({
               messageId: 'foundInvalidUsage',
               data: {
