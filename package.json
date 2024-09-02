@@ -136,7 +136,7 @@
     "snapshot-diff": "0.10.0",
     "styled-components": "^5.3.6",
     "stylelint": "^15.10.3",
-    "syncpack": "12.3.0",
+    "syncpack": "13.0.0",
     "tmp": "0.2.1",
     "ts-jest": "29.1.1",
     "ts-node": "10.9.1",
