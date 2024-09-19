@@ -15,7 +15,11 @@ function formatCSS(css: string): string {
 export async function compareSnapshots(options: CompareSnapshotsOptions): Promise<void> {
   const { snapshotFile, resultFile } = options;
 
-  const resultContent = formatCSS(await fs.promises.readFile(resultFile, 'utf8'));
+  const resultContentRaw = await fs.promises.readFile(resultFile, 'utf8');
+  // Remove meta info added by Rspack
+  const resultContentCleaned = resultContentRaw.replace(/head{--webpack-rspack-(\d+)-(\w+)-(\d+):&_(\d+);}/, '');
+  const resultContent = formatCSS(resultContentCleaned);
+
   const snapshotContent = formatCSS(await fs.promises.readFile(snapshotFile, 'utf8'));
 
   const diff = snapshotDiff(snapshotContent, resultContent, {
