@@ -16,6 +16,7 @@
         "project": "packages/shadow-dom/package.json",
         "entryFile": "packages/shadow-dom/src/index.ts",
         "compiler": "babel",
+        "sourceMap": true,
         "rollupConfig": ["@nx/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
         "external": ["tslib"],
         "format": ["esm", "cjs"],
