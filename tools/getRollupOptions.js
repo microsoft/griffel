@@ -5,8 +5,6 @@ function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options)
       // Stops bundling to a single file and prevents bundle size issues
       preserveModules: true,
       preserveModulesRoot: 'src',
-      // Enables sourcemaps
-      sourcemap: true,
       // Add interop for CJS
       ...(output.format === 'cjs' && { interop: 'compat' }),
     }));

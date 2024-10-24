@@ -15,6 +15,7 @@
         "project": "packages/style-types/package.json",
         "entryFile": "packages/style-types/src/index.ts",
         "rollupConfig": "tools/getRollupOptions.js",
+        "sourceMap": true,
         "compiler": "babel",
         "external": ["tslib"],
         "format": ["esm", "cjs"],
