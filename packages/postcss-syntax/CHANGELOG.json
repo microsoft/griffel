@@ -2,6 +2,27 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2024 16:16:50 GMT",
+      "tag": "@griffel/postcss-syntax_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "83dc4f00cbc306a1712bf945d411392f7a75932c",
+            "comment": "feat: Support stylelint rule disabling for style slots\u0017\u0017"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/postcss-syntax",
+            "comment": "Bump @griffel/babel-preset to v1.6.3",
+            "commit": "00ba8831f3b895c1600e8211895c0d2b99c13365"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Jul 2024 07:31:53 GMT",
       "tag": "@griffel/postcss-syntax_v1.1.4",
       "version": "1.1.4",

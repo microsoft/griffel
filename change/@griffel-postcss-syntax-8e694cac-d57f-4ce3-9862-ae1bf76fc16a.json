@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: Support stylelint rule disabling for style slots\u0017\u0017",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}

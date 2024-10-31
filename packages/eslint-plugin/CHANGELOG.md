@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Wed, 10 Jul 2024 14:36:29 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Oct 2024 16:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.7.0
+
+Thu, 31 Oct 2024 16:16:50 GMT
+
+### Minor changes
+
+- feat: add top-level-styles eslint rule (ben.keen@gmail.com)
 
 ## 1.6.4
 

@@ -1,8 +1,17 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Mon, 29 Jul 2024 07:31:53 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Oct 2024 16:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.0
+
+Thu, 31 Oct 2024 16:16:50 GMT
+
+### Minor changes
+
+- feat: Support stylelint rule disabling for style slots (lingfangao@hotmail.com)
+- Bump @griffel/babel-preset to v1.6.3
 
 ## 1.1.4
 

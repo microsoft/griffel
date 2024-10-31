@@ -1,8 +1,18 @@
 # Change Log - @griffel/react
 
-This log was last generated on Mon, 29 Jul 2024 07:31:53 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Oct 2024 16:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.26
+
+Thu, 31 Oct 2024 16:16:50 GMT
+
+### Patches
+
+- chore: add eslint-plugin-react-compiler and enable for React package. (seanmonahan@microsoft.com)
+- fix: make RendererProvider compatible with React Compiler (olfedias@microsoft.com)
+- Bump @griffel/core to v1.18.1
 
 ## 1.5.25
 

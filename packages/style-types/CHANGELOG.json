@@ -2,6 +2,21 @@
   "name": "@griffel/style-types",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2024 16:16:50 GMT",
+      "tag": "@griffel/style-types_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "alinazaieva@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "00ba8831f3b895c1600e8211895c0d2b99c13365",
+            "comment": "Support font-display in @font-face in makeStaticStyles"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 May 2024 08:24:17 GMT",
       "tag": "@griffel/style-types_v1.2.0",
       "version": "1.2.0",

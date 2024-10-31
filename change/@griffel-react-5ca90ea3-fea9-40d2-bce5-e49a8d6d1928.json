@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: add eslint-plugin-react-compiler and enable for React package.",
-  "packageName": "@griffel/react",
-  "email": "seanmonahan@microsoft.com",
-  "dependentChangeType": "patch"
-}

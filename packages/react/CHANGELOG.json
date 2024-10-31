@@ -2,6 +2,41 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2024 16:16:50 GMT",
+      "tag": "@griffel/react_v1.5.26",
+      "version": "1.5.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "seanmonahan@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "4436d63cff956aa0a71f7a7e00df1897e468c6d9",
+            "comment": "chore: add eslint-plugin-react-compiler and enable for React package."
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "fb21c433253790424a07159ede50c9f827b51137",
+            "comment": "fix: make RendererProvider compatible with React Compiler"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.18.1",
+            "commit": "00ba8831f3b895c1600e8211895c0d2b99c13365"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "291da5fea61bd08be595df1cdce171b755612898",
+            "comment": "chore: bump Nx to 19.8.6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Jul 2024 07:31:53 GMT",
       "tag": "@griffel/react_v1.5.25",
       "version": "1.5.25",

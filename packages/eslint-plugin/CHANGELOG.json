@@ -2,6 +2,35 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2024 16:16:50 GMT",
+      "tag": "@griffel/eslint-plugin_v1.7.0",
+      "version": "1.7.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "291da5fea61bd08be595df1cdce171b755612898",
+            "comment": "chore: bump Nx to 19.8.6"
+          },
+          {
+            "author": "tigeroakes@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "bdb268b47461714203d420a6761454775d8a6bf3",
+            "comment": "docs: update README"
+          }
+        ],
+        "minor": [
+          {
+            "author": "ben.keen@gmail.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "e729a723be10b63c566ce764738d4ba60f51e2e4",
+            "comment": "feat: add top-level-styles eslint rule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jul 2024 14:36:29 GMT",
       "tag": "@griffel/eslint-plugin_v1.6.4",
       "version": "1.6.4",

@@ -1,6 +1,6 @@
 {
   "name": "@griffel/babel-preset",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Babel preset with build time transforms for Griffel",
   "license": "MIT",
   "repository": {
@@ -13,7 +13,7 @@
     "@babel/helper-plugin-utils": "^7.22.5",
     "@babel/template": "^7.22.15",
     "@babel/traverse": "^7.23.2",
-    "@griffel/core": "^1.18.0",
+    "@griffel/core": "^1.18.1",
     "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
     "ajv": "^8.4.0",

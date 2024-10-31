@@ -1,8 +1,16 @@
 # Change Log - @griffel/style-types
 
-This log was last generated on Wed, 22 May 2024 08:24:17 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Oct 2024 16:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Thu, 31 Oct 2024 16:16:50 GMT
+
+### Minor changes
+
+- Support font-display in @font-face in makeStaticStyles (alinazaieva@microsoft.com)
 
 ## 1.2.0
 

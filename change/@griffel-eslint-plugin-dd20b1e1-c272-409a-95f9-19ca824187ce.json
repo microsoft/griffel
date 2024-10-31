@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add top-level-styles eslint rule",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "ben.keen@gmail.com",
-  "dependentChangeType": "patch"
-}
