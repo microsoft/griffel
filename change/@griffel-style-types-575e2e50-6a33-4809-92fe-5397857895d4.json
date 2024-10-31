@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Support font-display in @font-face in makeStaticStyles",
+  "packageName": "@griffel/style-types",
+  "email": "alinazaieva@microsoft.com",
+  "dependentChangeType": "patch"
+}
