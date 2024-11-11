@@ -22,8 +22,11 @@ type BorderStyle = Pick<
   | 'borderLeftWidth'
 >;
 
+/** @deprecated Use `{ border: '2px' }` instead as Griffel supports CSS shorthands now */
 export function border(width: BorderWidthInput): BorderStyle;
+/** @deprecated Use `{ border: '2px solid' }` instead as Griffel supports CSS shorthands now */
 export function border(width: BorderWidthInput, style: BorderStyleInput): BorderStyle;
+/** @deprecated Use `{ border: '2px solid red' }` instead as Griffel supports CSS shorthands now */
 export function border(width: BorderWidthInput, style: BorderStyleInput, color: BorderColorInput): BorderStyle;
 
 /**

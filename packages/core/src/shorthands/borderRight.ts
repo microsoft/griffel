@@ -5,15 +5,21 @@ import { isBorderStyle } from './utils';
 
 type BorderRightStyle = Pick<GriffelStyle, 'borderRightWidth' | 'borderRightStyle' | 'borderRightColor'>;
 
+/** @deprecated Use `{ borderRight: '2px' }` instead as Griffel supports CSS shorthands now */
 export function borderRight(width: BorderWidthInput): BorderRightStyle;
+/** @deprecated Use `{ borderRight: 'solid' }` instead as Griffel supports CSS shorthands now */
 export function borderRight(style: BorderStyleInput): BorderRightStyle;
+/** @deprecated Use `{ borderRight: '2px solid' }` instead as Griffel supports CSS shorthands now */
 export function borderRight(width: BorderWidthInput, style: BorderStyleInput): BorderRightStyle;
+/** @deprecated Use `{ borderRight: 'solid 2px' }` instead as Griffel supports CSS shorthands now */
 export function borderRight(style: BorderStyleInput, width: BorderWidthInput): BorderRightStyle;
+/** @deprecated Use `{ borderRight: '2px solid red' }` instead as Griffel supports CSS shorthands now */
 export function borderRight(
   width: BorderWidthInput,
   style: BorderStyleInput,
   color: BorderColorInput,
 ): BorderRightStyle;
+/** @deprecated Use `{ borderRight: 'solid 2px red' }` instead as Griffel supports CSS shorthands now */
 export function borderRight(
   style: BorderStyleInput,
   width: BorderWidthInput,

@@ -20,9 +20,13 @@ export function isCustomIdent(value: GridAreaInput | undefined): boolean {
   );
 }
 
+/** @deprecated Use `{ gridArea: '2' }` instead as Griffel supports CSS shorthands now */
 export function gridArea(all: GridAreaInput): GridAreaStyle;
+/** @deprecated Use `{ gridArea: '2 / 4' }` instead as Griffel supports CSS shorthands now */
 export function gridArea(rowStart: GridAreaInput, columnStart: GridAreaInput): GridAreaStyle;
+/** @deprecated Use `{ gridArea: '2 / 4 / 4' }` instead as Griffel supports CSS shorthands now */
 export function gridArea(rowStart: GridAreaInput, columnStart: GridAreaInput, rowEnd: GridAreaInput): GridAreaStyle;
+/** @deprecated Use `{ gridArea: '2 / 4 / 1 / 3' }` instead as Griffel supports CSS shorthands now */
 export function gridArea(
   rowStart: GridAreaInput,
   columnStart: GridAreaInput,
@@ -41,7 +45,7 @@ export function gridArea(
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area
  *
- * @deprecated Just use `{ gridArea: '2 / 4 / 1 / 3' }` instead as Griffel supports CSS shorthands now
+ * @deprecated Use `{ gridArea: '2 / 4 / 1 / 3' }` instead as Griffel supports CSS shorthands now
  */
 export function gridArea(...values: GridAreaInput[]): GridAreaStyle {
   // if any value is not valid, then do not apply the CSS.
