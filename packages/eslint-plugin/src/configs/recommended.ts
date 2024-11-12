@@ -5,5 +5,6 @@ export const recommendedConfig = {
     '@griffel/no-invalid-shorthand-argument': 'error',
     '@griffel/no-shorthands': 'error',
     '@griffel/pseudo-element-naming': 'error',
+    '@griffel/no-deprecated-shorthands': 'error',
   },
 };
