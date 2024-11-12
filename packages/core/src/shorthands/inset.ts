@@ -3,9 +3,13 @@ import type { InsetInput } from './types';
 
 type InsetStyle = Pick<GriffelStyle, 'top' | 'right' | 'bottom' | 'left'>;
 
+/** @deprecated Use `{ inset: '10px' }` instead as Griffel supports CSS shorthands now */
 export function inset(all: InsetInput): InsetStyle;
+/** @deprecated Use `{ inset: '10px 5px' }` instead as Griffel supports CSS shorthands now */
 export function inset(vertical: InsetInput, horizontal: InsetInput): InsetStyle;
+/** @deprecated Use `{ inset: '10px 5px 8px' }` instead as Griffel supports CSS shorthands now */
 export function inset(top: InsetInput, horizontal: InsetInput, bottom: InsetInput): InsetStyle;
+/** @deprecated Use `{ inset: '10px 5px 8px 4px' }` instead as Griffel supports CSS shorthands now */
 export function inset(top: InsetInput, right: InsetInput, bottom: InsetInput, left: InsetInput): InsetStyle;
 
 /**
@@ -19,7 +23,7 @@ export function inset(top: InsetInput, right: InsetInput, bottom: InsetInput, le
  *
  * See https://developer.mozilla.org/en-US/docs/Web/CSS/inset
  *
- * @deprecated Just use `{ inset: '10px 5px 8px 4px' }` instead as Griffel supports CSS shorthands now
+ * @deprecated Use `{ inset: '10px 5px 8px 4px' }` instead as Griffel supports CSS shorthands now
  */
 export function inset(...values: InsetInput[]): InsetStyle {
   const [firstValue, secondValue = firstValue, thirdValue = firstValue, fourthValue = secondValue] = values;
