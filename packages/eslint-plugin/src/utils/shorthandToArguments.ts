@@ -98,7 +98,7 @@ export const UNSUPPORTED_CSS_PROPERTIES: Partial<Record<keyof CSS.StandardShorth
 const pxSplitter = buildShorthandSplitter({ numberUnit: 'px' });
 
 // Transforms shorthand string into args for griffel shorthands.<name>() function.
-const SHORTHAND_FUNCTIONS: Partial<Record<string, ReturnType<typeof buildShorthandSplitter>>> = {
+export const SHORTHAND_FUNCTIONS: Partial<Record<string, ReturnType<typeof buildShorthandSplitter>>> = {
   border: pxSplitter,
   borderLeft: pxSplitter,
   borderBottom: pxSplitter,
