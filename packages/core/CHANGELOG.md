@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 31 Oct 2024 16:16:50 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Nov 2024 09:58:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.18.2
+
+Tue, 12 Nov 2024 09:58:11 GMT
+
+### Patches
+
+- chore: all deprecated shorthands functions are tagged properly (suryamalladi@microsoft.com)
 
 ## 1.18.1
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: all deprecated shorthands functions are tagged properly",
-  "packageName": "@griffel/core",
-  "email": "suryamalladi@microsoft.com",
-  "dependentChangeType": "patch"
-}
