@@ -1,28 +1,11 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
-import type { TSESTree } from '@typescript-eslint/utils';
 
 import { getDocsUrl } from '../utils/getDocsUrl';
-import { isIdentifier, isMemberExpression } from '../utils/helpers';
+import { getShorthandName } from '../utils/helpers';
 import { getShorthandValue, joinShorthandArguments } from '../utils/getShorthandValue';
 import { shorthandToArguments } from '../utils/shorthandToArguments';
 
 export const RULE_NAME = 'no-invalid-shorthand-argument';
-
-/**
- * Check if the node represents is a shorthand and return the name.
- */
-function getShorthandName(node: TSESTree.LeftHandSideExpression | TSESTree.Expression): string | undefined {
-  if (
-    isMemberExpression(node) &&
-    isIdentifier(node.object) &&
-    isIdentifier(node.property) &&
-    node.object.name === 'shorthands'
-  ) {
-    return node.property.name;
-  }
-
-  return undefined;
-}
 
 export const noInvalidShorthandArgumentRule = ESLintUtils.RuleCreator(getDocsUrl)({
   name: RULE_NAME,

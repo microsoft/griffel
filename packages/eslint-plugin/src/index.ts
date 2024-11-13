@@ -6,6 +6,7 @@ import { noInvalidShorthandArgumentRule } from './rules/no-invalid-shorthand-arg
 import { noShorthandsRule } from './rules/no-shorthands';
 import { pseudoElementNamingRule } from './rules/pseudo-element-naming';
 import { stylesFileRule } from './rules/styles-file';
+import { noDeprecatedShorthandsRule } from './rules/no-deprecated-shorthands';
 
 const rules: Record<string, ESLintUtils.RuleModule<string, unknown[]>> = {
   'hook-naming': hookNamingRule,
@@ -13,6 +14,7 @@ const rules: Record<string, ESLintUtils.RuleModule<string, unknown[]>> = {
   'no-shorthands': noShorthandsRule,
   'styles-file': stylesFileRule,
   'pseudo-element-naming': pseudoElementNamingRule,
+  'no-deprecated-shorthands': noDeprecatedShorthandsRule,
 };
 
 const plugin = {

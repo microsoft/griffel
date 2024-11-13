@@ -93,3 +93,19 @@ export function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
     }).length > 0
   );
 }
+
+/**
+ * Check if the node represents is a shorthand and return the name.
+ */
+export function getShorthandName(node: TSESTree.LeftHandSideExpression | TSESTree.Expression): string | undefined {
+  if (
+    isMemberExpression(node) &&
+    isIdentifier(node.object) &&
+    isIdentifier(node.property) &&
+    node.object.name === 'shorthands'
+  ) {
+    return node.property.name;
+  }
+
+  return undefined;
+}

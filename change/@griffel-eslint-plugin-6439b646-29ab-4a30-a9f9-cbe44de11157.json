@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "feat: Add no-deprecated-shorthands rule",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "suryamalladi@microsoft.com",
+  "dependentChangeType": "patch"
+}
