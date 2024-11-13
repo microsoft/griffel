@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Thu, 31 Oct 2024 16:16:50 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Nov 2024 15:01:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.0
+
+Wed, 13 Nov 2024 15:01:37 GMT
+
+### Major changes
+
+- feat: Add no-deprecated-shorthands rule (suryamalladi@microsoft.com)
 
 ## 1.7.0
 

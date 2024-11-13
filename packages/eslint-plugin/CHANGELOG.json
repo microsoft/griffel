@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Wed, 13 Nov 2024 15:01:37 GMT",
+      "tag": "@griffel/eslint-plugin_v2.0.0",
+      "version": "2.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "suryamalladi@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "629d59ae42b173b720c624e97b479f0b22dcf744",
+            "comment": "feat: Add no-deprecated-shorthands rule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Oct 2024 16:16:50 GMT",
       "tag": "@griffel/eslint-plugin_v1.7.0",
       "version": "1.7.0",
