@@ -4,7 +4,7 @@ Ensure that rules passed to `makeStyles()` function do not contain [CSS shorthan
 
 ## Rule Details
 
-The latest versions of Griffel supports CSS shorthand properties. However, some of the shorthands are not supported: borderColor, borderStyle & borderWidth.
+The latest versions of Griffel supports CSS shorthand properties. However, some of the shorthands are not supported: `borderColor`, `borderStyle` & `borderWidth`.
 
 Unsupported CSS shorthands are enforced by typings, but there are cases when they don't work as expected [microsoft/griffel#78](https://github.com/microsoft/griffel/issues/78).
 
