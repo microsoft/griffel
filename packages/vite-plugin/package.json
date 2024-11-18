@@ -9,7 +9,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@wyw-in-js/vite": "^0.2.3"
+    "@wyw-in-js/vite": "^0.5.5"
   },
   "peerDependencies": {
     "@griffel/tag-processor": "*",
