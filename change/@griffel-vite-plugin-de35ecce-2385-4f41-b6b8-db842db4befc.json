@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: bump @wyw-in-js/vite",
+  "packageName": "@griffel/vite-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

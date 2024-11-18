@@ -4747,7 +4747,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.0.4, @rollup/pluginutils@npm:^5.1.0":
+"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.1.0":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
@@ -7403,30 +7403,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wyw-in-js/processor-utils@npm:0.2.3, @wyw-in-js/processor-utils@npm:^0.2.3":
-  version: 0.2.3
-  resolution: "@wyw-in-js/processor-utils@npm:0.2.3"
+"@wyw-in-js/processor-utils@npm:0.5.5, @wyw-in-js/processor-utils@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "@wyw-in-js/processor-utils@npm:0.5.5"
   dependencies:
     "@babel/generator": "npm:^7.23.5"
-    "@wyw-in-js/shared": "npm:0.2.3"
-  checksum: 10/8c66dffe0ea0c9c10a38cf669190997239460dcc1423604a9dabf814a64a8355087f0c3dca5f0256c9c34246009655f4f2ea3d306757db44986feb9bdb03ce84
+    "@wyw-in-js/shared": "npm:0.5.5"
+  checksum: 10/a33f6348d508323443b389dd13a631be41c0139190bf1c06e4d10d89f01bebd4396a02833a07b7d4adba71ce5d0523ddf150312d0e87ff50f6bc10bedab71771
   languageName: node
   linkType: hard
 
-"@wyw-in-js/shared@npm:0.2.3":
-  version: 0.2.3
-  resolution: "@wyw-in-js/shared@npm:0.2.3"
+"@wyw-in-js/shared@npm:0.5.5":
+  version: 0.5.5
+  resolution: "@wyw-in-js/shared@npm:0.5.5"
   dependencies:
     debug: "npm:^4.3.4"
     find-up: "npm:^5.0.0"
     minimatch: "npm:^9.0.3"
-  checksum: 10/8ecb5fbf4498aecd4c796060d76514717309aaf15216afe44a7f607ecd3c03f53662d56db00ad9d816504f6ad523924b9370d606b58838180d93ff2c95645c23
+  checksum: 10/49bae7c11e724c3b7c9ff6138822e38033f382b96ba9bf3fdb739e8ca08e45ae13218661ec8910b559a879edabdf5d2e8c06449ce59def5134d77dfaf3f1be34
   languageName: node
   linkType: hard
 
-"@wyw-in-js/transform@npm:0.2.3":
-  version: 0.2.3
-  resolution: "@wyw-in-js/transform@npm:0.2.3"
+"@wyw-in-js/transform@npm:0.5.5":
+  version: 0.5.5
+  resolution: "@wyw-in-js/transform@npm:0.5.5"
   dependencies:
     "@babel/core": "npm:^7.23.5"
     "@babel/generator": "npm:^7.23.5"
@@ -7435,28 +7435,27 @@ __metadata:
     "@babel/template": "npm:^7.22.15"
     "@babel/traverse": "npm:^7.23.5"
     "@babel/types": "npm:^7.23.5"
-    "@wyw-in-js/processor-utils": "npm:0.2.3"
-    "@wyw-in-js/shared": "npm:0.2.3"
+    "@wyw-in-js/processor-utils": "npm:0.5.5"
+    "@wyw-in-js/shared": "npm:0.5.5"
     babel-merge: "npm:^3.0.0"
     cosmiconfig: "npm:^8.0.0"
-    happy-dom: "npm:^12.5.0"
+    happy-dom: "npm:^15.11.0"
     source-map: "npm:^0.7.4"
     stylis: "npm:^4.3.0"
     ts-invariant: "npm:^0.10.3"
-  checksum: 10/448a8fe14979ffec91bea9dd9dacb3fc7c6815eef84a8357165eb28e3e07b09d8f8e6085b3e361886ca756977562e1b73426acb40a3b049ef28fe7ffea54eed7
+  checksum: 10/4a54e36a1e1c47e01cf9f306fc435e74b12191b1922e76d5d188df9adceafe621bf61f5c52f378f8e7022ff671bea498e417449ac8eb77b651c44ba96d3ff724
   languageName: node
   linkType: hard
 
-"@wyw-in-js/vite@npm:^0.2.3":
-  version: 0.2.3
-  resolution: "@wyw-in-js/vite@npm:0.2.3"
+"@wyw-in-js/vite@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "@wyw-in-js/vite@npm:0.5.5"
   dependencies:
-    "@rollup/pluginutils": "npm:^5.0.4"
-    "@wyw-in-js/shared": "npm:0.2.3"
-    "@wyw-in-js/transform": "npm:0.2.3"
+    "@wyw-in-js/shared": "npm:0.5.5"
+    "@wyw-in-js/transform": "npm:0.5.5"
   peerDependencies:
     vite: ">=3.2.7"
-  checksum: 10/242c9f92374b6ddbfb24a63d5bb325babbcf3e842e1af2e68769ef90be3fde0f9c4b85f561aece9e73fa525e6004b2ce40c32487e06159a70b20cc8ef4c7cc55
+  checksum: 10/829613e29dc0071b5f4de8821a4fb33f1d159089a9750d58418e44ffc5bbb13919cc08bd792168fed47c0006934bb3dfff2c123e2e62a27dae675a5c5d630f5f
   languageName: node
   linkType: hard
 
@@ -13632,8 +13631,8 @@ __metadata:
     "@typescript-eslint/parser": "npm:7.18.0"
     "@typescript-eslint/utils": "npm:^7.18.0"
     "@uifabric/merge-styles": "npm:7.19.1"
-    "@wyw-in-js/processor-utils": "npm:^0.2.3"
-    "@wyw-in-js/vite": "npm:^0.2.3"
+    "@wyw-in-js/processor-utils": "npm:^0.5.5"
+    "@wyw-in-js/vite": "npm:^0.5.5"
     ajv: "npm:^8.4.0"
     babel-jest: "npm:29.7.0"
     babel-plugin-annotate-pure-calls: "npm:0.4.0"
@@ -13737,17 +13736,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^12.5.0":
-  version: 12.10.3
-  resolution: "happy-dom@npm:12.10.3"
+"happy-dom@npm:^15.11.0":
+  version: 15.11.6
+  resolution: "happy-dom@npm:15.11.6"
   dependencies:
-    css.escape: "npm:^1.5.1"
     entities: "npm:^4.5.0"
-    iconv-lite: "npm:^0.6.3"
     webidl-conversions: "npm:^7.0.0"
-    whatwg-encoding: "npm:^2.0.0"
     whatwg-mimetype: "npm:^3.0.0"
-  checksum: 10/de82ddd1c981f24a95011c62c2d03e12c4c48f86c0234fa7a1a309d8fa1481885956c783fb3cc56371fa49193d2323822a583196156b10db179e7ac754ef7864
+  checksum: 10/895a40bda00753f833ea563f64aef80558b6f701a3238e9fe7143265a1246bde57bc5a7a58ed89e77e2bbe309a119dcf956a70c48033fa84893c41206a6b4128
   languageName: node
   linkType: hard
 
