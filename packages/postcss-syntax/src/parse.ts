@@ -39,7 +39,7 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
   Object.entries(cssEntries).forEach(([declarator, slots]) => {
     Object.entries(slots).forEach(([slot, rules]) => {
       cssRuleSlotNames.push(`${declarator} ${slot}`);
-      let cssRule = rules.join('');
+      let cssRule = rules.join('').replace(/\n/g, ' ');
 
       const ignoredRules = getIgnoredRulesFromDirectives(commentDirectives[declarator]?.[slot] ?? []);
       if (ignoredRules.length) {
@@ -54,7 +54,7 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
   Object.entries(cssResetEntries).forEach(([declarator, resetRules]) => {
     cssRuleSlotNames.push(`${declarator}`);
     const ignoredRules = getIgnoredRulesFromDirectives(resetCommentDirectives[declarator] ?? []);
-    let cssRule = resetRules.join('');
+    let cssRule = resetRules.join('').replace(/\n/g, ' ');
 
     if (ignoredRules.length) {
       const stylelintIgnore = `/* stylelint-disable-line ${ignoredRules.join(',')} */`;
