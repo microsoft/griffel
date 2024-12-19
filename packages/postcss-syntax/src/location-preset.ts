@@ -14,6 +14,7 @@ export type ResetCommentDirectivesByHookDeclarator = Record</** hook declarator 
 export type ResetLocationsByHookDeclarator = Record</** hook declarator */ string, t.SourceLocation>;
 
 export interface LocationPluginState extends PluginPass {
+  callExpressionLocations?: Record</** hook declarator */ string, t.SourceLocation>;
   locations?: LocationsByHookDeclarator;
   commentDirectives?: CommentDirectivesByHookDeclarator;
 
@@ -22,11 +23,12 @@ export interface LocationPluginState extends PluginPass {
 }
 
 export interface LocationPluginMetadata {
-  locations: Record<string, Record<string, t.SourceLocation>>;
+  callExpressionLocations: Record</** hook declarator */ string, t.SourceLocation>;
+  locations: LocationsByHookDeclarator;
   commentDirectives: CommentDirectivesByHookDeclarator;
 
   resetCommentDirectives: ResetCommentDirectivesByHookDeclarator;
-  resetLocations: Record<string, t.SourceLocation>;
+  resetLocations: ResetLocationsByHookDeclarator;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -57,6 +59,7 @@ const plugin = declare<LocationPluginOptions, PluginObj<LocationPluginState>>((a
     name: '@griffel/slot-location-plugin',
 
     pre() {
+      this.callExpressionLocations = {};
       this.locations = {};
       this.resetLocations = {};
       this.commentDirectives = {};
@@ -67,6 +70,7 @@ const plugin = declare<LocationPluginOptions, PluginObj<LocationPluginState>>((a
       Program: {
         exit() {
           Object.assign(this.file.metadata, {
+            callExpressionLocations: this.callExpressionLocations,
             locations: this.locations,
             resetLocations: this.resetLocations,
             commentDirectives: this.commentDirectives,
@@ -94,6 +98,13 @@ const plugin = declare<LocationPluginOptions, PluginObj<LocationPluginState>>((a
         // but since we only collect locations, the plugin is idempotent and we
         // it's safe enough to avoid doing that check
         if (functionKinds.includes(callee.node.name)) {
+          if (path.node.loc) {
+            state.callExpressionLocations ??= {};
+            state.callExpressionLocations[declaratorId] = {
+              ...path.node.loc,
+            };
+          }
+
           const locations = path.get('arguments')[0];
           if (!locations.isObjectExpression()) {
             return;
@@ -130,6 +141,13 @@ const plugin = declare<LocationPluginOptions, PluginObj<LocationPluginState>>((a
         }
 
         if (resetFunctionKinds.includes(callee.node.name)) {
+          if (path.node.loc) {
+            state.callExpressionLocations ??= {};
+            state.callExpressionLocations[declaratorId] = {
+              ...path.node.loc,
+            };
+          }
+
           state.resetLocations ??= {};
           const resetStyles = path.get('arguments')[0];
           if (!resetStyles.isObjectExpression()) {
