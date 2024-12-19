@@ -113,6 +113,47 @@ export const useStyles = makeStyles({
       });
     });
 
+    it('should map style locations to slots when styles contains new lines', () => {
+      const fixture = `
+import { makeStyles } from "@griffel/react";
+
+export const useStyles = makeStyles({
+  slot1: {
+    background: \`linear-gradient(#e66465, 
+      #9198e5)\`,
+  },
+
+  slot2: {
+    color: "blue",
+  },
+});
+`;
+      const root = parse(fixture, { from: 'fixture.styles.ts' });
+
+      expect(root.toString()).toMatchInlineSnapshot(`
+        ".f1qmhkic{background:linear-gradient(#e66465,        #9198e5);}
+        .f163i14w{color:blue;}"
+      `);
+
+      root.walk(node => {
+        const slot = node.raw(GRIFFEL_SLOT_RAW);
+        expect(['slot1', 'slot2']).toContain(slot);
+
+        if (slot === 'slot1') {
+          expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+            start: { line: 5, column: 2, index: 87 },
+            end: { line: 8, column: 3, index: 159 },
+          });
+        }
+        if (slot === 'slot2') {
+          expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+            start: { line: 10, column: 2, index: 164 },
+            end: { line: 12, column: 3, index: 195 },
+          });
+        }
+      });
+    });
+
     it('should hold original source in document raw field', () => {
       const fixture = `
 import { makeStyles } from '@griffel/react';
@@ -257,6 +298,39 @@ export const useResetStyles = makeResetStyles({
           start: { line: 4, column: 46, index: 98 },
           end: { line: 7, column: 1, index: 145 },
         });
+      });
+    });
+
+    it('should map style locations to reset styles when styles contains new lines', () => {
+      const fixture = `
+import { makeResetStyles } from "@griffel/react";
+
+export const useResetStyles1 = makeResetStyles({
+  color: "red",
+  background: \`linear-gradient(#e66465, 
+    #9198e5)\`,
+});
+export const useResetStyles2 = makeResetStyles({
+  color: "red",
+});
+`;
+      const root = parse(fixture, { from: 'fixture.styles.ts' });
+
+      root.walk(node => {
+        const declarator = node.raw(GRIFFEL_DECLARATOR_RAW);
+        if (declarator === 'useResetStyles1') {
+          expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
+            start: { line: 4, column: 47, index: 99 },
+            end: { line: 8, column: 1, index: 174 },
+          });
+        }
+
+        if (declarator === 'useResetStyles2') {
+          expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
+            start: { line: 9, column: 47, index: 224 },
+            end: { line: 11, column: 1, index: 243 },
+          });
+        }
       });
     });
 
