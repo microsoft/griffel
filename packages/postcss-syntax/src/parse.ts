@@ -31,8 +31,15 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
     },
   });
 
-  const { cssEntries, cssResetEntries, resetLocations, locations, commentDirectives, resetCommentDirectives } =
-    metadata;
+  const {
+    cssEntries,
+    cssResetEntries,
+    callExpressionLocations,
+    resetLocations,
+    locations,
+    commentDirectives,
+    resetCommentDirectives,
+  } = metadata;
 
   const cssRuleSlotNames: string[] = [];
   const cssRules: string[] = [];
@@ -74,9 +81,9 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
     node.raws[GRIFFEL_DECLARATOR_RAW] = declarator;
     if (slot) {
       node.raws[GRIFFEL_SLOT_RAW] = slot;
-      node.raws[GRIFFEL_SLOT_LOCATION_RAW] = locations[declarator][slot];
+      node.raws[GRIFFEL_SLOT_LOCATION_RAW] = locations[declarator]?.[slot] ?? callExpressionLocations[declarator];
     } else {
-      node.raws[GRIFFEL_DECLARATOR_LOCATION_RAW] = resetLocations[declarator];
+      node.raws[GRIFFEL_DECLARATOR_LOCATION_RAW] = resetLocations[declarator] ?? callExpressionLocations[declarator];
     }
   });
 
