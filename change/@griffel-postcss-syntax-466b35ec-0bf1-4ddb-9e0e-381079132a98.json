@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: return location of the makeStyles/makeResetStyles call expression when it is not called with object expression",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "yuanboxue@microsoft.com",
+  "dependentChangeType": "patch"
+}
