@@ -72,7 +72,7 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
     cssRules.push(cssRule);
   });
 
-  const root = postcss.parse(cssRules.join('\n'));
+  const root = postcss.parse(cssRules.join('\n'), { from: filename });
   root.walk(node => {
     if (!node.source || node.source.start === undefined) {
       return;

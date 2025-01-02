@@ -37,6 +37,8 @@ export const useStyles = makeStyles({
           end: { line: 13, column: 3, index: 208 },
         });
       });
+
+      expect(root.source?.input.file?.endsWith('fixture.styles.ts')).toBe(true);
     });
 
     it('should handle different module source', () => {
