@@ -8,9 +8,18 @@ declare global {
   }
 }
 
+/**
+ * @internal
+ */
 export type DebugAtomicClassName = { className: string; overriddenBy?: string };
+/**
+ * @internal
+ */
 export type DebugCSSRules = Record<string /* className */, string /* cssRule */>;
 
+/**
+ * @internal
+ */
 export type DebugSequence = {
   sequenceHash: SequenceHash;
   direction: 'ltr' | 'rtl';
