@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: bump @wyw-in-js/processor-utils",
-  "packageName": "@griffel/tag-processor",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: Persist filename in postcss syntax",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,33 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2025 10:03:24 GMT",
+      "tag": "@griffel/postcss-syntax_v1.2.2",
+      "version": "1.2.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "1c399b04a43267a9cdcb3e269996417d738ce593",
+            "comment": "fix: Persist filename in postcss syntax"
+          },
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "8312835d4371706051708102048819de4a251401",
+            "comment": "fix: return location of the makeStyles/makeResetStyles call expression when it is not called with object expression"
+          },
+          {
+            "author": "yuanboxue@microsoft.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "0379b14bb1dd848761256465b05875ffcdc0ad1e",
+            "comment": "fix: parse styles with new lines"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 09:58:11 GMT",
       "tag": "@griffel/postcss-syntax_v1.2.1",
       "version": "1.2.1",

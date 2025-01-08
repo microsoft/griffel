@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: include `index.html` in publish",
-  "packageName": "@griffel/devtools",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
