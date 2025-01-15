@@ -20,7 +20,7 @@ export function getResetDebugTree(debugSequenceHash: SequenceHash, parentNode?: 
 
   node.rules = {};
   node.debugClassNames.forEach(({ className }) => {
-    node.slot = className;
+    node.slot = 'makeResetStyles()';
 
     const cssRule = debugData.getCSSRules().find(cssRule => {
       return cssRule.includes(className);
