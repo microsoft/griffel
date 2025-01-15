@@ -21,7 +21,6 @@ export function mergeDebugTrees(
     return debugResultRootAtomic;
   }
 
-  console.log('HERE');
   const debugResultRoot: DebugSequence = {
     sequenceHash: debugResultRootAtomic.sequenceHash + debugResultRootReset.sequenceHash,
     direction: 'ltr',
