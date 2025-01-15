@@ -9,11 +9,18 @@ export function injectDevTools(document: Document) {
 
   const devtools: (typeof window)['__GRIFFEL_DEVTOOLS__'] = {
     getInfo: (element: HTMLElement) => {
-      const rootDebugSequenceHash = Array.from(element.classList).find(className =>
-        className.startsWith(SEQUENCE_PREFIX),
-      );
+      let rootDebugSequenceHash: string | undefined;
+      let rootResetDebugClassName: string | undefined;
 
-      const rootResetDebugClassName = Array.from(element.classList).find(className => DEBUG_RESET_CLASSES[className]);
+      Array.from(element.classList).forEach(className => {
+        if (className.startsWith(SEQUENCE_PREFIX)) {
+          rootDebugSequenceHash = className;
+          return;
+        }
+        if (DEBUG_RESET_CLASSES[className]) {
+          rootResetDebugClassName = className;
+        }
+      });
 
       return mergeDebugSequence(rootDebugSequenceHash, rootResetDebugClassName);
     },
