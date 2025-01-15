@@ -23,7 +23,7 @@ export function mergeDebugTrees(
 
   const debugResultRoot: DebugSequence = {
     sequenceHash: debugResultRootAtomic.sequenceHash + debugResultRootReset.sequenceHash,
-    direction: 'ltr',
+    direction: debugResultRootAtomic.direction,
     children: [debugResultRootAtomic, debugResultRootReset],
     debugClassNames: [...debugResultRootAtomic.debugClassNames, ...debugResultRootReset.debugClassNames],
   };
