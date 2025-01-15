@@ -114,8 +114,6 @@ const debugResultRoot: DebugResult = {
   debugClassNames: [...debugResultRootAtomic.debugClassNames, ...debugResultRootReset.debugClassNames],
 };
 
-console.log(debugResultRoot);
-
 export const Default: StoryObj<{ theme: 'dark' | 'light' }> = {
   render: ({ theme }) => {
     const tokens = theme === 'dark' ? darkTheme : lightTheme;
