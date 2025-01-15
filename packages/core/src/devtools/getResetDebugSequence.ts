@@ -22,11 +22,13 @@ export function getResetDebugSequence(debugSequenceHash: SequenceHash) {
   node.slot = 'makeResetStyles()';
 
   const [{ className }] = node.debugClassNames;
-  const cssRule = debugData.getCSSRules().find(cssRule => {
+  const cssRules = debugData.getCSSRules().filter(cssRule => {
     return cssRule.includes(className);
   });
 
-  node.rules![className] = cssRule!;
+  cssRules.forEach(cssRule => {
+    node.rules![className] = cssRule!;
+  });
 
   return node;
 }
