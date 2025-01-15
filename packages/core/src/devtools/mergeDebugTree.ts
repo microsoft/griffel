@@ -4,10 +4,10 @@ import type { DebugSequence } from './types';
 
 export function mergeDebugTrees(
   atomicClases: string | undefined,
-  resetClasses: string | undefined,
+  resetClassName: string | undefined,
 ): DebugSequence | undefined {
   const debugResultRootAtomic = atomicClases ? getDebugTree(atomicClases) : undefined;
-  const debugResultRootReset = resetClasses ? getResetDebugTree(resetClasses) : undefined;
+  const debugResultRootReset = resetClassName ? getResetDebugTree(resetClassName) : undefined;
 
   if (!debugResultRootAtomic && !debugResultRootReset) {
     return undefined;
