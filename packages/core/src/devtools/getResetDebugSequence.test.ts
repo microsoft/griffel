@@ -40,7 +40,7 @@ describe('getResetDebugSequence', () => {
         [resetClassName!]: expect.stringContaining('margin:0'), // Match partial rule content
       },
       sequenceHash: resetClassName,
-      slot: resetClassName,
+      slot: 'makeResetStyles()',
     });
   });
 
@@ -68,7 +68,7 @@ describe('getResetDebugSequence', () => {
         [resetClassName!]: expect.stringMatching(/margin:0.*padding:0.*border:none/),
       },
       sequenceHash: resetClassName,
-      slot: resetClassName,
+      slot: 'makeResetStyles()',
     });
   });
 });
