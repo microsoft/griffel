@@ -97,12 +97,12 @@ const debugResultRootAtomic: DebugResult = {
 };
 
 const debugResultRootReset: DebugResult = {
-  sequenceHash: 'rabc',
+  sequenceHash: 'r8e9yta',
   direction: 'ltr',
   children: [],
-  debugClassNames: [{ className: 'rabc' }],
+  debugClassNames: [{ className: 'r8e9yta' }],
   rules: {
-    rabc: '.rabc{background-color:yellow; width: 100%;}.rabc:hover{background-color:red;}',
+    r8e9yta: '.r8e9yta{background-color:yellow; width: 100%;}.r8e9yta:hover{background-color:red;}',
   },
   slot: 'RESET STYLES',
 };
