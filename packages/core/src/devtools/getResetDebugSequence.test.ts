@@ -3,7 +3,7 @@ import { makeResetStyles } from '../makeResetStyles';
 import type { MakeStylesOptions } from '../makeStyles';
 import { mergeClasses } from '../mergeClasses';
 import { createDOMRenderer } from '../renderer/createDOMRenderer';
-import { getResetDebugTree } from './getResetDebugTree';
+import { getResetDebugSequence } from './getResetDebugSequence';
 
 jest.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
@@ -17,7 +17,7 @@ const options: MakeStylesOptions = {
 const findResetHash = (classNames: string) =>
   classNames.split(' ').find(className => className.startsWith(RESET_HASH_PREFIX));
 
-describe('getResetDebugTree', () => {
+describe('getResetDebugSequence', () => {
   it('returns correct debug tree for reset styles', () => {
     const classes = makeResetStyles({
       margin: '0',
@@ -28,7 +28,7 @@ describe('getResetDebugTree', () => {
     const className = mergeClasses('ui-button', classes);
     const resetClassName = findResetHash(className);
 
-    expect(getResetDebugTree(resetClassName!)).toEqual({
+    expect(getResetDebugSequence(resetClassName!)).toEqual({
       children: [],
       debugClassNames: [
         {
@@ -56,7 +56,7 @@ describe('getResetDebugTree', () => {
     const className = mergeClasses('ui-button', classes);
     const resetClassName = findResetHash(className);
 
-    expect(getResetDebugTree(resetClassName!)).toEqual({
+    expect(getResetDebugSequence(resetClassName!)).toEqual({
       children: [],
       debugClassNames: [
         {

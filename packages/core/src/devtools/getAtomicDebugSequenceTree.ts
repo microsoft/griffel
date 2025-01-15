@@ -4,7 +4,7 @@ import { debugData } from './store';
 import type { DebugSequence } from './types';
 import { getDebugClassNames } from './utils';
 
-export function getDebugTree(debugSequenceHash: SequenceHash, parentNode?: DebugSequence) {
+export function getAtomicDebugSequenceTree(debugSequenceHash: SequenceHash, parentNode?: DebugSequence) {
   const lookupItem: LookupItem | undefined = DEFINITION_LOOKUP_TABLE[debugSequenceHash];
   if (lookupItem === undefined) {
     return undefined;
@@ -29,7 +29,7 @@ export function getDebugTree(debugSequenceHash: SequenceHash, parentNode?: Debug
   childrenSequences
     .reverse() // first process the overriding children that are merged last
     .forEach((sequence: SequenceHash) => {
-      const child = getDebugTree(sequence, node);
+      const child = getAtomicDebugSequenceTree(sequence, node);
       if (child) {
         node.children.push(child);
       }

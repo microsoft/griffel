@@ -1,13 +1,13 @@
-import { getDebugTree } from './getDebugTree';
-import { getResetDebugTree } from './getResetDebugTree';
+import { getAtomicDebugSequenceTree } from './getAtomicDebugSequenceTree';
+import { getResetDebugSequence } from './getResetDebugSequence';
 import type { DebugSequence } from './types';
 
-export function mergeDebugTrees(
+export function mergeDebugSequence(
   atomicClases: string | undefined,
   resetClassName: string | undefined,
 ): DebugSequence | undefined {
-  const debugResultRootAtomic = atomicClases ? getDebugTree(atomicClases) : undefined;
-  const debugResultRootReset = resetClassName ? getResetDebugTree(resetClassName) : undefined;
+  const debugResultRootAtomic = atomicClases ? getAtomicDebugSequenceTree(atomicClases) : undefined;
+  const debugResultRootReset = resetClassName ? getResetDebugSequence(resetClassName) : undefined;
 
   if (!debugResultRootAtomic && !debugResultRootReset) {
     return undefined;

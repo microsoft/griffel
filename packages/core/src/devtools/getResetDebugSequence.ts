@@ -3,7 +3,7 @@ import type { SequenceHash } from '../types';
 import { debugData } from './store';
 import type { DebugSequence } from './types';
 
-export function getResetDebugTree(debugSequenceHash: SequenceHash, parentNode?: DebugSequence) {
+export function getResetDebugSequence(debugSequenceHash: SequenceHash, parentNode?: DebugSequence) {
   const resetClass = DEBUG_RESET_CLASSES[debugSequenceHash];
   if (resetClass === undefined) {
     return undefined;

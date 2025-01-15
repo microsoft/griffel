@@ -3,7 +3,7 @@ import { makeResetStyles } from '../makeResetStyles';
 import { makeStyles } from '../makeStyles';
 import type { MakeStylesOptions } from '../makeStyles';
 import { createDOMRenderer } from '../renderer/createDOMRenderer';
-import { mergeDebugTrees } from './mergeDebugTree';
+import { mergeDebugSequence } from './mergeDebugSequence';
 import { getDebugClassNames } from './utils';
 
 jest.mock('./isDevToolsEnabled', () => ({
@@ -21,9 +21,9 @@ const findSequenceHash = (classNames: string) =>
 const findResetHash = (classNames: string) =>
   classNames.split(' ').find(className => className.startsWith(RESET_HASH_PREFIX));
 
-describe('mergeDebugTrees', () => {
+describe('mergeDebugSequence', () => {
   it('returns undefined when both inputs are undefined', () => {
-    expect(mergeDebugTrees(undefined, undefined)).toBeUndefined();
+    expect(mergeDebugSequence(undefined, undefined)).toBeUndefined();
   });
 
   it('returns atomic debug tree when reset classes is undefined', () => {
@@ -32,7 +32,7 @@ describe('mergeDebugTrees', () => {
     })(options);
 
     const atomicSequence = findSequenceHash(classes.block);
-    const result = mergeDebugTrees(atomicSequence, undefined);
+    const result = mergeDebugSequence(atomicSequence, undefined);
 
     expect(result?.sequenceHash).toBe(atomicSequence);
     expect(result?.children).toHaveLength(0);
@@ -42,7 +42,7 @@ describe('mergeDebugTrees', () => {
     const classes = makeResetStyles({ margin: 0 })(options);
 
     const resetSequence = findResetHash(classes);
-    const result = mergeDebugTrees(undefined, resetSequence);
+    const result = mergeDebugSequence(undefined, resetSequence);
 
     expect(result?.sequenceHash).toBe(resetSequence);
     expect(result?.children).toHaveLength(0);
@@ -62,7 +62,7 @@ describe('mergeDebugTrees', () => {
     const atomicSequence = findSequenceHash(atomicClasses.block);
     const resetSequence = findResetHash(resetClasses);
 
-    const result = mergeDebugTrees(atomicSequence, resetSequence);
+    const result = mergeDebugSequence(atomicSequence, resetSequence);
 
     const debugClassname = getDebugClassNames(DEFINITION_LOOKUP_TABLE[atomicSequence!]);
     expect(result).toMatchObject({

@@ -1,5 +1,5 @@
 import { SEQUENCE_PREFIX, DEBUG_RESET_CLASSES } from '../constants';
-import { mergeDebugTrees } from './mergeDebugTree';
+import { mergeDebugSequence } from './mergeDebugSequence';
 
 export function injectDevTools(document: Document) {
   const window = document.defaultView;
@@ -15,7 +15,7 @@ export function injectDevTools(document: Document) {
 
       const rootResetDebugClassName = Array.from(element.classList).find(className => DEBUG_RESET_CLASSES[className]);
 
-      return mergeDebugTrees(rootDebugSequenceHash, rootResetDebugClassName);
+      return mergeDebugSequence(rootDebugSequenceHash, rootResetDebugClassName);
     },
   };
 
