@@ -37,6 +37,8 @@ export const useStyles = makeStyles({
           end: { line: 13, column: 3, index: 208 },
         });
       });
+
+      expect(root.source?.input.file?.endsWith('fixture.styles.ts')).toBe(true);
     });
 
     it('should handle different module source', () => {
@@ -151,6 +153,38 @@ export const useStyles = makeStyles({
             end: { line: 12, column: 3, index: 195 },
           });
         }
+      });
+    });
+
+    it('should map style locations to makeStyles call when it is not called with object expressions', () => {
+      const fixture = `
+import { makeStyles } from "@griffel/react";
+
+const styles = {
+  slot1: {
+    color: "red",
+  },
+  slot2: {
+    backgroundColor: "green",
+  },
+};
+
+export const useStyles = makeStyles(styles);
+`;
+      const root = parse(fixture, { from: 'fixture.styles.ts' });
+
+      expect(root.toString()).toMatchInlineSnapshot(`
+        ".fe3e8s9{color:red;}
+        .fcnqdeg{background-color:green;}"
+      `);
+
+      root.walk(node => {
+        const slot = node.raw(GRIFFEL_SLOT_RAW);
+        expect(['slot1', 'slot2']).toContain(slot);
+        expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
+          start: { line: 13, column: 25, index: 173 },
+          end: { line: 13, column: 43, index: 191 },
+        });
       });
     });
 
@@ -331,6 +365,31 @@ export const useResetStyles2 = makeResetStyles({
             end: { line: 11, column: 1, index: 243 },
           });
         }
+      });
+    });
+
+    it('should map style locations to makeResetStyles call when it is not called with object expressions', () => {
+      const fixture = `
+import { makeResetStyles } from "@griffel/react";
+
+const styles = {
+  color: "red",
+  backgroundColor: "green",
+};
+
+export const useResetStyles = makeResetStyles(styles);
+`;
+      const root = parse(fixture, { from: 'fixture.styles.ts' });
+
+      expect(root.toString()).toMatchInlineSnapshot(`".rbe9p1m{color:red;background-color:green;}"`);
+
+      root.walk(node => {
+        const declarator = node.raw(GRIFFEL_DECLARATOR_RAW);
+        expect(declarator).toEqual('useResetStyles');
+        expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
+          start: { line: 9, column: 30, index: 147 },
+          end: { line: 9, column: 53, index: 170 },
+        });
       });
     });
 

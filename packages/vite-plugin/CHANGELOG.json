@@ -2,6 +2,21 @@
   "name": "@griffel/vite-plugin",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2025 10:03:24 GMT",
+      "tag": "@griffel/vite-plugin_v0.1.10",
+      "version": "0.1.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "e0e7fea324484258808a044061bbee6919ad744d",
+            "comment": "chore: bump @wyw-in-js/vite"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Feb 2024 10:32:16 GMT",
       "tag": "@griffel/vite-plugin_v0.1.1",
       "version": "0.1.1",

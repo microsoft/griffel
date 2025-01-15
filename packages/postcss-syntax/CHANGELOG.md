@@ -1,8 +1,18 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Tue, 12 Nov 2024 09:58:11 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Jan 2025 10:03:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.2
+
+Wed, 08 Jan 2025 10:03:24 GMT
+
+### Patches
+
+- fix: Persist filename in postcss syntax (lingfangao@hotmail.com)
+- fix: return location of the makeStyles/makeResetStyles call expression when it is not called with object expression (yuanboxue@microsoft.com)
+- fix: parse styles with new lines (yuanboxue@microsoft.com)
 
 ## 1.2.1
 

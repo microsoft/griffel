@@ -2,6 +2,21 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2025 10:03:24 GMT",
+      "tag": "@griffel/devtools_v0.2.34",
+      "version": "0.2.34",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "9282f8271164121521b4a03e7fbd7ce3da57960c",
+            "comment": "fix: include `index.html` in publish"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 09:58:11 GMT",
       "tag": "@griffel/devtools_v0.2.33",
       "version": "0.2.33",

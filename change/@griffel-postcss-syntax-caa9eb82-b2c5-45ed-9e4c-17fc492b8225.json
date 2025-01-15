@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: parse styles with new lines",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "yuanboxue@microsoft.com",
-  "dependentChangeType": "patch"
-}
