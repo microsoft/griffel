@@ -2,7 +2,7 @@ import * as stylis from 'stylis';
 import type { AtomicRules, MonolithicAtRules, MonolithicRules, RuleDetail } from './types';
 
 // match className like '.fvnxzrg' or '.fvnxzrg.fui-focus-visible'
-const griffelClassNameRegex = /^\.(f[0-9a-z]+|r[0-9a-z]+)(\..*|$)/;
+const griffelClassNameRegex = /^\.([fr][0-9a-z]+)(\..*|$)/;
 
 function parseRuleElement(element: stylis.Element, overriddenBy?: string) {
   // example of `value`: `.f3xbvq9:hover`
