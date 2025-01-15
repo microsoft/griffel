@@ -51,6 +51,7 @@ describe('getResetDebugSequence', () => {
       border: 'none',
       background: 'none',
       fontSize: '100%',
+      ':hover': { color: 'blue' },
     })(options);
 
     const className = mergeClasses('ui-button', classes);
@@ -66,6 +67,7 @@ describe('getResetDebugSequence', () => {
       direction: 'ltr',
       rules: {
         [resetClassName!]: expect.stringMatching(/margin:0.*padding:0.*border:none/),
+        [resetClassName!]: expect.stringContaining('color:blue'),
       },
       sequenceHash: resetClassName,
       slot: 'makeResetStyles()',

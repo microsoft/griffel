@@ -23,12 +23,10 @@ export function getResetDebugSequence(debugSequenceHash: SequenceHash) {
 
   const [{ className }] = node.debugClassNames;
   const cssRules = debugData.getCSSRules().filter(cssRule => {
-    return cssRule.includes(className);
+    return cssRule.includes(`.${className}`);
   });
 
-  cssRules.forEach(cssRule => {
-    node.rules![className] = cssRule!;
-  });
+  node.rules![className] = cssRules.join('');
 
   return node;
 }
