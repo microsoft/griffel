@@ -3,7 +3,7 @@ import { makeStyles } from '../makeStyles';
 import type { MakeStylesOptions } from '../makeStyles';
 import { mergeClasses } from '../mergeClasses';
 import { createDOMRenderer } from '../renderer/createDOMRenderer';
-import { getDebugTree } from './getDebugTree';
+import { getAtomicDebugSequenceTree } from './getAtomicDebugSequenceTree';
 
 jest.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
@@ -19,7 +19,7 @@ const findSequenceHash = (classNames: string) =>
 
 const sourceURLregex = /.*[/\\].*:[0-9]+:[0-9]+/; // url with line and column number
 
-describe('getDebugTree', () => {
+describe('getAtomicDebugSequenceTree', () => {
   it.each<'ltr' | 'rtl'>(['ltr', 'rtl'])('returns styles merge tree when dir=%p', dir => {
     const classes = makeStyles({
       block: { display: 'block' },
@@ -35,7 +35,7 @@ describe('getDebugTree', () => {
     const sequence1 = findSequenceHash(className1);
     const sequence2 = findSequenceHash(className2);
 
-    expect(getDebugTree(sequence2!)).toEqual({
+    expect(getAtomicDebugSequenceTree(sequence2!)).toEqual({
       children: [
         {
           children: [],
@@ -108,7 +108,7 @@ describe('getDebugTree', () => {
     const sequence1 = findSequenceHash(className1);
     const sequence2 = findSequenceHash(className2);
 
-    expect(getDebugTree(sequence2!)).toEqual({
+    expect(getAtomicDebugSequenceTree(sequence2!)).toEqual({
       children: [
         {
           children: [],

@@ -1,5 +1,5 @@
-import { SEQUENCE_PREFIX } from '../constants';
-import { getDebugTree } from './getDebugTree';
+import { SEQUENCE_PREFIX, DEBUG_RESET_CLASSES } from '../constants';
+import { mergeDebugSequence } from './mergeDebugSequence';
 
 export function injectDevTools(document: Document) {
   const window = document.defaultView;
@@ -7,16 +7,22 @@ export function injectDevTools(document: Document) {
     return;
   }
 
-  const devtools: typeof window['__GRIFFEL_DEVTOOLS__'] = {
+  const devtools: (typeof window)['__GRIFFEL_DEVTOOLS__'] = {
     getInfo: (element: HTMLElement) => {
-      const rootDebugSequenceHash = Array.from(element.classList).find(className =>
-        className.startsWith(SEQUENCE_PREFIX),
-      );
-      if (rootDebugSequenceHash === undefined) {
-        return undefined;
+      let rootDebugSequenceHash: string | undefined;
+      let rootResetDebugClassName: string | undefined;
+
+      for (const className of element.classList) {
+        if (className.startsWith(SEQUENCE_PREFIX)) {
+          rootDebugSequenceHash = className;
+          return;
+        }
+        if (DEBUG_RESET_CLASSES[className]) {
+          rootResetDebugClassName = className;
+        }
       }
 
-      return getDebugTree(rootDebugSequenceHash);
+      return mergeDebugSequence(rootDebugSequenceHash, rootResetDebugClassName);
     },
   };
 

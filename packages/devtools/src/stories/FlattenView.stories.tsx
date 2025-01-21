@@ -5,7 +5,7 @@ import type { StoryObj } from '@storybook/react';
 import { FlattenView } from '../FlattenView';
 import { darkTheme, lightTheme } from '../themes';
 
-const debugResultRoot: DebugResult = {
+const debugResultRootAtomic: DebugResult = {
   sequenceHash: '___29aowz0_1rg0tlg',
   direction: 'ltr',
   children: [
@@ -94,6 +94,24 @@ const debugResultRoot: DebugResult = {
     { className: 'fsz8qd4' },
     { className: 'f7wpa5l' },
   ],
+};
+
+const debugResultRootReset: DebugResult = {
+  sequenceHash: 'r8e9yta',
+  direction: 'ltr',
+  children: [],
+  debugClassNames: [{ className: 'r8e9yta' }],
+  rules: {
+    r8e9yta: '.r8e9yta{background-color:yellow; width: 100%;}.r8e9yta:hover{background-color:red;}',
+  },
+  slot: 'RESET STYLES',
+};
+
+const debugResultRoot: DebugResult = {
+  sequenceHash: debugResultRootAtomic.sequenceHash + debugResultRootReset.sequenceHash,
+  direction: 'ltr',
+  children: [debugResultRootAtomic, debugResultRootReset],
+  debugClassNames: [...debugResultRootAtomic.debugClassNames, ...debugResultRootReset.debugClassNames],
 };
 
 export const Default: StoryObj<{ theme: 'dark' | 'light' }> = {
