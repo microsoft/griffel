@@ -12,7 +12,7 @@ export function injectDevTools(document: Document) {
       let rootDebugSequenceHash: string | undefined;
       let rootResetDebugClassName: string | undefined;
 
-      Array.from(element.classList).forEach(className => {
+      for (const className of element.classList) {
         if (className.startsWith(SEQUENCE_PREFIX)) {
           rootDebugSequenceHash = className;
           return;
@@ -20,7 +20,7 @@ export function injectDevTools(document: Document) {
         if (DEBUG_RESET_CLASSES[className]) {
           rootResetDebugClassName = className;
         }
-      });
+      }
 
       return mergeDebugSequence(rootDebugSequenceHash, rootResetDebugClassName);
     },
