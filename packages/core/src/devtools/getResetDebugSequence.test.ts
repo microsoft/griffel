@@ -19,58 +19,49 @@ const findResetHash = (classNames: string) =>
 
 describe('getResetDebugSequence', () => {
   it('returns correct debug tree for reset styles', () => {
-    const classes = makeResetStyles({
+    const resetClassName = makeResetStyles({
       margin: '0',
       padding: '0',
-      boxSizing: 'border-box',
     })(options);
-
-    const className = mergeClasses('ui-button', classes);
-    const resetClassName = findResetHash(className);
-
-    expect(getResetDebugSequence(resetClassName!)).toEqual({
+    const className = mergeClasses('ui-button', resetClassName);
+    const classNameForLookup = findResetHash(className)!;
+    const result = getResetDebugSequence(classNameForLookup)!;
+    expect(result).toEqual({
       children: [],
-      debugClassNames: [
-        {
-          className: resetClassName,
-        },
-      ],
-      direction: 'ltr',
-      rules: {
-        [resetClassName!]: expect.stringContaining('margin:0'), // Match partial rule content
-      },
-      sequenceHash: resetClassName,
+      debugClassNames: [{ className: classNameForLookup }],
+      direction: options.dir,
+      rules: expect.any(Object),
+      sequenceHash: classNameForLookup,
       slot: 'makeResetStyles()',
     });
+    expect(result.rules).toMatchInlineSnapshot(`
+      Object {
+        "r1l95nvm": ".r1l95nvm{margin:0;padding:0;}",
+      }
+    `);
   });
-
-  it('handles reset styles with multiple properties', () => {
-    const classes = makeResetStyles({
+  it('handles reset styles with nested selectors', () => {
+    const resetClassName = makeResetStyles({
       margin: '0',
       padding: '0',
-      border: 'none',
-      background: 'none',
-      fontSize: '100%',
       ':hover': { color: 'blue' },
+      '& .foo': { color: 'red' },
     })(options);
-
-    const className = mergeClasses('ui-button', classes);
-    const resetClassName = findResetHash(className);
-
-    expect(getResetDebugSequence(resetClassName!)).toEqual({
+    const className = mergeClasses('ui-button', resetClassName);
+    const classNameForLookup = findResetHash(className)!;
+    const result = getResetDebugSequence(classNameForLookup)!;
+    expect(result).toEqual({
       children: [],
-      debugClassNames: [
-        {
-          className: resetClassName,
-        },
-      ],
-      direction: 'ltr',
-      rules: {
-        [resetClassName!]: expect.stringMatching(/margin:0.*padding:0.*border:none/),
-        [resetClassName!]: expect.stringContaining('color:blue'),
-      },
-      sequenceHash: resetClassName,
+      debugClassNames: [{ className: classNameForLookup }],
+      direction: options.dir,
+      rules: expect.any(Object),
+      sequenceHash: classNameForLookup,
       slot: 'makeResetStyles()',
     });
+    expect(result.rules).toMatchInlineSnapshot(`
+      Object {
+        "rf14qlw": ".rf14qlw{margin:0;padding:0;}.rf14qlw:hover{color:blue;}.rf14qlw .foo{color:red;}",
+      }
+    `);
   });
 });
