@@ -53,7 +53,6 @@ describe('mergeDebugSequence', () => {
       block: { display: 'block' },
     })(options);
 
-    // Create reset styles
     const resetClasses = makeResetStyles({
       margin: 0,
       padding: 0,
@@ -80,11 +79,5 @@ describe('mergeDebugSequence', () => {
       ]),
       debugClassNames: expect.arrayContaining([...debugClassname, { className: resetSequence }]),
     });
-
-    // Verify the merged debugClassNames contains both sets
-    // const totalClassNames = (result?.debugClassNames || []).length;
-    // const atomicClassNames = (result?.children[0].debugClassNames || []).length;
-    // const resetClassNames = (result?.children[1].debugClassNames || []).length;
-    // expect(totalClassNames).toBe(atomicClassNames + resetClassNames);
   });
 });
