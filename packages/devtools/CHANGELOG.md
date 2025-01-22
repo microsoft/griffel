@@ -1,8 +1,17 @@
 # Change Log - @griffel/devtools
 
-This log was last generated on Wed, 08 Jan 2025 10:03:24 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Jan 2025 13:44:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.0
+
+Wed, 22 Jan 2025 13:44:43 GMT
+
+### Minor changes
+
+- feat: support reset styles (email not defined)
+- Bump @griffel/react to v1.5.28
 
 ## 0.2.34
 

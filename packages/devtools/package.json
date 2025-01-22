@@ -1,6 +1,6 @@
 {
   "name": "@griffel/devtools",
-  "version": "0.2.34",
+  "version": "0.3.0",
   "description": "Griffel chrome devtools extension",
   "license": "MIT",
   "repository": {
@@ -8,6 +8,6 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "devDependencies": {
-    "@griffel/react": "^1.5.27"
+    "@griffel/react": "^1.5.28"
   }
 }

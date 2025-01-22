@@ -2,6 +2,27 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Wed, 22 Jan 2025 13:44:43 GMT",
+      "tag": "@griffel/devtools_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "email not defined",
+            "package": "@griffel/devtools",
+            "commit": "6bac9a8ff5f10e90393f501e88c18671096d307d",
+            "comment": "feat: support reset styles"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.5.28",
+            "commit": "fa0a08b0452669a9bc4e0f83b2dbcd85b97f733e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jan 2025 10:03:24 GMT",
       "tag": "@griffel/devtools_v0.2.34",
       "version": "0.2.34",
