@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: remove early return",
+  "packageName": "@griffel/core",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
