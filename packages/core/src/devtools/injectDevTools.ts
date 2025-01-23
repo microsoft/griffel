@@ -15,7 +15,6 @@ export function injectDevTools(document: Document) {
       for (const className of element.classList) {
         if (className.startsWith(SEQUENCE_PREFIX)) {
           rootDebugSequenceHash = className;
-          return;
         }
         if (DEBUG_RESET_CLASSES[className]) {
           rootResetDebugClassName = className;
