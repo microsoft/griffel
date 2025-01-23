@@ -1,6 +1,6 @@
 {
   "name": "@griffel/tag-processor",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "wyw-in-js processor for Griffel",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@griffel/core": "^1.19.0",
+    "@griffel/core": "^1.19.1",
     "@wyw-in-js/processor-utils": "^0.5.5",
     "stylis": "^4.2.0",
     "tslib": "^2.1.0"

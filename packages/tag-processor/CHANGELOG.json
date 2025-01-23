@@ -2,6 +2,21 @@
   "name": "@griffel/tag-processor",
   "entries": [
     {
+      "date": "Thu, 23 Jan 2025 12:09:03 GMT",
+      "tag": "@griffel/tag-processor_v1.0.12",
+      "version": "1.0.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/tag-processor",
+            "comment": "Bump @griffel/core to v1.19.1",
+            "commit": "78b2b5f231e3032de8aa1b5c5794a2a4317df42e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jan 2025 13:44:43 GMT",
       "tag": "@griffel/tag-processor_v1.0.11",
       "version": "1.0.11",

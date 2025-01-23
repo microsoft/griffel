@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Thu, 23 Jan 2025 12:09:03 GMT",
+      "tag": "@griffel/webpack-loader_v2.2.18",
+      "version": "2.2.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.6.6",
+            "commit": "78b2b5f231e3032de8aa1b5c5794a2a4317df42e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jan 2025 13:44:43 GMT",
       "tag": "@griffel/webpack-loader_v2.2.17",
       "version": "2.2.17",

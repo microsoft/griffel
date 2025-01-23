@@ -1,8 +1,16 @@
 # Change Log - @griffel/shadow-dom
 
-This log was last generated on Wed, 22 Jan 2025 13:44:43 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jan 2025 12:09:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.9
+
+Thu, 23 Jan 2025 12:09:03 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.19.1
 
 ## 0.2.8
 
