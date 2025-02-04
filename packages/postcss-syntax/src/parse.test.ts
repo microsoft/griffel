@@ -273,6 +273,35 @@ export const useStyles = makeStyles({
         .f163i14w{color:blue;}.f3xbvq9{background-color:red;} /* stylelint-disable-line foo,bar */"
       `);
     });
+
+    it('should not throw on failure to parse JS code when `silenceOnParseErrors` is set', () => {
+      const fixture = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  slot: {
+      // simulate user WIP code
+      color: 'bl,
+  }
+})
+`;
+      const root = parse(fixture, { from: 'fixture.styles.ts', silenceParseErrors: true });
+      expect(root.toString()).toMatchInlineSnapshot(`"/* Failed to parse griffel styles: fixture.styles.ts */"`);
+    });
+
+    it('should throw on failure to parse JS code', () => {
+      const fixture = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  slot: {
+      // simulate user WIP code
+      color: 'bl,
+  }
+})
+`;
+      expect(() => parse(fixture, { from: 'fixture.styles.ts' })).toThrow('Unterminated string constant');
+    });
   });
 
   describe('makeResetStyles', () => {
