@@ -1,8 +1,16 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Thu, 23 Jan 2025 12:09:03 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Feb 2025 14:53:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Tue, 04 Feb 2025 14:53:08 GMT
+
+### Minor changes
+
+- feat: postcss-syntax should silence parse errors on demand (lingfangao@hotmail.com)
 
 ## 1.2.4
 

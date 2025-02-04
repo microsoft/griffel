@@ -2,6 +2,21 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Tue, 04 Feb 2025 14:53:08 GMT",
+      "tag": "@griffel/postcss-syntax_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "8545fda97cb38ec54e90e885fd5858838295f3d2",
+            "comment": "feat: postcss-syntax should silence parse errors on demand"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2025 12:09:03 GMT",
       "tag": "@griffel/postcss-syntax_v1.2.4",
       "version": "1.2.4",

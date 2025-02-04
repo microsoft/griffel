@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: postcss-syntax should silence parse errors on demand",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "lingfangao@hotmail.com",
-  "dependentChangeType": "patch"
-}
