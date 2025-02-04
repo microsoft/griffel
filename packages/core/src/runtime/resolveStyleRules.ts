@@ -25,8 +25,16 @@ import type { AtRules } from './utils/types';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties';
 
-function getShorthandDefinition(property: string): [number, string[]] | undefined {
-  return shorthands[property as keyof typeof shorthands];
+function getShorthandDefinition<Property extends keyof typeof shorthands>(
+  property: string,
+): (typeof shorthands)[Property] | undefined {
+  return shorthands[property as unknown as Property];
+}
+
+function createShorthandsReset(shorthand: NonNullable<ReturnType<typeof getShorthandDefinition>>) {
+  const propertiesToReset = shorthand[1];
+
+  return Object.fromEntries(propertiesToReset.map(property => [property, RESET])) as unknown as GriffelStyle;
 }
 
 function computePropertyPriority(shorthand: [number, string[]] | undefined): number {
@@ -127,10 +135,14 @@ export function resolveStyleRules(
       const shorthand = getShorthandDefinition(property);
 
       if (shorthand) {
-        const shorthandProperties = shorthand[1];
-        const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
-
-        resolveStyleRules(shorthandResetStyles, classNameHashSalt, selectors, atRules, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          createShorthandsReset(shorthand),
+          classNameHashSalt,
+          selectors,
+          atRules,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       }
 
       // uniq key based on a hash of property & selector, used for merging later
@@ -253,10 +265,14 @@ export function resolveStyleRules(
       const shorthand = getShorthandDefinition(property);
 
       if (shorthand) {
-        const shorthandProperties = shorthand[1];
-        const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
-
-        resolveStyleRules(shorthandResetStyles, classNameHashSalt, selectors, atRules, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          createShorthandsReset(shorthand),
+          classNameHashSalt,
+          selectors,
+          atRules,
+          cssClassesMap,
+          cssRulesByBucket,
+        );
       }
 
       const key = hashPropertyKey(selector, property, atRules);
@@ -383,7 +399,7 @@ export function resolveStyleRules(
           cssRulesByBucket,
         );
       } else {
-        warnAboutUnresolvedRule(property, value);
+        warnAboutUnresolvedRule(property, value as GriffelStyle);
       }
     }
   }
