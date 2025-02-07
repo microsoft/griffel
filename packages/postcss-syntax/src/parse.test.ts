@@ -1,4 +1,4 @@
-import postcss from 'postcss';
+import type postcss from 'postcss';
 import {
   GRIFFEL_DECLARATOR_LOCATION_RAW,
   GRIFFEL_DECLARATOR_RAW,
