@@ -2,6 +2,21 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Mon, 10 Feb 2025 08:07:43 GMT",
+      "tag": "@griffel/postcss-syntax_v1.3.1",
+      "version": "1.3.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "lingfangao@hotmail.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "b93f2811796a1fc66393821f467d296375dde02a",
+            "comment": "fix(postcss-syntax): Silenced parse result should be stringifiable"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Feb 2025 14:53:08 GMT",
       "tag": "@griffel/postcss-syntax_v1.3.0",
       "version": "1.3.0",

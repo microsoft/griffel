@@ -1,8 +1,16 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Tue, 04 Feb 2025 14:53:08 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Feb 2025 08:07:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.1
+
+Mon, 10 Feb 2025 08:07:43 GMT
+
+### Patches
+
+- fix(postcss-syntax): Silenced parse result should be stringifiable (lingfangao@hotmail.com)
 
 ## 1.3.0
 
