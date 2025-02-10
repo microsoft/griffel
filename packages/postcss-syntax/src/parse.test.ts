@@ -1,3 +1,4 @@
+import type postcss from 'postcss';
 import {
   GRIFFEL_DECLARATOR_LOCATION_RAW,
   GRIFFEL_DECLARATOR_RAW,
@@ -6,6 +7,7 @@ import {
   GRIFFEL_SRC_RAW,
 } from './constants';
 import { parse } from './parse';
+import { stringify } from './stringify';
 
 describe('parse', () => {
   describe('makeStyles', () => {
@@ -287,6 +289,7 @@ export const useStyles = makeStyles({
 `;
       const root = parse(fixture, { from: 'fixture.styles.ts', silenceParseErrors: true });
       expect(root.toString()).toMatchInlineSnapshot(`"/* Failed to parse griffel styles: fixture.styles.ts */"`);
+      expect(() => stringify(root, {} as postcss.Builder)).not.toThrow();
     });
 
     it('should throw on failure to parse JS code', () => {

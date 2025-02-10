@@ -35,7 +35,9 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
 
   const parseResult = parseGriffelStyles(code, filename, griffelPluginOptions, silenceParseErrors);
   if (!parseResult) {
-    return postcss.parse(`/* Failed to parse griffel styles: ${filename} */`, { from: filename });
+    const root = postcss.parse(`/* Failed to parse griffel styles: ${filename} */`, { from: filename });
+    root.raws[GRIFFEL_SRC_RAW] = code;
+    return root;
   }
 
   const {
