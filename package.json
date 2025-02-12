@@ -89,7 +89,7 @@
     "css-loader": "^6.4.0",
     "d3-scale-chromatic": "^3.0.0",
     "doctoc": "2.2.1",
-    "esbuild": "0.23.1",
+    "esbuild": "0.25.0",
     "esbuild-plugin-alias": "0.2.1",
     "esbuild-plugin-import-glob": "0.1.1",
     "eslint": "8.57.0",
