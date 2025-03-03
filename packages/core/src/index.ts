@@ -91,10 +91,11 @@ export type {
   GriffelStyle,
   // Reset styles
   GriffelResetStyle,
-  // Internal types
+  GriffelResetAnimation,
 } from '@griffel/style-types';
 
 export type {
+  // Internal types
   CSSClasses,
   CSSClassesMapBySlot,
   CSSBucketEntry,
