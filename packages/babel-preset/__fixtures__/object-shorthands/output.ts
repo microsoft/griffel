@@ -15,7 +15,7 @@ export const useStyles = __styles(
   {
     d: [
       [
-        '.fq3r367{border-right:5px solid red;}',
+        '.fq3r367{border-right:5px solid red ;}',
         {
           p: -1,
         },
