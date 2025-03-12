@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Verify extension has changed
-        uses: tj-actions/changed-files@v41
+        uses: tj-actions/changed-files@v45
         id: verify-extension-changed
         with:
           files: |
