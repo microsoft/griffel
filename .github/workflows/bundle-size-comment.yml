@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
     steps:
       - name: 'Download artifact'
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v9
         with:
           name: monosize-report
           path: ./results
