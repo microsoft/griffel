@@ -11,7 +11,7 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.repository_owner == 'microsoft' && (contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch') }}
 
     outputs:
       status: ${{ steps.verify-extension-changed.outputs.any_changed }}
@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Verify extension has changed
-        uses: tj-actions/changed-files@v45
+        uses: tj-actions/changed-files@v46.0.1
         id: verify-extension-changed
         with:
           files: |
@@ -30,8 +30,8 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: check
     if: ${{ needs.check.outputs.status == 'true' || github.event_name == 'workflow_dispatch' }}
+    needs: check
 
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
       - run: yarn nx run @griffel/devtools:pack-extension
 
       - name: Upload extension
-        uses: mobilefirstllc/cws-publish@latest
+        uses: mobilefirstllc/cws-publish@2.1.1
         with:
           action: 'publish'
           refresh_token: ${{ secrets.CHROME_EXT_REFRESH_TOKEN }}
