@@ -28,7 +28,4 @@ jobs:
       - run: yarn install --immutable
       - run: yarn check-dependencies
 
-      - run: yarn nx affected --target=lint
-      - run: yarn nx affected --target=type-check
-      - run: yarn nx affected --target=build
-      - run: yarn nx affected --target=test
+      - run: yarn nx affected --target=lint,type-check,build,test --nxBail
