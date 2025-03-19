@@ -8,26 +8,25 @@ on:
 jobs:
   comment:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.repository_owner == 'microsoft' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
     permissions:
       pull-requests: write
     steps:
-      - name: 'Download artifact'
-        uses: dawidd6/action-download-artifact@v9
+      - name: Download artifact
+        uses: actions/download-artifact@v4
         with:
           name: monosize-report
           path: ./results
-          run_id: ${{ github.event.workflow_run.id }}
-          workflow: ${{ github.event.workflow.id }}
-          workflow_conclusion: success
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Load PR number
         id: pr_number
         run: echo "::set-output name=id::$(cat pr.txt)"
         working-directory: ./results
 
-      - name: 'Comment on PR'
-        uses: marocchino/sticky-pull-request-comment@v2
+      - name: Comment on PR
+        uses: marocchino/sticky-pull-request-comment@v2.9.1
         with:
           number: ${{ steps.pr_number.outputs.id }}
           path: ./results/monosize.md

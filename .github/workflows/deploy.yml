@@ -7,11 +7,13 @@ on:
     branches:
       - main
 
+env:
+  NX_PARALLEL: 4
+
 jobs:
   build:
-    runs-on: ubuntu-latest
     if: ${{ contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch' }}
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -21,7 +23,7 @@ jobs:
           node-version: '20'
 
       - run: yarn install --immutable
-      - run: yarn nx run-many --target=build --projects=@griffel/website --parallel --max-parallel=3
+      - run: yarn nx run-many --target=build --projects=@griffel/website --nxBail
 
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3

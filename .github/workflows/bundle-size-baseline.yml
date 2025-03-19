@@ -1,31 +1,37 @@
-name: CI
+name: Bundle size [baseline]
 on:
   push:
     branches:
       - main
-  pull_request:
 
 env:
   NX_PARALLEL: 4
 
 jobs:
-  main:
+  bundle-size:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'microsoft' }}
+    permissions:
+      contents: 'read'
+      actions: 'read'
+
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4.3.0
 
       - uses: actions/setup-node@v4
         with:
-          cache: 'yarn'
+          cache: yarn
           node-version: '20'
 
       - run: yarn install --immutable
-      - run: yarn check-dependencies
 
-      - run: yarn nx affected --target=lint,type-check,build,test --nxBail
+      - name: Measure all packages
+        run: yarn nx run-many --all --target=bundle-size --nxBail
+
+      - name: Upload results
+        run: yarn monosize upload-report --branch main --commit-sha $GITHUB_SHA
+        env:
+          UPSTASH_WRITE_TOKEN: ${{ secrets.UPSTASH_WRITE_TOKEN }}

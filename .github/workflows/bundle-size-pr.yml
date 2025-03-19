@@ -1,0 +1,48 @@
+name: Bundle size
+on:
+  pull_request:
+
+env:
+  NX_PARALLEL: 4
+
+jobs:
+  bundle-size:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'microsoft' }}
+    permissions:
+      contents: 'read'
+      actions: 'read'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4.3.0
+
+      - uses: actions/setup-node@v4
+        with:
+          cache: yarn
+          node-version: '20'
+
+      - run: yarn install --immutable
+
+      - name: Measure affected packages
+        run: yarn nx affected --target=bundle-size --nxBail
+
+      - name: Compare results with "main" branch
+        run: |
+          npx monosize compare-reports --branch main --output markdown --quiet > ./monosize.md
+
+      - name: Save PR number
+        run: echo ${{ github.event.number }} > pr.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monosize-report
+          retention-days: 1
+          if-no-files-found: error
+          path: |
+            monosize.md
+            pr.txt
