@@ -160,3 +160,9 @@
     text-align: start;
   }
 }
+
+/* Mermaid diagrams */
+
+.statediagram .statediagram-note .label div {
+  text-align: left !important;
+}
