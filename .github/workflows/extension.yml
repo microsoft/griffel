@@ -17,12 +17,12 @@ jobs:
       status: ${{ steps.verify-extension-changed.outputs.any_changed }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
 
       - name: Verify extension has changed
-        uses: tj-actions/changed-files@v46.0.1
+        uses: tj-actions/changed-files@2f7c5bfce28377bc069a65ba478de0a74aa0ca32 # v46.0.1
         id: verify-extension-changed
         with:
           files: |
@@ -34,9 +34,9 @@ jobs:
     needs: check
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:
           cache: 'yarn'
           node-version: '20'
@@ -46,7 +46,7 @@ jobs:
       - run: yarn nx run @griffel/devtools:pack-extension
 
       - name: Upload extension
-        uses: mobilefirstllc/cws-publish@2.1.1
+        uses: mobilefirstllc/cws-publish@569e87bc9a54ad7712ba6dc154a110d88af63b85 # 2.1.1
         with:
           action: 'publish'
           refresh_token: ${{ secrets.CHROME_EXT_REFRESH_TOKEN }}

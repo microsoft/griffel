@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
         with:
           name: monosize-report
           path: ./results
@@ -26,7 +26,7 @@ jobs:
         working-directory: ./results
 
       - name: Comment on PR
-        uses: marocchino/sticky-pull-request-comment@v2.9.1
+        uses: marocchino/sticky-pull-request-comment@52423e01640425a022ef5fd42c6fb5f633a02728 # v2.9.1
         with:
           number: ${{ steps.pr_number.outputs.id }}
           path: ./results/monosize.md
