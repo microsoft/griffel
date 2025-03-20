@@ -34,13 +34,13 @@ You can look at the graph below which describes what work is done during style r
 
 ```mermaid
 stateDiagram-v2
-    direction LR
+    
 
     INVOKE_USE_STYLES: useStyles() invocation
     COMPUTE_RTL_STYLES: Compute RTL styles
     COMPUTE_CSS_CLASSES: Compute CSS classes
     COMPUTE_CSS_RULES: Compute CSS rules
-    INSERT_TO_DOM: Insert to DOM
+    INSERT_TO_DOM: Insert CSS to DOM
 
     INVOKE_USE_STYLES --> COMPUTE_RTL_STYLES
     COMPUTE_RTL_STYLES --> COMPUTE_CSS_CLASSES
@@ -49,28 +49,37 @@ stateDiagram-v2
 
     note right of INVOKE_USE_STYLES
      {
-        &nbsp;&nbsp;paddingLeft: '1px',
-        &nbsp;&nbsp;display: 'flex'
+        &nbsp;&nbsp;paddingLeft:'1px',
+        &nbsp;&nbsp;display:'flex',
      }
     end note
     note right of COMPUTE_RTL_STYLES
      {
-        &nbsp;&nbsp;paddingLeft: '1px',
-        &nbsp;&nbsp;paddingRight: '1px',
-        &nbsp;&nbsp;display: 'flex'
+        &nbsp;&nbsp;paddingLeft:'1px',
+        &nbsp;&nbsp;paddingRight:'1px',
+        &nbsp;&nbsp;display:'flex',
       }
     end note
     note right of COMPUTE_CSS_CLASSES
      {
-       &nbsp;&nbsp;paddingLeft: '1px', // .f10xn8zz
-       &nbsp;&nbsp;paddingRight: '1px', // .f136y8j8
-       &nbsp;&nbsp;display: 'flex' // .f22iagw
+       &nbsp;&nbsp;// .f10xn8zz
+       &nbsp;&nbsp;paddingLeft:'1px',
+       &nbsp;&nbsp;// .f136y8j8
+       &nbsp;&nbsp;paddingRight:'1px',
+       &nbsp;&nbsp;// .f22iagw
+       &nbsp;&nbsp;display:'flex'
      }
     end note
     note right of COMPUTE_CSS_RULES
-     .f10xn8zz { padding-left: 1px }
-     .f136y8j8 { padding-right: 1px }
-     .f22iagw { display: flex }
+     .f10xn8zz {
+       &nbsp;&nbsp;padding-left:1px
+     }
+     .f136y8j8 {
+       &nbsp;&nbsp;padding-right:1px
+     }
+     .f22iagw {
+      &nbsp;&nbsp;display:flex
+     }
     end note
 ```
 
