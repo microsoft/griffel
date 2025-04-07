@@ -81,7 +81,7 @@ export function getStyleSheetForBucket(
 
     renderer.stylesheets[stylesheetKey] = stylesheet;
 
-    if (targetDocument && tag) {
+    if (targetDocument?.head && tag) {
       targetDocument.head.insertBefore(
         tag,
         findInsertionPoint(targetDocument, insertionPoint, bucketName, renderer, metadata),
