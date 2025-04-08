@@ -14,7 +14,7 @@
   </a>
   <img alt="MIT License" src="https://img.shields.io/github/license/microsoft/griffel"/>
   <a href="https://github.com/microsoft/griffel/discussions">
-    <img alt="Github discussions" src="https://img.shields.io/github/discussions/microsoft/griffel" />
+    <img alt="GitHub discussions" src="https://img.shields.io/github/discussions/microsoft/griffel" />
   </a>
 </p>
 
