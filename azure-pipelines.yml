@@ -4,7 +4,7 @@ pr: none
 trigger: none
 
 variables:
-  - group: 'GitHub and NPM secrets'
+  - group: 'Github and NPM secrets'
   - name: tags
     value: production,externalfacing
 
