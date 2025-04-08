@@ -45,6 +45,27 @@ body {
 }
 ```
 
+:::note
+
+Be sure the correctly quote font family names with things like parentheses in them:
+
+```js
+// ✅ Correctly returns `font-family` in styles
+const useStaticStyles = makeStaticStyles({
+  '@font-face': {
+    fontFamily: '"Segoe UI Web (West European)"',
+    // ...
+  },
+});
+// 🔴 Will not return a `font-family` in styles
+const useStaticStyles = makeStaticStyles({
+  '@font-face': {
+    fontFamily: 'Segoe UI Web (West European)',
+    // ...
+  },
+});
+```
+
 :::caution Limited support for nested selectors
 
 Nested selectors are not supported for this scenario via nesting of JavaScript objects.
