@@ -101,7 +101,7 @@ const config = {
             href: 'https://github.com/microsoft/griffel',
             position: 'right',
             className: 'navbar-github-link',
-            html: 'Github <span aria-hidden="true" />',
+            html: 'GitHub <span aria-hidden="true" />',
           },
         ],
       },
