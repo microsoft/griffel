@@ -66,7 +66,7 @@ export type GriffelStaticStyle = {
   '@font-face'?: {
     fontFamily: string;
     src: string;
-
+    fontDisplay?: string;
     fontFeatureSettings?: string;
     fontStretch?: string;
     fontStyle?: string;
