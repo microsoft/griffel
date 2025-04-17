@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "adding fontDisplay type to static styles",
+  "packageName": "@griffel/core",
+  "email": "mgodbolt@microsoft.com",
+  "dependentChangeType": "patch"
+}
