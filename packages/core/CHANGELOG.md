@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Thu, 23 Jan 2025 12:09:03 GMT and should not be manually modified.
+This log was last generated on Tue, 22 Apr 2025 10:05:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.19.2
+
+Tue, 22 Apr 2025 10:05:48 GMT
+
+### Patches
+
+- fix: fix infinite loop caused by hydration errors in React 18 (dmytrokirpa@microsoft.com)
 
 ## 1.19.1
 
