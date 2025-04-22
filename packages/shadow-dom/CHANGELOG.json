@@ -2,6 +2,21 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Tue, 22 Apr 2025 10:05:48 GMT",
+      "tag": "@griffel/shadow-dom_v0.2.10",
+      "version": "0.2.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/shadow-dom",
+            "comment": "Bump @griffel/core to v1.19.2",
+            "commit": "d25d0967a81daac6fd8640961836b806ecfc7fe8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2025 12:09:03 GMT",
       "tag": "@griffel/shadow-dom_v0.2.9",
       "version": "0.2.9",

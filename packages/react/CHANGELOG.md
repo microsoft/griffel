@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-This log was last generated on Thu, 23 Jan 2025 12:09:03 GMT and should not be manually modified.
+This log was last generated on Tue, 22 Apr 2025 10:05:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.30
+
+Tue, 22 Apr 2025 10:05:48 GMT
+
+### Patches
+
+- chore: allow React 19 in "peerDependencies" (olfedias@microsoft.com)
+- Bump @griffel/core to v1.19.2
 
 ## 1.5.29
 

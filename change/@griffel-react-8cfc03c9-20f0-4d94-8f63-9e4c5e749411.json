@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: allow React 19 in \"peerDependencies\"",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
