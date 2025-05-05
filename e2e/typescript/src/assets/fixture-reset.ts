@@ -132,41 +132,41 @@ assertType({
 });
 
 assertType({
-  '.bar': { color: 'beige' },
-  '.foo': { padding: '5px' },
-  '.qux': { paddingLeft: '5px' },
+  '&.bar': { color: 'beige' },
+  '&.foo': { padding: '5px' },
+  '&.qux': { paddingLeft: '5px' },
 });
 
 assertType({
-  '.bar': { '--color': 'red' },
+  '&.bar': { '--color': 'red' },
 });
 assertType({
-  '.bar': { animationName: { from: {}, to: {} } },
+  '&.bar': { animationName: { from: {}, to: {} } },
 });
 
 // Nested custom selectors
 //
 
 assertType({
-  '.foo': {
-    '.bar': { flexShrink: 0 },
-    '.baz': { flexShrink: 'initial' },
-    '.qux': { opacity: 0 },
-    '.fred': { zIndex: 0 },
-    '.thud': { zIndex: 1 },
+  '&.foo': {
+    '&.bar': { flexShrink: 0 },
+    '&.baz': { flexShrink: 'initial' },
+    '&.qux': { opacity: 0 },
+    '&.fred': { zIndex: 0 },
+    '&.thud': { zIndex: 1 },
   },
-  '.bar': {
-    '.baz': { color: 'beige' },
-    '.qux': { paddingLeft: '5px' },
+  '&.bar': {
+    '&.baz': { color: 'beige' },
+    '&.qux': { paddingLeft: '5px' },
   },
-  '.baz': {
-    '.qux': {
+  '&.baz': {
+    '&.qux': {
       '--color': 'red',
     },
   },
-  '.qux': {
-    '.bar': { flexShrink: 'var(--bar)' },
-    '.baz': { opacity: 'var(--baz)' },
+  '&.qux': {
+    '&.bar': { flexShrink: 'var(--bar)' },
+    '&.baz': { opacity: 'var(--baz)' },
   },
 });
 
@@ -326,8 +326,8 @@ assertType({
 //
 
 assertType({
-  '.foo': {
-    '.baz': {
+  '&.foo': {
+    '&.baz': {
       // @ts-expect-error "1" is invalid value for "overflowX"
       overflowX: '1',
       padding: 0,
@@ -337,23 +337,23 @@ assertType({
   },
 });
 assertType({
-  '.foo': {
+  '&.foo': {
     // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
 
-    '.bar': {
+    '&.bar': {
       // @ts-expect-error outline-box is an invalid value for box-sizing
       boxSizing: 'outline-box', // < no error here, TS only reports the error for the whole object
     },
   },
 });
 assertType({
-  '.foo': {
+  '&.foo': {
     // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
     zIndex: 1,
 
-    '.bar': {
+    '&.bar': {
       // @ts-expect-error outline-box is an invalid value for box-sizing
       boxSizing: 'outline-box',
       zIndex: 1,
@@ -361,13 +361,13 @@ assertType({
   },
 });
 assertType({
-  '.foo': {
+  '&.foo': {
     // @ts-expect-error Object is not assignable to CSS property
     zIndex: { color: 'red' },
     // @ts-expect-error Object is not assignable to CSS property
     opacity: { color: 'red' },
 
-    '.bar': {
+    '&.bar': {
       // @ts-expect-error Object is not assignable to CSS property
       zIndex: { color: 'red' },
       // @ts-expect-error Object is not assignable to CSS property
