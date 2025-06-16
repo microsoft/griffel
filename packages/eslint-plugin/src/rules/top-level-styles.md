@@ -1,6 +1,6 @@
 # Ensure `makeStyles`, `makeResetStyles` and `makeStaticStyles` are only called at the top-level of a file
 
-This rule discourages developers from misusing the `makeStyles`, `makeResetStyles` and `makeStaticStyles` methods. These methods don't allow passing runtime values for constructing the styles, as described here under [limitations](https://griffel.js.org/react/guides/). To encourage proper usage, this rule only permits calling those methods in the _top-level scope_ of a file, where it's far less likely developers will pass runtime values.
+This rule discourages developers from misusing the `makeStyles`, `makeResetStyles` and `makeStaticStyles` methods. These methods don't allow passing runtime values for constructing the styles, as described here under [limitations](https://griffel.js.org/react/guides/limitations). To encourage proper usage, this rule only permits calling those methods in the _top-level scope_ of a file, where it's far less likely developers will pass runtime values.
 
 ## Rule Details
 
