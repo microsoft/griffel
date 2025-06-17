@@ -18,8 +18,8 @@ export default {
     },
   })),
   storage: upstashStorage({
-    url: 'https://us1-nearby-hyena-35747.upstash.io',
+    url: 'https://touching-dogfish-50147.upstash.io',
     readonlyToken:
-      'AoujASQgNGQwNGI0YjAtNmExNy00MzNjLWIwNTQtMTIyMGRlODQwZDk2QaCJNVtEfHj6pDLLscOcgMEt-Be1VWcMYbMRR_EqVCw=',
+      'AsPjAAIgcDEpdizizp9C7pNtYDH2w-THeT1QtRsiTt7Rrz9juDM_hw',
   }),
 };
