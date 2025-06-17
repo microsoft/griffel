@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix for invalid doc link",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "benkeen@microsoft.com",
+  "dependentChangeType": "patch"
+}
