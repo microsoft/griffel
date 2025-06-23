@@ -55,6 +55,7 @@
     "@storybook/addon-webpack5-compiler-babel": "3.0.6",
     "@storybook/react-webpack5": "9.0.9",
     "@swc/core": "1.5.29",
+    "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.4.6",
     "@testing-library/react": "16.1.0",
     "@types/babel__helper-module-imports": "7.18.0",
