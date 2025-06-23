@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: bump Nx to 21.2.1",
+  "packageName": "@griffel/shadow-dom",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
