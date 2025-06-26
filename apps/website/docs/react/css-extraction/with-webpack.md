@@ -65,7 +65,7 @@ module.exports = {
         },
       },
       // "css-loader" is required to handle produced CSS assets by Griffel
-      // you can use "style-loader" or "MiniCssExtractPlugin.loader" to handle CSS insertion
+      // you can use "MiniCssExtractPlugin.loader" to handle CSS insertion
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
@@ -76,7 +76,13 @@ module.exports = {
 };
 ```
 
-- `mini-css-extract-plugin` is not mandatory and is used as am example, you can use `style-loader` or other tooling to inject CSS on a page
+- `mini-css-extract-plugin` is not mandatory and is used as an example, you can use other tooling to inject CSS on a page
+
+:::caution `style-loader` is not supported
+
+`style-loader` does not produce necessary assets for the Griffel plugin to order CSS rules correctly. Using it to handle CSS insertion would result in partially broken styling in your app.
+
+:::
 
 For better performance (to process less files) consider using `include` for `GriffelCSSExtractionPlugin.loader`:
 
