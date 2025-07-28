@@ -18,8 +18,8 @@ export default {
     },
   })),
   storage: upstashStorage({
-    url: 'https://touching-dogfish-50147.upstash.io',
+    url: 'https://welcome-giraffe-61766.upstash.io',
     readonlyToken:
-      'AsPjAAIgcDEpdizizp9C7pNtYDH2w-THeT1QtRsiTt7Rrz9juDM_hw',
+      'AvFGAAIgcDHzHKwMeSqS_FCutK3bcM-AI7c7zSKbRYbAM14_ZiwUmg',
   }),
 };
