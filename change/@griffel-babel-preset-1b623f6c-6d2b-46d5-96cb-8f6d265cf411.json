@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: output a comment when \"classNameHashSalt\" is used",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

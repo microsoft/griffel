@@ -6,8 +6,17 @@ import { transformSync } from './transformSync';
 import type { SupplementedLoaderContext } from './constants';
 import { GriffelCssLoaderContextKey } from './constants';
 import { generateCSSRules } from './generateCSSRules';
+import { configSchema } from './schema';
 
 export type WebpackLoaderOptions = {
+  /**
+   * Salt to use for class names hashing.
+   *
+   * This loader will not perform any hashing, it will just perform validation to ensure that all processed files
+   * use the same salt.
+   */
+  classNameHashSalt?: string;
+
   /**
    * Please never use this feature, it will be removed without further notice.
    */
@@ -18,6 +27,9 @@ type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLo
 
 const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
 const virtualCSSFilePath = path.resolve(__dirname, '..', 'virtual-loader', 'griffel.css');
+
+const SALT_SEARCH_STRING = '/*@griffel:classNameHashSalt "';
+const SALT_SEARCH_STRING_LENGTH = SALT_SEARCH_STRING.length;
 
 /**
  * Webpack can also pass sourcemaps as a string or null, Babel accepts only objects, boolean and undefined.
@@ -41,6 +53,27 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
 
 function toURIComponent(rule: string): string {
   return encodeURIComponent(rule).replace(/!/g, '%21');
+}
+
+export function validateHashSalt(sourceCode: string, classNameHashSalt: string) {
+  const commentStartLoc = sourceCode.indexOf(SALT_SEARCH_STRING);
+
+  if (commentStartLoc === -1) {
+    throw new Error(
+      `GriffelCSSExtractionPlugin: classNameHashSalt is set to "${classNameHashSalt}", but no salt location comment was found in the source code.`,
+    );
+  }
+
+  const saltStartLoc = commentStartLoc + SALT_SEARCH_STRING_LENGTH;
+  const saltEndLoc = sourceCode.indexOf('"*/', saltStartLoc);
+
+  const saltFromComment = sourceCode.slice(commentStartLoc + SALT_SEARCH_STRING_LENGTH, saltEndLoc);
+
+  if (saltFromComment !== classNameHashSalt) {
+    throw new Error(
+      `GriffelCSSExtractionPlugin: classNameHashSalt is set to "${classNameHashSalt}", but the salt location comment contains "${saltFromComment}". Please ensure that all files use the same salt.`,
+    );
+  }
 }
 
 function webpackLoader(
@@ -69,10 +102,14 @@ function webpackLoader(
     }
   }
 
-  const { unstable_keepOriginalCode } = this.getOptions();
+  const { classNameHashSalt = '', unstable_keepOriginalCode } = this.getOptions(configSchema);
 
   let result: TransformResult | null = null;
   let error: Error | null = null;
+
+  if (classNameHashSalt.length > 0) {
+    validateHashSalt(sourceCode, classNameHashSalt);
+  }
 
   try {
     result = transformSync(sourceCode, {

@@ -300,6 +300,13 @@ describe('GriffelCSSExtractionPlugin', () => {
   // Custom filenames in mini-css-extract-plugin
   testFixture('config-name', { cssFilename: '[name].[contenthash].css' });
 
+  // Custom classNameHashSalt validation
+  testFixture('config-classname-hash-salt', {
+    loaderOptions: {
+      classNameHashSalt: 'prefix',
+    },
+  });
+
   // Config that disables SplitChunksPlugin
   testFixture('config-no-split-chunks', {
     webpackConfig: {

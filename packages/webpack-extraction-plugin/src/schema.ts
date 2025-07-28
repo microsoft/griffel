@@ -4,6 +4,13 @@ export const configSchema: JSONSchema7 = {
   $schema: 'http://json-schema.org/schema',
   $id: 'webpackLoader-options',
 
-  properties: {},
+  properties: {
+    classNameHashSalt: {
+      type: 'string',
+    },
+    unstable_keepOriginalCode: {
+      type: 'boolean',
+    },
+  },
   additionalProperties: false,
 };
