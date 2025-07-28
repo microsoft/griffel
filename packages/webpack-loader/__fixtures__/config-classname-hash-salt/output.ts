@@ -10,3 +10,4 @@ export const styles = __styles(
     d: ['.f3mwu0g{color:red;}', '.f1rfztu6{padding-left:10px;}', '.f1h66kgv{padding-right:10px;}'],
   },
 );
+/*@griffel:classNameHashSalt "prefix"*/

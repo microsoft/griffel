@@ -257,6 +257,10 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         },
 
         exit(programPath, state) {
+          if (pluginOptions.classNameHashSalt.length > 0) {
+            programPath.addComment('trailing', `@griffel:classNameHashSalt "${pluginOptions.classNameHashSalt}"`);
+          }
+
           if (state.importDeclarationPaths!.length === 0 && !state.requireDeclarationPath) {
             return;
           }
