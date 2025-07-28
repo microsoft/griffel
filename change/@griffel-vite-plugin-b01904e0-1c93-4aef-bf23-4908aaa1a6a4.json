@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: apply release",
-  "packageName": "@griffel/vite-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

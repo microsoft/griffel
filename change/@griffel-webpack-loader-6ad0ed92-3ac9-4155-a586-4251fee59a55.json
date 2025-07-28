@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: apply release",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

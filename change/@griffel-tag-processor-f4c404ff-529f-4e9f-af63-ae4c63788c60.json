@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: apply release",
-  "packageName": "@griffel/tag-processor",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

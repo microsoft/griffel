@@ -2,6 +2,29 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Mon, 28 Jul 2025 09:12:30 GMT",
+      "tag": "@griffel/webpack-loader_v2.2.20",
+      "version": "2.2.20",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "a588a6c1f301e598557a8a1255f6069ccbbb2534",
+            "comment": "chore: apply release"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.6.8",
+            "commit": "230887b0ab80fb2db29ed04687f15d14d0200396"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Apr 2025 10:05:48 GMT",
       "tag": "@griffel/webpack-loader_v2.2.19",
       "version": "2.2.19",

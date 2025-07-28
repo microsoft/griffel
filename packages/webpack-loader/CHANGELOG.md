@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-loader
 
-This log was last generated on Tue, 22 Apr 2025 10:05:48 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Jul 2025 09:12:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.20
+
+Mon, 28 Jul 2025 09:12:30 GMT
+
+### Patches
+
+- Bump @griffel/babel-preset to v1.6.8
 
 ## 2.2.19
 

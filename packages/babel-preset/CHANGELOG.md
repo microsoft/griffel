@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Tue, 22 Apr 2025 10:05:48 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Jul 2025 09:12:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.8
+
+Mon, 28 Jul 2025 09:12:30 GMT
+
+### Patches
+
+- chore: output a comment when "classNameHashSalt" is used (olfedias@microsoft.com)
 
 ## 1.6.7
 

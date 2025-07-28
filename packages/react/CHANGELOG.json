@@ -2,6 +2,27 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Mon, 28 Jul 2025 09:12:30 GMT",
+      "tag": "@griffel/react_v1.5.30",
+      "version": "1.5.30",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "f6ad8b5172b9bda7522c33badc84ce2d3a979c2f",
+            "comment": "chore: bump Nx to 21.2.1"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "a588a6c1f301e598557a8a1255f6069ccbbb2534",
+            "comment": "chore: apply release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Apr 2025 10:05:48 GMT",
       "tag": "@griffel/react_v1.5.30",
       "version": "1.5.30",

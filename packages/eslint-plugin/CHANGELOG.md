@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Wed, 13 Nov 2024 15:01:37 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Jul 2025 09:12:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.1
+
+Mon, 28 Jul 2025 09:12:30 GMT
+
+### Patches
+
+- Fix for invalid doc link (benkeen@microsoft.com)
 
 ## 2.0.0
 

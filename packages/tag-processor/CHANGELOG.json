@@ -2,6 +2,21 @@
   "name": "@griffel/tag-processor",
   "entries": [
     {
+      "date": "Mon, 28 Jul 2025 09:12:30 GMT",
+      "tag": "@griffel/tag-processor_v1.0.13",
+      "version": "1.0.13",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/tag-processor",
+            "commit": "a588a6c1f301e598557a8a1255f6069ccbbb2534",
+            "comment": "chore: apply release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Apr 2025 10:05:48 GMT",
       "tag": "@griffel/tag-processor_v1.0.13",
       "version": "1.0.13",

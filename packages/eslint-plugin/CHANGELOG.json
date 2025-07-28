@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Mon, 28 Jul 2025 09:12:30 GMT",
+      "tag": "@griffel/eslint-plugin_v2.0.1",
+      "version": "2.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "benkeen@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "e1cafcdd294f3a89c407ad3efd066f63e1866552",
+            "comment": "Fix for invalid doc link"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Nov 2024 15:01:37 GMT",
       "tag": "@griffel/eslint-plugin_v2.0.0",
       "version": "2.0.0",

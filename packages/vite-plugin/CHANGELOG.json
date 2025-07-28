@@ -2,6 +2,21 @@
   "name": "@griffel/vite-plugin",
   "entries": [
     {
+      "date": "Mon, 28 Jul 2025 09:12:30 GMT",
+      "tag": "@griffel/vite-plugin_v0.1.13",
+      "version": "0.1.13",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "a588a6c1f301e598557a8a1255f6069ccbbb2534",
+            "comment": "chore: apply release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jan 2025 10:03:24 GMT",
       "tag": "@griffel/vite-plugin_v0.1.10",
       "version": "0.1.10",

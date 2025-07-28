@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Tue, 22 Apr 2025 10:05:48 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Jul 2025 09:12:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.5.11
+
+Mon, 28 Jul 2025 09:12:30 GMT
+
+### Patches
+
+- feat: add "classNameHashSalt" validation (olfedias@microsoft.com)
 
 ## 0.5.10
 
