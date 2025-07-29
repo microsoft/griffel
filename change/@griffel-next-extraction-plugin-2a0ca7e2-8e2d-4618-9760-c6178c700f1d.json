@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: bump nx to 21.3.8",
+  "packageName": "@griffel/next-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

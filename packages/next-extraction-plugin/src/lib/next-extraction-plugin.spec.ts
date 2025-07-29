@@ -59,7 +59,7 @@ describe('nextExtractionPlugin', () => {
 
     if (config?.webpack) config?.webpack({}, options);
 
-    expect(consoleSpy).toBeCalled();
+    expect(consoleSpy).toHaveBeenCalled();
   });
 
   it('should extract css when mode is prod', () => {

@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/postcss-syntax/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -38,10 +39,13 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/babel-preset",
-        "commands": [{ "command": "tsc -b --pretty" }]
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
       },
       "outputs": []
     }
-  },
-  "tags": []
+  }
 }

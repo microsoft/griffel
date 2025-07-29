@@ -70,7 +70,7 @@ describe('serializer', () => {
       paddingRight: '20px',
     });
     expect(render(<TestResetComponent id="reset-test" />).getByTestId('reset-test')).toHaveStyle({
-      color: 'red',
+      color: 'rgb(255, 0, 0)' /* red */,
       paddingLeft: '10px',
       marginLeft: '20px',
     });
@@ -83,7 +83,7 @@ describe('serializer', () => {
     expect(
       render(<TestResetComponent id="rtl-reset-test" />, { wrapper: RtlWrapper }).getByTestId('rtl-reset-test'),
     ).toHaveStyle({
-      color: 'red',
+      color: 'rgb(255, 0, 0)' /* red */,
       paddingRight: '10px',
       marginRight: '20px',
     });

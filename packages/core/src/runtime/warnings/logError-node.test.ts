@@ -9,6 +9,6 @@ describe('logError', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation();
 
     logError('An error occurred');
-    expect(spy).not.toBeCalled();
+    expect(spy).not.toHaveBeenCalled();
   });
 });

@@ -47,17 +47,29 @@
     },
     "bundle-size": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "target": "build" }],
+      "dependsOn": [
+        {
+          "target": "build"
+        }
+      ],
       "options": {
         "cwd": "packages/core",
-        "commands": [{ "command": "monosize measure" }]
+        "commands": [
+          {
+            "command": "monosize measure"
+          }
+        ]
       }
     },
     "type-check": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/core",
-        "commands": [{ "command": "tsc -b --pretty" }]
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
       },
       "outputs": []
     }

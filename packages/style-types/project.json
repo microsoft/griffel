@@ -48,7 +48,11 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/style-types",
-        "commands": [{ "command": "tsc -b --pretty" }]
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
       },
       "outputs": []
     }

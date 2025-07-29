@@ -41,7 +41,9 @@
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/shadow-dom"],
-      "options": { "jestConfig": "packages/shadow-dom/jest.config.ts" }
+      "options": {
+        "jestConfig": "packages/shadow-dom/jest.config.ts"
+      }
     },
     "bundle-size": {
       "executor": "nx:run-commands",

@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/next-extraction-plugin/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -31,10 +32,13 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "packages/next-extraction-plugin",
-        "commands": [{ "command": "tsc -b --pretty" }]
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
       },
       "outputs": []
     }
-  },
-  "tags": []
+  }
 }
