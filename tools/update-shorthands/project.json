@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "tools/update-shorthands/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -12,7 +13,11 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "tools/update-shorthands",
-        "commands": [{ "command": "ts-node src/index.ts" }]
+        "commands": [
+          {
+            "command": "ts-node src/index.ts"
+          }
+        ]
       },
       "outputs": []
     },
@@ -27,10 +32,13 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "tools/update-shorthands",
-        "commands": [{ "command": "tsc -b --pretty" }]
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
       },
       "outputs": []
     }
-  },
-  "tags": []
+  }
 }

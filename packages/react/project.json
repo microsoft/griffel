@@ -41,7 +41,9 @@
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/react"],
-      "options": { "jestConfig": "packages/react/jest.config.ts" }
+      "options": {
+        "jestConfig": "packages/react/jest.config.ts"
+      }
     },
     "bundle-size": {
       "executor": "nx:run-commands",
