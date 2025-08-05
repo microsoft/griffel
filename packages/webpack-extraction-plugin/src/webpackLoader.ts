@@ -107,10 +107,6 @@ function webpackLoader(
   let result: TransformResult | null = null;
   let error: Error | null = null;
 
-  if (classNameHashSalt.length > 0) {
-    validateHashSalt(sourceCode, classNameHashSalt);
-  }
-
   try {
     result = transformSync(sourceCode, {
       filename: path.relative(process.cwd(), this.resourcePath),
@@ -132,6 +128,12 @@ function webpackLoader(
       if (css.length === 0) {
         this.callback(null, resultCode, resultSourceMap);
         return;
+      }
+
+      // Heads up!
+      // Run validation only if any CSS rules were generated, otherwise it might be a false positive
+      if (classNameHashSalt.length > 0) {
+        validateHashSalt(sourceCode, classNameHashSalt);
       }
 
       if (IS_RSPACK) {
