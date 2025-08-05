@@ -2,6 +2,29 @@
   "name": "@griffel/next-extraction-plugin",
   "entries": [
     {
+      "date": "Tue, 05 Aug 2025 16:25:42 GMT",
+      "tag": "@griffel/next-extraction-plugin_v0.1.13",
+      "version": "0.1.13",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/next-extraction-plugin",
+            "commit": "fce8acbe447eb79df31918e5fd56f264ee1a3440",
+            "comment": "chore: bump nx to 21.3.8"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/next-extraction-plugin",
+            "comment": "Bump @griffel/webpack-extraction-plugin to v0.5.12",
+            "commit": "04c09e10c83c712def41323320eb798c78638487"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/next-extraction-plugin_v0.1.12",
       "version": "0.1.12",

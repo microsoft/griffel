@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Tue, 05 Aug 2025 16:25:42 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.12",
+      "version": "0.5.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "04c09e10c83c712def41323320eb798c78638487",
+            "comment": "fix: improve classNameHashSalt validation logic"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.11",
       "version": "0.5.11",
