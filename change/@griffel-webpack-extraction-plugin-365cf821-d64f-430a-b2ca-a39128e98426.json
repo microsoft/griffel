@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: improve classNameHashSalt validation logic",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

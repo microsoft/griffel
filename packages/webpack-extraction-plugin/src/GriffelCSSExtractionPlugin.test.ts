@@ -306,6 +306,11 @@ describe('GriffelCSSExtractionPlugin', () => {
       classNameHashSalt: 'prefix',
     },
   });
+  testFixture('config-classname-hash-salt-empty', {
+    loaderOptions: {
+      classNameHashSalt: 'prefix',
+    },
+  });
 
   // Config that disables SplitChunksPlugin
   testFixture('config-no-split-chunks', {
