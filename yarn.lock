@@ -14527,7 +14527,7 @@ __metadata:
     stylelint: "npm:^15.10.3"
     stylis: "npm:^4.2.0"
     syncpack: "npm:13.0.0"
-    tmp: "npm:0.2.1"
+    tmp: "npm:0.2.4"
     ts-jest: "npm:29.4.0"
     ts-node: "npm:10.9.1"
     tsconfig-paths: "npm:4.1.1"
@@ -25454,7 +25454,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tmp@npm:0.2.1, tmp@npm:~0.2.1":
+"tmp@npm:0.2.4":
+  version: 0.2.4
+  resolution: "tmp@npm:0.2.4"
+  checksum: 10/6fa6c4e6749824e51cb45f0b050090f0fec6b037cfd327d328ebaf3eae80b7e1a53c6651f9bc36f1fa80cf367ec9dc05067fc1a14034fcfbba96d3a2aaa5c732
+  languageName: node
+  linkType: hard
+
+"tmp@npm:~0.2.1":
   version: 0.2.1
   resolution: "tmp@npm:0.2.1"
   dependencies:
