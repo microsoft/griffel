@@ -18,6 +18,13 @@ export type WebpackLoaderOptions = {
   classNameHashSalt?: string;
 
   /**
+   * A filter function to determine which file paths to check the classNameHashSalt on.
+   * @param path - The file path to check, with standardized slashes (`/`)
+   * @returns {boolean} True if should check the classNameHashSalt for the provided file; false if the file should be skipped.
+   */
+  classNameHashFilter?: (path: string) => boolean;
+
+  /**
    * Please never use this feature, it will be removed without further notice.
    */
   unstable_keepOriginalCode?: boolean;
@@ -55,13 +62,26 @@ function toURIComponent(rule: string): string {
   return encodeURIComponent(rule).replace(/!/g, '%21');
 }
 
-export function validateHashSalt(sourceCode: string, classNameHashSalt: string) {
+export function validateHashSalt(
+  resourcePath: string,
+  sourceCode: string,
+  classNameHashSalt: string,
+  classNameHashFilter: ((path: string) => boolean) | undefined,
+) {
+  const resourcePathWithStandardizedSlashes = resourcePath.replace(/\\/g, '/');
   const commentStartLoc = sourceCode.indexOf(SALT_SEARCH_STRING);
 
   if (commentStartLoc === -1) {
-    throw new Error(
-      `GriffelCSSExtractionPlugin: classNameHashSalt is set to "${classNameHashSalt}", but no salt location comment was found in the source code.`,
-    );
+    const throwError = classNameHashFilter ? classNameHashFilter(resourcePathWithStandardizedSlashes) : true;
+    if (throwError) {
+      throw new Error(
+        `GriffelCSSExtractionPlugin: classNameHashSalt is set to "${classNameHashSalt}", ` +
+          `but no salt location comment was found in the source code of "${resourcePathWithStandardizedSlashes}".`,
+      );
+    } else {
+      // Otherwise, just skip the validation
+      return;
+    }
   }
 
   const saltStartLoc = commentStartLoc + SALT_SEARCH_STRING_LENGTH;
@@ -70,9 +90,17 @@ export function validateHashSalt(sourceCode: string, classNameHashSalt: string) 
   const saltFromComment = sourceCode.slice(commentStartLoc + SALT_SEARCH_STRING_LENGTH, saltEndLoc);
 
   if (saltFromComment !== classNameHashSalt) {
-    throw new Error(
-      `GriffelCSSExtractionPlugin: classNameHashSalt is set to "${classNameHashSalt}", but the salt location comment contains "${saltFromComment}". Please ensure that all files use the same salt.`,
-    );
+    const throwError = classNameHashFilter ? classNameHashFilter(resourcePathWithStandardizedSlashes) : true;
+    if (throwError) {
+      throw new Error(
+        `GriffelCSSExtractionPlugin: classNameHashSalt is set to "${classNameHashSalt}", but the ` +
+          `salt location comment in "${resourcePathWithStandardizedSlashes}" contains "${saltFromComment}". ` +
+          `Please ensure that all files use the same salt.`,
+      );
+    } else {
+      // Otherwise, just skip the validation
+      return;
+    }
   }
 }
 
@@ -102,7 +130,11 @@ function webpackLoader(
     }
   }
 
-  const { classNameHashSalt = '', unstable_keepOriginalCode } = this.getOptions(configSchema);
+  const {
+    classNameHashSalt = '',
+    classNameHashFilter = undefined,
+    unstable_keepOriginalCode,
+  } = this.getOptions(configSchema);
 
   let result: TransformResult | null = null;
   let error: Error | null = null;
@@ -133,7 +165,7 @@ function webpackLoader(
       // Heads up!
       // Run validation only if any CSS rules were generated, otherwise it might be a false positive
       if (classNameHashSalt.length > 0) {
-        validateHashSalt(sourceCode, classNameHashSalt);
+        validateHashSalt(this.resourcePath, sourceCode, classNameHashSalt, classNameHashFilter);
       }
 
       if (IS_RSPACK) {
