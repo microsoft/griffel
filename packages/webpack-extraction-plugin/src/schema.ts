@@ -8,6 +8,9 @@ export const configSchema: JSONSchema7 = {
     classNameHashSalt: {
       type: 'string',
     },
+    classNameHashFilter: {
+      type: 'object',
+    },
     unstable_keepOriginalCode: {
       type: 'boolean',
     },

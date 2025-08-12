@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: add path to thrown error message for classNameHashSalt; and allow for a `classNameHashFilter`",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "mizlatko@microsoft.com",
+  "dependentChangeType": "patch"
+}
