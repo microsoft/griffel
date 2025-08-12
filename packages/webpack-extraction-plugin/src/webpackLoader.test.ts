@@ -45,14 +45,15 @@ describe('webpackLoader', () => {
     );
   });
 
-  it('should throw if "sourceCode" does not contain a comment, AND the classNameHashFilter returns true for everything', () => {
+  it('should throw if "sourceCode" does not contain a comment, AND the classNameHashFilter returns true for the file', () => {
     expect(() =>
-      validateHashSalt(
-        FILE_PATH,
-        'import { makeStyles } from "@griffel/react";',
-        'salt',
-        path => true /* classNameHashFilter */,
-      ),
+      validateHashSalt(FILE_PATH, 'import { makeStyles } from "@griffel/react";', 'salt', path => {
+        if (path.endsWith('someOtherFile.js')) {
+          // Skip validation for the other file
+          return false;
+        }
+        return true;
+      }),
     ).toThrowErrorMatchingInlineSnapshot(
       `"GriffelCSSExtractionPlugin: classNameHashSalt is set to \\"salt\\", but no salt location comment was found in the source code of \\"c:/repo/node_modules/some-package/file.js\\"."`,
     );
