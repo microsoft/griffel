@@ -12,8 +12,13 @@ env:
 
 jobs:
   build:
-    if: ${{ contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'microsoft' && (contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch') }}
+
+    permissions:
+      contents: 'read'
+      actions: 'read'
+
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 

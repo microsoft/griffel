@@ -9,6 +9,7 @@ jobs:
   bundle-size:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'microsoft' }}
+
     permissions:
       contents: 'read'
       actions: 'read'
