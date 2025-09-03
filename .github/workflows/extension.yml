@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'microsoft' && (contains(github.event.head_commit.message, 'applying package updates') || github.event_name == 'workflow_dispatch') }}
 
+    permissions:
+      contents: 'read'
+      actions: 'read'
+
     outputs:
       status: ${{ steps.verify-extension-changed.outputs.any_changed }}
 
@@ -32,6 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ needs.check.outputs.status == 'true' || github.event_name == 'workflow_dispatch' }}
     needs: check
+
+    permissions:
+      contents: 'read'
+      actions: 'read'
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2

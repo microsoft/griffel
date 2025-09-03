@@ -12,6 +12,11 @@ jobs:
   main:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'microsoft' }}
+
+    permissions:
+      contents: 'read'
+      actions: 'read'
+
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -26,6 +31,7 @@ jobs:
           node-version: '20'
 
       - run: yarn install --immutable
+      - run: yarn dedupe --check
       - run: yarn check-dependencies
 
       - run: yarn nx affected --target=lint,type-check,build,test --nxBail
