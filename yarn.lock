@@ -14533,7 +14533,7 @@ __metadata:
     tsconfig-paths: "npm:4.1.1"
     tslib: "npm:^2.1.0"
     typescript: "npm:5.8.3"
-    vite: "npm:^6.2.7"
+    vite: "npm:^6.3.6"
     webpack: "npm:5.99.9"
     webpack-merge: "npm:5.10.0"
     yargs: "npm:^17.5.1"
@@ -26515,9 +26515,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.2.7":
-  version: 6.3.4
-  resolution: "vite@npm:6.3.4"
+"vite@npm:^6.3.6":
+  version: 6.3.6
+  resolution: "vite@npm:6.3.6"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.4.4"
@@ -26566,7 +26566,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/347579b6571e591c1e4f54262e631f02e952e548171af09042aeffb40adfa5c9b43cf05cf115f0961cc553f6b7173fb9c2ee997a688007c01b6e13779d9a2bd4
+  checksum: 10/8b8b6fe12318ca457396bf2053df7056cf4810f1d4a43b36b6afe59860e32b749c0685a290fe8a973b0d3da179ceec4c30cebbd3c91d0c47fbcf6436b17bdeef
   languageName: node
   linkType: hard
 
