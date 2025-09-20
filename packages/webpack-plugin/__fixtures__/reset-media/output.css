@@ -1,0 +1,14 @@
+/** griffel.css **/
+.rjrhw4c {
+  color: red;
+}
+@supports (display: flex) {
+  .rjrhw4c {
+    color: pink;
+  }
+}
+@media (min-width: 100px) {
+  .rjrhw4c {
+    color: blue;
+  }
+}
