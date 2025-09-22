@@ -161,11 +161,6 @@ yarn change
 - React Storybook may have configuration issues with webpack5 dependencies
 - Use the website's /try-it-out page for interactive testing instead
 
-### Performance Notes
-- Initial yarn install downloads ~295MB of dependencies
-- Full rebuild from scratch takes ~2-3 minutes total
-- Nx caching significantly speeds up subsequent builds
-- Website build includes client and server compilation (30-60 seconds)
 
 ## Timeout Recommendations for Tools
 
