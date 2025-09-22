@@ -8,7 +8,3 @@ export type { Evaluator, EvalRule } from '@linaria/babel-preset';
 // Our APIs
 
 export { transformSync, type TransformOptions, type TransformResult } from './transformSync.mjs';
-
-// Utility functions
-export { shouldTransformSourceCode } from './utils/shouldTransformSourceCode.mjs';
-export { generateCSSRules } from './utils/generateCSSRules.mjs';

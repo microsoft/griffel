@@ -118,6 +118,7 @@
     "jsdom": "~22.1.0",
     "log-symbols": "4.1.0",
     "lz-string": "1.4.4",
+    "magic-string": "^0.30.19",
     "memfs": "3.6.0",
     "mini-css-extract-plugin": "2.6.0",
     "module-alias": "^2.2.3",
