@@ -47,7 +47,7 @@
     "@nx/react": "21.3.8",
     "@nx/rollup": "21.3.8",
     "@nx/storybook": "21.3.8",
-    "@nx/vite": "^21.5.3",
+    "@nx/vite": "21.3.8",
     "@nx/web": "21.3.8",
     "@nx/webpack": "21.3.8",
     "@nx/workspace": "21.3.8",
