@@ -34,16 +34,7 @@
     },
     "@nx/vite:test": {
       "cache": true,
-      "inputs": ["default", "^default", "{workspaceRoot}/vitest.config.{js,ts,mjs,mts}"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "watch": false,
-          "coverage": true
-        }
-      }
+      "inputs": ["default", "^default"]
     },
     "@nx/vite:build": {
       "cache": true,
