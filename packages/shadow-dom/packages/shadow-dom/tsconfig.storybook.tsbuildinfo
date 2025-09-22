@@ -1,0 +1,1 @@
+{"root":["../../src/createFallbackRenderer.ts","../../src/createShadowDOMRenderer.test.ts","../../src/createShadowDOMRenderer.ts","../../src/findInsertionPoint.test.ts","../../src/findInsertionPoint.ts","../../src/index.ts","../../src/types.ts","../../src/stories/createShadowDOMRenderer.stories.tsx","../../.storybook/main.js","../../.storybook/preview.js"],"version":"5.8.3"}
