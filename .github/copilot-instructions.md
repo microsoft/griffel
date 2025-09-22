@@ -162,21 +162,3 @@ yarn change
 - Use the website's /try-it-out page for interactive testing instead
 
 
-## Timeout Recommendations for Tools
-
-**CRITICAL: Always set appropriate timeouts to prevent premature cancellation**
-
-| Command | Expected Time | Recommended Timeout |
-|---------|---------------|-------------------|
-| `yarn install --immutable` (fresh) | 2 minutes | 300 seconds |
-| `yarn install --immutable` (cached) | 20-30 seconds | 60 seconds |
-| `yarn nx run-many --target=build --all` (fresh) | 1-2 minutes | 180 seconds |
-| `yarn nx run-many --target=build --all` (cached) | 30-45 seconds | 120 seconds |
-| `yarn nx run-many --target=test --all` | 3-4 minutes | 300 seconds |
-| `yarn nx run-many --target=type-check --all` | 1-2 minutes | 180 seconds |
-| `yarn nx run-many --target=lint --all` | 15-30 seconds | 60 seconds |
-| `yarn start` (website) | 30-60 seconds | 120 seconds |
-| `yarn nx run @griffel/website:build` | 20-30 seconds | 120 seconds |
-| `yarn nx run @griffel/e2e-*:test` | 30-60 seconds | 120 seconds |
-
-**NEVER CANCEL these commands early - builds may take longer than expected and timeouts should account for slower systems.**
