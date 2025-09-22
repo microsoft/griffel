@@ -108,6 +108,17 @@ yarn change
 # Creates files in change/ directory for beachball
 ```
 
+**Manual Change Files**: Create JSON files manually in `change/` directory using this template:
+```json
+{
+  "type": "patch", // "none", "patch", "minor", "major"
+  "comment": "final adjustments",
+  "packageName": "@griffel/webpack-plugin", // name of affected package
+  "email": "YOUR_EMAIL",
+  "dependentChangeType": "patch" // "none", "patch", "minor", "major"
+}
+```
+
 ## Repository Structure
 
 ### Key Packages (packages/ directory)
