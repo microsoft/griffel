@@ -38,7 +38,7 @@ export const debugData = {
   getCSSRules: (): string[] => {
     return Array.from(cssRules);
   },
-  getSequenceDetails: (sequenceHash: SequenceHash): typeof sequenceDetails[string] | undefined => {
+  getSequenceDetails: (sequenceHash: SequenceHash): (typeof sequenceDetails)[string] | undefined => {
     return sequenceDetails[sequenceHash];
   },
 };
