@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add initial @griffel/transform package boilerplate",
+  "packageName": "@griffel/transform",
+  "email": "copilot@github.com",
+  "dependentChangeType": "none"
+}
