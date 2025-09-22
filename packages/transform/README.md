@@ -9,7 +9,6 @@ A package that performs build time transforms for Griffel [`@griffel/react`](../
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 ## Install
 
 ```bash

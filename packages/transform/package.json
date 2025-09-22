@@ -15,7 +15,5 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {
-    "@griffel/core": "^1.19.2"
-  }
+  "dependencies": {}
 }
