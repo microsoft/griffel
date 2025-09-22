@@ -7,11 +7,13 @@ Always reference these instructions first and fallback to search or bash command
 ## Working Effectively
 
 ### Prerequisites and Setup
+
 - Node.js version 20+ is required (`node --version` should show v20.x.x)
 - Yarn 4.3.1 is the package manager (`yarn --version` should show 4.3.1)
 - Uses Nx monorepo for task orchestration
 
 ### Bootstrap, Build, and Test
+
 **CRITICAL: NEVER CANCEL long-running commands. Set timeouts appropriately.**
 
 ```bash
@@ -19,7 +21,7 @@ Always reference these instructions first and fallback to search or bash command
 yarn install --immutable
 # NEVER CANCEL: May take up to 3 minutes. Set timeout to 300+ seconds.
 
-# Build all packages - takes ~1 minute 15 seconds  
+# Build all packages - takes ~1 minute 15 seconds
 yarn nx run-many --target=build --all
 # NEVER CANCEL: Build takes 1-2 minutes. Set timeout to 180+ seconds.
 
@@ -37,6 +39,7 @@ yarn nx run-many --target=lint --all
 ```
 
 ### Development Servers
+
 ```bash
 # Start documentation website (Docusaurus)
 yarn start
@@ -48,7 +51,9 @@ yarn nx run @griffel/benchmark:build
 ```
 
 ### Working with Affected Changes (Nx)
+
 When using Nx affected commands in a repository that may not have a main branch locally:
+
 ```bash
 # Use run-many instead of affected if git comparison fails
 yarn nx run-many --target=build --all   # Instead of yarn build
@@ -59,9 +64,11 @@ yarn nx run-many --target=lint --all    # Instead of yarn lint
 ## Validation
 
 ### Manual Testing Requirements
+
 **ALWAYS test changes by running through complete scenarios:**
 
 1. **Core Library Changes**: Test makeStyles functionality
+
    ```bash
    # Start website to test interactive examples
    yarn start
@@ -70,13 +77,14 @@ yarn nx run-many --target=lint --all    # Instead of yarn lint
    ```
 
 2. **Build Tool Changes**: Test with actual build scenarios
+
    ```bash
    # Test TypeScript compatibility across versions
    yarn nx run @griffel/e2e-typescript:test
-   
+
    # Test Next.js integration
    yarn nx run @griffel/e2e-nextjs:test
-   
+
    # Test Rspack bundler integration
    yarn nx run @griffel/e2e-rspack:test
    ```
@@ -88,7 +96,9 @@ yarn nx run-many --target=lint --all    # Instead of yarn lint
    ```
 
 ### Code Quality Requirements
+
 **ALWAYS run these before submitting changes:**
+
 ```bash
 # Format code - required for CI
 yarn prettier --write .
@@ -103,6 +113,7 @@ yarn nx run-many --target=type-check --all
 ### Change Management
 
 **Manual Change Files**: Create JSON files manually in `change/` directory using this template:
+
 ```json
 {
   "type": "patch", // "none", "patch", "minor", "major"
@@ -116,8 +127,9 @@ yarn nx run-many --target=type-check --all
 ## Repository Structure
 
 ### Key Packages (packages/ directory)
+
 - `@griffel/core` - Core runtime and compilation logic
-- `@griffel/react` - React bindings and hooks  
+- `@griffel/react` - React bindings and hooks
 - `@griffel/webpack-loader` - Webpack build-time transforms
 - `@griffel/vite-plugin` - Vite build-time transforms
 - `@griffel/next-extraction-plugin` - Next.js CSS extraction
@@ -125,18 +137,21 @@ yarn nx run-many --target=type-check --all
 - `@griffel/eslint-plugin` - ESLint rules for Griffel usage
 
 ### Applications (apps/ directory)
+
 - `website` - Documentation site (Docusaurus) at griffel.js.org
 - `benchmark` - Performance benchmarking suite
 
 ### Testing Infrastructure (e2e/ directory)
+
 - `nextjs` - Next.js integration tests
-- `typescript` - TypeScript compilation tests  
+- `typescript` - TypeScript compilation tests
 - `rspack` - Rspack bundler tests
 - `utils` - Common E2E testing utilities
 
 ## Common Tasks
 
 ### Adding New Features
+
 1. Make changes to relevant packages
 2. Add/update tests in the same package
 3. Run affected builds and tests to ensure nothing breaks
@@ -144,12 +159,14 @@ yarn nx run-many --target=type-check --all
 5. Update documentation in `apps/website/docs/` if needed
 
 ### Debugging Build Issues
+
 - Check package.json dependencies are correctly configured
 - Use `yarn nx graph` to visualize project dependencies
 - Individual package builds: `yarn nx run @griffel/[package]:build`
 - Clear Nx cache if needed: `yarn nx reset`
 
 ### Working with Styles
+
 - Test changes using the interactive playground at /try-it-out
 - Validate CSS output using browser DevTools
 - Check atomic CSS generation is working correctly
@@ -158,12 +175,12 @@ yarn nx run-many --target=type-check --all
 ## Known Issues and Workarounds
 
 ### Build Warnings (Acceptable)
+
 - Some packages show rollup-plugin-typescript2 deprecation warnings - this is expected
 - Linting may show 1-2 warnings in core packages - this is acceptable
 - Prettier may flag some generated files in apps/website/.docusaurus/ - these can be ignored
 
 ### Storybook Issues
+
 - React Storybook may have configuration issues with webpack5 dependencies
 - Use the website's /try-it-out page for interactive testing instead
-
-
