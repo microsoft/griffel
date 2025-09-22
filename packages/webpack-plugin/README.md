@@ -2,8 +2,6 @@
 
 A unified Webpack plugin that performs build time transforms and CSS extraction for Griffel.
 
-This package combines the functionality of `@griffel/webpack-loader` and `@griffel/webpack-extraction-plugin` into a single, unified plugin.
-
 ## Install
 
 ```bash
@@ -21,8 +19,8 @@ module.exports = {
   plugins: [
     new GriffelPlugin({
       // plugin options
-    })
-  ]
+    }),
+  ],
 };
 ```
 

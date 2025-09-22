@@ -9,8 +9,8 @@ import { makeStyles, shorthands } from '@griffel/react';
 
 export const useStyles = makeStyles({
   root: {
-    ...shorthands.border('1px') // ❌ Will produce suboptimal results
-  }
+    ...shorthands.border('1px'), // ❌ Will produce suboptimal results
+  },
 });
 ```
 
@@ -18,7 +18,7 @@ export const useStyles = makeStyles({
 import { makeStyles, shorthands } from '@griffel/react';
 
 // ❌ Will produce suboptimal results
-shorthands.border('1px')
+shorthands.border('1px');
 ```
 
 Examples of **correct** code for this rule:
@@ -28,7 +28,7 @@ import { makeStyles, shorthands } from '@griffel/react';
 
 export const useStyles = makeStyles({
   root: {
-    ...shorthands.borderColor('red')
+    ...shorthands.borderColor('red'),
   },
 });
 ```

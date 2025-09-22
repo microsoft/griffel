@@ -5,4 +5,3 @@ This script updates `packages/core/src/runtime/shorthands.ts` file with MDN data
 ```sh
 yarn nx run @griffel/update-shorthands:generate
 ```
-

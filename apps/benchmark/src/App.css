@@ -51,8 +51,8 @@
 }
 
 .report-card .column {
- display: flex;
- flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .select {
@@ -70,4 +70,3 @@
   box-sizing: border-box;
   font-size: 20px;
 }
-

@@ -18,7 +18,7 @@ export const getStyles = () => {
   });
 
   return useStyles;
-}
+};
 ```
 
 ```js
@@ -26,7 +26,7 @@ export const getStyles = () => {
 import { makeStyles } from '@fluentui/react-components';
 
 export class MyClass {
-  getStyles () {
+  getStyles() {
     const styles = makeStyles({
       root: {
         backgroundColor: 'red',
@@ -54,9 +54,11 @@ export const useStyles = makeStyles({
 import { makeStyles } from '@fluentui/react-components';
 import { generateStyles } from './custom-css';
 
-export const useStyles = generateStyles(makeStyles({
-  root: {
-    backgroundColor: 'red',
-  },
-}));
+export const useStyles = generateStyles(
+  makeStyles({
+    root: {
+      backgroundColor: 'red',
+    },
+  }),
+);
 ```

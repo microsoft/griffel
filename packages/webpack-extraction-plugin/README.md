@@ -7,7 +7,6 @@ A plugin for Webpack 5 that performs CSS extraction for [`@griffel/react`](../re
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Install](#install)
 - [When to use it?](#when-to-use-it)
 - [How it works?](#how-it-works)
