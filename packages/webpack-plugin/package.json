@@ -1,0 +1,32 @@
+{
+  "name": "@griffel/webpack-plugin",
+  "version": "1.0.0",
+  "description": "Webpack plugin that performs CSS extraction for Griffel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": "./index.js",
+      "types": "./index.d.mts"
+    },
+    "./loader": {
+      "node": "./webpackLoader.js",
+      "types": "./webpack-loader.d.mts"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@griffel/transform": "^1.0.0",
+    "@griffel/core": "^1.19.2",
+    "enhanced-resolve": "^5.15.0",
+    "oxc-resolver": "^11.8.2",
+    "stylis": "^4.2.0"
+  },
+  "peerDependencies": {
+    "webpack": "^5"
+  }
+}

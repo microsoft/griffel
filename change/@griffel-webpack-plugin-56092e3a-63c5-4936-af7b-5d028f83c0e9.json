@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "final adjustments",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
