@@ -19,15 +19,6 @@ A high-performance transformation package for Griffel that unifies CSS-in-JS tra
 
 `@griffel/transform` provides a unified approach to CSS-in-JS transformation and extraction for Griffel. It replaces Babel-based processing with modern OXC-based parsing for improved performance while maintaining full compatibility with existing Griffel APIs.
 
-## Features
-
-- **🚀 High Performance**: Uses OXC parser instead of Babel for ~10x faster AST processing
-- **🔄 Unified Transformation**: Combines style transformation and CSS extraction in one pass
-- **⚡ Smart Evaluation**: AST-based evaluation for simple expressions, VM fallback for complex cases
-- **📦 Asset Processing**: Automatic inlining of imported assets in CSS rules
-- **🎯 Tree Shaking**: Only processes files that actually contain Griffel usage
-- **🔧 Build Tool Ready**: Designed for integration with webpack, Vite, and other build tools
-
 ## Install
 
 ```bash
