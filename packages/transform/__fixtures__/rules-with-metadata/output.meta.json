@@ -1,0 +1,14 @@
+{
+  "usedProcessing": true,
+  "usedVMForEvaluation": false,
+  "cssRulesByBucket": {
+    "m": [
+      [
+        "@media screen and (max-width: 100px){.ful25cn{color:red;}}",
+        {
+          "m": "screen and (max-width: 100px)"
+        }
+      ]
+    ]
+  }
+}
