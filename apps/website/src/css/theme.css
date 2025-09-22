@@ -58,5 +58,5 @@ html[data-theme='dark'] {
 
 :where(.button--secondary):not(.button--outline):hover {
   --ifm-button-background-color: var(--ifm-color-primary-darker);
-  --ifm-button-border-color: var(--ifm-color-primary-darker);
+  --ifm-button-border-color: var( --ifm-color-primary-darker);
 }

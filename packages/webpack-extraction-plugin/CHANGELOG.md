@@ -321,7 +321,7 @@ Thu, 26 Jan 2023 14:06:28 GMT
 ### Patches
 
 - feat: implement "unstable_keepOriginalCode" for extraction plugin (olfedias@microsoft.com)
-- fix: properly handle @media in \_\_resetStyles() (olfedias@microsoft.com)
+- fix: properly handle @media in __resetStyles() (olfedias@microsoft.com)
 - fix: support aliased imports (olfedias@microsoft.com)
 - Bump @griffel/core to v1.9.1
 

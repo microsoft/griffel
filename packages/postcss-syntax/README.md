@@ -21,9 +21,13 @@ that is used internally, we've created the a factory to return the custom syntax
 ```ts
 import { createSyntax } from '@griffel/postcss-syntax';
 const syntax = createSyntax({
-  modules: [{ moduleSource: '@myScope/griffel', importName: 'createStyles' }],
-});
+  modules: [
+    { moduleSource: '@myScope/griffel', importName: 'createStyles' },
+  ]
+})
 ```
 
-For more information about how to configure the babel Griffel preset
+For more information about how to configure the babel Griffel preset 
 [you can check out the docs](https://github.com/microsoft/griffel/blob/main/packages/babel-preset/README.md#usage)
+
+

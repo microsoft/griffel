@@ -273,7 +273,7 @@ Wed, 26 Oct 2022 11:06:03 GMT
 
 ### Patches
 
-- fix: add export for \_\_resetCSS (olfedias@microsoft.com)
+- fix: add export for __resetCSS (olfedias@microsoft.com)
 - chore: allow React 18 in peerDependencies (olfedias@microsoft.com)
 - Bump @griffel/core to v1.8.1
 
@@ -283,8 +283,8 @@ Thu, 13 Oct 2022 08:36:18 GMT
 
 ### Patches
 
-- chore: add \_\_resetStyles (internal function) (olfedias@microsoft.com)
-- chore: add \_\_resetStyles (internal function) (olfedias@microsoft.com)
+- chore: add __resetStyles (internal function) (olfedias@microsoft.com)
+- chore: add __resetStyles (internal function) (olfedias@microsoft.com)
 - Bump @griffel/core to v1.8.0
 
 ## 1.4.0
@@ -358,7 +358,7 @@ Thu, 23 Jun 2022 08:37:05 GMT
 
 ### Patches
 
-- chore: add \_\_css() functions for upcoming CSS extraction (olfedias@microsoft.com)
+- chore: add __css() functions for upcoming CSS extraction (olfedias@microsoft.com)
 - chore: rename instances of styleElement to stylesheet where appropriate following [#137](https://github.com/microsoft/griffel/pull/137) (lingfangao@hotmail.com)
 
 ## 1.1.0

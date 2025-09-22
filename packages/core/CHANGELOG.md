@@ -89,7 +89,7 @@ Thu, 02 May 2024 14:07:14 GMT
 ### Patches
 
 - chore: add support for priority in CSS rules (olfedias@microsoft.com)
-- chore: deprecate the most of shorthands.\* functions (olfedias@microsoft.com)
+- chore: deprecate the most of shorthands.* functions (olfedias@microsoft.com)
 
 ## 1.15.3
 
@@ -167,7 +167,7 @@ Mon, 31 Jul 2023 09:05:33 GMT
 ### Minor changes
 
 - feat: add API for styles insertion (olfedias@microsoft.com)
-- feat: support variadic arguments in border\* shorthands (olfedias@microsoft.com)
+- feat: support variadic arguments in border* shorthands (olfedias@microsoft.com)
 
 ### Patches
 
@@ -316,8 +316,8 @@ Thu, 13 Oct 2022 08:36:18 GMT
 
 ### Patches
 
-- chore: add \_\_resetStyles (internal function) (olfedias@microsoft.com)
-- chore: add \_\_resetStyles (internal function) (olfedias@microsoft.com)
+- chore: add __resetStyles (internal function) (olfedias@microsoft.com)
+- chore: add __resetStyles (internal function) (olfedias@microsoft.com)
 
 ## 1.7.0
 
@@ -390,8 +390,8 @@ Thu, 23 Jun 2022 08:37:05 GMT
 
 ### Patches
 
-- chore: add \_\_css() functions for upcoming CSS extraction (olfedias@microsoft.com)
-- fix: collect devtools data in \_\_styles (yuanboxue@microsoft.com)
+- chore: add __css() functions for upcoming CSS extraction (olfedias@microsoft.com)
+- fix: collect devtools data in __styles (yuanboxue@microsoft.com)
 
 ## 1.3.1
 
@@ -407,7 +407,7 @@ Wed, 04 May 2022 16:15:22 GMT
 
 ### Minor changes
 
-- feat: inject devtools when session storage contains **GRIFFEL_DEVTOOLS** (yuanboxue@microsoft.com)
+- feat: inject devtools when session storage contains __GRIFFEL_DEVTOOLS__ (yuanboxue@microsoft.com)
 - feat: add support for @layer (mgodbolt@microsoft.com)
 - feat: add shorthand function for outline (bsunderhus@microsoft.com)
 - feat: add shorthand function for inset (bsunderhus@microsoft.com)
