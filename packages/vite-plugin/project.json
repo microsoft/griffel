@@ -17,13 +17,6 @@
         "outputPath": []
       }
     },
-    "test:vitest": {
-      "executor": "@nx/vite:test",
-      "dependsOn": ["^build"],
-      "options": {
-        "configFile": "packages/vite-plugin/vitest.config.ts"
-      }
-    },
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],

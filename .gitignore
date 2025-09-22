@@ -40,11 +40,6 @@ yarn-error.log
 testem.log
 /types
 
-# Vitest
-.vitest
-vitest.config.*.timestamp-*
-test-results.xml
-
 # System Files
 .DS_Store
 Thumbs.db
