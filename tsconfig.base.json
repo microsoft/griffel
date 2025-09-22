@@ -33,7 +33,7 @@
       "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"],
       "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"]
     },
-    "typeRoots": ["node_modules", "node_modules/@types", "./typings"]
+    "typeRoots": ["node_modules/@types", "./typings"]
   },
   "exclude": ["node_modules", "tmp"]
 }
