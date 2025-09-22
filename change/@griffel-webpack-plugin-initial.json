@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: create @griffel/webpack-plugin package with boilerplate",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "copilot@microsoft.com",
+  "dependentChangeType": "patch"
+}
