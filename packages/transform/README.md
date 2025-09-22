@@ -1,4 +1,4 @@
-# Babel preset for Griffel
+# Griffel transform
 
 A Babel preset that performs build time transforms for [`@griffel/react`](../react).
 
@@ -9,8 +9,6 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-> [!CAUTION]
-> We don't recommend to use this preset directly, it's intended to be used by other tools like [webpack loader](../webpack-loader) or [Vite plugin](../vite-plugin).
 
 ## Install
 
