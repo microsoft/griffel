@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
+    "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
     "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest", "environment"]
   },
   "include": [
