@@ -1,6 +1,6 @@
 # Griffel transform
 
-A Babel preset that performs build time transforms for [`@griffel/react`](../react).
+A package that performs build time transforms for Griffel [`@griffel/react`](../react).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
