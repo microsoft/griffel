@@ -6,6 +6,9 @@
 /out-tsc
 /packages/*/dist/bundle-size
 
+# TypeScript build info
+*.tsbuildinfo
+
 # dependencies
 .yarn/*
 !.yarn/patches
