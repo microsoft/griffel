@@ -101,12 +101,6 @@ yarn nx run-many --target=type-check --all
 ```
 
 ### Change Management
-```bash
-# Create changelog entries (required for package changes)
-yarn change
-# Follow prompts to describe your changes
-# Creates files in change/ directory for beachball
-```
 
 **Manual Change Files**: Create JSON files manually in `change/` directory using this template:
 ```json
