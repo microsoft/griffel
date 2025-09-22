@@ -12,10 +12,10 @@ export function shouldTransformSourceCode(
   }
 
   // Check if it's likely from one of the supported modules by looking for imports
-  const hasGriffelImport = modules.some(module => 
-    sourceCode.includes(`from '${module}'`) || sourceCode.includes(`from "${module}"`)
+  const hasGriffelImport = modules.some(
+    module => sourceCode.includes(`from '${module}'`) || sourceCode.includes(`from "${module}"`),
   );
-  
+
   // Only process if we have a griffel import, otherwise it might be a local function with the same name
   return hasGriffelImport;
 }

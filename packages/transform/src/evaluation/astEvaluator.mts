@@ -99,7 +99,7 @@ function evaluateTemplateLiteral(node: TemplateLiteral): string {
 /**
  * Evaluates member expressions that reference Fluent UI design tokens.
  * Transforms `tokens.propertyName` expressions into CSS custom properties: `var(--propertyName)`
- * 
+ *
  * @param node - The MemberExpression AST node to evaluate
  * @returns The CSS custom property string
  */

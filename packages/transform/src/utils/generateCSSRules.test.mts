@@ -6,7 +6,7 @@ describe('generateCSSRules', () => {
     const cssRulesByBucket = {
       d: ['.a{color:red;}', '.b{color:blue;}'],
     };
-    
+
     const result = generateCSSRules(cssRulesByBucket);
     expect(result).toBe('.a{color:red;}.b{color:blue;}');
   });
@@ -15,7 +15,7 @@ describe('generateCSSRules', () => {
     const cssRulesByBucket = {
       d: ['.a{color:red;}', ['.b{padding:10px;}', { p: -1 }]],
     };
-    
+
     const result = generateCSSRules(cssRulesByBucket);
     expect(result).toBe('.a{color:red;}.b{padding:10px;}');
   });
@@ -26,7 +26,7 @@ describe('generateCSSRules', () => {
       d: ['.default{color:blue;}'],
       h: ['.hover{color:green;}'],
     };
-    
+
     const result = generateCSSRules(cssRulesByBucket);
     expect(result).toBe('.default{color:blue;}.hover{color:green;}.media{color:red;}');
   });

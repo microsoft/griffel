@@ -12,7 +12,7 @@ export function generateCSSRules(cssRulesByBucket: CSSRulesByBucket): string {
 
   for (const bucketName of bucketOrder) {
     const bucketEntries = cssRulesByBucket[bucketName];
-    
+
     if (bucketEntries) {
       for (const entry of bucketEntries) {
         if (typeof entry === 'string') {
