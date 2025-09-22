@@ -1,4 +1,7 @@
 {
   "type": "none",
-  "comment": "Add comprehensive GitHub Copilot instructions for developers"
+  "comment": "Add comprehensive GitHub Copilot instructions for developers",
+  "packageName": "@griffel/website",
+  "email": "copilot@github.com",
+  "dependentChangeType": "none"
 }
