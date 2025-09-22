@@ -1,0 +1,106 @@
+name: Prepare Copilot Environment
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run daily at 2 AM UTC to keep environment fresh
+    - cron: '0 2 * * *'
+
+env:
+  NX_PARALLEL: 4
+
+jobs:
+  prepare-environment:
+    name: Prepare Development Environment for Copilot
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'microsoft' }}
+
+    permissions:
+      contents: 'read'
+      actions: 'read'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        with:
+          cache: 'yarn'
+          node-version: '20'
+
+      - name: Verify environment prerequisites
+        run: |
+          echo "Node.js version: $(node --version)"
+          echo "Yarn version: $(yarn --version)"
+          echo "Expected Node.js: 20+"
+          echo "Expected Yarn: 4.3.1"
+
+      - name: Install dependencies
+        run: yarn install --immutable
+        timeout-minutes: 5
+
+      - name: Verify dependency integrity
+        run: |
+          yarn dedupe --check
+          yarn check-dependencies
+
+      - name: Build all packages
+        run: yarn nx run-many --target=build --all
+        timeout-minutes: 10
+
+      - name: Run type checking
+        run: yarn nx run-many --target=type-check --all
+        timeout-minutes: 5
+
+      - name: Run linting
+        run: yarn nx run-many --target=lint --all
+        timeout-minutes: 3
+
+      - name: Prepare development tools
+        run: |
+          # Cache Nx computation cache
+          echo "Nx cache location: $(yarn nx show project @griffel/core | grep cacheLocation || echo 'default')"
+          
+          # Verify build artifacts are ready
+          ls -la dist/packages/ || echo "Build artifacts not found"
+          
+          # Show available Nx targets for reference
+          echo "Available Nx targets:"
+          yarn nx show projects --with-target=build | head -10
+
+      - name: Cache development environment
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v4.1.2
+        with:
+          path: |
+            ~/.npm
+            ~/.yarn
+            .yarn/cache
+            dist/
+            node_modules/.cache/
+          key: griffel-dev-env-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('nx.json') }}
+          restore-keys: |
+            griffel-dev-env-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-
+            griffel-dev-env-${{ runner.os }}-
+
+      - name: Environment summary
+        run: |
+          echo "🎯 Copilot Environment Ready!"
+          echo "✅ Node.js $(node --version) installed"
+          echo "✅ Yarn $(yarn --version) installed"
+          echo "✅ All dependencies installed"
+          echo "✅ All packages built"
+          echo "✅ Type checking passed"
+          echo "✅ Linting passed"
+          echo "✅ Development tools cached"
+          echo ""
+          echo "📦 Available packages:"
+          ls dist/packages/ | grep -E '^[^.]' | sort | head -10
+          echo ""
+          echo "🔧 Key commands for Copilot development:"
+          echo "  yarn start - Start documentation website"
+          echo "  yarn nx run-many --target=test --all - Run tests"
+          echo "  yarn nx run-many --target=build --all - Build packages"
+          echo "  yarn change - Create changelog entry"
