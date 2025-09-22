@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Unify webpack-loader and webpack-extraction-plugin functionality into @griffel/transform with OXC-based parsing",
+  "packageName": "@griffel/transform",
+  "email": "copilot@github.com",
+  "dependentChangeType": "none"
+}
