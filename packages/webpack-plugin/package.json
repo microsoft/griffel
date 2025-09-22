@@ -13,10 +13,6 @@
       "node": "./index.js",
       "types": "./index.d.mts"
     },
-    "./loader": {
-      "node": "./webpackLoader.js",
-      "types": "./webpack-loader.d.mts"
-    },
     "./package.json": "./package.json"
   },
   "dependencies": {
