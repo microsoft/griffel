@@ -1,0 +1,12 @@
+{
+  "usedProcessing": true,
+  "usedVMForEvaluation": true,
+  "cssRulesByBucket": {
+    "d": [
+      ".fepo2lx{background-image:url(./blank.jpg);}",
+      ".f18nilc4{background-image:url(\"./blank.jpg\");}",
+      ".fsmjahx{background-image:url(./empty.jpg);}",
+      ".f12vvth1{filter:url(./a.svg#a);}"
+    ]
+  }
+}
