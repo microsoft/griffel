@@ -315,12 +315,12 @@ export class GriffelPlugin {
         () => {
           if (this.#collectStats) {
             function logTime(time: bigint): string {
-              if (time > 1_000_000n) {
-                return (time / 1_000_000n).toString() + 'ms';
+              if (time > BigInt(1_000_000)) {
+                return (time / BigInt(1_000_000)).toString() + 'ms';
               }
 
-              if (time > 1_000n) {
-                return (time / 1_000n).toString() + 'μs';
+              if (time > BigInt(1_000)) {
+                return (time / BigInt(1_000)).toString() + 'μs';
               }
 
               return time.toString() + 'ns';
@@ -333,7 +333,7 @@ export class GriffelPlugin {
             console.log('------------------------------------');
             console.log(
               'Total time spent in Griffel loader:',
-              logTime(entries.reduce((acc, cur) => acc + cur[1].time, 0n)),
+              logTime(entries.reduce((acc, cur) => acc + cur[1].time, BigInt(0))),
             );
             console.log(
               'AST evaluation hit: ',
