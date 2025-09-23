@@ -60,7 +60,7 @@ function webpackLoader(
       // makeStyles() calls, see evaluatePathsInVM.ts.
       // Webpack's config can define own module resolution, Babel plugin should use Webpack's resolution to properly
       // resolve paths.
-      Module._resolveFilename = (id, params) => {
+      Module._resolveFilename = (id: string, params: any) => {
         const resolvedPath = this[GriffelCssLoaderContextKey]!.resolveModule(id, params);
 
         this.addDependency(resolvedPath);
