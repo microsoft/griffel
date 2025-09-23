@@ -13,9 +13,19 @@
       "node": "./index.js",
       "types": "./index.d.mts"
     },
+    "./loader": {
+      "node": "./webpackLoader.js",
+      "types": "./webpack-loader.d.mts"
+    },
     "./package.json": "./package.json"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@griffel/transform": "^1.0.0",
+    "@griffel/core": "^1.19.2",
+    "enhanced-resolve": "^5.15.0",
+    "oxc-resolver": "^11.8.2",
+    "stylis": "^4.2.0"
+  },
   "peerDependencies": {
     "webpack": "^5"
   }
