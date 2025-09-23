@@ -336,8 +336,12 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
             );
           }
 
-          // Replace the function call arguments
-          magicString.overwrite(styleCall.argumentStart, styleCall.argumentEnd, `${JSON.stringify(classnamesMapping)}`);
+          // Replace the function call arguments to match babel-preset output
+          magicString.overwrite(
+            styleCall.argumentStart, 
+            styleCall.argumentEnd, 
+            `${JSON.stringify(classnamesMapping)}, ${JSON.stringify(cssRulesByBucketA)}`
+          );
           cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, cssRulesByBucketA);
         }
 
@@ -352,11 +356,12 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
             buildCSSResetEntriesMetadata(cssResetEntries, cssRules, styleCall.declaratorId);
           }
 
-          // Replace the function call arguments
+          // Replace the function call arguments to match babel-preset output
+          const cssRulesArray = Array.isArray(cssRules) ? cssRules : Object.values(cssRules).flat();
           magicString.overwrite(
             styleCall.argumentStart,
             styleCall.argumentEnd,
-            `${JSON.stringify(ltrClassName)}, ${JSON.stringify(rtlClassName)}`,
+            `${JSON.stringify(ltrClassName)}, ${JSON.stringify(rtlClassName)}, ${JSON.stringify(cssRulesArray)}`,
           );
           cssRulesByBucket = concatCSSRulesByBucket(
             cssRulesByBucket,
@@ -374,9 +379,9 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     for (const specifier of importInfo.specifiers) {
       if (specifier.imported === 'makeStyles') {
         // TODO: use mapping for identifiers
-        magicString.overwrite(specifier.start, specifier.end, '__css');
+        magicString.overwrite(specifier.start, specifier.end, '__styles');
       } else if (specifier.imported === 'makeResetStyles') {
-        magicString.overwrite(specifier.start, specifier.end, '__resetCSS');
+        magicString.overwrite(specifier.start, specifier.end, '__resetStyles');
       }
     }
   }
@@ -388,13 +393,13 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     magicString.overwrite(
       styleCall.callStart,
       styleCall.callStart + styleCall.importId.length,
-      '__' + (styleCall.functionKind === 'makeStyles' ? 'css' : 'resetCSS'),
+      '__' + (styleCall.functionKind === 'makeStyles' ? 'styles' : 'resetStyles'),
     );
   }
 
   return {
     code: magicString.toString(),
-    cssRulesByBucket,
+    ...(generateMetadata && { cssRulesByBucket }),
     usedProcessing: true,
     usedVMForEvaluation,
   };
