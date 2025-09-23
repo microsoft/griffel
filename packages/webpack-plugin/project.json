@@ -1,0 +1,41 @@
+{
+  "name": "@griffel/webpack-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/webpack-plugin/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/packages/webpack-plugin"
+      }
+    },
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/webpack-plugin",
+        "compiler": "swc",
+        "format": ["esm"]
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/webpack-plugin",
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
+      },
+      "outputs": []
+    }
+  }
+}
