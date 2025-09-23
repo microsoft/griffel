@@ -72,72 +72,10 @@ function testFixture(
 }
 
 describe('transformSync fixtures', () => {
-  // Basic functionality - start with simple ones first
+  // Basic functionality - test the main fixtures  
   testFixture('object');
   testFixture('at-rules');
   testFixture('multiple-declarations');
-  
-  // Skip complex ones for now
-  /*
-  testFixture('duplicated-imports', {
-    transformOptions: {
-      modules: ['custom-package', '@griffel/react'],
-    },
-  });
-  
-  testFixture('keyframes');
-  testFixture('object-shorthands');
-  testFixture('object-reset');
-  
-  // Assets
-  testFixture('assets');
-  testFixture('assets-multiple-declarations');
-  testFixture('assets-urls');
-  
-  // Evaluation
-  testFixture('function-mixin');
-  testFixture('object-computed-keys');
-  testFixture('object-imported-keys');
-  testFixture('object-mixins');
-  testFixture('object-nesting');
-  testFixture('object-sequence-expr');
-  testFixture('object-variables');
-  testFixture('rules-with-metadata');
-  testFixture('shared-mixins');
-  testFixture('tokens');
-  
-  // Reset styles
-  testFixture('reset-styles');
-  testFixture('assets-reset-styles');
-  testFixture('reset-styles-at-rules');
-  
-  // Imports
-  testFixture('import-alias');
-  testFixture('import-custom-module', {
-    transformOptions: {
-      modules: ['custom-package'],
-    },
-  });
-  testFixture('import-custom-name', {
-    transformOptions: {
-      modules: ['custom-package'],
-    },
-  });
-  testFixture('require');
-  testFixture('require-custom-module', {
-    transformOptions: {
-      modules: ['custom-package'],
-    },
-  });
-  testFixture('require-reset-styles');
-  
-  // Configuration options
-  testFixture('config-classname-hash-salt', {
-    transformOptions: {
-      classNameHashSalt: 'prefix',
-    },
-  });
-  */
 });
 
 describe('transformSync configuration', () => {

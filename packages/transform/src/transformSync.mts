@@ -65,6 +65,60 @@ interface ImportInfo {
 }
 
 /**
+ * Formats an object for insertion into code, with proper indentation and spacing
+ */
+function formatObjectForCode(obj: any, indent = 0): string {
+  if (obj === null || obj === undefined) {
+    return String(obj);
+  }
+  
+  if (typeof obj === 'string') {
+    return `'${obj.replace(/'/g, "\\'")}'`;
+  }
+  
+  if (typeof obj === 'number' || typeof obj === 'boolean') {
+    return String(obj);
+  }
+  
+  if (Array.isArray(obj)) {
+    if (obj.length === 0) {
+      return '[]';
+    }
+    
+    // For simple string arrays, use single-line format
+    if (obj.length <= 2 && obj.every(item => typeof item === 'string')) {
+      const items = obj.map(item => formatObjectForCode(item, indent));
+      return `[${items.join(', ')}]`;
+    }
+    
+    const items = obj.map(item => formatObjectForCode(item, indent + 1));
+    const spacing = '  '.repeat(indent + 1);
+    const closingSpacing = '  '.repeat(indent);
+    
+    return `[\n${spacing}${items.join(`,\n${spacing}`)},\n${closingSpacing}]`;
+  }
+  
+  if (typeof obj === 'object') {
+    const keys = Object.keys(obj);
+    if (keys.length === 0) {
+      return '{}';
+    }
+    
+    const spacing = '  '.repeat(indent + 1);
+    const closingSpacing = '  '.repeat(indent);
+    
+    const entries = keys.map(key => {
+      const value = formatObjectForCode(obj[key], indent + 1);
+      return `${spacing}${key}: ${value}`;
+    });
+    
+    return `{\n${entries.join(',\n')},\n${closingSpacing}}`;
+  }
+  
+  return JSON.stringify(obj);
+}
+
+/**
  * Extracts CSS rules from evaluated reset styles to metadata
  */
 function buildCSSResetEntriesMetadata(
@@ -340,7 +394,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           magicString.overwrite(
             styleCall.argumentStart, 
             styleCall.argumentEnd, 
-            `${JSON.stringify(classnamesMapping)}, ${JSON.stringify(cssRulesByBucketA)}`
+            `\n  ${formatObjectForCode(classnamesMapping, 1)},\n  ${formatObjectForCode(cssRulesByBucketA, 1)},\n`
           );
           cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, cssRulesByBucketA);
         }
@@ -361,7 +415,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           magicString.overwrite(
             styleCall.argumentStart,
             styleCall.argumentEnd,
-            `${JSON.stringify(ltrClassName)}, ${JSON.stringify(rtlClassName)}, ${JSON.stringify(cssRulesArray)}`,
+            `${formatObjectForCode(ltrClassName)}, ${formatObjectForCode(rtlClassName)}, ${formatObjectForCode(cssRulesArray)}`,
           );
           cssRulesByBucket = concatCSSRulesByBucket(
             cssRulesByBucket,

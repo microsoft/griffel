@@ -1,4 +1,5 @@
 import { __styles } from '@griffel/react';
+
 export const useStyles1 = __styles(
   {
     root: {

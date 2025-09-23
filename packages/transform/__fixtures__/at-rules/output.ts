@@ -1,4 +1,5 @@
 import { __styles } from '@griffel/react';
+
 export const useStyles = __styles(
   {
     root: {
@@ -16,7 +17,16 @@ export const useStyles = __styles(
           m: '(min-width: 600px)',
         },
       ],
+      [
+        '@media (min-width: 600px){.f1h4p6a1{padding-right:4px;}.fgefjy{padding-left:4px;}}',
+        {
+          m: '(min-width: 600px)',
+        },
+      ],
     ],
-    t: ['@supports (display: flex){.f1dyc5nu{padding-left:4px;}.f1kq3x14{padding-right:4px;}}'],
+    t: [
+      '@supports (display: flex){.f1dyc5nu{padding-left:4px;}.f1kq3x14{padding-right:4px;}}',
+      '@supports (display: flex){.f1dyc5nu{padding-left:4px;}.f1kq3x14{padding-right:4px;}}',
+    ],
   },
 );
