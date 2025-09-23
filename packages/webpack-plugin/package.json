@@ -8,14 +8,27 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "type": "module",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
-      "node": "./index.js",
-      "types": "./index.d.mts"
+      "node": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./loader": {
+      "node": "./lib/webpackLoader.js",
+      "types": "./lib/webpackLoader.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@griffel/transform": "^1.0.0",
+    "@griffel/core": "^1.19.2",
+    "enhanced-resolve": "^5.15.0",
+    "oxc-resolver": "^11.8.2",
+    "stylis": "^4.2.0"
+  },
   "peerDependencies": {
     "webpack": "^5"
   }
