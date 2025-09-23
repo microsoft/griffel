@@ -44,7 +44,7 @@ export function createEnhancedResolverFactory(
       ...(webpackResolveOptions as EnhancedResolveOptions),
     });
 
-    return function resolveModule(id: string, { filename }: { filename: string }) {
+    return function resolveModule(id: string, { filename }: { filename: string; id: string; paths: string[] }) {
       const resolvedPath = resolveSync(path.dirname(filename), id);
 
       if (!resolvedPath) {
