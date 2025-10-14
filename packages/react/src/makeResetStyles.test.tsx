@@ -6,7 +6,7 @@ import { makeResetStyles } from './makeResetStyles';
 
 describe('makeResetStyles', () => {
   it('works outside of React components', () => {
-    expect(() => makeResetStyles({ root: { color: 'red' } })).not.toThrow();
+    expect(() => makeResetStyles({ color: 'red' })).not.toThrow();
   });
 
   it('throws inside React components', () => {
