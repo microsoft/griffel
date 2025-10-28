@@ -10,13 +10,15 @@ function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options)
       // Add interop for CJS
       ...(output.format === 'cjs' && { interop: 'compat' }),
     }));
+
+    // Add plugin to preserve 'use client' directives in the output files
+    options.plugins = options.plugins || [];
+    options.plugins.push(preserveDirectives());
+
+    return options;
   }
 
-  // Add plugin to preserve 'use client' directives in the output files
-  options.plugins = options.plugins || [];
-  options.plugins.push(preserveDirectives());
-
-  return options;
+  throw new Error('"options.output" should be an array');
 }
 
 module.exports = getRollupOptions;
