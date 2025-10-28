@@ -1,5 +1,5 @@
 import hashString from '@emotion/hash';
-import type { GriffelResetStyle, GriffelAnimation } from '@griffel/style-types';
+import type { GriffelResetStyle, GriffelResetAnimation } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { RESET_HASH_PREFIX } from '../constants';
@@ -19,13 +19,13 @@ import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule';
 /**
  * @internal
  */
-function createStringFromStyles(styles: GriffelResetStyle) {
+function createStringFromStyles<Style extends GriffelResetStyle | GriffelResetAnimation>(styles: Style) {
   let ltrCSS = '';
   let rtlCSS = '';
 
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
-    const value = styles[property as keyof GriffelResetStyle];
+    const value = styles[property as keyof Style];
 
     // eslint-disable-next-line eqeqeq
     if (value == null) {
@@ -42,7 +42,7 @@ function createStringFromStyles(styles: GriffelResetStyle) {
     }
 
     if (property === 'animationName' && typeof value === 'object') {
-      const values = Array.isArray(value) ? (value as GriffelAnimation[]) : [value as GriffelAnimation];
+      const values = Array.isArray(value) ? (value as GriffelResetAnimation[]) : [value as GriffelResetAnimation];
 
       const ltrAnimationNames: string[] = [];
       const rtlAnimationNames: string[] = [];
