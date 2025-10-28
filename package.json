@@ -136,6 +136,7 @@
     "react-fela": "12.2.0",
     "react-refresh": "^0.10.0",
     "react-shadow": "^20.2.0",
+    "rollup-plugin-preserve-directives": "^0.4.0",
     "simple-git-hooks": "2.7.0",
     "snapshot-diff": "0.10.0",
     "storybook": "9.0.9",

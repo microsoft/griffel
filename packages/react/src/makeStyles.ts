@@ -1,3 +1,5 @@
+'use client';
+
 import { makeStyles as vanillaMakeStyles } from '@griffel/core';
 import type { GriffelStyle } from '@griffel/core';
 

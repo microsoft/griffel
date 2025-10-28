@@ -1,3 +1,5 @@
+'use client';
+
 import { createDOMRenderer, rehydrateRendererCache } from '@griffel/core';
 import type { GriffelRenderer } from '@griffel/core';
 import * as React from 'react';

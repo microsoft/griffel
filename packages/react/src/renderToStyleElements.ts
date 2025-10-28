@@ -1,3 +1,5 @@
+'use client';
+
 import { styleBucketOrdering } from '@griffel/core';
 import * as React from 'react';
 import type { GriffelRenderer } from '@griffel/core';

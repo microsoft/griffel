@@ -1,3 +1,5 @@
+'use client';
+
 import { __resetCSS as vanillaResetCSS } from '@griffel/core';
 import { useTextDirection } from './TextDirectionContext';
 

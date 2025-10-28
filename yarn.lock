@@ -15221,6 +15221,7 @@ __metadata:
     react-fela: "npm:12.2.0"
     react-refresh: "npm:^0.10.0"
     react-shadow: "npm:^20.2.0"
+    rollup-plugin-preserve-directives: "npm:^0.4.0"
     rtl-css-js: "npm:^1.16.1"
     simple-git-hooks: "npm:2.7.0"
     snapshot-diff: "npm:0.10.0"
@@ -24243,6 +24244,18 @@ __metadata:
   peerDependencies:
     postcss: 8.x
   checksum: 10/ee9485265fe69fde54340d4a324c8de15185c730861176cfd947b34532dc63445da6788dc17f3c641708fa4a87fe832c534bfad678b413bb3b4e2b8bdd292850
+  languageName: node
+  linkType: hard
+
+"rollup-plugin-preserve-directives@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "rollup-plugin-preserve-directives@npm:0.4.0"
+  dependencies:
+    "@rollup/pluginutils": "npm:^5.1.0"
+    magic-string: "npm:^0.30.5"
+  peerDependencies:
+    rollup: 2.x || 3.x || 4.x
+  checksum: 10/2ed0eeeb342ad87b9ec6c0521279c21b8680709e43da66b956cf111783852c01e167d463860b8e5a5b7385cf4d807d71d448eb9bf8179e1b336d777d6f7fe5b8
   languageName: node
   linkType: hard
 

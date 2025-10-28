@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 
 export const useInsertionEffect: typeof React.useInsertionEffect | undefined =

@@ -1,3 +1,5 @@
+'use client';
+
 import type { CSSRulesByBucket, GriffelInsertionFactory, GriffelRenderer } from '@griffel/core';
 
 import { canUseDOM } from './utils/canUseDOM';
