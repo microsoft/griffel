@@ -2,7 +2,6 @@ import { createDOMRenderer, mergeClasses } from '@griffel/core';
 import * as React from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { act } from 'react-dom/test-utils';
 
 import { makeStyles } from './makeStyles';
 import { makeResetStyles } from './makeResetStyles';
@@ -100,7 +99,7 @@ describe('createDOMRenderer', () => {
       jest.spyOn(styleEl.sheet!, 'insertRule'),
     );
 
-    act(() => {
+    React.act(() => {
       hydrateRoot(
         container,
         // "RendererProvider" is not required there, we need it only for Jest spies

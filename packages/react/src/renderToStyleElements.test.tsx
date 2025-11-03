@@ -4,7 +4,6 @@ import * as prettier from 'prettier';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { act } from 'react-dom/test-utils';
 
 import { makeStyles } from './makeStyles';
 import { makeResetStyles } from './makeResetStyles';
@@ -48,7 +47,7 @@ describe('renderToStyleElements (DOM)', () => {
     };
     const root = createRoot(document.createElement('div'));
 
-    act(() => {
+    React.act(() => {
       root.render(
         <RendererProvider renderer={renderer}>
           <ExampleComponent />
@@ -87,7 +86,7 @@ describe('renderToStyleElements (DOM)', () => {
     };
     const root = createRoot(document.createElement('div'));
 
-    act(() => {
+    React.act(() => {
       root.render(
         <RendererProvider renderer={renderer}>
           <ExampleComponent />
