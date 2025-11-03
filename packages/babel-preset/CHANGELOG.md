@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Mon, 28 Jul 2025 09:12:30 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Nov 2025 15:43:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.7.0
+
+Mon, 03 Nov 2025 15:43:56 GMT
+
+### Minor changes
+
+- fix(babel-preset): fix emit of classNameHashSalt comment (olfedias@microsoft.com)
 
 ## 1.6.8
 

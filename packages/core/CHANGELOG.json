@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 03 Nov 2025 15:43:56 GMT",
+      "tag": "@griffel/core_v1.19.2",
+      "version": "1.19.2",
+      "comments": {
+        "none": [
+          {
+            "author": "copilot@github.com",
+            "package": "@griffel/core",
+            "commit": "ffc4f6881fc2be54f7ff1591340bb28b9b9201ee",
+            "comment": "Fix formatting"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/core_v1.19.2",
       "version": "1.19.2",

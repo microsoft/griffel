@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add functionality",
-  "packageName": "@griffel/transform",
-  "email": "copilot@github.com",
-  "dependentChangeType": "none"
-}

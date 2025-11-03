@@ -1,8 +1,16 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Mon, 28 Jul 2025 09:12:30 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Nov 2025 15:43:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.4
+
+Mon, 03 Nov 2025 15:43:56 GMT
+
+### Patches
+
+- Bump @griffel/babel-preset to v1.7.0
 
 ## 1.3.3
 

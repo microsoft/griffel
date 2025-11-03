@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: fix dev-only validation to work in React 19",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

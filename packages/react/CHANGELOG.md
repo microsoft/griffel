@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-This log was last generated on Tue, 22 Apr 2025 10:05:48 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Nov 2025 15:43:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.31
+
+Mon, 03 Nov 2025 15:43:56 GMT
+
+### Patches
+
+- feat(react): add 'use client' directives (dmytrokirpa@microsoft.com)
+- fix: fix dev-only validation to work in React 19 (olfedias@microsoft.com)
 
 ## 1.5.30
 

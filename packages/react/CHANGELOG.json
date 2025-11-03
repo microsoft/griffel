@@ -2,6 +2,27 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Mon, 03 Nov 2025 15:43:56 GMT",
+      "tag": "@griffel/react_v1.5.31",
+      "version": "1.5.31",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmytrokirpa@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "a09e6aa5c86e05dca8dcda07771693189ef16af1",
+            "comment": "feat(react): add 'use client' directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "e591d1c2bf61df66d543715df660943601561ecb",
+            "comment": "fix: fix dev-only validation to work in React 19"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/react_v1.5.30",
       "version": "1.5.30",

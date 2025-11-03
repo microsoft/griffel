@@ -2,6 +2,21 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Mon, 03 Nov 2025 15:43:56 GMT",
+      "tag": "@griffel/babel-preset_v1.7.0",
+      "version": "1.7.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "a4c356170d7b2a851ffe43666157dfeb5a37feb0",
+            "comment": "fix(babel-preset): fix emit of classNameHashSalt comment"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/babel-preset_v1.6.8",
       "version": "1.6.8",

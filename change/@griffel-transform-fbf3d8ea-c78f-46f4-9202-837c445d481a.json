@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add fixtures and fixture-based tests to @griffel/transform from feat/new-plugin branch",
-  "packageName": "@griffel/transform",
-  "email": "198982749+Copilot@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

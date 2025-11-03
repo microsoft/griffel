@@ -1,6 +1,6 @@
 {
   "name": "@griffel/transform",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A package that performs build time transforms for Griffel",
   "license": "MIT",
   "repository": {

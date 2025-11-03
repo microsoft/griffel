@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "feat(react): add 'use client' directives",
-  "packageName": "@griffel/react",
-  "email": "dmytrokirpa@microsoft.com",
-  "dependentChangeType": "patch"
-}

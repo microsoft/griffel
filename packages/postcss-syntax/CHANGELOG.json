@@ -2,6 +2,21 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Mon, 03 Nov 2025 15:43:56 GMT",
+      "tag": "@griffel/postcss-syntax_v1.3.4",
+      "version": "1.3.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/postcss-syntax",
+            "comment": "Bump @griffel/babel-preset to v1.7.0",
+            "commit": "5fa32ed29a45ac1fc8bde9f59665208da17d0c35"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/postcss-syntax_v1.3.3",
       "version": "1.3.3",

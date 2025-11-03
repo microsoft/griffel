@@ -1,0 +1,34 @@
+{
+  "name": "@griffel/transform",
+  "entries": [
+    {
+      "date": "Mon, 03 Nov 2025 15:43:56 GMT",
+      "tag": "@griffel/transform_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "@griffel/transform",
+            "commit": "fde1736c87adc10627cb0e93f191f8d39cbf9b85",
+            "comment": "Add fixtures and fixture-based tests to @griffel/transform from feat/new-plugin branch"
+          }
+        ],
+        "minor": [
+          {
+            "author": "copilot@github.com",
+            "package": "@griffel/transform",
+            "commit": "4c1805eae95b64b3194f79e0f786529a15ee34bd",
+            "comment": "Add initial @griffel/transform package boilerplate"
+          },
+          {
+            "author": "copilot@github.com",
+            "package": "@griffel/transform",
+            "commit": "8de4a3c9a281c053ef0978b6506c666f57457c12",
+            "comment": "feat: add functionality"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "fix(babel-preset): fix emit of classNameHashSalt comment",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
