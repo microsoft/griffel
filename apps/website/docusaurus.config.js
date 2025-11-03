@@ -15,7 +15,6 @@ const config = {
   projectName: 'griffel',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
 
   title: 'Griffel',
   // tagline: 'Dinosaurs are cool',
@@ -26,6 +25,9 @@ const config = {
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
   },
 
   plugins: [require.resolve('./src/components/Playground/docusaurusPlugin')],
