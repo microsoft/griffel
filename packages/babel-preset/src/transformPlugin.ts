@@ -257,15 +257,15 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         },
 
         exit(programPath, state) {
-          if (pluginOptions.classNameHashSalt.length > 0) {
-            programPath.addComment('trailing', `@griffel:classNameHashSalt "${pluginOptions.classNameHashSalt}"`);
-          }
-
           if (state.importDeclarationPaths!.length === 0 && !state.requireDeclarationPath) {
             return;
           }
 
           if (state.definitionPaths) {
+            if (pluginOptions.classNameHashSalt.length > 0 && state.definitionPaths.length > 0) {
+              programPath.addComment('trailing', `@griffel:classNameHashSalt "${pluginOptions.classNameHashSalt}"`);
+            }
+
             // Runs Babel AST processing or module evaluation for Node once for all arguments of makeStyles() calls once
             evaluatePaths(
               programPath,
