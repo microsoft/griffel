@@ -44,7 +44,7 @@ extends:
 
               - task: NodeTool@0
                 inputs:
-                  versionSpec: '18.x'
+                  versionSpec: '20.x'
                   checkLatest: true
                 displayName: 'Install Node.js'
 
