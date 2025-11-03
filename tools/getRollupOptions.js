@@ -1,3 +1,5 @@
+const { preserveDirectives } = require('rollup-plugin-preserve-directives');
+
 function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options) {
   if (Array.isArray(options.output)) {
     options.output = options.output.map(output => ({
@@ -8,6 +10,10 @@ function getRollupOptions(/** @type {import('rollup').RollupOptions} */ options)
       // Add interop for CJS
       ...(output.format === 'cjs' && { interop: 'compat' }),
     }));
+
+    // Add plugin to preserve 'use client' directives in the output files
+    options.plugins = options.plugins || [];
+    options.plugins.push(preserveDirectives());
 
     return options;
   }

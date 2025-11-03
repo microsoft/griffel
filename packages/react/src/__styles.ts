@@ -1,3 +1,5 @@
+'use client';
+
 import { __styles as vanillaStyles } from '@griffel/core';
 import type { CSSClassesMapBySlot, CSSRulesByBucket } from '@griffel/core';
 

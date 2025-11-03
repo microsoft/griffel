@@ -1,3 +1,5 @@
+'use client';
+
 import { makeStaticStyles as vanillaMakeStaticStyles } from '@griffel/core';
 import type { GriffelStaticStyles, MakeStaticStylesOptions } from '@griffel/core';
 

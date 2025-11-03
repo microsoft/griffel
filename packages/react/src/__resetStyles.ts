@@ -1,3 +1,5 @@
+'use client';
+
 import { __resetStyles as vanillaResetStyles } from '@griffel/core';
 import type { CSSRulesByBucket } from '@griffel/core';
 
