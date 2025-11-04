@@ -1,8 +1,16 @@
 # Change Log - @griffel/vite-plugin
 
-This log was last generated on Wed, 08 Jan 2025 10:03:24 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Nov 2025 09:27:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.14
+
+Tue, 04 Nov 2025 09:27:58 GMT
+
+### Patches
+
+- chore: bump @wyw-in-js packages to 0.8.0 (olfedias@microsoft.com)
 
 ## 0.1.10
 

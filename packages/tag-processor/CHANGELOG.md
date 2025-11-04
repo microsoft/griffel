@@ -1,8 +1,16 @@
 # Change Log - @griffel/tag-processor
 
-This log was last generated on Tue, 22 Apr 2025 10:05:48 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Nov 2025 09:27:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.14
+
+Tue, 04 Nov 2025 09:27:58 GMT
+
+### Patches
+
+- chore: bump @wyw-in-js packages to 0.8.0 (olfedias@microsoft.com)
 
 ## 1.0.13
 
