@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@griffel/core": "^1.19.2",
-    "@wyw-in-js/processor-utils": "^0.5.5",
+    "@wyw-in-js/processor-utils": "^0.8.0",
     "stylis": "^4.2.0",
     "tslib": "^2.1.0"
   },

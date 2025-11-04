@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: bump @wyw-in-js packages to 0.8.0",
+  "packageName": "@griffel/tag-processor",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
