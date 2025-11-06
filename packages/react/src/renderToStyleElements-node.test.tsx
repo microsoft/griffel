@@ -72,6 +72,88 @@ describe('renderToStyleElements (node)', () => {
       `);
     });
 
+    it('supports overrides', () => {
+      const useExampleStylesA = makeStyles({
+        root: {
+          paddingLeft: '10px',
+          margin: '10px',
+          ':hover': { paddingRight: '20px' },
+        },
+      });
+      const useExampleStylesB = makeStyles({
+        root: { padding: '10px', ':hover': { padding: '20px' } },
+      });
+      const useExampleStylesC = makeStyles({
+        root: { marginLeft: '10px' },
+      });
+      const ExampleComponent: React.FC = () => {
+        useExampleStylesA();
+        useExampleStylesB();
+        useExampleStylesC();
+
+        return null;
+      };
+
+      const renderer = createDOMRenderer();
+
+      ReactDOM.renderToStaticMarkup(
+        <RendererProvider renderer={renderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+
+      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
+        <style
+          data-make-styles-bucket="d"
+          data-priority="-1"
+          data-make-styles-rehydration="true"
+        >
+          .femlv54 {
+            margin: 10px;
+          }
+          .fbhmu18 {
+            padding: 10px;
+          }</style
+        ><style
+          data-make-styles-bucket="d"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .frdkuqy {
+            padding-left: 10px;
+          }
+          .f81rol6 {
+            padding-right: 10px;
+          }
+          .f1oou7ox {
+            margin-left: 10px;
+          }
+          .f1pxv85q {
+            margin-right: 10px;
+          }</style
+        ><style
+          data-make-styles-bucket="h"
+          data-priority="-1"
+          data-make-styles-rehydration="true"
+        >
+          .fp9hkdp:hover {
+            padding: 20px;
+          }</style
+        ><style
+          data-make-styles-bucket="h"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .f19vcps:hover {
+            padding-right: 20px;
+          }
+          .f1mr755h:hover {
+            padding-left: 20px;
+          }
+        </style>
+      `);
+    });
+
     it('handles @at rules', () => {
       const useExampleStyles = makeStyles({
         media: {
