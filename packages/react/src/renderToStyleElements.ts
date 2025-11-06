@@ -11,11 +11,15 @@ import type { GriffelRenderer } from '@griffel/core';
  */
 export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
   const stylesheets = Object.values(renderer.stylesheets)
-    // first sort: bucket names
+    // first sort: bucket by order [data-priority]
+    .sort((a, b) => {
+      return Number(a.elementAttributes['data-priority']) - Number(b.elementAttributes['data-priority']);
+    })
+    // second sort: bucket by bucket name
     .sort((a, b) => {
       return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
     })
-    // second sort: media queries
+    // third sort: media queries
     .sort((a, b) => {
       const mediaA = a.elementAttributes['media'];
       const mediaB = b.elementAttributes['media'];

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: renderToStyleElements() should handle shorthands ordering",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
