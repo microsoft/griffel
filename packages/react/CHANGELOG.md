@@ -1,8 +1,16 @@
 # Change Log - @griffel/react
 
-This log was last generated on Mon, 03 Nov 2025 15:43:56 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Nov 2025 19:40:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.32
+
+Thu, 06 Nov 2025 19:40:21 GMT
+
+### Patches
+
+- fix: renderToStyleElements() should handle shorthands ordering (olfedias@microsoft.com)
 
 ## 1.5.31
 
