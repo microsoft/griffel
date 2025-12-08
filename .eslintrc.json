@@ -2,7 +2,7 @@
   "root": true,
   "ignorePatterns": ["**/*"],
   "plugins": ["@nx", "import", "jest"],
-  "extends": ["plugin:import/typescript"],
+  "extends": ["plugin:import/typescript", "plugin:storybook/recommended"],
   "settings": {
     "import/resolver": {
       "typescript": {
@@ -31,7 +31,7 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "excludedFiles": "*.fixture.js",
+      "excludedFiles": ["*.fixture.js", "**/.storybook/main.js"],
       "rules": {
         "@nx/enforce-module-boundaries": [
           "error",
@@ -75,7 +75,8 @@
         "**/*.test.ts",
         "**/*.test.tsx",
         "**/jest.setup.js",
-        "**/jest.setup.ts"
+        "**/jest.setup.ts",
+        "**/.storybook/main.js"
       ],
       "rules": {
         "import/no-extraneous-dependencies": "off"

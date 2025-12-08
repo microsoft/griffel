@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { StoryFn } from '@storybook/react';
+import type { StoryFn } from '@storybook/react-webpack5';
 
 import { DefaultMessage } from '../DefaultMessage';
 

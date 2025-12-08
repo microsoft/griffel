@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true,
+    "moduleResolution": "bundler",
     "noEmit": true,
     "outDir": ""
   },

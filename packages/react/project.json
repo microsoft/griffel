@@ -17,6 +17,7 @@
         "entryFile": "packages/react/src/index.ts",
         "compiler": "babel",
         "sourceMap": true,
+        "useLegacyTypescriptPlugin": true,
         "rollupConfig": ["@nx/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
         "external": ["tslib"],
         "format": ["esm", "cjs"],

@@ -1,6 +1,9 @@
-const { dirname, join } = require('node:path');
+import { dirname, join } from 'node:path';
+import { createRequire } from 'node:module';
 
-module.exports = {
+const require = createRequire(import.meta.url);
+
+export default {
   core: {},
   stories: [],
   addons: [getAbsolutePath('@storybook/addon-webpack5-compiler-babel')],
