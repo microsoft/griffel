@@ -2,6 +2,21 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Mon, 08 Dec 2025 10:45:32 GMT",
+      "tag": "@griffel/react_v1.5.32",
+      "version": "1.5.32",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "0c93f454a493a1e427575ac8eef6cc0e1246f1c1",
+            "comment": "chore: update imports in stories"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Nov 2025 19:40:21 GMT",
       "tag": "@griffel/react_v1.5.32",
       "version": "1.5.32",

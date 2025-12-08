@@ -2,6 +2,21 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Mon, 08 Dec 2025 10:45:32 GMT",
+      "tag": "@griffel/shadow-dom_v0.2.10",
+      "version": "0.2.10",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "0c93f454a493a1e427575ac8eef6cc0e1246f1c1",
+            "comment": "chore: update imports in stories"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/shadow-dom_v0.2.10",
       "version": "0.2.10",
