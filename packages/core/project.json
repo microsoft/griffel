@@ -15,6 +15,7 @@
         "skipTypeCheck": true,
         "project": "packages/core/package.json",
         "entryFile": "packages/core/src/index.ts",
+        "useLegacyTypescriptPlugin": true,
         "rollupConfig": "tools/getRollupOptions.js",
         "compiler": "babel",
         "sourceMap": true,

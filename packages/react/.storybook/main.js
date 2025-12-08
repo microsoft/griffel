@@ -1,7 +1,11 @@
-const { dirname, join } = require('node:path');
-const rootMain = require('../../../.storybook/main');
+import { dirname, join } from 'node:path';
+import { createRequire } from 'node:module';
 
-module.exports = {
+import rootMain from '../../../.storybook/main.js';
+
+const require = createRequire(import.meta.url);
+
+export default {
   ...rootMain,
 
   core: {
