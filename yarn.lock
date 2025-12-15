@@ -4923,10 +4923,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:14.2.34":
-  version: 14.2.34
-  resolution: "@next/env@npm:14.2.34"
-  checksum: 10/d5a703b50679b6227381d54fc60ae8f7aa04d3514a0b900f43316db91145821bf73b5203538dc955c15a6f6a7664960030617c9020a2851ad51400b76507172f
+"@next/env@npm:14.2.35":
+  version: 14.2.35
+  resolution: "@next/env@npm:14.2.35"
+  checksum: 10/5685145c9a6e6d21a85c012b023092ff50cfee61b73424d3c913d4155a89c85cf02867e79b5b3bde6ef9f6e6b2bec662cecd644d0d428082801e95c4cbe2393f
   languageName: node
   linkType: hard
 
@@ -15572,7 +15572,7 @@ __metadata:
     monosize-bundler-webpack: "npm:0.1.4"
     monosize-storage-upstash: "npm:0.0.20"
     nano-staged: "npm:0.5.0"
-    next: "npm:14.2.34"
+    next: "npm:14.2.35"
     nx: "npm:22.1.3"
     oxc-parser: "npm:^0.90.0"
     oxc-walker: "npm:^0.5.2"
@@ -20719,11 +20719,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:14.2.34":
-  version: 14.2.34
-  resolution: "next@npm:14.2.34"
+"next@npm:14.2.35":
+  version: 14.2.35
+  resolution: "next@npm:14.2.35"
   dependencies:
-    "@next/env": "npm:14.2.34"
+    "@next/env": "npm:14.2.35"
     "@next/swc-darwin-arm64": "npm:14.2.33"
     "@next/swc-darwin-x64": "npm:14.2.33"
     "@next/swc-linux-arm64-gnu": "npm:14.2.33"
@@ -20773,7 +20773,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 10/b964e4eaa09beb2e78840adf3d2365f4954dc949477ce4a9c0a304ca90ad017a16ebabbe378e9ab0978264f4193d30e4ca6485089f9e3efb8e0d0161b495cc8f
+  checksum: 10/3647056e208cf0b19821d761841b378c8fb489b291acc8dc4d80a7afe6b1850b30dad91e1766301feda03360275347881d6ead068f1f944d823b4f91177f35ae
   languageName: node
   linkType: hard
 
