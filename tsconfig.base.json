@@ -28,10 +28,12 @@
       "@griffel/tag-processor": ["packages/tag-processor/src/index.ts"],
       "@griffel/tag-processor/make-reset-styles": ["packages/tag-processor/src/MakeResetStylesProcessor.ts"],
       "@griffel/tag-processor/make-styles": ["packages/tag-processor/src/MakeStylesProcessor.ts"],
+      "@griffel/transform": ["packages/transform/src/index.mts"],
       "@griffel/update-shorthands": ["tools/update-shorthands/src/index.ts"],
       "@griffel/vite-plugin": ["packages/vite-plugin/src/index.ts"],
       "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"],
-      "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"]
+      "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"],
+      "@griffel/webpack-plugin": ["packages/webpack-plugin/src/index.mts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]
   },
