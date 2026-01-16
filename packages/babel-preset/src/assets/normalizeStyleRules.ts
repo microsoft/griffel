@@ -1,4 +1,4 @@
-import type { GriffelAnimation, GriffelStyle } from '@griffel/core';
+import type { GriffelAnimation, GriffelResetStyle, GriffelResetAnimation, GriffelStyle } from '@griffel/core';
 import { tokenize } from 'stylis';
 
 import { isAssetUrl } from './isAssetUrl';
@@ -47,14 +47,11 @@ export function normalizeStyleRule(
   }, '');
 }
 
-export function normalizeStyleRules(
-  path: typeof import('path'),
-  projectRoot: string,
-  filename: string,
-  stylesBySlots: Record<string /* slot */, GriffelStyle> | GriffelStyle,
-): Record<string /* slot */, GriffelStyle> {
+export function normalizeStyleRules<
+  Styles extends GriffelStyle | GriffelAnimation | GriffelResetStyle | GriffelResetAnimation,
+>(path: typeof import('path'), projectRoot: string, filename: string, styles: Styles): Styles {
   return Object.fromEntries(
-    Object.entries(stylesBySlots).map(([key, value]) => {
+    Object.entries(styles).map(([key, value]) => {
       if (typeof value === 'undefined' || value === null) {
         return [key, value];
       }
@@ -65,7 +62,7 @@ export function normalizeStyleRules(
           key,
           value.map(rule => {
             if (typeof rule === 'object') {
-              return normalizeStyleRules(path, projectRoot, filename, rule as GriffelAnimation);
+              return normalizeStyleRules(path, projectRoot, filename, rule);
             }
 
             return normalizeStyleRule(path, projectRoot, filename, rule);

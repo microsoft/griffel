@@ -1,4 +1,4 @@
-import type { GriffelAnimation, GriffelResetStyle, GriffelStyle } from '@griffel/core';
+import type { GriffelAnimation, GriffelResetStyle, GriffelResetAnimation, GriffelStyle } from '@griffel/core';
 import { tokenize } from 'stylis';
 
 import type { FileContext } from '../types';
@@ -40,13 +40,11 @@ export function normalizeStyleRule(path: typeof import('path'), fileContext: Fil
   }, '');
 }
 
-export function normalizeStyleRules(
-  path: typeof import('path'),
-  fileContext: FileContext,
-  stylesBySlots: Record<string /* slot */, GriffelStyle> | GriffelStyle | GriffelResetStyle,
-): Record<string /* slot */, GriffelStyle> {
+export function normalizeStyleRules<
+  Styles extends GriffelStyle | GriffelAnimation | GriffelResetStyle | GriffelResetAnimation,
+>(path: typeof import('path'), fileContext: FileContext, styles: Styles): Styles {
   return Object.fromEntries(
-    Object.entries(stylesBySlots).map(([key, value]) => {
+    Object.entries(styles).map(([key, value]) => {
       if (typeof value === 'undefined') {
         return [key, value];
       }
@@ -57,7 +55,7 @@ export function normalizeStyleRules(
           key,
           value.map(rule => {
             if (typeof rule === 'object') {
-              return normalizeStyleRules(path, fileContext, rule as GriffelAnimation);
+              return normalizeStyleRules(path, fileContext, rule);
             }
 
             return normalizeStyleRule(path, fileContext, rule);
@@ -67,7 +65,7 @@ export function normalizeStyleRules(
 
       // Nested objects
       if (typeof value === 'object') {
-        return [key, normalizeStyleRules(path, fileContext, value as unknown as GriffelStyle)];
+        return [key, normalizeStyleRules(path, fileContext, value as Styles)];
       }
 
       return [key, normalizeStyleRule(path, fileContext, value)];
