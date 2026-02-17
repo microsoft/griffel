@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: work with Next.js 15",
+  "packageName": "@griffel/next-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
