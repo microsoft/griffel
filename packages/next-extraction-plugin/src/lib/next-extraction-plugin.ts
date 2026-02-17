@@ -94,7 +94,7 @@ export const withGriffelCSSExtraction =
                 isDevelopment: dev,
                 experimental: nextConfig.experimental || {},
               } as ConfigurationContext,
-              () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev), undefined),
+              () => lazyPostCSS(dir, getSupportedBrowsers(dir, dev), undefined, undefined),
               [],
             ),
           });
