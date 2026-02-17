@@ -153,7 +153,7 @@
     "vite": "7.3.0",
     "vite-plugin-dts": "~4.5.0",
     "vitest": "4.0.9",
-    "webpack": "5.103.0",
+    "webpack": "5.104.1",
     "webpack-merge": "5.10.0",
     "yargs": "^17.5.1"
   },
