@@ -16,7 +16,7 @@
     "@griffel/core": "^1.19.2",
     "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
-    "ajv": "^8.4.0",
+    "ajv": "^8.18.0",
     "stylis": "^4.2.0",
     "tslib": "^2.1.0"
   }
