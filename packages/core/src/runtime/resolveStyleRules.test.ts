@@ -905,6 +905,10 @@ describe('resolveStyleRules', () => {
         { sj55zd: 'fe3e8s9', uwmqm3: 0 },
         { d: ['.fe3e8s9{color:red;}'] },
       ]);
+      expect(resolveStyleRules({ color: 'red', transition: RESET })).toEqual([
+        { B3o57yi: 0, Bi2q7bf: 0, Bkqvd7p: 0, Bmy1vo4: 0, Bn62ygk: 0, Cwk7ip: 0, sj55zd: 'fe3e8s9' },
+        { d: ['.fe3e8s9{color:red;}'] },
+      ]);
     });
   });
 

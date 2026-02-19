@@ -227,6 +227,16 @@ describe('mergeClasses', () => {
       expect(mergeClasses(classNameA, classNameC)).toMatchInlineSnapshot(`fe3e8s9`);
       expect(mergeClasses(classNameA, classNameB, classNameC)).toMatchInlineSnapshot(`ftu9nv0`);
     });
+
+    it('handles resets for shorthands', () => {
+      const computeClassesA = makeStyles({ root: { transitionDuration: '1s' } });
+      const computeClassesB = makeStyles({ root: { color: 'red', transition: RESET } });
+
+      const classNameA = computeClassesA(options).root;
+      const classNameB = computeClassesB(options).root;
+
+      expect(mergeClasses(classNameA, classNameB)).toMatchInlineSnapshot(`fe3e8s9`);
+    });
   });
 });
 
