@@ -176,6 +176,7 @@
     "enhanced-resolve": "^5.15.0",
     "magic-string": "^0.30.19",
     "oxc-parser": "^0.90.0",
+    "oxc-resolver": "^11.8.2",
     "oxc-walker": "^0.5.2",
     "rtl-css-js": "^1.16.1",
     "source-map-js": "1.0.2",
