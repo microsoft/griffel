@@ -32,6 +32,15 @@ assertType({
 });
 
 assertType({
+  ':hover': { animationName: { from: {}, to: {} } },
+});
+assertType({
+  '&.bar': {
+    animationName: { from: {}, to: {} },
+  },
+});
+
+assertType({
   // @ts-expect-error "200" is not a valid CSS value for "height"
   animationName: {
     to: { height: 200 },
@@ -41,6 +50,16 @@ assertType({
   // @ts-expect-error Only strings can be used as values for CSS variables
   animationName: {
     from: { '--opacity': 0 },
+  },
+});
+assertType({
+  animationName: {
+    from: {
+      // @ts-expect-error Only strings can be used as values for CSS variables
+      '&.foo': {
+        color: 'red',
+      },
+    },
   },
 });
 
@@ -54,6 +73,13 @@ assertType({ zIndex: 1 });
 
 assertType({ paddingLeft: '5px' });
 assertType({ color: 'beige' });
+
+assertType({ WebkitBackgroundSize: 'initial' });
+
+// @ts-expect-error Properties should be camelCase
+assertType({ 'padding-left': 'beige' });
+// @ts-expect-error Properties should be camelCase
+assertType({ '-webkit-scrollbar': 'beige' });
 
 // CSS variables
 //
@@ -102,16 +128,17 @@ assertType({
 assertType({
   ':hover': { content: "'foo'" },
 });
-assertType({
-  ':hover': { animationName: { from: {}, to: {} } },
-});
 
 assertType({
   // @ts-expect-error Values of selectors can be only objects
   ':hover': 'red',
 });
+assertType({
+  // @ts-expect-error ":foo" is not valid pseudo selector
+  ':foo': { flexShrink: 0 },
+});
 
-// Custom selectors
+// Complex pseudo selectors
 //
 
 assertType({
@@ -119,6 +146,7 @@ assertType({
   ':hover:active': { flexShrink: 'initial' },
   ':hover:visited': { zIndex: 0 },
   ':hover:focus-visible': { zIndex: 1 },
+  ':hover &.foo': { zIndex: 1 },
 });
 
 assertType({
@@ -129,40 +157,62 @@ assertType({
 });
 
 assertType({
-  '.bar': { color: 'beige' },
-  '.foo': { paddingLeft: '5px' },
+  // @ts-expect-error Values of selectors can be only objects
+  ':hover:focus': 'red',
+});
+assertType({
+  // @ts-expect-error ":foo" is not valid pseudo selector
+  ':foo:hover': { flexShrink: 0 },
+});
+assertType({
+  // @ts-expect-error ":foo" is not valid pseudo selector
+  ':foo &.bar': { flexShrink: 0 },
+});
+
+// Custom selectors
+//
+
+assertType({
+  '&.bar': { color: 'beige' },
+  '&.foo': { paddingLeft: '5px' },
 });
 
 assertType({
-  '.bar': { '--color': 'red' },
+  '&.bar': { '--color': 'red' },
+});
+
+assertType({
+  // @ts-expect-error Values of selectors can be only objects
+  '&.bar': 'red',
 });
 assertType({
-  '.bar': { animationName: { from: {}, to: {} } },
+  // @ts-expect-error Custom selector should start with "&"
+  '.bar': { color: 'beige' },
 });
 
 // Nested custom selectors
 //
 
 assertType({
-  '.foo': {
-    '.bar': { flexShrink: 0 },
-    '.baz': { flexShrink: 'initial' },
-    '.qux': { opacity: 0 },
-    '.fred': { zIndex: 0 },
-    '.thud': { zIndex: 1 },
+  '&.foo': {
+    '&.bar': { flexShrink: 0 },
+    '&.baz': { flexShrink: 'initial' },
+    '&.qux': { opacity: 0 },
+    '&.fred': { zIndex: 0 },
+    '&.thud': { zIndex: 1 },
   },
-  '.bar': {
-    '.baz': { color: 'beige' },
-    '.qux': { paddingLeft: '5px' },
+  '&.bar': {
+    '&.baz': { color: 'beige' },
+    '&.qux': { paddingLeft: '5px' },
   },
-  '.baz': {
-    '.qux': {
+  '&.baz': {
+    '&.qux': {
       '--color': 'red',
     },
   },
-  '.qux': {
-    '.bar': { flexShrink: 'var(--bar)' },
-    '.baz': { opacity: 'var(--baz)' },
+  '&.qux': {
+    '&.bar': { flexShrink: 'var(--bar)' },
+    '&.baz': { opacity: 'var(--baz)' },
   },
 });
 
@@ -315,8 +365,8 @@ assertType({
 //
 
 assertType({
-  '.foo': {
-    '.baz': {
+  '&.foo': {
+    '&.baz': {
       // @ts-expect-error outline-box is an invalid value for box-sizing
       overflowX: '1',
       // @ts-expect-error "5" is an invalid value for paddingLeft
@@ -325,23 +375,23 @@ assertType({
   },
 });
 assertType({
-  '.foo': {
+  '&.foo': {
     // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
 
-    '.bar': {
+    '&.bar': {
       // @ts-expect-error outline-box is an invalid value for box-sizing
       boxSizing: 'outline-box',
     },
   },
 });
 assertType({
-  '.foo': {
+  '&.foo': {
     // @ts-expect-error outline-box is an invalid value for box-sizing
     boxSizing: 'outline-box',
     zIndex: 1,
 
-    '.bar': {
+    '&.bar': {
       // @ts-expect-error outline-box is an invalid value for box-sizing
       boxSizing: 'outline-box',
       zIndex: 1,
@@ -349,13 +399,13 @@ assertType({
   },
 });
 assertType({
-  '.foo': {
+  '&.foo': {
     // @ts-expect-error Object is not assignable to CSS property
     zIndex: { color: 'red' },
     // @ts-expect-error Object is not assignable to CSS property
     opacity: { color: 'red' },
 
-    '.bar': {
+    '&.bar': {
       // @ts-expect-error Object is not assignable to CSS property
       zIndex: { color: 'red' },
       // @ts-expect-error Object is not assignable to CSS property

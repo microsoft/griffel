@@ -3,7 +3,7 @@ import { types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
-import type { GriffelStyle, CSSRulesByBucket, CSSClassesMapBySlot } from '@griffel/core';
+import type { GriffelStyle, CSSRulesByBucket, CSSClassesMapBySlot, GriffelResetStyle } from '@griffel/core';
 import { resolveStyleRulesForSlots, resolveResetStyleRules, normalizeCSSBucketEntry } from '@griffel/core';
 import * as path from 'path';
 
@@ -322,7 +322,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               }
 
               if (definitionPath.functionKind === 'makeResetStyles') {
-                const styles: GriffelStyle = evaluationResult.value;
+                const styles: GriffelResetStyle = evaluationResult.value;
                 const [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(
                   // Heads up!
                   // Style rules should be normalized *before* they will be resolved to CSS rules to have deterministic

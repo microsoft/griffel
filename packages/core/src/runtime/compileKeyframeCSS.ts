@@ -1,10 +1,12 @@
-import type { GriffelAnimation } from '@griffel/style-types';
+import type { GriffelAnimation, GriffelResetAnimation } from '@griffel/style-types';
 import { compile, middleware, serialize, rulesheet, stringify } from 'stylis';
 
 import { prefixerPlugin } from './stylis/prefixerPlugin';
 import { cssifyObject } from './utils/cssifyObject';
 
-export function compileKeyframeRule(keyframeObject: GriffelAnimation): string {
+export function compileKeyframeRule<Style extends GriffelAnimation | GriffelResetAnimation>(
+  keyframeObject: Style,
+): string {
   let css = '';
 
   // eslint-disable-next-line guard-for-in
