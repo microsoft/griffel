@@ -21,7 +21,7 @@
   "scripts": {
     "build": "nx affected --target=build",
     "change": "beachball change",
-    "check-dependencies": "syncpack list-mismatches --types prod,peer",
+    "check-dependencies": "syncpack lint --dependency-types prod,peer",
     "lint": "nx affected --target=lint",
     "start": "nx run @griffel/website:serve",
     "storybook": "nx run @griffel/react:storybook",
@@ -144,7 +144,7 @@
     "storybook": "10.2.10",
     "styled-components": "^5.3.6",
     "stylelint": "^15.10.3",
-    "syncpack": "13.0.0",
+    "syncpack": "14.0.0",
     "tmp": "0.2.4",
     "ts-jest": "29.4.0",
     "ts-node": "10.9.1",

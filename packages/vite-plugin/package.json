@@ -12,7 +12,7 @@
     "@wyw-in-js/vite": "^0.8.0"
   },
   "peerDependencies": {
-    "@griffel/tag-processor": "*",
+    "@griffel/tag-processor": ">=1",
     "vite": ">=4"
   }
 }
