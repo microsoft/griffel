@@ -225,14 +225,6 @@ export const babelPluginStripGriffelRuntime = declare<
         },
 
         exit(programPath, state) {
-          // Collect all matching imports first to avoid AST modification during traversal
-          // (addNamed modifies import declarations which can cause skipped specifiers)
-          const importsToProcess: Array<{
-            specifierPath: NodePath<t.ImportSpecifier>;
-            importSource: string;
-            kind: FunctionKinds;
-          }> = [];
-
           programPath.traverse({
             ImportSpecifier(path) {
               const importedPath = path.get('imported');
@@ -241,18 +233,14 @@ export const babelPluginStripGriffelRuntime = declare<
               const importSource = importSourcePath.node.value;
 
               if (importedPath.isIdentifier({ name: '__styles' })) {
-                importsToProcess.push({ specifierPath: path, importSource, kind: '__styles' });
+                updateReferences(state, path, importSource, '__styles');
               } else if (importedPath.isIdentifier({ name: '__resetStyles' })) {
-                importsToProcess.push({ specifierPath: path, importSource, kind: '__resetStyles' });
+                updateReferences(state, path, importSource, '__resetStyles');
               } else if (importedPath.isIdentifier({ name: '__staticStyles' })) {
-                importsToProcess.push({ specifierPath: path, importSource, kind: '__staticStyles' });
+                updateReferences(state, path, importSource, '__staticStyles');
               }
             },
           });
-
-          for (const { specifierPath, importSource, kind } of importsToProcess) {
-            updateReferences(state, specifierPath, importSource, kind);
-          }
         },
       },
     },

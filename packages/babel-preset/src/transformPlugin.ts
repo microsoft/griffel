@@ -296,47 +296,20 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
             return;
           }
 
-          let staticPathsEvaluated = false;
-
           if (state.definitionPaths) {
             if (pluginOptions.classNameHashSalt.length > 0 && state.definitionPaths.length > 0) {
               programPath.addComment('trailing', `@griffel:classNameHashSalt "${pluginOptions.classNameHashSalt}"`);
             }
 
-            // Separate makeStaticStyles paths from makeStyles/makeResetStyles paths.
-            // Static styles are evaluated independently so that failures (e.g. unresolvable asset imports like .ttf
-            // files) gracefully fall back to runtime without breaking the transform for other calls in the same file.
-            const regularDefinitionPaths = state.definitionPaths.filter(p => p.functionKind !== 'makeStaticStyles');
-            const staticDefinitionPaths = state.definitionPaths.filter(p => p.functionKind === 'makeStaticStyles');
-
             // Runs Babel AST processing or module evaluation for Node once for all arguments of makeStyles() calls once
             evaluatePaths(
               programPath,
               state.file.opts.filename!,
-              regularDefinitionPaths.map(p => p.path),
+              state.definitionPaths.map(p => p.path),
               pluginOptions,
             );
 
-            if (staticDefinitionPaths.length > 0) {
-              try {
-                evaluatePaths(
-                  programPath,
-                  state.file.opts.filename!,
-                  staticDefinitionPaths.map(p => p.path),
-                  pluginOptions,
-                );
-                staticPathsEvaluated = true;
-              } catch {
-                // If evaluation fails (e.g. due to unresolvable asset imports), skip the transform for
-                // makeStaticStyles calls and let them execute at runtime.
-              }
-            }
-
-            const pathsToProcess = staticPathsEvaluated
-              ? [...regularDefinitionPaths, ...staticDefinitionPaths]
-              : regularDefinitionPaths;
-
-            pathsToProcess.forEach(definitionPath => {
+            state.definitionPaths.forEach(definitionPath => {
               const callExpressionPath = definitionPath.path.findParent(parentPath =>
                 parentPath.isCallExpression(),
               ) as NodePath<t.CallExpression>;
@@ -471,10 +444,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                     specifier.replaceWith(t.identifier('__styles'));
                   } else if (importedPath.isIdentifier({ name: module.resetImportName || 'makeResetStyles' })) {
                     specifier.replaceWith(t.identifier('__resetStyles'));
-                  } else if (
-                    staticPathsEvaluated &&
-                    importedPath.isIdentifier({ name: module.staticImportName || 'makeStaticStyles' })
-                  ) {
+                  } else if (importedPath.isIdentifier({ name: module.staticImportName || 'makeStaticStyles' })) {
                     specifier.replaceWith(t.identifier('__staticStyles'));
                   }
                 }
@@ -490,9 +460,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               }
 
               if (calleePath.node.name === 'makeStaticStyles') {
-                if (staticPathsEvaluated) {
-                  calleePath.replaceWith(t.identifier('__staticStyles'));
-                }
+                calleePath.replaceWith(t.identifier('__staticStyles'));
                 return;
               }
 

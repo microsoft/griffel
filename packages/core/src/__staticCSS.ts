@@ -3,9 +3,7 @@
  *
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function __staticCSS() {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   function useStaticStyles(): void {}
 
   return useStaticStyles;

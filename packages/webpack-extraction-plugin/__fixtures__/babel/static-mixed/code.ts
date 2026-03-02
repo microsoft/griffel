@@ -1,5 +1,4 @@
-import { __styles } from '@griffel/react';
-import { __staticStyles } from '@griffel/react';
+import { __styles, __staticStyles } from '@griffel/react';
 
 export const styles = __styles(
   {
