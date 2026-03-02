@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add makeStaticStyles AOT/CSS extraction support",
+  "packageName": "@griffel/babel-preset",
+  "email": "hochelmartin@gmail.com",
+  "dependentChangeType": "patch"
+}
