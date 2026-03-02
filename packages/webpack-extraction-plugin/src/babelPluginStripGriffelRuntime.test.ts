@@ -55,6 +55,17 @@ pluginTester({
       fixture: path.resolve(fixturesDir, 'alias', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'alias', 'output.ts'),
     },
+
+    {
+      title: 'basic (makeStaticStyles)',
+      fixture: path.resolve(fixturesDir, 'static', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'static', 'output.ts'),
+    },
+    {
+      title: 'mixed (makeStyles + makeStaticStyles)',
+      fixture: path.resolve(fixturesDir, 'static-mixed', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'static-mixed', 'output.ts'),
+    },
   ],
 
   plugin: babelPluginStripGriffelRuntime,

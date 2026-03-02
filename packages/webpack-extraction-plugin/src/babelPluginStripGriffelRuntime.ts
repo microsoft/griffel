@@ -6,7 +6,7 @@ import type { CSSRulesByBucket } from '@griffel/core';
 
 type StripRuntimeBabelPluginOptions = Record<string, unknown>;
 
-type FunctionKinds = '__styles' | '__resetStyles';
+type FunctionKinds = '__styles' | '__resetStyles' | '__staticStyles';
 
 type StripRuntimeBabelPluginState = PluginPass & {
   cssRulesByBucket?: CSSRulesByBucket;
@@ -54,6 +54,10 @@ function evaluateAndUpdateArgument(
       state.cssRulesByBucket,
       Array.isArray(cssRules) ? { r: cssRules } : cssRules,
     );
+  } else if (functionKind === '__staticStyles') {
+    const cssRulesByBucket = evaluationResult.value as CSSRulesByBucket;
+
+    state.cssRulesByBucket = concatCSSRulesByBucket(state.cssRulesByBucket, cssRulesByBucket);
   }
 
   argumentPath.remove();
@@ -74,6 +78,12 @@ function getFunctionArgumentPath(
   if (functionKind === '__resetStyles') {
     if (argumentPaths.length === 3 && (argumentPaths[2].isArrayExpression() || argumentPaths[2].isObjectExpression())) {
       return argumentPaths[2];
+    }
+  }
+
+  if (functionKind === '__staticStyles') {
+    if (argumentPaths.length === 1 && argumentPaths[0].isObjectExpression()) {
+      return argumentPaths[0];
     }
   }
 
@@ -166,7 +176,8 @@ function updateReferences(
   importSource: string,
   functionKind: FunctionKinds,
 ) {
-  const importName = functionKind === '__styles' ? '__css' : '__resetCSS';
+  const importName =
+    functionKind === '__styles' ? '__css' : functionKind === '__resetStyles' ? '__resetCSS' : '__staticCSS';
   const importIdentifier = addNamed(importSpecifierPath, importName, importSource);
 
   const referencePaths = getReferencePaths(importSpecifierPath, functionKind);
@@ -213,8 +224,8 @@ export const babelPluginStripGriffelRuntime = declare<
           }
         },
 
-        exit(path, state) {
-          path.traverse({
+        exit(programPath, state) {
+          programPath.traverse({
             ImportSpecifier(path) {
               const importedPath = path.get('imported');
 
@@ -225,6 +236,8 @@ export const babelPluginStripGriffelRuntime = declare<
                 updateReferences(state, path, importSource, '__styles');
               } else if (importedPath.isIdentifier({ name: '__resetStyles' })) {
                 updateReferences(state, path, importSource, '__resetStyles');
+              } else if (importedPath.isIdentifier({ name: '__staticStyles' })) {
+                updateReferences(state, path, importSource, '__staticStyles');
               }
             },
           });

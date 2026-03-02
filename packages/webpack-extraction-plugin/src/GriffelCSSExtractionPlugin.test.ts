@@ -292,6 +292,7 @@ describe('GriffelCSSExtractionPlugin', () => {
   testFixture('assets-flip');
   testFixture('assets-multiple');
   testFixture('reset-assets');
+  testFixture('static-assets');
 
   // Config
   // --------------------

@@ -43,7 +43,8 @@ export function replaceAssetsWithImports(
       acc += tokens[i];
 
       if (tokens[i] === 'url') {
-        const url = tokens[i + 1].slice(1, -1);
+        // Strip outer parentheses and optional CSS string quotes from url() values
+        const url = stripUrlTokenWrapper(tokens[i + 1]);
 
         if (isAssetUrl(url)) {
           // Handle `filter: url(./a.svg#id)`
@@ -88,4 +89,12 @@ export function replaceAssetsWithImports(
       t.importDeclaration([t.importDefaultSpecifier(identifier)], t.stringLiteral(relativePath)),
     );
   }
+}
+
+/**
+ * Strips outer parentheses and optional CSS string quotes from a url() token value.
+ * @example `(url.png)` → `url.png`, `('url.png')` → `url.png`
+ */
+function stripUrlTokenWrapper(token: string): string {
+  return token.replace(/^\(["']?|["']?\)$/g, '');
 }

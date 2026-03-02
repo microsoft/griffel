@@ -24,6 +24,9 @@ export const configSchema: JSONSchema7 = {
           importName: {
             type: 'string',
           },
+          staticImportName: {
+            type: 'string',
+          },
         },
       },
     },

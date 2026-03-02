@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "feat: add makeStaticStyles AOT/CSS extraction support",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "hochelmartin@gmail.com",
+  "dependentChangeType": "patch"
+}
