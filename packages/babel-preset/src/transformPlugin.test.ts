@@ -207,6 +207,25 @@ pluginTester({
       outputFixture: path.resolve(fixturesDir, 'reset-styles-at-rules', 'output.ts'),
     },
 
+    // Static styles
+    //
+    //
+    {
+      title: 'static: object styles',
+      fixture: path.resolve(fixturesDir, 'static-styles', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'static-styles', 'output.ts'),
+    },
+    {
+      title: 'static: string styles',
+      fixture: path.resolve(fixturesDir, 'static-styles-string', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'static-styles-string', 'output.ts'),
+    },
+    {
+      title: 'static: array of mixed styles',
+      fixture: path.resolve(fixturesDir, 'static-styles-array', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'static-styles-array', 'output.ts'),
+    },
+
     // Imports
     //
     //
@@ -353,6 +372,7 @@ describe('babel preset', () => {
           },
         },
         cssResetEntries: Object {},
+        cssStaticEntries: Object {},
       }
     `);
   });
@@ -378,6 +398,7 @@ describe('babel preset', () => {
             .r7z97ji{color:red;padding-right:4px;},
           ],
         },
+        cssStaticEntries: Object {},
       }
     `);
   });
@@ -413,6 +434,7 @@ export const useStyles = makeStyles({
           },
         },
         cssResetEntries: Object {},
+        cssStaticEntries: Object {},
       }
     `);
   });

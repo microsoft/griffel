@@ -14,6 +14,7 @@ export type BabelPluginOptions = {
     moduleSource: string;
     importName: string;
     resetImportName?: string;
+    staticImportName?: string;
   }[];
 
   /**
@@ -37,4 +38,5 @@ export type BabelPluginOptions = {
 export type BabelPluginMetadata = {
   cssEntries: Record<string, Record<string, string[]>>;
   cssResetEntries: Record<string, string[]>;
+  cssStaticEntries: Record<string, string[]>;
 };

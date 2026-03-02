@@ -3,18 +3,29 @@ import { types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
 import shakerEvaluator from '@linaria/shaker';
-import type { GriffelStyle, CSSRulesByBucket, CSSClassesMapBySlot } from '@griffel/core';
-import { resolveStyleRulesForSlots, resolveResetStyleRules, normalizeCSSBucketEntry } from '@griffel/core';
+import type {
+  GriffelStyle,
+  GriffelStaticStyles,
+  CSSRulesByBucket,
+  CSSBucketEntry,
+  CSSClassesMapBySlot,
+} from '@griffel/core';
+import {
+  resolveStyleRulesForSlots,
+  resolveResetStyleRules,
+  resolveStaticStyleRules,
+  normalizeCSSBucketEntry,
+} from '@griffel/core';
 import * as path from 'path';
 
-import { normalizeStyleRules } from './assets/normalizeStyleRules';
+import { normalizeStyleRule, normalizeStyleRules } from './assets/normalizeStyleRules';
 import { replaceAssetsWithImports } from './assets/replaceAssetsWithImports';
 import { dedupeCSSRules } from './utils/dedupeCSSRules';
 import { evaluatePaths } from './utils/evaluatePaths';
 import type { BabelPluginOptions, BabelPluginMetadata } from './types';
 import { validateOptions } from './validateOptions';
 
-type FunctionKinds = 'makeStyles' | 'makeResetStyles';
+type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
 
 type BabelPluginState = PluginPass & {
   importDeclarationPaths?: NodePath<t.ImportDeclaration>[];
@@ -31,6 +42,7 @@ type BabelPluginState = PluginPass & {
   calleePaths?: NodePath<t.Identifier>[];
   cssEntries?: BabelPluginMetadata['cssEntries'];
   cssResetEntries?: BabelPluginMetadata['cssResetEntries'];
+  cssStaticEntries?: BabelPluginMetadata['cssStaticEntries'];
 };
 
 function getDefinitionPathFromCallExpression(
@@ -67,6 +79,10 @@ function getCalleeFunctionKind(
 
     if (path.referencesImport(module.moduleSource, module.resetImportName || 'makeResetStyles')) {
       return 'makeResetStyles';
+    }
+
+    if (path.referencesImport(module.moduleSource, module.staticImportName || 'makeStaticStyles')) {
+      return 'makeStaticStyles';
     }
   }
 
@@ -109,6 +125,23 @@ function buildCSSResetEntriesMetadata(
       }
 
       return bucketEntry;
+    });
+  });
+}
+
+/**
+ * Extracts CSS rules from evaluated static styles to metadata
+ */
+function buildCSSStaticEntriesMetadata(
+  state: Required<BabelPluginState>,
+  cssRulesByBucket: CSSRulesByBucket,
+  declaratorId: string,
+) {
+  state.cssStaticEntries[declaratorId] ??= [];
+  state.cssStaticEntries[declaratorId] = Object.values(cssRulesByBucket).flatMap(bucketEntries => {
+    return bucketEntries.map(bucketEntry => {
+      const [cssRule] = normalizeCSSBucketEntry(bucketEntry);
+      return cssRule;
     });
   });
 }
@@ -229,11 +262,13 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
       this.calleePaths = [];
       this.cssEntries = {};
       this.cssResetEntries = {};
+      this.cssStaticEntries = {};
 
       if (pluginOptions.generateMetadata) {
         Object.assign(this.file.metadata, {
           cssResetEntries: {},
           cssEntries: {},
+          cssStaticEntries: {},
         } as BabelPluginMetadata);
       }
     },
@@ -261,20 +296,47 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
             return;
           }
 
+          let staticPathsEvaluated = false;
+
           if (state.definitionPaths) {
             if (pluginOptions.classNameHashSalt.length > 0 && state.definitionPaths.length > 0) {
               programPath.addComment('trailing', `@griffel:classNameHashSalt "${pluginOptions.classNameHashSalt}"`);
             }
 
+            // Separate makeStaticStyles paths from makeStyles/makeResetStyles paths.
+            // Static styles are evaluated independently so that failures (e.g. unresolvable asset imports like .ttf
+            // files) gracefully fall back to runtime without breaking the transform for other calls in the same file.
+            const regularDefinitionPaths = state.definitionPaths.filter(p => p.functionKind !== 'makeStaticStyles');
+            const staticDefinitionPaths = state.definitionPaths.filter(p => p.functionKind === 'makeStaticStyles');
+
             // Runs Babel AST processing or module evaluation for Node once for all arguments of makeStyles() calls once
             evaluatePaths(
               programPath,
               state.file.opts.filename!,
-              state.definitionPaths.map(p => p.path),
+              regularDefinitionPaths.map(p => p.path),
               pluginOptions,
             );
 
-            state.definitionPaths.forEach(definitionPath => {
+            if (staticDefinitionPaths.length > 0) {
+              try {
+                evaluatePaths(
+                  programPath,
+                  state.file.opts.filename!,
+                  staticDefinitionPaths.map(p => p.path),
+                  pluginOptions,
+                );
+                staticPathsEvaluated = true;
+              } catch {
+                // If evaluation fails (e.g. due to unresolvable asset imports), skip the transform for
+                // makeStaticStyles calls and let them execute at runtime.
+              }
+            }
+
+            const pathsToProcess = staticPathsEvaluated
+              ? [...regularDefinitionPaths, ...staticDefinitionPaths]
+              : regularDefinitionPaths;
+
+            pathsToProcess.forEach(definitionPath => {
               const callExpressionPath = definitionPath.path.findParent(parentPath =>
                 parentPath.isCallExpression(),
               ) as NodePath<t.CallExpression>;
@@ -353,6 +415,32 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                 ]);
               }
 
+              if (definitionPath.functionKind === 'makeStaticStyles') {
+                const styles: GriffelStaticStyles | GriffelStaticStyles[] = evaluationResult.value;
+                const stylesSet: GriffelStaticStyles[] = Array.isArray(styles) ? styles : [styles];
+                const cssRules = resolveStaticStyleRules(stylesSet);
+
+                // Normalize asset paths in CSS rules so they are relative to projectRoot,
+                // matching the convention used by makeStyles/makeResetStyles via normalizeStyleRules.
+                const normalizedRules: CSSBucketEntry[] = cssRules.map(rule =>
+                  typeof rule === 'string'
+                    ? (normalizeStyleRule(path, pluginOptions.projectRoot, state.filename as string, rule) as string)
+                    : rule,
+                );
+                const cssRulesByBucket: CSSRulesByBucket = { d: normalizedRules };
+
+                if (pluginOptions.generateMetadata) {
+                  buildCSSStaticEntriesMetadata(
+                    state as Required<BabelPluginState>,
+                    cssRulesByBucket,
+                    definitionPath.declaratorId,
+                  );
+                }
+
+                (callExpressionPath.get('arguments.0') as NodePath).remove();
+                callExpressionPath.pushContainer('arguments', [t.valueToNode(cssRulesByBucket)]);
+              }
+
               replaceAssetsWithImports(pluginOptions.projectRoot, state.filename!, programPath, callExpressionPath);
             });
 
@@ -360,6 +448,7 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
               Object.assign(this.file.metadata, {
                 cssResetEntries: state.cssResetEntries ?? {},
                 cssEntries: state.cssEntries ?? {},
+                cssStaticEntries: state.cssStaticEntries ?? {},
               } as BabelPluginMetadata);
             }
           }
@@ -382,6 +471,11 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                     specifier.replaceWith(t.identifier('__styles'));
                   } else if (importedPath.isIdentifier({ name: module.resetImportName || 'makeResetStyles' })) {
                     specifier.replaceWith(t.identifier('__resetStyles'));
+                  } else if (
+                    staticPathsEvaluated &&
+                    importedPath.isIdentifier({ name: module.staticImportName || 'makeStaticStyles' })
+                  ) {
+                    specifier.replaceWith(t.identifier('__staticStyles'));
                   }
                 }
               }
@@ -392,6 +486,13 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
             state.calleePaths.forEach(calleePath => {
               if (calleePath.node.name === 'makeResetStyles') {
                 calleePath.replaceWith(t.identifier('__resetStyles'));
+                return;
+              }
+
+              if (calleePath.node.name === 'makeStaticStyles') {
+                if (staticPathsEvaluated) {
+                  calleePath.replaceWith(t.identifier('__staticStyles'));
+                }
                 return;
               }
 
@@ -467,6 +568,8 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
           functionKind = 'makeStyles';
         } else if (propertyPath.isIdentifier({ name: 'makeResetStyles' })) {
           functionKind = 'makeResetStyles';
+        } else if (propertyPath.isIdentifier({ name: 'makeStaticStyles' })) {
+          functionKind = 'makeStaticStyles';
         }
 
         if (!functionKind) {

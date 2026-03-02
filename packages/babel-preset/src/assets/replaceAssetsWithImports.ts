@@ -43,7 +43,8 @@ export function replaceAssetsWithImports(
       acc += tokens[i];
 
       if (tokens[i] === 'url') {
-        const url = tokens[i + 1].slice(1, -1);
+        // Strip outer parentheses and optional CSS string quotes from url() values
+        const url = tokens[i + 1].slice(1, -1).replace(/^["']|["']$/g, '');
 
         if (isAssetUrl(url)) {
           // Handle `filter: url(./a.svg#id)`

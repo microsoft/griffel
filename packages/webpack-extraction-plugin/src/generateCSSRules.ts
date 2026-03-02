@@ -1,5 +1,13 @@
 import { type CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
 
+/**
+ * Strips CSS string quotes from url() values so that css-loader can properly resolve asset paths.
+ * Converts url("./path") and url('./path') to url(./path).
+ */
+function stripCSSUrlQuotes(cssRule: string): string {
+  return cssRule.replace(/url\(["']([^"')]+)["']\)/g, 'url($1)');
+}
+
 export function generateCSSRules(cssRulesByBucket: CSSRulesByBucket): string {
   const entries = Object.entries(cssRulesByBucket);
 
@@ -26,7 +34,7 @@ export function generateCSSRules(cssRulesByBucket: CSSRulesByBucket): string {
         lastEntryKey = entryKey;
       }
 
-      cssLines.push(cssRule);
+      cssLines.push(stripCSSUrlQuotes(cssRule));
     }
   }
 

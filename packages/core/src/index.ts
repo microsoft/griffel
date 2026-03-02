@@ -71,6 +71,8 @@ export { __css } from './__css';
 export { __styles } from './__styles';
 export { __resetCSS } from './__resetCSS';
 export { __resetStyles } from './__resetStyles';
+export { __staticCSS } from './__staticCSS';
+export { __staticStyles } from './__staticStyles';
 
 export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry';
 export { styleBucketOrdering, getStyleSheetKey } from './renderer/getStyleSheetForBucket';
@@ -79,6 +81,7 @@ export { getStyleBucketName } from './runtime/getStyleBucketName';
 export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
 export { resolveStyleRules } from './runtime/resolveStyleRules';
 export { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
+export { resolveStaticStyleRules } from './runtime/resolveStaticStyleRules';
 
 export * from './constants';
 

@@ -87,7 +87,11 @@ function webpackLoader(
   this.cacheable();
 
   // Early return to handle cases when __styles() calls are not present, allows skipping expensive invocation of Babel
-  if (sourceCode.indexOf('__styles') === -1 && sourceCode.indexOf('__resetStyles') === -1) {
+  if (
+    sourceCode.indexOf('__styles') === -1 &&
+    sourceCode.indexOf('__resetStyles') === -1 &&
+    sourceCode.indexOf('__staticStyles') === -1
+  ) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }
