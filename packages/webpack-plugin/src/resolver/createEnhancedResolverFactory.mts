@@ -1,5 +1,4 @@
-import * as enhancedResolve from 'enhanced-resolve';
-import type { ResolveOptionsOptionalFS } from 'enhanced-resolve';
+import enhancedResolve, { type ResolveOptionsOptionalFS } from 'enhanced-resolve';
 import type { Compilation, Configuration } from 'webpack';
 import * as path from 'node:path';
 
@@ -44,7 +43,7 @@ export function createEnhancedResolverFactory(
       ...(webpackResolveOptions as EnhancedResolveOptions),
     });
 
-    return function resolveModule(id: string, { filename }: { filename: string }) {
+    return function resolveModule(id, { filename }) {
       const resolvedPath = resolveSync(path.dirname(filename), id);
 
       if (!resolvedPath) {

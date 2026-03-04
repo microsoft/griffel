@@ -8,7 +8,10 @@ import { join, resolve } from 'node:path';
 
 const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf-8'));
 
-const dependencies: string[] = Object.keys(packageJson.dependencies || {});
+const dependencies: string[] = Object.keys({
+  ...(packageJson.dependencies || {}),
+  ...(packageJson.peerDependencies || {}),
+});
 const external = ([/node:/] as (string | RegExp)[]).concat(dependencies);
 
 export default defineConfig(() => ({
@@ -16,7 +19,14 @@ export default defineConfig(() => ({
   cacheDir: '../../node_modules/.vite/packages/webpack-plugin',
   plugins: [
     nxViteTsPaths(),
-    nxCopyAssetsPlugin(['*.md']),
+    nxCopyAssetsPlugin([
+      '*.md',
+      {
+        glob: '*',
+        input: 'src/virtual-loader',
+        output: 'virtual-loader',
+      },
+    ]),
     dts({ entryRoot: 'src', tsconfigPath: join(__dirname, 'tsconfig.lib.json'), pathsToAliases: false }),
   ],
 
@@ -24,6 +34,7 @@ export default defineConfig(() => ({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+
   build: {
     emptyOutDir: true,
     lib: {
