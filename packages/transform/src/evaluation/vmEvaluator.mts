@@ -1,5 +1,5 @@
-import { Module, type StrictOptions } from '@linaria/babel-preset';
-import type { EvaluationResult } from './types.mjs';
+import { Module } from './module.mjs';
+import type { EvaluationResult, StrictOptions } from './types.mjs';
 
 function isError(e: unknown): e is Error {
   return Object.prototype.toString.call(e) === '[object Error]';
