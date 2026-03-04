@@ -22,7 +22,7 @@ export function createOxcResolverFactory(): TransformResolverFactory {
       // ...resolveOptionsFromWebpackConfig,
     });
 
-    return function resolveModule(id: string, { filename }: { filename: string }) {
+    return function resolveModule(id, { filename }) {
       const resolvedResolver = resolverFactory.sync(path.dirname(filename), id);
 
       if (resolvedResolver.error) {

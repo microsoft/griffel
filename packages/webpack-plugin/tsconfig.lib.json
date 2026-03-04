@@ -5,6 +5,24 @@
     "declaration": true,
     "types": ["node", "environment"]
   },
-  "include": ["src/**/*.ts", "src/**/*.mts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts", "src/**/*.spec.tsx", "src/**/*.test.tsx"]
+  "exclude": [
+    "__fixtures__/**/*",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "jest.config.ts",
+    "vite.config.ts",
+    "vite.config.mts",
+    "vitest.config.ts",
+    "vitest.config.mts",
+    "src/**/*.test.ts",
+    "src/**/*.test.mts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.js",
+    "src/**/*.spec.js",
+    "src/**/*.test.jsx",
+    "src/**/*.spec.jsx"
+  ],
+  "include": ["**/*.mts"]
 }
