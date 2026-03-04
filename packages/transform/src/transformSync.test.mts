@@ -278,7 +278,7 @@ const DEFAULT_TRANSFORM_OPTIONS = {
 };
 
 describe('transformSync', () => {
-  it('evaluationPlugins: fluentTokensPlugin handles tokens statically', () => {
+  it('astEvaluationPlugins: fluentTokensPlugin handles tokens statically', () => {
     const sourceCode = `
 import { makeStyles } from '@griffel/react';
 
@@ -295,7 +295,7 @@ export const useStyles = makeStyles({
 
     const result = transformSync(sourceCode, {
       filename: 'test-plugins.ts',
-      evaluationPlugins: [fluentTokensPlugin],
+      astEvaluationPlugins: [fluentTokensPlugin],
       babelOptions: {
         presets: ['@babel/preset-typescript'],
       },

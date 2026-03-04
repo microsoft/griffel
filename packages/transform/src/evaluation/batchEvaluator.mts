@@ -18,7 +18,7 @@ export function batchEvaluator(
   babelOptions: NonNullable<StrictOptions['babelOptions']>,
   evaluationRules: NonNullable<StrictOptions['rules']>,
   programAst: Program,
-  evaluationPlugins: AstEvaluatorPlugin[] = [],
+  astEvaluationPlugins: AstEvaluatorPlugin[] = [],
 ): {
   usedVMForEvaluation: boolean;
   evaluationResults: unknown[];
@@ -31,7 +31,7 @@ export function batchEvaluator(
   // First pass: try static evaluation for all calls
   for (let i = 0; i < styleCalls.length; i++) {
     const styleCall = styleCalls[i];
-    const staticResult = astEvaluator(styleCall.argumentNode, programAst, evaluationPlugins);
+    const staticResult = astEvaluator(styleCall.argumentNode, programAst, astEvaluationPlugins);
 
     if (staticResult.confident) {
       evaluationResults[i] = staticResult.value;

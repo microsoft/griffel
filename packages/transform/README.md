@@ -79,7 +79,7 @@ Transforms source code containing `makeStyles` or `makeResetStyles` calls.
 - `modules?` (string[]): Module sources to process
 - `babelOptions?` (object): Babel configuration for complex evaluations
 - `evaluationRules?` (array): Rules for determining evaluation strategy
-- `evaluationPlugins?` (AstEvaluatorPlugin[]): Plugins for extending AST evaluation with custom node handling
+- `astEvaluationPlugins?` (AstEvaluatorPlugin[]): Plugins for extending AST evaluation with custom node handling
 
 ## Evaluation Plugins
 
@@ -96,7 +96,7 @@ import { transformSync, fluentTokensPlugin } from '@griffel/transform';
 
 const result = transformSync(sourceCode, {
   filename: 'styles.ts',
-  evaluationPlugins: [fluentTokensPlugin],
+  astEvaluationPlugins: [fluentTokensPlugin],
 });
 ```
 
@@ -128,7 +128,7 @@ const myPlugin: AstEvaluatorPlugin = {
 
 const result = transformSync(sourceCode, {
   filename: 'styles.ts',
-  evaluationPlugins: [myPlugin],
+  astEvaluationPlugins: [myPlugin],
 });
 ```
 

@@ -46,7 +46,7 @@ export type TransformOptions = {
   evaluationRules?: StrictOptions['rules'];
 
   /** Plugins for extending AST evaluation with custom node handling. */
-  evaluationPlugins?: AstEvaluatorPlugin[];
+  astEvaluationPlugins?: AstEvaluatorPlugin[];
 };
 
 export type TransformResult = {
@@ -170,7 +170,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         action: 'ignore',
       },
     ],
-    evaluationPlugins = [],
+    astEvaluationPlugins = [],
   } = options;
 
   if (!filename) {
@@ -328,7 +328,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     babelOptions,
     evaluationRules,
     programAst,
-    evaluationPlugins,
+    astEvaluationPlugins,
   );
 
   for (let i = 0; i < styleCalls.length; i++) {
