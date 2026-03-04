@@ -27,7 +27,10 @@ export default defineConfig(() => ({
   build: {
     emptyOutDir: true,
     lib: {
-      entry: resolve(__dirname, 'src/index.mts'),
+      entry: {
+        'webpack-plugin': resolve(__dirname, 'src/index.mts'),
+        'webpack-loader': resolve(__dirname, 'src/webpackLoader.mts'),
+      },
       formats: ['es' as const],
       target: 'node20' as const,
     },
