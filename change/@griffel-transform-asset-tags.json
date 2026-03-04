@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: wrap imported asset paths in <griffel-asset> tags for reliable CSS extraction",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

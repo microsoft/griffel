@@ -4,6 +4,7 @@ import * as path from 'node:path';
 
 import { GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
 import { generateCSSRules } from './utils/generateCSSRules.mjs';
+import { resolveAssetPathsInCSSRules } from './utils/resolveAssetPaths.mjs';
 
 export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generateMetadata'>;
 
@@ -91,7 +92,8 @@ function webpackLoader(
       };
 
       if (cssRulesByBucket) {
-        const css = generateCSSRules(cssRulesByBucket);
+        const resolvedCssRulesByBucket = resolveAssetPathsInCSSRules(cssRulesByBucket, this.resourcePath);
+        const css = generateCSSRules(resolvedCssRulesByBucket);
 
         if (css.length === 0) {
           this.callback(null, code);

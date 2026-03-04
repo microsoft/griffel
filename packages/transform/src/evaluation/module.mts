@@ -17,6 +17,7 @@ import path, { dirname } from 'node:path';
 import vm from 'node:vm';
 import createDebug from 'debug';
 
+import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from '../constants.mjs';
 import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
 import type { StrictOptions } from './types.mjs';
@@ -224,10 +225,10 @@ export class Module {
             m.evaluate(code, only.includes('*') ? ['*'] : only);
           }
         } else {
-          // For non JS/JSON requires, just export the id
-          // This is to support importing assets in webpack
-          // The module will be resolved by css-loader
-          m.exports = id;
+          // For non JS/JSON requires, export the resolved absolute path wrapped in asset tags.
+          // This allows downstream tools (e.g. webpack plugin) to resolve the path correctly
+          // when CSS is extracted to a different location.
+          m.exports = ASSET_TAG_OPEN + filename + ASSET_TAG_CLOSE;
         }
       } else {
         this.debug('cached:exist', id);
