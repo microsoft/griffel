@@ -1,9 +1,8 @@
-// Re-exporting types from @linaria/babel-preset to avoid consumers having to install it directly
-
 export { default as shakerEvaluator } from '@linaria/shaker';
-export { EvalCache, Module } from '@linaria/babel-preset';
+export { Module } from './evaluation/module.mjs';
+export * as EvalCache from './evaluation/evalCache.mjs';
 
-export type { Evaluator, EvalRule } from '@linaria/babel-preset';
+export type { Evaluator, EvalRule } from './evaluation/types.mjs';
 
 // Our APIs
 

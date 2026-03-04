@@ -1,5 +1,6 @@
 import type { Program } from 'oxc-parser';
-import type { StrictOptions } from '@linaria/babel-preset';
+
+import type { StrictOptions } from './types.mjs';
 
 import type { StyleCall } from '../types.mjs';
 import type { AstEvaluatorPlugin } from './types.mjs';

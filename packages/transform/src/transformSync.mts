@@ -1,8 +1,9 @@
 import { parseSync, type Node } from 'oxc-parser';
 import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
-import { type Evaluator, type StrictOptions } from '@linaria/babel-preset';
 import _shaker from '@linaria/shaker';
+
+import type { Evaluator, StrictOptions } from './evaluation/types.mjs';
 import {
   resolveStyleRulesForSlots,
   resolveResetStyleRules,
