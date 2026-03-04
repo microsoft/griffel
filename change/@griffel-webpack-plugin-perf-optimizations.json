@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "perf: merge triple sort into single comparator, use Buffer.indexOf, cache JSON.stringify",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
