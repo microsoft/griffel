@@ -36,6 +36,7 @@ type TestOptions = {
 
   cssFilename?: string;
   loaderOptions?: WebpackLoaderOptions;
+  normalizeHashes?: boolean;
   pluginOptions?: GriffelCSSExtractionPluginOptions;
   webpackConfig?: WebpackConfiguration;
 };
@@ -191,6 +192,39 @@ function fixLineEndings(value: string) {
 }
 
 /**
+ * Normalizes Griffel-generated class name hashes in a string.
+ * Asset paths are resolved to absolute paths during transform, which causes
+ * class name hashes to differ across machines. This replaces all hashes with
+ * deterministic ordered placeholders so comparisons are machine-independent.
+ *
+ * Each string is normalized independently — the first hash encountered becomes
+ * `f___0`, the second `f___1`, etc.
+ */
+function normalizeGriffelHashes(str: string): string {
+  const hashRegex = /(?<=[\.\'\"])([fr][a-z0-9]{4,})(?=[{:\s\'\"\,\[\]])/g;
+  const hashes: string[] = [];
+  let match;
+
+  while ((match = hashRegex.exec(str)) !== null) {
+    if (!hashes.includes(match[1])) {
+      hashes.push(match[1]);
+    }
+  }
+
+  let result = str;
+
+  for (let i = 0; i < hashes.length; i++) {
+    const hash = hashes[i];
+    const prefix = hash[0];
+    const placeholder = `${prefix}___${i}`;
+
+    result = result.split(hash).join(placeholder);
+  }
+
+  return result;
+}
+
+/**
  * Test utility similar to "babel-plugin-tester".
  *
  * See https://webpack.js.org/contribute/writing-a-loader/#testing.
@@ -280,13 +314,21 @@ function testFixture(fixtureName: string, options: TestOptions = {}) {
       if (outputPath) {
         const moduleOutput = fixLineEndings(await fs.promises.readFile(outputPath, { encoding: 'utf8' }));
 
-        expect(resultModule).toBe(moduleOutput);
+        if (options.normalizeHashes) {
+          expect(normalizeGriffelHashes(resultModule)).toBe(moduleOutput);
+        } else {
+          expect(resultModule).toBe(moduleOutput);
+        }
       }
 
       if (cssOutputPath) {
         const cssOutput = fixLineEndings(await fs.promises.readFile(cssOutputPath, { encoding: 'utf8' }));
 
-        expect(resultCSS).toBe(cssOutput);
+        if (options.normalizeHashes) {
+          expect(normalizeGriffelHashes(resultCSS)).toBe(cssOutput);
+        } else {
+          expect(resultCSS).toBe(cssOutput);
+        }
       }
 
       if (expectedError) {
@@ -322,10 +364,10 @@ describe('GriffelCSSExtractionPlugin', () => {
 
   // Assets
   // --------------------
-  testFixture('assets');
-  testFixture('assets-flip');
-  testFixture('assets-multiple');
-  testFixture('reset-assets');
+  testFixture('assets', { normalizeHashes: true });
+  testFixture('assets-flip', { normalizeHashes: true });
+  testFixture('assets-multiple', { normalizeHashes: true });
+  testFixture('reset-assets', { normalizeHashes: true });
 
   // Config
   // --------------------

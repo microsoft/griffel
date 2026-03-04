@@ -3,9 +3,9 @@
   "usedVMForEvaluation": true,
   "cssRulesByBucket": {
     "r": [
-      ".rqpsvrz{background-image:url(./blank.jpg);}",
-      ".rqpsvrz:hover{background-image:url(./blank.jpg);}",
-      ".rqpsvrz:focus{background-image:url(./empty.jpg);}"
+      ".r___0{background-image:url(<griffel-asset>blank.jpg</griffel-asset>);}",
+      ".r___0:hover{background-image:url(<griffel-asset>blank.jpg</griffel-asset>);}",
+      ".r___0:focus{background-image:url(<griffel-asset>empty.jpg</griffel-asset>);}"
     ]
   }
 }

@@ -3,6 +3,7 @@ import * as path from 'node:path';
 import { format } from 'prettier';
 import { describe, it, expect, vi } from 'vitest';
 
+import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from './constants.mjs';
 import { transformSync, type TransformOptions } from './transformSync.mjs';
 
 type TestCase = {
@@ -22,6 +23,72 @@ const prettierConfig = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '../../../.prettierrc'), { encoding: 'utf-8' }),
 );
 const fixturesDir = path.join(__dirname, '..', '__fixtures__');
+
+/**
+ * Asset paths in `<griffel-asset>` tags contain machine-specific absolute paths which also
+ * cause class name hashes to differ. This normalizes both outputs by replacing absolute
+ * paths with relative ones and hashes with ordered placeholders.
+ *
+ * Only applied when the meta output contains asset tags; other fixtures pass through unchanged.
+ */
+function normalizeAssetOutputs(
+  code: string,
+  meta: string,
+  fixtureDir: string,
+): { code: string; meta: string } {
+  if (meta.indexOf(ASSET_TAG_OPEN) === -1) {
+    return { code, meta };
+  }
+
+  // 1. Replace absolute paths inside asset tags with fixture-relative paths
+  let normalizedMeta = '';
+  let searchFrom = 0;
+
+  while (searchFrom < meta.length) {
+    const openIdx = meta.indexOf(ASSET_TAG_OPEN, searchFrom);
+
+    if (openIdx === -1) {
+      normalizedMeta += meta.slice(searchFrom);
+      break;
+    }
+
+    normalizedMeta += meta.slice(searchFrom, openIdx + ASSET_TAG_OPEN.length);
+
+    const contentStart = openIdx + ASSET_TAG_OPEN.length;
+    const closeIdx = meta.indexOf(ASSET_TAG_CLOSE, contentStart);
+
+    if (closeIdx === -1) {
+      normalizedMeta += meta.slice(contentStart);
+      break;
+    }
+
+    normalizedMeta += path.relative(fixtureDir, meta.slice(contentStart, closeIdx));
+    searchFrom = closeIdx;
+  }
+
+  // 2. Collect unique class-name hashes from meta (e.g. ".fwvq0l6{" or ".r1abc23:")
+  const hashRegex = /\.([fr][a-z0-9]{4,})(?=[{:])/g;
+  const hashes: string[] = [];
+  let match;
+
+  while ((match = hashRegex.exec(normalizedMeta)) !== null) {
+    if (!hashes.includes(match[1])) {
+      hashes.push(match[1]);
+    }
+  }
+
+  // 3. Replace hashes with deterministic ordered placeholders in both outputs
+  let normalizedCode = code;
+
+  for (let i = 0; i < hashes.length; i++) {
+    const placeholder = `${hashes[i][0]}___${i}`;
+
+    normalizedMeta = normalizedMeta.split(hashes[i]).join(placeholder);
+    normalizedCode = normalizedCode.split(hashes[i]).join(placeholder);
+  }
+
+  return { code: normalizedCode, meta: normalizedMeta };
+}
 
 const TESTS: TestCase[] = [
   // 🎩 Tip: use "only: true" to run a single test
@@ -331,14 +398,20 @@ export const useStyles = makeStyles({
         filename: testCase.fixture,
         ...transformOptions,
       });
-      const outputCode = format(code, { ...prettierConfig, parser: 'typescript' });
-      const outputMeta = format(JSON.stringify({ usedProcessing, usedVMForEvaluation, cssRulesByBucket }, null, 2), {
-        ...prettierConfig,
-        parser: 'json',
-      });
+      const outputCode = await format(code, { ...prettierConfig, parser: 'typescript' });
+      const outputMeta = await format(
+        JSON.stringify({ usedProcessing, usedVMForEvaluation, cssRulesByBucket }, null, 2),
+        {
+          ...prettierConfig,
+          parser: 'json',
+        },
+      );
 
-      await expect(outputCode).toMatchFileSnapshot(testCase.outputFixture!);
-      await expect(outputMeta).toMatchFileSnapshot(testCase.outputFixture!.replace(/\.ts$/, '.meta.json'));
+      const fixtureDir = path.dirname(testCase.fixture);
+      const normalized = normalizeAssetOutputs(outputCode, outputMeta, fixtureDir);
+
+      await expect(normalized.code).toMatchFileSnapshot(testCase.outputFixture!);
+      await expect(normalized.meta).toMatchFileSnapshot(testCase.outputFixture!.replace(/\.ts$/, '.meta.json'));
 
       if (typeof teardown === 'function') {
         teardown?.();
