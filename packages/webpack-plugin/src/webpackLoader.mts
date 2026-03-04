@@ -29,7 +29,7 @@ function webpackLoader(
   this.cacheable();
 
   // Early return to handle cases when there is no Griffel usage in the file
-  if (sourceCode.indexOf('makeStyles') === -1 && sourceCode.indexOf('makeResetStyles') === -1) {
+  if (sourceCode.indexOf('makeStyles') === -1 && sourceCode.indexOf('makeResetStyles') === -1 && sourceCode.indexOf('makeStaticStyles') === -1) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }

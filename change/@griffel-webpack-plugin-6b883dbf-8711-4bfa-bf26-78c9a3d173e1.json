@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add makeStaticStyles AOT/CSS extraction support",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -6,8 +6,10 @@ import _shaker from '@linaria/shaker';
 import {
   resolveStyleRulesForSlots,
   resolveResetStyleRules,
+  resolveStaticStyleRules,
   normalizeCSSBucketEntry,
   type GriffelStyle,
+  type GriffelStaticStyles,
   type CSSRulesByBucket,
   type CSSClassesMapBySlot,
   type GriffelResetStyle,
@@ -50,12 +52,18 @@ export type TransformResult = {
   usedVMForEvaluation: boolean;
 };
 
-type FunctionKinds = 'makeStyles' | 'makeResetStyles';
+type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
+
+const RUNTIME_IDENTIFIERS = new Map<FunctionKinds, string>([
+  ['makeStyles', '__css'],
+  ['makeResetStyles', '__resetCSS'],
+  ['makeStaticStyles', '__staticCSS'],
+]);
 
 interface ImportInfo {
   source: string;
   specifiers: Array<{
-    imported: string;
+    imported: FunctionKinds;
     local: string;
     start: number;
     end: number;
@@ -165,7 +173,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   }
 
   const parseResult = parseSync(filename, sourceCode);
-  parseResult.module.staticImports; // TODO use it over imports collected manually
 
   if (parseResult.errors.length > 0) {
     throw new Error(`Failed to parse "${filename}": ${parseResult.errors.map(e => e.message).join(', ')}`);
@@ -174,7 +181,51 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const magicString = new MagicString(sourceCode);
   const programAst = parseResult.program;
 
+  // Collect imports from oxc-parser's staticImports instead of walking the AST manually
   const imports: ImportInfo[] = [];
+
+  for (const staticImport of parseResult.module.staticImports) {
+    const moduleSource = staticImport.moduleRequest.value;
+
+    if (modules.includes(moduleSource)) {
+      const specifiers: ImportInfo['specifiers'] = [];
+
+      for (const entry of staticImport.entries) {
+        if (
+          entry.importName.kind === 'Name' &&
+          entry.importName.start != null &&
+          entry.localName.start != null &&
+          RUNTIME_IDENTIFIERS.has(entry.importName.name as FunctionKinds)
+        ) {
+          specifiers.push({
+            imported: entry.importName.name as FunctionKinds,
+            local: entry.localName.value,
+            start: entry.importName.start,
+            end: entry.localName.start + entry.localName.value.length,
+          });
+        }
+      }
+
+      if (specifiers.length > 0) {
+        imports.push({
+          source: moduleSource,
+          specifiers,
+          start: staticImport.start,
+          end: staticImport.end,
+        });
+      }
+    }
+  }
+
+  // If no relevant imports found, return original code early (skip AST walk)
+  if (imports.length === 0) {
+    return {
+      code: sourceCode,
+      usedProcessing: false,
+      usedVMForEvaluation: false,
+    };
+  }
+
   const styleCalls: StyleCall[] = [];
   const cssEntries: Record<string, Record<string, string[]>> = {};
   const cssResetEntries: Record<string, string[]> = {};
@@ -182,53 +233,10 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   let cssRulesByBucket: CSSRulesByBucket = {};
 
   // -----
-  // First pass: collect imports and style function calls
+  // Walk AST to collect style function calls
 
   walk(programAst, {
     enter(node, parent) {
-      // Handle import declarations
-      if (node.type === 'ImportDeclaration') {
-        const moduleSource = node.source.value;
-
-        if (modules.includes(moduleSource)) {
-          const specifiers = node.specifiers.reduce<
-            {
-              imported: string;
-              local: string;
-              start: number;
-              end: number;
-            }[]
-          >((acc, spec) => {
-            if (spec.type === 'ImportSpecifier') {
-              const importedName = spec.imported;
-
-              if (
-                importedName.type === 'Identifier' &&
-                (importedName.name === 'makeStyles' || importedName.name === 'makeResetStyles')
-              ) {
-                acc.push({
-                  imported: importedName.name,
-                  local: spec.local.name,
-                  start: spec.start,
-                  end: spec.end,
-                });
-              }
-            }
-
-            return acc;
-          }, []);
-
-          if (specifiers.length > 0) {
-            imports.push({
-              source: moduleSource,
-              specifiers,
-              start: node.start,
-              end: node.end,
-            });
-          }
-        }
-      }
-
       // Handle call expressions
       if (node.type === 'CallExpression') {
         let functionKind: FunctionKinds | null = null;
@@ -298,8 +306,8 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     },
   });
 
-  // If no relevant imports or calls found, return original code
-  if (imports.length === 0 || styleCalls.length === 0) {
+  // If no style calls found, return original code
+  if (styleCalls.length === 0) {
     return {
       code: sourceCode,
       usedProcessing: false,
@@ -324,8 +332,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
       case 'makeStyles':
         {
           const stylesBySlots = evaluationResult as Record<string, GriffelStyle>;
-          // TODO fix naming
-          const [classnamesMapping, cssRulesByBucketA] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt);
+          const [classnamesMapping, resolvedCSSRules] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt);
           const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
           if (generateMetadata) {
@@ -334,7 +341,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
           // Replace the function call arguments
           magicString.overwrite(styleCall.argumentStart, styleCall.argumentEnd, `${JSON.stringify(classnamesMapping)}`);
-          cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, cssRulesByBucketA);
+          cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, resolvedCSSRules);
         }
 
         break;
@@ -360,6 +367,18 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           );
         }
         break;
+
+      case 'makeStaticStyles':
+        {
+          const styles = evaluationResult as GriffelStaticStyles | GriffelStaticStyles[];
+          const stylesSet: GriffelStaticStyles[] = Array.isArray(styles) ? styles : [styles];
+          const cssRules = resolveStaticStyleRules(stylesSet);
+
+          // Replace the function call arguments with the resolved CSS rules bucket
+          magicString.overwrite(styleCall.argumentStart, styleCall.argumentEnd, JSON.stringify({ d: cssRules }));
+          cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, { d: cssRules });
+        }
+        break;
     }
   }
 
@@ -368,12 +387,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
   for (const importInfo of imports) {
     for (const specifier of importInfo.specifiers) {
-      if (specifier.imported === 'makeStyles') {
-        // TODO: use mapping for identifiers
-        magicString.overwrite(specifier.start, specifier.end, '__css');
-      } else if (specifier.imported === 'makeResetStyles') {
-        magicString.overwrite(specifier.start, specifier.end, '__resetCSS');
-      }
+      magicString.overwrite(specifier.start, specifier.end, RUNTIME_IDENTIFIERS.get(specifier.imported)!);
     }
   }
 
@@ -384,7 +398,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     magicString.overwrite(
       styleCall.callStart,
       styleCall.callStart + styleCall.importId.length,
-      '__' + (styleCall.functionKind === 'makeStyles' ? 'css' : 'resetCSS'),
+      RUNTIME_IDENTIFIERS.get(styleCall.functionKind)!,
     );
   }
 
