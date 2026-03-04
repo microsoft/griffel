@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "refactor: extract dedupeCSSRules result to a variable in transformSync",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

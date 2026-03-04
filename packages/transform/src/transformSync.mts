@@ -326,14 +326,10 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           const stylesBySlots = evaluationResult as Record<string, GriffelStyle>;
           // TODO fix naming
           const [classnamesMapping, cssRulesByBucketA] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt);
+          const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
 
           if (generateMetadata) {
-            buildCSSEntriesMetadata(
-              cssEntries,
-              classnamesMapping,
-              dedupeCSSRules(cssRulesByBucket),
-              styleCall.declaratorId,
-            );
+            buildCSSEntriesMetadata(cssEntries, classnamesMapping, uniqueCSSRules, styleCall.declaratorId);
           }
 
           // Replace the function call arguments
