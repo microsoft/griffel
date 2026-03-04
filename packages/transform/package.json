@@ -20,7 +20,7 @@
     "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
     "magic-string": "^0.30.19",
-    "oxc-parser": "^0.90.0",
-    "oxc-walker": "^0.5.2"
+    "oxc-parser": "^0.116.0",
+    "oxc-walker": "^0.7.0"
   }
 }
