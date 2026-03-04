@@ -68,9 +68,7 @@ function isCSSModule(module: Module): module is CSSModule {
 function isGriffelCSSModule(module: Module): boolean {
   if (isCSSModule(module)) {
     if (Buffer.isBuffer(module.content)) {
-      const content = module.content.toString('utf-8');
-
-      return content.indexOf('/** @griffel:css-start') !== -1;
+      return module.content.indexOf('/** @griffel:css-start') !== -1;
     }
   }
 

@@ -19,7 +19,7 @@ import createDebug from 'debug';
 
 import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
-import type { StrictOptions } from './types.mjs';
+import type { EvalRule, StrictOptions } from './types.mjs';
 
 const debug = createDebug('griffel:module');
 
@@ -73,15 +73,27 @@ const createCustomDebug =
     debug(`${modulePrefix}:${namespaces}`, arg1, ...args);
   };
 
+const BABEL_ESM = '/@babel/runtime/helpers/esm/';
+const BABEL_CJS = '/@babel/runtime/helpers/';
+const SWC_HELPERS_RE = /(@swc\/helpers\/)src(\/.+)\.mjs/;
+
 const cookModuleId = (rawId: string): string => {
-  return (
-    rawId
-      // It's a dirty hack for avoiding conflicts with babel-preset-react-app
-      // https://github.com/callstack/linaria/issues/745
-      .replace('/@babel/runtime/helpers/esm/', '/@babel/runtime/helpers/')
-      // The same hack for SWC helpers
-      .replace(/(@swc\/helpers\/)src(\/.+)\.mjs/, '$1lib$2.js')
-  );
+  // It's a dirty hack for avoiding conflicts with babel-preset-react-app
+  // https://github.com/callstack/linaria/issues/745
+
+  const babelESMIndex = rawId.indexOf(BABEL_ESM);
+
+  if (babelESMIndex !== -1) {
+    return rawId.slice(0, babelESMIndex) + BABEL_CJS + rawId.slice(babelESMIndex + BABEL_ESM.length);
+  }
+
+  const swcHelpersIndex = rawId.indexOf('@swc/helpers/src/');
+
+  if (swcHelpersIndex === -1) {
+    return rawId.replace(SWC_HELPERS_RE, '$1lib$2.js');
+  }
+
+  return rawId;
 };
 
 export class Module {
@@ -244,23 +256,17 @@ export class Module {
 
   evaluate(text: string, only: string[] | null = null): void {
     const { filename } = this;
-    const matchedRules = this.options.rules
-      .filter(({ test }) => {
-        if (!test) {
-          return true;
-        }
+    // Find last matching rule (iterate backwards, break on first match)
+    let action: EvalRule['action'] = 'ignore';
 
-        if (typeof test === 'function') {
-          return test(filename);
-        }
+    for (let i = this.options.rules.length - 1; i >= 0; i--) {
+      const { test } = this.options.rules[i];
 
-        if (test instanceof RegExp) {
-          return test.test(filename);
-        }
-
-        return false;
-      })
-      .reverse();
+      if (!test || (typeof test === 'function' ? test(filename) : test instanceof RegExp && test.test(filename))) {
+        action = this.options.rules[i].action;
+        break;
+      }
+    }
 
     const cacheKey = [this.filename, ...(only ?? [])];
 
@@ -270,7 +276,6 @@ export class Module {
     }
 
     let code: string;
-    const action = matchedRules.length > 0 ? matchedRules[0].action : 'ignore';
 
     if (action === 'ignore') {
       this.debug('ignore', `${filename}`);
@@ -281,11 +286,9 @@ export class Module {
         typeof action === 'function'
           ? action
           : (
-              require(
-                require.resolve(action, {
-                  paths: [dirname(this.filename)],
-                }),
-              ) as { default: (...args: unknown[]) => [string, Map<string, string[]> | null] }
+              require(require.resolve(action, {
+                paths: [dirname(this.filename)],
+              })) as { default: (...args: unknown[]) => [string, Map<string, string[]> | null] }
             ).default;
 
       // For JavaScript files, we need to transpile it and to get the exports of the module

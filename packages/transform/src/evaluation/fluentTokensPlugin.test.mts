@@ -2,7 +2,7 @@ import { parseSync, type Node, type Program } from 'oxc-parser';
 import { walk } from 'oxc-walker';
 import { describe, it, expect } from 'vitest';
 
-import { DeoptError } from './astEvaluator.mjs';
+import { DEOPT } from './astEvaluator.mjs';
 import { fluentTokensPlugin } from './fluentTokensPlugin.mjs';
 import type { AstEvaluatorContext } from './types.mjs';
 
@@ -33,9 +33,7 @@ function getFirstNodeOfType(code: string, type: string): { node: Node; program: 
 function makeContext(program: Program): AstEvaluatorContext {
   return {
     programAst: program,
-    evaluateNode: () => {
-      throw new DeoptError('stub');
-    },
+    evaluateNode: () => DEOPT,
   };
 }
 
@@ -49,18 +47,18 @@ describe('fluentTokensPlugin', () => {
       expect(result).toBe('var(--colorBrandBackground)');
     });
 
-    it('throws DeoptError for non-tokens member expression', () => {
+    it('returns DEOPT for non-tokens member expression', () => {
       const code = 'const x = foo.bar;';
       const { node, program } = getFirstNodeOfType(code, 'MemberExpression');
 
-      expect(() => fluentTokensPlugin.evaluateNode(node, makeContext(program))).toThrow(DeoptError);
+      expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe(DEOPT);
     });
 
-    it('throws DeoptError for computed member expression on tokens', () => {
+    it('returns DEOPT for computed member expression on tokens', () => {
       const code = 'const x = tokens["colorBrandBackground"];';
       const { node, program } = getFirstNodeOfType(code, 'MemberExpression');
 
-      expect(() => fluentTokensPlugin.evaluateNode(node, makeContext(program))).toThrow(DeoptError);
+      expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe(DEOPT);
     });
   });
 
@@ -81,20 +79,20 @@ describe('fluentTokensPlugin', () => {
       expect(result).toBe('hello world');
     });
 
-    it('throws DeoptError for non-tokens expression in template literal', () => {
+    it('returns DEOPT for non-tokens expression in template literal', () => {
       const code = 'const x = `${foo.bar} 0`;';
       const { node, program } = getFirstNodeOfType(code, 'TemplateLiteral');
 
-      expect(() => fluentTokensPlugin.evaluateNode(node, makeContext(program))).toThrow(DeoptError);
+      expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe(DEOPT);
     });
   });
 
   describe('unsupported node types', () => {
-    it('throws DeoptError for Identifier', () => {
+    it('returns DEOPT for Identifier', () => {
       const code = 'const x = foo;';
       const { node, program } = getFirstNodeOfType(code, 'Identifier');
 
-      expect(() => fluentTokensPlugin.evaluateNode(node, makeContext(program))).toThrow(DeoptError);
+      expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe(DEOPT);
     });
   });
 });

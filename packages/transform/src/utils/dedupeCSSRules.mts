@@ -1,4 +1,4 @@
-import type { CSSRulesByBucket } from '@griffel/core';
+import type { CSSRulesByBucket, CSSBucketEntry } from '@griffel/core';
 
 /**
  * Rules that are returned by `resolveStyles()` are not deduplicated.
@@ -8,15 +8,18 @@ export function dedupeCSSRules(cssRulesByBucket: CSSRulesByBucket): CSSRulesByBu
   return Object.fromEntries(
     Object.entries(cssRulesByBucket).map(([styleBucketName, cssBucketEntries]) => {
       if (styleBucketName === 'm') {
-        return [
-          styleBucketName,
-          cssBucketEntries.filter(
-            (entryA, index, entries) => entries.findIndex(entryB => entryA[0] === entryB[0]) === index,
-          ),
-        ];
+        const seen = new Map<string, CSSBucketEntry>();
+
+        for (const entry of cssBucketEntries) {
+          if (!seen.has(entry[0])) {
+            seen.set(entry[0], entry);
+          }
+        }
+
+        return [styleBucketName, Array.from(seen.values())];
       }
 
-      return [styleBucketName, [...new Set(cssBucketEntries)]];
+      return [styleBucketName, Array.from(new Set(cssBucketEntries))];
     }),
   );
 }

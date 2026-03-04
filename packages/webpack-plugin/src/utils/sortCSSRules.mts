@@ -35,17 +35,29 @@ export function getUniqueRulesFromSets(setOfCSSRules: CSSRulesByBucket[]): RuleE
   return Array.from(uniqueCSSRules.values());
 }
 
+function compareCSSRules(
+  a: RuleEntry,
+  b: RuleEntry,
+  compareMediaQueries: GriffelRenderer['compareMediaQueries'],
+): number {
+  return (
+    compareMediaQueries(a.media, b.media) ||
+    styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName] ||
+    a.priority - b.priority
+  );
+}
+
 export function sortCSSRules(
   setOfCSSRules: CSSRulesByBucket[],
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
 ): string {
-  return getUniqueRulesFromSets(setOfCSSRules)
-    .sort((entryA, entryB) => entryA.priority - entryB.priority)
-    .sort(
-      (entryA, entryB) =>
-        styleBucketOrderingMap[entryA.styleBucketName] - styleBucketOrderingMap[entryB.styleBucketName],
-    )
-    .sort((entryA, entryB) => compareMediaQueries(entryA.media, entryB.media))
-    .map(entry => entry.cssRule)
-    .join('');
+  const entries = getUniqueRulesFromSets(setOfCSSRules).sort((a, b) => compareCSSRules(a, b, compareMediaQueries));
+
+  let result = '';
+
+  for (let i = 0; i < entries.length; i++) {
+    result += entries[i].cssRule;
+  }
+
+  return result;
 }
