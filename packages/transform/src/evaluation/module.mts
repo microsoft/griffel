@@ -332,7 +332,7 @@ export class Module {
   // Alias to resolve the module using node's resolve algorithm
   // This static property can be overridden by the webpack loader
   // This allows us to use webpack's module resolution algorithm
-  static _resolveFilename = (id: string, options: { paths: readonly string[] }): string =>
+  static _resolveFilename = (id: string, options: { filename: string; paths: readonly string[] }): string =>
     (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(
       id,
       options,
