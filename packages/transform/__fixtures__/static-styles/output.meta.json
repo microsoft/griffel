@@ -1,0 +1,7 @@
+{
+  "usedProcessing": true,
+  "usedVMForEvaluation": false,
+  "cssRulesByBucket": {
+    "d": ["body{background:red;}"]
+  }
+}

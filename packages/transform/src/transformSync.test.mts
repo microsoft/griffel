@@ -193,6 +193,25 @@ const TESTS: TestCase[] = [
     outputFixture: path.resolve(fixturesDir, 'reset-styles-at-rules', 'output.ts'),
   },
 
+  // Static styles
+  //
+  //
+  {
+    title: 'static: object',
+    fixture: path.resolve(fixturesDir, 'static-styles', 'code.ts'),
+    outputFixture: path.resolve(fixturesDir, 'static-styles', 'output.ts'),
+  },
+  {
+    title: 'static: string',
+    fixture: path.resolve(fixturesDir, 'static-styles-string', 'code.ts'),
+    outputFixture: path.resolve(fixturesDir, 'static-styles-string', 'output.ts'),
+  },
+  {
+    title: 'static: array',
+    fixture: path.resolve(fixturesDir, 'static-styles-array', 'code.ts'),
+    outputFixture: path.resolve(fixturesDir, 'static-styles-array', 'output.ts'),
+  },
+
   // Imports
   //
 

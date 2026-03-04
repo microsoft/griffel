@@ -2,7 +2,7 @@ import type { Node } from 'oxc-parser';
 
 export interface StyleCall {
   declaratorId: string;
-  functionKind: 'makeStyles' | 'makeResetStyles';
+  functionKind: 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
   argumentStart: number;
   argumentEnd: number;
   argumentCode: string;
