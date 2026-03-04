@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Move webpack-plugin implementation from feat/new-plugin branch",
+  "comment": "feat: add webpack-plugin implementation",
   "packageName": "@griffel/webpack-plugin",
   "email": "198982749+Copilot@users.noreply.github.com",
   "dependentChangeType": "none"
