@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add createFluentOxcResolverFactory for FluentUI ESM resolution",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
