@@ -1,6 +1,6 @@
 # Griffel - CSS-in-JS with Ahead-of-time Compilation
 
-Griffel is a CSS-in-JS library with near-zero runtime, SSR support, and ahead-of-time compilation. It's organized as a monorepo using Nx with 16+ packages and applications including React bindings, build-time transforms, DevTools, and benchmarking suite.
+Griffel is a CSS-in-JS library with near-zero runtime, SSR support, and ahead-of-time compilation. It's organized as a monorepo using Nx with 16+ packages and applications including React bindings, build-time transforms, and DevTools.
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
@@ -45,9 +45,6 @@ yarn nx run-many --target=lint --all
 yarn start
 # Serves on http://localhost:3000
 # NEVER CANCEL: Initial build takes 30-60 seconds. Set timeout to 120+ seconds.
-
-# Build benchmark app (if needed)
-yarn nx run @griffel/benchmark:build
 ```
 
 ### Working with Affected Changes (Nx)
@@ -139,7 +136,6 @@ yarn nx run-many --target=type-check --all
 ### Applications (apps/ directory)
 
 - `website` - Documentation site (Docusaurus) at griffel.js.org
-- `benchmark` - Performance benchmarking suite
 
 ### Testing Infrastructure (e2e/ directory)
 
