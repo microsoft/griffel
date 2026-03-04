@@ -110,7 +110,7 @@ This plugin handles:
 You can create custom plugins by implementing the `AstEvaluatorPlugin` interface:
 
 ```typescript
-import { type AstEvaluatorPlugin, DeoptError } from '@griffel/transform';
+import { type AstEvaluatorPlugin, DEOPT } from '@griffel/transform';
 
 const myPlugin: AstEvaluatorPlugin = {
   name: 'myPlugin',
@@ -121,8 +121,8 @@ const myPlugin: AstEvaluatorPlugin = {
       return 'some-value';
     }
 
-    // Throw DeoptError to signal "can't handle this node" and let the next plugin try
-    throw new DeoptError('myPlugin: unsupported node');
+    // Return DEOPT to signal "can't handle this node" and let the next plugin try
+    return DEOPT;
   },
 };
 

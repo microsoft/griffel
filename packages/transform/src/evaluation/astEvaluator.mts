@@ -1,7 +1,12 @@
 import type { Node, ObjectExpression, Program, TemplateLiteral } from 'oxc-parser';
 import type { EvaluationResult, AstEvaluatorContext, AstEvaluatorPlugin } from './types.mjs';
 
-export class DeoptError extends Error {}
+/**
+ * Sentinel value returned by plugins and evaluateNode to signal "can't handle this node".
+ * Using a symbol avoids the cost of Error construction and stack trace capture.
+ */
+export const DEOPT: unique symbol = Symbol('deopt');
+export type Deopt = typeof DEOPT;
 
 /**
  * Simple static evaluator for object expressions with nested objects.
@@ -14,11 +19,12 @@ export class DeoptError extends Error {}
  *
  * Plugins can extend evaluation to handle additional node types.
  */
-export function astEvaluator(
-  node: Node,
-  programAst: Program,
-  plugins: AstEvaluatorPlugin[] = [],
-): EvaluationResult {
+export function astEvaluator(node: Node, programAst: Program, plugins: AstEvaluatorPlugin[] = []): EvaluationResult {
+  const context: AstEvaluatorContext = {
+    programAst,
+    evaluateNode,
+  };
+
   function evaluateNode(node: Node): unknown {
     // Base cases
     switch (node.type) {
@@ -36,17 +42,17 @@ export function astEvaluator(
     }
 
     // Try plugins in order
-    const context: AstEvaluatorContext = { programAst, evaluateNode };
+    // ---
+
     for (const plugin of plugins) {
-      try {
-        return plugin.evaluateNode(node, context);
-      } catch (e) {
-        if (e instanceof DeoptError) continue;
-        throw e;
+      const result = plugin.evaluateNode(node, context);
+
+      if (result !== DEOPT) {
+        return result;
       }
     }
 
-    throw new DeoptError(`Unsupported node type: ${node.type}`);
+    return DEOPT;
   }
 
   function evaluateObjectExpression(node: ObjectExpression): unknown {
@@ -54,16 +60,13 @@ export function astEvaluator(
 
     for (const prop of node.properties) {
       if (prop.type !== 'Property' || prop.kind !== 'init') {
-        // Can't handle methods, getters, setters, or spread
-        throw new DeoptError('Only standard properties are supported');
+        return DEOPT;
       }
 
-      // Get the key
       let key: string;
 
       if (prop.computed) {
-        // Can't handle computed properties like obj[variable]
-        throw new DeoptError('Computed properties are not supported');
+        return DEOPT;
       } else if (prop.key.type === 'Identifier') {
         key = prop.key.name;
       } else if (prop.key.type === 'Literal') {
@@ -72,27 +75,35 @@ export function astEvaluator(
         if (typeof keyLiteral.value === 'string' || typeof keyLiteral.value === 'number') {
           key = String(keyLiteral.value);
         } else {
-          throw new DeoptError('Unsupported literal key type');
+          return DEOPT;
         }
       } else {
-        throw new DeoptError('Unsupported key type');
+        return DEOPT;
       }
 
-      obj[key] = evaluateNode(prop.value);
+      const value = evaluateNode(prop.value);
+
+      if (value === DEOPT) {
+        return DEOPT;
+      }
+
+      obj[key] = value;
     }
 
     return obj;
   }
 
-  try {
-    return {
-      confident: true,
-      value: evaluateNode(node),
-    };
-  } catch {
+  const result = evaluateNode(node);
+
+  if (result === DEOPT) {
     return {
       confident: false,
       value: undefined,
     };
   }
+
+  return {
+    confident: true,
+    value: result,
+  };
 }

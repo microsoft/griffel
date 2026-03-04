@@ -134,11 +134,16 @@ function buildCSSEntriesMetadata(
 }
 
 function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRulesByBucket) {
-  Object.entries(bucketB).forEach(([cssBucketName, cssBucketEntries]) => {
-    bucketA[cssBucketName as keyof CSSRulesByBucket] = cssBucketEntries.concat(
-      bucketA[cssBucketName as keyof CSSRulesByBucket] || [],
-    );
-  });
+  for (const cssBucketName in bucketB) {
+    const bucketName = cssBucketName as keyof CSSRulesByBucket;
+    const bucketBEntries = bucketB[bucketName] ?? [];
+
+    if (bucketA[bucketName]) {
+      bucketA[bucketName].push(...bucketBEntries);
+    } else {
+      bucketA[bucketName] = bucketBEntries;
+    }
+  }
 
   return bucketA;
 }

@@ -39,7 +39,7 @@ export interface AstEvaluatorContext {
 export interface AstEvaluatorPlugin {
   name: string;
   /**
-   * Evaluate an AST node. Throw DeoptError to signal "can't handle this".
+   * Evaluate an AST node. Return DEOPT symbol to signal "can't handle this".
    */
   evaluateNode: (node: Node, context: AstEvaluatorContext) => unknown;
 }
