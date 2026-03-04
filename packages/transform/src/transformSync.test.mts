@@ -277,6 +277,34 @@ const DEFAULT_TRANSFORM_OPTIONS = {
 };
 
 describe('transformSync', () => {
+  it('astEvaluationPlugins: fluentTokensPlugin is enabled by default', () => {
+    const sourceCode = `
+import { makeStyles } from '@griffel/react';
+
+const tokens = { colorBrandBackground: 'var(--colorBrandBackground)' };
+
+export const useStyles = makeStyles({
+  root: {
+    color: tokens.colorBrandBackground,
+    margin: \`\${tokens.spacingVerticalS} 0\`,
+    display: 'flex',
+  },
+});
+`;
+
+    const result = transformSync(sourceCode, {
+      filename: 'test-plugins.ts',
+      babelOptions: {
+        presets: ['@babel/preset-typescript'],
+      },
+    });
+
+    expect(result.usedProcessing).toBe(true);
+    // fluentTokensPlugin is on by default — tokens are evaluated statically, no VM needed
+    expect(result.usedVMForEvaluation).toBe(false);
+    expect(result.code).toContain('__css');
+  });
+
   for (const testCase of TESTS) {
     const testFn = testCase.only ? it.only : it;
 
