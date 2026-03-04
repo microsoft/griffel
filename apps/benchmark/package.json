@@ -1,6 +1,0 @@
-{
-  "name": "@griffel/benchmark",
-  "description": "Performance benchmarking app for Griffel",
-  "private": true,
-  "dependencies": {}
-}
