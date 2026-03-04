@@ -1,5 +1,5 @@
 import { parseSync, type Node } from 'oxc-parser';
-import { walk } from 'oxc-walker';
+import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
 import { type Evaluator, type StrictOptions } from '@linaria/babel-preset';
 import _shaker from '@linaria/shaker';
@@ -64,18 +64,6 @@ const RUNTIME_IDENTIFIERS = new Map<FunctionKinds, string>([
   ['makeResetStyles', '__resetCSS'],
   ['makeStaticStyles', '__staticCSS'],
 ]);
-
-interface ImportInfo {
-  source: string;
-  specifiers: Array<{
-    imported: FunctionKinds;
-    local: string;
-    start: number;
-    end: number;
-  }>;
-  start: number;
-  end: number;
-}
 
 /**
  * Extracts CSS rules from evaluated reset styles to metadata
@@ -187,49 +175,15 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const magicString = new MagicString(sourceCode);
   const programAst = parseResult.program;
 
-  // Collect imports from oxc-parser's staticImports instead of walking the AST manually
-  const imports: ImportInfo[] = [];
+  // Quick bail-out: if no Griffel imports exist, skip the AST walk entirely
+  const hasGriffelImports = parseResult.module.staticImports.some(
+    si =>
+      modules.includes(si.moduleRequest.value) &&
+      si.entries.some(e => e.importName.kind === 'Name' && RUNTIME_IDENTIFIERS.has(e.importName.name as FunctionKinds)),
+  );
 
-  for (const staticImport of parseResult.module.staticImports) {
-    const moduleSource = staticImport.moduleRequest.value;
-
-    if (modules.includes(moduleSource)) {
-      const specifiers: ImportInfo['specifiers'] = [];
-
-      for (const entry of staticImport.entries) {
-        if (
-          entry.importName.kind === 'Name' &&
-          entry.importName.start != null &&
-          entry.localName.start != null &&
-          RUNTIME_IDENTIFIERS.has(entry.importName.name as FunctionKinds)
-        ) {
-          specifiers.push({
-            imported: entry.importName.name as FunctionKinds,
-            local: entry.localName.value,
-            start: entry.importName.start,
-            end: entry.localName.start + entry.localName.value.length,
-          });
-        }
-      }
-
-      if (specifiers.length > 0) {
-        imports.push({
-          source: moduleSource,
-          specifiers,
-          start: staticImport.start,
-          end: staticImport.end,
-        });
-      }
-    }
-  }
-
-  // If no relevant imports found, return original code early (skip AST walk)
-  if (imports.length === 0) {
-    return {
-      code: sourceCode,
-      usedProcessing: false,
-      usedVMForEvaluation: false,
-    };
+  if (!hasGriffelImports) {
+    return { code: sourceCode, usedProcessing: false, usedVMForEvaluation: false };
   }
 
   const styleCalls: StyleCall[] = [];
@@ -239,75 +193,90 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   let cssRulesByBucket: CSSRulesByBucket = {};
 
   // -----
-  // Walk AST to collect style function calls
+  // Walk AST to collect style function calls using ScopeTracker for scope-aware import resolution
+
+  const scopeTracker = new ScopeTracker();
+  const matchedSpecifiers = new Map<number, { start: number; end: number; functionKind: FunctionKinds }>();
 
   walk(programAst, {
+    scopeTracker,
     enter(node, parent) {
-      // Handle call expressions
-      if (node.type === 'CallExpression') {
-        let functionKind: FunctionKinds | null = null;
-        let importId: string | undefined;
+      if (node.type === 'CallExpression' && node.callee.type === 'Identifier') {
+        const declaration = scopeTracker.getDeclaration(node.callee.name) as ScopeTrackerImport | null;
 
-        if (node.callee.type === 'Identifier') {
-          const calleeName = node.callee.name;
-
-          // Find which import this refers to
-          for (const importInfo of imports) {
-            const specifier = importInfo.specifiers.find(s => s.local === calleeName);
-
-            if (specifier) {
-              if (node.arguments.length !== 1) {
-                throw new Error(`${functionKind}() function accepts only a single param`);
-              }
-
-              functionKind = specifier.imported as FunctionKinds;
-              importId = specifier.local;
-
-              break;
-            }
-          }
+        if (declaration?.type !== 'Import' || declaration.node.type !== 'ImportSpecifier') {
+          return;
         }
 
-        if (functionKind && importId) {
-          // Find the variable declarator to get the hook name
-          let declaratorId = 'unknownHook';
-          let current: Node | null = parent;
+        const importSource = declaration.importNode.source.value;
 
-          while (current) {
-            if (!current) {
-              break;
-            }
+        if (!modules.includes(importSource)) {
+          return;
+        }
 
-            if (current.type === 'VariableDeclarator' && current.id.type === 'Identifier') {
-              declaratorId = current.id.name;
-              break;
-            }
+        const imported = declaration.node.imported;
 
-            if ('parent' in current) {
-              current = current.parent as Node | null;
-              continue;
-            }
+        if (imported.type !== 'Identifier') {
+          return;
+        }
 
+        const importedName = imported.name;
+
+        if (!RUNTIME_IDENTIFIERS.has(importedName as FunctionKinds)) {
+          return;
+        }
+
+        const functionKind = importedName as FunctionKinds;
+
+        if (node.arguments.length !== 1) {
+          throw new Error(`${functionKind}() function accepts only a single param`);
+        }
+
+        // Track the import specifier for rewriting (deduped by node start position)
+        matchedSpecifiers.set(declaration.node.start, {
+          start: declaration.node.start,
+          end: declaration.node.end,
+          functionKind,
+        });
+
+        // Find the variable declarator to get the hook name
+        let declaratorId = 'unknownHook';
+        let current: Node | null = parent;
+
+        while (current) {
+          if (!current) {
             break;
           }
 
-          const argument = node.arguments[0];
+          if (current.type === 'VariableDeclarator' && current.id.type === 'Identifier') {
+            declaratorId = current.id.name;
+            break;
+          }
 
-          styleCalls.push({
-            declaratorId,
-            functionKind,
+          if ('parent' in current) {
+            current = current.parent as Node | null;
+            continue;
+          }
 
-            argumentStart: argument.start,
-            argumentEnd: argument.end,
-            argumentCode: sourceCode.slice(argument.start, argument.end),
-            argumentNode: argument,
-
-            callStart: node.start,
-            callEnd: node.end,
-
-            importId,
-          });
+          break;
         }
+
+        const argument = node.arguments[0];
+
+        styleCalls.push({
+          declaratorId,
+          functionKind,
+
+          argumentStart: argument.start,
+          argumentEnd: argument.end,
+          argumentCode: sourceCode.slice(argument.start, argument.end),
+          argumentNode: argument,
+
+          callStart: node.start,
+          callEnd: node.end,
+
+          importId: node.callee.name,
+        });
       }
     },
   });
@@ -393,10 +362,8 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   // ---
   // Transform imports and function names
 
-  for (const importInfo of imports) {
-    for (const specifier of importInfo.specifiers) {
-      magicString.overwrite(specifier.start, specifier.end, RUNTIME_IDENTIFIERS.get(specifier.imported)!);
-    }
+  for (const specifier of matchedSpecifiers.values()) {
+    magicString.overwrite(specifier.start, specifier.end, RUNTIME_IDENTIFIERS.get(specifier.functionKind)!);
   }
 
   // ---
