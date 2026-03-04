@@ -79,7 +79,7 @@ Transforms source code containing `makeStyles` or `makeResetStyles` calls.
 - `modules?` (string[]): Module sources to process
 - `babelOptions?` (object): Babel configuration for complex evaluations
 - `evaluationRules?` (array): Rules for determining evaluation strategy
-- `astEvaluationPlugins?` (AstEvaluatorPlugin[]): Plugins for extending AST evaluation with custom node handling
+- `astEvaluationPlugins?` (AstEvaluatorPlugin[]): Plugins for extending AST evaluation with custom node handling (default: `[fluentTokensPlugin]`)
 
 ## Evaluation Plugins
 
@@ -89,14 +89,14 @@ The AST evaluator supports a plugin system that allows extending static evaluati
 
 #### `fluentTokensPlugin`
 
-Handles Fluent UI design token expressions, transforming `tokens.propertyName` into `var(--propertyName)`:
+Handles Fluent UI design token expressions, transforming `tokens.propertyName` into `var(--propertyName)`. Enabled by default — no configuration needed.
+
+To disable it, pass an empty array:
 
 ```typescript
-import { transformSync, fluentTokensPlugin } from '@griffel/transform';
-
 const result = transformSync(sourceCode, {
   filename: 'styles.ts',
-  astEvaluationPlugins: [fluentTokensPlugin],
+  astEvaluationPlugins: [],
 });
 ```
 

@@ -16,6 +16,7 @@ import {
 } from '@griffel/core';
 
 import { batchEvaluator } from './evaluation/batchEvaluator.mjs';
+import { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
 import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
 import type { StyleCall } from './types.mjs';
@@ -170,7 +171,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         action: 'ignore',
       },
     ],
-    astEvaluationPlugins = [],
+    astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
   if (!filename) {
