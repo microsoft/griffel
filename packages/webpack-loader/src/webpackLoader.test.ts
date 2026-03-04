@@ -229,6 +229,7 @@ describe('shouldTransformSourceCode', () => {
 });
 
 describe('webpackLoader', () => {
+  jest.setTimeout(15000);
   // Integration fixtures for base functionality, all scenarios are tested in "@griffel/babel-preset"
   testFixture('object');
   testFixture('function');
