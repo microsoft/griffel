@@ -4,6 +4,7 @@ import { format } from 'prettier';
 import { describe, it, expect, vi } from 'vitest';
 
 import { transformSync, type TransformOptions } from './transformSync.mjs';
+import { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
 
 type TestCase = {
   title: string;
@@ -277,6 +278,35 @@ const DEFAULT_TRANSFORM_OPTIONS = {
 };
 
 describe('transformSync', () => {
+  it('evaluationPlugins: fluentTokensPlugin handles tokens statically', () => {
+    const sourceCode = `
+import { makeStyles } from '@griffel/react';
+
+const tokens = { colorBrandBackground: 'var(--colorBrandBackground)' };
+
+export const useStyles = makeStyles({
+  root: {
+    color: tokens.colorBrandBackground,
+    margin: \`\${tokens.spacingVerticalS} 0\`,
+    display: 'flex',
+  },
+});
+`;
+
+    const result = transformSync(sourceCode, {
+      filename: 'test-plugins.ts',
+      evaluationPlugins: [fluentTokensPlugin],
+      babelOptions: {
+        presets: ['@babel/preset-typescript'],
+      },
+    });
+
+    expect(result.usedProcessing).toBe(true);
+    // With the plugin, tokens are evaluated statically — no VM needed
+    expect(result.usedVMForEvaluation).toBe(false);
+    expect(result.code).toContain('__css');
+  });
+
   for (const testCase of TESTS) {
     const testFn = testCase.only ? it.only : it;
 

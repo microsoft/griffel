@@ -6,12 +6,15 @@ A high-performance transformation package for Griffel that unifies CSS-in-JS tra
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Overview](#overview)
-- [Features](#features)
 - [Install](#install)
 - [Usage](#usage)
   - [Basic Transformation](#basic-transformation)
 - [API Reference](#api-reference)
   - [transformSync(sourceCode, options)](#transformsyncsourcecode-options)
+- [Evaluation Plugins](#evaluation-plugins)
+  - [Built-in Plugins](#built-in-plugins)
+    - [`fluentTokensPlugin`](#fluenttokensplugin)
+  - [Custom Plugins](#custom-plugins)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -76,3 +79,60 @@ Transforms source code containing `makeStyles` or `makeResetStyles` calls.
 - `modules?` (string[]): Module sources to process
 - `babelOptions?` (object): Babel configuration for complex evaluations
 - `evaluationRules?` (array): Rules for determining evaluation strategy
+- `evaluationPlugins?` (AstEvaluatorPlugin[]): Plugins for extending AST evaluation with custom node handling
+
+## Evaluation Plugins
+
+The AST evaluator supports a plugin system that allows extending static evaluation to handle additional AST node types. Plugins are tried in order when the base evaluator encounters a node type it doesn't handle (i.e., anything beyond `Literal`, `ObjectExpression`, and simple `TemplateLiteral` without expressions).
+
+### Built-in Plugins
+
+#### `fluentTokensPlugin`
+
+Handles Fluent UI design token expressions, transforming `tokens.propertyName` into `var(--propertyName)`:
+
+```typescript
+import { transformSync, fluentTokensPlugin } from '@griffel/transform';
+
+const result = transformSync(sourceCode, {
+  filename: 'styles.ts',
+  evaluationPlugins: [fluentTokensPlugin],
+});
+```
+
+This plugin handles:
+
+- `MemberExpression`: `tokens.colorBrandBackground` → `var(--colorBrandBackground)`
+- `TemplateLiteral`: `` `${tokens.spacingVerticalS} 0` `` → `var(--spacingVerticalS) 0`
+
+### Custom Plugins
+
+You can create custom plugins by implementing the `AstEvaluatorPlugin` interface:
+
+```typescript
+import { type AstEvaluatorPlugin, DeoptError } from '@griffel/transform';
+
+const myPlugin: AstEvaluatorPlugin = {
+  name: 'myPlugin',
+  evaluateNode(node, context) {
+    // Handle specific node types
+    if (node.type === 'MemberExpression') {
+      // Custom evaluation logic...
+      return 'some-value';
+    }
+
+    // Throw DeoptError to signal "can't handle this node" and let the next plugin try
+    throw new DeoptError('myPlugin: unsupported node');
+  },
+};
+
+const result = transformSync(sourceCode, {
+  filename: 'styles.ts',
+  evaluationPlugins: [myPlugin],
+});
+```
+
+The `context` parameter provides:
+
+- `programAst`: The full program AST for cross-referencing
+- `evaluateNode(node)`: Recursive evaluator callback that goes through base evaluation + all plugins

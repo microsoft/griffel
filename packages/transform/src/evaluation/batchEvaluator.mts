@@ -1,6 +1,8 @@
+import type { Program } from 'oxc-parser';
 import type { StrictOptions } from '@linaria/babel-preset';
 
 import type { StyleCall } from '../types.mjs';
+import type { AstEvaluatorPlugin } from './types.mjs';
 import { astEvaluator } from './astEvaluator.mjs';
 import { vmEvaluator } from './vmEvaluator.mjs';
 
@@ -15,6 +17,8 @@ export function batchEvaluator(
   styleCalls: StyleCall[],
   babelOptions: NonNullable<StrictOptions['babelOptions']>,
   evaluationRules: NonNullable<StrictOptions['rules']>,
+  programAst: Program,
+  evaluationPlugins: AstEvaluatorPlugin[] = [],
 ): {
   usedVMForEvaluation: boolean;
   evaluationResults: unknown[];
@@ -27,7 +31,7 @@ export function batchEvaluator(
   // First pass: try static evaluation for all calls
   for (let i = 0; i < styleCalls.length; i++) {
     const styleCall = styleCalls[i];
-    const staticResult = astEvaluator(styleCall.argumentNode);
+    const staticResult = astEvaluator(styleCall.argumentNode, programAst, evaluationPlugins);
 
     if (staticResult.confident) {
       evaluationResults[i] = staticResult.value;

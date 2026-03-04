@@ -16,6 +16,7 @@ import {
 } from '@griffel/core';
 
 import { batchEvaluator } from './evaluation/batchEvaluator.mjs';
+import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
 import type { StyleCall } from './types.mjs';
 
@@ -43,6 +44,9 @@ export type TransformOptions = {
 
   /** The set of rules that defines how the matched files will be transformed during the evaluation. */
   evaluationRules?: StrictOptions['rules'];
+
+  /** Plugins for extending AST evaluation with custom node handling. */
+  evaluationPlugins?: AstEvaluatorPlugin[];
 };
 
 export type TransformResult = {
@@ -166,6 +170,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         action: 'ignore',
       },
     ],
+    evaluationPlugins = [],
   } = options;
 
   if (!filename) {
@@ -322,6 +327,8 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     styleCalls,
     babelOptions,
     evaluationRules,
+    programAst,
+    evaluationPlugins,
   );
 
   for (let i = 0; i < styleCalls.length; i++) {
