@@ -17,6 +17,7 @@ import {
 } from '@griffel/core';
 
 import { batchEvaluator } from './evaluation/batchEvaluator.mjs';
+import { createHybridEvaluator } from './evaluation/hybridEvaluator.mjs';
 import { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
 import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
@@ -162,7 +163,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
       { action: shakerEvaluator },
       {
         test: /[/\\]node_modules[/\\]/,
-        action: 'ignore',
+        action: createHybridEvaluator(shakerEvaluator),
       },
     ],
     astEvaluationPlugins = [fluentTokensPlugin],
