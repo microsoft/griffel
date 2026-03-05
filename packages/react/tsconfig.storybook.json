@@ -3,8 +3,7 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "moduleResolution": "bundler",
-    "noEmit": true,
-    "outDir": ""
+    "outDir": "./out-tsc/storybook"
   },
   "exclude": ["src/**/*.spec.ts", "src/**/*.spec.js", "src/**/*.spec.tsx", "src/**/*.spec.jsx", "jest.config.ts"],
   "include": ["src/**/*", ".storybook/*.js"]
