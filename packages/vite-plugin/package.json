@@ -1,12 +1,21 @@
 {
   "name": "@griffel/vite-plugin",
   "version": "0.1.16",
+  "types": "./src/index.ts",
   "description": "Vite plugin for Griffel",
   "license": "MIT",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
   "dependencies": {
     "@wyw-in-js/vite": "^0.8.0"

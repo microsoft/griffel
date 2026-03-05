@@ -1,6 +1,7 @@
 {
   "name": "@griffel/transform",
   "version": "1.2.1",
+  "types": "./src/index.mts",
   "description": "A package that performs build time transforms for Griffel",
   "license": "MIT",
   "repository": {
@@ -10,6 +11,7 @@
   "type": "module",
   "exports": {
     ".": {
+      "@griffel/source": "./src/index.mts",
       "node": "./transform.js",
       "types": "./index.d.mts"
     },

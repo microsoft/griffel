@@ -11,6 +11,12 @@
   "engines": {
     "node": ">=20"
   },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "e2e/*",
+    "tools/*"
+  ],
   "nano-staged": {
     "**/*.{js,json,ts,tsx}": "prettier --write",
     "**/*.{md}": "doctoc -u"

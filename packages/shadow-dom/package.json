@@ -1,6 +1,7 @@
 {
   "name": "@griffel/shadow-dom",
   "version": "0.2.12",
+  "types": "./src/index.ts",
   "description": "Shadow DOM implementation of Griffel Atomic CSS-in-JS",
   "license": "MIT",
   "repository": {
@@ -8,6 +9,14 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
   "dependencies": {
     "@griffel/core": "^1.20.1",
     "tslib": "^2.1.0"

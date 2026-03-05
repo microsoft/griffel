@@ -1,0 +1,8 @@
+{
+  "name": "@griffel/update-shorthands",
+  "private": true,
+  "devDependencies": {
+    "@griffel/core": "workspace:*",
+    "@griffel/style-types": "workspace:*"
+  }
+}
