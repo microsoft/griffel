@@ -296,7 +296,11 @@ const TESTS: TestCase[] = [
     },
   },
 
-  // TODO: throws on CJS
+  {
+    title: 'errors: throws on CJS',
+    fixture: path.resolve(fixturesDir, 'error-cjs', 'fixture.js'),
+    error: /is not an ES module/,
+  },
 
   // Exports
   //
