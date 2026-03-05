@@ -1,3 +1,4 @@
+import { extname } from 'node:path';
 import { parseSync } from 'oxc-parser';
 
 import type { Evaluator } from './types.mjs';
@@ -7,7 +8,7 @@ const ESM_EXTENSIONS = new Set(['.mjs', '.mts']);
 
 export function createHybridEvaluator(shakerEvaluator: Evaluator): Evaluator {
   return (filename, options, text, only) => {
-    const ext = filename.slice(filename.lastIndexOf('.'));
+    const ext = extname(filename);
 
     // Fast path: extension tells us the answer
     if (CJS_EXTENSIONS.has(ext)) {
