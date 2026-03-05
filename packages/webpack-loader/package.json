@@ -1,11 +1,20 @@
 {
   "name": "@griffel/webpack-loader",
   "version": "2.2.22",
+  "types": "./src/index.ts",
   "description": "Webpack loader that performs build time transforms for Griffel",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
   "dependencies": {
     "@babel/core": "^7.23.2",
