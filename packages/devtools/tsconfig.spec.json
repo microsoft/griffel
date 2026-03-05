@@ -1,8 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
+    "outDir": "./out-tsc/spec",
     "types": ["chrome", "jest", "node", "environment"]
   },
   "include": [
@@ -16,5 +15,6 @@
     "**/*.spec.jsx",
     "**/*.d.ts",
     "jest.config.ts"
-  ]
+  ],
+  "references": [{ "path": "./tsconfig.lib.json" }]
 }
