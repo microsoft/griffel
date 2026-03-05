@@ -2,13 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "moduleResolution": "node16",
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "moduleResolution": "node16"
   },
   "files": [],
   "include": [],

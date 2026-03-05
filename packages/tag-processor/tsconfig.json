@@ -1,14 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["ES2019", "dom", "DOM.Iterable"],
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "allowJs": true
   },
   "files": [],
   "include": [],
