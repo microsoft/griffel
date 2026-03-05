@@ -2,28 +2,8 @@
   "name": "@griffel/style-types",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/style-types/src",
-  "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/style-types",
-        "tsConfig": "packages/style-types/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/style-types/package.json",
-        "main": "packages/style-types/src/index.ts",
-        "assets": [
-          "packages/style-types/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
@@ -34,18 +14,6 @@
       "options": {
         "jestConfig": "packages/style-types/jest.config.ts"
       }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/style-types",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }
