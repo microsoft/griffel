@@ -8,8 +8,16 @@ const ESM_EXTENSIONS = new Set(['.mjs', '.mts']);
 
 const useRawTransfer = rawTransferSupported();
 
+const NODE_MODULES_RE = /[/\\]node_modules[/\\]/;
+
 export function createHybridEvaluator(shakerEvaluator: Evaluator): Evaluator {
   return (filename, options, text, only) => {
+    // Non-node_modules: always shake
+    if (!NODE_MODULES_RE.test(filename)) {
+      return shakerEvaluator(filename, options, text, only);
+    }
+
+    // node_modules: detect CJS vs ESM
     const ext = extname(filename);
 
     // Fast path: extension tells us the answer

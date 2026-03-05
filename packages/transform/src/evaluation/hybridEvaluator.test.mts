@@ -11,7 +11,23 @@ function createMockShaker() {
 }
 
 describe('createHybridEvaluator', () => {
-  describe('extension fast-paths', () => {
+  describe('non-node_modules files', () => {
+    it('always delegates to shaker', () => {
+      const shaker = createMockShaker();
+      const hybrid = createHybridEvaluator(shaker);
+      const filename = '/project/src/styles.ts';
+      const text = 'export const x = 1;';
+      const only = ['x'];
+
+      const result = hybrid(filename, MOCK_OPTIONS, text, only);
+
+      expect(result).toBe(SHAKER_RESULT);
+      expect(shaker).toHaveBeenCalledWith(filename, MOCK_OPTIONS, text, only);
+    });
+  });
+
+  describe('node_modules files', () => {
+    describe('extension fast-paths', () => {
     it('.cjs → ignore (shaker not called)', () => {
       const shaker = createMockShaker();
       const hybrid = createHybridEvaluator(shaker);
@@ -70,9 +86,9 @@ describe('createHybridEvaluator', () => {
       expect(result).toBe(SHAKER_RESULT);
       expect(shaker).toHaveBeenCalledWith(filename, MOCK_OPTIONS, text, only);
     });
-  });
+    });
 
-  describe('content-based detection (.js)', () => {
+    describe('content-based detection (.js)', () => {
     it('CJS content → ignore (shaker not called)', () => {
       const shaker = createMockShaker();
       const hybrid = createHybridEvaluator(shaker);
@@ -108,6 +124,7 @@ describe('createHybridEvaluator', () => {
 
       expect(result).toBe(SHAKER_RESULT);
       expect(shaker).toHaveBeenCalledWith(filename, MOCK_OPTIONS, text, only);
+    });
     });
   });
 });
