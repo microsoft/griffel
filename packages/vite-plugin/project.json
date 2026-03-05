@@ -16,33 +16,6 @@
         "commands": [{ "command": "node --test **/*.test.mjs" }],
         "outputPath": []
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/vite-plugin",
-        "tsConfig": "packages/vite-plugin/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/vite-plugin/package.json",
-        "main": "packages/vite-plugin/src/index.ts",
-        "assets": [
-          "packages/vite-plugin/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/vite-plugin",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     }
   },
   "tags": []

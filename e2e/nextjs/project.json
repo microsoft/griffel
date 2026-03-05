@@ -13,14 +13,6 @@
         "commands": [{ "command": "ts-node src/test.ts" }]
       },
       "outputs": []
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "e2e/nextjs",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     }
   },
   "tags": []

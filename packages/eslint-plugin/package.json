@@ -16,6 +16,9 @@
       "default": "./src/index.ts"
     }
   },
+  "devDependencies": {
+    "@griffel/react": "workspace:*"
+  },
   "dependencies": {
     "@typescript-eslint/utils": "^7.18.0",
     "csstype": "^3.1.3",

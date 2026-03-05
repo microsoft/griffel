@@ -13,22 +13,10 @@
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/webpack-plugin",
+        "outputPath": "packages/webpack-plugin/dist",
         "compiler": "swc",
         "format": ["esm"]
       }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/webpack-plugin",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     },
     "test": {
       "executor": "@nx/vite:test",

@@ -1,9 +1,18 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "types": ["node", "environment"]
   },
-  "include": ["**/*.ts", "**/*.js"],
-  "exclude": ["src/assets/legacy/*"]
+  "exclude": ["src/**/*.test.ts", "src/**/__fixture__/", "src/**/__mocks__/", "src/assets/legacy/*"],
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../packages/style-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json"
+    }
+  ]
 }

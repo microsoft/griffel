@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16"
+  },
+  "references": [
+    {
+      "path": "../core/tsconfig.lib.json"
+    }
+  ]
+}

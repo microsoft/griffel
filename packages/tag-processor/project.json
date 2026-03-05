@@ -15,37 +15,6 @@
       "options": {
         "jestConfig": "packages/tag-processor/jest.config.js"
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/tag-processor",
-        "tsConfig": "packages/tag-processor/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/tag-processor/package.json",
-        "main": "packages/tag-processor/src/index.ts",
-        "assets": [
-          "packages/tag-processor/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/tag-processor",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ],
-        "outputPath": []
-      }
     }
   }
 }

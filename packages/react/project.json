@@ -9,30 +9,18 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/react",
-        "tsConfig": "packages/react/tsconfig.lib.json",
+        "outputPath": "packages/react/dist",
+        "generateExportsField": false,
         "skipTypeField": true,
         "skipTypeCheck": true,
-        "project": "packages/react/package.json",
+        "tsConfig": "packages/react/tsconfig.lib.json",
         "entryFile": "packages/react/src/index.ts",
+        "project": "packages/react/package.json",
         "compiler": "babel",
         "sourceMap": true,
-        "useLegacyTypescriptPlugin": true,
         "rollupConfig": ["@nx/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
         "external": ["tslib"],
-        "format": ["esm", "cjs"],
-        "assets": [
-          {
-            "glob": "packages/react/README.md",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "format": ["esm", "cjs"]
       }
     },
     "lint": {
@@ -73,31 +61,6 @@
           "quiet": true
         }
       }
-    },
-    "build-storybook": {
-      "executor": "@nx/storybook:build",
-      "outputs": ["{options.outputDir}"],
-      "options": {
-        "configDir": "packages/react/.storybook",
-        "outputDir": "dist/storybook/@griffel/react"
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/react",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }

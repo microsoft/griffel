@@ -1,10 +1,18 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "declaration": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
     "types": ["node", "environment"]
   },
-  "exclude": ["__fixtures__/*/*.ts", "**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
-  "include": ["**/*.ts"]
+  "exclude": ["src/**/*.test.ts", "src/**/__fixture__/", "src/**/__mocks__/"],
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../packages/style-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/core/tsconfig.lib.json"
+    }
+  ]
 }

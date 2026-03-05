@@ -15,30 +15,6 @@
       "options": {
         "jestConfig": "packages/next-extraction-plugin/jest.config.ts"
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/next-extraction-plugin",
-        "tsConfig": "packages/next-extraction-plugin/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/next-extraction-plugin/package.json",
-        "main": "packages/next-extraction-plugin/src/index.ts",
-        "assets": ["packages/next-extraction-plugin/*.md"]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/next-extraction-plugin",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }

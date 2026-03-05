@@ -1,23 +1,19 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "jsx": "react",
     "types": ["chrome", "node", "environment"]
   },
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/*.spec.tsx",
-    "**/*.test.tsx",
-    "**/*.spec.js",
-    "**/*.test.js",
-    "**/*.spec.jsx",
-    "**/*.test.jsx",
-    "**/*.stories.ts",
-    "**/*.stories.js",
-    "**/*.stories.jsx",
-    "**/*.stories.tsx",
-    "jest.config.ts"
-  ],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__fixture__/", "src/**/__mocks__/"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "references": [
+    {
+      "path": "../core/tsconfig.lib.json"
+    },
+    {
+      "path": "../react/tsconfig.lib.json"
+    }
+  ]
 }
