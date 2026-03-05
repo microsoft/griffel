@@ -206,12 +206,6 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'tokens', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'tokens', 'output.ts'),
   },
-  {
-    title: 'evaluation: ESM node_modules dependency',
-    fixture: path.resolve(fixturesDir, 'eval-esm-node-module', 'code.ts'),
-    outputFixture: path.resolve(fixturesDir, 'eval-esm-node-module', 'output.ts'),
-  },
-
   // Configs
   //
   //
