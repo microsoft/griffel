@@ -1,10 +1,12 @@
 import { extname } from 'node:path';
-import { parseSync } from 'oxc-parser';
+import { parseSync, rawTransferSupported } from 'oxc-parser';
 
 import type { Evaluator } from './types.mjs';
 
 const CJS_EXTENSIONS = new Set(['.cjs', '.cts', '.json']);
 const ESM_EXTENSIONS = new Set(['.mjs', '.mts']);
+
+const useRawTransfer = rawTransferSupported();
 
 export function createHybridEvaluator(shakerEvaluator: Evaluator): Evaluator {
   return (filename, options, text, only) => {
@@ -19,9 +21,17 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator): Evaluator {
     }
 
     // .js/.jsx/.ts/.tsx — detect via oxc-parser
-    const parseResult = parseSync(filename, text);
+    // experimentalLazy skips AST deserialization, we only need module metadata
+    const parseResult = parseSync(filename, text, {
+      sourceType: 'unambiguous',
+      ...(useRawTransfer && { experimentalLazy: true }),
+    } as Parameters<typeof parseSync>[2]);
 
-    if (!parseResult.module.hasModuleSyntax) {
+    const isESM = parseResult.module.hasModuleSyntax;
+
+    (parseResult as { dispose?: () => void }).dispose?.();
+
+    if (!isESM) {
       return [text, null];
     }
 
