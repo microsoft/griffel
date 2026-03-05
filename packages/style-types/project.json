@@ -2,38 +2,8 @@
   "name": "@griffel/style-types",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/style-types/src",
-  "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/style-types",
-        "tsConfig": "packages/style-types/tsconfig.lib.json",
-        "skipTypeCheck": true,
-        "project": "packages/style-types/package.json",
-        "entryFile": "packages/style-types/src/index.ts",
-        "useLegacyTypescriptPlugin": true,
-        "rollupConfig": "tools/getRollupOptions.js",
-        "sourceMap": true,
-        "compiler": "babel",
-        "external": ["tslib"],
-        "format": ["esm", "cjs"],
-        "assets": [
-          {
-            "glob": "packages/style-types/README.md",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
@@ -44,18 +14,6 @@
       "options": {
         "jestConfig": "packages/style-types/jest.config.ts"
       }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/style-types",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }
