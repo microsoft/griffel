@@ -178,6 +178,13 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     throw new Error(`Failed to parse "${filename}": ${parseResult.errors.map(e => e.message).join(', ')}`);
   }
 
+  if (parseResult.program.body.length > 0 && !parseResult.module.hasModuleSyntax) {
+    throw new Error(
+      `Transform error: "${filename}" is not an ES module. ` +
+        `@griffel/transform only supports ES modules (files using import/export syntax).`,
+    );
+  }
+
   const magicString = new MagicString(sourceCode);
   const programAst = parseResult.program;
 
