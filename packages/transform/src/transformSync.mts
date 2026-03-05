@@ -159,13 +159,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     classNameHashSalt = '',
     generateMetadata = false,
     modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
-    evaluationRules = [
-      { action: shakerEvaluator },
-      {
-        test: /[/\\]node_modules[/\\]/,
-        action: createHybridEvaluator(shakerEvaluator),
-      },
-    ],
+    evaluationRules = [{ action: createHybridEvaluator(shakerEvaluator) }],
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
