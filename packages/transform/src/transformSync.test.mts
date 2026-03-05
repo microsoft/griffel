@@ -206,7 +206,6 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'tokens', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'tokens', 'output.ts'),
   },
-
   // Configs
   //
   //

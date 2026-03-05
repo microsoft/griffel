@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: hybrid evaluator that shakes ESM node_modules instead of ignoring them",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
