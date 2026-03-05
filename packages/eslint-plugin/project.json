@@ -15,37 +15,6 @@
       "options": {
         "jestConfig": "packages/eslint-plugin/jest.config.ts"
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/eslint-plugin",
-        "tsConfig": "packages/eslint-plugin/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/eslint-plugin/package.json",
-        "main": "packages/eslint-plugin/src/index.ts",
-        "assets": [
-          "packages/eslint-plugin/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/babel-preset",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }

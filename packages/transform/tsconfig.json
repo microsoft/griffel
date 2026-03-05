@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "target": "ES2022"

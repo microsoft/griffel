@@ -3519,6 +3519,255 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@griffel/babel-preset@npm:^1.7.0, @griffel/babel-preset@workspace:packages/babel-preset":
+  version: 0.0.0-use.local
+  resolution: "@griffel/babel-preset@workspace:packages/babel-preset"
+  dependencies:
+    "@babel/core": "npm:^7.23.2"
+    "@babel/generator": "npm:^7.23.0"
+    "@babel/helper-plugin-utils": "npm:^7.22.5"
+    "@babel/template": "npm:^7.22.15"
+    "@babel/traverse": "npm:^7.23.2"
+    "@griffel/core": "npm:^1.19.2"
+    "@griffel/react": "workspace:*"
+    "@linaria/babel-preset": "npm:^3.0.0-beta.24"
+    "@linaria/shaker": "npm:^3.0.0-beta.22"
+    ajv: "npm:^8.18.0"
+    stylis: "npm:^4.2.0"
+    tslib: "npm:^2.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/core@npm:^1.19.2, @griffel/core@workspace:*, @griffel/core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@griffel/core@workspace:packages/core"
+  dependencies:
+    "@emotion/hash": "npm:^0.9.0"
+    "@griffel/style-types": "npm:^1.3.0"
+    csstype: "npm:^3.1.3"
+    rtl-css-js: "npm:^1.16.1"
+    stylis: "npm:^4.2.0"
+    tslib: "npm:^2.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/devtools@workspace:packages/devtools":
+  version: 0.0.0-use.local
+  resolution: "@griffel/devtools@workspace:packages/devtools"
+  dependencies:
+    "@griffel/core": "workspace:*"
+    "@griffel/react": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/e2e-nextjs@workspace:e2e/nextjs":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-nextjs@workspace:e2e/nextjs"
+  dependencies:
+    "@griffel/e2e-utils": "workspace:*"
+    "@griffel/next-extraction-plugin": "workspace:*"
+    "@griffel/react": "workspace:*"
+    "@griffel/webpack-loader": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/e2e-rspack@workspace:e2e/rspack":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
+  dependencies:
+    "@griffel/e2e-utils": "workspace:*"
+    "@griffel/react": "workspace:*"
+    "@griffel/webpack-extraction-plugin": "workspace:*"
+    "@griffel/webpack-loader": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/e2e-typescript@workspace:e2e/typescript":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-typescript@workspace:e2e/typescript"
+  dependencies:
+    "@griffel/e2e-utils": "workspace:*"
+    "@griffel/style-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/e2e-utils@workspace:*, @griffel/e2e-utils@workspace:e2e/utils":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-utils@workspace:e2e/utils"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/eslint-plugin@workspace:packages/eslint-plugin":
+  version: 0.0.0-use.local
+  resolution: "@griffel/eslint-plugin@workspace:packages/eslint-plugin"
+  dependencies:
+    "@griffel/react": "workspace:*"
+    "@typescript-eslint/utils": "npm:^7.18.0"
+    csstype: "npm:^3.1.3"
+    tslib: "npm:^2.1.0"
+  peerDependencies:
+    eslint: ^7.5.0 || ^8.0.0
+  languageName: unknown
+  linkType: soft
+
+"@griffel/jest-serializer@workspace:packages/jest-serializer":
+  version: 0.0.0-use.local
+  resolution: "@griffel/jest-serializer@workspace:packages/jest-serializer"
+  dependencies:
+    "@griffel/core": "npm:^1.19.2"
+    "@griffel/react": "workspace:*"
+    tslib: "npm:^2.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/next-extraction-plugin@workspace:*, @griffel/next-extraction-plugin@workspace:packages/next-extraction-plugin":
+  version: 0.0.0-use.local
+  resolution: "@griffel/next-extraction-plugin@workspace:packages/next-extraction-plugin"
+  dependencies:
+    "@griffel/webpack-extraction-plugin": "npm:^0.5.12"
+    browserslist: "npm:^4.19.1"
+    tslib: "npm:^2.1.0"
+  peerDependencies:
+    next: ">=13"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/postcss-syntax@workspace:packages/postcss-syntax":
+  version: 0.0.0-use.local
+  resolution: "@griffel/postcss-syntax@workspace:packages/postcss-syntax"
+  dependencies:
+    "@babel/core": "npm:^7.23.2"
+    "@babel/helper-plugin-utils": "npm:^7.22.5"
+    "@griffel/babel-preset": "npm:^1.7.0"
+    "@griffel/react": "workspace:*"
+    postcss: "npm:^8.4.29"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/react@workspace:*, @griffel/react@workspace:packages/react":
+  version: 0.0.0-use.local
+  resolution: "@griffel/react@workspace:packages/react"
+  dependencies:
+    "@griffel/core": "npm:^1.19.2"
+    tslib: "npm:^2.1.0"
+  peerDependencies:
+    react: ">=16.8.0 <20.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/shadow-dom@workspace:packages/shadow-dom":
+  version: 0.0.0-use.local
+  resolution: "@griffel/shadow-dom@workspace:packages/shadow-dom"
+  dependencies:
+    "@griffel/core": "npm:^1.19.2"
+    "@griffel/react": "workspace:*"
+    tslib: "npm:^2.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/style-types@npm:^1.3.0, @griffel/style-types@workspace:*, @griffel/style-types@workspace:packages/style-types":
+  version: 0.0.0-use.local
+  resolution: "@griffel/style-types@workspace:packages/style-types"
+  dependencies:
+    csstype: "npm:^3.1.3"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/tag-processor@workspace:packages/tag-processor":
+  version: 0.0.0-use.local
+  resolution: "@griffel/tag-processor@workspace:packages/tag-processor"
+  dependencies:
+    "@griffel/core": "npm:^1.19.2"
+    "@wyw-in-js/processor-utils": "npm:^0.8.0"
+    stylis: "npm:^4.2.0"
+    tslib: "npm:^2.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/transform@npm:^1.0.0, @griffel/transform@workspace:packages/transform":
+  version: 0.0.0-use.local
+  resolution: "@griffel/transform@workspace:packages/transform"
+  dependencies:
+    "@griffel/core": "npm:^1.19.2"
+    "@griffel/react": "workspace:*"
+    "@linaria/shaker": "npm:^3.0.0-beta.22"
+    debug: "npm:^4.3.0"
+    magic-string: "npm:^0.30.19"
+    oxc-parser: "npm:^0.116.0"
+    oxc-walker: "npm:^0.7.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/update-shorthands@workspace:tools/update-shorthands":
+  version: 0.0.0-use.local
+  resolution: "@griffel/update-shorthands@workspace:tools/update-shorthands"
+  dependencies:
+    "@griffel/core": "workspace:*"
+    "@griffel/style-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/vite-plugin@workspace:packages/vite-plugin":
+  version: 0.0.0-use.local
+  resolution: "@griffel/vite-plugin@workspace:packages/vite-plugin"
+  dependencies:
+    "@wyw-in-js/vite": "npm:^0.8.0"
+  peerDependencies:
+    "@griffel/tag-processor": ">=1"
+    vite: ">=4"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/webpack-extraction-plugin@npm:^0.5.12, @griffel/webpack-extraction-plugin@workspace:*, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
+  version: 0.0.0-use.local
+  resolution: "@griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin"
+  dependencies:
+    "@babel/core": "npm:^7.23.2"
+    "@babel/helper-module-imports": "npm:^7.22.15"
+    "@babel/helper-plugin-utils": "npm:^7.22.5"
+    "@griffel/core": "npm:^1.19.2"
+    "@griffel/react": "workspace:*"
+    stylis: "npm:^4.2.0"
+    tslib: "npm:^2.1.0"
+  peerDependencies:
+    webpack: ^5
+  languageName: unknown
+  linkType: soft
+
+"@griffel/webpack-loader@workspace:*, @griffel/webpack-loader@workspace:packages/webpack-loader":
+  version: 0.0.0-use.local
+  resolution: "@griffel/webpack-loader@workspace:packages/webpack-loader"
+  dependencies:
+    "@babel/core": "npm:^7.23.2"
+    "@griffel/babel-preset": "npm:^1.7.0"
+    "@griffel/react": "workspace:*"
+    enhanced-resolve: "npm:^5.15.0"
+    tslib: "npm:^2.1.0"
+  peerDependencies:
+    webpack: ^5
+  languageName: unknown
+  linkType: soft
+
+"@griffel/webpack-plugin@workspace:packages/webpack-plugin":
+  version: 0.0.0-use.local
+  resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
+  dependencies:
+    "@griffel/core": "npm:^1.19.2"
+    "@griffel/transform": "npm:^1.0.0"
+    enhanced-resolve: "npm:^5.15.0"
+    oxc-resolver: "npm:^11.19.1"
+    stylis: "npm:^4.2.0"
+  peerDependencies:
+    webpack: ^5
+  languageName: unknown
+  linkType: soft
+
+"@griffel/website@workspace:apps/website":
+  version: 0.0.0-use.local
+  resolution: "@griffel/website@workspace:apps/website"
+  languageName: unknown
+  linkType: soft
+
 "@hapi/hoek@npm:^9.0.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -15176,6 +15425,7 @@ __metadata:
     react-dom: "npm:18.3.1"
     react-refresh: "npm:^0.10.0"
     react-shadow: "npm:^20.2.0"
+    rollup: "npm:^4.14.0"
     rollup-plugin-preserve-directives: "npm:^0.4.0"
     rtl-css-js: "npm:^1.16.1"
     simple-git-hooks: "npm:2.7.0"
@@ -22323,6 +22573,17 @@ __metadata:
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
   checksum: 10/9e4fbe97574091e9736d0e82a591e29aa100a0bf60276a926308f8c57249698935f35c5d2f4e80de778d0cbb8dcffab4f383d85fd50c5649aca421c3df729b86
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.29":
+  version: 8.5.8
+  resolution: "postcss@npm:8.5.8"
+  dependencies:
+    nanoid: "npm:^3.3.11"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10/cbacbfd7f767e2c820d4bf09a3a744834dd7d14f69ff08d1f57b1a7defce9ae5efcf31981890d9697a972a64e9965de677932ef28e4c8ba23a87aad45b82c459
   languageName: node
   linkType: hard
 

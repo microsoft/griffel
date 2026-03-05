@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
+  "devDependencies": {
+    "@griffel/react": "workspace:*"
+  },
   "dependencies": {
     "@babel/core": "^7.23.2",
     "@babel/helper-plugin-utils": "^7.22.5",

@@ -1,10 +1,9 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react",
-    "emitDecoratorMetadata": true,
-    "noPropertyAccessFromIndexSignature": false,
-    "outDir": "./out-tsc/storybook"
+    "outDir": "./out-tsc/storybook",
+    "moduleResolution": "bundler",
+    "jsx": "react"
   },
   "exclude": ["src/**/*.spec.ts", "src/**/*.spec.js", "src/**/*.spec.tsx", "src/**/*.spec.jsx", "jest.config.ts"],
   "include": ["src/**/*", ".storybook/*.js"]

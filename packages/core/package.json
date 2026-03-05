@@ -13,8 +13,10 @@
     "./package.json": "./package.json",
     ".": {
       "@griffel/source": "./src/index.ts",
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.esm.js"
     }
   },
   "dependencies": {

@@ -16,7 +16,10 @@
       "default": "./src/index.ts"
     }
   },
+  "dependencies": {
+    "@griffel/core": "workspace:*"
+  },
   "devDependencies": {
-    "@griffel/react": "^1.6.1"
+    "@griffel/react": "workspace:*"
   }
 }

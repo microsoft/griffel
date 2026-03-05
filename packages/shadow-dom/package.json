@@ -17,6 +17,9 @@
       "default": "./src/index.ts"
     }
   },
+  "devDependencies": {
+    "@griffel/react": "workspace:*"
+  },
   "dependencies": {
     "@griffel/core": "^1.20.1",
     "tslib": "^2.1.0"

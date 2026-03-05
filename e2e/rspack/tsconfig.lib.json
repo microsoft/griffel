@@ -1,8 +1,24 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "types": ["node", "environment"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"]
+  "exclude": ["src/**/*.test.ts", "src/**/__fixture__/", "src/**/__mocks__/"],
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../packages/webpack-loader/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/webpack-extraction-plugin/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/react/tsconfig.lib.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json"
+    }
+  ]
 }

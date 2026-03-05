@@ -11,29 +11,13 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/packages/devtools",
+        "outputPath": "packages/devtools/dist",
         "index": "packages/devtools/src/index.html",
         "main": "packages/devtools/src/index.tsx",
         "tsConfig": "packages/devtools/tsconfig.lib.json",
+        "typeCheckOptions": false,
         "skipTypeField": true,
         "packageJson": "packages/devtools/package.json",
-        "assets": [
-          {
-            "glob": "packages/devtools/public",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "packages/devtools/package.json",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ],
         "webpackConfig": "packages/devtools/webpack.config.js"
       },
       "configurations": {
@@ -77,18 +61,6 @@
         "jestConfig": "packages/devtools/jest.config.ts"
       }
     },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/devtools",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
-    },
     "watch": {
       "executor": "nx:run-commands",
       "options": {
@@ -106,19 +78,6 @@
       "options": {
         "port": 4400,
         "configDir": "packages/devtools/.storybook"
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@nx/storybook:build",
-      "outputs": ["{options.outputDir}"],
-      "options": {
-        "configDir": "packages/devtools/.storybook",
-        "outputDir": "dist/storybook/@griffel/devtools"
       },
       "configurations": {
         "ci": {

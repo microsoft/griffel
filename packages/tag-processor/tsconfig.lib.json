@@ -1,11 +1,11 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "outDir": "../../dist/out-tsc",
-    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
     "types": ["node", "environment"]
   },
-  "exclude": ["**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts"]
+  "exclude": ["src/**/*.test.ts", "src/**/__fixture__/", "src/**/__mocks__/"],
+  "include": ["src/**/*.ts"],
+  "references": [{ "path": "../core/tsconfig.lib.json" }]
 }

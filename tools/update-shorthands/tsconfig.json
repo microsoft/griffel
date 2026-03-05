@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "module": "commonjs"
+    "allowJs": true
   },
   "files": [],
   "include": [],

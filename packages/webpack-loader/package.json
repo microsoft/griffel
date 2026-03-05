@@ -16,6 +16,9 @@
       "default": "./src/index.ts"
     }
   },
+  "devDependencies": {
+    "@griffel/react": "workspace:*"
+  },
   "dependencies": {
     "@babel/core": "^7.23.2",
     "@griffel/babel-preset": "^1.8.1",

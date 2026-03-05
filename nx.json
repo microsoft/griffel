@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "extends": "nx/presets/core.json",
+  "extends": "@nx/workspace/presets/core.json",
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
@@ -42,12 +42,32 @@
       "inputs": ["default", "^default"]
     }
   },
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "type-check"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json"
+        }
+      }
+    },
+    {
+      "plugin": "@nx/rollup/plugin",
+      "options": {
+        "buildTargetName": "build"
+      }
+    }
+  ],
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": true
     }
   },
-  "useInferencePlugins": false,
+  "useInferencePlugins": true,
   "defaultBase": "main",
   "tui": {
     "enabled": false

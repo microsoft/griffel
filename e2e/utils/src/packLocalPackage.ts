@@ -5,7 +5,7 @@ import * as logSymbols from 'log-symbols';
 import { sh } from './sh';
 
 export async function packLocalPackage(rootDir: string, tempDir: string, packageName: string) {
-  const packagePath = path.resolve(rootDir, 'dist', 'packages', packageName.split('/')[1]);
+  const packagePath = path.resolve(rootDir, 'packages', packageName.split('/')[1], 'dist');
   const packagePathExists = !!(await fs.promises.stat(packagePath).catch(() => false));
 
   if (!packagePathExists) {

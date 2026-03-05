@@ -10,7 +10,7 @@ export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): Slo
       {
         slot,
         sourceURL,
-        rules: debugClassNames.reduce((acc, { className, overriddenBy }) => {
+        rules: debugClassNames.reduce<AtomicRules[]>((acc, { className, overriddenBy }) => {
           if (className) {
             acc.push({
               cssRule: rules![className],
@@ -19,12 +19,12 @@ export function getRulesBySlots(node: DebugResult, result: SlotInfo[] = []): Slo
           }
 
           return acc;
-        }, [] as AtomicRules[]),
+        }, []),
       },
     ];
   }
 
-  return node.children.reduce((acc, child) => {
+  return node.children.reduce<SlotInfo[]>((acc, child) => {
     return [...acc, ...getRulesBySlots(child)];
   }, result);
 }

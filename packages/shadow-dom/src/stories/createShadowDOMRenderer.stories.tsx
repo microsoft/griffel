@@ -34,7 +34,7 @@ const ReactComponentsWrapper: React.FC<{
 
 const root = createProxy({}, '@griffel/shadow-dom', ({ children, root }) => (
   <ReactComponentsWrapper root={root}>{children}</ReactComponentsWrapper>
-));
+)) as unknown as { div: React.FC<{ children: React.ReactNode }> };
 
 const useStyles = makeStyles({
   root: {

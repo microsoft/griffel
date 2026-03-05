@@ -1,21 +1,11 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react",
     "outDir": "./out-tsc/spec",
+    "rootDir": ".",
     "types": ["node", "environment"]
   },
-  "include": [
-    "__fixtures__/**/*.ts",
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    "**/*.test.tsx",
-    "**/*.spec.tsx",
-    "**/*.test.js",
-    "**/*.spec.js",
-    "**/*.test.jsx",
-    "**/*.spec.jsx",
-    "**/*.d.ts"
-  ],
+  "include": ["src/**/*.spec.ts", "src/**/*.test.ts", "src/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.lib.json" }]
 }
