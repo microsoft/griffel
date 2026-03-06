@@ -2,6 +2,29 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 15:56:28 GMT",
+      "tag": "@griffel/babel-preset_v1.8.1",
+      "version": "1.8.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "f422dee59ffc7ad2f4e5396def5dae5c9785cf24",
+            "comment": "chore: hoist common tsconfig strict options to base config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.20.1",
+            "commit": "75914de37870943b9f2d483be421efe9cad8872f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 08:17:05 GMT",
       "tag": "@griffel/babel-preset_v1.8.0",
       "version": "1.8.0",

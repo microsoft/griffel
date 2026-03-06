@@ -1,8 +1,16 @@
 # Change Log - @griffel/style-types
 
-This log was last generated on Thu, 31 Oct 2024 16:16:50 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Mar 2026 15:56:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.0
+
+Fri, 06 Mar 2026 15:56:28 GMT
+
+### Minor changes
+
+- Type definitions now require TypeScript >= 4.4. The legacy `typesVersions` fallback for TS <4.4 has been removed. If you need to support an older TypeScript version, pin `@griffel/style-types` to a previous version. (olfedias@microsoft.com)
 
 ## 1.3.0
 

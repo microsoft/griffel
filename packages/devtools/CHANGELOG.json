@@ -2,6 +2,29 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 15:56:28 GMT",
+      "tag": "@griffel/devtools_v0.3.6",
+      "version": "0.3.6",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "f422dee59ffc7ad2f4e5396def5dae5c9785cf24",
+            "comment": "chore: hoist common tsconfig strict options to base config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.6.1",
+            "commit": "75914de37870943b9f2d483be421efe9cad8872f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 08:17:06 GMT",
       "tag": "@griffel/devtools_v0.3.5",
       "version": "0.3.5",

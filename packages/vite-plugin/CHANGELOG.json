@@ -2,6 +2,29 @@
   "name": "@griffel/vite-plugin",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 15:56:28 GMT",
+      "tag": "@griffel/vite-plugin_v0.1.16",
+      "version": "0.1.16",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "f422dee59ffc7ad2f4e5396def5dae5c9785cf24",
+            "comment": "chore: hoist common tsconfig strict options to base config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/vite-plugin",
+            "comment": "Bump @griffel/tag-processor to v1.0.16",
+            "commit": "75914de37870943b9f2d483be421efe9cad8872f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 08:17:05 GMT",
       "tag": "@griffel/vite-plugin_v0.1.15",
       "version": "0.1.15",

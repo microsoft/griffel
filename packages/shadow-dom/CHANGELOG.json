@@ -2,6 +2,29 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 15:56:28 GMT",
+      "tag": "@griffel/shadow-dom_v0.2.12",
+      "version": "0.2.12",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "f422dee59ffc7ad2f4e5396def5dae5c9785cf24",
+            "comment": "chore: hoist common tsconfig strict options to base config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/shadow-dom",
+            "comment": "Bump @griffel/core to v1.20.1",
+            "commit": "75914de37870943b9f2d483be421efe9cad8872f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 08:17:06 GMT",
       "tag": "@griffel/shadow-dom_v0.2.11",
       "version": "0.2.11",

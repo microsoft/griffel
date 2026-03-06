@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "BREAKING: consolidate resolvers into ESM-first createResolverFactory, remove enhanced-resolve dependency",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

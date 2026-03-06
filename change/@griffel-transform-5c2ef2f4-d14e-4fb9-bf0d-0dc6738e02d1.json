@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: hoist common tsconfig strict options to base config",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -2,6 +2,29 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 15:56:28 GMT",
+      "tag": "@griffel/core_v1.20.1",
+      "version": "1.20.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "f422dee59ffc7ad2f4e5396def5dae5c9785cf24",
+            "comment": "chore: hoist common tsconfig strict options to base config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/core",
+            "comment": "Bump @griffel/style-types to v1.4.0",
+            "commit": "75914de37870943b9f2d483be421efe9cad8872f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 08:17:05 GMT",
       "tag": "@griffel/core_v1.20.0",
       "version": "1.20.0",

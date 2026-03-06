@@ -2,6 +2,29 @@
   "name": "@griffel/style-types",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 15:56:28 GMT",
+      "tag": "@griffel/style-types_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "f422dee59ffc7ad2f4e5396def5dae5c9785cf24",
+            "comment": "chore: hoist common tsconfig strict options to base config"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "e511e04d49448f617f5258b4e85a4efa12758ea4",
+            "comment": "Type definitions now require TypeScript >= 4.4. The legacy `typesVersions` fallback for TS <4.4 has been removed. If you need to support an older TypeScript version, pin `@griffel/style-types` to a previous version."
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Oct 2024 16:16:50 GMT",
       "tag": "@griffel/style-types_v1.3.0",
       "version": "1.3.0",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "refactor: remove cookModuleId from module evaluation",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
