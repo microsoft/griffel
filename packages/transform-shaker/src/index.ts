@@ -3,16 +3,13 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  *
  * This is the evaluator entry point. It takes source code, transforms it with Babel
- * to produce a CJS AST, then tree-shakes ("shakes") it to remove dead code, and returns
- * the shaken source code along with import metadata.
+ * to produce CJS code, then parses it with oxc-parser, tree-shakes ("shakes") it
+ * to remove dead code, and returns the shaken source code along with import metadata.
  */
 
 import { transformSync } from '@babel/core';
-import type { Node, Program } from '@babel/types';
-import type { GeneratorResult } from '@babel/generator';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const generator: (ast: Node) => GeneratorResult = require('@babel/generator').default;
+import { parseSync } from 'oxc-parser';
+import type { Program } from 'oxc-parser';
 
 import { buildOptions, debug } from './utils.js';
 import type { Evaluator, StrictOptions } from './utils.js';
@@ -21,10 +18,9 @@ import shake from './shaker.js';
 
 export { default as buildDepsGraph } from './graphBuilder.js';
 
-function prepareForShake(filename: string, options: StrictOptions, code: string): Program {
+function prepareForShake(filename: string, options: StrictOptions, code: string): { program: Program; code: string } {
   const transformOptions = buildOptions(filename, options);
 
-  transformOptions.ast = true;
   transformOptions.presets!.unshift([
     require.resolve('@babel/preset-env'),
     {
@@ -40,18 +36,19 @@ function prepareForShake(filename: string, options: StrictOptions, code: string)
   );
   const transformed = transformSync(code, transformOptions);
 
-  if (transformed === null || !transformed.ast) {
+  if (transformed === null || !transformed.code) {
     throw new Error(`${filename} cannot be transformed`);
   }
 
-  return transformed.ast.program;
+  const cjsCode = transformed.code;
+  const parsed = parseSync(filename, cjsCode);
+
+  return { program: parsed.program, code: cjsCode };
 }
 
 const shaker: Evaluator = (filename, options, text, only = null) => {
-  const [shaken, imports] = shake(prepareForShake(filename, options, text), only);
-
-  debug('evaluator:shaker:generate', `Generate shaken source code ${filename}`);
-  const { code: shakenCode } = generator(shaken!);
+  const { program, code: cjsCode } = prepareForShake(filename, options, text);
+  const [shakenCode, imports] = shake(program, cjsCode, only);
   return [shakenCode, imports];
 };
 

@@ -3,14 +3,14 @@
  * to remove the dependency on @linaria/* packages.
  */
 
-import { types as t } from '@babel/core';
-import type { Node } from '@babel/types';
+import type { Node } from 'oxc-parser';
 import createDebug from 'debug';
+
+import { isNode as isNodeCheck, VISITOR_KEYS } from './ast.js';
 
 // --- From @linaria/babel-preset/utils/isNode ---
 
-export const isNode = (obj: unknown): obj is Node =>
-  typeof obj === 'object' && obj !== null && (obj as { type: unknown })?.type !== undefined;
+export const isNode = isNodeCheck;
 
 // --- From @linaria/babel-preset/utils/getVisitorKeys ---
 
@@ -20,7 +20,7 @@ export type VisitorKeys<T extends Node> = {
   string;
 
 export function getVisitorKeys<TNode extends Node>(node: TNode): VisitorKeys<TNode>[] {
-  return t.VISITOR_KEYS[node.type] as VisitorKeys<TNode>[];
+  return (VISITOR_KEYS[node.type] ?? []) as VisitorKeys<TNode>[];
 }
 
 // --- From @linaria/babel-preset/utils/peek ---
