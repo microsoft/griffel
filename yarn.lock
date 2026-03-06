@@ -3519,7 +3519,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@griffel/babel-preset@npm:^1.7.0, @griffel/babel-preset@npm:^1.8.0, @griffel/babel-preset@workspace:packages/babel-preset":
+"@griffel/babel-preset@npm:^1.8.0, @griffel/babel-preset@workspace:packages/babel-preset":
   version: 0.0.0-use.local
   resolution: "@griffel/babel-preset@workspace:packages/babel-preset"
   dependencies:
@@ -3638,7 +3638,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/helper-plugin-utils": "npm:^7.22.5"
-    "@griffel/babel-preset": "npm:^1.7.0"
+    "@griffel/babel-preset": "npm:^1.8.0"
     "@griffel/react": "npm:^1.6.0"
     postcss: "npm:^8.4.29"
   languageName: unknown

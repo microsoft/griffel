@@ -13,9 +13,8 @@
   },
   "dependencies": {
     "@babel/core": "^7.23.2",
-    "@griffel/babel-preset": "^1.8.0",
     "@babel/helper-plugin-utils": "^7.22.5",
-    "@griffel/babel-preset": "^1.7.0",
+    "@griffel/babel-preset": "^1.8.0",
     "postcss": "^8.4.29"
   },
   "exports": {
