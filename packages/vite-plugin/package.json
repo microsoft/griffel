@@ -13,7 +13,7 @@
     "./package.json": "./package.json",
     ".": {
       "@griffel/source": "./src/index.ts",
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
     }
   },
