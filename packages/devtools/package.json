@@ -16,10 +16,8 @@
       "default": "./src/index.ts"
     }
   },
-  "dependencies": {
-    "@griffel/core": "^1.20.0"
-  },
   "devDependencies": {
+    "@griffel/core": "^1.20.0",
     "@griffel/react": "^1.6.0"
   }
 }
