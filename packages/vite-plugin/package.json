@@ -1,7 +1,7 @@
 {
   "name": "@griffel/vite-plugin",
   "version": "0.1.15",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "description": "Vite plugin for Griffel",
   "license": "MIT",
   "type": "module",
