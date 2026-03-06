@@ -15,7 +15,7 @@ import type { Visitor, Visitors } from './types.js';
 
 type IdentifierNode = Node & { type: 'Identifier'; name: string };
 
-const visitors: Visitors = {
+const visitors = {
   Identifier<TParent extends Node>(
     this: GraphBuilderState,
     node: IdentifierNode,
@@ -76,9 +76,9 @@ const visitors: Visitors = {
   },
 
   ...core,
-};
+} as Visitors;
 
-const isKeyOfVisitors = (type: string): type is keyof Visitors => type in visitors;
+const isKeyOfVisitors = (type: string): type is string & keyof Visitors => type in visitors;
 
 export function getVisitors<TNode extends Node>(node: TNode): Visitor<TNode>[] {
   const aliases = ALIAS_KEYS[node.type] || [];

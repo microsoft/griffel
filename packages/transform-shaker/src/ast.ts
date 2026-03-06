@@ -291,7 +291,8 @@ export function isNode(obj: unknown): obj is Node {
  */
 export function shallowEqual(node: Node, match: Record<string, unknown>): boolean {
   for (const key of Object.keys(match)) {
-    if ((node as Record<string, unknown>)[key] !== match[key]) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((node as any)[key] !== match[key]) {
       return false;
     }
   }
