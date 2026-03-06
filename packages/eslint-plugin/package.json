@@ -3,6 +3,9 @@
   "version": "2.0.2",
   "types": "./dist/index.d.ts",
   "description": "ESLint plugin with lint rules for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

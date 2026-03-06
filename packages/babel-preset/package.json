@@ -3,6 +3,9 @@
   "version": "1.8.1",
   "types": "./dist/index.d.ts",
   "description": "Babel preset with build time transforms for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
