@@ -4,7 +4,7 @@ import * as path from 'node:path';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import type { Compilation } from 'webpack';
 
-import { createOxcResolverFactory } from './createOxcResolverFactory.mjs';
+import { createESMResolverFactory } from './createESMResolverFactory.mjs';
 
 const compilationStub = {} as Compilation;
 
@@ -148,21 +148,21 @@ function makeContext(id: string) {
   return { id, filename: path.join(tmpDir, 'src', 'app.js'), paths: [] };
 }
 
-describe('createOxcResolverFactory', () => {
+describe('createESMResolverFactory', () => {
   it('returns a factory function', () => {
-    const factory = createOxcResolverFactory();
+    const factory = createESMResolverFactory();
     expect(typeof factory).toBe('function');
   });
 
   it('throws for unresolvable modules', () => {
-    const resolve = createOxcResolverFactory()(compilationStub);
+    const resolve = createESMResolverFactory()(compilationStub);
     expect(() => resolve('__nonexistent_package__', makeContext('__nonexistent_package__'))).toThrow();
   });
 });
 
 describe('resolver selection', () => {
   it('resolves packages with ESM conditions by default', () => {
-    const resolve = createOxcResolverFactory()(compilationStub);
+    const resolve = createESMResolverFactory()(compilationStub);
     const resolved = resolve('@fluentui/react-button', makeContext('@fluentui/react-button'));
 
     expect(resolved).toContain(path.join('lib-esm', 'index.js'));
@@ -171,7 +171,7 @@ describe('resolver selection', () => {
 
 describe('CJS-only exceptions', () => {
   it('resolves tslib with CJS conditions', () => {
-    const resolve = createOxcResolverFactory()(compilationStub);
+    const resolve = createESMResolverFactory()(compilationStub);
     const resolved = resolve('tslib', makeContext('tslib'));
 
     expect(resolved).toContain('tslib.js');
@@ -179,14 +179,14 @@ describe('CJS-only exceptions', () => {
   });
 
   it('resolves @babel/helpers with CJS conditions', () => {
-    const resolve = createOxcResolverFactory()(compilationStub);
+    const resolve = createESMResolverFactory()(compilationStub);
     const resolved = resolve('@babel/helpers', makeContext('@babel/helpers'));
 
     expect(resolved).toContain(path.join('lib', 'index.js'));
   });
 
   it('resolves @swc/helpers with CJS conditions', () => {
-    const resolve = createOxcResolverFactory()(compilationStub);
+    const resolve = createESMResolverFactory()(compilationStub);
     const resolved = resolve('@swc/helpers', makeContext('@swc/helpers'));
 
     expect(resolved).toContain(path.join('cjs', 'index.cjs'));
