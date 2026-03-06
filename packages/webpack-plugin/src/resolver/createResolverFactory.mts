@@ -5,7 +5,7 @@ import * as path from 'node:path';
 import type { TransformResolver, TransformResolverFactory } from './types.mjs';
 
 function isCJSOnlyPackage(id: string): boolean {
-  return id === 'tslib' || id.startsWith('@babel/') || id.startsWith('@swc/helpers');
+  return id === 'tslib' || id.startsWith('@babel/runtime') || id.startsWith('@swc/helpers');
 }
 
 const RESOLVE_OPTIONS_DEFAULTS: NapiResolveOptions = {
