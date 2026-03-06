@@ -1,5 +1,42 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`keeps ESM default import when binding is referenced via CJS export 1`] = `
+"import blank from './blank.jpg';
+const __mkPreval = { backgroundImage: blank };
+module.exports = { __mkPreval };"
+`;
+
+exports[`keeps ESM import when binding is referenced via CJS export 1`] = `
+"import { colorBlue } from './consts';
+const __mkPreval = { color: colorBlue };
+module.exports = { __mkPreval };"
+`;
+
+exports[`keeps export const declarators 1`] = `"export const colorBlue = 'blue';"`;
+
+exports[`keeps identifiers inside template literals 1`] = `
+"const color = 'red';
+const result = \`color is \${color}\`;
+exports.__linariaPreval = [result];"
+`;
+
+exports[`keeps identifiers used as computed property keys 1`] = `
+"const selector = '& .foo';
+const styles = { [selector]: { color: 'red' } };
+exports.__linariaPreval = [styles];"
+`;
+
+exports[`keeps identifiers used as spread arguments 1`] = `
+"const shared = { display: 'flex' };
+const styles = { ...shared, color: 'red' };
+exports.__linariaPreval = [styles];"
+`;
+
+exports[`keeps multiple export const declarators 1`] = `
+"export const className = 'component-foo';
+export const selector = '& .component-bar';"
+`;
+
 exports[`keeps objects as is 1`] = `
 "const fill1 = (top = 0, left = 0, right = 0, bottom = 0) => ({
   position: 'absolute',
@@ -80,7 +117,8 @@ Object.defineProperty(exports, "greenColor", {
 `;
 
 exports[`shakes exports 1`] = `
-"export const a = color;
+"import { whiteColor as color } from '…';
+export const a = color;
 exports.__linariaPreval = [a];"
 `;
 
@@ -93,7 +131,11 @@ for (const key in obj1) {
 exports.__linariaPreval = [obj2];"
 `;
 
-exports[`shakes imports 1`] = `"exports.__linariaPreval = [color, defaultColor];"`;
+exports[`shakes imports 1`] = `
+"import { whiteColor as color } from '…';
+import defaultColor from '…';
+exports.__linariaPreval = [color, defaultColor];"
+`;
 
 exports[`shakes sequence expression 1`] = `
 "const color1 = (() => 'blue');
