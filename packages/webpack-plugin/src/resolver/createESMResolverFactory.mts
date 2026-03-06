@@ -26,9 +26,10 @@ export function createESMResolverFactory(): TransformResolverFactory {
       // ...resolveOptionsFromWebpackConfig,
     });
 
-    // Clone shares the underlying cache, only overrides conditionNames
+    // Clone shares the underlying cache; extensions must be re-specified as cloneWithOptions does not persist them
     const cjsResolver = defaultResolver.cloneWithOptions({
       conditionNames: ['require'],
+      extensions: RESOLVE_OPTIONS_DEFAULTS.extensions,
     });
 
     return function resolveModule(id, { filename }) {
