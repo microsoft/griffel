@@ -1,7 +1,7 @@
 import { parseSync, type Node } from 'oxc-parser';
 import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
-import _shaker from '@linaria/shaker';
+import _shakerDefault from '@griffel/transform-shaker';
 
 import type { Evaluator, StrictOptions } from './evaluation/types.mjs';
 import {
@@ -23,7 +23,7 @@ import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
 import type { StyleCall } from './types.mjs';
 
-const shakerEvaluator = (_shaker.default || _shaker) as unknown as Evaluator;
+const shakerEvaluator = _shakerDefault as unknown as Evaluator;
 
 export type TransformOptions = {
   filename: string;
