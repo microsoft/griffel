@@ -6,7 +6,7 @@
 import type { Node } from 'oxc-parser';
 
 import type { VisitorKeys } from './utils.js';
-import { ALIAS_KEYS } from './ast.js';
+import type { ALIAS_KEYS } from './ast.js';
 
 export type NodeType = Node['type'] | keyof typeof ALIAS_KEYS | string;
 

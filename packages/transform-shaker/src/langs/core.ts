@@ -16,7 +16,6 @@ import {
   isNumericLiteral,
   isMemberExpression,
   isCallExpression,
-  isObjectExpression,
   isObjectProperty,
   isObjectMethod,
   isSpreadElement,

@@ -7,7 +7,7 @@ import type { Node } from 'oxc-parser';
 
 import { peek } from './utils.js';
 import type { VisitorKeys } from './utils.js';
-import { isMemberExpression, isIdentifier, FLIPPED_ALIAS_KEYS } from './ast.js';
+import { isMemberExpression, FLIPPED_ALIAS_KEYS } from './ast.js';
 import type GraphBuilderState from './GraphBuilderState.js';
 import { identifierHandlers as core } from './langs/core.js';
 import ScopeManager from './scope.js';
