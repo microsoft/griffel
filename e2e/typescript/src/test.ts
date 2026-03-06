@@ -2,21 +2,15 @@ import { configureYarn, copyAssets, createTempDir, installPackages, packLocalPac
 import * as logSymbols from 'log-symbols';
 import * as path from 'path';
 
-async function performTest(tsVersion: string, options: { mode?: 'legacy' | 'modern' } = {}) {
+async function performTest(tsVersion: string) {
   let tempDir: string;
   let tscBin: string;
 
-  const { mode = 'modern' } = options;
-
   try {
     const rootDir = path.resolve(__dirname, '..', '..', '..');
-    const assetsPath = path.resolve(__dirname, 'assets', mode === 'legacy' ? 'legacy' : '');
+    const assetsPath = path.resolve(__dirname, 'assets');
 
     tempDir = createTempDir('typescript');
-
-    if (mode === 'legacy') {
-      console.log(logSymbols.info, 'Using legacy mode...');
-    }
 
     await copyAssets({
       assetsPath: assetsPath,
@@ -75,9 +69,6 @@ async function performTest(tsVersion: string, options: { mode?: 'legacy' | 'mode
 }
 
 (async () => {
-  await performTest('3.9', { mode: 'legacy' });
-  await performTest('4.1', { mode: 'legacy' });
-  await performTest('4.3', { mode: 'legacy' });
   await performTest('4.4');
   await performTest('4.9');
   await performTest('5.0');
