@@ -10,7 +10,6 @@ import type { GeneratorResult } from '@babel/generator';
 const generator: (ast: Node) => GeneratorResult = require('@babel/generator').default;
 
 import { isNode, getVisitorKeys, debug } from './utils.js';
-import dumpNode from './dumpNode.js';
 import build from './graphBuilder.js';
 
 /*
@@ -107,11 +106,7 @@ export default function shake(rootPath: Program, exports: string[] | null): [Pro
   }
 
   const shaken = shakeNode(rootPath, alive) as Program;
-  /*
-   * If we want to know what is really happen with our code tree,
-   * we can print formatted tree here by setting env variable LINARIA_LOG=debug
-   */
-  debug('evaluator:shaker:shake', () => dumpNode(rootPath, alive));
+  debug('evaluator:shaker:shake', `shaken ${alive.size} alive nodes`);
 
   const imports = new Map<string, string[]>();
   [...depsGraph.imports.entries()].forEach(([source, members]) => {
