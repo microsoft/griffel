@@ -3,7 +3,9 @@
   "compilerOptions": {
     "jsx": "react",
     "noEmit": true,
-    "module": "nodenext",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
     "types": ["jest", "node", "environment"]
   },
   "include": [
