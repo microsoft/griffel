@@ -1,14 +1,14 @@
 import { configureYarn, copyAssets, createTempDir, installPackages, packLocalPackage, sh } from '@griffel/e2e-utils';
-import * as logSymbols from 'log-symbols';
-import * as path from 'path';
+import logSymbols from 'log-symbols';
+import path from 'path';
 
 async function performTest(tsVersion: string) {
   let tempDir: string;
   let tscBin: string;
 
   try {
-    const rootDir = path.resolve(__dirname, '..', '..', '..');
-    const assetsPath = path.resolve(__dirname, 'assets');
+    const rootDir = path.resolve(import.meta.dirname, '..', '..', '..');
+    const assetsPath = path.resolve(import.meta.dirname, 'assets');
 
     tempDir = createTempDir('typescript');
 

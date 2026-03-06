@@ -1,4 +1,4 @@
-import { isShorthandProperty, isVendorProperty, toCamelCase } from './utils';
+import { isShorthandProperty, isVendorProperty, toCamelCase } from './utils.ts';
 
 describe('isShorthandProperty', () => {
   it('returns "true" for shorthand properties', () => {

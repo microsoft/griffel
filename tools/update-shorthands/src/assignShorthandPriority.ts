@@ -1,4 +1,4 @@
-import type { CSSShorthands } from './types';
+import type { CSSShorthands } from './types.ts';
 
 function updatePriorities(propertiesWithPriority: CSSShorthands, targetPriority: number = -1) {
   const effectiveProperties: CSSShorthands = {};

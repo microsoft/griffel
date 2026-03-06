@@ -1,7 +1,7 @@
-export { compareSnapshots } from './compareSnapshots';
-export { configureYarn } from './configureYarn';
-export { copyAssets } from './copyAssets';
-export { createTempDir } from './createTempDir';
-export { packLocalPackage } from './packLocalPackage';
-export { installPackages } from './installPackages';
-export { sh } from './sh';
+export { compareSnapshots } from './compareSnapshots.ts';
+export { configureYarn } from './configureYarn.ts';
+export { copyAssets } from './copyAssets.ts';
+export { createTempDir } from './createTempDir.ts';
+export { packLocalPackage } from './packLocalPackage.ts';
+export { installPackages } from './installPackages.ts';
+export { sh } from './sh.ts';

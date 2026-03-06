@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as prettier from 'prettier';
-import * as snapshotDiff from 'snapshot-diff';
+import fs from 'fs';
+import prettier from 'prettier';
+import snapshotDiff from 'snapshot-diff';
 
 type CompareSnapshotsOptions = {
   type: 'css';

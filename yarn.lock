@@ -3519,6 +3519,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@griffel/e2e-nextjs@workspace:e2e/nextjs":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-nextjs@workspace:e2e/nextjs"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/e2e-rspack@workspace:e2e/rspack":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/e2e-typescript@workspace:e2e/typescript":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-typescript@workspace:e2e/typescript"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/e2e-utils@workspace:e2e/utils":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-utils@workspace:e2e/utils"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/update-shorthands@workspace:tools/update-shorthands":
+  version: 0.0.0-use.local
+  resolution: "@griffel/update-shorthands@workspace:tools/update-shorthands"
+  languageName: unknown
+  linkType: soft
+
 "@hapi/hoek@npm:^9.0.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -4223,9 +4253,9 @@ __metadata:
   linkType: hard
 
 "@jridgewell/resolve-uri@npm:^3.0.3, @jridgewell/resolve-uri@npm:^3.1.0":
-  version: 3.1.1
-  resolution: "@jridgewell/resolve-uri@npm:3.1.1"
-  checksum: 10/64d59df8ae1a4e74315eb1b61e012f1c7bc8aac47a3a1e683f6fe7008eab07bc512a742b7aa7c0405685d1421206de58c9c2e6adbfe23832f8bd69408ffc183e
+  version: 3.1.2
+  resolution: "@jridgewell/resolve-uri@npm:3.1.2"
+  checksum: 10/97106439d750a409c22c8bff822d648f6a71f3aa9bc8e5129efdc36343cd3096ddc4eeb1c62d2fe48e9bdd4db37b05d4646a17114ecebd3bbcacfa2de51c3c1d
   languageName: node
   linkType: hard
 
@@ -7155,10 +7185,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@trysound/sax@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@trysound/sax@npm:0.2.0"
+  checksum: 10/7379713eca480ac0d9b6c7b063e06b00a7eac57092354556c81027066eb65b61ea141a69d0cc2e15d32e05b2834d4c9c2184793a5e36bbf5daf05ee5676af18c
+  languageName: node
+  linkType: hard
+
 "@tsconfig/node10@npm:^1.0.7":
-  version: 1.0.9
-  resolution: "@tsconfig/node10@npm:1.0.9"
-  checksum: 10/a33ae4dc2a621c0678ac8ac4bceb8e512ae75dac65417a2ad9b022d9b5411e863c4c198b6ba9ef659e14b9fb609bbec680841a2e84c1172df7a5ffcf076539df
+  version: 1.0.12
+  resolution: "@tsconfig/node10@npm:1.0.12"
+  checksum: 10/27e2f989dbb20f773aa121b609a5361a473b7047ff286fce7c851e61f5eec0c74f0bdb38d5bd69c8a06f17e60e9530188f2219b1cbeabeac91f0a5fd348eac2a
   languageName: node
   linkType: hard
 
@@ -7177,9 +7214,9 @@ __metadata:
   linkType: hard
 
 "@tsconfig/node16@npm:^1.0.2":
-  version: 1.0.3
-  resolution: "@tsconfig/node16@npm:1.0.3"
-  checksum: 10/3a8b657dd047495b7ad23437d6afd20297ce90380ff0bdee93fc7d39a900dbd8d9e26e53ff6b465e7967ce2adf0b218782590ce9013285121e6a5928fbd6819f
+  version: 1.0.4
+  resolution: "@tsconfig/node16@npm:1.0.4"
+  checksum: 10/202319785901f942a6e1e476b872d421baec20cf09f4b266a1854060efbf78cde16a4d256e8bc949d31e6cd9a90f1e8ef8fb06af96a65e98338a2b6b0de0a0ff
   languageName: node
   linkType: hard
 
@@ -9313,13 +9350,15 @@ __metadata:
   linkType: hard
 
 "acorn-walk@npm:^8.0.0, acorn-walk@npm:^8.1.1":
-  version: 8.3.2
-  resolution: "acorn-walk@npm:8.3.2"
-  checksum: 10/57dbe2fd8cf744f562431775741c5c087196cd7a65ce4ccb3f3981cdfad25cd24ad2bad404997b88464ac01e789a0a61e5e355b2a84876f13deef39fb39686ca
+  version: 8.3.5
+  resolution: "acorn-walk@npm:8.3.5"
+  dependencies:
+    acorn: "npm:^8.11.0"
+  checksum: 10/f52a158a1c1f00c82702c7eb9b8ae8aad79748a7689241dcc2d797dce680f1dcb15c78f312f687eeacdfb3a4cac4b87d04af470f0201bd56c6661fca6f94b195
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.0, acorn@npm:^8.0.4, acorn@npm:^8.11.3, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.0.0, acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.11.3, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.16.0
   resolution: "acorn@npm:8.16.0"
   bin:
@@ -12733,9 +12772,9 @@ __metadata:
   linkType: hard
 
 "diff@npm:^4.0.1":
-  version: 4.0.2
-  resolution: "diff@npm:4.0.2"
-  checksum: 10/ec09ec2101934ca5966355a229d77afcad5911c92e2a77413efda5455636c4cf2ce84057e2d7715227a2eeeda04255b849bd3ae3a4dd22eb22e86e76456df069
+  version: 4.0.4
+  resolution: "diff@npm:4.0.4"
+  checksum: 10/5019b3f5ae124ea9e95137119e1a83a59c252c75ddac873cc967832fd7a834570a58a4d58b941bdbd07832ebf98dcb232b27c561b7f5584357da6dae59bcac62
   languageName: node
   linkType: hard
 
@@ -15188,7 +15227,6 @@ __metadata:
     tmp: "npm:0.2.4"
     ts-jest: "npm:29.4.0"
     ts-node: "npm:10.9.1"
-    tsconfig-paths: "npm:4.1.1"
     tslib: "npm:^2.1.0"
     typescript: "npm:5.9.3"
     vite: "npm:7.3.0"
@@ -17741,7 +17779,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.1.2, json5@npm:^2.2.1, json5@npm:^2.2.2, json5@npm:^2.2.3":
+"json5@npm:^2.1.2, json5@npm:^2.2.2, json5@npm:^2.2.3":
   version: 2.2.3
   resolution: "json5@npm:2.2.3"
   bin:
@@ -19801,7 +19839,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:3.1.5, minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
+"minimatch@npm:3.1.2":
+  version: 3.1.2
+  resolution: "minimatch@npm:3.1.2"
+  dependencies:
+    brace-expansion: "npm:^1.1.7"
+  checksum: 10/e0b25b04cd4ec6732830344e5739b13f8690f8a012d73445a4a19fbc623f5dd481ef7a5827fde25954cd6026fede7574cc54dc4643c99d6c6b653d6203f94634
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
   version: 3.1.5
   resolution: "minimatch@npm:3.1.5"
   dependencies:
@@ -24016,7 +24063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sax@npm:^1.2.4, sax@npm:^1.5.0":
+"sax@npm:^1.2.4":
   version: 1.5.0
   resolution: "sax@npm:1.5.0"
   checksum: 10/9012ff37dda7a7ac5da45db2143b04036103e8bef8d586c3023afd5df6caf0ebd7f38017eee344ad2e2247eded7d38e9c42cf291d8dd91781352900ac0fd2d9f
@@ -24213,17 +24260,17 @@ __metadata:
   linkType: hard
 
 "serve-handler@npm:^6.1.6":
-  version: 6.1.7
-  resolution: "serve-handler@npm:6.1.7"
+  version: 6.1.6
+  resolution: "serve-handler@npm:6.1.6"
   dependencies:
     bytes: "npm:3.0.0"
     content-disposition: "npm:0.5.2"
     mime-types: "npm:2.1.18"
-    minimatch: "npm:3.1.5"
+    minimatch: "npm:3.1.2"
     path-is-inside: "npm:1.0.2"
     path-to-regexp: "npm:3.3.0"
     range-parser: "npm:1.2.0"
-  checksum: 10/2366e53cc8e8376d58abb289293b930111fa5da6d14bb31eafac5b1162f332c45c6f394c7d78fdcf6b5736e12caf9370b02d05c7e8a75291d2fc6a55b52b14ea
+  checksum: 10/7e7d93eb7e69fcd9f9c5afc2ef2b46cb0072b4af13cbabef9bca725afb350ddae6857d8c8be2c256f7ce1f7677c20347801399c11caa5805c0090339f894e8f2
   languageName: node
   linkType: hard
 
@@ -25362,19 +25409,19 @@ __metadata:
   linkType: hard
 
 "svgo@npm:^3.0.2, svgo@npm:^3.2.0":
-  version: 3.3.3
-  resolution: "svgo@npm:3.3.3"
+  version: 3.2.0
+  resolution: "svgo@npm:3.2.0"
   dependencies:
+    "@trysound/sax": "npm:0.2.0"
     commander: "npm:^7.2.0"
     css-select: "npm:^5.1.0"
     css-tree: "npm:^2.3.1"
     css-what: "npm:^6.1.0"
     csso: "npm:^5.0.5"
     picocolors: "npm:^1.0.0"
-    sax: "npm:^1.5.0"
   bin:
     svgo: ./bin/svgo
-  checksum: 10/f3c1b4d05d1704483e53515d5995af5f06a2718df85e3a8320f57bb256b8dc926b84c87a1a9b98e9d3ca1224314cc0676a803bdd03163508292f2d45c7077096
+  checksum: 10/2fdf3f2090e17b3c309e60f69c78a2afd5a9771247adb540bae3fce467243f7a601a2a5497ef40998292da41ad828b3eabf3c18b75bf449c2d2cbf6d7f6e96d9
   languageName: node
   linkType: hard
 
@@ -25994,17 +26041,6 @@ __metadata:
     tapable: "npm:^2.2.1"
     tsconfig-paths: "npm:^4.1.2"
   checksum: 10/946f23a38a404bf2d3803b60b5af1d7a6cc85bed411c9feefa707656efd9007cdcee7eb0e860ca8690ba479810c7b94ce026f6ac70daa6c803e55aac809c86c4
-  languageName: node
-  linkType: hard
-
-"tsconfig-paths@npm:4.1.1":
-  version: 4.1.1
-  resolution: "tsconfig-paths@npm:4.1.1"
-  dependencies:
-    json5: "npm:^2.2.1"
-    minimist: "npm:^1.2.6"
-    strip-bom: "npm:^3.0.0"
-  checksum: 10/4276c9918a9dc8a559015a6884f7ff6261833ea55d791713a8fdcbd332525342d93827e29332ba98baddff3359209bad0ba3e77090329639bd9ec53d0e70a58c
   languageName: node
   linkType: hard
 

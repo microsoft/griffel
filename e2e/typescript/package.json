@@ -1,0 +1,5 @@
+{
+  "name": "@griffel/e2e-typescript",
+  "private": true,
+  "type": "module"
+}

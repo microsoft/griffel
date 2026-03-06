@@ -18,6 +18,6 @@ jobs:
 
       - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:
-          node-version: '20'
+          node-version: '24'
 
       - run: npx beachball check --changehint "Run 'yarn change' to generate a change file"

@@ -15,7 +15,7 @@
         "cwd": "tools/update-shorthands",
         "commands": [
           {
-            "command": "ts-node src/index.ts"
+            "command": "node src/index.ts"
           }
         ]
       },
