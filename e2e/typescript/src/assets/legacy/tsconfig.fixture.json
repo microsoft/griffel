@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "lib": ["ES2019", "dom"],
-    "isolatedModules": true,
-    "moduleResolution": "node",
-    "types": []
-  },
-  "include": ["*.ts"]
-}
