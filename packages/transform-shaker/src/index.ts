@@ -2,53 +2,43 @@
  * Copied from @linaria/shaker v3.0.0-beta.22
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  *
- * This is the evaluator entry point. It takes source code, transforms it with Babel
- * to produce CJS code, then parses it with oxc-parser, tree-shakes ("shakes") it
- * to remove dead code, and returns the shaken source code along with import metadata.
+ * This is the evaluator entry point. It takes source code, parses it with oxc-parser,
+ * tree-shakes ("shakes") it to remove dead code, and returns the shaken source code
+ * along with import metadata.
  */
 
-import { transformSync } from '@babel/core';
 import { parseSync } from 'oxc-parser';
 import type { Program } from 'oxc-parser';
+import { transformSync } from 'oxc-transform';
 
-import { buildOptions, debug } from './utils.js';
-import type { Evaluator, StrictOptions } from './utils.js';
+import { debug } from './utils.js';
+import type { Evaluator } from './utils.js';
 
 import shake from './shaker.js';
 
 export { default as buildDepsGraph } from './graphBuilder.js';
 
-function prepareForShake(filename: string, options: StrictOptions, code: string): { program: Program; code: string } {
-  const transformOptions = buildOptions(filename, options);
+const needsTransformExtensions = new Set(['ts', 'tsx', 'jsx', 'mts', 'cts']);
 
-  transformOptions.presets!.unshift([
-    require.resolve('@babel/preset-env'),
-    {
-      targets: 'ie 11',
-    },
-  ]);
-  transformOptions.plugins!.unshift(require.resolve('babel-plugin-transform-react-remove-prop-types'));
-  transformOptions.plugins!.unshift([require.resolve('@babel/plugin-transform-runtime'), { useESModules: false }]);
+function prepareForShake(filename: string, code: string): { program: Program; code: string } {
+  const ext = filename.split('.').pop()?.toLowerCase() ?? '';
+  let sourceCode = code;
 
-  debug(
-    'evaluator:shaker:transform',
-    `Transform ${filename} with options ${JSON.stringify(transformOptions, null, 2)}`,
-  );
-  const transformed = transformSync(code, transformOptions);
-
-  if (transformed === null || !transformed.code) {
-    throw new Error(`${filename} cannot be transformed`);
+  // Strip TypeScript/JSX syntax if needed
+  if (needsTransformExtensions.has(ext)) {
+    const result = transformSync(filename, code, {});
+    sourceCode = result.code;
   }
 
-  const cjsCode = transformed.code;
-  const parsed = parseSync(filename, cjsCode);
+  debug('evaluator:shaker:transform', `Parsed ${filename}`);
+  const parsed = parseSync(filename, sourceCode);
 
-  return { program: parsed.program, code: cjsCode };
+  return { program: parsed.program, code: sourceCode };
 }
 
 const shaker: Evaluator = (filename, options, text, only = null) => {
-  const { program, code: cjsCode } = prepareForShake(filename, options, text);
-  const [shakenCode, imports] = shake(program, cjsCode, only);
+  const { program, code } = prepareForShake(filename, text);
+  const [shakenCode, imports] = shake(program, code, only);
   return [shakenCode, imports];
 };
 

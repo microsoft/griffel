@@ -103,4 +103,29 @@ const memberExpressionPropertyHandler = (builder: GraphBuilderState, node: Ident
 defineHandler('MemberExpression', 'property', memberExpressionPropertyHandler);
 defineHandler('OptionalMemberExpression', 'property', memberExpressionPropertyHandler);
 
+/*
+ * Special handler for Property:value — context-dependent.
+ * In object expressions, value identifiers are references.
+ * In destructuring patterns (ObjectPattern), value identifiers are declarations.
+ */
+defineHandler('Property', 'value', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+  const grandparent = builder.graph.getParent(parent);
+  if (grandparent && grandparent.type === 'ObjectPattern') {
+    // Destructuring pattern: the identifier is being declared
+    const kindOfDeclaration = builder.meta.get('kind-of-declaration');
+    builder.scope.declare(node, kindOfDeclaration === 'var', null);
+  } else {
+    // Object expression: the identifier is a reference
+    const declaration = builder.scope.addReference(node);
+    if (declaration) {
+      builder.graph.addEdge(node, declaration);
+
+      const context = peek(builder.context);
+      if (context === 'lval') {
+        builder.graph.addEdge(declaration, node);
+      }
+    }
+  }
+});
+
 export default handlers;
