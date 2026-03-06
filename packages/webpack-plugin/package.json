@@ -23,8 +23,8 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@griffel/transform": "^1.2.0",
     "@griffel/core": "^1.20.0",
+    "@griffel/transform": "^1.2.0",
     "enhanced-resolve": "^5.15.0",
     "oxc-resolver": "^11.19.1",
     "stylis": "^4.2.0"
