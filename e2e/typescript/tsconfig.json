@@ -4,13 +4,7 @@
     "allowJs": true,
     "checkJs": true,
     "module": "CommonJS",
-    "noEmit": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noEmit": true
   },
   "files": [],
   "include": [],
