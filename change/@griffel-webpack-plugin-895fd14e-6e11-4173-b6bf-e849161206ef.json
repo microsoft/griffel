@@ -1,6 +1,6 @@
 {
   "type": "major",
-  "comment": "refactor: make oxc resolver ESM-first, remove createFluentOxcResolverFactory",
+  "comment": "BREAKING: consolidate resolvers into ESM-first createResolverFactory, remove enhanced-resolve dependency",
   "packageName": "@griffel/webpack-plugin",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"

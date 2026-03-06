@@ -74,29 +74,6 @@ const createCustomDebug =
     debug(`${modulePrefix}:${namespaces}`, arg1, ...args);
   };
 
-const BABEL_ESM = '/@babel/runtime/helpers/esm/';
-const BABEL_CJS = '/@babel/runtime/helpers/';
-const SWC_HELPERS_RE = /(@swc\/helpers\/)src(\/.+)\.mjs/;
-
-const cookModuleId = (rawId: string): string => {
-  // It's a dirty hack for avoiding conflicts with babel-preset-react-app
-  // https://github.com/callstack/linaria/issues/745
-
-  const babelESMIndex = rawId.indexOf(BABEL_ESM);
-
-  if (babelESMIndex !== -1) {
-    return rawId.slice(0, babelESMIndex) + BABEL_CJS + rawId.slice(babelESMIndex + BABEL_ESM.length);
-  }
-
-  const swcHelpersIndex = rawId.indexOf('@swc/helpers/src/');
-
-  if (swcHelpersIndex === -1) {
-    return rawId.replace(SWC_HELPERS_RE, '$1lib$2.js');
-  }
-
-  return rawId;
-};
-
 export class Module {
   readonly id: string;
   readonly filename: string;
@@ -142,8 +119,7 @@ export class Module {
     this.debug('prepare', filename);
   }
 
-  resolve = (rawId: string): string => {
-    const id = cookModuleId(rawId);
+  resolve = (id: string): string => {
     const extensions = (NativeModule as unknown as { _extensions: Record<string, (...args: unknown[]) => void> })
       ._extensions;
     const added: string[] = [];
@@ -172,8 +148,7 @@ export class Module {
     cache: Record<string, Module>;
     resolve: (id: string) => string;
   } = Object.assign(
-    (rawId: string): unknown => {
-      const id = cookModuleId(rawId);
+    (id: string): unknown => {
       this.debug('require', id);
 
       if (id in builtins) {
