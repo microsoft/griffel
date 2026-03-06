@@ -19,11 +19,11 @@ export function createESMResolverFactory(): TransformResolverFactory {
     // resolver.
     // There is this.resolve(), but it's asynchronous. Another option is to read the webpack.config.js, but it won't work
     // for programmatic usage. This API is used by many loaders/plugins, so hope we're safe for a while
-    const resolveOptionsFromWebpackConfig = (compilation?.options.resolve ?? {}) as NapiResolveOptions;
+    // const resolveOptionsFromWebpackConfig = (compilation?.options.resolve ?? {}) as NapiResolveOptions;
 
     const defaultResolver = new ResolverFactory({
       ...RESOLVE_OPTIONS_DEFAULTS,
-      ...resolveOptionsFromWebpackConfig,
+      // ...resolveOptionsFromWebpackConfig,
     });
 
     // Clone shares the underlying cache, only overrides conditionNames
