@@ -1,7 +1,7 @@
 {
   "name": "@griffel/webpack-extraction-plugin",
   "version": "0.5.14",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "description": "Webpack plugin that performs CSS extraction for Griffel",
   "license": "MIT",
   "repository": {
@@ -12,8 +12,8 @@
     "./package.json": "./package.json",
     ".": {
       "@griffel/source": "./src/index.ts",
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "devDependencies": {
