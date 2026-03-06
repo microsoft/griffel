@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16",
+    "outDir": "../../dist/packages/style-types/cjs",
+    "tsBuildInfoFile": "../../dist/packages/style-types/cjs/tsconfig.lib.cjs.tsbuildinfo",
+    "sourceMap": false
+  }
+}

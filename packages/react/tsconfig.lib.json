@@ -1,10 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "composite": true,
+    "outDir": "../../dist/packages/react",
+    "tsBuildInfoFile": "../../dist/packages/react/tsconfig.lib.tsbuildinfo",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
     "types": ["node", "environment"]
   },
   "exclude": [
+    "dist",
     "**/*.spec.ts",
     "**/*.test.ts",
     "**/*.spec.tsx",
@@ -19,5 +25,6 @@
     "**/*.stories.tsx",
     "jest.config.ts"
   ],
-  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "references": [{ "path": "../core/tsconfig.lib.json" }]
 }

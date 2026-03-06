@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16",
+    "outDir": "../../dist/packages/react/cjs",
+    "tsBuildInfoFile": "../../dist/packages/react/cjs/tsconfig.lib.cjs.tsbuildinfo",
+    "sourceMap": false
+  },
+  "references": [{ "path": "../core/tsconfig.lib.cjs.json" }]
+}

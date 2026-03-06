@@ -6,33 +6,19 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["^build"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/core"],
       "options": {
-        "outputPath": "dist/packages/core",
-        "tsConfig": "packages/core/tsconfig.lib.json",
-        "skipTypeField": true,
-        "skipTypeCheck": true,
-        "project": "packages/core/package.json",
-        "entryFile": "packages/core/src/index.ts",
-        "useLegacyTypescriptPlugin": true,
-        "rollupConfig": "tools/getRollupOptions.js",
-        "compiler": "babel",
-        "sourceMap": true,
-        "external": ["tslib"],
-        "format": ["esm", "cjs"],
-        "assets": [
-          {
-            "glob": "packages/core/README.md",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "cwd": "packages/core",
+        "commands": [
+          "tsc -b tsconfig.lib.json --pretty",
+          "tsc -b tsconfig.lib.cjs.json --pretty",
+          "cp package.json ../../dist/packages/core/package.json",
+          "cp README.md ../../dist/packages/core/README.md",
+          "cp ../../LICENSE.md ../../dist/packages/core/LICENSE.md"
+        ],
+        "parallel": false
       }
     },
     "lint": {
