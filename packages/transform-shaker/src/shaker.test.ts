@@ -6,7 +6,6 @@
  * fixtures have been omitted. Only the self-contained shake() tests are kept.
  */
 
-import type { TransformOptions } from '@babel/core';
 import dedent from 'dedent';
 
 import shaker from './index.js';
@@ -15,13 +14,12 @@ function getFileName() {
   return '/test/source.js';
 }
 
-function _shake(opts?: TransformOptions, only: string[] = ['__linariaPreval']) {
+function _shake(only: string[] = ['__linariaPreval']) {
   return (literal: TemplateStringsArray, ...placeholders: string[]): [string, Map<string, string[]>] => {
     const code = dedent(literal, ...placeholders);
     const [shaken, deps] = shaker(
       getFileName(),
       {
-        babelOptions: opts || {},
         displayName: true,
         evaluate: true,
         rules: [
@@ -128,7 +126,7 @@ it('shakes exports', () => {
 });
 
 it('shakes es5 exports', () => {
-  const [shaken] = _shake(undefined, ['redColor', 'greenColor', 'yellowColor'])`
+  const [shaken] = _shake(['redColor', 'greenColor', 'yellowColor'])`
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
