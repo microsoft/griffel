@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/core_v1.20.0",
+      "version": "1.20.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "hochelmartin@gmail.com",
+            "package": "@griffel/core",
+            "commit": "7df55abb5486fe5d5cd0a0c4731d4aaee9bbe7c8",
+            "comment": "feat: add makeStaticStyles AOT/CSS extraction support"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Nov 2025 15:43:56 GMT",
       "tag": "@griffel/core_v1.19.2",
       "version": "1.19.2",

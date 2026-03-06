@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "perf: replace DeoptError with DEOPT sentinel symbol, optimize CSS rule dedup and lookups",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

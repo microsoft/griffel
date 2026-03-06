@@ -2,6 +2,35 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/babel-preset_v1.8.0",
+      "version": "1.8.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "hochelmartin@gmail.com",
+            "package": "@griffel/babel-preset",
+            "commit": "7df55abb5486fe5d5cd0a0c4731d4aaee9bbe7c8",
+            "comment": "feat: add makeStaticStyles AOT/CSS extraction support"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.20.0",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "b9f48d650250423c404f65e176f2ada8afe8981b",
+            "comment": "chore: bump ajv"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Nov 2025 15:43:56 GMT",
       "tag": "@griffel/babel-preset_v1.7.0",
       "version": "1.7.0",

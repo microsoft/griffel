@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: resolve tagged asset paths before CSS generation",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,0 +1,78 @@
+{
+  "name": "@griffel/webpack-plugin",
+  "entries": [
+    {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/webpack-plugin_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "8899f13b7545a0a64c7ee0f48bdd84d962095e0b",
+            "comment": "feat: initial release of @griffel/webpack-plugin"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "3ad6da3c7aa4bee5f34caf656bd01136c6851afb",
+            "comment": "feat: add makeStaticStyles AOT/CSS extraction support"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "4120a767b62911738663673a93551ce8ba411b88",
+            "comment": "feat: add createFluentOxcResolverFactory for FluentUI ESM resolution"
+          },
+          {
+            "author": "copilot@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "f664f4856b2b9515577a0b2c30d9938509595a11",
+            "comment": "feat: create @griffel/webpack-plugin package with boilerplate"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v1.2.0",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/core to v1.20.0",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "f29bf9c1ef7592fda794b1d7911adcd7f39675ec",
+            "comment": "chore: bump oxc-resolver to ^11.19.1"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "92e3be23310caca39d666dd52b91e00559126a4b",
+            "comment": "perf: merge triple sort into single comparator, use Buffer.indexOf, cache JSON.stringify"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "aaf1e0d5158f3926da15aa56c7cabdc1f90ae11e",
+            "comment": "fix: resolve tagged asset paths before CSS generation"
+          }
+        ],
+        "none": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "63f4a5076e221b10703677be00f7cbbe7cdad4cd",
+            "comment": "feat: add webpack-plugin implementation"
+          }
+        ]
+      }
+    }
+  ]
+}

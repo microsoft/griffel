@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add makeStaticStyles AOT/CSS extraction support",
-  "packageName": "@griffel/core",
-  "email": "hochelmartin@gmail.com",
-  "dependentChangeType": "patch"
-}

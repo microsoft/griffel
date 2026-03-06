@@ -2,6 +2,77 @@
   "name": "@griffel/transform",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/transform_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "f29bf9c1ef7592fda794b1d7911adcd7f39675ec",
+            "comment": "refactor: use ScopeTracker from oxc-walker for scope-aware import resolution"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "8899f13b7545a0a64c7ee0f48bdd84d962095e0b",
+            "comment": "refactor: extract dedupeCSSRules result to a variable in transformSync"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "fbc4ec36aef084fb54a6fcadb838b43e2cf3025b",
+            "comment": "refactor: internalize Linaria Module/EvalCache to remove @linaria/babel-preset dependency"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "92e3be23310caca39d666dd52b91e00559126a4b",
+            "comment": "perf: replace DeoptError with DEOPT sentinel symbol, optimize CSS rule dedup and lookups"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "ae00bdd2d1160d35abd24b37f3d6ac3dc68f45cd",
+            "comment": "feat: add AST evaluator plugin system with evaluationPlugins option"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "aaf1e0d5158f3926da15aa56c7cabdc1f90ae11e",
+            "comment": "feat: wrap imported asset paths in <griffel-asset> tags for reliable CSS extraction"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "3ad6da3c7aa4bee5f34caf656bd01136c6851afb",
+            "comment": "feat: add makeStaticStyles AOT/CSS extraction support"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "4ae3632b39f4feedaf66b6258f8ddc1ca9e1ad44",
+            "comment": "feat: hybrid evaluator that shakes ESM node_modules instead of ignoring them"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "faee841c0dc969828253b06961ca6702bdbfe5ae",
+            "comment": "feat: throw on non-ESM input in transformSync"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/transform",
+            "comment": "Bump @griffel/core to v1.20.0",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Nov 2025 15:43:56 GMT",
       "tag": "@griffel/transform_v1.1.0",
       "version": "1.1.0",

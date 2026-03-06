@@ -1,8 +1,21 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Mon, 03 Nov 2025 15:43:56 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Mar 2026 08:17:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.8.0
+
+Fri, 06 Mar 2026 08:17:05 GMT
+
+### Minor changes
+
+- feat: add makeStaticStyles AOT/CSS extraction support (hochelmartin@gmail.com)
+- Bump @griffel/core to v1.20.0
+
+### Patches
+
+- chore: bump ajv (olfedias@microsoft.com)
 
 ## 1.7.0
 

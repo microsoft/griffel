@@ -2,6 +2,29 @@
   "name": "@griffel/vite-plugin",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/vite-plugin_v0.1.15",
+      "version": "0.1.15",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "cb80d48f46f00f59a009a5bd0c64442de3b572c5",
+            "comment": "chore: bump syncpack to v14"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/vite-plugin",
+            "comment": "Bump @griffel/tag-processor to v1.0.15",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Nov 2025 09:27:58 GMT",
       "tag": "@griffel/vite-plugin_v0.1.14",
       "version": "0.1.14",

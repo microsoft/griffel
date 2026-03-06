@@ -1,8 +1,16 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Mon, 28 Jul 2025 09:12:30 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Mar 2026 08:17:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.2
+
+Fri, 06 Mar 2026 08:17:05 GMT
+
+### Patches
+
+- fix: replace deprecated context.getSourceCode() with context.sourceCode (olfedias@microsoft.com)
 
 ## 2.0.1
 

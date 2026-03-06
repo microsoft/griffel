@@ -2,6 +2,27 @@
   "name": "@griffel/next-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/next-extraction-plugin_v0.1.14",
+      "version": "0.1.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/next-extraction-plugin",
+            "commit": "5370788cea69e6e6e66a21e3bcc7031791d69811",
+            "comment": "fix: work with Next.js 15"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/next-extraction-plugin",
+            "comment": "Bump @griffel/webpack-extraction-plugin to v0.5.13",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Aug 2025 16:25:42 GMT",
       "tag": "@griffel/next-extraction-plugin_v0.1.13",
       "version": "0.1.13",

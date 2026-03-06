@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.13",
+      "version": "0.5.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "8899f13b7545a0a64c7ee0f48bdd84d962095e0b",
+            "comment": "fix: use Symbol.for() instead of Symbol() for GriffelCssLoaderContextKey"
+          },
+          {
+            "author": "hochelmartin@gmail.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "7df55abb5486fe5d5cd0a0c4731d4aaee9bbe7c8",
+            "comment": "feat: add makeStaticStyles AOT/CSS extraction support"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.20.0",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Aug 2025 16:25:42 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.12",
       "version": "0.5.12",

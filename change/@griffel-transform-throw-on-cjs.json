@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: throw on non-ESM input in transformSync",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

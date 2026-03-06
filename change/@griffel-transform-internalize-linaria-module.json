@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "refactor: internalize Linaria Module/EvalCache to remove @linaria/babel-preset dependency",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

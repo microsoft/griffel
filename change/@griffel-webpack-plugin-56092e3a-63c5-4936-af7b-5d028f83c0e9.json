@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: initial release of @griffel/webpack-plugin",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

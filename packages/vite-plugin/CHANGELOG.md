@@ -1,8 +1,16 @@
 # Change Log - @griffel/vite-plugin
 
-This log was last generated on Tue, 04 Nov 2025 09:27:58 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Mar 2026 08:17:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.15
+
+Fri, 06 Mar 2026 08:17:05 GMT
+
+### Patches
+
+- Bump @griffel/tag-processor to v1.0.15
 
 ## 0.1.14
 

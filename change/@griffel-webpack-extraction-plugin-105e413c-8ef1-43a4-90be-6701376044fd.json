@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: use Symbol.for() instead of Symbol() for GriffelCssLoaderContextKey",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Tue, 05 Aug 2025 16:25:42 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Mar 2026 08:17:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.5.13
+
+Fri, 06 Mar 2026 08:17:05 GMT
+
+### Patches
+
+- fix: use Symbol.for() instead of Symbol() for GriffelCssLoaderContextKey (olfedias@microsoft.com)
+- feat: add makeStaticStyles AOT/CSS extraction support (hochelmartin@gmail.com)
+- Bump @griffel/core to v1.20.0
 
 ## 0.5.12
 

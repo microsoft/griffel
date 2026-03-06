@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/eslint-plugin_v2.0.2",
+      "version": "2.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "24e2097354e17b456506bcda1ad5df3ec3903ff7",
+            "comment": "fix: replace deprecated context.getSourceCode() with context.sourceCode"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jul 2025 09:12:30 GMT",
       "tag": "@griffel/eslint-plugin_v2.0.1",
       "version": "2.0.1",

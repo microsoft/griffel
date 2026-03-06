@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "refactor: use ScopeTracker from oxc-walker for scope-aware import resolution",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

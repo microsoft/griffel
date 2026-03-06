@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add AST evaluator plugin system with evaluationPlugins option",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

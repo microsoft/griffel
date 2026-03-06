@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "feat: add webpack-plugin implementation",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "198982749+Copilot@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

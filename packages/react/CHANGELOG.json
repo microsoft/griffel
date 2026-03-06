@@ -2,6 +2,27 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Fri, 06 Mar 2026 08:17:05 GMT",
+      "tag": "@griffel/react_v1.6.0",
+      "version": "1.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "hochelmartin@gmail.com",
+            "package": "@griffel/react",
+            "commit": "7df55abb5486fe5d5cd0a0c4731d4aaee9bbe7c8",
+            "comment": "feat: add makeStaticStyles AOT/CSS extraction support"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.20.0",
+            "commit": "832ca3b88650bb8fa8b20499ade2e679518bc934"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Dec 2025 10:45:32 GMT",
       "tag": "@griffel/react_v1.5.32",
       "version": "1.5.32",

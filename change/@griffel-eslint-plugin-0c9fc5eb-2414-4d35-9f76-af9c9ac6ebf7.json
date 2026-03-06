@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: replace deprecated context.getSourceCode() with context.sourceCode",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
