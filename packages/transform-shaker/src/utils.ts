@@ -59,8 +59,6 @@ export const warn = log.bind(null, 'warn');
 
 // --- From @linaria/babel-preset types ---
 
-import type { TransformOptions } from '@babel/core';
-
 export type Evaluator = (
   filename: string,
   options: StrictOptions,
@@ -78,26 +76,8 @@ export type StrictOptions = {
   displayName: boolean;
   evaluate: boolean;
   ignore?: RegExp;
-  babelOptions: TransformOptions;
   rules: EvalRule[];
 };
-
-// --- From @linaria/babel-preset/evaluators/buildOptions ---
-
-export function buildOptions(filename: string, options: StrictOptions): TransformOptions {
-  const plugins = [...(options.babelOptions?.plugins ?? [])];
-
-  const presets = [...(options.babelOptions?.presets ?? [])];
-
-  return {
-    filename,
-    plugins,
-    presets,
-    babelrc: false,
-    configFile: false,
-    sourceMaps: false,
-  };
-}
 
 // --- Invariant utility (replaces ts-invariant) ---
 

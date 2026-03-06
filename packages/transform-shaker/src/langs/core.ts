@@ -477,6 +477,18 @@ export const visitors = {
 
     // If a statement is required itself, an id is also required
     this.graph.addEdge(node, node.id);
+
+    // Connect identifiers declared inside patterns (destructuring) back to the declarator.
+    // Without this, destructured identifiers have no edge to their containing declaration,
+    // and the declaration gets removed even when the identifiers are alive.
+    for (const [identifier] of declared) {
+      if (identifier !== node.id) {
+        this.graph.addEdge(identifier, node);
+        if (node.init) {
+          this.graph.addEdge(identifier, node.init);
+        }
+      }
+    }
   },
 
   VariableDeclaration(
@@ -594,10 +606,162 @@ export const visitors = {
       this.graph.addEdge(node, node.expressions[node.expressions.length - 1]);
     }
   },
+
+  /*
+   * Pattern nodes (destructuring) — need explicit edges since they're not expressions,
+   * so baseVisit doesn't add dependency edges for them.
+   */
+
+  ObjectPattern(this: GraphBuilderState, node: Node & { properties: Node[] }) {
+    this.baseVisit(node);
+    node.properties.forEach(prop => {
+      this.graph.addEdge(node, prop);
+      if (isSpreadElement(prop)) {
+        this.graph.addEdge(prop, prop.argument);
+      } else {
+        // Property node: connect to key and value
+        const p = prop as Node & { key: Node; value: Node };
+        this.graph.addEdge(prop, p.key);
+        this.graph.addEdge(prop, p.value);
+      }
+    });
+  },
+
+  ArrayPattern(this: GraphBuilderState, node: Node & { elements: (Node | null)[] }) {
+    this.baseVisit(node);
+    node.elements.forEach(el => {
+      if (el) {
+        this.graph.addEdge(node, el);
+      }
+    });
+  },
+
+  AssignmentPattern(this: GraphBuilderState, node: Node & { left: Node; right: Node }) {
+    this.baseVisit(node);
+    this.graph.addEdge(node, node.left);
+    this.graph.addEdge(node, node.right);
+  },
+
+  /*
+   * ESM import/export support
+   */
+
+  ImportDeclaration(this: GraphBuilderState, node: Node & { specifiers: Node[]; source: Node & { value: string } }) {
+    const source = node.source.value;
+
+    if (!this.graph.imports.has(source)) {
+      this.graph.imports.set(source, []);
+    }
+
+    // Side-effect import: `import 'module'`
+    if (node.specifiers.length === 0) {
+      return;
+    }
+
+    for (const specifier of node.specifiers) {
+      const local = (specifier as { local: IdentifierNode }).local;
+      this.scope.declare(local, false, null);
+      this.graph.addEdge(node, local);
+
+      if (specifier.type === 'ImportDefaultSpecifier') {
+        this.graph.importTypes.set(source, 'default');
+        this.graph.imports.get(source)!.push(local);
+      } else if (specifier.type === 'ImportNamespaceSpecifier') {
+        this.graph.importTypes.set(source, 'wildcard');
+        this.graph.importAliases.set(local, source);
+      } else if (specifier.type === 'ImportSpecifier') {
+        const imported = (specifier as { imported: IdentifierNode }).imported;
+        this.graph.imports.get(source)!.push(imported);
+      }
+    }
+
+    return 'ignore' as const;
+  },
+
+  ExportNamedDeclaration(
+    this: GraphBuilderState,
+    node: Node & {
+      declaration: Node | null;
+      specifiers: Node[];
+      source: (Node & { value: string }) | null;
+    },
+  ) {
+    if (node.declaration) {
+      // `export const x = ...` or `export function foo() {}`
+      this.visit(node.declaration, node, 'declaration');
+
+      if (isVariableDeclaration(node.declaration)) {
+        for (const declarator of node.declaration.declarations) {
+          if (isVariableDeclarator(declarator) && isIdentifier(declarator.id)) {
+            this.graph.addExport(declarator.id.name, node);
+            this.graph.addEdge(node, node.declaration);
+          }
+        }
+      } else if (isFunctionDeclaration(node.declaration) && node.declaration.id) {
+        const id = node.declaration.id as IdentifierNode;
+        this.graph.addExport(id.name, node);
+        this.graph.addEdge(node, node.declaration);
+      }
+
+      return 'ignore' as const;
+    }
+
+    if (node.source) {
+      // Re-export: `export { foo } from 'source'`
+      const source = node.source.value;
+      if (!this.graph.imports.has(source)) {
+        this.graph.imports.set(source, []);
+      }
+
+      for (const specifier of node.specifiers) {
+        const spec = specifier as { local: IdentifierNode; exported: IdentifierNode };
+        this.graph.addExport(spec.exported.name, node);
+        this.graph.imports.get(source)!.push(spec.local);
+      }
+
+      return 'ignore' as const;
+    }
+
+    // `export { foo, bar }`
+    for (const specifier of node.specifiers) {
+      const spec = specifier as { local: IdentifierNode; exported: IdentifierNode };
+      const declaration = this.scope.addReference(spec.local);
+      if (declaration) {
+        this.graph.addEdge(node, declaration);
+        this.graph.addEdge(node, spec.local);
+      }
+      this.graph.addExport(spec.exported.name, node);
+    }
+
+    return 'ignore' as const;
+  },
+
+  ExportDefaultDeclaration(this: GraphBuilderState, node: Node & { declaration: Node }) {
+    this.visit(node.declaration, node, 'declaration');
+    this.graph.addExport('default', node);
+    this.graph.addEdge(node, node.declaration);
+
+    return 'ignore' as const;
+  },
+
+  ExportAllDeclaration(this: GraphBuilderState, node: Node & { source: Node & { value: string } }) {
+    const source = node.source.value;
+    if (!this.graph.imports.has(source)) {
+      this.graph.imports.set(source, []);
+    }
+    this.graph.importTypes.set(source, 'reexport');
+
+    // Create a sentinel node that represents this re-export
+    this.graph.reexports.push(node as unknown as IdentifierNode);
+
+    return 'ignore' as const;
+  },
 } as Visitors;
 
 export const identifierHandlers: IdentifierHandlers = {
   declare: [
+    ['AssignmentPattern', 'left'],
+    ['ArrayPattern', 'elements'],
     ['CatchClause', 'param'],
     ['Function', 'params'],
     ['FunctionExpression', 'id'],
@@ -605,7 +769,15 @@ export const identifierHandlers: IdentifierHandlers = {
     ['ThrowStatement', 'argument'],
     ['VariableDeclarator', 'id'],
   ],
-  keep: [['Property', 'key']],
+  keep: [
+    ['Property', 'key'],
+    // ESM: identifiers in import/export specifiers are handled by visitors, not identifier handlers
+    ['ImportSpecifier', 'imported', 'local'],
+    ['ImportDefaultSpecifier', 'local'],
+    ['ImportNamespaceSpecifier', 'local'],
+    ['ExportSpecifier', 'local', 'exported'],
+    ['ExportDefaultDeclaration', 'declaration'],
+  ],
   refer: [
     ['ArrayExpression', 'elements'],
     ['AssignmentExpression', 'left', 'right'],
@@ -617,7 +789,6 @@ export const identifierHandlers: IdentifierHandlers = {
     ['IfStatement', 'test'],
     ['LogicalExpression', 'left', 'right'],
     ['NewExpression', 'arguments', 'callee'],
-    ['Property', 'value'],
     ['ReturnStatement', 'argument'],
     ['SequenceExpression', 'expressions'],
     ['SwitchStatement', 'discriminant'],
