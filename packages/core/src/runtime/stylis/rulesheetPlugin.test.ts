@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { compile, middleware, serialize, stringify, RULESET } from 'stylis';
 
 import { rulesheetPlugin } from './rulesheetPlugin';
@@ -9,7 +10,7 @@ function compileRule(rule: string, callback: RulesheetPluginCallback) {
 
 describe('rulesheetPlugin', () => {
   it('handles basic selectors', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     const css = `
       .foo { color: red }
       .bar { color: blue }

@@ -1,3 +1,4 @@
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import { griffelRulesSerializer } from '../common/snapshotSerializers';
 import { resolveStyleRules } from './resolveStyleRules';
 import type { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
@@ -13,9 +14,9 @@ function getFirstClassName([resolvedClassesForSlot]: [CSSClassesMap, CSSRulesByB
 
 describe('resolveStyleRules', () => {
   describe('unsupported css properties', () => {
-    let consoleSpy: jest.SpyInstance;
+    let consoleSpy: ReturnType<typeof vi.spyOn>;
     beforeAll(() => {
-      consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterAll(() => {
@@ -128,7 +129,7 @@ describe('resolveStyleRules', () => {
 
       expect(resultA[0]).toEqual(resultB[0]);
       expect(resultA[0]).toMatchInlineSnapshot(`
-        Object {
+        {
           "B9q554f": "f1plvi8r",
         }
       `);
@@ -221,7 +222,7 @@ describe('resolveStyleRules', () => {
 
     it('handles empty array of fallback values', () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      const warn = jest.spyOn(console, 'warn').mockImplementationOnce(() => {});
+      const warn = vi.spyOn(console, 'warn').mockImplementationOnce(() => {});
 
       const actual = resolveStyleRules({ color: [] });
       expect(actual).toMatchInlineSnapshot(``); /* empty result */
@@ -377,7 +378,7 @@ describe('resolveStyleRules', () => {
 
     it('errors if fallback values result in multiple properties in RTL, skips the property', () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
       expect(
         resolveStyleRules({
@@ -502,7 +503,7 @@ describe('resolveStyleRules', () => {
         }
       `);
       expect(result[0]).toMatchInlineSnapshot(`
-        Object {
+        {
           "b7rg5g": "fbmp7kx",
         }
       `);
@@ -519,7 +520,7 @@ describe('resolveStyleRules', () => {
         }
       `);
       expect(result[0]).toMatchInlineSnapshot(`
-        Object {
+        {
           "pmeytk": "f4ivup9",
         }
       `);
@@ -542,7 +543,7 @@ describe('resolveStyleRules', () => {
         }
       `);
       expect(result[0]).toMatchInlineSnapshot(`
-        Object {
+        {
           "b7rg5g": "fbmp7kx",
           "sj55zd": "fe3e8s9",
         }
@@ -930,7 +931,7 @@ describe('resolveStyleRules', () => {
       const resultC = resolveStyleRules({ borderRight: `5px solid red /* @noflip */`, borderBottom: `5px solid red` });
 
       expect(resultA[0]).toMatchInlineSnapshot(`
-        Object {
+        {
           "B0ocmuz": "fbhmu18",
           "Byoj8tv": 0,
           "uwmqm3": 0,
@@ -939,7 +940,7 @@ describe('resolveStyleRules', () => {
         }
       `);
       expect(resultB[0]).toMatchInlineSnapshot(`
-        Object {
+        {
           "B1bh7kg": 0,
           "Brv18ce": 0,
           "jh8l1e": 0,
@@ -948,7 +949,7 @@ describe('resolveStyleRules', () => {
         }
       `);
       expect(resultC[0]).toMatchInlineSnapshot(`
-        Object {
+        {
           "B9xav0g": 0,
           "Bekrc4i": 0,
           "Bgfg5da": "f171p8tk",

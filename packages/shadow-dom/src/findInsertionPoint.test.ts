@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import type { StyleBucketName } from '@griffel/core';
 
 import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint';

@@ -1,19 +1,26 @@
 /*
- * @jest-environment node
+ * @vitest-environment node
  */
 
 // 👆 this is intentionally to test in SSR like environment
 
+import { describe, it, test, expect, vi } from 'vitest';
 import type { GriffelRenderer } from '@griffel/core';
-import * as React from 'react';
+
+const { useInsertionEffect } = vi.hoisted(() => ({
+  useInsertionEffect: vi.fn(),
+}));
+
+vi.mock('react', async importOriginal => {
+  const actual = await importOriginal<typeof import('react')>();
+  return { ...actual, useInsertionEffect };
+});
 
 import { insertionFactory } from './insertionFactory';
 
 describe('insertionFactory (node)', () => {
   it('does not use insertionEffect', () => {
-    const useInsertionEffect = jest.spyOn(React, 'useInsertionEffect');
-
-    const renderer: Partial<GriffelRenderer> = { id: 'a', insertCSSRules: jest.fn() };
+    const renderer: Partial<GriffelRenderer> = { id: 'a', insertCSSRules: vi.fn() };
     const insertStyles = insertionFactory();
 
     insertStyles(renderer as GriffelRenderer, { d: ['a'] });

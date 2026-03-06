@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { fileTemplate } from './fileTemplate';
 import { type CSSShorthands } from './types';
 

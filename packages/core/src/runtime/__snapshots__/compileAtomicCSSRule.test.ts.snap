@@ -1,217 +1,217 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`compileAtomicCSSRule does not prefix align-content:center 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix align-content:center 1`] = `
+[
   ".foo{align-content:center;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix align-items:center 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix align-items:center 1`] = `
+[
   ".foo{align-items:center;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix align-self:center 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix align-self:center 1`] = `
+[
   ".foo{align-self:center;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation:3s linear 1s slidein; 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation:3s linear 1s slidein; 1`] = `
+[
   ".foo{animation:3s linear 1s slidein;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-delay:3s 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-delay:3s 1`] = `
+[
   ".foo{animation-delay:3s;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-direction:normal 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-direction:normal 1`] = `
+[
   ".foo{animation-direction:normal;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-duration:3s 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-duration:3s 1`] = `
+[
   ".foo{animation-duration:3s;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-fill-mode:both 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-fill-mode:both 1`] = `
+[
   ".foo{animation-fill-mode:both;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-iteration-count:10 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-iteration-count:10 1`] = `
+[
   ".foo{animation-iteration-count:10;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-name:foo 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-name:foo 1`] = `
+[
   ".foo{animation-name:foo;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-play-state:running 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-play-state:running 1`] = `
+[
   ".foo{animation-play-state:running;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix animation-timing-function:linear 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix animation-timing-function:linear 1`] = `
+[
   ".foo{animation-timing-function:linear;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix background-clip:content-box 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix background-clip:content-box 1`] = `
+[
   ".foo{background-clip:content-box;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix clip-path:circle(40%) 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix clip-path:circle(40%) 1`] = `
+[
   ".foo{clip-path:circle(40%);}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix columns:2 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix columns:2 1`] = `
+[
   ".foo{columns:2;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix display:flex 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix display:flex 1`] = `
+[
   ".foo{display:flex;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix display:grid 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix display:grid 1`] = `
+[
   ".foo{display:grid;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix display:inline-flex 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix display:inline-flex 1`] = `
+[
   ".foo{display:inline-flex;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix display:inline-grid 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix display:inline-grid 1`] = `
+[
   ".foo{display:inline-grid;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix filter:blur(5px) 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix filter:blur(5px) 1`] = `
+[
   ".foo{filter:blur(5px);}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix flex-basis:auto 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix flex-basis:auto 1`] = `
+[
   ".foo{flex-basis:auto;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix flex-direction:column 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix flex-direction:column 1`] = `
+[
   ".foo{flex-direction:column;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix flex-grow:1 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix flex-grow:1 1`] = `
+[
   ".foo{flex-grow:1;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix flex-shrink:1 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix flex-shrink:1 1`] = `
+[
   ".foo{flex-shrink:1;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix justify-content:center 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix justify-content:center 1`] = `
+[
   ".foo{justify-content:center;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix order:1 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix order:1 1`] = `
+[
   ".foo{order:1;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix position:sticky 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix position:sticky 1`] = `
+[
   ".foo{position:sticky;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix scroll-margin:0 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix scroll-margin:0 1`] = `
+[
   ".foo{scroll-margin:0;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix scroll-snap-type:none 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix scroll-snap-type:none 1`] = `
+[
   ".foo{scroll-snap-type:none;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix text-decoration:none 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix text-decoration:none 1`] = `
+[
   ".foo{text-decoration:none;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix text-size-adjust:none 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix text-size-adjust:none 1`] = `
+[
   ".foo{text-size-adjust:none;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix transform:none 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix transform:none 1`] = `
+[
   ".foo{transform:none;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix transition:margin-right 4s 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix transition:margin-right 4s 1`] = `
+[
   ".foo{transition:margin-right 4s;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix width:fit-content 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix width:fit-content 1`] = `
+[
   ".foo{width:fit-content;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix width:min-block-size 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix width:min-block-size 1`] = `
+[
   ".foo{width:min-block-size;}",
 ]
 `;
 
-exports[`compileAtomicCSSRule does not prefix writing-mode:vertical-lr 1`] = `
-Array [
+exports[`compileAtomicCSSRule > does not prefix writing-mode:vertical-lr 1`] = `
+[
   ".foo{writing-mode:vertical-lr;}",
 ]
 `;

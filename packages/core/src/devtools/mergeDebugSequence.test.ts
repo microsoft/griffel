@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { DEFINITION_LOOKUP_TABLE, RESET_HASH_PREFIX, SEQUENCE_PREFIX } from '../constants';
 import { makeResetStyles } from '../makeResetStyles';
 import { makeStyles } from '../makeStyles';
@@ -6,7 +7,7 @@ import { createDOMRenderer } from '../renderer/createDOMRenderer';
 import { mergeDebugSequence } from './mergeDebugSequence';
 import { getDebugClassNames } from './utils';
 
-jest.mock('./isDevToolsEnabled', () => ({
+vi.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
 }));
 

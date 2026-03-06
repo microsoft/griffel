@@ -1,8 +1,9 @@
+import { describe, it, expect, vi } from 'vitest';
 import { logError } from './logError';
 
 describe('logError', () => {
   it('logs in browser env', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation();
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     logError('An error occurred');
     expect(spy).toHaveBeenCalledTimes(1);

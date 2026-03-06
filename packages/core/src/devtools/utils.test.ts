@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import type { LookupItem } from '../types';
 import type { DebugSequence } from './types';
 import { getDebugClassNames } from './utils';

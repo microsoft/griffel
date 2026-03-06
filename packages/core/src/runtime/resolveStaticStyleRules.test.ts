@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { resolveStaticStyleRules } from './resolveStaticStyleRules';
 
 describe('resolveStaticStyleRules', () => {
@@ -12,8 +13,8 @@ describe('resolveStaticStyleRules', () => {
         },
       ]),
     ).toMatchInlineSnapshot(`
-      Array [
-        "@font-face{font-family:Open Sans;src:url(\\"webfont.woff2\\") format(\\"woff2\\");}",
+      [
+        "@font-face{font-family:Open Sans;src:url("webfont.woff2") format("woff2");}",
       ]
     `);
   });
@@ -32,7 +33,7 @@ describe('resolveStaticStyleRules', () => {
         },
       ]),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         "body{background:blue;}",
         ".foo{background:yellow;margin-left:5px;}",
       ]
@@ -41,7 +42,7 @@ describe('resolveStaticStyleRules', () => {
 
   it('handles css string', () => {
     expect(resolveStaticStyleRules(['body {background: red;} div {color: green;}'])).toMatchInlineSnapshot(`
-      Array [
+      [
         "body{background:red;}",
         "div{color:green;}",
       ]
@@ -58,7 +59,7 @@ describe('resolveStaticStyleRules', () => {
         },
       ]),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         "body{display:flex;display:-webkit-flex;}",
       ]
     `);

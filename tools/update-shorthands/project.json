@@ -22,10 +22,10 @@
       "outputs": []
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/tools/update-shorthands"],
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "jestConfig": "tools/update-shorthands/jest.config.ts"
+        "reportsDirectory": "../../coverage/tools/update-shorthands"
       }
     },
     "type-check": {

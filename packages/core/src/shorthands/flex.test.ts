@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { flex } from './flex';
 
 describe('flex', () => {
@@ -99,10 +100,10 @@ describe('flex', () => {
 
   it('for incorrect input', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(flex('hello', 'oh', 'no')).toEqual({});
 
-    jest.spyOn(console, 'error').mockClear();
+    vi.spyOn(console, 'error').mockClear();
   });
 });

@@ -1,3 +1,4 @@
+import { describe, it, test, expect, vi, beforeEach } from 'vitest';
 import { griffelRendererSerializer } from '../common/snapshotSerializers';
 import type { CSSRulesByBucket } from '../types';
 import { createDOMRenderer } from './createDOMRenderer';
@@ -10,7 +11,7 @@ describe('createDOMRenderer', () => {
   });
 
   it('should apply filter for css rules for multiple buckets', () => {
-    const mediaQueryFilter = jest.fn().mockImplementation(cssRule => {
+    const mediaQueryFilter = vi.fn().mockImplementation(cssRule => {
       return !cssRule.startsWith('@media');
     });
     const renderer = createDOMRenderer(document, { unstable_filterCSSRule: mediaQueryFilter });
@@ -31,7 +32,7 @@ describe('createDOMRenderer', () => {
   });
 
   it('should apply filter for css rules within single bucket', () => {
-    const mediaQueryFilter = jest.fn().mockImplementation(cssRule => {
+    const mediaQueryFilter = vi.fn().mockImplementation(cssRule => {
       return !cssRule.startsWith('@media');
     });
     const renderer = createDOMRenderer(document, { unstable_filterCSSRule: mediaQueryFilter });

@@ -1,3 +1,6 @@
+import { describe, it, test, expect, vi, afterEach } from 'vitest';
+import type { SnapshotSerializer } from 'vitest';
+
 import { mergeClasses } from './mergeClasses';
 import { makeStyles } from './makeStyles';
 import type { MakeStylesOptions } from './makeStyles';
@@ -15,7 +18,7 @@ function removeSequenceHash(classNames: string) {
   return (classNames.substr(0, indexOfSequence - 1) + classNames.substr(indexOfSequence + SEQUENCE_SIZE)).trim();
 }
 
-const mergeClassesSequenceHashRemoval: jest.SnapshotSerializerPlugin = {
+const mergeClassesSequenceHashRemoval: SnapshotSerializer = {
   test(value) {
     return typeof value === 'string';
   },
@@ -32,7 +35,7 @@ const options: MakeStylesOptions = {
 
 describe('mergeClasses', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('handles non makeStyles classes', () => {
@@ -115,7 +118,7 @@ describe('mergeClasses', () => {
 
   it('warns if an unregistered sequence was passed', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
     const className = makeStyles({ root: { display: 'block' } })(options).root;
 
     expect(mergeClasses(className, `${SEQUENCE_PREFIX}abcdefg_abcdefg oprsqrt`)).toMatchInlineSnapshot(
@@ -128,7 +131,7 @@ describe('mergeClasses', () => {
 
   it('warns if strings are not properly merged', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
     const className1 = makeStyles({ root: { display: 'block' } })(options).root;
     const className2 = makeStyles({ root: { display: 'flex' } })(options).root;
@@ -142,7 +145,7 @@ describe('mergeClasses', () => {
 
   it('warns if classes with different directions are passed', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
     const ltrClassName = makeStyles({ root: { display: 'block' } })(options).root;
     const rtlClassName = makeStyles({ root: { display: 'flex' } })({ ...options, dir: 'rtl' }).root;
@@ -153,7 +156,7 @@ describe('mergeClasses', () => {
 
   it('warns if contains multiple classes from makeResetStyles', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const error = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
     const className1 = makeResetStyles({ display: 'block' })(options);
     const className2 = makeResetStyles({ display: 'grid' })(options);
@@ -231,30 +234,24 @@ describe('mergeClasses', () => {
 });
 
 describe('merges classes and generates sequence hashes', () => {
-  it('development', () => {
-    jest.isolateModules(() => {
-      process.env.NODE_ENV = 'development';
+  it('development', async () => {
+    vi.resetModules();
+    process.env.NODE_ENV = 'development';
 
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { mergeClasses } = require('./mergeClasses');
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { makeStyles } = require('./makeStyles');
-      const className1 = makeStyles({ root: { display: 'block' } })(options).root;
-      const className2 = makeStyles({ root: { display: 'flex' } })(options).root;
-      expect(mergeClasses(className1, className2)).toBe('___1gzszts_39qb7g0 f22iagw');
-    });
+    const { mergeClasses } = await import('./mergeClasses');
+    const { makeStyles } = await import('./makeStyles');
+    const className1 = makeStyles({ root: { display: 'block' } })(options).root;
+    const className2 = makeStyles({ root: { display: 'flex' } })(options).root;
+    expect(mergeClasses(className1, className2)).toBe('___1gzszts_39qb7g0 f22iagw');
   });
   it('production', async () => {
-    jest.isolateModules(() => {
-      process.env.NODE_ENV = 'production';
+    vi.resetModules();
+    process.env.NODE_ENV = 'production';
 
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { mergeClasses } = require('./mergeClasses');
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { makeStyles } = require('./makeStyles');
-      const className1 = makeStyles({ root: { display: 'block' } })(options).root;
-      const className2 = makeStyles({ root: { display: 'flex' } })(options).root;
-      expect(mergeClasses(className1, className2)).toBe('___1gzszts f22iagw');
-    });
+    const { mergeClasses } = await import('./mergeClasses');
+    const { makeStyles } = await import('./makeStyles');
+    const className1 = makeStyles({ root: { display: 'block' } })(options).root;
+    const className2 = makeStyles({ root: { display: 'flex' } })(options).root;
+    expect(mergeClasses(className1, className2)).toBe('___1gzszts f22iagw');
   });
 });

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { type GriffelStyle } from '@griffel/style-types';
 import { borderBottom } from './borderBottom';
 

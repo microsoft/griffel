@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { outline } from './outline';
 describe('outline', () => {
   it('for a given width', () => {

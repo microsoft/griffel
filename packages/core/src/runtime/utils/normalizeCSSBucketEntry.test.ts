@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { normalizeCSSBucketEntry } from './normalizeCSSBucketEntry';
 
 describe('normalizeCSSBucketEntry', () => {

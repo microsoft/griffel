@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { SEQUENCE_PREFIX } from '../constants';
 import { makeStyles } from '../makeStyles';
 import { mergeClasses } from '../mergeClasses';
@@ -5,7 +6,7 @@ import { createDOMRenderer } from '../renderer/createDOMRenderer';
 import type { MakeStylesOptions } from '../makeStyles';
 import { debugData } from './store';
 
-jest.mock('./isDevToolsEnabled', () => ({
+vi.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
 }));
 

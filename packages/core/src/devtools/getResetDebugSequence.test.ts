@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { RESET_HASH_PREFIX } from '../constants';
 import { makeResetStyles } from '../makeResetStyles';
 import type { MakeStylesOptions } from '../makeStyles';
@@ -5,7 +6,7 @@ import { mergeClasses } from '../mergeClasses';
 import { createDOMRenderer } from '../renderer/createDOMRenderer';
 import { getResetDebugSequence } from './getResetDebugSequence';
 
-jest.mock('./isDevToolsEnabled', () => ({
+vi.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,
 }));
 
@@ -35,7 +36,7 @@ describe('getResetDebugSequence', () => {
       slot: 'makeResetStyles()',
     });
     expect(result.rules).toMatchInlineSnapshot(`
-      Object {
+      {
         "r1l95nvm": ".r1l95nvm{margin:0;padding:0;}",
       }
     `);
@@ -59,7 +60,7 @@ describe('getResetDebugSequence', () => {
       slot: 'makeResetStyles()',
     });
     expect(result.rules).toMatchInlineSnapshot(`
-      Object {
+      {
         "rf14qlw": ".rf14qlw{margin:0;padding:0;}.rf14qlw:hover{color:blue;}.rf14qlw .foo{color:red;}",
       }
     `);

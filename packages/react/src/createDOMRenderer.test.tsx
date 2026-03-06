@@ -1,3 +1,5 @@
+import { describe, it, test, expect, vi } from 'vitest';
+import type { Mock } from 'vitest';
 import { createDOMRenderer, mergeClasses } from '@griffel/core';
 import * as React from 'react';
 import { hydrateRoot } from 'react-dom/client';
@@ -9,11 +11,11 @@ import { RendererProvider } from './RendererContext';
 import { renderToStyleElements } from './renderToStyleElements';
 import { useInsertionEffect as _useInsertionEffect } from './useInsertionEffect';
 
-jest.mock('./useInsertionEffect', () => ({
-  useInsertionEffect: jest.fn(),
+vi.mock('./useInsertionEffect', () => ({
+  useInsertionEffect: vi.fn(),
 }));
 
-const useInsertionEffect = _useInsertionEffect as jest.MockedFunction<typeof React.useInsertionEffect>;
+const useInsertionEffect = _useInsertionEffect as Mock<typeof React.useInsertionEffect>;
 
 describe('createDOMRenderer', () => {
   it('rehydrateCache() avoids double insertion', () => {
@@ -68,7 +70,7 @@ describe('createDOMRenderer', () => {
 
     // Ensure that all styles are inserted into the cache
     expect(serverRenderer.insertionCache).toMatchInlineSnapshot(`
-      Object {
+      {
         ".f1p9cr64{animation-name:f1kgwxhb;}": "d",
         ".fe3e8s9{color:red;}": "d",
         ".rp2atum:hover{color:blue;}": "r",
@@ -96,7 +98,7 @@ describe('createDOMRenderer', () => {
     // (this tests internal implementation, but there is no other way?)
     const styleElementsBeforeHydration = document.querySelectorAll<HTMLStyleElement>('style');
     const insertRules = [...(styleElementsBeforeHydration as unknown as HTMLStyleElement[])].map(styleEl =>
-      jest.spyOn(styleEl.sheet!, 'insertRule'),
+      vi.spyOn(styleEl.sheet!, 'insertRule'),
     );
 
     React.act(() => {
