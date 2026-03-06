@@ -10500,28 +10500,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"beachball@patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch::locator=griffel-repository%40workspace%3A.":
-  version: 2.31.5
-  resolution: "beachball@patch:beachball@npm%3A2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch::version=2.31.5&hash=21277d&locator=griffel-repository%40workspace%3A."
-  dependencies:
-    cosmiconfig: "npm:^7.0.0"
-    execa: "npm:^5.0.0"
-    fs-extra: "npm:^10.0.0"
-    lodash: "npm:^4.17.15"
-    minimatch: "npm:^3.0.4"
-    p-limit: "npm:^3.0.2"
-    prompts: "npm:^2.4.2"
-    semver: "npm:^7.0.0"
-    toposort: "npm:^2.0.2"
-    uuid: "npm:^9.0.0"
-    workspace-tools: "npm:^0.29.0"
-    yargs-parser: "npm:^21.0.0"
-  bin:
-    beachball: bin/beachball.js
-  checksum: 10/01fdff91134d30225df12ecea3c73cdd0498d7d281c83f94acf7dacebd872d0d993f38efe4fca26a3a8f88dbf9843c8afe2c73e92f02c38840d798875b261ac1
-  languageName: node
-  linkType: hard
-
 "bestzip@npm:2.2.0":
   version: 2.2.0
   resolution: "bestzip@npm:2.2.0"
