@@ -31,12 +31,12 @@ const compilationStub = {} as Compilation;
  *         tslib.js
  *         tslib.es6.js
  *       @babel/
- *         helpers/
+ *         runtime/
  *           package.json   (CJS-only exception)
- *           lib/
- *             index.js
- *           esm/
- *             index.js
+ *           helpers/
+ *             interopRequireDefault.js
+ *             esm/
+ *               interopRequireDefault.js
  *       @swc/
  *         helpers/
  *           package.json   (CJS-only exception)
@@ -105,18 +105,18 @@ beforeAll(() => {
     }),
   );
 
-  // @babel/helpers — CJS-only exception
-  writeFile(path.join(tmpDir, 'node_modules', '@babel', 'helpers', 'lib', 'index.js'), 'module.exports = {};');
-  writeFile(path.join(tmpDir, 'node_modules', '@babel', 'helpers', 'esm', 'index.js'), 'export {};');
+  // @babel/runtime — CJS-only exception
+  writeFile(path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'helpers', 'interopRequireDefault.js'), 'module.exports = {};');
+  writeFile(path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'helpers', 'esm', 'interopRequireDefault.js'), 'export {};');
   writeFile(
-    path.join(tmpDir, 'node_modules', '@babel', 'helpers', 'package.json'),
+    path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'package.json'),
     JSON.stringify({
-      name: '@babel/helpers',
-      main: './lib/index.js',
+      name: '@babel/runtime',
+      main: './helpers/interopRequireDefault.js',
       exports: {
-        '.': {
-          import: './esm/index.js',
-          require: './lib/index.js',
+        './helpers/interopRequireDefault': {
+          import: './helpers/esm/interopRequireDefault.js',
+          require: './helpers/interopRequireDefault.js',
         },
       },
     }),
@@ -178,11 +178,12 @@ describe('CJS-only exceptions', () => {
     expect(resolved).not.toContain('es6');
   });
 
-  it('resolves @babel/helpers with CJS conditions', () => {
+  it('resolves @babel/runtime with CJS conditions', () => {
     const resolve = createResolverFactory()(compilationStub);
-    const resolved = resolve('@babel/helpers', makeContext('@babel/helpers'));
+    const resolved = resolve('@babel/runtime/helpers/interopRequireDefault', makeContext('@babel/runtime/helpers/interopRequireDefault'));
 
-    expect(resolved).toContain(path.join('lib', 'index.js'));
+    expect(resolved).toContain(path.join('helpers', 'interopRequireDefault.js'));
+    expect(resolved).not.toContain('esm');
   });
 
   it('resolves @swc/helpers with CJS conditions', () => {
