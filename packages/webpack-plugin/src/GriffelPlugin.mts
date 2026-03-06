@@ -2,7 +2,7 @@ import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core'
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
 import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
-import { createEnhancedResolverFactory } from './resolver/createEnhancedResolverFactory.mjs';
+import { createResolverFactory } from './resolver/createResolverFactory.mjs';
 import { type TransformResolverFactory } from './resolver/types.mjs';
 import { parseCSSRules } from './utils/parseCSSRules.mjs';
 import { sortCSSRules } from './utils/sortCSSRules.mjs';
@@ -125,7 +125,7 @@ export class GriffelPlugin {
     this.#attachToEntryPoint = options.unstable_attachToEntryPoint;
     this.#collectStats = options.collectStats ?? false;
     this.#compareMediaQueries = options.compareMediaQueries ?? defaultCompareMediaQueries;
-    this.#resolverFactory = options.resolverFactory ?? createEnhancedResolverFactory();
+    this.#resolverFactory = options.resolverFactory ?? createResolverFactory();
   }
 
   apply(compiler: Compiler): void {

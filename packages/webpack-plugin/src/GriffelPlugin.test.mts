@@ -10,7 +10,7 @@ import { merge } from 'webpack-merge';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-import { createOxcResolverFactory } from './resolver/createOxcResolverFactory.mjs';
+import { createResolverFactory } from './resolver/createResolverFactory.mjs';
 
 await vi.hoisted(mock);
 
@@ -102,7 +102,7 @@ async function compileSourceWithWebpack(
     },
     plugins: [
       new GriffelPlugin({
-        resolverFactory: createOxcResolverFactory(),
+        resolverFactory: createResolverFactory(),
         ...options.pluginOptions,
       }),
       new MiniCssExtractPlugin({
