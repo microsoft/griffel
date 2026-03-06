@@ -5,24 +5,6 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "packages/shadow-dom/dist",
-        "generateExportsField": false,
-        "skipTypeField": true,
-        "skipTypeCheck": true,
-        "tsConfig": "packages/shadow-dom/tsconfig.lib.json",
-        "entryFile": "packages/shadow-dom/src/index.ts",
-        "project": "packages/shadow-dom/package.json",
-        "compiler": "babel",
-        "sourceMap": true,
-        "rollupConfig": ["@nx/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
-        "external": ["tslib"],
-        "format": ["esm", "cjs"]
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
