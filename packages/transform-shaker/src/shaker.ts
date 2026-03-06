@@ -98,10 +98,11 @@ function removeStatementRange(s: MagicString, sourceCode: string, start: number,
 function removeDeadCode(node: Node, alive: Set<Node>, s: MagicString, sourceCode: string): void {
   const keys = getVisitorKeys(node);
 
-  for (const key of keys) {
+  for (const key of keys as string[]) {
     if (key === 'typeArguments' || key === 'typeParameters') continue;
 
-    const subNode = (node as Record<string, unknown>)[key];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const subNode = (node as any)[key];
 
     if (Array.isArray(subNode)) {
       const elements = subNode.filter((el: unknown): el is Node => el != null && isNode(el));

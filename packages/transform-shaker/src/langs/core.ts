@@ -246,7 +246,7 @@ function isLazyInit(statement: Node & { type: 'ExpressionStatement'; expression:
   return isIdentifier(left) && isAssignmentExpression(right);
 }
 
-export const visitors: Visitors = {
+export const visitors = {
   ExpressionStatement(this: GraphBuilderState, node: Node & { type: 'ExpressionStatement'; expression: Node }) {
     this.baseVisit(node);
 
@@ -517,8 +517,9 @@ export const visitors: Visitors = {
             this.graph.imports.set(source, []);
           }
 
-          this.graph.addEdge((parent.callee as MemberExpressionNode).object, parent);
-          this.graph.reexports.push((parent.callee as MemberExpressionNode).object as IdentifierNode);
+          const callee = (parent as unknown as CallExpressionNode).callee as MemberExpressionNode;
+          this.graph.addEdge(callee.object, parent);
+          this.graph.reexports.push(callee.object as IdentifierNode);
           this.graph.importTypes.set(source, 'reexport');
         }
 
@@ -594,7 +595,7 @@ export const visitors: Visitors = {
       this.graph.addEdge(node, node.expressions[node.expressions.length - 1]);
     }
   },
-};
+} as Visitors;
 
 export const identifierHandlers: IdentifierHandlers = {
   declare: [
