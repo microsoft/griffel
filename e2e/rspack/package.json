@@ -3,8 +3,8 @@
   "private": true,
   "devDependencies": {
     "@griffel/e2e-utils": "workspace:*",
-    "@griffel/react": "workspace:*",
-    "@griffel/webpack-extraction-plugin": "workspace:*",
-    "@griffel/webpack-loader": "workspace:*"
+    "@griffel/react": "^1.6.0",
+    "@griffel/webpack-extraction-plugin": "^0.5.13",
+    "@griffel/webpack-loader": "^2.2.22"
   }
 }

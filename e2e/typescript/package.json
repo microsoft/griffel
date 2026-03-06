@@ -3,6 +3,6 @@
   "private": true,
   "devDependencies": {
     "@griffel/e2e-utils": "workspace:*",
-    "@griffel/style-types": "workspace:*"
+    "@griffel/style-types": "^1.3.0"
   }
 }
