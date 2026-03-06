@@ -1,4 +1,4 @@
-import { describe, it, test, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { griffelRendererSerializer } from '../common/snapshotSerializers';
 import type { CSSRulesByBucket } from '../types';
 import { createDOMRenderer } from './createDOMRenderer';

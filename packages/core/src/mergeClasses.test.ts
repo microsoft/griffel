@@ -1,4 +1,4 @@
-import { describe, it, test, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import type { SnapshotSerializer } from 'vitest';
 
 import { mergeClasses } from './mergeClasses';

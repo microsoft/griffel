@@ -1,4 +1,4 @@
-import { describe, it, test, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import type { SnapshotSerializer } from 'vitest';
 import { compile, middleware, serialize, stringify } from 'stylis';
 import { sortClassesInAtRulesPlugin } from './sortClassesInAtRulesPlugin';

@@ -1,4 +1,4 @@
-import { describe, it, test, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import type { GriffelRenderer } from '@griffel/core';
 import { createDOMRenderer } from '@griffel/core';
 import * as prettier from 'prettier';

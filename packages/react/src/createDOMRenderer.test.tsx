@@ -1,4 +1,4 @@
-import { describe, it, test, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 import { createDOMRenderer, mergeClasses } from '@griffel/core';
 import * as React from 'react';

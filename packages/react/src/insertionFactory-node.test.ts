@@ -4,7 +4,7 @@
 
 // 👆 this is intentionally to test in SSR like environment
 
-import { describe, it, test, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import type { GriffelRenderer } from '@griffel/core';
 
 const { useInsertionEffect } = vi.hoisted(() => ({

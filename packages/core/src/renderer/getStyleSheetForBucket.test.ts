@@ -1,4 +1,4 @@
-import { describe, it, test, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { DATA_BUCKET_ATTR } from '../constants';
 import { createDOMRenderer } from './createDOMRenderer';
 import { getStyleSheetForBucket, styleBucketOrdering } from './getStyleSheetForBucket';

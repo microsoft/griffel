@@ -76,6 +76,7 @@
         "**/*.test.tsx",
         "**/jest.setup.js",
         "**/jest.setup.ts",
+        "**/vitest.config.ts",
         "**/.storybook/main.js"
       ],
       "rules": {

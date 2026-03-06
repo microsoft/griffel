@@ -16,6 +16,7 @@ describe('resolveStyleRules', () => {
   describe('unsupported css properties', () => {
     let consoleSpy: ReturnType<typeof vi.spyOn>;
     beforeAll(() => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
