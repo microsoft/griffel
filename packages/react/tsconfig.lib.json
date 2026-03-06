@@ -6,7 +6,13 @@
     "jsx": "react",
     "types": ["node", "environment"]
   },
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__fixture__/", "src/**/__mocks__/"],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.stories.tsx",
+    "src/**/__fixture__/",
+    "src/**/__mocks__/"
+  ],
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [{ "path": "../core/tsconfig.lib.json" }]
 }
