@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Type definitions now require TypeScript >= 4.4. The legacy `typesVersions` fallback for TS <4.4 has been removed. If you need to support an older TypeScript version, pin `@griffel/style-types` to a previous version.",
+  "packageName": "@griffel/style-types",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
