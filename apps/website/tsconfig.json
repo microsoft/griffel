@@ -2,14 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "outDir": "../../dist/out-tsc/apps/website",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
+    "outDir": "../../dist/out-tsc",
     "types": [
       "../../node_modules/@docusaurus/module-type-aliases",
       "../../node_modules/@docusaurus/theme-classic",
