@@ -104,6 +104,19 @@ defineHandler('MemberExpression', 'property', memberExpressionPropertyHandler);
 defineHandler('OptionalMemberExpression', 'property', memberExpressionPropertyHandler);
 
 /*
+ * Special handler for Property:key — computed keys are references, non-computed are labels.
+ */
+defineHandler('Property', 'key', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+  if ((parent as Node & { computed: boolean }).computed) {
+    const declaration = builder.scope.addReference(node);
+    if (declaration) {
+      builder.graph.addEdge(node, declaration);
+    }
+  }
+  // Non-computed keys are just labels — no action needed (equivalent to 'keep')
+});
+
+/*
  * Special handler for Property:value — context-dependent.
  * In object expressions, value identifiers are references.
  * In destructuring patterns (ObjectPattern), value identifiers are declarations.
