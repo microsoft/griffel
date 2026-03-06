@@ -3,7 +3,7 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  */
 
-import type { Node } from '@babel/types';
+import type { Node } from 'oxc-parser';
 
 import type { VisitorKeys } from './utils.js';
 import DepsGraph from './DepsGraph.js';

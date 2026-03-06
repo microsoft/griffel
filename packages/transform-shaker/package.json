@@ -18,16 +18,16 @@
   },
   "dependencies": {
     "@babel/core": "^7.23.2",
-    "@babel/generator": "^7.23.0",
     "@babel/plugin-transform-runtime": ">=7",
     "@babel/plugin-transform-template-literals": ">=7",
     "@babel/preset-env": ">=7",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "debug": "^4.3.0"
+    "debug": "^4.3.0",
+    "magic-string": "^0.30.19",
+    "oxc-parser": "^0.116.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.19",
-    "@types/babel__generator": "^7.6.4",
     "@types/debug": "^4.1.7",
     "dedent": "^1.5.3"
   }

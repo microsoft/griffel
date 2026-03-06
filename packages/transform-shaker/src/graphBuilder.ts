@@ -3,8 +3,7 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  */
 
-import { types as t } from '@babel/core';
-import type { AssignmentExpression, Node } from '@babel/types';
+import type { Node } from 'oxc-parser';
 
 import { isNode, getVisitorKeys } from './utils.js';
 import type { VisitorKeys } from './utils.js';
@@ -13,16 +12,39 @@ import GraphBuilderState from './GraphBuilderState.js';
 import { getVisitors } from './Visitors.js';
 import ScopeManager from './scope.js';
 import type { VisitorAction, Visitor } from './types.js';
+import {
+  isUnaryExpression,
+  isCallExpression,
+  isIdentifier,
+  isMemberExpression,
+  isStringLiteral,
+  isObjectExpression,
+  isObjectProperty,
+  isAssignmentExpression,
+  isVariableDeclaration,
+  isVariableDeclarator,
+  isExpression,
+  isStatement,
+  isScopable,
+  isFunction,
+  isProgram,
+} from './ast.js';
 
-const isVoid = (node: Node): boolean => t.isUnaryExpression(node) && node.operator === 'void';
+type IdentifierNode = Node & { type: 'Identifier'; name: string };
+type AssignmentExpressionNode = Node & { type: 'AssignmentExpression'; operator: string; left: Node; right: Node };
 
-function isTSExporterCall(node: Node): node is t.CallExpression & { arguments: [t.StringLiteral, t.Identifier] } {
-  if (!t.isCallExpression(node) || node.arguments.length !== 2) {
+const isVoid = (node: Node): boolean => isUnaryExpression(node) && node.operator === 'void';
+
+function isTSExporterCall(node: Node): node is Node & {
+  type: 'CallExpression';
+  arguments: [Node & { type: 'Literal'; value: string }, IdentifierNode];
+} {
+  if (!isCallExpression(node) || node.arguments.length !== 2) {
     return false;
   }
 
   // FIXME: more precisely check
-  return !(!t.isIdentifier(node.callee) || node.callee.name !== 'exporter');
+  return !(!isIdentifier(node.callee) || node.callee.name !== 'exporter');
 }
 
 class GraphBuilder extends GraphBuilderState {
@@ -37,15 +59,15 @@ class GraphBuilder extends GraphBuilderState {
   }
 
   private isExportsIdentifier(node: Node) {
-    if (t.isIdentifier(node)) {
+    if (isIdentifier(node)) {
       return this.scope.getDeclaration(node) === ScopeManager.globalExportsIdentifier;
     }
 
-    if (t.isMemberExpression(node)) {
+    if (isMemberExpression(node)) {
       return (
-        t.isIdentifier(node.property) &&
+        isIdentifier(node.property) &&
         node.property.name === 'exports' &&
-        t.isIdentifier(node.object) &&
+        isIdentifier(node.object) &&
         this.scope.getDeclaration(node.object) === ScopeManager.globalModuleIdentifier
       );
     }
@@ -53,8 +75,8 @@ class GraphBuilder extends GraphBuilderState {
     return false;
   }
 
-  private isExportsAssignment(node: Node): node is AssignmentExpression {
-    if (node && t.isAssignmentExpression(node) && t.isMemberExpression(node.left)) {
+  private isExportsAssignment(node: Node): node is AssignmentExpressionNode {
+    if (node && isAssignmentExpression(node) && isMemberExpression(node.left)) {
       if (this.isExportsIdentifier(node.left)) {
         // This is a default export like `module.exports = 42`
         return true;
@@ -78,8 +100,8 @@ class GraphBuilder extends GraphBuilderState {
    * both of them are required for evaluating the value of the expression
    */
   baseVisit<TNode extends Node>(node: TNode, ignoreDeps = false) {
-    const dependencies: t.Node[] = [];
-    const isExpression = t.isExpression(node);
+    const dependencies: Node[] = [];
+    const isExpr = isExpression(node);
     const keys = getVisitorKeys(node);
     keys.forEach(key => {
       // Ignore all types
@@ -101,7 +123,7 @@ class GraphBuilder extends GraphBuilderState {
       }
     });
 
-    if (isExpression && !ignoreDeps) {
+    if (isExpr && !ignoreDeps) {
       dependencies.forEach(dep => this.graph.addEdge(node, dep));
     }
 
@@ -119,19 +141,16 @@ class GraphBuilder extends GraphBuilderState {
     }
 
     if (this.isExportsAssignment(node) && !this.isExportsAssignment(node.right) && !isVoid(node.right)) {
-      if (
-        t.isMemberExpression(node.left) &&
-        (t.isIdentifier(node.left.property) || t.isStringLiteral(node.left.property))
-      ) {
-        if (t.isIdentifier(node.left.object) && node.left.object.name === 'module') {
+      if (isMemberExpression(node.left) && (isIdentifier(node.left.property) || isStringLiteral(node.left.property))) {
+        if (isIdentifier(node.left.object) && node.left.object.name === 'module') {
           // It's a batch or default export
-          if (t.isObjectExpression(node.right)) {
+          if (isObjectExpression(node.right)) {
             // Batch export is a very particular case.
             // Each property of the assigned object is independent named export.
             // We also need to specify all dependencies and call `visit` for every value.
-            this.visit(node.left, node, 'left' as VisitorKeys<TNode & AssignmentExpression>);
+            this.visit(node.left, node, 'left' as VisitorKeys<TNode & AssignmentExpressionNode>);
             node.right.properties.forEach(prop => {
-              if (t.isObjectProperty(prop) && t.isIdentifier(prop.key)) {
+              if (isObjectProperty(prop) && isIdentifier(prop.key)) {
                 this.visit(prop.value, prop, 'value');
                 this.graph.addExport(prop.key.name, prop);
                 this.graph.addEdge(prop, node.right);
@@ -151,40 +170,42 @@ class GraphBuilder extends GraphBuilderState {
         } else {
           // it can be either `exports.name` or `exports["name"]`
           const nameNode = node.left.property;
-          this.graph.addExport(t.isStringLiteral(nameNode) ? nameNode.value : nameNode.name, node);
+          this.graph.addExport(isStringLiteral(nameNode) ? nameNode.value : (nameNode as IdentifierNode).name, node);
         }
       }
     } else if (isTSExporterCall(node)) {
       const [name, identifier] = node.arguments;
       this.graph.addExport(name.value, node);
       this.graph.addEdge(node, identifier);
-    } else if (t.isVariableDeclaration(node)) {
+    } else if (isVariableDeclaration(node)) {
       // We might be assigning to the exports, eg. `var Padding = exports.Padding = ...`
       // or it might be a sequence and look like var foo = 1, var Name = exports.name = ...
       node.declarations.forEach(declaration => {
-        if (t.isVariableDeclarator(declaration) && t.isAssignmentExpression(declaration.init)) {
-          let currentAssignmentExpression: t.Expression = declaration.init;
+        if (isVariableDeclarator(declaration) && declaration.init && isAssignmentExpression(declaration.init)) {
+          let currentExpression: Node = declaration.init;
           let addedExport = false;
-          const edgesToAdd = [];
+          const edgesToAdd: Node[] = [];
 
           // loop through the assignments looking for possible exports
-          while (t.isAssignmentExpression(currentAssignmentExpression)) {
-            edgesToAdd.push(currentAssignmentExpression);
+          while (isAssignmentExpression(currentExpression)) {
+            edgesToAdd.push(currentExpression);
             if (
-              this.isExportsAssignment(currentAssignmentExpression) &&
-              t.isMemberExpression(currentAssignmentExpression.left) &&
-              (t.isIdentifier(currentAssignmentExpression.left.property) ||
-                t.isStringLiteral(currentAssignmentExpression.left.property))
+              this.isExportsAssignment(currentExpression) &&
+              isMemberExpression(currentExpression.left) &&
+              (isIdentifier(currentExpression.left.property) || isStringLiteral(currentExpression.left.property))
             ) {
-              const nameNode = currentAssignmentExpression.left.property;
-              this.graph.addExport(t.isStringLiteral(nameNode) ? nameNode.value : nameNode.name, node);
+              const nameNode = currentExpression.left.property;
+              this.graph.addExport(
+                isStringLiteral(nameNode) ? nameNode.value : (nameNode as IdentifierNode).name,
+                node,
+              );
               addedExport = true;
               edgesToAdd.push(declaration);
-              edgesToAdd.push(currentAssignmentExpression.left);
-              edgesToAdd.push(currentAssignmentExpression.right);
+              edgesToAdd.push(currentExpression.left);
+              edgesToAdd.push(currentExpression.right);
             }
 
-            currentAssignmentExpression = currentAssignmentExpression.right;
+            currentExpression = currentExpression.right;
           }
           if (addedExport) {
             edgesToAdd.forEach(edge => {
@@ -195,11 +216,11 @@ class GraphBuilder extends GraphBuilderState {
       });
     }
 
-    const isScopable = t.isScopable(node);
-    const isFunction = t.isFunction(node);
+    const isScopableNode = isScopable(node);
+    const isFunctionNode = isFunction(node);
 
-    if (isScopable) this.scope.new(t.isProgram(node) || t.isFunction(node));
-    if (isFunction) this.fnStack.push(node);
+    if (isScopableNode) this.scope.new(isProgram(node) || isFunction(node));
+    if (isFunctionNode) this.fnStack.push(node);
 
     const visitors = getVisitors(node);
     let action: VisitorAction = undefined;
@@ -214,13 +235,13 @@ class GraphBuilder extends GraphBuilderState {
       this.baseVisit(node);
     }
 
-    if (parent && action !== 'ignore' && t.isStatement(node)) {
+    if (parent && action !== 'ignore' && isStatement(node)) {
       // Statement always depends on its parent
       this.graph.addEdge(node, parent);
     }
 
-    if (isFunction) this.fnStack.pop();
-    if (isScopable) this.scope.dispose();
+    if (isFunctionNode) this.fnStack.pop();
+    if (isScopableNode) this.scope.dispose();
 
     return action;
   }

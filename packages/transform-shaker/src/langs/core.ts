@@ -3,67 +3,73 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  */
 
-import { types as t } from '@babel/core';
-import type {
-  AssignmentExpression,
-  Block,
-  CallExpression,
-  CatchClause,
-  Directive,
-  ExpressionStatement,
-  ForInStatement,
-  ForStatement,
-  Function as FunctionNode,
-  Identifier,
-  IfStatement,
-  MemberExpression,
-  Node,
-  ObjectExpression,
-  SequenceExpression,
-  SwitchCase,
-  SwitchStatement,
-  Terminatorless,
-  TryStatement,
-  VariableDeclaration,
-  VariableDeclarator,
-  WhileStatement,
-} from '@babel/types';
+import type { Node } from 'oxc-parser';
 
 import { peek } from '../utils.js';
 import type DepsGraph from '../DepsGraph.js';
 import type GraphBuilderState from '../GraphBuilderState.js';
 import ScopeManager from '../scope.js';
 import type { IdentifierHandlers, Visitors } from '../types.js';
+import {
+  isIdentifier,
+  isStringLiteral,
+  isNumericLiteral,
+  isMemberExpression,
+  isCallExpression,
+  isObjectProperty,
+  isObjectMethod,
+  isSpreadElement,
+  isVariableDeclaration,
+  isVariableDeclarator,
+  isAssignmentExpression,
+  isLogicalExpression,
+  isSequenceExpression,
+  isExpressionStatement,
+  isFunctionDeclaration,
+  isFunctionExpression,
+  isProgram,
+  isBreakStatement,
+  isContinueStatement,
+} from '../ast.js';
 
-function isIdentifier(node: Node, name?: string | string[]): node is Identifier {
+type IdentifierNode = Node & { type: 'Identifier'; name: string };
+type AssignmentExpressionNode = Node & { type: 'AssignmentExpression'; left: Node; right: Node };
+type CallExpressionNode = Node & { type: 'CallExpression'; callee: Node; arguments: Node[] };
+type MemberExpressionNode = Node & {
+  type: 'MemberExpression';
+  object: Node;
+  property: Node;
+  computed: boolean;
+};
+
+function isIdentifierWithName(node: Node, name?: string | string[]): node is IdentifierNode {
   return (
-    t.isIdentifier(node) &&
-    (name === undefined || (Array.isArray(name) ? name.includes(node.name) : node.name === name))
+    isIdentifier(node) && (name === undefined || (Array.isArray(name) ? name.includes(node.name) : node.name === name))
   );
 }
 
 type SideEffect = [
   {
-    callee?: (child: CallExpression['callee']) => boolean;
-    arguments?: (child: CallExpression['arguments']) => boolean;
+    callee?: (child: Node) => boolean;
+    arguments?: (child: Node[]) => boolean;
   },
-  (node: CallExpression, state: GraphBuilderState) => void,
+  (node: CallExpressionNode, state: GraphBuilderState) => void,
 ];
 
 const sideEffects: SideEffect[] = [
   [
     // if the first argument of forEach is required, mark forEach as required
     {
-      callee: node => t.isMemberExpression(node) && t.isIdentifier(node.property) && node.property.name === 'forEach',
+      callee: node => isMemberExpression(node) && isIdentifier(node.property) && node.property.name === 'forEach',
     },
     (node, state) => state.graph.addEdge(node.arguments[0], node),
   ],
 ];
 
-function getCallee(node: CallExpression): Node {
-  if (t.isSequenceExpression(node.callee) && node.callee.expressions.length === 2) {
+function getCallee(node: CallExpressionNode): Node {
+  if (isSequenceExpression(node.callee) && node.callee.expressions.length === 2) {
     const [first, second] = node.callee.expressions;
-    if (t.isNumericLiteral(first) && first.value === 0) {
+    if (isNumericLiteral(first) && first.value === 0) {
       return second;
     }
   }
@@ -71,17 +77,20 @@ function getCallee(node: CallExpression): Node {
   return node.callee;
 }
 
-function isTSLib(node: t.Node, scope: ScopeManager) {
-  if (!t.isIdentifier(node)) {
+function isTSLib(node: Node, scope: ScopeManager) {
+  if (!isIdentifier(node)) {
     return false;
   }
 
   const declaration = scope.getDeclaration(node);
-  return t.isIdentifier(declaration) && declaration.name === 'tslib_1';
+  return isIdentifier(declaration) && declaration.name === 'tslib_1';
 }
 
-function isTSReexport(node: t.Node, scope: ScopeManager): node is t.Node & { callee: { object: t.Identifier } } {
-  if (!t.isCallExpression(node)) {
+function isTSReexport(
+  node: Node,
+  scope: ScopeManager,
+): node is CallExpressionNode & { callee: MemberExpressionNode & { object: IdentifierNode } } {
+  if (!isCallExpression(node)) {
     return false;
   }
 
@@ -90,19 +99,19 @@ function isTSReexport(node: t.Node, scope: ScopeManager): node is t.Node & { cal
     arguments: [, exportsIdentifier],
   } = node;
   if (
-    !t.isIdentifier(exportsIdentifier) ||
+    !isIdentifier(exportsIdentifier) ||
     exportsIdentifier.name !== 'exports' ||
     scope.getDeclaration(exportsIdentifier) !== ScopeManager.globalExportsIdentifier
   ) {
     return false;
   }
 
-  if (!t.isMemberExpression(callee)) {
+  if (!isMemberExpression(callee)) {
     return false;
   }
 
   const { object, property } = callee;
-  if (!t.isIdentifier(property) || property.name !== '__exportStar') {
+  if (!isIdentifier(property) || property.name !== '__exportStar') {
     return false;
   }
 
@@ -110,20 +119,20 @@ function isTSReexport(node: t.Node, scope: ScopeManager): node is t.Node & { cal
 }
 
 function findWildcardReexportStatement(
-  node: t.CallExpression,
+  node: CallExpressionNode,
   identifierName: string,
   graph: DepsGraph,
-): t.Statement | null {
-  if (!t.isIdentifier(node.callee) || node.callee.name !== 'require') return null;
+): Node | null {
+  if (!isIdentifier(node.callee) || node.callee.name !== 'require') return null;
 
   const declarator = graph.getParent(node);
-  if (!t.isVariableDeclarator(declarator)) return null;
+  if (!isVariableDeclarator(declarator)) return null;
 
   const declaration = graph.getParent(declarator);
-  if (!t.isVariableDeclaration(declaration)) return null;
+  if (!isVariableDeclaration(declaration)) return null;
 
   const program = graph.getParent(declaration);
-  if (!t.isProgram(program)) return null;
+  if (!isProgram(program)) return null;
 
   // Our node is a correct export
   // Let's check that we have something that looks like transpiled re-export
@@ -133,43 +142,47 @@ function findWildcardReexportStatement(
        * We are looking for `Object.keys(_bar).forEach(…)`
        */
 
-      if (!t.isExpressionStatement(statement)) return false;
+      if (!isExpressionStatement(statement)) return false;
 
       const { expression } = statement;
-      if (!t.isCallExpression(expression)) return false;
+      if (!isCallExpression(expression)) return false;
 
       const { callee } = expression;
-      if (!t.isMemberExpression(callee)) return false;
+      if (!isMemberExpression(callee)) return false;
 
       const { object, property } = callee;
 
-      if (!isIdentifier(property, 'forEach')) return false;
+      if (!isIdentifierWithName(property, 'forEach')) return false;
 
-      if (!t.isCallExpression(object)) return false;
+      if (!isCallExpression(object)) return false;
 
       // `object` should be `Object.keys`
       if (
-        !t.isMemberExpression(object.callee) ||
-        !isIdentifier(object.callee.object, 'Object') ||
-        !isIdentifier(object.callee.property, 'keys')
+        !isMemberExpression(object.callee) ||
+        !isIdentifierWithName(object.callee.object, 'Object') ||
+        !isIdentifierWithName(object.callee.property, 'keys')
       )
         return false;
 
       //
       const [argument] = object.arguments;
-      return isIdentifier(argument, identifierName);
+      return isIdentifierWithName(argument, identifierName);
     }) ?? null
   );
 }
 
 function isMethodWithSideEffect(callee: Node | null, state: GraphBuilderState): boolean {
   const methods = ['assign', 'defineProperty', 'defineProperties', 'freeze', 'observe'];
-  if (t.isMemberExpression(callee) && isIdentifier(callee.object, 'Object') && isIdentifier(callee.property, methods)) {
+  if (
+    isMemberExpression(callee) &&
+    isIdentifierWithName(callee.object, 'Object') &&
+    isIdentifierWithName(callee.property, methods)
+  ) {
     // It's something like Object.defineProperty
     return true;
   }
 
-  if (t.isMemberExpression(callee) && isIdentifier(callee.property, 'default') && isIdentifier(callee.object)) {
+  if (isMemberExpression(callee) && isIdentifierWithName(callee.property, 'default') && isIdentifier(callee.object)) {
     // It looks like a call of imported method. Maybe it's a polyfill for Object's methods?
     const declaration = state.scope.getDeclaration(callee.object);
     if (!declaration || !isIdentifier(declaration)) return false;
@@ -185,10 +198,10 @@ function isMethodWithSideEffect(callee: Node | null, state: GraphBuilderState): 
  */
 function getAffectedNodes(node: Node, state: GraphBuilderState): Node[] {
   // FIXME: this method should be generalized
-  const callee = t.isCallExpression(node) ? getCallee(node) : null;
-  if (t.isCallExpression(node) && isMethodWithSideEffect(callee, state)) {
+  const callee = isCallExpression(node) ? getCallee(node) : null;
+  if (isCallExpression(node) && isMethodWithSideEffect(callee, state)) {
     const [obj, property] = node.arguments;
-    if (!t.isIdentifier(obj)) {
+    if (!isIdentifier(obj)) {
       return [];
     }
 
@@ -196,7 +209,7 @@ function getAffectedNodes(node: Node, state: GraphBuilderState): Node[] {
       return [node.arguments[0]];
     }
 
-    if (t.isStringLiteral(property)) {
+    if (isStringLiteral(property)) {
       if (property.value === '__esModule') {
         return [node.arguments[0]];
       }
@@ -214,27 +227,26 @@ function getAffectedNodes(node: Node, state: GraphBuilderState): Node[] {
  *   Colors["BLUE"] = "#27509A";
  * })(Colors || (Colors = {}));
  */
-function isLazyInit(statement: ExpressionStatement): statement is ExpressionStatement & {
-  expression: {
-    arguments: [{ right: AssignmentExpression }];
-  };
+function isLazyInit(statement: Node & { type: 'ExpressionStatement'; expression: Node }): statement is Node & {
+  type: 'ExpressionStatement';
+  expression: CallExpressionNode & { arguments: [Node & { right: AssignmentExpressionNode }] };
 } {
   const { expression } = statement;
-  if (!t.isCallExpression(expression) || expression.arguments.length !== 1) {
+  if (!isCallExpression(expression) || expression.arguments.length !== 1) {
     return false;
   }
 
   const [arg] = expression.arguments;
-  if (!t.isLogicalExpression(arg) || arg.operator !== '||') {
+  if (!isLogicalExpression(arg) || arg.operator !== '||') {
     return false;
   }
 
   const { left, right } = arg;
-  return t.isIdentifier(left) && t.isAssignmentExpression(right);
+  return isIdentifier(left) && isAssignmentExpression(right);
 }
 
-export const visitors: Visitors = {
-  ExpressionStatement(this: GraphBuilderState, node: ExpressionStatement) {
+export const visitors = {
+  ExpressionStatement(this: GraphBuilderState, node: Node & { type: 'ExpressionStatement'; expression: Node }) {
     this.baseVisit(node);
 
     this.graph.addEdge(node, node.expression);
@@ -245,7 +257,7 @@ export const visitors: Visitors = {
     }
   },
 
-  Function(this: GraphBuilderState, node: FunctionNode) {
+  Function(this: GraphBuilderState, node: Node & { id?: Node | null; params: Node[]; body: Node }) {
     const unsubscribe = this.onVisit(descendant => this.graph.addEdge(node, descendant));
     this.baseVisit(node, true); // ignoreDeps=true prevents default dependency resolving
     unsubscribe();
@@ -253,37 +265,40 @@ export const visitors: Visitors = {
     this.graph.addEdge(node, node.body);
 
     node.params.forEach(param => this.graph.addEdge(node.body, param));
-    if (t.isFunctionDeclaration(node) && node.id) {
+    if (isFunctionDeclaration(node) && node.id) {
       // `id` is an identifier which depends on the function declaration
       this.graph.addEdge(node.id, node);
     }
 
-    if (t.isFunctionExpression(node) && node.id !== null && node.id !== undefined) {
+    if (isFunctionExpression(node) && node.id !== null && node.id !== undefined) {
       // keep function name in expressions like `const a = function a();`
       this.graph.addEdge(node, node.id);
     }
 
-    if (t.isFunctionDeclaration(node) && node.id) {
+    if (isFunctionDeclaration(node) && node.id) {
       this.graph.addEdge(node, node.id);
     }
   },
 
-  Block(this: GraphBuilderState, node: Block) {
+  Block(this: GraphBuilderState, node: Node & { body: Node[]; directives?: Node[] }) {
     this.baseVisit(node);
 
-    if (t.isProgram(node)) {
+    if (isProgram(node)) {
       const exportsDeclaration = this.scope.getDeclaration('global:exports')!;
       this.graph.addEdge(node, exportsDeclaration);
-      node.directives.forEach(directive => this.graph.addEdge(node, directive));
+      // In oxc, directives are ExpressionStatement nodes in body with a `directive` field
+      node.body.forEach(child => {
+        if ((child as { directive?: string }).directive !== undefined) {
+          this.graph.addEdge(node, child);
+        }
+      });
     }
   },
 
-  Directive(this: GraphBuilderState, node: Directive) {
-    this.baseVisit(node);
-    this.graph.addEdge(node, node.value);
-  },
+  // oxc represents directives as ExpressionStatement nodes with a `directive` field
+  // No separate Directive visitor needed
 
-  TryStatement(this: GraphBuilderState, node: TryStatement) {
+  TryStatement(this: GraphBuilderState, node: Node & { block: Node; handler: Node | null; finalizer: Node | null }) {
     this.baseVisit(node);
     [node.handler, node.finalizer].forEach(statement => {
       if (statement) {
@@ -293,24 +308,24 @@ export const visitors: Visitors = {
     });
   },
 
-  CatchClause(this: GraphBuilderState, node: CatchClause) {
+  CatchClause(this: GraphBuilderState, node: Node & { body: Node }) {
     this.baseVisit(node);
 
     this.graph.addEdge(node, node.body);
   },
 
-  IfStatement(this: GraphBuilderState, node: IfStatement) {
+  IfStatement(this: GraphBuilderState, node: Node & { test: Node; consequent: Node }) {
     this.baseVisit(node);
     this.graph.addEdge(node, node.consequent);
     this.graph.addEdge(node, node.test);
   },
 
-  WhileStatement(this: GraphBuilderState, node: WhileStatement) {
+  WhileStatement(this: GraphBuilderState, node: Node & { test: Node }) {
     this.baseVisit(node);
     this.graph.addEdge(node, node.test);
   },
 
-  SwitchCase(this: GraphBuilderState, node: SwitchCase) {
+  SwitchCase(this: GraphBuilderState, node: Node & { test: Node | null; consequent: Node[] }) {
     this.baseVisit(node);
     node.consequent.forEach(statement => this.graph.addEdge(statement, node));
     if (node.test) {
@@ -318,13 +333,16 @@ export const visitors: Visitors = {
     }
   },
 
-  SwitchStatement(this: GraphBuilderState, node: SwitchStatement) {
+  SwitchStatement(this: GraphBuilderState, node: Node & { discriminant: Node; cases: Node[] }) {
     this.baseVisit(node);
     node.cases.forEach(c => this.graph.addEdge(c, node));
     this.graph.addEdge(node, node.discriminant);
   },
 
-  ForStatement(this: GraphBuilderState, node: ForStatement) {
+  ForStatement(
+    this: GraphBuilderState,
+    node: Node & { init: Node | null; test: Node | null; update: Node | null; body: Node },
+  ) {
     this.baseVisit(node);
 
     [node.init, node.test, node.update, node.body].forEach(child => {
@@ -334,7 +352,7 @@ export const visitors: Visitors = {
     });
   },
 
-  ForInStatement(this: GraphBuilderState, node: ForInStatement) {
+  ForInStatement(this: GraphBuilderState, node: Node & { left: Node; right: Node; body: Node }) {
     this.baseVisit(node);
 
     if (node.body) {
@@ -345,10 +363,10 @@ export const visitors: Visitors = {
     this.graph.addEdge(node.left, node.right);
   },
 
-  Terminatorless(this: GraphBuilderState, node: Terminatorless) {
+  Terminatorless(this: GraphBuilderState, node: Node & { argument?: Node | null }) {
     this.baseVisit(node);
 
-    if (!(t.isBreakStatement(node) || t.isContinueStatement(node)) && node.argument) {
+    if (!(isBreakStatement(node) || isContinueStatement(node)) && node.argument) {
       this.graph.addEdge(node, node.argument);
     }
 
@@ -356,25 +374,25 @@ export const visitors: Visitors = {
     this.graph.addEdge(closestFunctionNode, node);
   },
 
-  ObjectExpression(this: GraphBuilderState, node: ObjectExpression) {
+  ObjectExpression(this: GraphBuilderState, node: Node & { properties: Node[] }) {
     this.context.push('expression');
     this.baseVisit(node);
     node.properties.forEach(prop => {
       this.graph.addEdge(node, prop);
-      if (t.isObjectMethod(prop)) {
-        this.graph.addEdge(prop, prop.key);
-        this.graph.addEdge(prop, prop.body);
-      } else if (t.isObjectProperty(prop)) {
+      if (isObjectMethod(prop)) {
         this.graph.addEdge(prop, prop.key);
         this.graph.addEdge(prop, prop.value);
-      } else if (t.isSpreadElement(prop)) {
+      } else if (isObjectProperty(prop)) {
+        this.graph.addEdge(prop, prop.key);
+        this.graph.addEdge(prop, prop.value);
+      } else if (isSpreadElement(prop)) {
         this.graph.addEdge(prop, prop.argument);
       }
     });
     this.context.pop();
   },
 
-  MemberExpression(this: GraphBuilderState, node: MemberExpression) {
+  MemberExpression(this: GraphBuilderState, node: MemberExpressionNode) {
     if (this.visit(node.object, node, 'object') !== 'ignore') {
       this.graph.addEdge(node, node.object);
     }
@@ -388,7 +406,7 @@ export const visitors: Visitors = {
     this.graph.addEdge(node.object, node);
 
     if (
-      isIdentifier(node.object, 'exports') &&
+      isIdentifierWithName(node.object, 'exports') &&
       this.scope.getDeclaration(node.object) === ScopeManager.globalExportsIdentifier
     ) {
       // We treat `exports.something` and `exports['something']` as identifiers in the global scope
@@ -407,22 +425,22 @@ export const visitors: Visitors = {
     }
 
     if (
-      t.isIdentifier(node.object) &&
-      ((t.isIdentifier(node.property) && !node.computed) || t.isStringLiteral(node.property))
+      isIdentifier(node.object) &&
+      ((isIdentifier(node.property) && !node.computed) || isStringLiteral(node.property))
     ) {
       // It's simple `foo.bar` or `foo["bar"]` expression. Is it a usage of a required library?
       const declaration = this.scope.getDeclaration(node.object);
-      if (t.isIdentifier(declaration) && this.graph.importAliases.has(declaration)) {
+      if (isIdentifier(declaration) && this.graph.importAliases.has(declaration)) {
         // It is. We can remember what exactly we use from it.
         const source = this.graph.importAliases.get(declaration)!;
-        this.graph.imports.get(source)!.push(node.property);
+        this.graph.imports.get(source)!.push(node.property as IdentifierNode);
       }
     }
   },
 
-  AssignmentExpression(this: GraphBuilderState, node: AssignmentExpression) {
+  AssignmentExpression(this: GraphBuilderState, node: AssignmentExpressionNode) {
     this.context.push('lval');
-    this.visit<AssignmentExpression['left'], AssignmentExpression>(node.left, node, 'left');
+    this.visit(node.left, node, 'left');
     this.context.pop();
 
     this.visit(node.right, node, 'right');
@@ -437,8 +455,11 @@ export const visitors: Visitors = {
     this.graph.addEdge(node.left, node);
   },
 
-  VariableDeclarator(this: GraphBuilderState, node: VariableDeclarator) {
-    const declared: Array<[Identifier, Identifier | null]> = [];
+  VariableDeclarator(
+    this: GraphBuilderState,
+    node: Node & { type: 'VariableDeclarator'; id: Node; init: Node | null },
+  ) {
+    const declared: Array<[IdentifierNode, IdentifierNode | null]> = [];
     this.meta.set('declared', declared);
     const unregister = this.scope.addDeclareHandler((identifier, from) => declared.push([identifier, from]));
     this.baseVisit(node);
@@ -458,17 +479,20 @@ export const visitors: Visitors = {
     this.graph.addEdge(node, node.id);
   },
 
-  VariableDeclaration(this: GraphBuilderState, node: VariableDeclaration) {
+  VariableDeclaration(
+    this: GraphBuilderState,
+    node: Node & { type: 'VariableDeclaration'; kind: string; declarations: Node[] },
+  ) {
     this.meta.set('kind-of-declaration', node.kind);
     this.baseVisit(node);
     node.declarations.forEach(declaration => this.graph.addEdge(declaration, node));
     this.meta.delete('kind-of-declaration');
   },
 
-  CallExpression(this: GraphBuilderState, node: CallExpression, parent: Node | null) {
+  CallExpression(this: GraphBuilderState, node: CallExpressionNode, parent: Node | null) {
     this.baseVisit(node);
 
-    if (t.isIdentifier(node.callee) && node.callee.name === 'require') {
+    if (isIdentifier(node.callee) && node.callee.name === 'require') {
       // It looks like a module import …
       const scopeId = this.scope.whereIsDeclared(node.callee);
       if (scopeId && scopeId !== 'global') {
@@ -477,13 +501,13 @@ export const visitors: Visitors = {
       }
 
       const [firstArg] = node.arguments;
-      if (!t.isStringLiteral(firstArg)) {
+      if (!isStringLiteral(firstArg)) {
         // dynamic import? Maybe someday we can do something about it
         return;
       }
 
       const { value: source } = firstArg;
-      const declared = this.meta.get('declared') as Array<[Identifier, Identifier | null]>;
+      const declared = this.meta.get('declared') as Array<[IdentifierNode, IdentifierNode | null]>;
       if (!declared) {
         // Is it a ts reexport?
         // tslib_1.__exportStar(require("./Async"), exports);
@@ -492,8 +516,9 @@ export const visitors: Visitors = {
             this.graph.imports.set(source, []);
           }
 
-          this.graph.addEdge(parent.callee.object, parent);
-          this.graph.reexports.push(parent.callee.object);
+          const callee = (parent as unknown as CallExpressionNode).callee as MemberExpressionNode;
+          this.graph.addEdge(callee.object, parent);
+          this.graph.reexports.push(callee.object as IdentifierNode);
           this.graph.importTypes.set(source, 'reexport');
         }
 
@@ -508,12 +533,12 @@ export const visitors: Visitors = {
           this.graph.imports.set(source, []);
         }
 
-        if (parent && t.isMemberExpression(parent) && t.isIdentifier(parent.property)) {
+        if (parent && isMemberExpression(parent) && isIdentifier(parent.property)) {
           // An imported function is specified right here.
           // eg. require('../slugify').default
           this.graph.imports.get(source)!.push(parent.property);
         } else {
-          if (t.isCallExpression(parent) && t.isIdentifier(parent.callee) && typeof parent.callee.name === 'string') {
+          if (isCallExpression(parent) && isIdentifier(parent.callee) && typeof parent.callee.name === 'string') {
             if (parent.callee.name.startsWith('_interopRequireDefault')) {
               this.graph.importTypes.set(source, 'default');
             } else if (parent.callee.name.startsWith('_interopRequireWildcard')) {
@@ -556,20 +581,20 @@ export const visitors: Visitors = {
 
     getAffectedNodes(node, this).forEach(affectedNode => {
       this.graph.addEdge(affectedNode, node);
-      if (t.isIdentifier(affectedNode)) {
+      if (isIdentifier(affectedNode)) {
         this.graph.addEdge(this.scope.getDeclaration(affectedNode)!, affectedNode);
       }
     });
   },
 
-  SequenceExpression(this: GraphBuilderState, node: SequenceExpression) {
+  SequenceExpression(this: GraphBuilderState, node: Node & { expressions: Node[] }) {
     // Sequence value depends on only last expression in the list
     this.baseVisit(node, true);
     if (node.expressions.length > 0) {
       this.graph.addEdge(node, node.expressions[node.expressions.length - 1]);
     }
   },
-};
+} as Visitors;
 
 export const identifierHandlers: IdentifierHandlers = {
   declare: [
@@ -580,7 +605,7 @@ export const identifierHandlers: IdentifierHandlers = {
     ['ThrowStatement', 'argument'],
     ['VariableDeclarator', 'id'],
   ],
-  keep: [['ObjectProperty', 'key']],
+  keep: [['Property', 'key']],
   refer: [
     ['ArrayExpression', 'elements'],
     ['AssignmentExpression', 'left', 'right'],
@@ -592,7 +617,7 @@ export const identifierHandlers: IdentifierHandlers = {
     ['IfStatement', 'test'],
     ['LogicalExpression', 'left', 'right'],
     ['NewExpression', 'arguments', 'callee'],
-    ['ObjectProperty', 'value'],
+    ['Property', 'value'],
     ['ReturnStatement', 'argument'],
     ['SequenceExpression', 'expressions'],
     ['SwitchStatement', 'discriminant'],
