@@ -1,4 +1,4 @@
-import * as childProcess from 'child_process';
+import childProcess from 'child_process';
 
 export function sh(command: string, cwd?: string, pipeOutputToResult = false): Promise<string> {
   return new Promise((resolve, reject) => {

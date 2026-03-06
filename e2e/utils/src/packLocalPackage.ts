@@ -1,8 +1,8 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import * as logSymbols from 'log-symbols';
+import path from 'path';
+import fs from 'fs';
+import logSymbols from 'log-symbols';
 
-import { sh } from './sh';
+import { sh } from './sh.ts';
 
 export async function packLocalPackage(rootDir: string, tempDir: string, packageName: string) {
   const packagePath = path.resolve(rootDir, 'dist', 'packages', packageName.split('/')[1]);

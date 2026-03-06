@@ -12,9 +12,5 @@
     {
       "path": "./tsconfig.lib.json"
     }
-  ],
-  "ts-node": {
-    "require": ["tsconfig-paths/register"],
-    "swc": true
-  }
+  ]
 }

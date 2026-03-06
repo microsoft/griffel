@@ -7,19 +7,19 @@ import {
   packLocalPackage,
   sh,
 } from '@griffel/e2e-utils';
-import * as fs from 'fs';
-import * as logSymbols from 'log-symbols';
-import * as path from 'path';
+import fs from 'fs';
+import logSymbols from 'log-symbols';
+import path from 'path';
 
 async function performTest() {
-  const rootDir = path.resolve(__dirname, '..', '..', '..');
+  const rootDir = path.resolve(import.meta.dirname, '..', '..', '..');
 
   let tempDir: string;
 
   try {
     tempDir = createTempDir('rspack');
 
-    await copyAssets({ assetsPath: path.resolve(__dirname, 'assets'), tempDir });
+    await copyAssets({ assetsPath: path.resolve(import.meta.dirname, 'assets'), tempDir });
     await configureYarn({ tempDir, rootDir });
 
     const resolutions = await Promise.all([
@@ -73,7 +73,7 @@ async function performTest() {
 
     await compareSnapshots({
       type: 'css',
-      snapshotFile: path.resolve(__dirname, 'snapshots', 'output.css'),
+      snapshotFile: path.resolve(import.meta.dirname, 'snapshots', 'output.css'),
       resultFile: path.resolve(distDir, cssFilename),
     });
 

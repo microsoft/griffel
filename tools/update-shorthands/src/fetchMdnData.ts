@@ -1,5 +1,5 @@
-import * as fs from 'node:fs/promises';
-import { type MdnData } from './types';
+import fs from 'node:fs/promises';
+import { type MdnData } from './types.ts';
 
 const VERSION_REGEX = /git\+https:\/\/github.com\/mdn\/data.git#(.+)/;
 

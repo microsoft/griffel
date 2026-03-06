@@ -1,0 +1,5 @@
+{
+  "name": "@griffel/e2e-rspack",
+  "private": true,
+  "type": "module"
+}
