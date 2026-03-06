@@ -1,8 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "declaration": false,
+    "noEmit": true,
     "types": ["node", "environment"]
   },
   "exclude": ["__fixtures__/*/*.ts", "**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],

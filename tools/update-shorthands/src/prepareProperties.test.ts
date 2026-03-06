@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { prepareProperties } from './prepareProperties';
+import { prepareProperties } from './prepareProperties.ts';
 
 describe('mergeShorthandProperties', () => {
   it('should not merge flat properties', () => {

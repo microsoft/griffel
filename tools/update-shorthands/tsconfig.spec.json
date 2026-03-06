@@ -3,6 +3,8 @@
   "compilerOptions": {
     "jsx": "react",
     "outDir": "../../dist/out-tsc",
+    "noEmit": true,
+    "module": "nodenext",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
     "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment"]
   },
