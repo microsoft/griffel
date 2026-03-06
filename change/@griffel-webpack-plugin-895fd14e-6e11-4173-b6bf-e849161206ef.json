@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "major",
   "comment": "refactor: make oxc resolver ESM-first, remove createFluentOxcResolverFactory",
   "packageName": "@griffel/webpack-plugin",
   "email": "olfedias@microsoft.com",
