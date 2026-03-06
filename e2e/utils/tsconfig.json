@@ -3,7 +3,9 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "module": "CommonJS",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": true,
     "noEmit": true
   },
   "files": [],

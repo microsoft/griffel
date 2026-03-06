@@ -1,4 +1,4 @@
-import { assignShorthandPriority } from './assignShorthandPriority';
+import { assignShorthandPriority } from './assignShorthandPriority.ts';
 
 describe('assignPriority', () => {
   it('should not touch flat properties', () => {

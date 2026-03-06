@@ -2,8 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "jsx": "react",
-    "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
+    "noEmit": true,
+    "module": "nodenext",
     "types": ["jest", "node", "environment"]
   },
   "include": [

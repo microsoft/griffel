@@ -1,5 +1,5 @@
-import { fileTemplate } from './fileTemplate';
-import { type CSSShorthands } from './types';
+import { fileTemplate } from './fileTemplate.ts';
+import { type CSSShorthands } from './types.ts';
 
 describe('fileTemplate', () => {
   it('should return a formatted string', async () => {
