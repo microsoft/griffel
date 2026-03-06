@@ -3,6 +3,9 @@
   "version": "2.2.22",
   "types": "./dist/index.d.ts",
   "description": "Webpack loader that performs build time transforms for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

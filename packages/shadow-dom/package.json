@@ -3,6 +3,9 @@
   "version": "0.2.11",
   "types": "./dist/index.d.ts",
   "description": "Shadow DOM implementation of Griffel Atomic CSS-in-JS",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
 const { URLSearchParams } = require('url');
-const { GriffelCssLoaderContextKey } = require('../src/constants');
+const { GriffelCssLoaderContextKey } = require('../dist/constants');
 
 /**
  * @this {import("../src/constants").SupplementedLoaderContext}

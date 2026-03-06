@@ -3,6 +3,10 @@
   "version": "0.5.13",
   "types": "./dist/index.d.ts",
   "description": "Webpack plugin that performs CSS extraction for Griffel",
+  "files": [
+    "dist/",
+    "virtual-loader/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

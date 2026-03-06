@@ -3,6 +3,9 @@
   "version": "0.1.14",
   "types": "./dist/index.d.ts",
   "description": "NextJS plugin that add Griffel's CSS extraction to webpack loaders pipeline",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

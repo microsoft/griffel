@@ -3,6 +3,9 @@
   "version": "1.1.35",
   "types": "./dist/index.d.ts",
   "description": "Jest serializer for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

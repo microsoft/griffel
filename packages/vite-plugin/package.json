@@ -3,6 +3,9 @@
   "version": "0.1.15",
   "types": "./dist/index.d.ts",
   "description": "Vite plugin for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "type": "module",
   "repository": {

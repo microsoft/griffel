@@ -2,6 +2,9 @@
   "name": "@griffel/style-types",
   "version": "1.3.0",
   "description": "Provides types for Griffel style objects",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,8 +27,8 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<4.4": {
-      "src/index.d.ts": [
-        "src/legacy/index.d.ts"
+      "dist/index.d.ts": [
+        "dist/legacy/index.d.ts"
       ]
     }
   }

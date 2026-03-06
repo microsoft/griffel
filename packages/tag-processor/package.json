@@ -1,8 +1,11 @@
 {
   "name": "@griffel/tag-processor",
   "version": "1.0.15",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "description": "wyw-in-js processor for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

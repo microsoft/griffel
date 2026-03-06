@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
+    "module": "node16",
+    "moduleResolution": "node16",
     "types": ["node", "environment"]
   },
   "exclude": ["src/**/*.test.ts", "src/**/__fixture__/", "src/**/__mocks__/"],

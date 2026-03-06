@@ -1,8 +1,11 @@
 {
   "name": "@griffel/react",
   "version": "1.6.0",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "description": "React implementation of Atomic CSS-in-JS",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
