@@ -1,5 +1,5 @@
-import type { MdnShorthandProperty } from './types';
-import { toCamelCase } from './utils';
+import type { MdnShorthandProperty } from './types.ts';
+import { toCamelCase } from './utils.ts';
 
 const ADDITIONAL_SHORTHANDS: Record<string, string[]> = {
   border: ['border-top', 'border-right', 'border-bottom', 'border-left'],

@@ -7,9 +7,13 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
+  "workspaces": [
+    "e2e/*",
+    "tools/*"
+  ],
   "packageManager": "yarn@4.3.1",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "nano-staged": {
     "**/*.{js,json,ts,tsx}": "prettier --write",
@@ -133,8 +137,6 @@
     "syncpack": "14.0.0",
     "tmp": "0.2.4",
     "ts-jest": "29.4.0",
-    "ts-node": "10.9.1",
-    "tsconfig-paths": "4.1.1",
     "typescript": "5.9.3",
     "vite": "7.3.0",
     "vite-plugin-dts": "~4.5.0",

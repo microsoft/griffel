@@ -1,7 +1,7 @@
 import { UNSUPPORTED_CSS_PROPERTIES } from '@griffel/core';
 
-import type { MdnData, MdnShorthandProperty } from './types';
-import { isShorthandProperty, isVendorProperty, toCamelCase } from './utils';
+import type { MdnData, MdnShorthandProperty } from './types.ts';
+import { isShorthandProperty, isVendorProperty, toCamelCase } from './utils.ts';
 
 function isSupportedShorthand(property: string): boolean {
   return !Object.prototype.hasOwnProperty.call(UNSUPPORTED_CSS_PROPERTIES, toCamelCase(property));

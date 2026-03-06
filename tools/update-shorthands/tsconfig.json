@@ -13,9 +13,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "ts-node": {
-    "require": ["tsconfig-paths/register"],
-    "swc": true
-  }
+  ]
 }

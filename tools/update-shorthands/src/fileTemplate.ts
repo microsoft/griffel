@@ -1,7 +1,7 @@
-import * as fs from 'node:fs/promises';
-import * as path from 'node:path';
-import * as prettier from 'prettier';
-import type { CSSShorthands } from './types';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import prettier from 'prettier';
+import type { CSSShorthands } from './types.ts';
 
 export async function fileTemplate(shorthandProperties: CSSShorthands) {
   const prettierConfig = JSON.parse(

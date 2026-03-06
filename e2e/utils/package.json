@@ -1,0 +1,8 @@
+{
+  "name": "@griffel/e2e-utils",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
