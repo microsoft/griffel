@@ -3,19 +3,21 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  */
 
-import { types as t } from '@babel/core';
-import type { Aliases, Identifier, Node } from '@babel/types';
+import type { Node } from 'oxc-parser';
 
 import { peek } from './utils.js';
 import type { VisitorKeys } from './utils.js';
+import { isMemberExpression, isIdentifier, FLIPPED_ALIAS_KEYS } from './ast.js';
 import type GraphBuilderState from './GraphBuilderState.js';
 import { identifierHandlers as core } from './langs/core.js';
 import ScopeManager from './scope.js';
 import type { IdentifierHandlerType, NodeType } from './types.js';
 
+type IdentifierNode = Node & { type: 'Identifier'; name: string };
+
 type HandlerFn = <TParent extends Node = Node>(
   builder: GraphBuilderState,
-  node: Identifier,
+  node: IdentifierNode,
   parent: TParent,
   parentKey: VisitorKeys<TParent>,
   listIdx: number | null,
@@ -27,12 +29,12 @@ const handlers: {
   [key: string]: Handler;
 } = {};
 
-function isAlias(type: NodeType): type is keyof Aliases {
-  return type in t.FLIPPED_ALIAS_KEYS;
+function isAlias(type: NodeType): type is keyof typeof FLIPPED_ALIAS_KEYS {
+  return type in FLIPPED_ALIAS_KEYS;
 }
 
 export function defineHandler(typeOrAlias: NodeType, field: string, handler: Handler) {
-  const types = isAlias(typeOrAlias) ? t.FLIPPED_ALIAS_KEYS[typeOrAlias] : [typeOrAlias];
+  const types = isAlias(typeOrAlias) ? FLIPPED_ALIAS_KEYS[typeOrAlias] : [typeOrAlias];
   types.forEach((type: string) => {
     handlers[`${type}:${field}`] = handler;
   });
@@ -52,14 +54,14 @@ batchDefineHandlers([...core.refer], 'refer');
  * Special case for FunctionDeclaration
  * Function id should be defined in the parent scope
  */
-defineHandler('FunctionDeclaration', 'id', (builder: GraphBuilderState, node: Identifier) => {
+defineHandler('FunctionDeclaration', 'id', (builder: GraphBuilderState, node: IdentifierNode) => {
   builder.scope.declare(node, false, null, 1);
 });
 
 /*
  * Special handler for [obj.member = 42] = [1] in different contexts
  */
-const memberExpressionObjectHandler = (builder: GraphBuilderState, node: Identifier) => {
+const memberExpressionObjectHandler = (builder: GraphBuilderState, node: IdentifierNode) => {
   const context = peek(builder.context);
   const declaration = builder.scope.addReference(node);
   if (declaration) {
@@ -81,8 +83,8 @@ defineHandler('OptionalMemberExpression', 'object', memberExpressionObjectHandle
 /*
  * Special handler for obj.member and obj[member]
  */
-const memberExpressionPropertyHandler = (builder: GraphBuilderState, node: Identifier, parent: Node) => {
-  if (t.isMemberExpression(parent) && parent.computed) {
+const memberExpressionPropertyHandler = (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+  if (isMemberExpression(parent) && parent.computed) {
     const declaration = builder.scope.addReference(node);
     // Let's check that it's not a global variable
     if (declaration) {

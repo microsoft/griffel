@@ -5,22 +5,23 @@
 
 /* eslint-disable no-template-curly-in-string */
 
-import * as babel from '@babel/core';
+import { parseSync } from 'oxc-parser';
 import dedent from 'dedent';
 
 import { buildDepsGraph } from './index.js';
 
 function _build(literal: TemplateStringsArray, ...placeholders: string[]) {
   const code = dedent(literal, ...placeholders);
+  const parsed = parseSync('source.js', code);
   return {
-    ast: babel.parseSync(code, { filename: 'source.js' })!,
+    program: parsed.program,
     code,
   };
 }
 
 function _buildGraph(literal: TemplateStringsArray, ...placeholders: string[]) {
-  const { ast } = _build(literal, ...placeholders);
-  return buildDepsGraph(ast);
+  const { program } = _build(literal, ...placeholders);
+  return buildDepsGraph(program);
 }
 
 describe('VariableDeclaration', () => {
@@ -32,7 +33,7 @@ describe('VariableDeclaration', () => {
     const deps = graph.getDependenciesByBinding('0:a');
     expect(deps).toMatchObject([
       {
-        type: 'NumericLiteral',
+        type: 'Literal',
         value: 42,
       },
       {
@@ -58,7 +59,7 @@ describe('scopes', () => {
     const deps0 = graph.getDependenciesByBinding('0:a');
     expect(deps0).toMatchObject([
       {
-        type: 'NumericLiteral',
+        type: 'Literal',
         value: 42,
       },
       {
@@ -73,7 +74,7 @@ describe('scopes', () => {
         start: 35,
       },
       {
-        type: 'NumericLiteral',
+        type: 'Literal',
         value: 21,
       },
       {
@@ -84,7 +85,7 @@ describe('scopes', () => {
     const deps1 = graph.getDependenciesByBinding('1:a');
     expect(deps1).toMatchObject([
       {
-        type: 'StringLiteral',
+        type: 'Literal',
         value: '21',
       },
       {
@@ -162,7 +163,7 @@ describe('AssignmentExpression', () => {
     const deps = graph.getDependenciesByBinding('0:a');
     expect(deps).toMatchObject([
       {
-        type: 'NumericLiteral',
+        type: 'Literal',
         value: 42,
       },
       {
@@ -179,7 +180,7 @@ describe('AssignmentExpression', () => {
         start: 12,
       },
       {
-        type: 'NumericLiteral',
+        type: 'Literal',
         value: 24,
       },
       {
@@ -271,7 +272,7 @@ it('SequenceExpression', () => {
   const localDeps = graph.getDependenciesByBinding('0:local');
   expect(localDeps).toMatchObject([
     {
-      type: 'StringLiteral',
+      type: 'Literal',
       value: '',
     },
     {
@@ -301,7 +302,8 @@ it('SequenceExpression', () => {
     },
   ]);
 
-  const bool = { type: 'BooleanLiteral' };
+  // Use value: true to match only the boolean literal (all literals have type: 'Literal' in oxc)
+  const bool = { type: 'Literal', value: true };
   expect(graph.findDependents(bool)).toHaveLength(0);
   expect(graph.findDependencies(bool)).toHaveLength(0);
 });
