@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: hoist common tsconfig strict options to base config",
+  "packageName": "@griffel/vite-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
