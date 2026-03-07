@@ -1,5 +1,4 @@
-/// <reference types="jest" />
-
+import type { SnapshotSerializer } from 'vitest';
 import * as prettier from 'prettier';
 
 import { DATA_BUCKET_ATTR } from '../constants';
@@ -11,7 +10,7 @@ import type { resolveResetStyleRules } from '../runtime/resolveResetStyleRules';
 // eslint-disable-next-line eqeqeq
 const isObject = (value: unknown) => value != null && !Array.isArray(value) && typeof value === 'object';
 
-export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
+export const griffelRendererSerializer: SnapshotSerializer = {
   test(value) {
     return isObject(value) && isObject(value.stylesheets);
   },
@@ -53,7 +52,7 @@ export const griffelRendererSerializer: jest.SnapshotSerializerPlugin = {
 type StyleRulesTuple = ReturnType<typeof resolveStyleRules>;
 const isStyleRulesTuple = (value: unknown): value is StyleRulesTuple => Array.isArray(value) && value.length === 2;
 
-export const griffelRulesSerializer: jest.SnapshotSerializerPlugin = {
+export const griffelRulesSerializer: SnapshotSerializer = {
   test(value) {
     return isStyleRulesTuple(value);
   },
@@ -74,7 +73,7 @@ export const griffelRulesSerializer: jest.SnapshotSerializerPlugin = {
   },
 };
 
-export const griffelResetRulesSerializer: jest.SnapshotSerializerPlugin = {
+export const griffelResetRulesSerializer: SnapshotSerializer = {
   test(value) {
     return Array.isArray(value);
   },

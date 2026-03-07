@@ -1,3 +1,4 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { RESET } from './constants';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { griffelRendererSerializer } from './common/snapshotSerializers';
@@ -226,7 +227,7 @@ describe('makeStyles', () => {
         renderer.insertCSSRules(cssRulesByBucket);
       };
     };
-    const renderer: Partial<GriffelRenderer> = { insertCSSRules: jest.fn() };
+    const renderer: Partial<GriffelRenderer> = { insertCSSRules: vi.fn() };
 
     const computeClasses = makeStyles(
       {

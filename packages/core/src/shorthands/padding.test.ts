@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { padding } from './padding';
 
 describe('padding', () => {

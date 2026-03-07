@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { resolveResetStyleRules } from './resolveResetStyleRules';
 import { griffelResetRulesSerializer } from '../common/snapshotSerializers';
 

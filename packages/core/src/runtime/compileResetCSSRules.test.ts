@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { compileResetCSSRules } from './compileResetCSSRules';
 
 describe('compileCSSRules', () => {
@@ -10,11 +11,11 @@ describe('compileCSSRules', () => {
     `;
 
     expect(compileResetCSSRules(cssRules)).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           ".foo{color:red;}",
         ],
-        Array [
+        [
           "@media (min-width: 768px){.foo{color:blue;}}",
         ],
       ]

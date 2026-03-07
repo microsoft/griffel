@@ -1,9 +1,10 @@
+import { it, expect, vi } from 'vitest';
 it('hosts global constants', async () => {
   const importA = await import('./constants');
 
   // We are reloading a module, so instances that are created inside a module will be different
   // https://jestjs.io/docs/jest-object#jestresetmodules
-  jest.resetModules();
+  vi.resetModules();
   const importB = await import('./constants');
 
   expect(importA.DEFINITION_LOOKUP_TABLE).toBe(importA.DEFINITION_LOOKUP_TABLE);

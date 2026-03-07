@@ -1,9 +1,10 @@
 /*
- * @jest-environment node
+ * @vitest-environment node
  */
 
 // 👆 this is intentionally to test in SSR like environment
 
+import { describe, it, expect } from 'vitest';
 import { createDOMRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
 import * as React from 'react';

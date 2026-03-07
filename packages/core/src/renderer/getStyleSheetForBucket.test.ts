@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { DATA_BUCKET_ATTR } from '../constants';
 import { createDOMRenderer } from './createDOMRenderer';
 import { getStyleSheetForBucket, styleBucketOrdering } from './getStyleSheetForBucket';
@@ -183,7 +184,7 @@ describe('getStyleSheetForBucket', () => {
       styleElement.getAttribute(DATA_BUCKET_ATTR),
     );
     expect(styleElementOrder).toMatchInlineSnapshot(`
-      Array [
+      [
         "d",
         "l",
         "v",

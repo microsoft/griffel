@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { compileAtomicCSSRule, normalizePseudoSelector } from './compileAtomicCSSRule';
 import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule';
 import type { AtRules } from './utils/types';
@@ -77,7 +78,7 @@ describe('compileAtomicCSSRule', () => {
         defaultAtRules,
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         ".foo:hover{color:red;}",
       ]
     `);
@@ -92,7 +93,7 @@ describe('compileAtomicCSSRule', () => {
         defaultAtRules,
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         ".foo:focus:hover{color:red;}",
       ]
     `);
@@ -109,7 +110,7 @@ describe('compileAtomicCSSRule', () => {
         defaultAtRules,
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         ".foo{color:red;color:blue;}",
       ]
     `);
@@ -126,7 +127,7 @@ describe('compileAtomicCSSRule', () => {
         { ...defaultAtRules, media: '(max-width: 100px)' },
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         "@media (max-width: 100px){.foo{color:red;}}",
       ]
     `);
@@ -140,7 +141,7 @@ describe('compileAtomicCSSRule', () => {
         { ...defaultAtRules, supports: '(display: table-cell)' },
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         "@supports (display: table-cell){.foo{color:red;}}",
       ]
     `);
@@ -161,7 +162,7 @@ describe('compileAtomicCSSRule', () => {
         defaultAtRules,
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         ".foo{padding-left:10px;}",
         ".rtl-foo{padding-right:10px;}",
       ]
@@ -184,7 +185,7 @@ describe('compileAtomicCSSRule', () => {
         defaultAtRules,
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         ".foo:before{padding-left:10px;}",
         ".rtl-foo:before{padding-right:10px;}",
       ]
@@ -204,7 +205,7 @@ describe('compileAtomicCSSRule', () => {
         defaultAtRules,
       ),
     ).toMatchInlineSnapshot(`
-      Array [
+      [
         ".foo{padding-left:0;padding-left:10px;}",
         ".rtl-foo{padding-right:0;padding-right:10px;}",
       ]
@@ -224,10 +225,10 @@ describe('compileAtomicCSSRule', () => {
           defaultAtRules,
         ),
       ).toMatchInlineSnapshot(`
-              Array [
-                "body .foo{color:red;}",
-              ]
-          `);
+        [
+          "body .foo{color:red;}",
+        ]
+      `);
       expect(
         compileAtomicCSSRule(
           {
@@ -239,10 +240,10 @@ describe('compileAtomicCSSRule', () => {
           defaultAtRules,
         ),
       ).toMatchInlineSnapshot(`
-              Array [
-                ".fui-FluentProvider .foo .focus:hover{color:red;}",
-              ]
-          `);
+        [
+          ".fui-FluentProvider .foo .focus:hover{color:red;}",
+        ]
+      `);
     });
 
     it('compiles global rules with RTL', () => {
@@ -260,11 +261,11 @@ describe('compileAtomicCSSRule', () => {
           defaultAtRules,
         ),
       ).toMatchInlineSnapshot(`
-              Array [
-                "body .foo{padding-left:10px;}",
-                "body .rtl-foo{padding-right:10px;}",
-              ]
-          `);
+        [
+          "body .foo{padding-left:10px;}",
+          "body .rtl-foo{padding-right:10px;}",
+        ]
+      `);
     });
   });
 });

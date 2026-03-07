@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
 import type { StylesBySlots } from './types';
 
@@ -9,19 +10,19 @@ describe('resolveStyleRulesForSlots', () => {
     };
 
     expect(resolveStyleRulesForSlots(stylesBySlots)).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "De3pzq": "f1ta0kgp",
             "sj55zd": "f163i14w",
           },
-          "root": Object {
+          "root": {
             "De3pzq": "fnf68zh",
             "sj55zd": "fe3e8s9",
           },
         },
-        Object {
-          "d": Array [
+        {
+          "d": [
             ".fe3e8s9{color:red;}",
             ".fnf68zh{background-color:pink;}",
             ".f163i14w{color:blue;}",

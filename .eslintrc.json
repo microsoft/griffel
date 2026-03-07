@@ -76,10 +76,17 @@
         "**/*.test.tsx",
         "**/jest.setup.js",
         "**/jest.setup.ts",
+        "**/vitest.config.ts",
         "**/.storybook/main.js"
       ],
       "rules": {
         "import/no-extraneous-dependencies": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+      "rules": {
+        "import/first": "off"
       }
     }
   ]
