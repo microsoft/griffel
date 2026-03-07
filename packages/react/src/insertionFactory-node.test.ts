@@ -16,7 +16,6 @@ vi.mock('react', async importOriginal => {
   return { ...actual, useInsertionEffect };
 });
 
-// eslint-disable-next-line import/first
 import { insertionFactory } from './insertionFactory';
 
 describe('insertionFactory (node)', () => {
