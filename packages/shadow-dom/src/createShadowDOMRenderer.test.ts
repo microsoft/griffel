@@ -1,4 +1,4 @@
-import { describe, it, test, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { createShadowDOMRenderer } from './createShadowDOMRenderer';
 import type { ExtendedCSSStyleSheet } from './types';
 
