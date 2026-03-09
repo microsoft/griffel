@@ -62,10 +62,8 @@ export function batchEvaluator(
     }
   }
 
-  // Map VM results back to correct indices.
-  // The VM wraps expressions in an array literal, so vmResult.value is always an array.
-  // However, when a single expression is sent, the linaria shaker may unwrap it from the array.
-  const vmValues = Array.isArray(vmResult.value) ? (vmResult.value as unknown[]) : [vmResult.value];
+  // Map VM results back to correct indices
+  const vmValues = vmResult.value as unknown[];
 
   for (let i = 0; i < vmCalls.length; i++) {
     evaluationResults[vmCalls[i].index] = vmValues[i];
