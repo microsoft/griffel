@@ -97,6 +97,11 @@ color.green = '#0f0';
 exports.__linariaPreval = [color];"
 `;
 
+exports[`keeps only referenced re-exports from barrel files 1`] = `
+"export { colorBlue, colorGreen } from './colors';
+"
+`;
+
 exports[`keeps reused exports 1`] = `
 "const bar = function() {
   return 'hello world';

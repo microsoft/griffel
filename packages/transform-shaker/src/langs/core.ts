@@ -751,9 +751,14 @@ export const visitors = {
         this.graph.imports.set(source, []);
       }
 
+      // Each specifier maps individually so dead specifiers can be pruned
+      this.graph.addEdge(node, node.source);
       for (const specifier of node.specifiers) {
         const spec = specifier as { local: IdentifierNode; exported: IdentifierNode };
-        this.graph.addExport(spec.exported.name, node);
+        this.graph.addExport(spec.exported.name, specifier);
+        this.graph.addEdge(specifier, node);
+        this.graph.addEdge(specifier, spec.local);
+        this.graph.addEdge(specifier, spec.exported);
         this.graph.imports.get(source)!.push(spec.local);
       }
 
