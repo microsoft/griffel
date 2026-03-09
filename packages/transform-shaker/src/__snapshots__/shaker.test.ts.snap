@@ -12,6 +12,25 @@ const __mkPreval = { color: colorBlue };
 module.exports = { __mkPreval };"
 `;
 
+exports[`keeps class with constructor references to imports and sibling exports 1`] = `
+"import { baseHeight } from './base';
+import { labels } from './labels';
+
+export const defaults = {
+    transparent: 'transparent'
+};
+
+export class Config {
+    constructor(){
+        this.height = baseHeight;
+        this.color = labels.highlight;
+        this.fallback = defaults.transparent;
+    }
+}
+
+export const config = new Config();"
+`;
+
 exports[`keeps export const declarators 1`] = `"export const colorBlue = 'blue';"`;
 
 exports[`keeps identifiers inside template literals 1`] = `

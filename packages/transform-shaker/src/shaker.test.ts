@@ -304,6 +304,30 @@ it('keeps identifiers used as spread arguments', () => {
   expect(shaken).toMatchSnapshot();
 });
 
+it('keeps class with constructor references to imports and sibling exports', () => {
+  const [shaken] = _shake(['config'])`
+    import { baseHeight } from './base';
+    import { unused } from './unused';
+    import { labels } from './labels';
+
+    export const defaults = {
+        transparent: 'transparent'
+    };
+
+    export class Config {
+        constructor(){
+            this.height = baseHeight;
+            this.color = labels.highlight;
+            this.fallback = defaults.transparent;
+        }
+    }
+
+    export const config = new Config();
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
 it('keeps identifiers used as computed property keys', () => {
   const [shaken] = _shake()`
     const selector = '& .foo';
