@@ -15,37 +15,6 @@
       "options": {
         "jestConfig": "packages/webpack-loader/jest.config.ts"
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/webpack-loader",
-        "tsConfig": "packages/webpack-loader/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/webpack-loader/package.json",
-        "main": "packages/webpack-loader/src/index.ts",
-        "assets": [
-          "packages/webpack-loader/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/webpack-loader",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }

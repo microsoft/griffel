@@ -15,37 +15,6 @@
       "options": {
         "jestConfig": "packages/postcss-syntax/jest.config.ts"
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/postcss-syntax",
-        "tsConfig": "packages/postcss-syntax/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/postcss-syntax/package.json",
-        "main": "packages/postcss-syntax/src/index.ts",
-        "assets": [
-          "packages/postcss-syntax/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/babel-preset",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }

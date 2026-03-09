@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: migrate from TS path aliases to workspaces + project references",
+  "packageName": "@griffel/next-extraction-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

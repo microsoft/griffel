@@ -1,0 +1,10 @@
+{
+  "name": "@griffel/e2e-rspack",
+  "private": true,
+  "devDependencies": {
+    "@griffel/e2e-utils": "workspace:*",
+    "@griffel/react": "^1.6.0",
+    "@griffel/webpack-extraction-plugin": "^0.5.13",
+    "@griffel/webpack-loader": "^2.2.22"
+  }
+}

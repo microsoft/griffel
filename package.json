@@ -11,6 +11,12 @@
   "engines": {
     "node": ">=20"
   },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "e2e/*",
+    "tools/*"
+  ],
   "nano-staged": {
     "**/*.{js,json,ts,tsx}": "prettier --write",
     "**/*.{md}": "doctoc -u"
@@ -125,6 +131,7 @@
     "react-dom": "18.3.1",
     "react-refresh": "^0.10.0",
     "react-shadow": "^20.2.0",
+    "rollup": "^4.14.0",
     "rollup-plugin-preserve-directives": "^0.4.0",
     "simple-git-hooks": "2.7.0",
     "snapshot-diff": "0.10.0",
@@ -171,7 +178,6 @@
     "tslib": "^2.1.0"
   },
   "resolutions": {
-    "beachball@2.31.5": "patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch",
     "source-map-js@1.0.2": "patch:source-map-js@npm:1.0.2#.yarn/patches/source-map-js-npm-1.0.2-ee4f9f9b30.patch"
   }
 }

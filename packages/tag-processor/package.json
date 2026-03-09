@@ -1,7 +1,11 @@
 {
   "name": "@griffel/tag-processor",
   "version": "1.0.16",
+  "types": "./dist/index.d.ts",
   "description": "wyw-in-js processor for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,16 +19,19 @@
   },
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "default": "./src/index.js"
+      "@griffel/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./make-styles": {
-      "types": "./src/MakeStylesProcessor.d.ts",
-      "default": "./src/MakeStylesProcessor.js"
+      "@griffel/source": "./src/MakeStylesProcessor.ts",
+      "types": "./dist/MakeStylesProcessor.d.ts",
+      "default": "./dist/MakeStylesProcessor.js"
     },
     "./make-reset-styles": {
-      "types": "./src/MakeResetStylesProcessor.d.ts",
-      "default": "./src/MakeResetStylesProcessor.js"
+      "@griffel/source": "./src/MakeResetStylesProcessor.ts",
+      "types": "./dist/MakeResetStylesProcessor.d.ts",
+      "default": "./dist/MakeResetStylesProcessor.js"
     }
   }
 }

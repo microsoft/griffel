@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    { "path": "./packages/style-types" },
+    { "path": "./packages/core" },
+    { "path": "./packages/react" },
+    { "path": "./packages/transform" },
+    { "path": "./packages/webpack-plugin" },
+    { "path": "./packages/babel-preset" },
+    { "path": "./packages/tag-processor" },
+    { "path": "./packages/webpack-loader" },
+    { "path": "./packages/webpack-extraction-plugin" },
+    { "path": "./packages/next-extraction-plugin" },
+    { "path": "./packages/jest-serializer" },
+    { "path": "./packages/postcss-syntax" },
+    { "path": "./packages/vite-plugin" },
+    { "path": "./packages/shadow-dom" },
+    { "path": "./packages/devtools" },
+    { "path": "./packages/eslint-plugin" },
+    { "path": "./apps/website" },
+    { "path": "./e2e/nextjs" },
+    { "path": "./e2e/rspack" },
+    { "path": "./e2e/typescript" },
+    { "path": "./e2e/utils" },
+    { "path": "./tools/update-shorthands" }
+  ]
+}

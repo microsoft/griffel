@@ -8,23 +8,15 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/website",
-        "commands": [{ "command": "docusaurus build --out-dir ../../dist/apps/website" }]
+        "commands": [{ "command": "docusaurus build --out-dir ./dist" }]
       },
-      "outputs": ["{workspaceRoot}/dist/apps/website"]
+      "outputs": ["{workspaceRoot}/apps/website/dist"]
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/website",
         "commands": [{ "command": "docusaurus start" }]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "apps/website",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
       }
     }
   },

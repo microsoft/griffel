@@ -1,28 +1,24 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "types": ["node", "environment"]
   },
-  "exclude": [
-    "__fixtures__/**/*",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "jest.config.ts",
-    "vite.config.ts",
-    "vite.config.mts",
-    "vitest.config.ts",
-    "vitest.config.mts",
-    "src/**/*.test.ts",
-    "src/**/*.test.mts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.tsx",
-    "src/**/*.test.js",
-    "src/**/*.spec.js",
-    "src/**/*.test.jsx",
-    "src/**/*.spec.jsx"
-  ],
-  "include": ["**/*.mts"]
+  "exclude": ["src/**/*.test.mts", "src/**/__fixture__/", "src/**/__mocks__/"],
+  "include": ["src/**/*.mts"],
+  "references": [
+    {
+      "path": "../transform/tsconfig.lib.json"
+    },
+    {
+      "path": "../core/tsconfig.lib.json"
+    },
+    {
+      "path": "../react/tsconfig.lib.json"
+    }
+  ]
 }

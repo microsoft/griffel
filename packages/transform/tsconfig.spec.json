@@ -1,24 +1,14 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./out-tsc/spec",
+    "rootDir": ".",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
     "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest", "environment"]
   },
-  "include": [
-    "vite.config.ts",
-    "vite.config.mts",
-    "vitest.config.ts",
-    "vitest.config.mts",
-    "src/**/*.test.ts",
-    "src/**/*.test.mts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.tsx",
-    "src/**/*.test.js",
-    "src/**/*.spec.js",
-    "src/**/*.test.jsx",
-    "src/**/*.spec.jsx",
-    "src/**/*.d.ts"
-  ]
+  "include": ["src/**/*.spec.mts", "src/**/*.test.mts", "src/**/*.d.mts"],
+  "references": [{ "path": "./tsconfig.lib.json" }]
 }

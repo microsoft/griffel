@@ -1,11 +1,26 @@
 {
   "name": "@griffel/eslint-plugin",
   "version": "2.0.2",
+  "types": "./dist/index.d.ts",
   "description": "ESLint plugin with lint rules for Griffel",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@griffel/react": "^1.6.0"
   },
   "dependencies": {
     "@typescript-eslint/utils": "^7.18.0",

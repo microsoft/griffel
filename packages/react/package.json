@@ -1,13 +1,27 @@
 {
   "name": "@griffel/react",
   "version": "1.6.1",
+  "types": "./dist/index.d.ts",
   "description": "React implementation of Atomic CSS-in-JS",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.esm.js"
+    }
+  },
   "wyw-in-js": {
     "tags": {
       "makeStyles": "@griffel/tag-processor/make-styles",

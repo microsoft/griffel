@@ -1,4 +1,3 @@
-import moduleAlias from 'module-alias';
 import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import test from 'node:test';
@@ -15,18 +14,6 @@ const fixturesDir = path.resolve(currentDir, '..', '__fixtures__');
 
 const prettierConfig = JSON.parse(await fs.readFile(path.resolve(rootDir, '.prettierrc'), { encoding: 'utf-8' }));
 
-// TODO: Remove this once we have a better way to resolve aliases in ESM
-moduleAlias.addAlias('@griffel/core', path.resolve(rootDir, 'dist', 'packages', 'core'));
-moduleAlias.addAlias('@griffel/react', path.resolve(rootDir, 'dist', 'packages', 'react'));
-moduleAlias.addAlias(
-  '@griffel/tag-processor/make-styles',
-  path.resolve(rootDir, 'dist', 'packages', 'tag-processor', 'src', 'MakeStylesProcessor.js'),
-);
-moduleAlias.addAlias(
-  '@griffel/tag-processor/make-reset-styles',
-  path.resolve(rootDir, 'dist', 'packages', 'tag-processor', 'src', 'MakeResetStylesProcessor.js'),
-);
-
 /**
  * @param {string} fixtureName
  * @param {object} [options]
@@ -41,9 +28,6 @@ async function buildFixture(fixtureName, options = {}) {
   const result = await build({
     resolve: {
       alias: {
-        '@griffel/core': path.resolve(rootDir, 'dist', 'packages', 'core'),
-        '@griffel/react': path.resolve(rootDir, 'dist', 'packages', 'react'),
-
         ...options.aliases,
       },
     },

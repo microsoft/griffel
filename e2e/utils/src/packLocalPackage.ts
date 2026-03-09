@@ -1,15 +1,13 @@
 import * as path from 'path';
-import * as fs from 'fs';
 import * as logSymbols from 'log-symbols';
 
 import { sh } from './sh';
 
 export async function packLocalPackage(rootDir: string, tempDir: string, packageName: string) {
-  const packagePath = path.resolve(rootDir, 'dist', 'packages', packageName.split('/')[1]);
-  const packagePathExists = !!(await fs.promises.stat(packagePath).catch(() => false));
+  const packagePath = path.resolve(rootDir, 'packages', packageName.split('/')[1]);
 
-  if (!packagePathExists) {
-    throw new Error(`A directory with artifacts (${packagePath}) does not exist`);
+  if (!packagePath) {
+    throw new Error(`A package directory (${packageName}) does not exist`);
   }
 
   // Use `npm pack` because `yarn pack` incorrectly calculates the included files when the

@@ -1,11 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
-    "module": "CommonJS",
-    "jsx": "react",
-    "noEmit": true
+    "jsx": "react"
   },
   "files": [],
   "include": [],
@@ -15,7 +11,10 @@
     }
   ],
   "ts-node": {
-    "require": ["tsconfig-paths/register"],
-    "swc": true
+    "swc": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node"
+    }
   }
 }
