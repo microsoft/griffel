@@ -304,6 +304,30 @@ it('keeps identifiers used as spread arguments', () => {
   expect(shaken).toMatchSnapshot();
 });
 
+it('keeps class with constructor references to imports and sibling exports', () => {
+  const [shaken] = _shake(['config'])`
+    import { baseHeight } from './base';
+    import { unused } from './unused';
+    import { labels } from './labels';
+
+    export const defaults = {
+        transparent: 'transparent'
+    };
+
+    export class Config {
+        constructor(){
+            this.height = baseHeight;
+            this.color = labels.highlight;
+            this.fallback = defaults.transparent;
+        }
+    }
+
+    export const config = new Config();
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
 it('keeps only referenced re-exports from barrel files', () => {
   const [shaken] = _shake(['colorBlue', 'colorGreen'])`
     export { sizeSmall, sizeLarge } from './sizes';
@@ -319,6 +343,24 @@ it('keeps export-all re-exports when referenced export is not found locally', ()
     export { sizeSmall } from './sizes';
     export * from './colors';
     export { fontBold } from './fonts';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('shakes export-all when requested export is found as named re-export', () => {
+  const [shaken] = _shake(['baz'])`
+    export * from './foo';
+    export { baz } from './baz';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps all export-all re-exports when requested export is not found locally', () => {
+  const [shaken] = _shake(['qux'])`
+    export * from './foo';
+    export * from './baz';
   `;
 
   expect(shaken).toMatchSnapshot();
