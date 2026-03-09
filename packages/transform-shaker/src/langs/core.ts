@@ -793,6 +793,7 @@ export const visitors = {
       this.graph.imports.set(source, []);
     }
     this.graph.importTypes.set(source, 'reexport');
+    this.graph.addEdge(node, node.source);
 
     // Create a sentinel node that represents this re-export
     this.graph.reexports.push(node as unknown as IdentifierNode);

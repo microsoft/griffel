@@ -314,6 +314,16 @@ it('keeps only referenced re-exports from barrel files', () => {
   expect(shaken).toMatchSnapshot();
 });
 
+it('keeps export-all re-exports when referenced export is not found locally', () => {
+  const [shaken] = _shake(['colorBlue'])`
+    export { sizeSmall } from './sizes';
+    export * from './colors';
+    export { fontBold } from './fonts';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
 it('keeps identifiers used as computed property keys', () => {
   const [shaken] = _shake()`
     const selector = '& .foo';

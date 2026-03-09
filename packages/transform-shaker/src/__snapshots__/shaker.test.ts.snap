@@ -33,6 +33,11 @@ export const config = new Config();"
 
 exports[`keeps export const declarators 1`] = `"export const colorBlue = 'blue';"`;
 
+exports[`keeps export-all re-exports when referenced export is not found locally 1`] = `
+"export * from './colors';
+"
+`;
+
 exports[`keeps identifiers inside template literals 1`] = `
 "const color = 'red';
 const result = \`color is \${color}\`;
