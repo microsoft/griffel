@@ -1,0 +1,23 @@
+/** griffel.css **/
+.r3ak0s3 {
+  display: block;
+  color: var(--colorNeutralForeground1);
+}
+.f1tll2w5 {
+  justify-items: end;
+}
+.ffvkwdr {
+  grid-template-columns: auto [middle] max-content;
+}
+.f1hek2iy {
+  grid-row-start: span 5;
+}
+.fgcyt7z {
+  --avatar-spacing: var(--spacing-horizontal-s-nudge);
+}
+.f1warjpf {
+  grid-column-end: middle;
+}
+.fwu52yu {
+  grid-column-start: middle;
+}

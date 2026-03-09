@@ -26,8 +26,8 @@ export function batchEvaluator(
 } {
   const evaluationResults: unknown[] = new Array(styleCalls.length);
 
-  const argumentsCode = new Array(styleCalls.length).fill(null);
-  let vmEvaluationNeeded = false;
+  // Track calls that need VM evaluation: their original index and argument source code
+  const vmCalls: { index: number; argumentCode: string }[] = [];
 
   // First pass: try static evaluation for all calls
   for (let i = 0; i < styleCalls.length; i++) {
@@ -40,11 +40,10 @@ export function batchEvaluator(
     }
 
     // Mark for VM evaluation
-    vmEvaluationNeeded = true;
-    argumentsCode[i] = styleCall.argumentCode;
+    vmCalls.push({ index: i, argumentCode: styleCall.argumentCode });
   }
 
-  if (!vmEvaluationNeeded) {
+  if (vmCalls.length === 0) {
     return {
       usedVMForEvaluation: false,
       evaluationResults,
@@ -52,7 +51,8 @@ export function batchEvaluator(
   }
 
   // Second pass: batch VM evaluation for complex expressions
-  const vmResult = vmEvaluator(sourceCode, filename, argumentsCode.join(','), babelOptions, evaluationRules);
+  const expressionCode = vmCalls.map(c => c.argumentCode).join(',');
+  const vmResult = vmEvaluator(sourceCode, filename, expressionCode, babelOptions, evaluationRules);
 
   if (!vmResult.confident) {
     if (vmResult.error) {
@@ -62,15 +62,13 @@ export function batchEvaluator(
     }
   }
 
-  const vmValues = vmResult.value as unknown[];
+  // Map VM results back to correct indices.
+  // The VM wraps expressions in an array literal, so vmResult.value is always an array.
+  // However, when a single expression is sent, the linaria shaker may unwrap it from the array.
+  const vmValues = Array.isArray(vmResult.value) ? (vmResult.value as unknown[]) : [vmResult.value];
 
-  for (let i = 0; i < vmValues.length; i++) {
-    if (vmValues[i] === null) {
-      // This was already evaluated statically
-      continue;
-    }
-
-    evaluationResults[i] = vmValues[i];
+  for (let i = 0; i < vmCalls.length; i++) {
+    evaluationResults[vmCalls[i].index] = vmValues[i];
   }
 
   return {
