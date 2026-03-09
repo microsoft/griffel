@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { gridArea, isCustomIdent } from './gridArea';
 
 it('isCustomIdent', () => {
@@ -208,28 +209,28 @@ describe('gridArea(rowStart, columnStart, rowEnd, columnEnd)', () => {
 
   it('for css var reference', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(gridArea('header', 'header', 'var(--my-var)', 'header')).toEqual({});
 
-    jest.spyOn(console, 'error').mockClear();
+    vi.spyOn(console, 'error').mockClear();
   });
 
   it('for css var reference within string', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(gridArea('header', 'header', 'header var(--my-var) header', 'header')).toEqual({});
 
-    jest.spyOn(console, 'error').mockClear();
+    vi.spyOn(console, 'error').mockClear();
   });
 
   it('for empty css var reference', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(gridArea('header', 'header', 'var()', 'header')).toEqual({});
 
-    jest.spyOn(console, 'error').mockClear();
+    vi.spyOn(console, 'error').mockClear();
   });
 });

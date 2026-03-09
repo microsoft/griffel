@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import type { GriffelAnimation } from '@griffel/style-types';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
 
@@ -31,7 +32,7 @@ describe('compileKeyframeCSS', () => {
     const result = compileKeyframesCSS('foo', keyframesCSS);
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
+      [
         "@keyframes foo{from{height:10px;}to{height:50px;}}",
       ]
     `);

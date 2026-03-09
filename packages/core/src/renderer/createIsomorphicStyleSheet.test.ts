@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
 
 describe('createIsomorphicStyleElement', () => {
@@ -5,7 +6,7 @@ describe('createIsomorphicStyleElement', () => {
     const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', 0, {});
     stylesheet.insertRule(".foo { color: 'red' }");
     expect(stylesheet.cssRules()).toMatchInlineSnapshot(`
-      Array [
+      [
         ".foo { color: 'red' }",
       ]
     `);
@@ -14,7 +15,7 @@ describe('createIsomorphicStyleElement', () => {
   it('should set element attributes', () => {
     const stylesheet = createIsomorphicStyleSheet(document.createElement('style'), 'd', 0, { 'data-foo': 'foo' });
     expect(stylesheet.elementAttributes).toMatchInlineSnapshot(`
-      Object {
+      {
         "data-foo": "foo",
         "data-make-styles-bucket": "d",
         "data-priority": "0",

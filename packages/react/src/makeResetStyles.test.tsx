@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
@@ -11,7 +12,7 @@ describe('makeResetStyles', () => {
 
   it('throws inside React components', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const Example: React.FC = () => {
       makeResetStyles({ color: 'red' });

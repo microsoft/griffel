@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest';
 import { insertionFactory } from './insertionFactory';
 import type { GriffelRenderer } from './types';
 
@@ -7,8 +8,8 @@ describe('insertionFactory', () => {
   });
 
   it('inserts CSS rules only once per renderer', () => {
-    const rendererA: Partial<GriffelRenderer> = { id: 'a', insertCSSRules: jest.fn() };
-    const rendererB: Partial<GriffelRenderer> = { id: 'b', insertCSSRules: jest.fn() };
+    const rendererA: Partial<GriffelRenderer> = { id: 'a', insertCSSRules: vi.fn() };
+    const rendererB: Partial<GriffelRenderer> = { id: 'b', insertCSSRules: vi.fn() };
 
     const insertStyles = insertionFactory();
 

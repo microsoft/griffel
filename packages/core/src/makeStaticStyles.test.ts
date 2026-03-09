@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { createDOMRenderer } from './renderer/createDOMRenderer';
 import { griffelRendererSerializer } from './common/snapshotSerializers';
 import { makeStaticStyles } from './makeStaticStyles';

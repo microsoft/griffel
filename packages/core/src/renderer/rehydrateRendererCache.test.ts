@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants';
 import type { GriffelRenderer } from '../types';
 import { createDOMRenderer } from './createDOMRenderer';
@@ -27,7 +28,7 @@ describe('rehydrateRendererCache', () => {
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
-      Object {
+      {
         ".foo { color: red; }": "d",
       }
     `);
@@ -44,7 +45,7 @@ describe('rehydrateRendererCache', () => {
     expect(Object.keys(renderer.stylesheets)).toEqual(['d-1']);
     expect(renderer.stylesheets['d-1'].bucketName).toMatchInlineSnapshot(`"d"`);
     expect(renderer.stylesheets['d-1'].elementAttributes).toMatchInlineSnapshot(`
-      Object {
+      {
         "data-make-styles-bucket": "d",
         "data-priority": "-1",
       }

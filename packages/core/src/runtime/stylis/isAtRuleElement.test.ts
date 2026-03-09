@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { compile } from 'stylis';
 import { isAtRuleElement } from './isAtRuleElement';
 

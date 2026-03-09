@@ -40,10 +40,10 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/shadow-dom"],
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "jestConfig": "packages/shadow-dom/jest.config.ts"
+        "reportsDirectory": "../../coverage/packages/shadow-dom"
       }
     },
     "bundle-size": {
