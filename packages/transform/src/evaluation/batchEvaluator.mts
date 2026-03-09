@@ -26,8 +26,9 @@ export function batchEvaluator(
 } {
   const evaluationResults: unknown[] = new Array(styleCalls.length);
 
-  const argumentsCode = new Array(styleCalls.length).fill(null);
-  let vmEvaluationNeeded = false;
+  // Track which indices need VM evaluation and build the expression code string
+  const vmIndices: number[] = [];
+  let expressionCode = '';
 
   // First pass: try static evaluation for all calls
   for (let i = 0; i < styleCalls.length; i++) {
@@ -40,11 +41,14 @@ export function batchEvaluator(
     }
 
     // Mark for VM evaluation
-    vmEvaluationNeeded = true;
-    argumentsCode[i] = styleCall.argumentCode;
+    if (expressionCode.length > 0) {
+      expressionCode += ',';
+    }
+    expressionCode += styleCall.argumentCode;
+    vmIndices.push(i);
   }
 
-  if (!vmEvaluationNeeded) {
+  if (vmIndices.length === 0) {
     return {
       usedVMForEvaluation: false,
       evaluationResults,
@@ -52,7 +56,7 @@ export function batchEvaluator(
   }
 
   // Second pass: batch VM evaluation for complex expressions
-  const vmResult = vmEvaluator(sourceCode, filename, argumentsCode.join(','), babelOptions, evaluationRules);
+  const vmResult = vmEvaluator(sourceCode, filename, expressionCode, babelOptions, evaluationRules);
 
   if (!vmResult.confident) {
     if (vmResult.error) {
@@ -62,15 +66,11 @@ export function batchEvaluator(
     }
   }
 
+  // Map VM results back to correct indices
   const vmValues = vmResult.value as unknown[];
 
-  for (let i = 0; i < vmValues.length; i++) {
-    if (vmValues[i] === null) {
-      // This was already evaluated statically
-      continue;
-    }
-
-    evaluationResults[i] = vmValues[i];
+  for (let i = 0; i < vmIndices.length; i++) {
+    evaluationResults[vmIndices[i]] = vmValues[i];
   }
 
   return {

@@ -348,6 +348,7 @@ describe('GriffelCSSExtractionPlugin', () => {
   testFixture('reset');
   testFixture('reset-media');
   testFixture('mixed');
+  testFixture('mixed-vm');
   testFixture('empty');
 
   // Ensures that a file without makeStyles() calls remains unprocessed
