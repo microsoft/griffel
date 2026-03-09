@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "test: add mixed-vm fixture",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
