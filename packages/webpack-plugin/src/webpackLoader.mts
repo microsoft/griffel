@@ -58,11 +58,11 @@ function webpackLoader(
       result = transformSync(sourceCode, {
         filename: this.resourcePath,
         resolveModule: (id, params) => {
-          const resolvedPath = this[GriffelCssLoaderContextKey]!.resolveModule(id, params);
+          const resolved = this[GriffelCssLoaderContextKey]!.resolveModule(id, params);
 
-          this.addDependency(resolvedPath);
+          this.addDependency(resolved.path);
 
-          return resolvedPath;
+          return resolved;
         },
         classNameHashSalt,
         modules,

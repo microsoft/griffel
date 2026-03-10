@@ -8,8 +8,10 @@ import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from './constants.mjs';
 import type { TransformResolver } from './evaluation/module.mjs';
 import { transformSync, type TransformOptions } from './transformSync.mjs';
 
-const nodeResolve: TransformResolver = (id, opts) =>
-  (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts);
+const nodeResolve: TransformResolver = (id, opts) => ({
+  path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+  builtin: false,
+});
 
 type TestCase = {
   title: string;

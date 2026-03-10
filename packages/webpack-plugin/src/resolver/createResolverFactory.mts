@@ -45,7 +45,10 @@ export function createResolverFactory(): TransformResolverFactory {
         throw new Error(`oxc-resolver: Failed to resolve module "${id}"`);
       }
 
-      return resolved.path;
+      return {
+        path: resolved.path,
+        builtin: !!resolved.builtin,
+      };
     };
   };
 }

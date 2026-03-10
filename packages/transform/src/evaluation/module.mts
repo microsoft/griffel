@@ -23,7 +23,10 @@ import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
 import type { Evaluator, EvalRule } from './types.mjs';
 
-export type TransformResolver = (id: string, options: { filename: string; paths: readonly string[] }) => string;
+export type TransformResolver = (
+  id: string,
+  options: { filename: string; paths: readonly string[] },
+) => { path: string; builtin: boolean };
 
 const debug = createDebug('griffel:module');
 
@@ -124,7 +127,7 @@ export class Module {
     this.debug('prepare', filename);
   }
 
-  resolve = (id: string): string => {
+  resolve = (id: string): { path: string; builtin: boolean } => {
     const extensions = (NativeModule as unknown as { _extensions: Record<string, (...args: unknown[]) => void> })
       ._extensions;
     const added: string[] = [];
@@ -169,12 +172,14 @@ export class Module {
       }
 
       // Resolve module id (and filename) relatively to parent module
-      const filename = this.resolve(id);
+      const resolved = this.resolve(id);
 
-      if (filename === id && !path.isAbsolute(id)) {
+      if (resolved.builtin) {
         // The module is a builtin node modules, but not in the allowed list
         throw new Error(`Unable to import "${id}". Importing Node builtins is not supported in the sandbox.`);
       }
+
+      const filename = resolved.path;
 
       this.dependencies?.push(id);
       let cacheKey = filename;
@@ -231,7 +236,7 @@ export class Module {
     {
       ensure: NOOP,
       cache,
-      resolve: this.resolve,
+      resolve: (id: string) => this.resolve(id).path,
     },
   );
 

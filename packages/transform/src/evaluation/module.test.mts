@@ -9,8 +9,10 @@ import { Module } from './module.mjs';
 import type { TransformResolver } from './module.mjs';
 
 const defaultRules = [{ action: 'ignore' as const }];
-const defaultResolve: TransformResolver = (id, opts) =>
-  (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts);
+const defaultResolve: TransformResolver = (id, opts) => ({
+  path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+  builtin: false,
+});
 
 describe('Module', () => {
   let tmpDir: string;
