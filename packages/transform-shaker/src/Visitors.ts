@@ -3,20 +3,22 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  */
 
-import { types as t } from '@babel/core';
-import type { Identifier, Node } from '@babel/types';
+import type { Node } from 'oxc-parser';
 
 import { peek, warn } from './utils.js';
 import type { VisitorKeys } from './utils.js';
+import { isIdentifier, ALIAS_KEYS } from './ast.js';
 import type GraphBuilderState from './GraphBuilderState.js';
 import identifierHandlers from './identifierHandlers.js';
 import { visitors as core } from './langs/core.js';
 import type { Visitor, Visitors } from './types.js';
 
-const visitors: Visitors = {
+type IdentifierNode = Node & { type: 'Identifier'; name: string };
+
+const visitors = {
   Identifier<TParent extends Node>(
     this: GraphBuilderState,
-    node: Identifier,
+    node: IdentifierNode,
     parent: TParent | null,
     parentKey: VisitorKeys<TParent> | null,
     listIdx: number | null = null,
@@ -63,16 +65,23 @@ const visitors: Visitors = {
      * There is an unhandled identifier.
      * This case should be added to ./identifierHandlers.ts
      */
-    warn('evaluator:shaker', 'Unhandled identifier', node.name, parent.type, parentKey, listIdx);
+    warn(
+      'evaluator:shaker',
+      'Unhandled identifier',
+      isIdentifier(node) ? node.name : '(unknown)',
+      parent.type,
+      parentKey,
+      listIdx,
+    );
   },
 
   ...core,
-};
+} as Visitors;
 
-const isKeyOfVisitors = (type: string): type is keyof Visitors => type in visitors;
+const isKeyOfVisitors = (type: string): type is string & keyof Visitors => type in visitors;
 
 export function getVisitors<TNode extends Node>(node: TNode): Visitor<TNode>[] {
-  const aliases = t.ALIAS_KEYS[node.type] || [];
+  const aliases = ALIAS_KEYS[node.type] || [];
   const aliasVisitors = aliases
     .map(type => (isKeyOfVisitors(type) ? visitors[type] : null))
     .filter(i => i) as Visitor<TNode>[];
