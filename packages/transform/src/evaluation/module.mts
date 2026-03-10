@@ -18,6 +18,7 @@ import vm from 'node:vm';
 import createDebug from 'debug';
 
 import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from '../constants.mjs';
+import { convertESMtoCJS } from '../utils/convertESMtoCJS.mjs';
 import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
 import type { EvalRule, StrictOptions } from './types.mjs';
@@ -274,6 +275,9 @@ export class Module {
       this.imports = imports;
       this.debug('evaluate', `${this.filename} (only ${(only || []).join(', ')}):\n${code}`);
     }
+
+    // Convert ESM syntax to CJS so it can run inside a function wrapper in vm.Script
+    code = convertESMtoCJS(code, this.filename);
 
     const script = new vm.Script(`(function (exports) { ${code}\n})(exports);`, {
       filename: this.filename,
