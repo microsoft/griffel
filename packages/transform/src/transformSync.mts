@@ -3,7 +3,7 @@ import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
 import shakerEvaluator from '@griffel/transform-shaker';
 
-import type { EvalRule, TransformPerfIssue } from './evaluation/types.mjs';
+import type { Evaluator, EvalRule, TransformPerfIssue } from './evaluation/types.mjs';
 import {
   resolveStyleRulesForSlots,
   resolveResetStyleRules,
@@ -17,7 +17,6 @@ import {
 } from '@griffel/core';
 
 import { batchEvaluator } from './evaluation/batchEvaluator.mjs';
-import { createHybridEvaluator } from './evaluation/hybridEvaluator.mjs';
 import { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
 import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
@@ -59,6 +58,22 @@ export type TransformResult = {
 };
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
+
+const EXPORT_STAR_RE = /export\s+\*\s+from\s/;
+
+function wrapWithPerfIssues(evaluator: Evaluator, perfIssues: TransformPerfIssue[]): Evaluator {
+  return (filename, text, only) => {
+    const result = evaluator(filename, text, only);
+
+    if (result.moduleKind === 'cjs') {
+      perfIssues.push({ type: 'cjs-module', dependencyFilename: filename });
+    } else if (EXPORT_STAR_RE.test(result.code)) {
+      perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
+    }
+
+    return result;
+  };
+}
 
 const RUNTIME_IDENTIFIERS = new Map<FunctionKinds, string>([
   ['makeStyles', '__css'],
@@ -159,7 +174,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     classNameHashSalt = '',
     generateMetadata = false,
     modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
-    evaluationRules = [{ action: createHybridEvaluator(shakerEvaluator, perfIssues) }],
+    evaluationRules = [{ action: perfIssues ? wrapWithPerfIssues(shakerEvaluator, perfIssues) : shakerEvaluator }],
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 

@@ -1,15 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`keeps ESM default import when binding is referenced via CJS export 1`] = `
+exports[`keeps ESM default import with batch export 1`] = `
 "import blank from './blank.jpg';
-const __mkPreval = { backgroundImage: blank };
-module.exports = { __mkPreval };"
+export const __mkPreval = { backgroundImage: blank };"
 `;
 
-exports[`keeps ESM import when binding is referenced via CJS export 1`] = `
+exports[`keeps ESM import with batch export 1`] = `
 "import { colorBlue } from './consts';
-const __mkPreval = { color: colorBlue };
-module.exports = { __mkPreval };"
+export const __mkPreval = { color: colorBlue };"
 `;
 
 exports[`keeps all export-all re-exports when requested export is not found locally 1`] = `
@@ -57,19 +55,19 @@ exports[`keeps for-of loop right-hand side reference 1`] = `
 exports[`keeps identifiers inside template literals 1`] = `
 "const color = 'red';
 const result = \`color is \${color}\`;
-exports.__linariaPreval = [result];"
+export const __linariaPreval = [result];"
 `;
 
 exports[`keeps identifiers used as computed property keys 1`] = `
 "const selector = '& .foo';
 const styles = { [selector]: { color: 'red' } };
-exports.__linariaPreval = [styles];"
+export const __linariaPreval = [styles];"
 `;
 
 exports[`keeps identifiers used as spread arguments 1`] = `
 "const shared = { display: 'flex' };
 const styles = { ...shared, color: 'red' };
-exports.__linariaPreval = [styles];"
+export const __linariaPreval = [styles];"
 `;
 
 exports[`keeps local export specifiers (export { name }) 1`] = `
@@ -108,26 +106,25 @@ const fill2 = (top = 0, left = 0, right = 0, bottom = 0) => {
   };
 };
 
-exports.__linariaPreval = [fill1, fill2];"
+export const __linariaPreval = [fill1, fill2];"
 `;
 
 exports[`keeps only code which is related to \`a\` 1`] = `
-"const { whiteColor: color, anotherColor } = require('…');
+"import { whiteColor as color, anotherColor } from '…';
 const a = color || anotherColor;
 color.green = '#0f0';
-exports.__linariaPreval = [a];"
+export const __linariaPreval = [a];"
 `;
 
 exports[`keeps only code which is related to \`anotherColor\` 1`] = `
-"const { whiteColor: color, anotherColor } = require('…');
-color.green = '#0f0';
-exports.__linariaPreval = [anotherColor];"
+"import { anotherColor } from '…';
+export const __linariaPreval = [anotherColor];"
 `;
 
 exports[`keeps only code which is related to \`color\` 1`] = `
-"const { whiteColor: color, anotherColor } = require('…');
+"import { whiteColor as color } from '…';
 color.green = '#0f0';
-exports.__linariaPreval = [color];"
+export const __linariaPreval = [color];"
 `;
 
 exports[`keeps only referenced re-exports from barrel files 1`] = `
@@ -136,18 +133,17 @@ exports[`keeps only referenced re-exports from barrel files 1`] = `
 `;
 
 exports[`keeps reused exports 1`] = `
-"const bar = function() {
+"export const bar = function() {
   return 'hello world';
 };
-exports.bar = bar;
 
-const foo = exports.bar();
-exports.__linariaPreval = [foo];"
+const foo = bar();
+export const __linariaPreval = [foo];"
 `;
 
 exports[`removes all 1`] = `
 "
-exports.__linariaPreval = [];"
+export const __linariaPreval = [];"
 `;
 
 exports[`shakes assignment patterns 1`] = `
@@ -155,22 +151,13 @@ exports[`shakes assignment patterns 1`] = `
 const [{...object} = {}] = [{ a: 1, b: 2 }];
 const [[...array] = []] = [[1,2,3,4]];
 const obj = { member: null };
-exports.__linariaPreval = [identifier, object, array, obj];"
+export const __linariaPreval = [identifier, object, array, obj];"
 `;
 
 exports[`shakes es5 exports 1`] = `
-""use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.redColor = 'red';
-exports['yellowColor'] = 'yellow';
-Object.defineProperty(exports, "greenColor", {
-  enumerable: true,
-  get: function get() {
-    return 'green';
-  }
-});"
+"export const redColor = 'red';
+export const yellowColor = 'yellow';
+export const greenColor = (() => 'green')();"
 `;
 
 exports[`shakes export-all when requested export is found as named re-export 1`] = `"export { baz } from './baz';"`;
@@ -178,7 +165,7 @@ exports[`shakes export-all when requested export is found as named re-export 1`]
 exports[`shakes exports 1`] = `
 "import { whiteColor as color } from '…';
 export const a = color;
-exports.__linariaPreval = [a];"
+export const __linariaPreval = [a];"
 `;
 
 exports[`shakes for-in statements 1`] = `
@@ -187,25 +174,25 @@ const obj2 = {};
 for (const key in obj1) {
   obj2[key] = obj1[key];
 }
-exports.__linariaPreval = [obj2];"
+export const __linariaPreval = [obj2];"
 `;
 
 exports[`shakes imports 1`] = `
 "import { whiteColor as color } from '…';
 import defaultColor from '…';
-exports.__linariaPreval = [color, defaultColor];"
+export const __linariaPreval = [color, defaultColor];"
 `;
 
 exports[`shakes sequence expression 1`] = `
 "const color1 = (() => 'blue');
 let local = '';
 const color2 = (local = color1(), () => local);
-exports.__linariaPreval = [color2];"
+export const __linariaPreval = [color2];"
 `;
 
 exports[`should keep member expression key 1`] = `
 "const key = 'blue';
 const obj = { blue: '#00F' };
 const blue = obj[key];
-exports.__linariaPreval = [blue];"
+export const __linariaPreval = [blue];"
 `;

@@ -7,7 +7,7 @@
  * along with import metadata.
  */
 
-import path from 'node:path';
+import { extname } from 'node:path';
 import { parseSync } from 'oxc-parser';
 import type { Program } from 'oxc-parser';
 import { transformSync } from 'oxc-transform';
@@ -21,26 +21,62 @@ export { default as buildDepsGraph } from './graphBuilder.js';
 
 const needsTransformExtensions = new Set(['ts', 'tsx', 'jsx', 'mts', 'cts']);
 
+const CJS_EXTENSIONS = new Set(['.cjs', '.json']);
+
 function prepareForShake(filename: string, code: string): { program: Program; code: string; hasModuleSyntax: boolean } {
-  const ext = path.extname(filename).slice(1).toLowerCase();
+  const ext = extname(filename).slice(1).toLowerCase();
+  const needsTransform = needsTransformExtensions.has(ext);
+
   let sourceCode = code;
 
   // Strip TypeScript/JSX syntax if needed
-  if (needsTransformExtensions.has(ext)) {
+
+  if (needsTransform) {
     const result = transformSync(filename, code, {});
+
     sourceCode = result.code;
   }
 
-  debug('evaluator:shaker:transform', `Parsed ${filename}`);
+  debug(
+    'evaluator:shaker:transform',
+    `Parsed ${filename} ({${needsTransform ? 'transformed' : 'no transform needed'}})`,
+  );
   const parsed = parseSync(filename, sourceCode);
 
-  return { program: parsed.program, code: sourceCode, hasModuleSyntax: parsed.module.hasModuleSyntax };
+  return {
+    program: parsed.program,
+    code: sourceCode,
+    hasModuleSyntax: parsed.module.hasModuleSyntax,
+  };
 }
 
 const shaker: Evaluator = (filename, text, only = null) => {
+  // Fast path: .cjs/.cts/.json — skip parsing entirely
+  if (CJS_EXTENSIONS.has(extname(filename))) {
+    return {
+      code: text,
+      imports: null,
+      moduleKind: 'cjs',
+    };
+  }
+
   const { program, code, hasModuleSyntax } = prepareForShake(filename, text);
+
+  if (!hasModuleSyntax) {
+    return {
+      code: text,
+      imports: null,
+      moduleKind: 'cjs',
+    };
+  }
+
   const [shakenCode, imports] = shake(program, code, only);
-  return { code: shakenCode, imports, moduleKind: hasModuleSyntax ? 'esm' : 'cjs' };
+
+  return {
+    code: shakenCode,
+    imports,
+    moduleKind: 'esm',
+  };
 };
 
 export default shaker;

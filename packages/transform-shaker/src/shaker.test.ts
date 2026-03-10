@@ -4,6 +4,8 @@
  *
  * Integration tests that depend on @linaria/core, @linaria/react, and linaria
  * fixtures have been omitted. Only the self-contained shake() tests are kept.
+ *
+ * Tests converted to ESM-first syntax.
  */
 
 import dedent from 'dedent';
@@ -25,11 +27,11 @@ function _shake(only: string[] = ['__linariaPreval']) {
 
 it('removes all', () => {
   const [shaken] = _shake()`
-    const { whiteColor: color, anotherColor } = require('…');
+    import { whiteColor as color, anotherColor } from '…';
     const a = color || anotherColor;
     color.green = '#0f0';
 
-    exports.__linariaPreval = [];
+    export const __linariaPreval = [];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -37,12 +39,12 @@ it('removes all', () => {
 
 it('keeps only code which is related to `color`', () => {
   const [shaken] = _shake()`
-    const { whiteColor: color, anotherColor } = require('…');
+    import { whiteColor as color, anotherColor } from '…';
     const wrap = '';
     const a = color || anotherColor;
     color.green = '#0f0';
-    module.exports = { color, anotherColor };
-    exports.__linariaPreval = [color];
+    export { color, anotherColor };
+    export const __linariaPreval = [color];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -50,10 +52,10 @@ it('keeps only code which is related to `color`', () => {
 
 it('keeps only code which is related to `anotherColor`', () => {
   const [shaken] = _shake()`
-    const { whiteColor: color, anotherColor } = require('…');
+    import { whiteColor as color, anotherColor } from '…';
     const a = color || anotherColor;
     color.green = '#0f0';
-    exports.__linariaPreval = [anotherColor];
+    export const __linariaPreval = [anotherColor];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -61,10 +63,10 @@ it('keeps only code which is related to `anotherColor`', () => {
 
 it('keeps only code which is related to `a`', () => {
   const [shaken] = _shake()`
-    const { whiteColor: color, anotherColor } = require('…');
+    import { whiteColor as color, anotherColor } from '…';
     const a = color || anotherColor;
     color.green = '#0f0';
-    exports.__linariaPreval = [a];
+    export const __linariaPreval = [a];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -77,9 +79,8 @@ it('shakes imports', () => {
     import defaultColor from '…';
     import anotherDefaultColor from '…';
     import '…';
-    require('…');
     export default color;
-    exports.__linariaPreval = [color, defaultColor];
+    export const __linariaPreval = [color, defaultColor];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -90,7 +91,7 @@ it('should keep member expression key', () => {
     const key = 'blue';
     const obj = { blue: '#00F' };
     const blue = obj[key];
-    exports.__linariaPreval = [blue];
+    export const __linariaPreval = [blue];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -102,7 +103,7 @@ it('shakes exports', () => {
     export const a = color;
     export { redColor } from "…";
     export { anotherColor };
-    exports.__linariaPreval = [a];
+    export const __linariaPreval = [a];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -110,25 +111,11 @@ it('shakes exports', () => {
 
 it('shakes es5 exports', () => {
   const [shaken] = _shake(['redColor', 'greenColor', 'yellowColor'])`
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.redColor = 'red';
-    exports['yellowColor'] = 'yellow';
-    exports['pinkColor'] = 'pink';
-    Object.defineProperty(exports, "blueColor", {
-      enumerable: true,
-      get: function get() {
-        return 'blue';
-      }
-    });
-    Object.defineProperty(exports, "greenColor", {
-      enumerable: true,
-      get: function get() {
-        return 'green';
-      }
-    });
+    export const redColor = 'red';
+    export const yellowColor = 'yellow';
+    export const pinkColor = 'pink';
+    export const blueColor = (() => 'blue')();
+    export const greenColor = (() => 'green')();
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -143,7 +130,7 @@ it.skip('should throw away any side effects', () => {
       console.log('side effect');
       return obj;
     };
-    exports.__linariaPreval = [foo];
+    export const __linariaPreval = [foo];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -169,7 +156,7 @@ it('keeps objects as is', () => {
       };
     };
 
-    exports.__linariaPreval = [fill1, fill2];
+    export const __linariaPreval = [fill1, fill2];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -181,7 +168,7 @@ it('shakes sequence expression', () => {
     const color1 = (external, () => 'blue');
     let local = '';
     const color2 = (local = color1(), () => local);
-    exports.__linariaPreval = [color2];
+    export const __linariaPreval = [color2];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -194,7 +181,7 @@ it('shakes assignment patterns', () => {
     const [[...array] = []] = [[1,2,3,4]];
     const obj = { member: null };
     ([obj.member = 42] = [1]);
-    exports.__linariaPreval = [identifier, object, array, obj];
+    export const __linariaPreval = [identifier, object, array, obj];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -207,7 +194,7 @@ it('shakes for-in statements', () => {
     for (const key in obj1) {
       obj2[key] = obj1[key];
     }
-    exports.__linariaPreval = [obj2];
+    export const __linariaPreval = [obj2];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -215,34 +202,31 @@ it('shakes for-in statements', () => {
 
 it('keeps reused exports', () => {
   const [shaken] = _shake()`
-    const bar = function() {
+    export const bar = function() {
       return 'hello world';
     };
-    exports.bar = bar;
 
-    const foo = exports.bar();
-    exports.__linariaPreval = [foo];
+    const foo = bar();
+    export const __linariaPreval = [foo];
   `;
 
   expect(shaken).toMatchSnapshot();
 });
 
-it('keeps ESM import when binding is referenced via CJS export', () => {
+it('keeps ESM import with batch export', () => {
   const [shaken] = _shake(['__mkPreval'])`
     import { colorBlue } from './consts';
     export const useStyles = 'unused';
-    const __mkPreval = { color: colorBlue };
-    module.exports = { __mkPreval };
+    export const __mkPreval = { color: colorBlue };
   `;
 
   expect(shaken).toMatchSnapshot();
 });
 
-it('keeps ESM default import when binding is referenced via CJS export', () => {
+it('keeps ESM default import with batch export', () => {
   const [shaken] = _shake(['__mkPreval'])`
     import blank from './blank.jpg';
-    const __mkPreval = { backgroundImage: blank };
-    module.exports = { __mkPreval };
+    export const __mkPreval = { backgroundImage: blank };
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -270,7 +254,7 @@ it('keeps identifiers inside template literals', () => {
     const color = 'red';
     const unused = 'blue';
     const result = \`color is \${color}\`;
-    exports.__linariaPreval = [result];
+    export const __linariaPreval = [result];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -281,7 +265,7 @@ it('keeps identifiers used as spread arguments', () => {
     const shared = { display: 'flex' };
     const unused = { display: 'grid' };
     const styles = { ...shared, color: 'red' };
-    exports.__linariaPreval = [styles];
+    export const __linariaPreval = [styles];
   `;
 
   expect(shaken).toMatchSnapshot();
@@ -387,7 +371,7 @@ it('keeps identifiers used as computed property keys', () => {
     const selector = '& .foo';
     const unused = 'bar';
     const styles = { [selector]: { color: 'red' } };
-    exports.__linariaPreval = [styles];
+    export const __linariaPreval = [styles];
   `;
 
   expect(shaken).toMatchSnapshot();
