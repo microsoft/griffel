@@ -23,6 +23,8 @@ import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
 import type { Evaluator, EvalRule } from './types.mjs';
 
+export type TransformResolver = (id: string, options: { filename: string; paths: readonly string[] }) => string;
+
 const debug = createDebug('griffel:module');
 
 // Supported node builtins based on the modules polyfilled by webpack
@@ -86,13 +88,15 @@ export class Module {
   exports: unknown = {};
   extensions: string[];
 
+  private readonly resolveFilename: TransformResolver;
   private debug: (namespaces: string, arg1: unknown, ...args: unknown[]) => void;
   private debuggerDepth: number;
 
-  constructor(filename: string, rules: EvalRule[], debuggerDepth = 0) {
+  constructor(filename: string, rules: EvalRule[], resolveFilename: TransformResolver, debuggerDepth = 0) {
     this.id = filename;
     this.filename = filename;
     this.rules = rules;
+    this.resolveFilename = resolveFilename;
     this.debuggerDepth = debuggerDepth;
     this.debug = createCustomDebug(debuggerDepth);
 
@@ -137,7 +141,7 @@ export class Module {
         extensions[ext] = NOOP;
         added.push(ext);
       });
-      return Module._resolveFilename(id, this);
+      return this.resolveFilename(id, this);
     } finally {
       // Cleanup the extensions we added to restore previous behaviour
       added.forEach(ext => delete extensions[ext]);
@@ -194,7 +198,7 @@ export class Module {
       if (!m) {
         this.debug('cached:not-exist', id);
         // Create the module if cached module is not available
-        m = new Module(filename, this.rules, this.debuggerDepth + 1);
+        m = new Module(filename, this.rules, this.resolveFilename, this.debuggerDepth + 1);
         m.transform = this.transform;
         // Store it in cache at this point, otherwise
         // we would end up in infinite loop with cyclic dependencies
@@ -314,15 +318,6 @@ export class Module {
   static invalidateEvalCache = (): void => {
     EvalCache.clear();
   };
-
-  // Alias to resolve the module using node's resolve algorithm
-  // This static property can be overridden by the webpack loader
-  // This allows us to use webpack's module resolution algorithm
-  static _resolveFilename = (id: string, options: { filename: string; paths: readonly string[] }): string =>
-    (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(
-      id,
-      options,
-    );
 
   static _nodeModulePaths = (filename: string): string[] =>
     (NativeModule as unknown as { _nodeModulePaths: (dir: string) => string[] })._nodeModulePaths(filename);

@@ -1,8 +1,7 @@
 import { ResolverFactory, type NapiResolveOptions } from 'oxc-resolver';
+import type { TransformResolver } from '@griffel/transform';
 import type { Compilation } from 'webpack';
 import * as path from 'node:path';
-
-import type { TransformResolver, TransformResolverFactory } from './types.mjs';
 
 function isCJSOnlyPackage(id: string): boolean {
   return id === 'tslib' || id.startsWith('@babel/runtime') || id.startsWith('@swc/helpers');
@@ -12,6 +11,8 @@ const RESOLVE_OPTIONS_DEFAULTS: NapiResolveOptions = {
   conditionNames: ['require'],
   extensions: ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.tsx', '.json'],
 };
+
+export type TransformResolverFactory = (compilation: Compilation) => TransformResolver;
 
 export function createResolverFactory(): TransformResolverFactory {
   return function (compilation: Compilation): TransformResolver {

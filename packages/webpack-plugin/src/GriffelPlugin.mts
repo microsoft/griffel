@@ -2,8 +2,7 @@ import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core'
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
 import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
-import { createResolverFactory } from './resolver/createResolverFactory.mjs';
-import { type TransformResolverFactory } from './resolver/types.mjs';
+import { createResolverFactory, type TransformResolverFactory } from './resolver/createResolverFactory.mjs';
 import { parseCSSRules } from './utils/parseCSSRules.mjs';
 import { sortCSSRules } from './utils/sortCSSRules.mjs';
 

@@ -3,6 +3,7 @@ import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
 import shakerEvaluator from '@griffel/transform-shaker';
 
+import type { TransformResolver } from './evaluation/module.mjs';
 import type { Evaluator, EvalRule, TransformPerfIssue } from './evaluation/types.mjs';
 import {
   resolveStyleRulesForSlots,
@@ -24,6 +25,9 @@ import type { StyleCall } from './types.mjs';
 
 export type TransformOptions = {
   filename: string;
+
+  /** Custom module resolver used to resolve imports inside evaluated modules. */
+  resolveModule: TransformResolver;
 
   classNameHashSalt?: string;
 
@@ -171,6 +175,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
   const {
     filename,
+    resolveModule,
     classNameHashSalt = '',
     generateMetadata = false,
     modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
@@ -319,6 +324,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     filename,
     styleCalls,
     evaluationRules,
+    resolveModule,
     programAst,
     astEvaluationPlugins,
   );

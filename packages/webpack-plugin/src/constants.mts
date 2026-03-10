@@ -1,6 +1,5 @@
 import type { LoaderContext } from 'webpack';
-import type { TransformPerfIssue } from '@griffel/transform';
-import type { TransformResolver } from './resolver/types.mjs';
+import type { TransformResolver, TransformPerfIssue } from '@griffel/transform';
 
 export const PLUGIN_NAME = 'GriffelExtractPlugin';
 export const GriffelCssLoaderContextKey = Symbol.for(`${PLUGIN_NAME}/GriffelCssLoaderContextKey`);

@@ -1,10 +1,15 @@
 import * as fs from 'node:fs';
+import NativeModule from 'node:module';
 import * as path from 'node:path';
 import { format } from 'prettier';
 import { describe, it, expect, vi } from 'vitest';
 
 import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from './constants.mjs';
+import type { TransformResolver } from './evaluation/module.mjs';
 import { transformSync, type TransformOptions } from './transformSync.mjs';
+
+const nodeResolve: TransformResolver = (id, opts) =>
+  (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts);
 
 type TestCase = {
   title: string;
@@ -348,6 +353,7 @@ export const useStyles = makeStyles({
 
     const result = transformSync(sourceCode, {
       filename: 'test-plugins.ts',
+      resolveModule: nodeResolve,
     });
 
     expect(result.usedProcessing).toBe(true);
@@ -369,6 +375,7 @@ export const useStyles = makeStyles({
         expect(() =>
           transformSync(sourceCode, {
             filename: testCase.fixture,
+            resolveModule: nodeResolve,
             ...transformOptions,
           }),
         ).toThrow(testCase.error);
@@ -377,6 +384,7 @@ export const useStyles = makeStyles({
 
       const { code, cssRulesByBucket, usedProcessing, usedVMForEvaluation } = transformSync(sourceCode, {
         filename: testCase.fixture,
+        resolveModule: nodeResolve,
         ...transformOptions,
       });
       const outputCode = await format(code, { ...prettierConfig, parser: 'typescript' });
