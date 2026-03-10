@@ -769,11 +769,15 @@ export const visitors = {
     for (const specifier of node.specifiers) {
       const spec = specifier as { local: IdentifierNode; exported: IdentifierNode };
       const declaration = this.scope.addReference(spec.local);
+
+      this.graph.addExport(spec.exported.name, specifier);
+      this.graph.addEdge(specifier, node);
+      this.graph.addEdge(specifier, spec.local);
+      this.graph.addEdge(specifier, spec.exported);
+
       if (declaration) {
-        this.graph.addEdge(node, declaration);
-        this.graph.addEdge(node, spec.local);
+        this.graph.addEdge(specifier, declaration);
       }
-      this.graph.addExport(spec.exported.name, node);
     }
 
     return 'ignore' as const;

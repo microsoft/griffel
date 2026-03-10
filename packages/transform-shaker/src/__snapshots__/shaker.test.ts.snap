@@ -61,6 +61,18 @@ const styles = { ...shared, color: 'red' };
 exports.__linariaPreval = [styles];"
 `;
 
+exports[`keeps local export specifiers (export { name }) 1`] = `
+"import { border } from './shorthands/border';
+import { margin } from './shorthands/margin';
+
+const shorthands = {
+  border,
+  margin,
+};
+
+export { shorthands };"
+`;
+
 exports[`keeps multiple export const declarators 1`] = `
 "export const className = 'component-foo';
 export const selector = '& .component-bar';"
