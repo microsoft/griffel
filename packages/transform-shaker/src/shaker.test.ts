@@ -328,6 +328,44 @@ it('keeps class with constructor references to imports and sibling exports', () 
   expect(shaken).toMatchSnapshot();
 });
 
+it('keeps only referenced re-exports from barrel files', () => {
+  const [shaken] = _shake(['colorBlue', 'colorGreen'])`
+    export { sizeSmall, sizeLarge } from './sizes';
+    export { colorRed, colorBlue, colorGreen, colorYellow } from './colors';
+    export { fontBold } from './fonts';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps export-all re-exports when referenced export is not found locally', () => {
+  const [shaken] = _shake(['colorBlue'])`
+    export { sizeSmall } from './sizes';
+    export * from './colors';
+    export { fontBold } from './fonts';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('shakes export-all when requested export is found as named re-export', () => {
+  const [shaken] = _shake(['baz'])`
+    export * from './foo';
+    export { baz } from './baz';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps all export-all re-exports when requested export is not found locally', () => {
+  const [shaken] = _shake(['qux'])`
+    export * from './foo';
+    export * from './baz';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
 it('keeps identifiers used as computed property keys', () => {
   const [shaken] = _shake()`
     const selector = '& .foo';

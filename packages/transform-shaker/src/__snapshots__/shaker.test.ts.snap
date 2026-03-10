@@ -31,7 +31,17 @@ export class Config {
 export const config = new Config();"
 `;
 
+exports[`keeps all export-all re-exports when requested export is not found locally 1`] = `
+"export * from './foo';
+export * from './baz';"
+`;
+
 exports[`keeps export const declarators 1`] = `"export const colorBlue = 'blue';"`;
+
+exports[`keeps export-all re-exports when referenced export is not found locally 1`] = `
+"export * from './colors';
+"
+`;
 
 exports[`keeps identifiers inside template literals 1`] = `
 "const color = 'red';
@@ -97,6 +107,11 @@ color.green = '#0f0';
 exports.__linariaPreval = [color];"
 `;
 
+exports[`keeps only referenced re-exports from barrel files 1`] = `
+"export { colorBlue, colorGreen } from './colors';
+"
+`;
+
 exports[`keeps reused exports 1`] = `
 "const bar = function() {
   return 'hello world';
@@ -134,6 +149,8 @@ Object.defineProperty(exports, "greenColor", {
   }
 });"
 `;
+
+exports[`shakes export-all when requested export is found as named re-export 1`] = `"export { baz } from './baz';"`;
 
 exports[`shakes exports 1`] = `
 "import { whiteColor as color } from '…';
