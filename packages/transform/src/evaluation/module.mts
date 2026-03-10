@@ -50,8 +50,9 @@ export class Module {
   imports: Map<string, string[]> | null = null;
   dependencies: string[] | null = null;
   transform: ((code: string, filename: string) => string) | null = null;
+  static readonly extensions = new Set(['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs', '.mjs', '.mts', '.cts']);
+
   exports: unknown = {};
-  extensions: string[];
 
   private readonly resolveFilename: TransformResolver;
   private debug: (namespaces: string, arg1: unknown, ...args: unknown[]) => void;
@@ -85,7 +86,6 @@ export class Module {
     });
 
     this.exports = {};
-    this.extensions = ['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs', '.mjs', '.mts', '.cts'];
     this.debug('prepare', filename);
   }
 
@@ -137,7 +137,7 @@ export class Module {
 
         const ext = path.extname(filename).toLowerCase();
 
-        if (this.extensions.includes(ext)) {
+        if (Module.extensions.has(ext)) {
           // To evaluate the file, we need to read it first
           const code = fs.readFileSync(filename, 'utf-8');
 
