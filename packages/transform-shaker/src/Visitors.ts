@@ -7,17 +7,16 @@ import type { Node } from 'oxc-parser';
 
 import { peek, warn } from './utils.js';
 import type { VisitorKeys } from './utils.js';
+import type { IdentifierNode } from './ast.js';
 import { isIdentifier, ALIAS_KEYS } from './ast.js';
-import type GraphBuilderState from './GraphBuilderState.js';
+import type { GraphBuilder } from './graphBuilder.js';
 import identifierHandlers from './identifierHandlers.js';
 import { visitors as core } from './langs/core.js';
 import type { Visitor, Visitors } from './types.js';
 
-type IdentifierNode = Node & { type: 'Identifier'; name: string };
-
 const visitors = {
   Identifier<TParent extends Node>(
-    this: GraphBuilderState,
+    this: GraphBuilder,
     node: IdentifierNode,
     parent: TParent | null,
     parentKey: VisitorKeys<TParent> | null,

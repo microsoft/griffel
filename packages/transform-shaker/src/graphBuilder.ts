@@ -7,11 +7,11 @@ import type { Node } from 'oxc-parser';
 
 import { isNode, getVisitorKeys } from './utils.js';
 import type { VisitorKeys } from './utils.js';
-import type DepsGraph from './DepsGraph.js';
-import GraphBuilderState from './GraphBuilderState.js';
+import DepsGraph from './DepsGraph.js';
 import { getVisitors } from './Visitors.js';
 import ScopeManager from './scope.js';
 import type { VisitorAction, Visitor } from './types.js';
+import type { IdentifierNode, AssignmentExpressionNode } from './ast.js';
 import {
   isUnaryExpression,
   isCallExpression,
@@ -30,8 +30,7 @@ import {
   isProgram,
 } from './ast.js';
 
-type IdentifierNode = Node & { type: 'Identifier'; name: string };
-type AssignmentExpressionNode = Node & { type: 'AssignmentExpression'; operator: string; left: Node; right: Node };
+type OnVisitCallback = (n: Node) => void;
 
 const isVoid = (node: Node): boolean => isUnaryExpression(node) && node.operator === 'void';
 
@@ -47,14 +46,40 @@ function isTSExporterCall(node: Node): node is Node & {
   return !(!isIdentifier(node.callee) || node.callee.name !== 'exporter');
 }
 
-class GraphBuilder extends GraphBuilderState {
+class GraphBuilder {
   static build(root: Node): DepsGraph {
     return new GraphBuilder(root).graph;
   }
 
-  constructor(rootNode: Node) {
-    super();
+  public readonly scope = new ScopeManager();
 
+  public readonly graph = new DepsGraph(this.scope);
+
+  public readonly meta = new Map<string, unknown>();
+
+  protected callbacks: OnVisitCallback[] = [];
+
+  /*
+   * For expressions like `{ foo: bar }` we need to now context
+   *
+   * const obj = { foo: bar };
+   * Here context is `expression`, `bar` is a variable which depends from its declaration.
+   *
+   * const { foo: bar } = obj;
+   * Here context is `pattern` and `bar` is a variable declaration itself.
+   */
+  public readonly context: Array<'expression' | 'lval'> = [];
+
+  public readonly fnStack: Node[] = [];
+
+  public onVisit(callback: OnVisitCallback) {
+    this.callbacks.push(callback);
+    return () => {
+      this.callbacks = this.callbacks.filter(c => c !== callback);
+    };
+  }
+
+  constructor(rootNode: Node) {
     this.visit(rootNode, null, null, null);
   }
 
@@ -247,4 +272,5 @@ class GraphBuilder extends GraphBuilderState {
   }
 }
 
+export type { GraphBuilder };
 export default GraphBuilder.build;

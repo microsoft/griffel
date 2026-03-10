@@ -5,14 +5,11 @@
 
 import type { Node } from 'oxc-parser';
 
-import { isIdentifier, shallowEqual } from './ast.js';
+import type { IdentifierNode, StringLiteralNode } from './ast.js';
 import type { PromisedNode } from './scope.js';
 import type ScopeManager from './scope.js';
 import { resolveNode } from './scope.js';
 
-type IdentifierNode = Node & { type: 'Identifier'; name: string };
-type StringLiteralNode = Node & { type: 'Literal'; value: string };
-type MemberExpressionNode = Node & { type: 'MemberExpression'; object: Node; property: Node };
 type Action = (this: DepsGraph, a: Node, b: Node) => void;
 
 function addEdge(this: DepsGraph, a: Node, b: Node) {
@@ -21,17 +18,10 @@ function addEdge(this: DepsGraph, a: Node, b: Node) {
     return;
   }
 
-  this.edges.push([a, b]);
   if (this.dependencies.has(a)) {
     this.dependencies.get(a)!.add(b);
   } else {
     this.dependencies.set(a, new Set([b]));
-  }
-
-  if (this.dependents.has(b)) {
-    this.dependents.get(b)!.add(a);
-  } else {
-    this.dependents.set(b, new Set([a]));
   }
 }
 
@@ -46,13 +36,9 @@ export default class DepsGraph {
 
   protected readonly parents: WeakMap<Node, Node> = new WeakMap();
 
-  protected readonly edges: Array<[Node, Node]> = [];
-
   protected readonly exports: Map<string, Node> = new Map();
 
   protected readonly dependencies: Map<Node, Set<Node>> = new Map();
-
-  protected readonly dependents: Map<Node, Set<Node>> = new Map();
 
   private actionQueue: Array<[Action, Node | PromisedNode, Node | PromisedNode]> = [];
 
@@ -70,17 +56,6 @@ export default class DepsGraph {
     });
 
     this.actionQueue = [];
-  }
-
-  private getAllReferences(id: string): (IdentifierNode | MemberExpressionNode)[] {
-    const [, name] = id.split(':');
-    const declaration = this.scope.getDeclaration(id)!;
-    const allReferences: (IdentifierNode | MemberExpressionNode)[] = [
-      ...Array.from(this.dependencies.get(declaration) || []),
-      ...Array.from(this.dependents.get(declaration) || []),
-    ].filter(i => isIdentifier(i) && i.name === name) as IdentifierNode[];
-    allReferences.push(declaration);
-    return allReferences;
   }
 
   constructor(protected scope: ScopeManager) {}
@@ -105,43 +80,6 @@ export default class DepsGraph {
 
   getParent(node: Node): Node | undefined {
     return this.parents.get(node);
-  }
-
-  getDependenciesByBinding(id: string) {
-    this.processQueue();
-    const allReferences = this.getAllReferences(id);
-    const dependencies: Node[] = [];
-    this.edges.forEach(([a, b]) => {
-      if (isIdentifier(a) && allReferences.includes(a)) {
-        dependencies.push(b);
-      }
-    });
-
-    return dependencies;
-  }
-
-  getDependentsByBinding(id: string) {
-    this.processQueue();
-    const allReferences = this.getAllReferences(id);
-    const dependents: Node[] = [];
-    this.edges.forEach(([a, b]) => {
-      if (isIdentifier(b) && allReferences.includes(b)) {
-        dependents.push(a);
-      }
-    });
-
-    return dependents;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  findDependencies(like: Object) {
-    this.processQueue();
-    return this.edges.filter(([a]) => shallowEqual(a, like as Record<string, unknown>)).map(([, b]) => b);
-  }
-
-  findDependents(like: object) {
-    this.processQueue();
-    return this.edges.filter(([, b]) => shallowEqual(b, like as Record<string, unknown>)).map(([a]) => a);
   }
 
   getDependencies(nodes: Node[]) {

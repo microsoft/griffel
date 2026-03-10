@@ -8,9 +8,8 @@ import type { Node } from 'oxc-parser';
 
 import { invariant } from './utils.js';
 import { isIdentifier, isMemberExpression, isStringLiteral, createIdentifier } from './ast.js';
+import type { IdentifierNode, MemberExpressionNode } from './ast.js';
 
-type IdentifierNode = Node & { type: 'Identifier'; name: string };
-type MemberExpressionNode = Node & { type: 'MemberExpression'; object: Node; property: Node; computed: boolean };
 type Scope = Map<string, Set<IdentifierNode | MemberExpressionNode>>;
 
 export type ScopeId = number | 'global' | 'exports';

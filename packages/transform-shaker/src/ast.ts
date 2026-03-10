@@ -13,9 +13,22 @@ import { visitorKeys } from 'oxc-parser';
 // Re-export visitorKeys as VISITOR_KEYS for compatibility
 export const VISITOR_KEYS: Record<string, string[]> = visitorKeys;
 
+// --- Shared narrow node types ---
+
+export type IdentifierNode = Node & { type: 'Identifier'; name: string };
+export type StringLiteralNode = Node & { type: 'Literal'; value: string };
+export type MemberExpressionNode = Node & { type: 'MemberExpression'; object: Node; property: Node; computed: boolean };
+export type AssignmentExpressionNode = Node & {
+  type: 'AssignmentExpression';
+  operator: string;
+  left: Node;
+  right: Node;
+};
+export type CallExpressionNode = Node & { type: 'CallExpression'; callee: Node; arguments: Node[] };
+
 // --- Type guards for individual node types ---
 
-export function isIdentifier(node: unknown): node is Node & { type: 'Identifier'; name: string } {
+export function isIdentifier(node: unknown): node is IdentifierNode {
   return isNodeLike(node) && node.type === 'Identifier';
 }
 
@@ -35,15 +48,11 @@ export function isNullLiteral(node: unknown): node is NullLiteral {
   return isNodeLike(node) && node.type === 'Literal' && (node as NullLiteral).value === null;
 }
 
-export function isMemberExpression(
-  node: unknown,
-): node is Node & { type: 'MemberExpression'; object: Node; property: Node; computed: boolean } {
+export function isMemberExpression(node: unknown): node is MemberExpressionNode {
   return isNodeLike(node) && node.type === 'MemberExpression';
 }
 
-export function isCallExpression(
-  node: unknown,
-): node is Node & { type: 'CallExpression'; callee: Node; arguments: Node[] } {
+export function isCallExpression(node: unknown): node is CallExpressionNode {
   return isNodeLike(node) && node.type === 'CallExpression';
 }
 
@@ -80,9 +89,7 @@ export function isVariableDeclarator(
   return isNodeLike(node) && node.type === 'VariableDeclarator';
 }
 
-export function isAssignmentExpression(
-  node: unknown,
-): node is Node & { type: 'AssignmentExpression'; operator: string; left: Node; right: Node } {
+export function isAssignmentExpression(node: unknown): node is AssignmentExpressionNode {
   return isNodeLike(node) && node.type === 'AssignmentExpression';
 }
 
@@ -290,20 +297,6 @@ function isNodeLike(obj: unknown): obj is { type: string; start: number; end: nu
 
 export function isNode(obj: unknown): obj is Node {
   return isNodeLike(obj);
-}
-
-/**
- * Shallow comparison of AST nodes by matching specified properties.
- * Replacement for `t.shallowEqual()`.
- */
-export function shallowEqual(node: Node, match: Record<string, unknown>): boolean {
-  for (const key of Object.keys(match)) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if ((node as any)[key] !== match[key]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 /**
