@@ -128,6 +128,12 @@ export function isArrowFunctionExpression(node: unknown): node is Node & { type:
   return isNodeLike(node) && node.type === 'ArrowFunctionExpression';
 }
 
+export function isClassDeclaration(
+  node: unknown,
+): node is Node & { type: 'ClassDeclaration'; id: Node | null; body: Node; superClass: Node | null } {
+  return isNodeLike(node) && node.type === 'ClassDeclaration';
+}
+
 export function isBreakStatement(node: unknown): node is Node & { type: 'BreakStatement' } {
   return isNodeLike(node) && node.type === 'BreakStatement';
 }
@@ -259,6 +265,7 @@ export function isBlock(node: unknown): node is Node & { type: 'Program' | 'Bloc
 export const ALIAS_KEYS: Record<string, string[]> = {};
 
 export const FLIPPED_ALIAS_KEYS: Record<string, string[]> = {
+  Class: ['ClassDeclaration', 'ClassExpression'],
   Function: ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression'],
   Expression: Array.from(EXPRESSION_TYPES),
   Statement: Array.from(STATEMENT_TYPES),

@@ -27,6 +27,7 @@ import {
   isExpressionStatement,
   isFunctionDeclaration,
   isFunctionExpression,
+  isClassDeclaration,
   isProgram,
   isBreakStatement,
   isContinueStatement,
@@ -276,6 +277,26 @@ export const visitors = {
     }
 
     if (isFunctionDeclaration(node) && node.id) {
+      this.graph.addEdge(node, node.id);
+    }
+  },
+
+  Class(
+    this: GraphBuilderState,
+    node: Node & { id?: (Node & { name: string }) | null; body: Node; superClass?: Node | null },
+  ) {
+    const unsubscribe = this.onVisit(descendant => this.graph.addEdge(node, descendant));
+    this.baseVisit(node, true);
+    unsubscribe();
+
+    this.graph.addEdge(node, node.body);
+
+    if (node.superClass) {
+      this.graph.addEdge(node, node.superClass);
+    }
+
+    if (node.id) {
+      this.graph.addEdge(node.id, node);
       this.graph.addEdge(node, node.id);
     }
   },
@@ -714,6 +735,10 @@ export const visitors = {
         const id = node.declaration.id as IdentifierNode;
         this.graph.addExport(id.name, node);
         this.graph.addEdge(node, node.declaration);
+      } else if (isClassDeclaration(node.declaration) && node.declaration.id) {
+        const id = node.declaration.id as IdentifierNode;
+        this.graph.addExport(id.name, node);
+        this.graph.addEdge(node, node.declaration);
       }
 
       return 'ignore' as const;
@@ -778,6 +803,7 @@ export const identifierHandlers: IdentifierHandlers = {
     ['CatchClause', 'param'],
     ['Function', 'params'],
     ['FunctionExpression', 'id'],
+    ['ClassExpression', 'id'],
     ['RestElement', 'argument'],
     ['ThrowStatement', 'argument'],
     ['VariableDeclarator', 'id'],

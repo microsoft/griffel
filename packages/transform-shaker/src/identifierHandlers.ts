@@ -59,6 +59,26 @@ defineHandler('FunctionDeclaration', 'id', (builder: GraphBuilderState, node: Id
 });
 
 /*
+ * Special case for ClassDeclaration
+ * Class id should be defined in the parent scope (same as FunctionDeclaration)
+ */
+defineHandler('ClassDeclaration', 'id', (builder: GraphBuilderState, node: IdentifierNode) => {
+  builder.scope.declare(node, false, null, 1);
+});
+
+/*
+ * Special case for MethodDefinition/PropertyDefinition keys
+ * The key identifier is alive when the definition is alive.
+ */
+defineHandler('MethodDefinition', 'key', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+  builder.graph.addEdge(parent, node);
+});
+
+defineHandler('PropertyDefinition', 'key', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+  builder.graph.addEdge(parent, node);
+});
+
+/*
  * Special handler for [obj.member = 42] = [1] in different contexts
  */
 const memberExpressionObjectHandler = (builder: GraphBuilderState, node: IdentifierNode) => {
