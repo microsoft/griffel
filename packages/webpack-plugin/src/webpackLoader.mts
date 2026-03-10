@@ -45,7 +45,7 @@ function webpackLoader(
     }
   }
 
-  const { classNameHashSalt, modules, evaluationRules, babelOptions } = this.getOptions();
+  const { classNameHashSalt, modules, evaluationRules } = this.getOptions();
 
   this[GriffelCssLoaderContextKey]!.runWithTimer(() => {
     // Clear require cache to allow re-evaluation of modules
@@ -74,7 +74,6 @@ function webpackLoader(
         classNameHashSalt,
         modules,
         evaluationRules,
-        babelOptions,
         collectPerfIssues: this[GriffelCssLoaderContextKey]?.collectPerfIssues,
       });
     } catch (err) {

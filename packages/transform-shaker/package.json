@@ -1,6 +1,5 @@
 {
   "name": "@griffel/transform-shaker",
-  "private": true,
   "version": "1.0.0",
   "description": "Tree-shaking evaluator for Griffel transform, based on @linaria/shaker",
   "license": "MIT",

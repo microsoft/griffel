@@ -12,6 +12,11 @@ const __mkPreval = { color: colorBlue };
 module.exports = { __mkPreval };"
 `;
 
+exports[`keeps all export-all re-exports when requested export is not found locally 1`] = `
+"export * from './foo';
+export * from './baz';"
+`;
+
 exports[`keeps class with constructor references to imports and sibling exports 1`] = `
 "import { baseHeight } from './base';
 import { labels } from './labels';
@@ -29,11 +34,6 @@ export class Config {
 }
 
 export const config = new Config();"
-`;
-
-exports[`keeps all export-all re-exports when requested export is not found locally 1`] = `
-"export * from './foo';
-export * from './baz';"
 `;
 
 exports[`keeps export const declarators 1`] = `"export const colorBlue = 'blue';"`;

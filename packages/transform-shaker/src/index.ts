@@ -37,7 +37,7 @@ function prepareForShake(filename: string, code: string): { program: Program; co
   return { program: parsed.program, code: sourceCode };
 }
 
-const shaker: Evaluator = (filename, options, text, only = null) => {
+const shaker: Evaluator = (filename, text, only = null) => {
   const { program, code } = prepareForShake(filename, text);
   const [shakenCode, imports] = shake(program, code, only);
   return [shakenCode, imports];

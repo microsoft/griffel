@@ -218,16 +218,6 @@ const TESTS: TestCase[] = [
     },
   },
   {
-    title: 'config: babelOptions',
-    fixture: path.resolve(fixturesDir, 'config-babel-options', 'code.ts'),
-    outputFixture: path.resolve(fixturesDir, 'config-babel-options', 'output.ts'),
-    transformOptions: {
-      babelOptions: {
-        plugins: ['./packages/transform/__fixtures__/config-babel-options/colorRenamePlugin'],
-      },
-    },
-  },
-  {
     title: 'config: evaluationRules',
     fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
@@ -340,12 +330,6 @@ const TESTS: TestCase[] = [
   },
 ];
 
-const DEFAULT_TRANSFORM_OPTIONS = {
-  babelOptions: {
-    presets: ['@babel/preset-typescript'],
-  },
-};
-
 describe('transformSync', () => {
   it('astEvaluationPlugins: fluentTokensPlugin is enabled by default', () => {
     const sourceCode = `
@@ -364,9 +348,6 @@ export const useStyles = makeStyles({
 
     const result = transformSync(sourceCode, {
       filename: 'test-plugins.ts',
-      babelOptions: {
-        presets: ['@babel/preset-typescript'],
-      },
     });
 
     expect(result.usedProcessing).toBe(true);
@@ -382,10 +363,7 @@ export const useStyles = makeStyles({
       const sourceCode = fs.readFileSync(testCase.fixture, { encoding: 'utf-8' });
       const teardown = testCase.setup?.();
 
-      const transformOptions = {
-        ...DEFAULT_TRANSFORM_OPTIONS,
-        ...(testCase.transformOptions || {}),
-      };
+      const transformOptions = testCase.transformOptions || {};
 
       if (testCase.error) {
         expect(() =>

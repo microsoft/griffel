@@ -6,12 +6,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from '../constants.mjs';
 import { Module } from './module.mjs';
 
-const defaultOptions = {
-  displayName: false,
-  evaluate: true,
-  babelOptions: {},
-  rules: [{ action: 'ignore' as const }],
-};
+const defaultRules = [{ action: 'ignore' as const }];
 
 describe('Module', () => {
   let tmpDir: string;
@@ -34,7 +29,7 @@ describe('Module', () => {
       const entryFile = path.join(tmpDir, 'entry.js');
       fs.writeFileSync(entryFile, '');
 
-      const m = new Module(entryFile, defaultOptions);
+      const m = new Module(entryFile, defaultRules);
       const result = m.require('./test.jpg');
 
       expect(result).toBe(ASSET_TAG_OPEN + jpgFile + ASSET_TAG_CLOSE);
@@ -49,7 +44,7 @@ describe('Module', () => {
       const entryFile = path.join(tmpDir, 'entry.js');
       fs.writeFileSync(entryFile, '');
 
-      const m = new Module(entryFile, defaultOptions);
+      const m = new Module(entryFile, defaultRules);
       const result = m.require('./icon.png');
 
       expect(result).toBe(ASSET_TAG_OPEN + pngFile + ASSET_TAG_CLOSE);
@@ -64,7 +59,7 @@ describe('Module', () => {
       const entryFile = path.join(tmpDir, 'entry.js');
       fs.writeFileSync(entryFile, '');
 
-      const m = new Module(entryFile, defaultOptions);
+      const m = new Module(entryFile, defaultRules);
       const result = m.require('./data.json');
 
       expect(result).toEqual({ key: 'value' });

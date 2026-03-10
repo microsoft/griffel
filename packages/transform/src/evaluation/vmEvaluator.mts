@@ -1,5 +1,5 @@
 import { Module } from './module.mjs';
-import type { EvaluationResult, StrictOptions } from './types.mjs';
+import type { EvalRule, EvaluationResult } from './types.mjs';
 
 function isError(e: unknown): e is Error {
   return Object.prototype.toString.call(e) === '[object Error]';
@@ -10,8 +10,7 @@ export function vmEvaluator(
   filename: string,
   expressionCode: string,
 
-  babelOptions: NonNullable<StrictOptions['babelOptions']>,
-  evaluationRules: NonNullable<StrictOptions['rules']>,
+  evaluationRules: EvalRule[],
 ): EvaluationResult {
   // Create a simple wrapper program for evaluation
   const codeForEvaluation = `
@@ -31,18 +30,7 @@ if (typeof module !== 'undefined' && module.exports) {
 `;
 
   try {
-    const options: StrictOptions = {
-      displayName: false,
-      evaluate: true,
-      rules: evaluationRules,
-      babelOptions: {
-        ...babelOptions,
-        configFile: false,
-        babelrc: false,
-      },
-    };
-
-    const mod = new Module(filename, options);
+    const mod = new Module(filename, evaluationRules);
     mod.evaluate(codeForEvaluation, ['__mkPreval']);
 
     const result = (mod.exports as { __mkPreval: unknown }).__mkPreval;

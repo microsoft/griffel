@@ -13,10 +13,10 @@ const NODE_MODULES_RE = /[/\\]node_modules[/\\]/;
 const EXPORT_STAR_RE = /export\s+\*\s+from\s/;
 
 export function createHybridEvaluator(shakerEvaluator: Evaluator, perfIssues?: TransformPerfIssue[]): Evaluator {
-  return (filename, options, text, only) => {
+  return (filename, text, only) => {
     // Non-node_modules: always shake
     if (!NODE_MODULES_RE.test(filename)) {
-      const result = shakerEvaluator(filename, options, text, only);
+      const result = shakerEvaluator(filename, text, only);
 
       if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
         perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
@@ -34,7 +34,7 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator, perfIssues?: T
       return [text, null];
     }
     if (ESM_EXTENSIONS.has(ext)) {
-      const result = shakerEvaluator(filename, options, text, only);
+      const result = shakerEvaluator(filename, text, only);
 
       if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
         perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
@@ -59,7 +59,7 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator, perfIssues?: T
       return [text, null];
     }
 
-    const result = shakerEvaluator(filename, options, text, only);
+    const result = shakerEvaluator(filename, text, only);
 
     if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
       perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });

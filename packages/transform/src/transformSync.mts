@@ -3,9 +3,7 @@ import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
 import _shakerEvaluator from '@griffel/transform-shaker';
 
-import type { Evaluator, StrictOptions, TransformPerfIssue } from './evaluation/types.mjs';
-
-const shakerEvaluator = _shakerEvaluator as unknown as Evaluator;
+import type { EvalRule, TransformPerfIssue } from './evaluation/types.mjs';
 import {
   resolveStyleRulesForSlots,
   resolveResetStyleRules,
@@ -39,14 +37,8 @@ export type TransformOptions = {
   /** Defines set of modules and imports handled by a transformPlugin. */
   modules?: string[];
 
-  /**
-   * If you need to specify custom Babel configuration, you can pass them here. These options will be used by the
-   * transformPlugin when parsing and evaluating modules.
-   */
-  babelOptions?: Pick<StrictOptions['babelOptions'], 'plugins' | 'presets'>;
-
   /** The set of rules that defines how the matched files will be transformed during the evaluation. */
-  evaluationRules?: StrictOptions['rules'];
+  evaluationRules?: EvalRule[];
 
   /** Plugins for extending AST evaluation with custom node handling. */
   astEvaluationPlugins?: AstEvaluatorPlugin[];
@@ -163,12 +155,11 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const perfIssues = options.collectPerfIssues ? [] as TransformPerfIssue[] : undefined;
 
   const {
-    babelOptions = {},
     filename,
     classNameHashSalt = '',
     generateMetadata = false,
     modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
-    evaluationRules = [{ action: createHybridEvaluator(shakerEvaluator, perfIssues) }],
+    evaluationRules = [{ action: createHybridEvaluator(_shakerEvaluator, perfIssues) }],
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
@@ -312,7 +303,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     sourceCode,
     filename,
     styleCalls,
-    babelOptions,
     evaluationRules,
     programAst,
     astEvaluationPlugins,
