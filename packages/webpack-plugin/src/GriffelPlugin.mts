@@ -196,6 +196,7 @@ export class GriffelPlugin {
           const resourcePath = module.resource;
 
           (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
+            collectPerfIssues: this.#collectPerfIssues,
             resolveModule,
             registerExtractedCss(css: string) {
               cssByModuleMap.set(resourcePath, css);

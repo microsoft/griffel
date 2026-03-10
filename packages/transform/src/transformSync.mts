@@ -50,6 +50,12 @@ export type TransformOptions = {
 
   /** Plugins for extending AST evaluation with custom node handling. */
   astEvaluationPlugins?: AstEvaluatorPlugin[];
+
+  /**
+   * Collects performance issues (CJS modules, barrel re-exports) during evaluation.
+   * @default false
+   */
+  collectPerfIssues?: boolean;
 };
 
 export type TransformResult = {
@@ -57,7 +63,7 @@ export type TransformResult = {
   cssRulesByBucket?: CSSRulesByBucket;
   usedProcessing: boolean;
   usedVMForEvaluation: boolean;
-  perfIssues: TransformPerfIssue[];
+  perfIssues?: TransformPerfIssue[];
 };
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
@@ -154,7 +160,7 @@ function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRule
  * Transforms passed source code with oxc-parser and oxc-walker instead of Babel.
  */
 export function transformSync(sourceCode: string, options: TransformOptions): TransformResult {
-  const perfIssues: TransformPerfIssue[] = [];
+  const perfIssues = options.collectPerfIssues ? [] as TransformPerfIssue[] : undefined;
 
   const {
     babelOptions = {},
@@ -194,7 +200,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   );
 
   if (!hasGriffelImports) {
-    return { code: sourceCode, usedProcessing: false, usedVMForEvaluation: false, perfIssues: [] };
+    return { code: sourceCode, usedProcessing: false, usedVMForEvaluation: false };
   }
 
   const styleCalls: StyleCall[] = [];
@@ -298,7 +304,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
       code: sourceCode,
       usedProcessing: false,
       usedVMForEvaluation: false,
-      perfIssues: [],
     };
   }
 

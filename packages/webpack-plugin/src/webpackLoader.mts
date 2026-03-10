@@ -75,6 +75,7 @@ function webpackLoader(
         modules,
         evaluationRules,
         babelOptions,
+        collectPerfIssues: this[GriffelCssLoaderContextKey]?.collectPerfIssues,
       });
     } catch (err) {
       error = err as Error;
