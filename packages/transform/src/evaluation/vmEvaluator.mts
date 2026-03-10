@@ -16,17 +16,13 @@ export function vmEvaluator(
   const codeForEvaluation = `
 ${sourceCode}
 
-const __mkPreval = (() => {
+export const __mkPreval = (() => {
   try {
     return ([${expressionCode}]);
   } catch (e) {
     return e;
   }
 })();
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { __mkPreval };
-}
 `;
 
   try {
