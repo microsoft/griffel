@@ -653,6 +653,9 @@ export const visitors = {
       this.graph.imports.set(source, []);
     }
 
+    // Keep the source literal alive when the import is alive
+    this.graph.addEdge(node, node.source);
+
     // Side-effect import: `import 'module'`
     if (node.specifiers.length === 0) {
       return;
@@ -661,7 +664,12 @@ export const visitors = {
     for (const specifier of node.specifiers) {
       const local = (specifier as { local: IdentifierNode }).local;
       this.scope.declare(local, false, null);
-      this.graph.addEdge(node, local);
+
+      // When local is alive (referenced), keep the ImportDeclaration and specifier alive
+      this.graph.addEdge(local, node);
+      this.graph.addEdge(local, specifier);
+      // Specifier depends on local (so removeDeadCode preserves the local identifier within the specifier)
+      this.graph.addEdge(specifier, local);
 
       if (specifier.type === 'ImportDefaultSpecifier') {
         this.graph.importTypes.set(source, 'default');
@@ -672,6 +680,9 @@ export const visitors = {
       } else if (specifier.type === 'ImportSpecifier') {
         const imported = (specifier as { imported: IdentifierNode }).imported;
         this.graph.imports.get(source)!.push(imported);
+        // Keep imported alive when local is alive (for the imports map tracking)
+        this.graph.addEdge(local, imported);
+        this.graph.addEdge(specifier, imported);
       }
     }
 
@@ -695,6 +706,8 @@ export const visitors = {
           if (isVariableDeclarator(declarator) && isIdentifier(declarator.id)) {
             this.graph.addExport(declarator.id.name, node);
             this.graph.addEdge(node, node.declaration);
+            // Ensure the declarator is alive when the export is alive
+            this.graph.addEdge(node, declarator);
           }
         }
       } else if (isFunctionDeclaration(node.declaration) && node.declaration.id) {
@@ -770,7 +783,7 @@ export const identifierHandlers: IdentifierHandlers = {
     ['VariableDeclarator', 'id'],
   ],
   keep: [
-    ['Property', 'key'],
+    // Property:key is handled by a custom handler (computed keys are references, non-computed are labels)
     // ESM: identifiers in import/export specifiers are handled by visitors, not identifier handlers
     ['ImportSpecifier', 'imported', 'local'],
     ['ImportDefaultSpecifier', 'local'],
@@ -791,7 +804,9 @@ export const identifierHandlers: IdentifierHandlers = {
     ['NewExpression', 'arguments', 'callee'],
     ['ReturnStatement', 'argument'],
     ['SequenceExpression', 'expressions'],
+    ['SpreadElement', 'argument'],
     ['SwitchStatement', 'discriminant'],
+    ['TemplateLiteral', 'expressions'],
     ['UnaryExpression', 'argument'],
     ['UpdateExpression', 'argument'],
     ['VariableDeclarator', 'init'],

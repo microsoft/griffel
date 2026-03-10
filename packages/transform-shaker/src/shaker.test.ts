@@ -243,3 +243,74 @@ it('keeps reused exports', () => {
 
   expect(shaken).toMatchSnapshot();
 });
+
+it('keeps ESM import when binding is referenced via CJS export', () => {
+  const [shaken] = _shake(['__mkPreval'])`
+    import { colorBlue } from './consts';
+    export const useStyles = 'unused';
+    const __mkPreval = { color: colorBlue };
+    module.exports = { __mkPreval };
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps ESM default import when binding is referenced via CJS export', () => {
+  const [shaken] = _shake(['__mkPreval'])`
+    import blank from './blank.jpg';
+    const __mkPreval = { backgroundImage: blank };
+    module.exports = { __mkPreval };
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps export const declarators', () => {
+  const [shaken] = _shake(['colorBlue'])`
+    export const colorBlue = 'blue';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps multiple export const declarators', () => {
+  const [shaken] = _shake(['className', 'selector'])`
+    export const className = 'component-foo';
+    export const selector = '& .component-bar';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps identifiers inside template literals', () => {
+  const [shaken] = _shake()`
+    const color = 'red';
+    const unused = 'blue';
+    const result = \`color is \${color}\`;
+    exports.__linariaPreval = [result];
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps identifiers used as spread arguments', () => {
+  const [shaken] = _shake()`
+    const shared = { display: 'flex' };
+    const unused = { display: 'grid' };
+    const styles = { ...shared, color: 'red' };
+    exports.__linariaPreval = [styles];
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps identifiers used as computed property keys', () => {
+  const [shaken] = _shake()`
+    const selector = '& .foo';
+    const unused = 'bar';
+    const styles = { [selector]: { color: 'red' } };
+    exports.__linariaPreval = [styles];
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
