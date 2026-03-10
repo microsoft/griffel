@@ -366,6 +366,24 @@ it('keeps all export-all re-exports when requested export is not found locally',
   expect(shaken).toMatchSnapshot();
 });
 
+it('keeps local export specifiers (export { name })', () => {
+  const [shaken] = _shake(['shorthands'])`
+    import { border } from './shorthands/border';
+    import { margin } from './shorthands/margin';
+    export { createDOMRenderer } from './renderer/createDOMRenderer';
+    export { mergeClasses } from './mergeClasses';
+
+    const shorthands = {
+      border,
+      margin,
+    };
+
+    export { shorthands };
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
 it('keeps identifiers used as computed property keys', () => {
   const [shaken] = _shake()`
     const selector = '& .foo';
