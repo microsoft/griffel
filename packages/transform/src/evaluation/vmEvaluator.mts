@@ -1,4 +1,4 @@
-import { Module } from './module.mjs';
+import { Module, type ModuleResolver } from './module.mjs';
 import type { EvalRule, EvaluationResult } from './types.mjs';
 
 function isError(e: unknown): e is Error {
@@ -11,6 +11,7 @@ export function vmEvaluator(
   expressionCode: string,
 
   evaluationRules: EvalRule[],
+  resolveFilename?: ModuleResolver,
 ): EvaluationResult {
   // Create a simple wrapper program for evaluation
   const codeForEvaluation = `
@@ -30,7 +31,7 @@ if (typeof module !== 'undefined' && module.exports) {
 `;
 
   try {
-    const mod = new Module(filename, evaluationRules);
+    const mod = new Module(filename, evaluationRules, resolveFilename);
     mod.evaluate(codeForEvaluation, ['__mkPreval']);
 
     const result = (mod.exports as { __mkPreval: unknown }).__mkPreval;

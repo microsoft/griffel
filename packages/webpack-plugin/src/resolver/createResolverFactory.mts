@@ -33,7 +33,7 @@ export function createResolverFactory(): TransformResolverFactory {
       mainFields: ['module', 'main'],
     });
 
-    return function resolveModule(id, { filename }) {
+    return function resolveModule(id: string, { filename }: { filename: string }) {
       const resolver = isCJSOnlyPackage(id) ? cjsResolver : esmResolver;
       const resolved = resolver.sync(path.dirname(filename), id);
 

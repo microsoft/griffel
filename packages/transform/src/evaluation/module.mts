@@ -75,6 +75,59 @@ const createCustomDebug =
     debug(`${modulePrefix}:${namespaces}`, arg1, ...args);
   };
 
+export type ModuleResolver = (id: string, options: { filename: string; paths: readonly string[] }) => string;
+
+const defaultResolver: ModuleResolver = (id, options) =>
+  (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(
+    id,
+    options,
+  );
+
+// Cache for _nodeModulePaths — same directory always yields same paths
+const nodeModulePathsCache = new Map<string, readonly string[]>();
+
+function getNodeModulePaths(dir: string): readonly string[] {
+  let paths = nodeModulePathsCache.get(dir);
+
+  if (!paths) {
+    paths = Object.freeze(
+      (NativeModule as unknown as { _nodeModulePaths: (dir: string) => string[] })._nodeModulePaths(dir),
+    );
+    nodeModulePathsCache.set(dir, paths);
+  }
+
+  return paths;
+}
+
+const SUPPORTED_EXTENSIONS = ['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs'];
+const SUPPORTED_EXTENSIONS_SET = new Set(SUPPORTED_EXTENSIONS);
+
+// Shared VM context — reused across all evaluations to avoid the cost of vm.createContext()
+let sharedContext: vm.Context | null = null;
+
+function getSharedContext(): vm.Context {
+  if (!sharedContext) {
+    sharedContext = vm.createContext({
+      clearImmediate: NOOP,
+      clearInterval: NOOP,
+      clearTimeout: NOOP,
+      setImmediate: NOOP,
+      setInterval: NOOP,
+      setTimeout: NOOP,
+      global,
+      process: mockProcess,
+      // These are placeholders — overwritten before each script.runInContext()
+      module: null,
+      exports: null,
+      require: null,
+      __filename: '',
+      __dirname: '',
+    });
+  }
+
+  return sharedContext;
+}
+
 export class Module {
   readonly id: string;
   readonly filename: string;
@@ -84,15 +137,16 @@ export class Module {
   dependencies: string[] | null = null;
   transform: ((code: string, filename: string) => string) | null = null;
   exports: unknown = {};
-  extensions: string[];
 
+  private readonly resolveFilename: ModuleResolver;
   private debug: (namespaces: string, arg1: unknown, ...args: unknown[]) => void;
   private debuggerDepth: number;
 
-  constructor(filename: string, rules: EvalRule[], debuggerDepth = 0) {
+  constructor(filename: string, rules: EvalRule[], resolveFilename: ModuleResolver = defaultResolver, debuggerDepth = 0) {
     this.id = filename;
     this.filename = filename;
     this.rules = rules;
+    this.resolveFilename = resolveFilename;
     this.debuggerDepth = debuggerDepth;
     this.debug = createCustomDebug(debuggerDepth);
 
@@ -106,17 +160,12 @@ export class Module {
         writable: false,
       },
       paths: {
-        value: Object.freeze(
-          (NativeModule as unknown as { _nodeModulePaths: (dir: string) => string[] })._nodeModulePaths(
-            path.dirname(filename),
-          ),
-        ),
+        value: getNodeModulePaths(path.dirname(filename)),
         writable: false,
       },
     });
 
     this.exports = {};
-    this.extensions = ['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs'];
     this.debug('prepare', filename);
   }
 
@@ -126,21 +175,20 @@ export class Module {
     const added: string[] = [];
 
     try {
-      // Check for supported extensions
-      this.extensions.forEach(ext => {
+      for (const ext of SUPPORTED_EXTENSIONS) {
         if (ext in extensions) {
-          return;
+          continue;
         }
-        // When an extension is not supported, add it
-        // And keep track of it to clean it up after resolving
-        // Use noop for the transform function since we handle it
+
         extensions[ext] = NOOP;
         added.push(ext);
-      });
-      return Module._resolveFilename(id, this);
+      }
+
+      return this.resolveFilename(id, this);
     } finally {
-      // Cleanup the extensions we added to restore previous behaviour
-      added.forEach(ext => delete extensions[ext]);
+      for (const ext of added) {
+        delete extensions[ext];
+      }
     }
   };
 
@@ -194,13 +242,13 @@ export class Module {
       if (!m) {
         this.debug('cached:not-exist', id);
         // Create the module if cached module is not available
-        m = new Module(filename, this.rules, this.debuggerDepth + 1);
+        m = new Module(filename, this.rules, this.resolveFilename, this.debuggerDepth + 1);
         m.transform = this.transform;
         // Store it in cache at this point, otherwise
         // we would end up in infinite loop with cyclic dependencies
         cache[cacheKey] = m;
 
-        if (this.extensions.includes(path.extname(filename))) {
+        if (SUPPORTED_EXTENSIONS_SET.has(path.extname(filename))) {
           // To evaluate the file, we need to read it first
           const code = fs.readFileSync(filename, 'utf-8');
 
@@ -286,44 +334,41 @@ export class Module {
       filename: this.filename,
     });
 
-    script.runInContext(
-      vm.createContext({
-        clearImmediate: NOOP,
-        clearInterval: NOOP,
-        clearTimeout: NOOP,
-        setImmediate: NOOP,
-        setInterval: NOOP,
-        setTimeout: NOOP,
-        global,
-        process: mockProcess,
-        module: this,
-        exports: this.exports,
-        require: this.require,
-        __filename: this.filename,
-        __dirname: path.dirname(this.filename),
-      }),
-    );
+    const ctx = getSharedContext();
+
+    // Save parent context values before overwriting — child module evaluations
+    // (triggered by require()) would otherwise clobber the parent's bindings.
+    const savedModule = ctx['module'];
+    const savedExports = ctx['exports'];
+    const savedRequire = ctx['require'];
+    const savedFilename = ctx['__filename'];
+    const savedDirname = ctx['__dirname'];
+
+    ctx['module'] = this;
+    ctx['exports'] = this.exports;
+    ctx['require'] = this.require;
+    ctx['__filename'] = this.filename;
+    ctx['__dirname'] = path.dirname(this.filename);
+
+    try {
+      script.runInContext(ctx);
+    } finally {
+      ctx['module'] = savedModule;
+      ctx['exports'] = savedExports;
+      ctx['require'] = savedRequire;
+      ctx['__filename'] = savedFilename;
+      ctx['__dirname'] = savedDirname;
+    }
 
     EvalCache.set(cacheKey, text, this.exports);
   }
 
   static invalidate = (): void => {
     cache = {};
+    sharedContext = null;
   };
 
   static invalidateEvalCache = (): void => {
     EvalCache.clear();
   };
-
-  // Alias to resolve the module using node's resolve algorithm
-  // This static property can be overridden by the webpack loader
-  // This allows us to use webpack's module resolution algorithm
-  static _resolveFilename = (id: string, options: { filename: string; paths: readonly string[] }): string =>
-    (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(
-      id,
-      options,
-    );
-
-  static _nodeModulePaths = (filename: string): string[] =>
-    (NativeModule as unknown as { _nodeModulePaths: (dir: string) => string[] })._nodeModulePaths(filename);
 }

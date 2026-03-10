@@ -3,6 +3,7 @@ import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
 import shakerEvaluator from '@griffel/transform-shaker';
 
+import type { ModuleResolver } from './evaluation/module.mjs';
 import type { EvalRule, TransformPerfIssue } from './evaluation/types.mjs';
 import {
   resolveStyleRulesForSlots,
@@ -42,6 +43,9 @@ export type TransformOptions = {
 
   /** Plugins for extending AST evaluation with custom node handling. */
   astEvaluationPlugins?: AstEvaluatorPlugin[];
+
+  /** Custom module resolver for the VM evaluator. Uses Node's resolution by default. */
+  resolveFilename?: ModuleResolver;
 
   /**
    * Collects performance issues (CJS modules, barrel re-exports) during evaluation.
@@ -161,6 +165,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
     evaluationRules = [{ action: createHybridEvaluator(shakerEvaluator, perfIssues) }],
     astEvaluationPlugins = [fluentTokensPlugin],
+    resolveFilename,
   } = options;
 
   if (!filename) {
@@ -306,6 +311,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     evaluationRules,
     programAst,
     astEvaluationPlugins,
+    resolveFilename,
   );
 
   for (let i = 0; i < styleCalls.length; i++) {

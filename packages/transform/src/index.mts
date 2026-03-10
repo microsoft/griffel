@@ -1,5 +1,5 @@
 export { default as shakerEvaluator } from '@griffel/transform-shaker';
-export { Module } from './evaluation/module.mjs';
+export { Module, type ModuleResolver } from './evaluation/module.mjs';
 export * as EvalCache from './evaluation/evalCache.mjs';
 export { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from './constants.mjs';
 
