@@ -330,8 +330,6 @@ const TESTS: TestCase[] = [
   },
 ];
 
-const DEFAULT_TRANSFORM_OPTIONS = {};
-
 describe('transformSync', () => {
   it('astEvaluationPlugins: fluentTokensPlugin is enabled by default', () => {
     const sourceCode = `
@@ -365,10 +363,7 @@ export const useStyles = makeStyles({
       const sourceCode = fs.readFileSync(testCase.fixture, { encoding: 'utf-8' });
       const teardown = testCase.setup?.();
 
-      const transformOptions = {
-        ...DEFAULT_TRANSFORM_OPTIONS,
-        ...(testCase.transformOptions || {}),
-      };
+      const transformOptions = testCase.transformOptions || {};
 
       if (testCase.error) {
         expect(() =>
