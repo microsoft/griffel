@@ -3,7 +3,9 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "module": "CommonJS",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": true,
     "jsx": "react",
     "noEmit": true
   },
@@ -13,9 +15,5 @@
     {
       "path": "./tsconfig.lib.json"
     }
-  ],
-  "ts-node": {
-    "require": ["tsconfig-paths/register"],
-    "swc": true
-  }
+  ]
 }

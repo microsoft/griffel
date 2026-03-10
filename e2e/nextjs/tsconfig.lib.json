@@ -4,5 +4,6 @@
     "outDir": "../../dist/out-tsc",
     "types": ["node", "environment"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"]
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "exclude": ["src/assets/**"]
 }

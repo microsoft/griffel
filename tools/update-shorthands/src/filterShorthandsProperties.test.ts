@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { filterShorthandsProperties } from './filterShorthandsProperties';
-import { type MdnData } from './types';
+import { filterShorthandsProperties } from './filterShorthandsProperties.ts';
+import { type MdnData } from './types.ts';
 
 describe('filterShorthandsProperties', () => {
   it('should filter out vendor properties and obsolete properties', () => {

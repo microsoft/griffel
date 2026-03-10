@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as logSymbols from 'log-symbols';
+import fs from 'fs';
+import path from 'path';
+import logSymbols from 'log-symbols';
 
 export async function copyAssets(options: { assetsPath: string; tempDir: string; renames?: Record<string, string> }) {
   const { assetsPath, tempDir, renames } = options;

@@ -1,4 +1,4 @@
-import { type MdnProperty, type MdnShorthandProperty } from './types';
+import { type MdnProperty, type MdnShorthandProperty } from './types.ts';
 
 const REGEX_KEBAB_SEPARATOR = /-(\w)/g;
 const REGEX_VENDOR_PREFIXED = /^-(\w)/;

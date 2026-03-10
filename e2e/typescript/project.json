@@ -9,7 +9,7 @@
       "dependsOn": [{ "target": "build", "dependencies": true }],
       "options": {
         "cwd": "e2e/typescript",
-        "commands": [{ "command": "ts-node src/test.ts" }]
+        "commands": [{ "command": "node src/test.ts" }]
       },
       "outputs": []
     },

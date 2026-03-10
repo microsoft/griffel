@@ -1,8 +1,8 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as logSymbols from 'log-symbols';
+import fs from 'fs';
+import path from 'path';
+import logSymbols from 'log-symbols';
 
-import { sh } from './sh';
+import { sh } from './sh.ts';
 
 export async function configureYarn(options: { tempDir: string; rootDir: string }) {
   const { tempDir, rootDir } = options;
