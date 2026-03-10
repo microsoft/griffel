@@ -9,6 +9,7 @@
   },
   "workspaces": [
     "e2e/*",
+    "packages/*",
     "tools/*"
   ],
   "packageManager": "yarn@4.3.1",
