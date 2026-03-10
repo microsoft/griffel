@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "initial release: tree-shaking evaluator for Griffel transform, replacing @linaria/shaker",
+  "packageName": "@griffel/transform-shaker",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
