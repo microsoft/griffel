@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/babel__core": "^7.1.19",
     "@types/babel__generator": "^7.6.4",
-    "@types/debug": "^4.1.7"
+    "@types/debug": "^4.1.7",
+    "dedent": "^1.5.3"
   }
 }
