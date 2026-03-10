@@ -13,7 +13,7 @@
 
 import fs from 'node:fs';
 import NativeModule from 'node:module';
-import path, { dirname } from 'node:path';
+import path from 'node:path';
 import vm from 'node:vm';
 import createDebug from 'debug';
 
@@ -29,44 +29,6 @@ export type TransformResolver = (
 ) => { path: string; builtin: boolean };
 
 const debug = createDebug('griffel:module');
-
-// Supported node builtins based on the modules polyfilled by webpack
-// `true` means module is polyfilled, `false` means module is empty
-const builtins: Record<string, boolean> = {
-  assert: true,
-  buffer: true,
-  child_process: false,
-  cluster: false,
-  console: true,
-  constants: true,
-  crypto: true,
-  dgram: false,
-  dns: false,
-  domain: true,
-  events: true,
-  fs: false,
-  http: true,
-  https: true,
-  module: false,
-  net: false,
-  os: true,
-  path: true,
-  punycode: true,
-  process: true,
-  querystring: true,
-  readline: false,
-  repl: false,
-  stream: true,
-  string_decoder: true,
-  sys: true,
-  timers: true,
-  tls: false,
-  tty: true,
-  url: true,
-  util: true,
-  vm: true,
-  zlib: true,
-};
 
 // Separate cache for evaluated modules
 let cache: Record<string, Module> = {};
@@ -123,7 +85,7 @@ export class Module {
     });
 
     this.exports = {};
-    this.extensions = ['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs'];
+    this.extensions = ['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs', '.mjs', '.mts', '.cts'];
     this.debug('prepare', filename);
   }
 
@@ -135,23 +97,10 @@ export class Module {
     (id: string): unknown => {
       this.debug('require', id);
 
-      if (id in builtins) {
-        // The module is in the allowed list of builtin node modules
-        // Ideally we should prevent importing them, but webpack polyfills some
-        // So we check for the list of polyfills to determine which ones to support
-        if (builtins[id]) {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require(id);
-        }
-
-        return null;
-      }
-
       // Resolve module id (and filename) relatively to parent module
       const resolved = this.resolveFilename(id, this);
 
       if (resolved.builtin) {
-        // The module is a builtin node modules, but not in the allowed list
         throw new Error(`Unable to import "${id}". Importing Node builtins is not supported in the sandbox.`);
       }
 
@@ -178,6 +127,7 @@ export class Module {
 
       if (!m) {
         this.debug('cached:not-exist', id);
+
         // Create the module if cached module is not available
         m = new Module(filename, this.rules, this.resolveFilename, this.debuggerDepth + 1);
         m.transform = this.transform;
@@ -185,11 +135,13 @@ export class Module {
         // we would end up in infinite loop with cyclic dependencies
         cache[cacheKey] = m;
 
-        if (this.extensions.includes(path.extname(filename))) {
+        const ext = path.extname(filename).toLowerCase();
+
+        if (this.extensions.includes(ext)) {
           // To evaluate the file, we need to read it first
           const code = fs.readFileSync(filename, 'utf-8');
 
-          if (/\.json$/.test(filename)) {
+          if (ext === '.json') {
             // For JSON files, parse it to a JS object similar to Node
             m.exports = JSON.parse(code);
           } else {
@@ -224,7 +176,7 @@ export class Module {
     for (let i = this.rules.length - 1; i >= 0; i--) {
       const { test } = this.rules[i];
 
-      if (!test || (typeof test === 'function' ? test(filename) : test instanceof RegExp && test.test(filename))) {
+      if (!test || (typeof test === 'function' ? test(filename) : test.test(filename))) {
         action = this.rules[i].action;
         break;
       }
@@ -243,19 +195,11 @@ export class Module {
       this.debug('ignore', `${filename}`);
       code = text;
     } else {
-      // Action can be a function or a module name
-      const evaluator =
-        typeof action === 'function'
-          ? action
-          : (
-              require(require.resolve(action, {
-                paths: [dirname(this.filename)],
-              })) as { default: Evaluator }
-            ).default;
-
       // For JavaScript files, we need to transpile it and to get the exports of the module
-      this.debug('prepare-evaluation', this.filename, 'using', evaluator.name);
-      const result = evaluator(this.filename, text, only);
+      this.debug('prepare-evaluation', this.filename, 'using', action.name);
+
+      const result = action(this.filename, text, only);
+
       code = result.code;
       this.imports = result.imports;
 

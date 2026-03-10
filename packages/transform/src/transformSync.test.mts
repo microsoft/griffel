@@ -249,11 +249,8 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
     transformOptions: {
-      evaluationRules: [
-        {
-          action: path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs'),
-        },
-      ],
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      evaluationRules: [{ action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default }],
     },
   },
 
