@@ -23,6 +23,12 @@ export type StrictOptions = {
 
 // Griffel-specific types
 
+export interface TransformPerfIssue {
+  type: 'cjs-module' | 'barrel-export-star';
+  /** The dependency file that caused the issue */
+  dependencyFilename: string;
+}
+
 export interface EvaluationResult {
   confident: boolean;
   value?: unknown;

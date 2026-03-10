@@ -15,6 +15,7 @@ type EntryPoint = Compilation['entrypoints'] extends Map<unknown, infer I> ? I :
 
 export type GriffelCSSExtractionPluginOptions = {
   collectStats?: boolean;
+  collectPerfIssues?: boolean;
 
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
 
@@ -111,6 +112,7 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
 export class GriffelPlugin {
   readonly #attachToEntryPoint: GriffelCSSExtractionPluginOptions['unstable_attachToEntryPoint'];
   readonly #collectStats: boolean;
+  readonly #collectPerfIssues: boolean;
   readonly #compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
   readonly #resolverFactory: TransformResolverFactory;
   readonly #stats: Record<
@@ -120,10 +122,12 @@ export class GriffelPlugin {
       evaluationMode: 'ast' | 'vm';
     }
   > = {};
+  readonly #perfIssues: Map<string, { type: 'cjs-module' | 'barrel-export-star'; dependencyFilename: string; sourceFilenames: Set<string> }> = new Map();
 
   constructor(options: GriffelCSSExtractionPluginOptions = {}) {
     this.#attachToEntryPoint = options.unstable_attachToEntryPoint;
     this.#collectStats = options.collectStats ?? false;
+    this.#collectPerfIssues = options.collectPerfIssues ?? false;
     this.#compareMediaQueries = options.compareMediaQueries ?? defaultCompareMediaQueries;
     this.#resolverFactory = options.resolverFactory ?? createResolverFactory();
   }
@@ -192,6 +196,7 @@ export class GriffelPlugin {
           const resourcePath = module.resource;
 
           (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
+            collectPerfIssues: this.#collectPerfIssues,
             resolveModule,
             registerExtractedCss(css: string) {
               cssByModuleMap.set(resourcePath, css);
@@ -203,20 +208,40 @@ export class GriffelPlugin {
               return css;
             },
             runWithTimer: cb => {
+              if (!this.#collectStats && !this.#collectPerfIssues) {
+                return cb().result;
+              }
+
+              const start = this.#collectStats ? process.hrtime.bigint() : 0n;
+              const { meta, result } = cb();
+
               if (this.#collectStats) {
-                const start = process.hrtime.bigint();
-                const { meta, result } = cb();
                 const end = process.hrtime.bigint();
 
                 this.#stats[meta.filename] = {
                   time: end - start,
                   evaluationMode: meta.evaluationMode,
                 };
-
-                return result;
               }
 
-              return cb().result;
+              if (this.#collectPerfIssues && meta.perfIssues) {
+                for (const issue of meta.perfIssues) {
+                  const key = `${issue.type}:${issue.dependencyFilename}`;
+                  const existing = this.#perfIssues.get(key);
+
+                  if (existing) {
+                    existing.sourceFilenames.add(meta.filename);
+                  } else {
+                    this.#perfIssues.set(key, {
+                      type: issue.type,
+                      dependencyFilename: issue.dependencyFilename,
+                      sourceFilenames: new Set([meta.filename]),
+                    });
+                  }
+                }
+              }
+
+              return result;
             },
           };
         });
@@ -341,6 +366,26 @@ export class GriffelPlugin {
 
             for (const [filename, info] of entries) {
               console.log(`  ${logTime(info.time)} - ${filename} (evaluation mode: ${info.evaluationMode})`);
+            }
+
+            console.log();
+          }
+
+          if (this.#collectPerfIssues && this.#perfIssues.size > 0) {
+            const issues = Array.from(this.#perfIssues.values());
+            const cjsCount = issues.filter(i => i.type === 'cjs-module').length;
+            const barrelCount = issues.filter(i => i.type === 'barrel-export-star').length;
+
+            console.log('\nGriffel performance issues:');
+            console.log('------------------------------------');
+            console.log(`CJS modules (no tree-shaking): ${cjsCount}`);
+            console.log(`Barrel files with remaining export *: ${barrelCount}`);
+            console.log('------------------------------------');
+
+            for (const issue of issues) {
+              const tag = issue.type === 'cjs-module' ? 'cjs' : 'barrel';
+              const sources = Array.from(issue.sourceFilenames).join(', ');
+              console.log(`  [${tag}] ${issue.dependencyFilename} (source: ${sources})`);
             }
 
             console.log();

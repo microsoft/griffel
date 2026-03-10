@@ -3,7 +3,7 @@ import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
 import _shaker from '@linaria/shaker';
 
-import type { Evaluator, StrictOptions } from './evaluation/types.mjs';
+import type { Evaluator, StrictOptions, TransformPerfIssue } from './evaluation/types.mjs';
 import {
   resolveStyleRulesForSlots,
   resolveResetStyleRules,
@@ -50,6 +50,12 @@ export type TransformOptions = {
 
   /** Plugins for extending AST evaluation with custom node handling. */
   astEvaluationPlugins?: AstEvaluatorPlugin[];
+
+  /**
+   * Collects performance issues (CJS modules, barrel re-exports) during evaluation.
+   * @default false
+   */
+  collectPerfIssues?: boolean;
 };
 
 export type TransformResult = {
@@ -57,6 +63,7 @@ export type TransformResult = {
   cssRulesByBucket?: CSSRulesByBucket;
   usedProcessing: boolean;
   usedVMForEvaluation: boolean;
+  perfIssues?: TransformPerfIssue[];
 };
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
@@ -153,13 +160,15 @@ function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRule
  * Transforms passed source code with oxc-parser and oxc-walker instead of Babel.
  */
 export function transformSync(sourceCode: string, options: TransformOptions): TransformResult {
+  const perfIssues = options.collectPerfIssues ? [] as TransformPerfIssue[] : undefined;
+
   const {
     babelOptions = {},
     filename,
     classNameHashSalt = '',
     generateMetadata = false,
     modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
-    evaluationRules = [{ action: createHybridEvaluator(shakerEvaluator) }],
+    evaluationRules = [{ action: createHybridEvaluator(shakerEvaluator, perfIssues) }],
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
@@ -390,5 +399,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     cssRulesByBucket,
     usedProcessing: true,
     usedVMForEvaluation,
+    perfIssues,
   };
 }
