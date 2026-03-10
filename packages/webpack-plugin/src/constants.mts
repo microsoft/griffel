@@ -1,4 +1,5 @@
 import type { LoaderContext } from 'webpack';
+import type { TransformPerfIssue } from '@griffel/transform';
 import type { TransformResolver } from './resolver/types.mjs';
 
 export const PLUGIN_NAME = 'GriffelExtractPlugin';
@@ -15,6 +16,7 @@ export interface GriffelLoaderContextSupplement {
         filename: string;
         step: 'transform';
         evaluationMode: 'ast' | 'vm';
+        perfIssues?: TransformPerfIssue[];
       };
     },
   ): T;

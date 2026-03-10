@@ -1,7 +1,7 @@
 import { extname } from 'node:path';
 import { parseSync, rawTransferSupported } from 'oxc-parser';
 
-import type { Evaluator } from './types.mjs';
+import type { Evaluator, TransformPerfIssue } from './types.mjs';
 
 const CJS_EXTENSIONS = new Set(['.cjs', '.cts', '.json']);
 const ESM_EXTENSIONS = new Set(['.mjs', '.mts']);
@@ -10,11 +10,19 @@ const useRawTransfer = rawTransferSupported();
 
 const NODE_MODULES_RE = /[/\\]node_modules[/\\]/;
 
-export function createHybridEvaluator(shakerEvaluator: Evaluator): Evaluator {
+const EXPORT_STAR_RE = /export\s+\*\s+from\s/;
+
+export function createHybridEvaluator(shakerEvaluator: Evaluator, perfIssues?: TransformPerfIssue[]): Evaluator {
   return (filename, options, text, only) => {
     // Non-node_modules: always shake
     if (!NODE_MODULES_RE.test(filename)) {
-      return shakerEvaluator(filename, options, text, only);
+      const result = shakerEvaluator(filename, options, text, only);
+
+      if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
+        perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
+      }
+
+      return result;
     }
 
     // node_modules: detect CJS vs ESM
@@ -22,10 +30,17 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator): Evaluator {
 
     // Fast path: extension tells us the answer
     if (CJS_EXTENSIONS.has(ext)) {
+      perfIssues?.push({ type: 'cjs-module', dependencyFilename: filename });
       return [text, null];
     }
     if (ESM_EXTENSIONS.has(ext)) {
-      return shakerEvaluator(filename, options, text, only);
+      const result = shakerEvaluator(filename, options, text, only);
+
+      if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
+        perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
+      }
+
+      return result;
     }
 
     // .js/.jsx/.ts/.tsx — detect via oxc-parser
@@ -40,9 +55,16 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator): Evaluator {
     (parseResult as { dispose?: () => void }).dispose?.();
 
     if (!isESM) {
+      perfIssues?.push({ type: 'cjs-module', dependencyFilename: filename });
       return [text, null];
     }
 
-    return shakerEvaluator(filename, options, text, only);
+    const result = shakerEvaluator(filename, options, text, only);
+
+    if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
+      perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
+    }
+
+    return result;
   };
 }
