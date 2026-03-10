@@ -21,7 +21,7 @@ import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from '../constants.mjs';
 import { convertESMtoCJS } from '../utils/convertESMtoCJS.mjs';
 import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
-import type { EvalRule, StrictOptions } from './types.mjs';
+import type { EvalRule } from './types.mjs';
 
 const debug = createDebug('griffel:module');
 
@@ -79,7 +79,7 @@ export class Module {
   readonly id: string;
   readonly filename: string;
   declare readonly paths: readonly string[];
-  options: StrictOptions;
+  rules: EvalRule[];
   imports: Map<string, string[]> | null = null;
   dependencies: string[] | null = null;
   transform: ((code: string, filename: string) => string) | null = null;
@@ -89,10 +89,10 @@ export class Module {
   private debug: (namespaces: string, arg1: unknown, ...args: unknown[]) => void;
   private debuggerDepth: number;
 
-  constructor(filename: string, options: StrictOptions, debuggerDepth = 0) {
+  constructor(filename: string, rules: EvalRule[], debuggerDepth = 0) {
     this.id = filename;
     this.filename = filename;
-    this.options = options;
+    this.rules = rules;
     this.debuggerDepth = debuggerDepth;
     this.debug = createCustomDebug(debuggerDepth);
 
@@ -194,7 +194,7 @@ export class Module {
       if (!m) {
         this.debug('cached:not-exist', id);
         // Create the module if cached module is not available
-        m = new Module(filename, this.options, this.debuggerDepth + 1);
+        m = new Module(filename, this.rules, this.debuggerDepth + 1);
         m.transform = this.transform;
         // Store it in cache at this point, otherwise
         // we would end up in infinite loop with cyclic dependencies
@@ -236,11 +236,11 @@ export class Module {
     // Find last matching rule (iterate backwards, break on first match)
     let action: EvalRule['action'] = 'ignore';
 
-    for (let i = this.options.rules.length - 1; i >= 0; i--) {
-      const { test } = this.options.rules[i];
+    for (let i = this.rules.length - 1; i >= 0; i--) {
+      const { test } = this.rules[i];
 
       if (!test || (typeof test === 'function' ? test(filename) : test instanceof RegExp && test.test(filename))) {
-        action = this.options.rules[i].action;
+        action = this.rules[i].action;
         break;
       }
     }
@@ -271,7 +271,7 @@ export class Module {
       // For JavaScript files, we need to transpile it and to get the exports of the module
       let imports: Map<string, string[]> | null;
       this.debug('prepare-evaluation', this.filename, 'using', evaluator.name);
-      [code, imports] = evaluator(this.filename, this.options, text, only);
+      [code, imports] = evaluator(this.filename, text, only);
       this.imports = imports;
       this.debug('evaluate', `${this.filename} (only ${(only || []).join(', ')}):\n${code}`);
     }

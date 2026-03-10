@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "BREAKING: Replace @linaria/shaker with @griffel/transform-shaker. Remove babelOptions from TransformOptions. Remove StrictOptions type.",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

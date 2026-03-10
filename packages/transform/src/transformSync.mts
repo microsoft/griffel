@@ -1,9 +1,9 @@
 import { parseSync, type Node } from 'oxc-parser';
 import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
-import _shaker from '@linaria/shaker';
+import shakerEvaluator from '@griffel/transform-shaker';
 
-import type { Evaluator, StrictOptions, TransformPerfIssue } from './evaluation/types.mjs';
+import type { EvalRule, TransformPerfIssue } from './evaluation/types.mjs';
 import {
   resolveStyleRulesForSlots,
   resolveResetStyleRules,
@@ -23,8 +23,6 @@ import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
 import type { StyleCall } from './types.mjs';
 
-const shakerEvaluator = (_shaker.default || _shaker) as unknown as Evaluator;
-
 export type TransformOptions = {
   filename: string;
 
@@ -39,14 +37,8 @@ export type TransformOptions = {
   /** Defines set of modules and imports handled by a transformPlugin. */
   modules?: string[];
 
-  /**
-   * If you need to specify custom Babel configuration, you can pass them here. These options will be used by the
-   * transformPlugin when parsing and evaluating modules.
-   */
-  babelOptions?: Pick<StrictOptions['babelOptions'], 'plugins' | 'presets'>;
-
   /** The set of rules that defines how the matched files will be transformed during the evaluation. */
-  evaluationRules?: StrictOptions['rules'];
+  evaluationRules?: EvalRule[];
 
   /** Plugins for extending AST evaluation with custom node handling. */
   astEvaluationPlugins?: AstEvaluatorPlugin[];
@@ -163,7 +155,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const perfIssues = options.collectPerfIssues ? [] as TransformPerfIssue[] : undefined;
 
   const {
-    babelOptions = {},
     filename,
     classNameHashSalt = '',
     generateMetadata = false,
@@ -312,7 +303,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     sourceCode,
     filename,
     styleCalls,
-    babelOptions,
     evaluationRules,
     programAst,
     astEvaluationPlugins,

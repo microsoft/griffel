@@ -17,24 +17,7 @@ function getFileName() {
 function _shake(only: string[] = ['__linariaPreval']) {
   return (literal: TemplateStringsArray, ...placeholders: string[]): [string, Map<string, string[]>] => {
     const code = dedent(literal, ...placeholders);
-    const [shaken, deps] = shaker(
-      getFileName(),
-      {
-        displayName: true,
-        evaluate: true,
-        rules: [
-          {
-            action: shaker,
-          },
-          {
-            test: /\/node_modules\//,
-            action: 'ignore',
-          },
-        ],
-      },
-      code,
-      only,
-    );
+    const [shaken, deps] = shaker(getFileName(), code, only);
 
     return [shaken, deps!];
   };

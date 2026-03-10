@@ -59,25 +59,16 @@ export const warn = log.bind(null, 'warn');
 
 // --- From @linaria/babel-preset types ---
 
-export type Evaluator = (
-  filename: string,
-  options: StrictOptions,
-  text: string,
-  only: string[] | null,
-) => [string, Map<string, string[]> | null];
-
 export type EvalRule = {
   test?: RegExp | ((path: string) => boolean);
   action: Evaluator | 'ignore' | string;
 };
 
-export type StrictOptions = {
-  classNameSlug?: string | ((...args: unknown[]) => string);
-  displayName: boolean;
-  evaluate: boolean;
-  ignore?: RegExp;
-  rules: EvalRule[];
-};
+export type Evaluator = (
+  filename: string,
+  text: string,
+  only: string[] | null,
+) => [string, Map<string, string[]> | null];
 
 // --- Invariant utility (replaces ts-invariant) ---
 
