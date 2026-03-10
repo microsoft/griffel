@@ -1,7 +1,7 @@
 import { parseSync, type Node } from 'oxc-parser';
 import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
-import _shakerEvaluator from '@griffel/transform-shaker';
+import shakerEvaluator from '@griffel/transform-shaker';
 
 import type { EvalRule, TransformPerfIssue } from './evaluation/types.mjs';
 import {
@@ -159,7 +159,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     classNameHashSalt = '',
     generateMetadata = false,
     modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
-    evaluationRules = [{ action: createHybridEvaluator(_shakerEvaluator, perfIssues) }],
+    evaluationRules = [{ action: createHybridEvaluator(shakerEvaluator, perfIssues) }],
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
