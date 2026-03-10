@@ -127,30 +127,6 @@ export class Module {
     this.debug('prepare', filename);
   }
 
-  resolve = (id: string): { path: string; builtin: boolean } => {
-    const extensions = (NativeModule as unknown as { _extensions: Record<string, (...args: unknown[]) => void> })
-      ._extensions;
-    const added: string[] = [];
-
-    try {
-      // Check for supported extensions
-      this.extensions.forEach(ext => {
-        if (ext in extensions) {
-          return;
-        }
-        // When an extension is not supported, add it
-        // And keep track of it to clean it up after resolving
-        // Use noop for the transform function since we handle it
-        extensions[ext] = NOOP;
-        added.push(ext);
-      });
-      return this.resolveFilename(id, this);
-    } finally {
-      // Cleanup the extensions we added to restore previous behaviour
-      added.forEach(ext => delete extensions[ext]);
-    }
-  };
-
   require: ((id: string) => unknown) & {
     ensure: () => void;
     cache: Record<string, Module>;
@@ -172,7 +148,7 @@ export class Module {
       }
 
       // Resolve module id (and filename) relatively to parent module
-      const resolved = this.resolve(id);
+      const resolved = this.resolveFilename(id, this);
 
       if (resolved.builtin) {
         // The module is a builtin node modules, but not in the allowed list
@@ -236,7 +212,7 @@ export class Module {
     {
       ensure: NOOP,
       cache,
-      resolve: (id: string) => this.resolve(id).path,
+      resolve: (id: string) => this.resolveFilename(id, this).path,
     },
   );
 
@@ -303,6 +279,7 @@ export class Module {
         setImmediate: NOOP,
         setInterval: NOOP,
         setTimeout: NOOP,
+        fetch: NOOP,
         global,
         process: mockProcess,
         module: this,
