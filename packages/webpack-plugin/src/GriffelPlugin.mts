@@ -350,17 +350,19 @@ export class GriffelPlugin {
             }
 
             const entries = Object.entries(this.#stats).sort(([, a], [, b]) => Number(b.time - a.time));
+            const totalTime = entries.reduce((acc, cur) => acc + cur[1].time, 0n);
+            const fileCount = entries.length;
+            const avgTime = fileCount > 0 ? totalTime / BigInt(fileCount) : 0n;
 
             console.log('\nGriffel CSS extraction stats:');
 
             console.log('------------------------------------');
-            console.log(
-              'Total time spent in Griffel loader:',
-              logTime(entries.reduce((acc, cur) => acc + cur[1].time, 0n)),
-            );
+            console.log('Total time spent in Griffel loader:', logTime(totalTime));
+            console.log('Files processed:', fileCount);
+            console.log('Average time per file:', logTime(avgTime));
             console.log(
               'AST evaluation hit: ',
-              ((entries.filter(s => s[1].evaluationMode === 'ast').length / entries.length) * 100).toFixed(2) + '%',
+              ((entries.filter(s => s[1].evaluationMode === 'ast').length / fileCount) * 100).toFixed(2) + '%',
             );
             console.log('------------------------------------');
 
