@@ -6,7 +6,7 @@ const sampleEvaluator = () => {
   // that results will be available as "exports.__mkPreval", this evaluator mocks it
   const result = `exports.__mkPreval = [{ root: { color: 'blue' } }]`;
 
-  return [result, null];
+  return { code: result, imports: null, moduleKind: 'cjs' };
 };
 
 module.exports.default = sampleEvaluator;

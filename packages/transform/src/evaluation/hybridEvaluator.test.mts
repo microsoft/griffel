@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import type { Evaluator } from './types.mjs';
 import { createHybridEvaluator } from './hybridEvaluator.mjs';
 
-const SHAKER_RESULT: [string, Map<string, string[]>] = ['shaken-code', new Map()];
+const SHAKER_RESULT = { code: 'shaken-code', imports: new Map<string, string[]>(), moduleKind: 'esm' as const };
 
 function createMockShaker() {
   return vi.fn<Evaluator>(() => SHAKER_RESULT);
@@ -34,7 +34,7 @@ describe('createHybridEvaluator', () => {
 
       const result = hybrid('/project/node_modules/pkg/index.cjs', text, null);
 
-      expect(result).toEqual([text, null]);
+      expect(result).toEqual({ code: text, imports: null, moduleKind: 'cjs' });
       expect(shaker).not.toHaveBeenCalled();
     });
 
@@ -45,7 +45,7 @@ describe('createHybridEvaluator', () => {
 
       const result = hybrid('/project/node_modules/pkg/index.cts', text, null);
 
-      expect(result).toEqual([text, null]);
+      expect(result).toEqual({ code: text, imports: null, moduleKind: 'cjs' });
       expect(shaker).not.toHaveBeenCalled();
     });
 
@@ -56,7 +56,7 @@ describe('createHybridEvaluator', () => {
 
       const result = hybrid('/project/node_modules/pkg/data.json', text, null);
 
-      expect(result).toEqual([text, null]);
+      expect(result).toEqual({ code: text, imports: null, moduleKind: 'cjs' });
       expect(shaker).not.toHaveBeenCalled();
     });
 
@@ -95,7 +95,7 @@ describe('createHybridEvaluator', () => {
 
       const result = hybrid('/project/node_modules/pkg/index.js', text, null);
 
-      expect(result).toEqual([text, null]);
+      expect(result).toEqual({ code: text, imports: null, moduleKind: 'cjs' });
       expect(shaker).not.toHaveBeenCalled();
     });
 

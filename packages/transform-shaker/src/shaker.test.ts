@@ -17,9 +17,9 @@ function getFileName() {
 function _shake(only: string[] = ['__linariaPreval']) {
   return (literal: TemplateStringsArray, ...placeholders: string[]): [string, Map<string, string[]>] => {
     const code = dedent(literal, ...placeholders);
-    const [shaken, deps] = shaker(getFileName(), code, only);
+    const result = shaker(getFileName(), code, only);
 
-    return [shaken, deps!];
+    return [result.code, result.imports!];
   };
 }
 
@@ -362,6 +362,21 @@ it('keeps local export specifiers (export { name })', () => {
     };
 
     export { shorthands };
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps for-of loop right-hand side reference', () => {
+  const [shaken] = _shake(['fn'])`
+    export function fn(obj) {
+      const result = {};
+      const keys = Object.keys(obj);
+      for (const key of keys) {
+        result[key] = obj[key];
+      }
+      return result;
+    }
   `;
 
   expect(shaken).toMatchSnapshot();

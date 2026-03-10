@@ -2,6 +2,12 @@ import type { Node, Program } from 'oxc-parser';
 
 // Types from @linaria/babel-preset, internalized to remove the dependency
 
+export type EvaluatorResult = {
+  code: string;
+  imports: Map<string, string[]> | null;
+  moduleKind: 'esm' | 'cjs';
+};
+
 export type EvalRule = {
   test?: RegExp | ((path: string) => boolean);
   action: Evaluator | 'ignore' | string;
@@ -11,7 +17,7 @@ export type Evaluator = (
   filename: string,
   text: string,
   only: string[] | null,
-) => [string, Map<string, string[]> | null];
+) => EvaluatorResult;
 
 // Griffel-specific types
 

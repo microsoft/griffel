@@ -18,7 +18,7 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator, perfIssues?: T
     if (!NODE_MODULES_RE.test(filename)) {
       const result = shakerEvaluator(filename, text, only);
 
-      if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
+      if (perfIssues && EXPORT_STAR_RE.test(result.code)) {
         perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
       }
 
@@ -31,12 +31,12 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator, perfIssues?: T
     // Fast path: extension tells us the answer
     if (CJS_EXTENSIONS.has(ext)) {
       perfIssues?.push({ type: 'cjs-module', dependencyFilename: filename });
-      return [text, null];
+      return { code: text, imports: null, moduleKind: 'cjs' };
     }
     if (ESM_EXTENSIONS.has(ext)) {
       const result = shakerEvaluator(filename, text, only);
 
-      if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
+      if (perfIssues && EXPORT_STAR_RE.test(result.code)) {
         perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
       }
 
@@ -56,12 +56,12 @@ export function createHybridEvaluator(shakerEvaluator: Evaluator, perfIssues?: T
 
     if (!isESM) {
       perfIssues?.push({ type: 'cjs-module', dependencyFilename: filename });
-      return [text, null];
+      return { code: text, imports: null, moduleKind: 'cjs' };
     }
 
     const result = shakerEvaluator(filename, text, only);
 
-    if (perfIssues && EXPORT_STAR_RE.test(result[0])) {
+    if (perfIssues && EXPORT_STAR_RE.test(result.code)) {
       perfIssues.push({ type: 'barrel-export-star', dependencyFilename: filename });
     }
 

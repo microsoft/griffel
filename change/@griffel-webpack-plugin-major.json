@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "BREAKING: replace @linaria/shaker with @griffel/transform-shaker, remove babelOptions, add collectPerfIssues option",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

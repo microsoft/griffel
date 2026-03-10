@@ -40,7 +40,7 @@ function prepareForShake(filename: string, code: string): { program: Program; co
 const shaker: Evaluator = (filename, text, only = null) => {
   const { program, code } = prepareForShake(filename, text);
   const [shakenCode, imports] = shake(program, code, only);
-  return [shakenCode, imports];
+  return { code: shakenCode, imports, moduleKind: 'esm' };
 };
 
 export default shaker;
