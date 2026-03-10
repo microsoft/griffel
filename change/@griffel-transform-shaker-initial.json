@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Initial release of @griffel/transform-shaker",
-  "packageName": "@griffel/transform-shaker",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

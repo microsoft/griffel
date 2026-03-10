@@ -21,7 +21,7 @@ import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from '../constants.mjs';
 import { convertESMtoCJS } from '../utils/convertESMtoCJS.mjs';
 import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
-import type { EvalRule } from './types.mjs';
+import type { Evaluator, EvalRule } from './types.mjs';
 
 const debug = createDebug('griffel:module');
 
@@ -265,19 +265,22 @@ export class Module {
           : (
               require(require.resolve(action, {
                 paths: [dirname(this.filename)],
-              })) as { default: (...args: unknown[]) => [string, Map<string, string[]> | null] }
+              })) as { default: Evaluator }
             ).default;
 
       // For JavaScript files, we need to transpile it and to get the exports of the module
-      let imports: Map<string, string[]> | null;
       this.debug('prepare-evaluation', this.filename, 'using', evaluator.name);
-      [code, imports] = evaluator(this.filename, text, only);
-      this.imports = imports;
+      const result = evaluator(this.filename, text, only);
+      code = result.code;
+      this.imports = result.imports;
+
+      // Convert ESM syntax to CJS so it can run inside a function wrapper in vm.Script
+      if (result.moduleKind === 'esm') {
+        code = convertESMtoCJS(code, this.filename);
+      }
+
       this.debug('evaluate', `${this.filename} (only ${(only || []).join(', ')}):\n${code}`);
     }
-
-    // Convert ESM syntax to CJS so it can run inside a function wrapper in vm.Script
-    code = convertESMtoCJS(code, this.filename);
 
     const script = new vm.Script(`(function (exports) { ${code}\n})(exports);`, {
       filename: this.filename,

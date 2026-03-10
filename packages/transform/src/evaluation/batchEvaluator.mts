@@ -1,9 +1,7 @@
 import type { Program } from 'oxc-parser';
 
-import type { EvalRule } from './types.mjs';
-
 import type { StyleCall } from '../types.mjs';
-import type { AstEvaluatorPlugin } from './types.mjs';
+import type { AstEvaluatorPlugin, EvalRule } from './types.mjs';
 import { astEvaluator } from './astEvaluator.mjs';
 import { vmEvaluator } from './vmEvaluator.mjs';
 

@@ -152,7 +152,7 @@ function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRule
  * Transforms passed source code with oxc-parser and oxc-walker instead of Babel.
  */
 export function transformSync(sourceCode: string, options: TransformOptions): TransformResult {
-  const perfIssues = options.collectPerfIssues ? [] as TransformPerfIssue[] : undefined;
+  const perfIssues = options.collectPerfIssues ? ([] as TransformPerfIssue[]) : undefined;
 
   const {
     filename,

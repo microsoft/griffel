@@ -21,7 +21,7 @@ export { default as buildDepsGraph } from './graphBuilder.js';
 
 const needsTransformExtensions = new Set(['ts', 'tsx', 'jsx', 'mts', 'cts']);
 
-function prepareForShake(filename: string, code: string): { program: Program; code: string } {
+function prepareForShake(filename: string, code: string): { program: Program; code: string; hasModuleSyntax: boolean } {
   const ext = path.extname(filename).slice(1).toLowerCase();
   let sourceCode = code;
 
@@ -34,13 +34,13 @@ function prepareForShake(filename: string, code: string): { program: Program; co
   debug('evaluator:shaker:transform', `Parsed ${filename}`);
   const parsed = parseSync(filename, sourceCode);
 
-  return { program: parsed.program, code: sourceCode };
+  return { program: parsed.program, code: sourceCode, hasModuleSyntax: parsed.module.hasModuleSyntax };
 }
 
 const shaker: Evaluator = (filename, text, only = null) => {
-  const { program, code } = prepareForShake(filename, text);
+  const { program, code, hasModuleSyntax } = prepareForShake(filename, text);
   const [shakenCode, imports] = shake(program, code, only);
-  return [shakenCode, imports];
+  return { code: shakenCode, imports, moduleKind: hasModuleSyntax ? 'esm' : 'cjs' };
 };
 
 export default shaker;

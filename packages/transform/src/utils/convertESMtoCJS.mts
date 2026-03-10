@@ -38,7 +38,9 @@ export function convertESMtoCJS(code: string, filename: string): string {
   const parseResult = parseSync(filename, code);
 
   if (parseResult.errors.length > 0) {
-    return code;
+    throw new Error(
+      `convertESMtoCJS: failed to parse "${filename}": ${parseResult.errors.map(e => e.message).join(', ')}`,
+    );
   }
 
   const program = parseResult.program;

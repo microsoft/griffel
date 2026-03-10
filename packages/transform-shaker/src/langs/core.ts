@@ -384,6 +384,17 @@ export const visitors = {
     this.graph.addEdge(node.left, node.right);
   },
 
+  ForOfStatement(this: GraphBuilderState, node: Node & { left: Node; right: Node; body: Node }) {
+    this.baseVisit(node);
+
+    if (node.body) {
+      this.graph.addEdge(node, node.body);
+      this.graph.addEdge(node.body, node.left);
+    }
+
+    this.graph.addEdge(node.left, node.right);
+  },
+
   Terminatorless(this: GraphBuilderState, node: Node & { argument?: Node | null }) {
     this.baseVisit(node);
 
@@ -834,6 +845,7 @@ export const identifierHandlers: IdentifierHandlers = {
     ['CallExpression', 'arguments', 'callee'],
     ['ConditionalExpression', 'test', 'consequent', 'alternate'],
     ['ForInStatement', 'right'],
+    ['ForOfStatement', 'right'],
     ['Function', 'body'],
     ['IfStatement', 'test'],
     ['LogicalExpression', 'left', 'right'],
