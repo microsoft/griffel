@@ -7,6 +7,7 @@
  * along with import metadata.
  */
 
+import path from 'node:path';
 import { parseSync } from 'oxc-parser';
 import type { Program } from 'oxc-parser';
 import { transformSync } from 'oxc-transform';
@@ -21,7 +22,7 @@ export { default as buildDepsGraph } from './graphBuilder.js';
 const needsTransformExtensions = new Set(['ts', 'tsx', 'jsx', 'mts', 'cts']);
 
 function prepareForShake(filename: string, code: string): { program: Program; code: string } {
-  const ext = filename.split('.').pop()?.toLowerCase() ?? '';
+  const ext = path.extname(filename).slice(1).toLowerCase();
   let sourceCode = code;
 
   // Strip TypeScript/JSX syntax if needed
