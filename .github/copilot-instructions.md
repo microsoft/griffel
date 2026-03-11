@@ -79,9 +79,6 @@ yarn nx run-many --target=lint --all    # Instead of yarn lint
    # Test TypeScript compatibility across versions
    yarn nx run @griffel/e2e-typescript:test
 
-   # Test Next.js integration
-   yarn nx run @griffel/e2e-nextjs:test
-
    # Test Rspack bundler integration
    yarn nx run @griffel/e2e-rspack:test
    ```
@@ -128,7 +125,6 @@ yarn nx run-many --target=type-check --all
 - `@griffel/core` - Core runtime and compilation logic
 - `@griffel/react` - React bindings and hooks
 - `@griffel/webpack-loader` - Webpack build-time transforms
-- `@griffel/next-extraction-plugin` - Next.js CSS extraction
 - `@griffel/devtools` - Browser extension for debugging
 - `@griffel/eslint-plugin` - ESLint rules for Griffel usage
 
