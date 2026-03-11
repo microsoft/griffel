@@ -54,4 +54,8 @@ module.exports = {
       completedPrepublish = true;
     }
   },
+  // Runs once after all bumps, before committing — update lockfile so it stays in sync
+  async precommit() {
+    await sh('yarn install');
+  },
 };

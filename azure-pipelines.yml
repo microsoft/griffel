@@ -63,12 +63,3 @@ extends:
                 env:
                   GITHUB_PAT: $(githubPAT)
                 displayName: Publish to NPM & bump versions
-
-              - script: |
-                  yarn install
-                  git add yarn.lock
-                  if ! git diff --cached --quiet; then
-                    git commit -m "chore: update yarn.lock after release"
-                    git push origin HEAD:main
-                  fi
-                displayName: Update lockfile after release
