@@ -11,4 +11,3 @@ Griffel only does the expensive runtime on the first render of the component. Th
 ## What to use?
 
 - [Webpack loader](/react/ahead-of-time-compilation/with-webpack) (supports Next.js)
-- [Vite plugin](/react/ahead-of-time-compilation/with-vite)
