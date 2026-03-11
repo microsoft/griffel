@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "refactor(build): switch to @nx/js:tsc executor",
-  "packageName": "@griffel/shadow-dom",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
