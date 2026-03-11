@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "BREAKING: Remove babelOptions from WebpackLoaderOptions. Uses @griffel/transform-shaker instead of @linaria/shaker.",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

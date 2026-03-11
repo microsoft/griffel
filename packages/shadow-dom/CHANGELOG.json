@@ -2,6 +2,21 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2026 13:33:34 GMT",
+      "tag": "@griffel/shadow-dom_v0.2.12",
+      "version": "0.2.12",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "c1c05e2822a214d7cc3ad14c4e981e1b93ba245f",
+            "comment": "chore: migrate from Jest to Vitest"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/shadow-dom_v0.2.12",
       "version": "0.2.12",

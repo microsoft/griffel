@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "feat: add collectPerfIssues option to report CJS modules and barrel re-exports",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

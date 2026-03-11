@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: make CJS the default resolver, ESM the clone",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

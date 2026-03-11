@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "feat: add collectPerfIssues option to TransformOptions",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

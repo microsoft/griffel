@@ -2,6 +2,21 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2026 13:33:34 GMT",
+      "tag": "@griffel/react_v1.6.1",
+      "version": "1.6.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "c1c05e2822a214d7cc3ad14c4e981e1b93ba245f",
+            "comment": "chore: migrate from Jest to Vitest"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/react_v1.6.1",
       "version": "1.6.1",

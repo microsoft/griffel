@@ -2,6 +2,49 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2026 13:33:34 GMT",
+      "tag": "@griffel/webpack-plugin_v3.0.0",
+      "version": "3.0.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "f2cd5f051ab624dd58aa0b3a9b6b820176a6cdaa",
+            "comment": "test: add mixed-vm fixture"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "d5fd23b8330abfb5432575b09374727545cbb090",
+            "comment": "fix: make CJS the default resolver, ESM the clone"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "5e470e329c250e3d9e86570c763301f1349ae3a7",
+            "comment": "feat: add collectPerfIssues option to report CJS modules and barrel re-exports"
+          }
+        ],
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "4e637d68cf1cb9a7d1e9fb4356e27ad6fd8dc823",
+            "comment": "BREAKING: Remove babelOptions from WebpackLoaderOptions. Uses @griffel/transform-shaker instead of @linaria/shaker."
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v2.0.0",
+            "commit": "641fa875810c9df43f4e203e53be0174e4477c62"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/webpack-plugin_v2.0.0",
       "version": "2.0.0",

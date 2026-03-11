@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: fix VM result index mapping in batchEvaluator",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

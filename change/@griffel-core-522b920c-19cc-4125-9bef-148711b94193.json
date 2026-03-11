@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: migrate from Jest to Vitest",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

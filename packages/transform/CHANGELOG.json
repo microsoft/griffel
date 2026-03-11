@@ -2,6 +2,35 @@
   "name": "@griffel/transform",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2026 13:33:34 GMT",
+      "tag": "@griffel/transform_v2.0.0",
+      "version": "2.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "5e470e329c250e3d9e86570c763301f1349ae3a7",
+            "comment": "feat: add collectPerfIssues option to TransformOptions"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "f2cd5f051ab624dd58aa0b3a9b6b820176a6cdaa",
+            "comment": "fix: fix VM result index mapping in batchEvaluator"
+          }
+        ],
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "4e637d68cf1cb9a7d1e9fb4356e27ad6fd8dc823",
+            "comment": "BREAKING: Replace @linaria/shaker with @griffel/transform-shaker. Remove babelOptions from TransformOptions. Remove StrictOptions type."
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/transform_v1.2.1",
       "version": "1.2.1",
