@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@babel/core": "^7.23.2",
-    "@griffel/babel-preset": "^1.8.1",
     "@babel/helper-plugin-utils": "^7.22.5",
+    "@griffel/babel-preset": "^1.8.1",
     "postcss": "^8.4.29"
   },
   "main": "./src/index.js"

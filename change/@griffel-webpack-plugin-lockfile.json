@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: update yarn.lock after release",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
