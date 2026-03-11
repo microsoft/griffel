@@ -20,8 +20,8 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@griffel/transform": "^2.0.0",
     "@griffel/core": "^1.20.1",
+    "@griffel/transform": "^2.0.0",
     "oxc-resolver": "^11.19.1",
     "stylis": "^4.2.0"
   },

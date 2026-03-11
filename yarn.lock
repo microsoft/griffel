@@ -3678,7 +3678,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/transform@npm:^1.2.1, @griffel/transform@workspace:packages/transform":
+"@griffel/transform@npm:^2.0.0, @griffel/transform@workspace:packages/transform":
   version: 0.0.0-use.local
   resolution: "@griffel/transform@workspace:packages/transform"
   dependencies:
@@ -3741,7 +3741,7 @@ __metadata:
   resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@griffel/core": "npm:^1.20.1"
-    "@griffel/transform": "npm:^1.2.1"
+    "@griffel/transform": "npm:^2.0.0"
     oxc-resolver: "npm:^11.19.1"
     stylis: "npm:^4.2.0"
   peerDependencies:
