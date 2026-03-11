@@ -33,7 +33,7 @@ Atomic CSS enables CSS rules re-use and reduces the total amount of defined rule
 
 ## Style overrides
 
-While Griffel works by default in runtime it has [ahead-of-time compilation](/react/ahead-of-time-compilation/introduction). The AOT compilation process [cannot create new rules at runtime](/react/guides/limitations) and because of that, we rely on [merging CSS rules](/react/api/merge-classes) at runtime.
+While Griffel works by default in runtime it has [build optimization](/react/build-optimization/introduction). The AOT compilation process [cannot create new rules at runtime](/react/guides/limitations) and because of that, we rely on [merging CSS rules](/react/api/merge-classes) at runtime.
 
 Take these two rule sets:
 
