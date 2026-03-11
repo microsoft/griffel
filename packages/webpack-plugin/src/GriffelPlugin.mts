@@ -254,7 +254,7 @@ export class GriffelPlugin {
           throw new Error(
             [
               'You are using Rspack, but don\'t have "optimization.splitChunks" enabled.',
-              '"optimization.splitChunks" should be enabled for "@griffel/webpack-extraction-plugin" to function properly.',
+              '"optimization.splitChunks" should be enabled for "@griffel/webpack-plugin" to function properly.',
             ].join(' '),
           );
         }

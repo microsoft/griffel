@@ -37,8 +37,6 @@
       "@griffel/transform-shaker": ["packages/transform-shaker/src/index.ts"],
       "@griffel/update-shorthands": ["tools/update-shorthands/src/index.ts"],
       "@griffel/vite-plugin": ["packages/vite-plugin/src/index.ts"],
-      "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"],
-      "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"],
       "@griffel/webpack-plugin": ["packages/webpack-plugin/src/index.mts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]

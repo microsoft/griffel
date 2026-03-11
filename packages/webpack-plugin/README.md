@@ -22,7 +22,7 @@ npm install --save-dev @griffel/webpack-plugin
 
 ## When to use it?
 
-This is a replacement for `@griffel/webpack-loader` + `@griffel/webpack-extraction-plugin`. It combines both into a single plugin that handles CSS extraction without needing a separate loader setup.
+This plugin handles both build-time transforms and CSS extraction in a single package, without needing a separate loader setup.
 
 ## Usage
 
