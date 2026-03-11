@@ -3,13 +3,47 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  */
 
-import type { Node } from 'oxc-parser';
+import type {
+  Node,
+  ExpressionStatement,
+  Function as OxcFunction,
+  Class as OxcClass,
+  Program,
+  BlockStatement,
+  TryStatement,
+  CatchClause,
+  IfStatement,
+  WhileStatement,
+  SwitchCase,
+  SwitchStatement,
+  ForStatement,
+  ForInStatement,
+  ForOfStatement,
+  ReturnStatement,
+  ThrowStatement,
+  BreakStatement,
+  ContinueStatement,
+  ObjectExpression,
+  VariableDeclarator,
+  VariableDeclaration,
+  SequenceExpression,
+  ObjectPattern,
+  ArrayPattern,
+  AssignmentPattern,
+  ImportDeclaration,
+  ExportNamedDeclaration,
+  ExportDefaultDeclaration,
+  ExportAllDeclaration,
+  CallExpression,
+  LogicalExpression,
+  AssignmentExpression,
+} from 'oxc-parser';
 
 import { peek } from '../utils.js';
 import type { GraphBuilder } from '../graphBuilder.js';
 import ScopeManager from '../scope.js';
 import type { IdentifierHandlers, Visitors } from '../types.js';
-import type { IdentifierNode, AssignmentExpressionNode, CallExpressionNode, MemberExpressionNode } from '../ast.js';
+import type { IdentifierNode, MemberExpressionNode } from '../ast.js';
 import {
   isIdentifier,
   isStringLiteral,
@@ -43,7 +77,7 @@ type SideEffect = [
     callee?: (child: Node) => boolean;
     arguments?: (child: Node[]) => boolean;
   },
-  (node: CallExpressionNode, state: GraphBuilder) => void,
+  (node: CallExpression, state: GraphBuilder) => void,
 ];
 
 const sideEffects: SideEffect[] = [
@@ -56,7 +90,7 @@ const sideEffects: SideEffect[] = [
   ],
 ];
 
-function getCallee(node: CallExpressionNode): Node {
+function getCallee(node: CallExpression): Node {
   if (isSequenceExpression(node.callee) && node.callee.expressions.length === 2) {
     const [first, second] = node.callee.expressions;
     if (isNumericLiteral(first) && first.value === 0) {
@@ -123,9 +157,8 @@ function getAffectedNodes(node: Node, state: GraphBuilder): Node[] {
  *   Colors["BLUE"] = "#27509A";
  * })(Colors || (Colors = {}));
  */
-function isLazyInit(statement: Node & { type: 'ExpressionStatement'; expression: Node }): statement is Node & {
-  type: 'ExpressionStatement';
-  expression: CallExpressionNode & { arguments: [Node & { right: AssignmentExpressionNode }] };
+function isLazyInit(statement: ExpressionStatement): statement is ExpressionStatement & {
+  expression: CallExpression & { arguments: [LogicalExpression & { right: AssignmentExpression }] };
 } {
   const { expression } = statement;
   if (!isCallExpression(expression) || expression.arguments.length !== 1) {
@@ -142,7 +175,7 @@ function isLazyInit(statement: Node & { type: 'ExpressionStatement'; expression:
 }
 
 export const visitors = {
-  ExpressionStatement(this: GraphBuilder, node: Node & { type: 'ExpressionStatement'; expression: Node }) {
+  ExpressionStatement(this: GraphBuilder, node: ExpressionStatement) {
     this.baseVisit(node);
 
     this.graph.addEdge(node, node.expression);
@@ -153,7 +186,7 @@ export const visitors = {
     }
   },
 
-  Function(this: GraphBuilder, node: Node & { id?: Node | null; params: Node[]; body: Node }) {
+  Function(this: GraphBuilder, node: OxcFunction & { body: NonNullable<OxcFunction['body']> }) {
     const unsubscribe = this.onVisit(descendant => this.graph.addEdge(node, descendant));
     this.baseVisit(node, true); // ignoreDeps=true prevents default dependency resolving
     unsubscribe();
@@ -176,10 +209,7 @@ export const visitors = {
     }
   },
 
-  Class(
-    this: GraphBuilder,
-    node: Node & { id?: (Node & { name: string }) | null; body: Node; superClass?: Node | null },
-  ) {
+  Class(this: GraphBuilder, node: OxcClass) {
     const unsubscribe = this.onVisit(descendant => this.graph.addEdge(node, descendant));
     this.baseVisit(node, true);
     unsubscribe();
@@ -196,7 +226,7 @@ export const visitors = {
     }
   },
 
-  Block(this: GraphBuilder, node: Node & { body: Node[]; directives?: Node[] }) {
+  Block(this: GraphBuilder, node: Program | BlockStatement) {
     this.baseVisit(node);
 
     if (isProgram(node)) {
@@ -214,7 +244,7 @@ export const visitors = {
   // oxc represents directives as ExpressionStatement nodes with a `directive` field
   // No separate Directive visitor needed
 
-  TryStatement(this: GraphBuilder, node: Node & { block: Node; handler: Node | null; finalizer: Node | null }) {
+  TryStatement(this: GraphBuilder, node: TryStatement) {
     this.baseVisit(node);
     [node.handler, node.finalizer].forEach(statement => {
       if (statement) {
@@ -224,24 +254,24 @@ export const visitors = {
     });
   },
 
-  CatchClause(this: GraphBuilder, node: Node & { body: Node }) {
+  CatchClause(this: GraphBuilder, node: CatchClause) {
     this.baseVisit(node);
 
     this.graph.addEdge(node, node.body);
   },
 
-  IfStatement(this: GraphBuilder, node: Node & { test: Node; consequent: Node }) {
+  IfStatement(this: GraphBuilder, node: IfStatement) {
     this.baseVisit(node);
     this.graph.addEdge(node, node.consequent);
     this.graph.addEdge(node, node.test);
   },
 
-  WhileStatement(this: GraphBuilder, node: Node & { test: Node }) {
+  WhileStatement(this: GraphBuilder, node: WhileStatement) {
     this.baseVisit(node);
     this.graph.addEdge(node, node.test);
   },
 
-  SwitchCase(this: GraphBuilder, node: Node & { test: Node | null; consequent: Node[] }) {
+  SwitchCase(this: GraphBuilder, node: SwitchCase) {
     this.baseVisit(node);
     node.consequent.forEach(statement => this.graph.addEdge(statement, node));
     if (node.test) {
@@ -249,16 +279,13 @@ export const visitors = {
     }
   },
 
-  SwitchStatement(this: GraphBuilder, node: Node & { discriminant: Node; cases: Node[] }) {
+  SwitchStatement(this: GraphBuilder, node: SwitchStatement) {
     this.baseVisit(node);
     node.cases.forEach(c => this.graph.addEdge(c, node));
     this.graph.addEdge(node, node.discriminant);
   },
 
-  ForStatement(
-    this: GraphBuilder,
-    node: Node & { init: Node | null; test: Node | null; update: Node | null; body: Node },
-  ) {
+  ForStatement(this: GraphBuilder, node: ForStatement) {
     this.baseVisit(node);
 
     [node.init, node.test, node.update, node.body].forEach(child => {
@@ -268,7 +295,7 @@ export const visitors = {
     });
   },
 
-  ForInStatement(this: GraphBuilder, node: Node & { left: Node; right: Node; body: Node }) {
+  ForInStatement(this: GraphBuilder, node: ForInStatement) {
     this.baseVisit(node);
 
     if (node.body) {
@@ -279,7 +306,7 @@ export const visitors = {
     this.graph.addEdge(node.left, node.right);
   },
 
-  ForOfStatement(this: GraphBuilder, node: Node & { left: Node; right: Node; body: Node }) {
+  ForOfStatement(this: GraphBuilder, node: ForOfStatement) {
     this.baseVisit(node);
 
     if (node.body) {
@@ -290,7 +317,7 @@ export const visitors = {
     this.graph.addEdge(node.left, node.right);
   },
 
-  Terminatorless(this: GraphBuilder, node: Node & { argument?: Node | null }) {
+  Terminatorless(this: GraphBuilder, node: ReturnStatement | ThrowStatement | BreakStatement | ContinueStatement) {
     this.baseVisit(node);
 
     if (!(isBreakStatement(node) || isContinueStatement(node)) && node.argument) {
@@ -301,7 +328,7 @@ export const visitors = {
     this.graph.addEdge(closestFunctionNode, node);
   },
 
-  ObjectExpression(this: GraphBuilder, node: Node & { properties: Node[] }) {
+  ObjectExpression(this: GraphBuilder, node: ObjectExpression) {
     this.context.push('expression');
     this.baseVisit(node);
     node.properties.forEach(prop => {
@@ -365,7 +392,7 @@ export const visitors = {
     }
   },
 
-  AssignmentExpression(this: GraphBuilder, node: AssignmentExpressionNode) {
+  AssignmentExpression(this: GraphBuilder, node: AssignmentExpression) {
     this.context.push('lval');
     this.visit(node.left, node, 'left');
     this.context.pop();
@@ -382,7 +409,7 @@ export const visitors = {
     this.graph.addEdge(node.left, node);
   },
 
-  VariableDeclarator(this: GraphBuilder, node: Node & { type: 'VariableDeclarator'; id: Node; init: Node | null }) {
+  VariableDeclarator(this: GraphBuilder, node: VariableDeclarator) {
     const declared: Array<[IdentifierNode, IdentifierNode | null]> = [];
     this.meta.set('declared', declared);
     const unregister = this.scope.addDeclareHandler((identifier, from) => declared.push([identifier, from]));
@@ -406,7 +433,7 @@ export const visitors = {
     // Without this, destructured identifiers have no edge to their containing declaration,
     // and the declaration gets removed even when the identifiers are alive.
     for (const [identifier] of declared) {
-      if (identifier !== node.id) {
+      if (identifier !== (node.id as Node)) {
         this.graph.addEdge(identifier, node);
         if (node.init) {
           this.graph.addEdge(identifier, node.init);
@@ -415,23 +442,20 @@ export const visitors = {
     }
   },
 
-  VariableDeclaration(
-    this: GraphBuilder,
-    node: Node & { type: 'VariableDeclaration'; kind: string; declarations: Node[] },
-  ) {
+  VariableDeclaration(this: GraphBuilder, node: VariableDeclaration) {
     this.meta.set('kind-of-declaration', node.kind);
     this.baseVisit(node);
     node.declarations.forEach(declaration => this.graph.addEdge(declaration, node));
     this.meta.delete('kind-of-declaration');
   },
 
-  CallExpression(this: GraphBuilder, node: CallExpressionNode) {
+  CallExpression(this: GraphBuilder, node: CallExpression) {
     this.baseVisit(node);
 
     sideEffects.forEach(([conditions, callback]) => {
       if (
         (conditions.callee && !conditions.callee(node.callee)) ||
-        (conditions.arguments && !conditions.arguments(node.arguments))
+        (conditions.arguments && !conditions.arguments(node.arguments as unknown as Node[]))
       ) {
         return;
       }
@@ -447,7 +471,7 @@ export const visitors = {
     });
   },
 
-  SequenceExpression(this: GraphBuilder, node: Node & { expressions: Node[] }) {
+  SequenceExpression(this: GraphBuilder, node: SequenceExpression) {
     // Sequence value depends on only last expression in the list
     this.baseVisit(node, true);
     if (node.expressions.length > 0) {
@@ -460,22 +484,21 @@ export const visitors = {
    * so baseVisit doesn't add dependency edges for them.
    */
 
-  ObjectPattern(this: GraphBuilder, node: Node & { properties: Node[] }) {
+  ObjectPattern(this: GraphBuilder, node: ObjectPattern) {
     this.baseVisit(node);
     node.properties.forEach(prop => {
       this.graph.addEdge(node, prop);
-      if (isSpreadElement(prop)) {
+      if (prop.type === 'RestElement') {
         this.graph.addEdge(prop, prop.argument);
       } else {
-        // Property node: connect to key and value
-        const p = prop as Node & { key: Node; value: Node };
-        this.graph.addEdge(prop, p.key);
-        this.graph.addEdge(prop, p.value);
+        // BindingProperty: connect to key and value
+        this.graph.addEdge(prop, prop.key);
+        this.graph.addEdge(prop, prop.value);
       }
     });
   },
 
-  ArrayPattern(this: GraphBuilder, node: Node & { elements: (Node | null)[] }) {
+  ArrayPattern(this: GraphBuilder, node: ArrayPattern) {
     this.baseVisit(node);
     node.elements.forEach(el => {
       if (el) {
@@ -484,7 +507,7 @@ export const visitors = {
     });
   },
 
-  AssignmentPattern(this: GraphBuilder, node: Node & { left: Node; right: Node }) {
+  AssignmentPattern(this: GraphBuilder, node: AssignmentPattern) {
     this.baseVisit(node);
     this.graph.addEdge(node, node.left);
     this.graph.addEdge(node, node.right);
@@ -494,7 +517,7 @@ export const visitors = {
    * ESM import/export support
    */
 
-  ImportDeclaration(this: GraphBuilder, node: Node & { specifiers: Node[]; source: Node & { value: string } }) {
+  ImportDeclaration(this: GraphBuilder, node: ImportDeclaration) {
     const source = node.source.value;
 
     if (!this.graph.imports.has(source)) {
@@ -537,14 +560,7 @@ export const visitors = {
     return 'ignore' as const;
   },
 
-  ExportNamedDeclaration(
-    this: GraphBuilder,
-    node: Node & {
-      declaration: Node | null;
-      specifiers: Node[];
-      source: (Node & { value: string }) | null;
-    },
-  ) {
+  ExportNamedDeclaration(this: GraphBuilder, node: ExportNamedDeclaration) {
     if (node.declaration) {
       // `export const x = ...` or `export function foo() {}`
       this.visit(node.declaration, node, 'declaration');
@@ -610,7 +626,7 @@ export const visitors = {
     return 'ignore' as const;
   },
 
-  ExportDefaultDeclaration(this: GraphBuilder, node: Node & { declaration: Node }) {
+  ExportDefaultDeclaration(this: GraphBuilder, node: ExportDefaultDeclaration) {
     this.visit(node.declaration, node, 'declaration');
     this.graph.addExport('default', node);
     this.graph.addEdge(node, node.declaration);
@@ -618,7 +634,7 @@ export const visitors = {
     return 'ignore' as const;
   },
 
-  ExportAllDeclaration(this: GraphBuilder, node: Node & { source: Node & { value: string } }) {
+  ExportAllDeclaration(this: GraphBuilder, node: ExportAllDeclaration) {
     const source = node.source.value;
     if (!this.graph.imports.has(source)) {
       this.graph.imports.set(source, []);
