@@ -1,10 +1,37 @@
 import * as fs from 'node:fs';
+import NativeModule from 'node:module';
 import * as path from 'node:path';
 import { format } from 'prettier';
 import { describe, it, expect, vi } from 'vitest';
 
 import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from './constants.mjs';
+import type { TransformResolver } from './evaluation/module.mjs';
 import { transformSync, type TransformOptions } from './transformSync.mjs';
+
+const EXTRA_EXTENSIONS = ['.ts', '.tsx', '.jsx', '.cjs'];
+
+const nodeResolve: TransformResolver = (id, opts) => {
+  const extensions = (NativeModule as unknown as { _extensions: Record<string, () => void> })._extensions;
+  const added: string[] = [];
+
+  try {
+    for (const ext of EXTRA_EXTENSIONS) {
+      if (!(ext in extensions)) {
+        extensions[ext] = () => {};
+        added.push(ext);
+      }
+    }
+
+    return {
+      path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+      builtin: false,
+    };
+  } finally {
+    for (const ext of added) {
+      delete extensions[ext];
+    }
+  }
+};
 
 type TestCase = {
   title: string;
@@ -14,7 +41,7 @@ type TestCase = {
   outputFixture?: string;
 
   only?: boolean;
-  transformOptions?: Omit<TransformOptions, 'filename'>;
+  transformOptions?: Omit<TransformOptions, 'filename' | 'resolveModule'>;
 
   setup?: () => (() => void) | void;
 };
@@ -222,11 +249,8 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
     transformOptions: {
-      evaluationRules: [
-        {
-          action: path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs'),
-        },
-      ],
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      evaluationRules: [{ action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default }],
     },
   },
 
@@ -348,6 +372,7 @@ export const useStyles = makeStyles({
 
     const result = transformSync(sourceCode, {
       filename: 'test-plugins.ts',
+      resolveModule: nodeResolve,
     });
 
     expect(result.usedProcessing).toBe(true);
@@ -369,6 +394,7 @@ export const useStyles = makeStyles({
         expect(() =>
           transformSync(sourceCode, {
             filename: testCase.fixture,
+            resolveModule: nodeResolve,
             ...transformOptions,
           }),
         ).toThrow(testCase.error);
@@ -377,6 +403,7 @@ export const useStyles = makeStyles({
 
       const { code, cssRulesByBucket, usedProcessing, usedVMForEvaluation } = transformSync(sourceCode, {
         filename: testCase.fixture,
+        resolveModule: nodeResolve,
         ...transformOptions,
       });
       const outputCode = await format(code, { ...prettierConfig, parser: 'typescript' });

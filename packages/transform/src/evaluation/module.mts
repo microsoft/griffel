@@ -13,7 +13,7 @@
 
 import fs from 'node:fs';
 import NativeModule from 'node:module';
-import path, { dirname } from 'node:path';
+import path from 'node:path';
 import vm from 'node:vm';
 import createDebug from 'debug';
 
@@ -23,45 +23,12 @@ import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
 import type { Evaluator, EvalRule } from './types.mjs';
 
-const debug = createDebug('griffel:module');
+export type TransformResolver = (
+  id: string,
+  options: { filename: string; paths: readonly string[] },
+) => { path: string; builtin: boolean };
 
-// Supported node builtins based on the modules polyfilled by webpack
-// `true` means module is polyfilled, `false` means module is empty
-const builtins: Record<string, boolean> = {
-  assert: true,
-  buffer: true,
-  child_process: false,
-  cluster: false,
-  console: true,
-  constants: true,
-  crypto: true,
-  dgram: false,
-  dns: false,
-  domain: true,
-  events: true,
-  fs: false,
-  http: true,
-  https: true,
-  module: false,
-  net: false,
-  os: true,
-  path: true,
-  punycode: true,
-  process: true,
-  querystring: true,
-  readline: false,
-  repl: false,
-  stream: true,
-  string_decoder: true,
-  sys: true,
-  timers: true,
-  tls: false,
-  tty: true,
-  url: true,
-  util: true,
-  vm: true,
-  zlib: true,
-};
+const debug = createDebug('griffel:module');
 
 // Separate cache for evaluated modules
 let cache: Record<string, Module> = {};
@@ -83,16 +50,19 @@ export class Module {
   imports: Map<string, string[]> | null = null;
   dependencies: string[] | null = null;
   transform: ((code: string, filename: string) => string) | null = null;
-  exports: unknown = {};
-  extensions: string[];
+  static readonly extensions = new Set(['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs', '.mjs', '.mts', '.cts']);
 
+  exports: unknown = {};
+
+  private readonly resolveFilename: TransformResolver;
   private debug: (namespaces: string, arg1: unknown, ...args: unknown[]) => void;
   private debuggerDepth: number;
 
-  constructor(filename: string, rules: EvalRule[], debuggerDepth = 0) {
+  constructor(filename: string, rules: EvalRule[], resolveFilename: TransformResolver, debuggerDepth = 0) {
     this.id = filename;
     this.filename = filename;
     this.rules = rules;
+    this.resolveFilename = resolveFilename;
     this.debuggerDepth = debuggerDepth;
     this.debug = createCustomDebug(debuggerDepth);
 
@@ -116,33 +86,8 @@ export class Module {
     });
 
     this.exports = {};
-    this.extensions = ['.json', '.js', '.jsx', '.ts', '.tsx', '.cjs'];
     this.debug('prepare', filename);
   }
-
-  resolve = (id: string): string => {
-    const extensions = (NativeModule as unknown as { _extensions: Record<string, (...args: unknown[]) => void> })
-      ._extensions;
-    const added: string[] = [];
-
-    try {
-      // Check for supported extensions
-      this.extensions.forEach(ext => {
-        if (ext in extensions) {
-          return;
-        }
-        // When an extension is not supported, add it
-        // And keep track of it to clean it up after resolving
-        // Use noop for the transform function since we handle it
-        extensions[ext] = NOOP;
-        added.push(ext);
-      });
-      return Module._resolveFilename(id, this);
-    } finally {
-      // Cleanup the extensions we added to restore previous behaviour
-      added.forEach(ext => delete extensions[ext]);
-    }
-  };
 
   require: ((id: string) => unknown) & {
     ensure: () => void;
@@ -152,25 +97,14 @@ export class Module {
     (id: string): unknown => {
       this.debug('require', id);
 
-      if (id in builtins) {
-        // The module is in the allowed list of builtin node modules
-        // Ideally we should prevent importing them, but webpack polyfills some
-        // So we check for the list of polyfills to determine which ones to support
-        if (builtins[id]) {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require(id);
-        }
-
-        return null;
-      }
-
       // Resolve module id (and filename) relatively to parent module
-      const filename = this.resolve(id);
+      const resolved = this.resolveFilename(id, this);
 
-      if (filename === id && !path.isAbsolute(id)) {
-        // The module is a builtin node modules, but not in the allowed list
+      if (resolved.builtin) {
         throw new Error(`Unable to import "${id}". Importing Node builtins is not supported in the sandbox.`);
       }
+
+      const filename = resolved.path;
 
       this.dependencies?.push(id);
       let cacheKey = filename;
@@ -193,18 +127,21 @@ export class Module {
 
       if (!m) {
         this.debug('cached:not-exist', id);
+
         // Create the module if cached module is not available
-        m = new Module(filename, this.rules, this.debuggerDepth + 1);
+        m = new Module(filename, this.rules, this.resolveFilename, this.debuggerDepth + 1);
         m.transform = this.transform;
         // Store it in cache at this point, otherwise
         // we would end up in infinite loop with cyclic dependencies
         cache[cacheKey] = m;
 
-        if (this.extensions.includes(path.extname(filename))) {
+        const ext = path.extname(filename).toLowerCase();
+
+        if (Module.extensions.has(ext)) {
           // To evaluate the file, we need to read it first
           const code = fs.readFileSync(filename, 'utf-8');
 
-          if (/\.json$/.test(filename)) {
+          if (ext === '.json') {
             // For JSON files, parse it to a JS object similar to Node
             m.exports = JSON.parse(code);
           } else {
@@ -227,7 +164,7 @@ export class Module {
     {
       ensure: NOOP,
       cache,
-      resolve: this.resolve,
+      resolve: (id: string) => this.resolveFilename(id, this).path,
     },
   );
 
@@ -239,7 +176,7 @@ export class Module {
     for (let i = this.rules.length - 1; i >= 0; i--) {
       const { test } = this.rules[i];
 
-      if (!test || (typeof test === 'function' ? test(filename) : test instanceof RegExp && test.test(filename))) {
+      if (!test || (typeof test === 'function' ? test(filename) : test.test(filename))) {
         action = this.rules[i].action;
         break;
       }
@@ -258,19 +195,11 @@ export class Module {
       this.debug('ignore', `${filename}`);
       code = text;
     } else {
-      // Action can be a function or a module name
-      const evaluator =
-        typeof action === 'function'
-          ? action
-          : (
-              require(require.resolve(action, {
-                paths: [dirname(this.filename)],
-              })) as { default: Evaluator }
-            ).default;
-
       // For JavaScript files, we need to transpile it and to get the exports of the module
-      this.debug('prepare-evaluation', this.filename, 'using', evaluator.name);
-      const result = evaluator(this.filename, text, only);
+      this.debug('prepare-evaluation', this.filename, 'using', action.name);
+
+      const result = action(this.filename, text, only);
+
       code = result.code;
       this.imports = result.imports;
 
@@ -294,6 +223,7 @@ export class Module {
         setImmediate: NOOP,
         setInterval: NOOP,
         setTimeout: NOOP,
+        fetch: NOOP,
         global,
         process: mockProcess,
         module: this,
@@ -314,15 +244,6 @@ export class Module {
   static invalidateEvalCache = (): void => {
     EvalCache.clear();
   };
-
-  // Alias to resolve the module using node's resolve algorithm
-  // This static property can be overridden by the webpack loader
-  // This allows us to use webpack's module resolution algorithm
-  static _resolveFilename = (id: string, options: { filename: string; paths: readonly string[] }): string =>
-    (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(
-      id,
-      options,
-    );
 
   static _nodeModulePaths = (filename: string): string[] =>
     (NativeModule as unknown as { _nodeModulePaths: (dir: string) => string[] })._nodeModulePaths(filename);

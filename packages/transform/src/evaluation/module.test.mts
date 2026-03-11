@@ -1,12 +1,18 @@
 import * as fs from 'node:fs';
+import NativeModule from 'node:module';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from '../constants.mjs';
 import { Module } from './module.mjs';
+import type { TransformResolver } from './module.mjs';
 
 const defaultRules = [{ action: 'ignore' as const }];
+const defaultResolve: TransformResolver = (id, opts) => ({
+  path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+  builtin: false,
+});
 
 describe('Module', () => {
   let tmpDir: string;
@@ -29,7 +35,7 @@ describe('Module', () => {
       const entryFile = path.join(tmpDir, 'entry.js');
       fs.writeFileSync(entryFile, '');
 
-      const m = new Module(entryFile, defaultRules);
+      const m = new Module(entryFile, defaultRules, defaultResolve);
       const result = m.require('./test.jpg');
 
       expect(result).toBe(ASSET_TAG_OPEN + jpgFile + ASSET_TAG_CLOSE);
@@ -44,7 +50,7 @@ describe('Module', () => {
       const entryFile = path.join(tmpDir, 'entry.js');
       fs.writeFileSync(entryFile, '');
 
-      const m = new Module(entryFile, defaultRules);
+      const m = new Module(entryFile, defaultRules, defaultResolve);
       const result = m.require('./icon.png');
 
       expect(result).toBe(ASSET_TAG_OPEN + pngFile + ASSET_TAG_CLOSE);
@@ -59,7 +65,7 @@ describe('Module', () => {
       const entryFile = path.join(tmpDir, 'entry.js');
       fs.writeFileSync(entryFile, '');
 
-      const m = new Module(entryFile, defaultRules);
+      const m = new Module(entryFile, defaultRules, defaultResolve);
       const result = m.require('./data.json');
 
       expect(result).toEqual({ key: 'value' });

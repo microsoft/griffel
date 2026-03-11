@@ -1,4 +1,4 @@
-import { EvalCache, Module, transformSync, type TransformOptions, type TransformResult } from '@griffel/transform';
+import { EvalCache, transformSync, type TransformOptions, type TransformResult } from '@griffel/transform';
 import type * as webpack from 'webpack';
 import * as path from 'node:path';
 
@@ -6,7 +6,7 @@ import { GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './co
 import { generateCSSRules } from './utils/generateCSSRules.mjs';
 import { resolveAssetPathsInCSSRules } from './utils/resolveAssetPaths.mjs';
 
-export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generateMetadata'>;
+export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generateMetadata' | 'resolveModule'>;
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
@@ -51,26 +51,19 @@ function webpackLoader(
     // Clear require cache to allow re-evaluation of modules
     EvalCache.clearForFile(this.resourcePath);
 
-    const originalResolveFilename = Module._resolveFilename;
-
     let result: TransformResult | null = null;
     let error: Error | null = null;
 
     try {
-      // We are evaluating modules in Babel plugin to resolve expressions (function calls, imported constants, etc.) in
-      // makeStyles() calls, see evaluatePathsInVM.ts.
-      // Webpack's config can define own module resolution, Babel plugin should use Webpack's resolution to properly
-      // resolve paths.
-      Module._resolveFilename = (id, params) => {
-        const resolvedPath = this[GriffelCssLoaderContextKey]!.resolveModule(id, params);
-
-        this.addDependency(resolvedPath);
-
-        return resolvedPath;
-      };
-
       result = transformSync(sourceCode, {
         filename: this.resourcePath,
+        resolveModule: (id, params) => {
+          const resolved = this[GriffelCssLoaderContextKey]!.resolveModule(id, params);
+
+          this.addDependency(resolved.path);
+
+          return resolved;
+        },
         classNameHashSalt,
         modules,
         evaluationRules,
@@ -78,9 +71,6 @@ function webpackLoader(
       });
     } catch (err) {
       error = err as Error;
-    } finally {
-      // Restore original behaviour
-      Module._resolveFilename = originalResolveFilename;
     }
 
     if (result) {

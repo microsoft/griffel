@@ -165,7 +165,7 @@ describe('resolver selection', () => {
     const resolve = createResolverFactory()(compilationStub);
     const resolved = resolve('@fluentui/react-button', makeContext('@fluentui/react-button'));
 
-    expect(resolved).toContain(path.join('lib-esm', 'index.js'));
+    expect(resolved.path).toContain(path.join('lib-esm', 'index.js'));
   });
 });
 
@@ -174,22 +174,22 @@ describe('CJS-only exceptions', () => {
     const resolve = createResolverFactory()(compilationStub);
     const resolved = resolve('tslib', makeContext('tslib'));
 
-    expect(resolved).toContain('tslib.js');
-    expect(resolved).not.toContain('es6');
+    expect(resolved.path).toContain('tslib.js');
+    expect(resolved.path).not.toContain('es6');
   });
 
   it('resolves @babel/runtime with CJS conditions', () => {
     const resolve = createResolverFactory()(compilationStub);
     const resolved = resolve('@babel/runtime/helpers/interopRequireDefault', makeContext('@babel/runtime/helpers/interopRequireDefault'));
 
-    expect(resolved).toContain(path.join('helpers', 'interopRequireDefault.js'));
-    expect(resolved).not.toContain('esm');
+    expect(resolved.path).toContain(path.join('helpers', 'interopRequireDefault.js'));
+    expect(resolved.path).not.toContain('esm');
   });
 
   it('resolves @swc/helpers with CJS conditions', () => {
     const resolve = createResolverFactory()(compilationStub);
     const resolved = resolve('@swc/helpers', makeContext('@swc/helpers'));
 
-    expect(resolved).toContain(path.join('cjs', 'index.cjs'));
+    expect(resolved.path).toContain(path.join('cjs', 'index.cjs'));
   });
 });

@@ -1,6 +1,7 @@
 import type { Program } from 'oxc-parser';
 
 import type { StyleCall } from '../types.mjs';
+import type { TransformResolver } from './module.mjs';
 import type { AstEvaluatorPlugin, EvalRule } from './types.mjs';
 import { astEvaluator } from './astEvaluator.mjs';
 import { vmEvaluator } from './vmEvaluator.mjs';
@@ -15,6 +16,7 @@ export function batchEvaluator(
   filename: string,
   styleCalls: StyleCall[],
   evaluationRules: EvalRule[],
+  resolveFilename: TransformResolver,
   programAst: Program,
   astEvaluationPlugins: AstEvaluatorPlugin[] = [],
 ): {
@@ -53,7 +55,7 @@ export function batchEvaluator(
   }
 
   // Second pass: batch VM evaluation for complex expressions
-  const vmResult = vmEvaluator(sourceCode, filename, expressionCode, evaluationRules);
+  const vmResult = vmEvaluator(sourceCode, filename, expressionCode, evaluationRules, resolveFilename);
 
   if (!vmResult.confident) {
     if (vmResult.error) {

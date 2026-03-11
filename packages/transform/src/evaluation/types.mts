@@ -10,7 +10,7 @@ export type EvaluatorResult = {
 
 export type EvalRule = {
   test?: RegExp | ((path: string) => boolean);
-  action: Evaluator | 'ignore' | string;
+  action: Evaluator | 'ignore';
 };
 
 export type Evaluator = (
