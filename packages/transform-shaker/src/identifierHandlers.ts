@@ -7,16 +7,15 @@ import type { Node } from 'oxc-parser';
 
 import { peek } from './utils.js';
 import type { VisitorKeys } from './utils.js';
+import type { IdentifierNode } from './ast.js';
 import { isMemberExpression, FLIPPED_ALIAS_KEYS } from './ast.js';
-import type GraphBuilderState from './GraphBuilderState.js';
+import type { GraphBuilder } from './graphBuilder.js';
 import { identifierHandlers as core } from './langs/core.js';
 import ScopeManager from './scope.js';
 import type { IdentifierHandlerType, NodeType } from './types.js';
 
-type IdentifierNode = Node & { type: 'Identifier'; name: string };
-
 type HandlerFn = <TParent extends Node = Node>(
-  builder: GraphBuilderState,
+  builder: GraphBuilder,
   node: IdentifierNode,
   parent: TParent,
   parentKey: VisitorKeys<TParent>,
@@ -54,7 +53,7 @@ batchDefineHandlers([...core.refer], 'refer');
  * Special case for FunctionDeclaration
  * Function id should be defined in the parent scope
  */
-defineHandler('FunctionDeclaration', 'id', (builder: GraphBuilderState, node: IdentifierNode) => {
+defineHandler('FunctionDeclaration', 'id', (builder: GraphBuilder, node: IdentifierNode) => {
   builder.scope.declare(node, false, null, 1);
 });
 
@@ -62,7 +61,7 @@ defineHandler('FunctionDeclaration', 'id', (builder: GraphBuilderState, node: Id
  * Special case for ClassDeclaration
  * Class id should be defined in the parent scope (same as FunctionDeclaration)
  */
-defineHandler('ClassDeclaration', 'id', (builder: GraphBuilderState, node: IdentifierNode) => {
+defineHandler('ClassDeclaration', 'id', (builder: GraphBuilder, node: IdentifierNode) => {
   builder.scope.declare(node, false, null, 1);
 });
 
@@ -70,18 +69,18 @@ defineHandler('ClassDeclaration', 'id', (builder: GraphBuilderState, node: Ident
  * Special case for MethodDefinition/PropertyDefinition keys
  * The key identifier is alive when the definition is alive.
  */
-defineHandler('MethodDefinition', 'key', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+defineHandler('MethodDefinition', 'key', (builder: GraphBuilder, node: IdentifierNode, parent: Node) => {
   builder.graph.addEdge(parent, node);
 });
 
-defineHandler('PropertyDefinition', 'key', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+defineHandler('PropertyDefinition', 'key', (builder: GraphBuilder, node: IdentifierNode, parent: Node) => {
   builder.graph.addEdge(parent, node);
 });
 
 /*
  * Special handler for [obj.member = 42] = [1] in different contexts
  */
-const memberExpressionObjectHandler = (builder: GraphBuilderState, node: IdentifierNode) => {
+const memberExpressionObjectHandler = (builder: GraphBuilder, node: IdentifierNode) => {
   const context = peek(builder.context);
   const declaration = builder.scope.addReference(node);
   if (declaration) {
@@ -103,7 +102,7 @@ defineHandler('OptionalMemberExpression', 'object', memberExpressionObjectHandle
 /*
  * Special handler for obj.member and obj[member]
  */
-const memberExpressionPropertyHandler = (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+const memberExpressionPropertyHandler = (builder: GraphBuilder, node: IdentifierNode, parent: Node) => {
   if (isMemberExpression(parent) && parent.computed) {
     const declaration = builder.scope.addReference(node);
     // Let's check that it's not a global variable
@@ -126,7 +125,7 @@ defineHandler('OptionalMemberExpression', 'property', memberExpressionPropertyHa
 /*
  * Special handler for Property:key — computed keys are references, non-computed are labels.
  */
-defineHandler('Property', 'key', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+defineHandler('Property', 'key', (builder: GraphBuilder, node: IdentifierNode, parent: Node) => {
   if ((parent as Node & { computed: boolean }).computed) {
     const declaration = builder.scope.addReference(node);
     if (declaration) {
@@ -141,7 +140,7 @@ defineHandler('Property', 'key', (builder: GraphBuilderState, node: IdentifierNo
  * In object expressions, value identifiers are references.
  * In destructuring patterns (ObjectPattern), value identifiers are declarations.
  */
-defineHandler('Property', 'value', (builder: GraphBuilderState, node: IdentifierNode, parent: Node) => {
+defineHandler('Property', 'value', (builder: GraphBuilder, node: IdentifierNode, parent: Node) => {
   const grandparent = builder.graph.getParent(parent);
   if (grandparent && grandparent.type === 'ObjectPattern') {
     // Destructuring pattern: the identifier is being declared

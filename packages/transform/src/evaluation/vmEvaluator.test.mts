@@ -1,10 +1,14 @@
 import { describe, expect, it } from 'vitest';
+import shakerEvaluator from '@griffel/transform-shaker';
 import { vmEvaluator } from './vmEvaluator.mjs';
 
 const evaluationRules = [
   {
     test: /[/\\]node_modules[/\\]/,
     action: 'ignore' as const,
+  },
+  {
+    action: shakerEvaluator,
   },
 ];
 
