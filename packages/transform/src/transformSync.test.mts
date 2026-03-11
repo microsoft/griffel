@@ -41,7 +41,7 @@ type TestCase = {
   outputFixture?: string;
 
   only?: boolean;
-  transformOptions?: Omit<TransformOptions, 'filename'>;
+  transformOptions?: Omit<TransformOptions, 'filename' | 'resolveModule'>;
 
   setup?: () => (() => void) | void;
 };

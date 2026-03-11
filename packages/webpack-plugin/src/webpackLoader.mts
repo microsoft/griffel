@@ -6,7 +6,7 @@ import { GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './co
 import { generateCSSRules } from './utils/generateCSSRules.mjs';
 import { resolveAssetPathsInCSSRules } from './utils/resolveAssetPaths.mjs';
 
-export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generateMetadata'>;
+export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generateMetadata' | 'resolveModule'>;
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
