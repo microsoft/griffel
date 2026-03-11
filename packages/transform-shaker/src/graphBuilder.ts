@@ -3,7 +3,7 @@
  * https://github.com/callstack/linaria/tree/%40linaria/shaker%403.0.0-beta.22/packages/shaker
  */
 
-import type { Node } from 'oxc-parser';
+import type { Node, CallExpression, StringLiteral } from 'oxc-parser';
 
 import { isNode, getVisitorKeys } from './utils.js';
 import type { VisitorKeys } from './utils.js';
@@ -34,9 +34,8 @@ type OnVisitCallback = (n: Node) => void;
 
 const isVoid = (node: Node): boolean => isUnaryExpression(node) && node.operator === 'void';
 
-function isTSExporterCall(node: Node): node is Node & {
-  type: 'CallExpression';
-  arguments: [Node & { type: 'Literal'; value: string }, IdentifierNode];
+function isTSExporterCall(node: Node): node is CallExpression & {
+  arguments: [StringLiteral, IdentifierNode];
 } {
   if (!isCallExpression(node) || node.arguments.length !== 2) {
     return false;

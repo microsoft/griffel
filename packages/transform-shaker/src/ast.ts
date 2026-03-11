@@ -7,24 +7,48 @@
  * - `Property` instead of ObjectProperty/ObjectMethod
  */
 
-import type { Node, Program, StringLiteral, NumericLiteral, BooleanLiteral, NullLiteral } from 'oxc-parser';
+import type {
+  Node,
+  Program,
+  Span,
+  StringLiteral,
+  NumericLiteral,
+  BooleanLiteral,
+  NullLiteral,
+  MemberExpression,
+  AssignmentExpression,
+  CallExpression,
+  ObjectExpression,
+  ObjectProperty,
+  SpreadElement,
+  VariableDeclaration,
+  VariableDeclarator,
+  LogicalExpression,
+  SequenceExpression,
+  UnaryExpression,
+  ExpressionStatement,
+  Function as OxcFunction,
+  ArrowFunctionExpression,
+  Class as OxcClass,
+  BreakStatement,
+  ContinueStatement,
+  ReturnStatement,
+  BlockStatement,
+} from 'oxc-parser';
 import { visitorKeys } from 'oxc-parser';
 
 // Re-export visitorKeys as VISITOR_KEYS for compatibility
 export const VISITOR_KEYS: Record<string, string[]> = visitorKeys;
 
 // --- Shared narrow node types ---
+// Use Span (a simple interface) instead of Node (a 140-member union) to avoid
+// expensive intersection type distribution during type-checking.
 
-export type IdentifierNode = Node & { type: 'Identifier'; name: string };
-export type StringLiteralNode = Node & { type: 'Literal'; value: string };
-export type MemberExpressionNode = Node & { type: 'MemberExpression'; object: Node; property: Node; computed: boolean };
-export type AssignmentExpressionNode = Node & {
-  type: 'AssignmentExpression';
-  operator: string;
-  left: Node;
-  right: Node;
-};
-export type CallExpressionNode = Node & { type: 'CallExpression'; callee: Node; arguments: Node[] };
+export type IdentifierNode = Span & { type: 'Identifier'; name: string };
+export type StringLiteralNode = StringLiteral;
+export type MemberExpressionNode = MemberExpression;
+export type AssignmentExpressionNode = AssignmentExpression;
+export type CallExpressionNode = CallExpression;
 
 // --- Type guards for individual node types ---
 
@@ -56,36 +80,28 @@ export function isCallExpression(node: unknown): node is CallExpressionNode {
   return isNodeLike(node) && node.type === 'CallExpression';
 }
 
-export function isObjectExpression(node: unknown): node is Node & { type: 'ObjectExpression'; properties: Node[] } {
+export function isObjectExpression(node: unknown): node is ObjectExpression {
   return isNodeLike(node) && node.type === 'ObjectExpression';
 }
 
 // oxc uses type: "Property" for both object properties and methods
-export function isObjectProperty(
-  node: unknown,
-): node is Node & { type: 'Property'; key: Node; value: Node; method: boolean; shorthand: boolean; computed: boolean } {
+export function isObjectProperty(node: unknown): node is ObjectProperty & { method: false } {
   return isNodeLike(node) && node.type === 'Property' && !(node as { method?: boolean }).method;
 }
 
-export function isObjectMethod(
-  node: unknown,
-): node is Node & { type: 'Property'; key: Node; value: Node; method: true } {
+export function isObjectMethod(node: unknown): node is ObjectProperty & { method: true } {
   return isNodeLike(node) && node.type === 'Property' && (node as { method?: boolean }).method === true;
 }
 
-export function isSpreadElement(node: unknown): node is Node & { type: 'SpreadElement'; argument: Node } {
+export function isSpreadElement(node: unknown): node is SpreadElement {
   return isNodeLike(node) && node.type === 'SpreadElement';
 }
 
-export function isVariableDeclaration(
-  node: unknown,
-): node is Node & { type: 'VariableDeclaration'; kind: string; declarations: Node[] } {
+export function isVariableDeclaration(node: unknown): node is VariableDeclaration {
   return isNodeLike(node) && node.type === 'VariableDeclaration';
 }
 
-export function isVariableDeclarator(
-  node: unknown,
-): node is Node & { type: 'VariableDeclarator'; id: Node; init: Node | null } {
+export function isVariableDeclarator(node: unknown): node is VariableDeclarator {
   return isNodeLike(node) && node.type === 'VariableDeclarator';
 }
 
@@ -93,25 +109,19 @@ export function isAssignmentExpression(node: unknown): node is AssignmentExpress
   return isNodeLike(node) && node.type === 'AssignmentExpression';
 }
 
-export function isLogicalExpression(
-  node: unknown,
-): node is Node & { type: 'LogicalExpression'; operator: string; left: Node; right: Node } {
+export function isLogicalExpression(node: unknown): node is LogicalExpression {
   return isNodeLike(node) && node.type === 'LogicalExpression';
 }
 
-export function isSequenceExpression(
-  node: unknown,
-): node is Node & { type: 'SequenceExpression'; expressions: Node[] } {
+export function isSequenceExpression(node: unknown): node is SequenceExpression {
   return isNodeLike(node) && node.type === 'SequenceExpression';
 }
 
-export function isUnaryExpression(
-  node: unknown,
-): node is Node & { type: 'UnaryExpression'; operator: string; argument: Node } {
+export function isUnaryExpression(node: unknown): node is UnaryExpression {
   return isNodeLike(node) && node.type === 'UnaryExpression';
 }
 
-export function isExpressionStatement(node: unknown): node is Node & { type: 'ExpressionStatement'; expression: Node } {
+export function isExpressionStatement(node: unknown): node is ExpressionStatement {
   return isNodeLike(node) && node.type === 'ExpressionStatement';
 }
 
@@ -119,41 +129,35 @@ export function isProgram(node: unknown): node is Program {
   return isNodeLike(node) && node.type === 'Program';
 }
 
-export function isFunctionDeclaration(
-  node: unknown,
-): node is Node & { type: 'FunctionDeclaration'; id: Node | null; params: Node[]; body: Node } {
+export function isFunctionDeclaration(node: unknown): node is OxcFunction & { type: 'FunctionDeclaration' } {
   return isNodeLike(node) && node.type === 'FunctionDeclaration';
 }
 
-export function isFunctionExpression(
-  node: unknown,
-): node is Node & { type: 'FunctionExpression'; id: Node | null; params: Node[]; body: Node } {
+export function isFunctionExpression(node: unknown): node is OxcFunction & { type: 'FunctionExpression' } {
   return isNodeLike(node) && node.type === 'FunctionExpression';
 }
 
-export function isArrowFunctionExpression(node: unknown): node is Node & { type: 'ArrowFunctionExpression' } {
+export function isArrowFunctionExpression(node: unknown): node is ArrowFunctionExpression {
   return isNodeLike(node) && node.type === 'ArrowFunctionExpression';
 }
 
-export function isClassDeclaration(
-  node: unknown,
-): node is Node & { type: 'ClassDeclaration'; id: Node | null; body: Node; superClass: Node | null } {
+export function isClassDeclaration(node: unknown): node is OxcClass & { type: 'ClassDeclaration' } {
   return isNodeLike(node) && node.type === 'ClassDeclaration';
 }
 
-export function isBreakStatement(node: unknown): node is Node & { type: 'BreakStatement' } {
+export function isBreakStatement(node: unknown): node is BreakStatement {
   return isNodeLike(node) && node.type === 'BreakStatement';
 }
 
-export function isContinueStatement(node: unknown): node is Node & { type: 'ContinueStatement' } {
+export function isContinueStatement(node: unknown): node is ContinueStatement {
   return isNodeLike(node) && node.type === 'ContinueStatement';
 }
 
-export function isReturnStatement(node: unknown): node is Node & { type: 'ReturnStatement'; argument: Node | null } {
+export function isReturnStatement(node: unknown): node is ReturnStatement {
   return isNodeLike(node) && node.type === 'ReturnStatement';
 }
 
-export function isBlockStatement(node: unknown): node is Node & { type: 'BlockStatement'; body: Node[] } {
+export function isBlockStatement(node: unknown): node is BlockStatement {
   return isNodeLike(node) && node.type === 'BlockStatement';
 }
 
@@ -256,14 +260,12 @@ export function isScopable(node: unknown): boolean {
   return isNodeLike(node) && SCOPABLE_TYPES.has(node.type);
 }
 
-export function isFunction(
-  node: unknown,
-): node is Node & { type: 'FunctionDeclaration' | 'FunctionExpression' | 'ArrowFunctionExpression' } {
+export function isFunction(node: unknown): node is OxcFunction | ArrowFunctionExpression {
   return isNodeLike(node) && FUNCTION_TYPES.has(node.type);
 }
 
 // "Block" in Babel = Program | BlockStatement
-export function isBlock(node: unknown): node is Node & { type: 'Program' | 'BlockStatement'; body: Node[] } {
+export function isBlock(node: unknown): node is Program | BlockStatement {
   return isProgram(node) || isBlockStatement(node);
 }
 
@@ -302,6 +304,6 @@ export function isNode(obj: unknown): obj is Node {
 /**
  * Create a simple identifier node. Used for global sentinel identifiers in scope tracking.
  */
-export function createIdentifier(name: string): Node & { type: 'Identifier'; name: string } {
-  return { type: 'Identifier', name, start: -1, end: -1 } as Node & { type: 'Identifier'; name: string };
+export function createIdentifier(name: string): IdentifierNode {
+  return { type: 'Identifier', name, start: -1, end: -1 } as IdentifierNode;
 }

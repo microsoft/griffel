@@ -126,7 +126,7 @@ defineHandler('OptionalMemberExpression', 'property', memberExpressionPropertyHa
  * Special handler for Property:key — computed keys are references, non-computed are labels.
  */
 defineHandler('Property', 'key', (builder: GraphBuilder, node: IdentifierNode, parent: Node) => {
-  if ((parent as Node & { computed: boolean }).computed) {
+  if ((parent as { computed: boolean }).computed) {
     const declaration = builder.scope.addReference(node);
     if (declaration) {
       builder.graph.addEdge(node, declaration);
