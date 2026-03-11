@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "BREAKING: the package is ESM only now, switch from @griffel/babel-preset to @griffel/transform, replace \"modules\" option with \"importsToTransform\"/\"functionsToTransform\"",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

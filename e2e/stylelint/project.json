@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "e2e/stylelint/src",
   "projectType": "library",
-  "implicitDependencies": ["@griffel/postcss-syntax", "@griffel/babel-preset"],
+  "implicitDependencies": ["@griffel/postcss-syntax", "@griffel/transform", "@griffel/transform-shaker"],
   "targets": {
     "test": {
       "executor": "nx:run-commands",
