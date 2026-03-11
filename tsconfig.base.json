@@ -21,7 +21,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@griffel/babel-preset": ["packages/babel-preset/src/index.ts"],
       "@griffel/core": ["packages/core/src/index.ts"],
       "@griffel/devtools": ["packages/devtools/src/index.ts"],
       "@griffel/e2e-utils": ["e2e/utils/src/index.ts"],

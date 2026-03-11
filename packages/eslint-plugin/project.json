@@ -38,7 +38,7 @@
     "type-check": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "packages/babel-preset",
+        "cwd": "packages/eslint-plugin",
         "commands": [
           {
             "command": "tsc -b --pretty"
