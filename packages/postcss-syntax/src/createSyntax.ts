@@ -1,15 +1,17 @@
-import type { BabelPluginOptions } from '@griffel/babel-preset';
+import type { ParserOptions } from './parse.js';
 import type * as postcss from 'postcss';
 
-import { parse } from './parse';
-import { stringify } from './stringify';
+import { parse } from './parse.js';
+import { stringify } from './stringify.js';
 
 /**
- * Creates a custom syntax with configured options for @griffel/babel-preset
- * @param options - Options to configure @griffel/babel-preset
+ * Creates a custom syntax with configured options
+ * @param options - Options to configure the transform
  * @returns a postcss custom syntax
  */
-export function createSyntax(options: BabelPluginOptions): postcss.Syntax {
+export function createSyntax(
+  options: Pick<ParserOptions, 'importsToTransform' | 'functionsToTransform'>,
+): postcss.Syntax {
   const extendedParse: postcss.Parser = (css, opts) => parse(css, { ...opts, ...options });
 
   return {

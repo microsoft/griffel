@@ -1,12 +1,12 @@
-import { parse } from './parse';
-import { stringify } from './stringify';
+import { parse } from './parse.js';
+import { stringify } from './stringify.js';
 
 export { parse, stringify };
-export { createSyntax } from './createSyntax';
+export { createSyntax } from './createSyntax.js';
 
 export default {
   parse,
   stringify,
 };
 
-export { GRIFFEL_DECLARATOR_LOCATION_RAW, GRIFFEL_SLOT_LOCATION_RAW } from './constants';
+export { GRIFFEL_DECLARATOR_LOCATION_RAW, GRIFFEL_SLOT_LOCATION_RAW } from './constants.js';

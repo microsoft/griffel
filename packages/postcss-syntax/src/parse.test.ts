@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import type postcss from 'postcss';
-import { describe, expect, it } from 'vitest';
 
 import {
   GRIFFEL_DECLARATOR_LOCATION_RAW,
@@ -7,9 +7,9 @@ import {
   GRIFFEL_SLOT_LOCATION_RAW,
   GRIFFEL_SLOT_RAW,
   GRIFFEL_SRC_RAW,
-} from './constants';
-import { parse } from './parse';
-import { stringify } from './stringify';
+} from './constants.js';
+import { parse } from './parse.js';
+import { stringify } from './stringify.js';
 
 describe('parse', () => {
   describe('makeStyles', () => {
@@ -47,13 +47,13 @@ export const useStyles = makeStyles({
 
     it('should handle different module source', () => {
       const fixture = `
-import { foo} from '@foo/foo';
+import { makeStyles} from '@foo/foo';
 
 const mixin = () => ({
   marginTop: '4px',
 })
 
-export const useStyles = foo({
+export const useStyles = makeStyles({
   root: {
     color: 'red',
     backgroundColor: 'green',
@@ -63,7 +63,7 @@ export const useStyles = foo({
 `;
       const root = parse(fixture, {
         from: 'fixture.styles.ts',
-        modules: [{ moduleSource: '@foo/foo', importName: 'foo' }],
+        importsToTransform: ['@foo/foo'],
       });
       expect(root.toString()).toMatchInlineSnapshot(
         `".fe3e8s9{color:red;}.fcnqdeg{background-color:green;}.fvjh0tl{margin-top:4px;}"`,
@@ -73,8 +73,8 @@ export const useStyles = foo({
         expect(node.raw(GRIFFEL_DECLARATOR_RAW)).toEqual('useStyles');
         expect(node.raw(GRIFFEL_SLOT_RAW)).toEqual('root');
         expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
-          start: { line: 9, column: 2, index: 113 },
-          end: { line: 13, column: 3, index: 187 },
+          start: { line: 9, column: 2, index: 127 },
+          end: { line: 13, column: 3, index: 201 },
         });
       });
     });
@@ -125,7 +125,7 @@ import { makeStyles } from "@griffel/react";
 
 export const useStyles = makeStyles({
   slot1: {
-    background: \`linear-gradient(#e66465, 
+    background: \`linear-gradient(#e66465,
       #9198e5)\`,
   },
 
@@ -137,7 +137,7 @@ export const useStyles = makeStyles({
       const root = parse(fixture, { from: 'fixture.styles.ts' });
 
       expect(root.toString()).toMatchInlineSnapshot(`
-        ".f1qmhkic{background:linear-gradient(#e66465,        #9198e5);}
+        ".f1bph55t{background:linear-gradient(#e66465,       #9198e5);}
         .f163i14w{color:blue;}"
       `);
 
@@ -148,13 +148,13 @@ export const useStyles = makeStyles({
         if (slot === 'slot1') {
           expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
             start: { line: 5, column: 2, index: 87 },
-            end: { line: 8, column: 3, index: 159 },
+            end: { line: 8, column: 3, index: 158 },
           });
         }
         if (slot === 'slot2') {
           expect(node.raw(GRIFFEL_SLOT_LOCATION_RAW)).toEqual({
-            start: { line: 10, column: 2, index: 164 },
-            end: { line: 12, column: 3, index: 195 },
+            start: { line: 10, column: 2, index: 163 },
+            end: { line: 12, column: 3, index: 194 },
           });
         }
       });
@@ -305,7 +305,7 @@ export const useStyles = makeStyles({
   }
 })
 `;
-      expect(() => parse(fixture, { from: 'fixture.styles.ts' })).toThrow('Unterminated string constant');
+      expect(() => parse(fixture, { from: 'fixture.styles.ts' })).toThrow('Unterminated string');
     });
   });
 
@@ -325,24 +325,24 @@ export const useResetStyles = makeResetStyles({
 
     it('should handle different module source', () => {
       const fixture = `
-import { foo } from '@foo/foo';
+import { makeResetStyles } from '@foo/foo';
 
-export const useResetStyles = foo({
+export const useResetStyles = makeResetStyles({
   color: 'red',
   backgroundColor: 'green',
 })
 `;
       const root = parse(fixture, {
         from: 'fixture.styles.ts',
-        modules: [{ moduleSource: '@foo/foo', importName: 'makeStyles', resetImportName: 'foo' }],
+        importsToTransform: ['@foo/foo'],
       });
       expect(root.toString()).toMatchInlineSnapshot(`".rbe9p1m{color:red;background-color:green;}"`);
       root.walk(node => {
         expect(node.raw(GRIFFEL_DECLARATOR_RAW)).toEqual('useResetStyles');
 
         expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
-          start: { line: 4, column: 34, index: 68 },
-          end: { line: 7, column: 1, index: 115 },
+          start: { line: 4, column: 46, index: 92 },
+          end: { line: 7, column: 1, index: 139 },
         });
       });
     });
@@ -375,7 +375,7 @@ import { makeResetStyles } from "@griffel/react";
 
 export const useResetStyles1 = makeResetStyles({
   color: "red",
-  background: \`linear-gradient(#e66465, 
+  background: \`linear-gradient(#e66465,
     #9198e5)\`,
 });
 export const useResetStyles2 = makeResetStyles({
@@ -389,14 +389,14 @@ export const useResetStyles2 = makeResetStyles({
         if (declarator === 'useResetStyles1') {
           expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
             start: { line: 4, column: 47, index: 99 },
-            end: { line: 8, column: 1, index: 174 },
+            end: { line: 8, column: 1, index: 173 },
           });
         }
 
         if (declarator === 'useResetStyles2') {
           expect(node.raw(GRIFFEL_DECLARATOR_LOCATION_RAW)).toEqual({
-            start: { line: 9, column: 47, index: 224 },
-            end: { line: 11, column: 1, index: 243 },
+            start: { line: 9, column: 47, index: 223 },
+            end: { line: 11, column: 1, index: 242 },
           });
         }
       });

@@ -21,7 +21,7 @@ import { batchEvaluator } from './evaluation/batchEvaluator.mjs';
 import { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
 import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
-import type { StyleCall } from './types.mjs';
+import type { StyleCall, SourceLocation, CommentDirective, TransformMetadata } from './types.mjs';
 
 export type TransformOptions = {
   filename: string;
@@ -62,6 +62,7 @@ export type TransformResult = {
   usedProcessing: boolean;
   usedVMForEvaluation: boolean;
   perfIssues?: TransformPerfIssue[];
+  metadata?: TransformMetadata;
 };
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
@@ -171,6 +172,52 @@ function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRule
   return bucketA;
 }
 
+function buildLineStarts(source: string): number[] {
+  const starts = [0];
+  for (let i = 0; i < source.length; i++) {
+    if (source[i] === '\n') {
+      starts.push(i + 1);
+    }
+  }
+  return starts;
+}
+
+function offsetToLocation(lineStarts: number[], offset: number): { line: number; column: number; index: number } {
+  // Binary search for the line
+  let lo = 0;
+  let hi = lineStarts.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (lineStarts[mid] <= offset) {
+      lo = mid;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return { line: lo + 1, column: offset - lineStarts[lo], index: offset };
+}
+
+function makeSourceLocation(lineStarts: number[], start: number, end: number): SourceLocation {
+  return { start: offsetToLocation(lineStarts, start), end: offsetToLocation(lineStarts, end) };
+}
+
+function parseCommentDirectives(
+  comments: { type: string; value: string; start: number; end: number }[],
+  rangeStart: number,
+  rangeEnd: number,
+): CommentDirective[] | null {
+  const entries: CommentDirective[] = [];
+  for (const comment of comments) {
+    if (comment.type !== 'Line') continue;
+    if (comment.start < rangeStart || comment.start >= rangeEnd) continue;
+    const value = comment.value.trim();
+    if (!value.startsWith('griffel-')) continue;
+    const tokens = value.split(' ');
+    entries.push([tokens[0], tokens[1]]);
+  }
+  return entries.length > 0 ? entries : null;
+}
+
 /**
  * Transforms passed source code with oxc-parser and oxc-walker instead of Babel.
  */
@@ -188,12 +235,12 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
-  const importsToTransformSet = new Set(importsToTransform);
-  const functionsToTransformSet = new Set<FunctionKinds>(functionsToTransform);
-
   if (!filename) {
     throw new Error('Transform error: "filename" option is required');
   }
+
+  const importsToTransformSet = new Set(importsToTransform);
+  const functionsToTransformSet = new Set<FunctionKinds>(functionsToTransform);
 
   const parseResult = parseSync(filename, sourceCode);
 
@@ -215,7 +262,9 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const hasGriffelImports = parseResult.module.staticImports.some(
     si =>
       importsToTransformSet.has(si.moduleRequest.value) &&
-      si.entries.some(e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds)),
+      si.entries.some(
+        e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds),
+      ),
   );
 
   if (!hasGriffelImports) {
@@ -225,6 +274,14 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const styleCalls: StyleCall[] = [];
   const cssEntries: Record<string, Record<string, string[]>> = {};
   const cssResetEntries: Record<string, string[]> = {};
+
+  const callExpressionLocations: Record<string, SourceLocation> = {};
+  const locations: Record<string, Record<string, SourceLocation>> = {};
+  const resetLocations: Record<string, SourceLocation> = {};
+  const commentDirectives: Record<string, Record<string, CommentDirective[]>> = {};
+  const resetCommentDirectives: Record<string, CommentDirective[]> = {};
+
+  const lineStarts = generateMetadata ? buildLineStarts(sourceCode) : [];
 
   let cssRulesByBucket: CSSRulesByBucket = {};
 
@@ -315,6 +372,65 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
           importId: node.callee.name,
         });
+
+        // --- Metadata collection ---
+        if (generateMetadata) {
+          callExpressionLocations[declaratorId] = makeSourceLocation(lineStarts, node.start, node.end);
+
+          // Seed CSS entry keys in source order. The processing loop below iterates style calls
+          // in reverse (to keep MagicString offsets valid), so without seeding here the entries
+          // would be inserted in reverse order and consumers (e.g. @griffel/postcss-syntax) would
+          // emit CSS rules bottom-to-top.
+          if (functionKind === 'makeStyles') {
+            cssEntries[declaratorId] ??= {};
+          } else if (functionKind === 'makeResetStyles') {
+            cssResetEntries[declaratorId] ??= [];
+          }
+
+          if (functionKind === 'makeStyles' && argument.type === 'ObjectExpression') {
+            locations[declaratorId] ??= {};
+            commentDirectives[declaratorId] ??= {};
+
+            const properties = argument.properties;
+            for (let pi = 0; pi < properties.length; pi++) {
+              const prop = properties[pi];
+              if (prop.type !== 'Property') continue;
+              const key = prop.key;
+              if (key.type !== 'Identifier') continue;
+
+              locations[declaratorId][key.name] = makeSourceLocation(lineStarts, prop.start, prop.end);
+
+              // Collect comment directives between previous property end and this property start
+              const rangeStart = pi === 0 ? argument.start : properties[pi - 1].end;
+              const directives = parseCommentDirectives(parseResult.comments, rangeStart, prop.start);
+              if (directives) {
+                commentDirectives[declaratorId][key.name] = directives;
+              }
+            }
+          }
+
+          if (functionKind === 'makeResetStyles') {
+            if (argument.type === 'ObjectExpression') {
+              resetLocations[declaratorId] = makeSourceLocation(lineStarts, argument.start, argument.end);
+            }
+
+            // Collect comment directives from before the VariableDeclaration or ExportNamedDeclaration parent
+            // Find the top-level statement that contains this call expression
+            const containingStatement = programAst.body.find(stmt => stmt.start <= node.start && stmt.end >= node.end);
+
+            if (containingStatement) {
+              let rangeStart = 0;
+              for (const bodyNode of programAst.body) {
+                if (bodyNode.start >= containingStatement.start) break;
+                rangeStart = bodyNode.end;
+              }
+              const directives = parseCommentDirectives(parseResult.comments, rangeStart, containingStatement.start);
+              if (directives) {
+                resetCommentDirectives[declaratorId] = directives;
+              }
+            }
+          }
+        }
       }
     },
   });
@@ -351,7 +467,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           const uniqueCSSRules = dedupeCSSRules(resolvedCSSRules);
 
           if (generateMetadata) {
-            buildCSSEntriesMetadata(cssEntries, classnamesMapping, uniqueCSSRules, styleCall.declaratorId);
+            buildCSSEntriesMetadata(cssEntries, classnamesMapping, resolvedCSSRules, styleCall.declaratorId);
           }
 
           // Replace the function call arguments
@@ -421,5 +537,16 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     usedProcessing: true,
     usedVMForEvaluation,
     perfIssues,
+    ...(generateMetadata && {
+      metadata: {
+        cssEntries,
+        cssResetEntries,
+        callExpressionLocations,
+        locations,
+        resetLocations,
+        commentDirectives,
+        resetCommentDirectives,
+      },
+    }),
   };
 }

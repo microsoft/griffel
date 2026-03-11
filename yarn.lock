@@ -3869,9 +3869,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/postcss-syntax@workspace:packages/postcss-syntax"
   dependencies:
-    "@babel/core": "npm:^7.29.6"
-    "@babel/helper-plugin-utils": "npm:^7.28.6"
-    "@griffel/babel-preset": "npm:^1.9.1"
+    "@griffel/transform": "npm:^3.0.7"
     postcss: "npm:^8.5.14"
   languageName: unknown
   linkType: soft

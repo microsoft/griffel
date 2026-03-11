@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
+import { transformSync } from '@griffel/transform';
+import { nodeResolve } from './resolveModule.js';
 
-import transformSync, { type TransformOptions } from './transform-sync';
-
-describe('transformSync', () => {
+describe('nodeResolve', () => {
   it('should parse TS and return metadata that contains css location', () => {
     const sourceCode = `
     import type { GriffelStyle } from '@griffel/react'
@@ -20,19 +20,13 @@ describe('transformSync', () => {
       }
     })
     `;
-    const options: TransformOptions = {
+    const result = transformSync(sourceCode, {
       filename: 'test.styles.ts',
-      pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
-        generateMetadata: true,
-      },
-    };
+      resolveModule: nodeResolve,
+      generateMetadata: true,
+    });
 
-    const result = transformSync(sourceCode, options);
-
-    expect(result.metadata.cssEntries).toMatchInlineSnapshot(`
+    expect(result.metadata!.cssEntries).toMatchInlineSnapshot(`
       {
         "useStyles": {
           "root": [
@@ -43,18 +37,16 @@ describe('transformSync', () => {
         },
       }
     `);
-    expect(result.metadata.locations).toMatchInlineSnapshot(`
+    expect(result.metadata!.locations).toMatchInlineSnapshot(`
       {
         "useStyles": {
           "root": {
-            "end": Position {
+            "end": {
               "column": 7,
               "index": 317,
               "line": 14,
             },
-            "filename": undefined,
-            "identifierName": undefined,
-            "start": Position {
+            "start": {
               "column": 6,
               "index": 227,
               "line": 10,
@@ -98,19 +90,13 @@ describe('transformSync', () => {
     export { useResetStylesExportedLater };
     `;
 
-    const options: TransformOptions = {
+    const result = transformSync(sourceCode, {
       filename: 'test.styles.ts',
-      pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
-        generateMetadata: true,
-      },
-    };
+      resolveModule: nodeResolve,
+      generateMetadata: true,
+    });
 
-    const result = transformSync(sourceCode, options);
-
-    expect(result.metadata.commentDirectives).toMatchInlineSnapshot(`
+    expect(result.metadata!.commentDirectives).toMatchInlineSnapshot(`
       {
         "useStyles": {
           "foo": [
@@ -133,7 +119,7 @@ describe('transformSync', () => {
       }
     `);
 
-    expect(result.metadata.resetCommentDirectives).toMatchInlineSnapshot(`
+    expect(result.metadata!.resetCommentDirectives).toMatchInlineSnapshot(`
       {
         "useResetStyles": [
           [
@@ -175,19 +161,13 @@ describe('transformSync', () => {
       export const useStyles1 = makeStyles(styles);
       export const useStyles2 = makeStyles(styles);
       `;
-    const options: TransformOptions = {
+    const result = transformSync(sourceCode, {
       filename: 'test.styles.ts',
-      pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
-        generateMetadata: true,
-      },
-    };
+      resolveModule: nodeResolve,
+      generateMetadata: true,
+    });
 
-    const result = transformSync(sourceCode, options);
-
-    expect(result.metadata.cssEntries).toMatchInlineSnapshot(`
+    expect(result.metadata!.cssEntries).toMatchInlineSnapshot(`
       {
         "useStyles1": {
           "root": [
@@ -205,28 +185,28 @@ describe('transformSync', () => {
         },
       }
     `);
-    expect(result.metadata.callExpressionLocations).toEqual({
+    expect(result.metadata!.callExpressionLocations).toEqual({
       useStyles1: {
-        end: {
-          column: 50,
-          index: 383,
-          line: 17,
-        },
         start: {
           column: 32,
           index: 365,
           line: 17,
         },
-      },
-      useStyles2: {
         end: {
           column: 50,
-          index: 435,
-          line: 18,
+          index: 383,
+          line: 17,
         },
+      },
+      useStyles2: {
         start: {
           column: 32,
           index: 417,
+          line: 18,
+        },
+        end: {
+          column: 50,
+          index: 435,
           line: 18,
         },
       },
@@ -248,19 +228,13 @@ describe('transformSync', () => {
       export const useResetStyles1 = makeResetStyles(styles);
       export const useResetStyles2 = makeResetStyles(styles);
       `;
-    const options: TransformOptions = {
+    const result = transformSync(sourceCode, {
       filename: 'test.styles.ts',
-      pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
-        generateMetadata: true,
-      },
-    };
+      resolveModule: nodeResolve,
+      generateMetadata: true,
+    });
 
-    const result = transformSync(sourceCode, options);
-
-    expect(result.metadata.cssResetEntries).toMatchInlineSnapshot(`
+    expect(result.metadata!.cssResetEntries).toMatchInlineSnapshot(`
       {
         "useResetStyles1": [
           ".rv6h41g{color:red;background-color:green;margin-top:4px;}",
@@ -270,28 +244,28 @@ describe('transformSync', () => {
         ],
       }
     `);
-    expect(result.metadata.callExpressionLocations).toEqual({
+    expect(result.metadata!.callExpressionLocations).toEqual({
       useResetStyles1: {
-        end: {
-          column: 60,
-          index: 362,
-          line: 12,
-        },
         start: {
           column: 37,
           index: 339,
           line: 12,
         },
-      },
-      useResetStyles2: {
         end: {
           column: 60,
-          index: 424,
-          line: 13,
+          index: 362,
+          line: 12,
         },
+      },
+      useResetStyles2: {
         start: {
           column: 37,
           index: 401,
+          line: 13,
+        },
+        end: {
+          column: 60,
+          index: 424,
           line: 13,
         },
       },
