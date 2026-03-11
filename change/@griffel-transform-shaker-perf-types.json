@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "perf: use specific oxc types instead of Node intersections",
+  "packageName": "@griffel/transform-shaker",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
