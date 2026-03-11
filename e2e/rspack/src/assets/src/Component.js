@@ -1,6 +1,5 @@
 import { makeResetStyles, makeStyles } from '@griffel/react';
-// @ts-expect-error It's a fake module resolved via aliases
-import { colors } from 'fake-colors';
+import { colors } from './colors.js';
 
 const useClasses = makeStyles({
   root: {
