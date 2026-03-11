@@ -1,4 +1,5 @@
-import transformSync, { type TransformOptions } from './transform-sync';
+import { describe, it, expect } from 'vitest';
+import transformSync, { type TransformOptions } from './transform-sync.mjs';
 
 describe('transformSync', () => {
   it('should parse TS and return metadata that contains css location', () => {
@@ -21,19 +22,16 @@ describe('transformSync', () => {
     const options: TransformOptions = {
       filename: 'test.styles.ts',
       pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
         generateMetadata: true,
       },
     };
 
     const result = transformSync(sourceCode, options);
 
-    expect(result.metadata.cssEntries).toMatchInlineSnapshot(`
-      Object {
-        "useStyles": Object {
-          "root": Array [
+    expect(result.metadata!.cssEntries).toMatchInlineSnapshot(`
+      {
+        "useStyles": {
+          "root": [
             ".fe3e8s9{color:red;}",
             ".fcnqdeg{background-color:green;}",
             ".fvjh0tl{margin-top:4px;}",
@@ -41,18 +39,16 @@ describe('transformSync', () => {
         },
       }
     `);
-    expect(result.metadata.locations).toMatchInlineSnapshot(`
-      Object {
-        "useStyles": Object {
-          "root": Object {
-            "end": Position {
+    expect(result.metadata!.locations).toMatchInlineSnapshot(`
+      {
+        "useStyles": {
+          "root": {
+            "end": {
               "column": 7,
               "index": 317,
               "line": 14,
             },
-            "filename": undefined,
-            "identifierName": undefined,
-            "start": Position {
+            "start": {
               "column": 6,
               "index": 227,
               "line": 10,
@@ -99,30 +95,27 @@ describe('transformSync', () => {
     const options: TransformOptions = {
       filename: 'test.styles.ts',
       pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
         generateMetadata: true,
       },
     };
 
     const result = transformSync(sourceCode, options);
 
-    expect(result.metadata.commentDirectives).toMatchInlineSnapshot(`
-      Object {
-        "useStyles": Object {
-          "foo": Array [
-            Array [
+    expect(result.metadata!.commentDirectives).toMatchInlineSnapshot(`
+      {
+        "useStyles": {
+          "foo": [
+            [
               "griffel-csslint-disable",
               "foo",
             ],
           ],
-          "root": Array [
-            Array [
+          "root": [
+            [
               "griffel-csslint-disable",
               "foo",
             ],
-            Array [
+            [
               "griffel-csslint-disable",
               "bar",
             ],
@@ -131,20 +124,20 @@ describe('transformSync', () => {
       }
     `);
 
-    expect(result.metadata.resetCommentDirectives).toMatchInlineSnapshot(`
-      Object {
-        "useResetStyles": Array [
-          Array [
+    expect(result.metadata!.resetCommentDirectives).toMatchInlineSnapshot(`
+      {
+        "useResetStyles": [
+          [
             "griffel-csslint-disable",
             "foo",
           ],
         ],
-        "useResetStylesExportedLater": Array [
-          Array [
+        "useResetStylesExportedLater": [
+          [
             "griffel-csslint-disable",
             "foo",
           ],
-          Array [
+          [
             "griffel-csslint-disable",
             "bar",
           ],
@@ -176,26 +169,23 @@ describe('transformSync', () => {
     const options: TransformOptions = {
       filename: 'test.styles.ts',
       pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
         generateMetadata: true,
       },
     };
 
     const result = transformSync(sourceCode, options);
 
-    expect(result.metadata.cssEntries).toMatchInlineSnapshot(`
-      Object {
-        "useStyles1": Object {
-          "root": Array [
+    expect(result.metadata!.cssEntries).toMatchInlineSnapshot(`
+      {
+        "useStyles1": {
+          "root": [
             ".fe3e8s9{color:red;}",
             ".fcnqdeg{background-color:green;}",
             ".fvjh0tl{margin-top:4px;}",
           ],
         },
-        "useStyles2": Object {
-          "root": Array [
+        "useStyles2": {
+          "root": [
             ".fe3e8s9{color:red;}",
             ".fcnqdeg{background-color:green;}",
             ".fvjh0tl{margin-top:4px;}",
@@ -203,28 +193,28 @@ describe('transformSync', () => {
         },
       }
     `);
-    expect(result.metadata.callExpressionLocations).toEqual({
+    expect(result.metadata!.callExpressionLocations).toEqual({
       useStyles1: {
-        end: {
-          column: 50,
-          index: 383,
-          line: 17,
-        },
         start: {
           column: 32,
           index: 365,
           line: 17,
         },
-      },
-      useStyles2: {
         end: {
           column: 50,
-          index: 435,
-          line: 18,
+          index: 383,
+          line: 17,
         },
+      },
+      useStyles2: {
         start: {
           column: 32,
           index: 417,
+          line: 18,
+        },
+        end: {
+          column: 50,
+          index: 435,
           line: 18,
         },
       },
@@ -249,47 +239,44 @@ describe('transformSync', () => {
     const options: TransformOptions = {
       filename: 'test.styles.ts',
       pluginOptions: {
-        babelOptions: {
-          presets: ['@babel/preset-typescript'],
-        },
         generateMetadata: true,
       },
     };
 
     const result = transformSync(sourceCode, options);
 
-    expect(result.metadata.cssResetEntries).toMatchInlineSnapshot(`
-      Object {
-        "useResetStyles1": Array [
+    expect(result.metadata!.cssResetEntries).toMatchInlineSnapshot(`
+      {
+        "useResetStyles1": [
           ".rv6h41g{color:red;background-color:green;margin-top:4px;}",
         ],
-        "useResetStyles2": Array [
+        "useResetStyles2": [
           ".rv6h41g{color:red;background-color:green;margin-top:4px;}",
         ],
       }
     `);
-    expect(result.metadata.callExpressionLocations).toEqual({
+    expect(result.metadata!.callExpressionLocations).toEqual({
       useResetStyles1: {
-        end: {
-          column: 60,
-          index: 362,
-          line: 12,
-        },
         start: {
           column: 37,
           index: 339,
           line: 12,
         },
-      },
-      useResetStyles2: {
         end: {
           column: 60,
-          index: 424,
-          line: 13,
+          index: 362,
+          line: 12,
         },
+      },
+      useResetStyles2: {
         start: {
           column: 37,
           index: 401,
+          line: 13,
+        },
+        end: {
+          column: 60,
+          index: 424,
           line: 13,
         },
       },

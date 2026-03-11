@@ -1,19 +1,21 @@
 import * as postcss from 'postcss';
-import transformSync from './transform-sync';
+import transformSync from './transform-sync.mjs';
 import {
   GRIFFEL_DECLARATOR_LOCATION_RAW,
   GRIFFEL_DECLARATOR_RAW,
   GRIFFEL_SLOT_LOCATION_RAW,
   GRIFFEL_SLOT_RAW,
   GRIFFEL_SRC_RAW,
-} from './constants';
-import type { BabelPluginOptions } from '@griffel/babel-preset';
-import type { CommentDirective } from './location-preset';
+} from './constants.mjs';
+import type { TransformMetadata, ModuleConfig } from './transform-sync.mjs';
+import type { CommentDirective } from '@griffel/transform';
 import * as os from 'os';
 
 export type PostCSSParserOptions = Pick<postcss.ProcessOptions<postcss.Document | postcss.Root>, 'from' | 'map'>;
 
-export interface ParserOptions extends Pick<PostCSSParserOptions, 'from'>, BabelPluginOptions {
+export interface ParserOptions extends Pick<PostCSSParserOptions, 'from'> {
+  modules?: ModuleConfig[];
+
   /**
    * Throws error when griffel parsing fails
    * @default false
@@ -27,13 +29,13 @@ export interface ParserOptions extends Pick<PostCSSParserOptions, 'from'>, Babel
  */
 export const parse = (css: string | { toString(): string }, opts?: ParserOptions) => {
   const { from: filename = 'postcss-syntax.styles.ts', silenceParseErrors = false } = opts ?? {};
-  const griffelPluginOptions = extractGriffelBabelPluginOptions(opts);
+  const pluginOptions = extractPluginOptions(opts);
   const code = css.toString();
 
   const cssRuleSlotNames: string[] = [];
   const cssRules: string[] = [];
 
-  const parseResult = parseGriffelStyles(code, filename, griffelPluginOptions, silenceParseErrors);
+  const parseResult = parseGriffelStyles(code, filename, pluginOptions, silenceParseErrors);
   if (!parseResult) {
     const root = postcss.parse(`/* Failed to parse griffel styles: ${filename} */`, { from: filename });
     root.raws[GRIFFEL_SRC_RAW] = code;
@@ -100,9 +102,9 @@ export const parse = (css: string | { toString(): string }, opts?: ParserOptions
 function parseGriffelStyles(
   code: string,
   filename: string,
-  pluginOpts: BabelPluginOptions,
+  pluginOpts: { modules?: ModuleConfig[]; generateMetadata?: boolean },
   silenceParseErrors: boolean,
-) {
+): TransformMetadata | null {
   try {
     const { metadata } = transformSync(code, {
       filename,
@@ -112,7 +114,7 @@ function parseGriffelStyles(
       },
     });
 
-    return metadata;
+    return metadata ?? null;
   } catch (error) {
     console.warn('Failed to parse Griffel styles');
     console.warn(error);
@@ -133,24 +135,13 @@ function getIgnoredRulesFromDirectives(commentDirectives: CommentDirective[]) {
   );
 }
 
-const extractGriffelBabelPluginOptions = (opts: ParserOptions = {}) => {
-  const { babelOptions, evaluationRules, generateMetadata, modules } = opts;
-  const babelPluginOptions: BabelPluginOptions = {};
-  if (babelOptions) {
-    babelPluginOptions.babelOptions = babelOptions;
-  }
-
-  if (evaluationRules) {
-    babelPluginOptions.evaluationRules = evaluationRules;
-  }
-
-  if (generateMetadata) {
-    babelPluginOptions.generateMetadata = generateMetadata;
-  }
+const extractPluginOptions = (opts: ParserOptions = {}) => {
+  const { modules } = opts;
+  const pluginOptions: { modules?: ModuleConfig[] } = {};
 
   if (modules) {
-    babelPluginOptions.modules = modules;
+    pluginOptions.modules = modules;
   }
 
-  return babelPluginOptions;
+  return pluginOptions;
 };
