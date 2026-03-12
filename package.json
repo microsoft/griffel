@@ -34,7 +34,7 @@
     "type-check": "nx affected --target=type-check"
   },
   "devDependencies": {
-    "@babel/generator": "^7.23.0",
+    "@babel/generator": "^7.23.1",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.2",
     "@codesandbox/sandpack-react": "2.13.10",
