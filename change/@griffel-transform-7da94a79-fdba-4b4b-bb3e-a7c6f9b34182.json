@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix yarn install in beachball precommit hook",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
