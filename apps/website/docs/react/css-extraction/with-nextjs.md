@@ -30,11 +30,11 @@ npm install --save-dev @griffel/next-extraction-plugin
 
 :::info
 
-Please configure [`@griffel/webpack-loader`](/react/ahead-of-time-compilation/with-webpack) first.
+Please configure [`@griffel/webpack-plugin`](/react/ahead-of-time-compilation/with-webpack) first.
 
 :::
 
-In `next.config.js` file you'll need to add the next-plugin from `@griffel/webpack-extraction-plugin` like so:
+In `next.config.js` file you'll need to add the next-plugin from `@griffel/next-extraction-plugin` like so:
 
 ```js
 // next.config.js
@@ -47,7 +47,7 @@ module.exports = withGriffelCSSExtraction()({
       exclude: /node_modules/,
       use: [
         {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
         },
       ],
     });
@@ -58,7 +58,7 @@ module.exports = withGriffelCSSExtraction()({
       exclude: /node_modules/,
       use: [
         {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
           options: {
             babelOptions: {
               presets: ['next/babel'],
