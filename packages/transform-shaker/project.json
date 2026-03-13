@@ -17,12 +17,22 @@
       }
     },
     "build": {
-      "executor": "@nx/vite:build",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/transform-shaker",
-        "compiler": "swc",
-        "format": ["esm"]
+        "tsConfig": "packages/transform-shaker/tsconfig.lib.json",
+        "skipTypeField": true,
+        "packageJson": "packages/transform-shaker/package.json",
+        "main": "packages/transform-shaker/src/index.ts",
+        "assets": [
+          "packages/transform-shaker/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "type-check": {

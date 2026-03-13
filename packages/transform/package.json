@@ -8,10 +8,12 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "type": "module",
+  "main": "./src/index.mjs",
+  "types": "./src/index.d.mts",
   "exports": {
     ".": {
-      "node": "./transform.js",
-      "types": "./index.d.mts"
+      "types": "./src/index.d.mts",
+      "default": "./src/index.mjs"
     },
     "./package.json": "./package.json"
   },

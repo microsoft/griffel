@@ -30,19 +30,17 @@ function webpackLoader(
   this.cacheable();
 
   // Early return to handle cases when there is no Griffel usage in the file
-  if (sourceCode.indexOf('makeStyles') === -1 && sourceCode.indexOf('makeResetStyles') === -1 && sourceCode.indexOf('makeStaticStyles') === -1) {
+  if (
+    sourceCode.indexOf('makeStyles') === -1 &&
+    sourceCode.indexOf('makeResetStyles') === -1 &&
+    sourceCode.indexOf('makeStaticStyles') === -1
+  ) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }
 
-  const IS_RSPACK = !this.webpack;
-
-  // @ Rspack compat:
-  // We don't use the trick with loader context as assets are generated differently
-  if (!IS_RSPACK) {
-    if (!this[GriffelCssLoaderContextKey]) {
-      throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
-    }
+  if (!this[GriffelCssLoaderContextKey]) {
+    throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
   }
 
   const { classNameHashSalt, modules, evaluationRules } = this.getOptions();
@@ -92,7 +90,9 @@ function webpackLoader(
           return { result: undefined, meta };
         }
 
-        if (IS_RSPACK) {
+        // Rspack compat:
+        // Support of CSS extraction is weird in Rspack, revisit later.
+        if (!this.webpack) {
           const request = `griffel.css!=!${virtualLoaderPath}!${virtualCSSFilePath}?style=${toURIComponent(css)}`;
           const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
 

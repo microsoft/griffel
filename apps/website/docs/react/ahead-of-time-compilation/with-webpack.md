@@ -13,14 +13,14 @@ import TabItem from '@theme/TabItem';
 <TabItem value="yarn" label="Yarn">
 
 ```shell
-yarn add --dev @griffel/webpack-loader
+yarn add --dev @griffel/webpack-plugin
 ```
 
 </TabItem>
 <TabItem value="npm" label="NPM">
 
 ```shell
-npm install --save-dev @griffel/webpack-loader
+npm install --save-dev @griffel/webpack-plugin
 ```
 
 </TabItem>
@@ -30,7 +30,7 @@ npm install --save-dev @griffel/webpack-loader
 
 Webpack documentation: [Loaders](https://webpack.js.org/loaders/)
 
-Within your webpack configuration object, you'll need to add the `@griffel/webpack-loader` to the list of modules, like so:
+Within your webpack configuration object, you'll need to add the `@griffel/webpack-plugin` loader to the list of modules, like so:
 
 ```js
 module.exports = {
@@ -40,7 +40,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
         },
       },
 
@@ -49,7 +49,7 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
           options: {
             babelOptions: {
               presets: ['@babel/preset-typescript'],
@@ -72,7 +72,7 @@ module.exports = {
         test: /\.styles.ts$/,
         exclude: /node_modules/,
         use: {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
           options: {
             babelOptions: {
               presets: ['@babel/preset-typescript'],
@@ -99,7 +99,7 @@ module.exports = {
       exclude: /node_modules/,
       use: [
         {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
         },
       ],
     });
@@ -110,7 +110,7 @@ module.exports = {
       exclude: /node_modules/,
       use: [
         {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
           options: {
             babelOptions: {
               presets: ['next/babel'],
@@ -127,4 +127,4 @@ module.exports = {
 
 ## Configuration
 
-Please check [the README](https://github.com/microsoft/griffel/tree/main/packages/webpack-loader) of `@griffel/webpack-loader` to check how to configure module evaluation and imports.
+Please check [the README](https://github.com/microsoft/griffel/tree/main/packages/webpack-plugin) of `@griffel/webpack-plugin` to check how to configure module evaluation and imports.
