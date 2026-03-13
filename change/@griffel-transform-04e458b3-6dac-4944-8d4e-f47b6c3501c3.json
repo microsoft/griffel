@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: wrap VM errors as host Error with filename context",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
