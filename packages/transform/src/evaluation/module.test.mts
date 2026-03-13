@@ -10,7 +10,10 @@ import type { TransformResolver } from './module.mjs';
 
 const defaultRules = [{ action: 'ignore' as const }];
 const defaultResolve: TransformResolver = (id, opts) => ({
-  path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+  path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(
+    id,
+    opts,
+  ),
   builtin: false,
 });
 
@@ -23,6 +26,27 @@ describe('Module', () => {
     if (tmpDir) {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }
+  });
+
+  describe('evaluate', () => {
+    it('wraps VM errors as host Error with filename context', () => {
+      tmpDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'griffel-module-test-')));
+      const entryFile = path.join(tmpDir, 'entry.js');
+      fs.writeFileSync(entryFile, '');
+
+      const m = new Module(entryFile, defaultRules, defaultResolve);
+
+      // Verify it's a proper host Error instance (not a VM context Error)
+      try {
+        m.evaluate('const y = null; y.bar;');
+        expect.unreachable('should have thrown');
+      } catch (e) {
+        expect(e).toBeInstanceOf(Error);
+        expect(e).toMatchObject({
+          message: expect.stringContaining(entryFile),
+        });
+      }
+    });
   });
 
   describe('require (asset handling)', () => {
