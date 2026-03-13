@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "perf: skip eval cache for __mkPreval entry-point evaluations",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,0 +1,46 @@
+{
+  "name": "@griffel/transform-shaker",
+  "entries": [
+    {
+      "date": "Fri, 13 Mar 2026 17:00:44 GMT",
+      "tag": "@griffel/transform-shaker_v1.0.2",
+      "version": "1.0.2",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "38eeaccf3dcc30470cefa3f29624e5e64b16dcdd",
+            "comment": "fix yarn install in beachball precommit hook"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "f3b5e3f5f7b89904627dc19a93a47ee00e4db685",
+            "comment": "fix: protect structural children from removal, handle export * as ns correctly"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "e7b6200ac687fdbbbab91b4f2d747ea5c90544be",
+            "comment": "fix: guard control flow structural children (catch param, labels, loop tests) from removal"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "33c36cae51af3de92c6deae00e1b828550ac60f8",
+            "comment": "chore: initial release"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "37ff106d1df37ef73bcd21210a3c7b399ec4a770",
+            "comment": "perf: use specific oxc types instead of Node intersections"
+          }
+        ]
+      }
+    }
+  ]
+}

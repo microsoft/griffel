@@ -2,6 +2,47 @@
   "name": "@griffel/transform",
   "entries": [
     {
+      "date": "Fri, 13 Mar 2026 17:00:44 GMT",
+      "tag": "@griffel/transform_v2.0.2",
+      "version": "2.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "e7b6200ac687fdbbbab91b4f2d747ea5c90544be",
+            "comment": "fix: wrap VM errors as host Error with filename context"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "65d7de25a942d7790b8d477b486f40257fdb1be4",
+            "comment": "perf: skip eval cache for __mkPreval entry-point evaluations"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "e0f931f2481843af7f1f86bf247bd21c38aef87f",
+            "comment": "fix: wrap VM errors as host Error with filename context, defer CJS export assignments for IIFE patterns"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/transform",
+            "comment": "Bump @griffel/transform-shaker to v1.0.2",
+            "commit": "e7b6200ac687fdbbbab91b4f2d747ea5c90544be"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "38eeaccf3dcc30470cefa3f29624e5e64b16dcdd",
+            "comment": "fix yarn install in beachball precommit hook"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 13:33:34 GMT",
       "tag": "@griffel/transform_v2.0.0",
       "version": "2.0.0",

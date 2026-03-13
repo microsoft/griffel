@@ -2,6 +2,21 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Fri, 13 Mar 2026 17:00:44 GMT",
+      "tag": "@griffel/postcss-syntax_v1.3.6",
+      "version": "1.3.6",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "ac8954b1c64b333f27ef177db743b1f6d79299e5",
+            "comment": "chore: update yarn.lock after release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/postcss-syntax_v1.3.6",
       "version": "1.3.6",

@@ -1,8 +1,19 @@
 # Change Log - @griffel/transform
 
-This log was last generated on Wed, 11 Mar 2026 13:33:34 GMT and should not be manually modified.
+This log was last generated on Fri, 13 Mar 2026 17:00:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.2
+
+Fri, 13 Mar 2026 17:00:44 GMT
+
+### Patches
+
+- fix: wrap VM errors as host Error with filename context (olfedias@microsoft.com)
+- perf: skip eval cache for __mkPreval entry-point evaluations (olfedias@microsoft.com)
+- fix: wrap VM errors as host Error with filename context, defer CJS export assignments for IIFE patterns (olfedias@microsoft.com)
+- Bump @griffel/transform-shaker to v1.0.2
 
 ## 2.0.0
 

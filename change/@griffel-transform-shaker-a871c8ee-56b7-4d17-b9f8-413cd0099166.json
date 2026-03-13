@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: guard control flow structural children (catch param, labels, loop tests) from removal",
-  "packageName": "@griffel/transform-shaker",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,41 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Fri, 13 Mar 2026 17:00:45 GMT",
+      "tag": "@griffel/webpack-plugin_v3.0.2",
+      "version": "3.0.2",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "38eeaccf3dcc30470cefa3f29624e5e64b16dcdd",
+            "comment": "fix yarn install in beachball precommit hook"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "ac8954b1c64b333f27ef177db743b1f6d79299e5",
+            "comment": "chore: update yarn.lock after release"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "e0f931f2481843af7f1f86bf247bd21c38aef87f",
+            "comment": "fix: switch webpack-plugin to vm evaluation mode"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v2.0.2",
+            "commit": "e7b6200ac687fdbbbab91b4f2d747ea5c90544be"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 13:33:34 GMT",
       "tag": "@griffel/webpack-plugin_v3.0.0",
       "version": "3.0.0",

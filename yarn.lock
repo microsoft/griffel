@@ -3665,7 +3665,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/transform-shaker@npm:^1.0.1, @griffel/transform-shaker@workspace:packages/transform-shaker":
+"@griffel/transform-shaker@npm:^1.0.2, @griffel/transform-shaker@workspace:packages/transform-shaker":
   version: 0.0.0-use.local
   resolution: "@griffel/transform-shaker@workspace:packages/transform-shaker"
   dependencies:
@@ -3678,12 +3678,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/transform@npm:^2.0.1, @griffel/transform@workspace:packages/transform":
+"@griffel/transform@npm:^2.0.2, @griffel/transform@workspace:packages/transform":
   version: 0.0.0-use.local
   resolution: "@griffel/transform@workspace:packages/transform"
   dependencies:
     "@griffel/core": "npm:^1.20.1"
-    "@griffel/transform-shaker": "npm:^1.0.1"
+    "@griffel/transform-shaker": "npm:^1.0.2"
     debug: "npm:^4.3.0"
     magic-string: "npm:^0.30.19"
     oxc-parser: "npm:^0.116.0"
@@ -3741,7 +3741,7 @@ __metadata:
   resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@griffel/core": "npm:^1.20.1"
-    "@griffel/transform": "npm:^2.0.1"
+    "@griffel/transform": "npm:^2.0.2"
     oxc-resolver: "npm:^11.19.1"
     stylis: "npm:^4.2.0"
   peerDependencies:

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix yarn install in beachball precommit hook",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

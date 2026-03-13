@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-plugin
 
-This log was last generated on Wed, 11 Mar 2026 13:33:34 GMT and should not be manually modified.
+This log was last generated on Fri, 13 Mar 2026 17:00:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 3.0.2
+
+Fri, 13 Mar 2026 17:00:45 GMT
+
+### Patches
+
+- fix: switch webpack-plugin to vm evaluation mode (olfedias@microsoft.com)
+- Bump @griffel/transform to v2.0.2
 
 ## 3.0.0
 
