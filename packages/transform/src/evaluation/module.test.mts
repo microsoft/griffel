@@ -31,20 +31,23 @@ describe('Module', () => {
   describe('evaluate', () => {
     it('wraps VM errors as host Error with filename context', () => {
       tmpDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'griffel-module-test-')));
+
+      const childFile = path.join(tmpDir, 'child.js');
+      fs.writeFileSync(childFile, 'const x = undefined;\nx.foo;');
+
       const entryFile = path.join(tmpDir, 'entry.js');
       fs.writeFileSync(entryFile, '');
 
       const m = new Module(entryFile, defaultRules, defaultResolve);
 
-      // Verify it's a proper host Error instance (not a VM context Error)
       try {
-        m.evaluate('const y = null; y.bar;');
+        m.evaluate(`const child = require("./child.js");`, ['child']);
         expect.unreachable('should have thrown');
       } catch (e) {
+        // Must be a proper host Error instance (not a VM context Error that webpack wraps as NonErrorEmittedError)
         expect(e).toBeInstanceOf(Error);
-        expect(e).toMatchObject({
-          message: expect.stringContaining(entryFile),
-        });
+        expect((e as Error).message).toContain(childFile);
+        expect((e as Error).stack).toContain(childFile);
       }
     });
   });
