@@ -40,6 +40,7 @@
     "@codesandbox/sandpack-react": "2.13.10",
     "@codesandbox/sandpack-themes": "2.0.21",
     "@docusaurus/core": "^3.9.2",
+    "@docusaurus/faster": "^3.9.2",
     "@docusaurus/module-type-aliases": "^3.9.2",
     "@docusaurus/preset-classic": "^3.9.2",
     "@docusaurus/theme-mermaid": "^3.9.2",
