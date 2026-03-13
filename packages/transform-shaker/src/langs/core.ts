@@ -639,11 +639,25 @@ export const visitors = {
     if (!this.graph.imports.has(source)) {
       this.graph.imports.set(source, []);
     }
-    this.graph.importTypes.set(source, 'reexport');
+
     this.graph.addEdge(node, node.source);
 
-    // Create a sentinel node that represents this re-export
-    this.graph.reexports.push(node as unknown as IdentifierNode);
+    if (node.exported) {
+      // `export * as ns from "module"` — namespace re-export creates a single named export `ns`,
+      // it does NOT pass through individual exports like `export * from "module"` does.
+      const name = isIdentifier(node.exported)
+        ? node.exported.name
+        : (node.exported as unknown as { value: string }).value;
+
+      this.graph.addExport(name, node);
+      this.graph.addEdge(node, node.exported);
+
+      this.graph.importTypes.set(source, 'wildcard');
+    } else {
+      // `export * from "module"` — true wildcard re-export, passes through all exports
+      this.graph.importTypes.set(source, 'reexport');
+      this.graph.reexports.push(node as unknown as IdentifierNode);
+    }
 
     return 'ignore' as const;
   },

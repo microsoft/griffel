@@ -1,5 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`does not break export * as ns when requesting the namespace export 1`] = `"export * as ns from './module';"`;
+
 exports[`keeps ESM default import with batch export 1`] = `
 "import blank from './blank.jpg';
 export const __mkPreval = { backgroundImage: blank };"
@@ -140,6 +142,8 @@ exports[`keeps reused exports 1`] = `
 const foo = bar();
 export const __linariaPreval = [foo];"
 `;
+
+exports[`removes \`export * as ns\` if not requested 1`] = `"export * from './other';"`;
 
 exports[`removes all 1`] = `
 "
