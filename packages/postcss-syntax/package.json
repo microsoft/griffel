@@ -7,11 +7,18 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
-  "dependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/helper-plugin-utils": "^7.22.5",
-    "@griffel/babel-preset": "^1.8.1",
-    "postcss": "^8.4.29"
+  "type": "module",
+  "main": "./src/index.mjs",
+  "types": "./src/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.mts",
+      "default": "./src/index.mjs"
+    },
+    "./package.json": "./package.json"
   },
-  "main": "./src/index.js"
+  "dependencies": {
+    "@griffel/transform": "^2.0.0",
+    "postcss": "^8.4.29"
+  }
 }

@@ -1,4 +1,3 @@
-// @ts-expect-error It's a fake module resolved via aliases
-import { Component } from 'fake-module';
+import { Component } from './Component.js';
 
 console.log(Component);
