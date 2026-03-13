@@ -244,7 +244,7 @@ export class Module {
       // so they fail `instanceof Error` in the host context (e.g. webpack wraps them as NonErrorEmittedError).
       // Re-create as a host Error with filename context.
       const message = isError(vmError) ? vmError.message : String(vmError);
-      const hostError = new Error(`[Griffel] Evaluation of "${this.filename}" failed: ${message}`);
+      const hostError = new Error(message);
 
       if (isError(vmError)) {
         hostError.stack = vmError.stack;

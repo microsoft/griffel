@@ -46,8 +46,39 @@ describe('Module', () => {
       } catch (e) {
         // Must be a proper host Error instance (not a VM context Error that webpack wraps as NonErrorEmittedError)
         expect(e).toBeInstanceOf(Error);
-        expect((e as Error).message).toContain(childFile);
-        expect((e as Error).stack).toContain(childFile);
+
+        const err = e as Error;
+        // Replace machine-specific paths and line numbers so snapshots are stable across environments
+        const normalize = (s: string) =>
+          s!
+            .replaceAll(tmpDir, '<tmpDir>')
+            .replace(/\/.*?griffel-copyA\//g, '<repo>/')
+            .replace(/:\d+(:\d+)?/g, ':<line>');
+
+        expect(normalize(err.message)).toMatchInlineSnapshot(
+          `"Cannot read properties of undefined (reading 'foo')"`,
+        );
+        expect(normalize(err.stack!)).toMatchInlineSnapshot(`
+          "<repo>/packages/transform/src/evaluation/module.mts:<line>
+                throw hostError;
+                ^
+
+          <tmpDir>/child.js:<line>
+          x.foo;
+            ^
+
+          TypeError: Cannot read properties of undefined (reading 'foo')
+              at <tmpDir>/child.js:<line>
+              at <tmpDir>/child.js:<line>
+              at Script.runInContext (node:vm:<line>)
+              at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+              at require.Object.assign.ensure (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+              at <tmpDir>/entry.js:<line>
+              at <tmpDir>/entry.js:<line>
+              at Script.runInContext (node:vm:<line>)
+              at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+              at <repo>/packages/transform/src/evaluation/module.test.mts:<line>"
+        `);
       }
     });
   });
