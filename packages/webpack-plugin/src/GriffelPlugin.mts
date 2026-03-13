@@ -121,7 +121,10 @@ export class GriffelPlugin {
       evaluationMode: 'ast' | 'vm';
     }
   > = {};
-  readonly #perfIssues: Map<string, { type: 'cjs-module' | 'barrel-export-star'; dependencyFilename: string; sourceFilenames: Set<string> }> = new Map();
+  readonly #perfIssues: Map<
+    string,
+    { type: 'cjs-module' | 'barrel-export-star'; dependencyFilename: string; sourceFilenames: Set<string> }
+  > = new Map();
 
   constructor(options: GriffelCSSExtractionPluginOptions = {}) {
     this.#attachToEntryPoint = options.unstable_attachToEntryPoint;
@@ -144,8 +147,7 @@ export class GriffelPlugin {
     //   Webpack to shake out generated CSS.
 
     // @ Rspack compat:
-    // "createModule" in "normalModuleFactory" is not supported by Rspack
-    // https://github.com/web-infra-dev/rspack/blob/e52601e059fff1f0cdc4e9328746fb3ae6c3ecb2/packages/rspack/src/NormalModuleFactory.ts#L53
+    // "createModule" in "normalModuleFactory" is supported by Rspack, but updates of `settings` are ignored
     if (!IS_RSPACK) {
       compiler.hooks.normalModuleFactory.tap(PLUGIN_NAME, nmf => {
         nmf.hooks.createModule.tap(
@@ -181,70 +183,65 @@ export class GriffelPlugin {
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
       const resolveModule = this.#resolverFactory(compilation);
 
-      // @ Rspack compat
-      // As Rspack does not support functions in "splitChunks.cacheGroups" we have to emit modules differently
-      // and can't rely on this approach due
-      if (!IS_RSPACK) {
-        // WHAT?
-        //   Adds a callback to the loader context
-        // WHY?
-        //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
-        const cssByModuleMap = new Map<string, string>();
+      // WHAT?
+      //   Adds a callback to the loader context
+      // WHY?
+      //   Allows us to register the CSS extracted from Griffel calls to then process in a CSS module
+      const cssByModuleMap = new Map<string, string>();
 
-        NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
-          const resourcePath = module.resource;
+      NormalModule.getCompilationHooks(compilation).loader.tap(PLUGIN_NAME, (loaderContext, module) => {
+        const resourcePath = module.resource;
 
-          (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
-            collectPerfIssues: this.#collectPerfIssues,
-            resolveModule,
-            registerExtractedCss(css: string) {
-              cssByModuleMap.set(resourcePath, css);
-            },
-            getExtractedCss() {
-              const css = cssByModuleMap.get(resourcePath) ?? '';
-              cssByModuleMap.delete(resourcePath);
+        (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
+          collectPerfIssues: this.#collectPerfIssues,
+          resolveModule,
+          registerExtractedCss(css: string) {
+            cssByModuleMap.set(resourcePath, css);
+          },
+          getExtractedCss() {
+            const css = cssByModuleMap.get(resourcePath) ?? '';
+            cssByModuleMap.delete(resourcePath);
 
-              return css;
-            },
-            runWithTimer: cb => {
-              if (!this.#collectStats && !this.#collectPerfIssues) {
-                return cb().result;
-              }
+            return css;
+          },
+          runWithTimer: cb => {
+            if (!this.#collectStats && !this.#collectPerfIssues) {
+              return cb().result;
+            }
 
-              const start = this.#collectStats ? process.hrtime.bigint() : 0n;
-              const { meta, result } = cb();
+            const start = this.#collectStats ? process.hrtime.bigint() : 0n;
+            const { meta, result } = cb();
 
-              if (this.#collectStats) {
-                const end = process.hrtime.bigint();
+            if (this.#collectStats) {
+              const end = process.hrtime.bigint();
 
-                this.#stats[meta.filename] = {
-                  time: end - start,
-                  evaluationMode: meta.evaluationMode,
-                };
-              }
+              this.#stats[meta.filename] = {
+                time: end - start,
+                evaluationMode: meta.evaluationMode,
+              };
+            }
 
-              if (this.#collectPerfIssues && meta.perfIssues) {
-                for (const issue of meta.perfIssues) {
-                  const key = `${issue.type}:${issue.dependencyFilename}`;
-                  const existing = this.#perfIssues.get(key);
+            if (this.#collectPerfIssues && meta.perfIssues) {
+              for (const issue of meta.perfIssues) {
+                const key = `${issue.type}:${issue.dependencyFilename}`;
+                const existing = this.#perfIssues.get(key);
 
-                  if (existing) {
-                    existing.sourceFilenames.add(meta.filename);
-                  } else {
-                    this.#perfIssues.set(key, {
-                      type: issue.type,
-                      dependencyFilename: issue.dependencyFilename,
-                      sourceFilenames: new Set([meta.filename]),
-                    });
-                  }
+                if (existing) {
+                  existing.sourceFilenames.add(meta.filename);
+                } else {
+                  this.#perfIssues.set(key, {
+                    type: issue.type,
+                    dependencyFilename: issue.dependencyFilename,
+                    sourceFilenames: new Set([meta.filename]),
+                  });
                 }
               }
+            }
 
-              return result;
-            },
-          };
-        });
-      }
+            return result;
+          },
+        };
+      });
 
       // WHAT?
       //   Performs module movements between chunks if SplitChunksPlugin is not enabled.
@@ -257,7 +254,7 @@ export class GriffelPlugin {
           throw new Error(
             [
               'You are using Rspack, but don\'t have "optimization.splitChunks" enabled.',
-              '"optimization.splitChunks" should be enabled for "@griffel/webpack-extraction-plugin" to function properly.',
+              '"optimization.splitChunks" should be enabled for "@griffel/webpack-plugin" to function properly.',
             ].join(' '),
           );
         }
@@ -297,23 +294,13 @@ export class GriffelPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
-          let cssAssetDetails;
+          const griffelChunk = compilation.namedChunks.get('griffel');
 
-          // @ Rspack compat
-          // "compilation.namedChunks.get()" explodes with Rspack
-          if (IS_RSPACK) {
-            cssAssetDetails = Object.entries(assets).find(
-              ([assetName]) => assetName.endsWith('.css') && assetName.includes('griffel'),
-            );
-          } else {
-            const griffelChunk = compilation.namedChunks.get('griffel');
-
-            if (typeof griffelChunk === 'undefined') {
-              return;
-            }
-
-            cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
+          if (typeof griffelChunk === 'undefined') {
+            return;
           }
+
+          const cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
 
           if (typeof cssAssetDetails === 'undefined') {
             return;
