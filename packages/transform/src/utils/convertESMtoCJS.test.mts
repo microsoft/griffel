@@ -70,7 +70,8 @@ describe('convertESMtoCJS', () => {
     expect(convertESMtoCJS('export const { a, b } = obj;', '/test.js')).toMatchInlineSnapshot(`
       "Object.defineProperty(exports, "__esModule", { value: true });
       const { a, b } = obj;
-      exports.a = a; exports.b = b;"
+      exports.a = a;
+      exports.b = b;"
     `);
   });
 
@@ -79,6 +80,24 @@ describe('convertESMtoCJS', () => {
       "Object.defineProperty(exports, "__esModule", { value: true });
       function foo() {}
       exports.foo = foo;"
+    `);
+  });
+
+  it('defers export var assignment for TS enum IIFE pattern', () => {
+    const code = [
+      'export var Depths;',
+      '(function (Depths) {',
+      '    Depths.depth4 = "shadow";',
+      '})(Depths || (Depths = {}));',
+    ].join('\n');
+
+    expect(convertESMtoCJS(code, '/test.js')).toMatchInlineSnapshot(`
+      "Object.defineProperty(exports, "__esModule", { value: true });
+      var Depths;
+      (function (Depths) {
+          Depths.depth4 = "shadow";
+      })(Depths || (Depths = {}));
+      exports.Depths = Depths;"
     `);
   });
 

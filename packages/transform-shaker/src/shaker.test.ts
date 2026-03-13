@@ -393,3 +393,72 @@ it('does not break export * as ns when requesting the namespace export', () => {
 
   expect(shaken).toMatchSnapshot();
 });
+
+it('preserves catch clause parameter when unused', () => {
+  const [shaken] = _shake()`
+    function fn() {
+      try { throw new Error('test'); }
+      catch (e) { /* unused */ }
+    }
+    export const __linariaPreval = [fn];
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps export default identifier referencing a function declaration', () => {
+  const [shaken] = _shake(['default'])`
+    function isPlainObject(value) {
+      return typeof value === 'object';
+    }
+    export default isPlainObject;
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('keeps IIFE enum initializer when export is requested', () => {
+  const [shaken] = _shake(['ThemeName'])`
+    export var ThemeName;
+    (function (ThemeName) {
+        ThemeName[ThemeName["Light"] = 0] = "Light";
+        ThemeName[ThemeName["Dark"] = 1] = "Dark";
+    })(ThemeName || (ThemeName = {}));
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('shakes unrelated IIFE enums in the same file', () => {
+  const [shaken] = _shake(['ThemeName'])`
+    export var ActionStyle;
+    (function (ActionStyle) {
+        ActionStyle["Default"] = "default";
+        ActionStyle["Positive"] = "positive";
+    })(ActionStyle || (ActionStyle = {}));
+    export var ThemeName;
+    (function (ThemeName) {
+        ThemeName[ThemeName["Light"] = 0] = "Light";
+        ThemeName[ThemeName["Dark"] = 1] = "Dark";
+    })(ThemeName || (ThemeName = {}));
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('preserves labeled statement label', () => {
+  const [shaken] = _shake()`
+    function fn() {
+      var result = [];
+      outer:
+      while (true) {
+        result.push(1);
+        break outer;
+      }
+      return result;
+    }
+    export const __linariaPreval = [fn];
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});

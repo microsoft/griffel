@@ -15,6 +15,18 @@ const STRUCTURAL_CHILDREN: Record<string, Set<string>> = {
   ExportNamedDeclaration: new Set(['source']),
   ExportAllDeclaration: new Set(['source', 'exported']),
   ImportDeclaration: new Set(['source']),
+  // Removing CatchClause.param turns `catch(e) {}` into `catch() {}` which is invalid syntax.
+  // Valid forms are `catch(e) {}` or `catch {}` (optional catch binding), but not `catch() {}`.
+  CatchClause: new Set(['param']),
+  // Removing LabeledStatement.label turns `outer: while(…)` into `: while(…)` which is invalid.
+  LabeledStatement: new Set(['label']),
+  // Removing loop/conditional test expressions produces invalid syntax (e.g. `while() {}`, `do {} while ()`).
+  DoWhileStatement: new Set(['test']),
+  WhileStatement: new Set(['test']),
+  IfStatement: new Set(['test']),
+  SwitchStatement: new Set(['discriminant']),
+  ForInStatement: new Set(['left', 'right']),
+  ForOfStatement: new Set(['left', 'right']),
 };
 
 function isStatementBody(nodeType: string, key: string): boolean {

@@ -63,6 +63,7 @@ export function convertESMtoCJS(code: string, filename: string): string {
   }
 
   const ms = new MagicString(code);
+  const deferredExports: string[] = [];
 
   for (const node of program.body) {
     switch (node.type) {
@@ -129,13 +130,11 @@ export function convertESMtoCJS(code: string, filename: string): string {
             const names = (prop(decl, 'declarations') as Node[]).flatMap(d =>
               extractDeclaredNames(prop(d, 'id') as Node),
             );
-            const exportsCode = names.map(name => `exports.${name} = ${name};`).join(' ');
-            ms.appendLeft(node.end, '\n' + exportsCode);
+            deferredExports.push(...names);
           } else if (decl.type === 'FunctionDeclaration' || decl.type === 'ClassDeclaration') {
             const id = prop(decl, 'id') as Node | null;
             if (id) {
-              const name = prop(id, 'name') as string;
-              ms.appendLeft(node.end, `\nexports.${name} = ${name};`);
+              deferredExports.push(prop(id, 'name') as string);
             }
           }
         } else if (prop(node, 'source')) {
@@ -211,6 +210,13 @@ export function convertESMtoCJS(code: string, filename: string): string {
         break;
       }
     }
+  }
+
+  // Append deferred exports at end-of-file so that IIFEs (e.g. TS compiled enums)
+  // can populate variables before they are captured by `exports.X = X`.
+  // ESM uses live bindings; deferring to end-of-file approximates that for CJS.
+  if (deferredExports.length > 0) {
+    ms.append('\n' + deferredExports.map(name => `exports.${name} = ${name};`).join('\n'));
   }
 
   // Mark the module as ESM-converted for interop
