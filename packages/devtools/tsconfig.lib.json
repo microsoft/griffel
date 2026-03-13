@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["chrome", "node", "environment"]
+    "types": ["chrome", "node"]
   },
   "exclude": [
     "**/*.spec.ts",
@@ -17,7 +17,8 @@
     "**/*.stories.js",
     "**/*.stories.jsx",
     "**/*.stories.tsx",
-    "jest.config.ts"
+    "vite.config.ts",
+    "vitest.setup.ts"
   ],
   "include": ["**/*.ts", "**/*.tsx"]
 }

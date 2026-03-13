@@ -1,9 +1,10 @@
+import { vi } from 'vitest';
 import type { RawSourceMap } from 'source-map-js';
 import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer';
 
 describe('getOriginalPosition', () => {
   it('returns input location when sourceMapJSon is invalid', async () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => ({}));
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => ({}));
 
     const sourceMapJSON = {} as RawSourceMap;
     const sourceLoc = { source: '/src', line: 1, column: 10 };
@@ -31,7 +32,7 @@ describe('getOriginalPosition', () => {
       column: 0,
       line: 3,
       name: null,
-      // resources is mocked in jest.setup.js
+      // resources is mocked in vitest.setup.ts
       source: (await resources)[0].url,
     });
   });
