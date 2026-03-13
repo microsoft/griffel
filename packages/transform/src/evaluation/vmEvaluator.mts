@@ -28,7 +28,9 @@ export const __mkPreval = (() => {
 
   try {
     const mod = new Module(filename, evaluationRules, resolveFilename);
-    mod.evaluate(codeForEvaluation, ['__mkPreval']);
+    // useEvalCache=false: each source file produces unique codeForEvaluation (different sourceCode +
+    // expressionCode), so the eval cache would never hit — skip the unnecessary hashing and map storage.
+    mod.evaluate(codeForEvaluation, ['__mkPreval'], /* useEvalCache */ false);
 
     const result = (mod.exports as { __mkPreval: unknown }).__mkPreval;
 

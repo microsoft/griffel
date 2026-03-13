@@ -173,7 +173,7 @@ export class Module {
     },
   );
 
-  evaluate(text: string, only: string[] | null = null): void {
+  evaluate(text: string, only: string[] | null = null, useEvalCache = true): void {
     const { filename } = this;
     // Find last matching rule (iterate backwards, break on first match)
     let action: EvalRule['action'] = 'ignore';
@@ -189,7 +189,7 @@ export class Module {
 
     const cacheKey = [this.filename, ...(only ?? [])];
 
-    if (EvalCache.has(cacheKey, text)) {
+    if (useEvalCache && EvalCache.has(cacheKey, text)) {
       this.exports = EvalCache.get(cacheKey, text);
       return;
     }
@@ -253,7 +253,9 @@ export class Module {
       throw hostError;
     }
 
-    EvalCache.set(cacheKey, text, this.exports);
+    if (useEvalCache) {
+      EvalCache.set(cacheKey, text, this.exports);
+    }
   }
 
   static invalidate = (): void => {
