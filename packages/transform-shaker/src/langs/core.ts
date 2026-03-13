@@ -151,27 +151,41 @@ function getAffectedNodes(node: Node, state: GraphBuilder): Node[] {
   return [];
 }
 
+/** Unwraps `ParenthesizedExpression` wrappers (oxc-parser preserves these, Babel does not). */
+function unwrapParens(node: Node): Node {
+  while (node.type === 'ParenthesizedExpression' && (node as { expression: Node }).expression) {
+    node = (node as { expression: Node }).expression;
+  }
+  return node;
+}
+
 /*
  * In some cases (such as enums) babel uses CallExpression for object initializations
  * (function (Colors) {
  *   Colors["BLUE"] = "#27509A";
  * })(Colors || (Colors = {}));
+ *
+ * oxc-parser may wrap the RHS in a ParenthesizedExpression: `Colors || (Colors = {})`,
+ * so we unwrap before checking.
  */
-function isLazyInit(statement: ExpressionStatement): statement is ExpressionStatement & {
-  expression: CallExpression & { arguments: [LogicalExpression & { right: AssignmentExpression }] };
-} {
+function isLazyInit(statement: ExpressionStatement): { assignmentNode: AssignmentExpression } | null {
   const { expression } = statement;
   if (!isCallExpression(expression) || expression.arguments.length !== 1) {
-    return false;
+    return null;
   }
 
   const [arg] = expression.arguments;
   if (!isLogicalExpression(arg) || arg.operator !== '||') {
-    return false;
+    return null;
   }
 
   const { left, right } = arg;
-  return isIdentifier(left) && isAssignmentExpression(right);
+  const unwrappedRight = unwrapParens(right);
+  if (isIdentifier(left) && isAssignmentExpression(unwrappedRight)) {
+    return { assignmentNode: unwrappedRight };
+  }
+
+  return null;
 }
 
 export const visitors = {
@@ -181,8 +195,11 @@ export const visitors = {
     this.graph.addEdge(node, node.expression);
     this.graph.addEdge(node.expression, node);
 
-    if (isLazyInit(node)) {
-      this.graph.addEdge(node.expression.arguments[0].right, node);
+    const lazyInit = isLazyInit(node);
+    if (lazyInit) {
+      // The unwrapped AssignmentExpression (not the ParenthesizedExpression wrapper) must
+      // depend on the ExpressionStatement so that the IIFE stays alive when the variable is alive.
+      this.graph.addEdge(lazyInit.assignmentNode, node);
     }
   },
 

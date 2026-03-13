@@ -12,6 +12,14 @@ exports[`keeps ESM import with batch export 1`] = `
 export const __mkPreval = { color: colorBlue };"
 `;
 
+exports[`keeps IIFE enum initializer when export is requested 1`] = `
+"export var ThemeName;
+(function (ThemeName) {
+    ThemeName[ThemeName["Light"] = 0] = "Light";
+    ThemeName[ThemeName["Dark"] = 1] = "Dark";
+})(ThemeName || (ThemeName = {}));"
+`;
+
 exports[`keeps all export-all re-exports when requested export is not found locally 1`] = `
 "export * from './foo';
 export * from './baz';"
@@ -220,6 +228,14 @@ exports[`shakes sequence expression 1`] = `
 let local = '';
 const color2 = (local = color1(), () => local);
 export const __linariaPreval = [color2];"
+`;
+
+exports[`shakes unrelated IIFE enums in the same file 1`] = `
+"export var ThemeName;
+(function (ThemeName) {
+    ThemeName[ThemeName["Light"] = 0] = "Light";
+    ThemeName[ThemeName["Dark"] = 1] = "Dark";
+})(ThemeName || (ThemeName = {}));"
 `;
 
 exports[`should keep member expression key 1`] = `
