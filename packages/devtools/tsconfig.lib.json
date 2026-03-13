@@ -17,7 +17,8 @@
     "**/*.stories.js",
     "**/*.stories.jsx",
     "**/*.stories.tsx",
-    "jest.config.ts"
+    "vite.config.ts",
+    "vitest.setup.ts"
   ],
   "include": ["**/*.ts", "**/*.tsx"]
 }
