@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: protect structural children from removal, handle export * as ns correctly",
+  "packageName": "@griffel/transform-shaker",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
