@@ -443,8 +443,9 @@ describe('GriffelCSSExtractionPlugin', () => {
       const entryPath = path.resolve(fixturePath, 'code.ts');
 
       // Replace machine-specific paths and line numbers so snapshots are stable across environments
+      const repoRoot = path.resolve(__dirname, '../../..');
       const normalize = (s: string) =>
-        s.replace(/\/.*?griffel-copyA\//g, '<repo>/').replace(/:\d+(:\d+)?/g, ':<line>');
+        s.split(repoRoot).join('<repo>').replace(/:\d+(:\d+)?/g, ':<line>');
 
       let error: WebpackStatsError | undefined;
 

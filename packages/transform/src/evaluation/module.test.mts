@@ -49,10 +49,11 @@ describe('Module', () => {
 
         const err = e as Error;
         // Replace machine-specific paths and line numbers so snapshots are stable across environments
+        const repoRoot = path.resolve(__dirname, '../../../..');
         const normalize = (s: string) =>
-          s!
-            .replaceAll(tmpDir, '<tmpDir>')
-            .replace(/\/.*?griffel-copyA\//g, '<repo>/')
+          s
+            .split(tmpDir).join('<tmpDir>')
+            .split(repoRoot).join('<repo>')
             .replace(/:\d+(:\d+)?/g, ':<line>');
 
         expect(normalize(err.message)).toMatchInlineSnapshot(
