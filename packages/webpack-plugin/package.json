@@ -8,14 +8,16 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "type": "module",
+  "main": "./src/index.mjs",
+  "types": "./src/index.d.mts",
   "exports": {
     ".": {
-      "node": "./webpack-plugin.js",
-      "types": "./index.d.mts"
+      "types": "./src/index.d.mts",
+      "default": "./src/index.mjs"
     },
     "./loader": {
-      "node": "./webpack-loader.js",
-      "types": "./webpackLoader.d.mts"
+      "types": "./src/webpackLoader.d.mts",
+      "default": "./src/webpackLoader.mjs"
     },
     "./package.json": "./package.json"
   },
