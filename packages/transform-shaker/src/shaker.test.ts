@@ -393,3 +393,32 @@ it('does not break export * as ns when requesting the namespace export', () => {
 
   expect(shaken).toMatchSnapshot();
 });
+
+it('preserves catch clause parameter when unused', () => {
+  const [shaken] = _shake()`
+    function fn() {
+      try { throw new Error('test'); }
+      catch (e) { /* unused */ }
+    }
+    export const __linariaPreval = [fn];
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('preserves labeled statement label', () => {
+  const [shaken] = _shake()`
+    function fn() {
+      var result = [];
+      outer:
+      while (true) {
+        result.push(1);
+        break outer;
+      }
+      return result;
+    }
+    export const __linariaPreval = [fn];
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});

@@ -143,6 +143,27 @@ const foo = bar();
 export const __linariaPreval = [foo];"
 `;
 
+exports[`preserves catch clause parameter when unused 1`] = `
+"function fn() {
+  try { throw new Error('test'); }
+  catch (e) { /* unused */ }
+}
+export const __linariaPreval = [fn];"
+`;
+
+exports[`preserves labeled statement label 1`] = `
+"function fn() {
+  var result = [];
+  outer:
+  while (true) {
+    result.push(1);
+    break ;
+  }
+  return result;
+}
+export const __linariaPreval = [fn];"
+`;
+
 exports[`removes \`export * as ns\` if not requested 1`] = `"export * from './other';"`;
 
 exports[`removes all 1`] = `
