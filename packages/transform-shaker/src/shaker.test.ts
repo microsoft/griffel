@@ -406,6 +406,17 @@ it('preserves catch clause parameter when unused', () => {
   expect(shaken).toMatchSnapshot();
 });
 
+it('keeps export default identifier referencing a function declaration', () => {
+  const [shaken] = _shake(['default'])`
+    function isPlainObject(value) {
+      return typeof value === 'object';
+    }
+    export default isPlainObject;
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
 it('preserves labeled statement label', () => {
   const [shaken] = _shake()`
     function fn() {

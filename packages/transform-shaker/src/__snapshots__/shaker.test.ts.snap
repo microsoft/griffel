@@ -38,6 +38,13 @@ export const config = new Config();"
 
 exports[`keeps export const declarators 1`] = `"export const colorBlue = 'blue';"`;
 
+exports[`keeps export default identifier referencing a function declaration 1`] = `
+"function isPlainObject(value) {
+  return typeof value === 'object';
+}
+export default isPlainObject;"
+`;
+
 exports[`keeps export-all re-exports when referenced export is not found locally 1`] = `
 "export * from './colors';
 "

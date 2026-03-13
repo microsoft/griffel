@@ -682,9 +682,11 @@ export const identifierHandlers: IdentifierHandlers = {
     ['ImportDefaultSpecifier', 'local'],
     ['ImportNamespaceSpecifier', 'local'],
     ['ExportSpecifier', 'local', 'exported'],
-    ['ExportDefaultDeclaration', 'declaration'],
   ],
   refer: [
+    // `export default <Identifier>` — the identifier references a variable declaration.
+    // (For `export default function/class`, declaration is not an Identifier so this handler won't fire.)
+    ['ExportDefaultDeclaration', 'declaration'],
     ['ArrayExpression', 'elements'],
     ['AssignmentExpression', 'left', 'right'],
     ['BinaryExpression', 'left', 'right'],
