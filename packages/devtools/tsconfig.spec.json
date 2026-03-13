@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
-    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "chrome", "node", "vitest"]
+    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "chrome", "node", "vitest", "environment"]
   },
   "include": [
     "vite.config.ts",
