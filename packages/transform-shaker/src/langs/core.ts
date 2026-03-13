@@ -35,7 +35,6 @@ import type {
   ExportDefaultDeclaration,
   ExportAllDeclaration,
   CallExpression,
-  LogicalExpression,
   AssignmentExpression,
 } from 'oxc-parser';
 
