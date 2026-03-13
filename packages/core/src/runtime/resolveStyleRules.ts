@@ -113,18 +113,17 @@ export function resolveStyleRules(
       continue;
     }
 
-    if (isResetValue(value)) {
+    if (typeof value === 'string' || typeof value === 'number') {
+      const isReset = isResetValue(value);
+
       const selector = trimSelector(selectors.join(''));
+      const shorthand = getShorthandDefinition(property);
       // uniq key based on a hash of property & selector, used for merging later
       const key = hashPropertyKey(selector, property, atRules);
 
-      pushToClassesMap(cssClassesMap, key, 0, undefined);
-      continue;
-    }
-
-    if (typeof value === 'string' || typeof value === 'number') {
-      const selector = trimSelector(selectors.join(''));
-      const shorthand = getShorthandDefinition(property);
+      if (isReset) {
+        pushToClassesMap(cssClassesMap, key, 0, undefined);
+      }
 
       if (shorthand) {
         const shorthandProperties = shorthand[1];
@@ -133,8 +132,12 @@ export function resolveStyleRules(
         resolveStyleRules(shorthandResetStyles, classNameHashSalt, selectors, atRules, cssClassesMap, cssRulesByBucket);
       }
 
-      // uniq key based on a hash of property & selector, used for merging later
-      const key = hashPropertyKey(selector, property, atRules);
+      // Heads up!
+      // We don't need to generate CSS rules for reset values as they are not used in the output
+      if (isReset) {
+        continue;
+      }
+
       const className = hashClassName(
         {
           value: value.toString(),
