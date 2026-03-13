@@ -376,3 +376,20 @@ it('keeps identifiers used as computed property keys', () => {
 
   expect(shaken).toMatchSnapshot();
 });
+
+it('removes `export * as ns` if not requested', () => {
+  const [shaken] = _shake(['unknownExport'])`
+    export * as ns from './module';
+    export * from './other';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});
+
+it('does not break export * as ns when requesting the namespace export', () => {
+  const [shaken] = _shake(['ns'])`
+    export * as ns from './module';
+  `;
+
+  expect(shaken).toMatchSnapshot();
+});

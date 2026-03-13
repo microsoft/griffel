@@ -9,6 +9,14 @@ import MagicString from 'magic-string';
 import { isNode, getVisitorKeys, debug } from './utils.js';
 import build from './graphBuilder.js';
 
+// Syntactically required children that must not be removed independently —
+// removing them produces invalid code (e.g. `export { X }` without `from "module"`).
+const STRUCTURAL_CHILDREN: Record<string, Set<string>> = {
+  ExportNamedDeclaration: new Set(['source']),
+  ExportAllDeclaration: new Set(['source', 'exported']),
+  ImportDeclaration: new Set(['source']),
+};
+
 function isStatementBody(nodeType: string, key: string): boolean {
   return (
     (nodeType === 'Program' && key === 'body') ||
@@ -130,7 +138,7 @@ function removeDeadCode(node: Node, alive: Set<Node>, s: MagicString, sourceCode
     } else if (isNode(subNode)) {
       if (alive.has(subNode)) {
         removeDeadCode(subNode, alive, s, sourceCode);
-      } else {
+      } else if (!STRUCTURAL_CHILDREN[node.type]?.has(key)) {
         s.remove(subNode.start, subNode.end);
       }
     }
