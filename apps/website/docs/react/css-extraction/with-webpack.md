@@ -13,14 +13,14 @@ import TabItem from '@theme/TabItem';
 <TabItem value="yarn" label="Yarn">
 
 ```shell
-yarn add --dev @griffel/webpack-extraction-plugin
+yarn add --dev @griffel/webpack-plugin
 ```
 
 </TabItem>
 <TabItem value="npm" label="NPM">
 
 ```shell
-npm install --save-dev @griffel/webpack-extraction-plugin
+npm install --save-dev @griffel/webpack-plugin
 ```
 
 </TabItem>
@@ -28,16 +28,10 @@ npm install --save-dev @griffel/webpack-extraction-plugin
 
 ## Usage
 
-:::info
-
-Please configure [`@griffel/webpack-loader`](/react/ahead-of-time-compilation/with-webpack) first.
-
-:::
-
-Within your Webpack configuration object, you'll need to add the loader and the plugin from `@griffel/webpack-extraction-plugin` like so:
+Within your Webpack configuration object, you'll need to add the loader and the plugin from `@griffel/webpack-plugin` like so:
 
 ```js
-const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
+const { GriffelPlugin } = require('@griffel/webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -48,20 +42,7 @@ module.exports = {
         // Apply "exclude" only if your dependencies **do not use** Griffel
         // exclude: /node_modules/,
         use: {
-          loader: GriffelCSSExtractionPlugin.loader,
-        },
-      },
-      // Add "@griffel/webpack-loader" if you use Griffel directly in your project
-      {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: '@griffel/webpack-loader',
-          options: {
-            babelOptions: {
-              presets: ['@babel/preset-typescript'],
-            },
-          },
+          loader: '@griffel/webpack-plugin/loader',
         },
       },
       // "css-loader" is required to handle produced CSS assets by Griffel
@@ -72,7 +53,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [new MiniCssExtractPlugin(), new GriffelCSSExtractionPlugin()],
+  plugins: [new MiniCssExtractPlugin(), new GriffelPlugin()],
 };
 ```
 
@@ -84,10 +65,10 @@ module.exports = {
 
 :::
 
-For better performance (to process less files) consider using `include` for `GriffelCSSExtractionPlugin.loader`:
+For better performance (to process less files) consider using `include` for `@griffel/webpack-plugin/loader`:
 
 ```js
-const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
+const { GriffelPlugin } = require('@griffel/webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -101,7 +82,7 @@ module.exports = {
           // see https://webpack.js.org/configuration/module/#condition
         ],
         use: {
-          loader: GriffelCSSExtractionPlugin.loader,
+          loader: '@griffel/webpack-plugin/loader',
         },
       },
     ],
@@ -116,9 +97,6 @@ If you use `mini-css-extract-plugin`, you may need to set it to `false` to remov
 ```
 WARNING in chunk griffel [mini-css-extract-plugin]
 Conflicting order. Following module has been added:
-* css ./node_modules/css-loader/dist/cjs.js!./node_modules/@griffel/webpack-extraction-plugin/virtual-loader/index.js?style=%2F**%20%40griffel%3Acss-start%20%5Bd%5D%20**%2F%0A.fm40iov%7Bcolor%3A%23ccc%3B%7D%0A%2F**%20%40griffel%3Acss-end%20**%2F%0A!./src/foo-module/baz.js
-  despite it was not able to fulfill desired ordering with these modules:
-* css ./node_modules/css-loader/dist/cjs.js!./node_modules/@griffel/webpack-extraction-plugin/virtual-loader/index.js?style=%2F**%20%40griffel%3Acss-start%20%5Bd%5D%20**%2F%0A.f1e30ogq%7Bcolor%3Ablueviolet%3B%7D%0A%2F**%20%40griffel%3Acss-end%20**%2F%0A!./src/foo-module/qux.js
   - couldn't fulfill desired order of chunk group(s)
 ```
 

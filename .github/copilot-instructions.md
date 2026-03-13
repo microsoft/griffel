@@ -129,7 +129,6 @@ yarn nx run-many --target=type-check --all
 - `@griffel/react` - React bindings and hooks
 - `@griffel/webpack-loader` - Webpack build-time transforms
 - `@griffel/vite-plugin` - Vite build-time transforms
-- `@griffel/next-extraction-plugin` - Next.js CSS extraction
 - `@griffel/devtools` - Browser extension for debugging
 - `@griffel/eslint-plugin` - ESLint rules for Griffel usage
 

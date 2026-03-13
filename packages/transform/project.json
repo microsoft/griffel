@@ -17,12 +17,22 @@
       }
     },
     "build": {
-      "executor": "@nx/vite:build",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/transform",
-        "compiler": "swc",
-        "format": ["esm"]
+        "tsConfig": "packages/transform/tsconfig.lib.json",
+        "skipTypeField": true,
+        "packageJson": "packages/transform/package.json",
+        "main": "packages/transform/src/index.mts",
+        "assets": [
+          "packages/transform/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "type-check": {
