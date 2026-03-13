@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: switch webpack-plugin to vm evaluation mode",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

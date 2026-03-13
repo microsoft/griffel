@@ -257,7 +257,9 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         const functionKind = importedName as FunctionKinds;
 
         if (node.arguments.length !== 1) {
-          throw new Error(`${functionKind}() function accepts only a single param`);
+          throw new Error(
+            `${functionKind}() function accepts only a single param, got ${node.arguments.length} in ${filename}`,
+          );
         }
 
         // Track the import specifier for rewriting (deduped by node start position)

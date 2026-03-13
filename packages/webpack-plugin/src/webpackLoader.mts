@@ -120,7 +120,7 @@ function webpackLoader(
       meta: {
         filename: this.resourcePath,
         step: 'transform' as const,
-        evaluationMode: 'ast' as const,
+        evaluationMode: 'vm' as const,
       },
     };
   });

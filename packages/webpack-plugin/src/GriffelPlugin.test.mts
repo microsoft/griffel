@@ -433,4 +433,52 @@ describe('GriffelCSSExtractionPlugin', () => {
       },
     },
   });
+
+  // Error reporting
+  // --------------------
+  it(
+    'includes the offending filename in VM evaluation errors',
+    async () => {
+      const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'vm-error-trace');
+      const entryPath = path.resolve(fixturePath, 'code.ts');
+
+      // Replace machine-specific paths and line numbers so snapshots are stable across environments
+      const repoRoot = path.resolve(__dirname, '../../..');
+      const normalize = (s: string) =>
+        s.split(repoRoot).join('<repo>').replace(/:\d+(:\d+)?/g, ':<line>');
+
+      let error: WebpackStatsError | undefined;
+
+      try {
+        await compileSourceWithWebpack(entryPath, {});
+      } catch (e) {
+        error = e as WebpackStatsError;
+      }
+
+      expect(error).toBeDefined();
+      expect(normalize(error!.message)).toMatchInlineSnapshot(`
+        "Module build failed (from ./webpackLoader.vitest.cjs):
+        <repo>/packages/transform/src/evaluation/module.mts:<line>
+              throw hostError;
+              ^
+
+        <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/broken.ts:<line>
+        const color = obj.missingProp;
+                          ^
+
+        TypeError: Cannot read properties of undefined (reading 'missingProp')
+            at <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/broken.ts:<line>
+            at <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/broken.ts:<line>
+            at Script.runInContext (node:vm:<line>)
+            at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+            at require.Object.assign.ensure (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+            at <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/code.ts:<line>
+            at <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/code.ts:<line>
+            at Script.runInContext (node:vm:<line>)
+            at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+            at vmEvaluator (<repo>/packages/transform/src/evaluation/vmEvaluator.mts:<line>)"
+      `);
+    },
+    15000,
+  );
 });

@@ -10,7 +10,10 @@ import type { TransformResolver } from './module.mjs';
 
 const defaultRules = [{ action: 'ignore' as const }];
 const defaultResolve: TransformResolver = (id, opts) => ({
-  path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+  path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(
+    id,
+    opts,
+  ),
   builtin: false,
 });
 
@@ -23,6 +26,62 @@ describe('Module', () => {
     if (tmpDir) {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }
+  });
+
+  describe('evaluate', () => {
+    it('wraps VM errors as host Error with filename context', () => {
+      tmpDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'griffel-module-test-')));
+
+      const childFile = path.join(tmpDir, 'child.js');
+      fs.writeFileSync(childFile, 'const x = undefined;\nx.foo;');
+
+      const entryFile = path.join(tmpDir, 'entry.js');
+      fs.writeFileSync(entryFile, '');
+
+      const m = new Module(entryFile, defaultRules, defaultResolve);
+
+      try {
+        m.evaluate(`const child = require("./child.js");`, ['child']);
+        expect.unreachable('should have thrown');
+      } catch (e) {
+        // Must be a proper host Error instance (not a VM context Error that webpack wraps as NonErrorEmittedError)
+        expect(e).toBeInstanceOf(Error);
+
+        const err = e as Error;
+        // Replace machine-specific paths and line numbers so snapshots are stable across environments
+        const repoRoot = path.resolve(__dirname, '../../../..');
+        const normalize = (s: string) =>
+          s
+            .split(tmpDir).join('<tmpDir>')
+            .split(repoRoot).join('<repo>')
+            .replace(/:\d+(:\d+)?/g, ':<line>');
+
+        expect(normalize(err.message)).toMatchInlineSnapshot(
+          `"Cannot read properties of undefined (reading 'foo')"`,
+        );
+        expect(normalize(err.stack!)).toMatchInlineSnapshot(`
+          "<repo>/packages/transform/src/evaluation/module.mts:<line>
+                throw hostError;
+                ^
+
+          <tmpDir>/child.js:<line>
+          x.foo;
+            ^
+
+          TypeError: Cannot read properties of undefined (reading 'foo')
+              at <tmpDir>/child.js:<line>
+              at <tmpDir>/child.js:<line>
+              at Script.runInContext (node:vm:<line>)
+              at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+              at require.Object.assign.ensure (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+              at <tmpDir>/entry.js:<line>
+              at <tmpDir>/entry.js:<line>
+              at Script.runInContext (node:vm:<line>)
+              at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+              at <repo>/packages/transform/src/evaluation/module.test.mts:<line>"
+        `);
+      }
+    });
   });
 
   describe('require (asset handling)', () => {

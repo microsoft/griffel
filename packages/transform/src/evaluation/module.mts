@@ -35,6 +35,11 @@ let cache: Record<string, Module> = {};
 
 const NOOP = () => {};
 
+/** Checks if a value is an Error-like object (works across VM contexts where `instanceof Error` fails). */
+function isError(e: unknown): e is Error {
+  return e != null && typeof e === 'object' && 'message' in e && 'stack' in e;
+}
+
 const createCustomDebug =
   (depth: number) =>
   (namespaces: string, arg1: unknown, ...args: unknown[]) => {
@@ -215,24 +220,38 @@ export class Module {
       filename: this.filename,
     });
 
-    script.runInContext(
-      vm.createContext({
-        clearImmediate: NOOP,
-        clearInterval: NOOP,
-        clearTimeout: NOOP,
-        setImmediate: NOOP,
-        setInterval: NOOP,
-        setTimeout: NOOP,
-        fetch: NOOP,
-        global,
-        process: mockProcess,
-        module: this,
-        exports: this.exports,
-        require: this.require,
-        __filename: this.filename,
-        __dirname: path.dirname(this.filename),
-      }),
-    );
+    try {
+      script.runInContext(
+        vm.createContext({
+          clearImmediate: NOOP,
+          clearInterval: NOOP,
+          clearTimeout: NOOP,
+          setImmediate: NOOP,
+          setInterval: NOOP,
+          setTimeout: NOOP,
+          fetch: NOOP,
+          global,
+          process: mockProcess,
+          module: this,
+          exports: this.exports,
+          require: this.require,
+          __filename: this.filename,
+          __dirname: path.dirname(this.filename),
+        }),
+      );
+    } catch (vmError: unknown) {
+      // Errors thrown inside vm.runInContext() use the VM context's Error constructor,
+      // so they fail `instanceof Error` in the host context (e.g. webpack wraps them as NonErrorEmittedError).
+      // Re-create as a host Error with filename context.
+      const message = isError(vmError) ? vmError.message : String(vmError);
+      const hostError = new Error(message);
+
+      if (isError(vmError)) {
+        hostError.stack = vmError.stack;
+      }
+
+      throw hostError;
+    }
 
     EvalCache.set(cacheKey, text, this.exports);
   }
