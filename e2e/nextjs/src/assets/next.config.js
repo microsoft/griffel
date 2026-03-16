@@ -7,7 +7,7 @@ module.exports = withGriffelCSSExtraction()({
       exclude: /node_modules/,
       use: [
         {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
         },
       ],
     });
@@ -18,7 +18,7 @@ module.exports = withGriffelCSSExtraction()({
       exclude: /node_modules/,
       use: [
         {
-          loader: '@griffel/webpack-loader',
+          loader: '@griffel/webpack-plugin/loader',
           options: {
             babelOptions: {
               presets: ['next/babel'],
