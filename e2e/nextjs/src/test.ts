@@ -26,10 +26,9 @@ async function performTest() {
       packLocalPackage(rootDir, tempDir, '@griffel/style-types'),
       packLocalPackage(rootDir, tempDir, '@griffel/core'),
       packLocalPackage(rootDir, tempDir, '@griffel/react'),
-      packLocalPackage(rootDir, tempDir, '@griffel/babel-preset'),
-      packLocalPackage(rootDir, tempDir, '@griffel/webpack-extraction-plugin'),
-      packLocalPackage(rootDir, tempDir, '@griffel/webpack-loader'),
-      packLocalPackage(rootDir, tempDir, '@griffel/next-extraction-plugin'),
+      packLocalPackage(rootDir, tempDir, '@griffel/transform-shaker'),
+      packLocalPackage(rootDir, tempDir, '@griffel/transform'),
+      packLocalPackage(rootDir, tempDir, '@griffel/webpack-plugin'),
     ]);
 
     const nextRawVersion = await sh(`yarn next -v`, rootDir, true);

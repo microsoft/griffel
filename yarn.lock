@@ -3519,24 +3519,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@griffel/babel-preset@npm:^1.8.1, @griffel/babel-preset@workspace:packages/babel-preset":
-  version: 0.0.0-use.local
-  resolution: "@griffel/babel-preset@workspace:packages/babel-preset"
-  dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@babel/generator": "npm:^7.23.0"
-    "@babel/helper-plugin-utils": "npm:^7.22.5"
-    "@babel/template": "npm:^7.22.15"
-    "@babel/traverse": "npm:^7.23.2"
-    "@griffel/core": "npm:^1.20.1"
-    "@linaria/babel-preset": "npm:^3.0.0-beta.24"
-    "@linaria/shaker": "npm:^3.0.0-beta.22"
-    ajv: "npm:^8.18.0"
-    stylis: "npm:^4.2.0"
-    tslib: "npm:^2.1.0"
-  languageName: unknown
-  linkType: soft
-
 "@griffel/core@npm:^1.20.1, @griffel/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@griffel/core@workspace:packages/core"
@@ -3603,25 +3585,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/next-extraction-plugin@workspace:packages/next-extraction-plugin":
-  version: 0.0.0-use.local
-  resolution: "@griffel/next-extraction-plugin@workspace:packages/next-extraction-plugin"
-  dependencies:
-    "@griffel/webpack-extraction-plugin": "npm:^0.5.14"
-    browserslist: "npm:^4.19.1"
-    tslib: "npm:^2.1.0"
-  peerDependencies:
-    next: ">=13"
-  languageName: unknown
-  linkType: soft
-
 "@griffel/postcss-syntax@workspace:packages/postcss-syntax":
   version: 0.0.0-use.local
   resolution: "@griffel/postcss-syntax@workspace:packages/postcss-syntax"
   dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@babel/helper-plugin-utils": "npm:^7.22.5"
-    "@griffel/babel-preset": "npm:^1.8.1"
+    "@griffel/transform": "npm:^2.0.0"
     postcss: "npm:^8.4.29"
   languageName: unknown
   linkType: soft
@@ -3705,34 +3673,6 @@ __metadata:
   peerDependencies:
     "@griffel/tag-processor": ">=1.0.16 <2.0.0"
     vite: ">=4"
-  languageName: unknown
-  linkType: soft
-
-"@griffel/webpack-extraction-plugin@npm:^0.5.14, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
-  version: 0.0.0-use.local
-  resolution: "@griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin"
-  dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@babel/helper-module-imports": "npm:^7.22.15"
-    "@babel/helper-plugin-utils": "npm:^7.22.5"
-    "@griffel/core": "npm:^1.20.1"
-    stylis: "npm:^4.2.0"
-    tslib: "npm:^2.1.0"
-  peerDependencies:
-    webpack: ^5
-  languageName: unknown
-  linkType: soft
-
-"@griffel/webpack-loader@workspace:packages/webpack-loader":
-  version: 0.0.0-use.local
-  resolution: "@griffel/webpack-loader@workspace:packages/webpack-loader"
-  dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@griffel/babel-preset": "npm:^1.8.1"
-    enhanced-resolve: "npm:^5.15.0"
-    tslib: "npm:^2.1.0"
-  peerDependencies:
-    webpack: ^5
   languageName: unknown
   linkType: soft
 

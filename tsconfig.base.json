@@ -21,14 +21,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@griffel/babel-preset": ["packages/babel-preset/src/index.ts"],
       "@griffel/core": ["packages/core/src/index.ts"],
       "@griffel/devtools": ["packages/devtools/src/index.ts"],
       "@griffel/e2e-utils": ["e2e/utils/src/index.ts"],
       "@griffel/eslint-plugin": ["packages/eslint-plugin/src/index.ts"],
       "@griffel/jest-serializer": ["packages/jest-serializer/src/index.ts"],
-      "@griffel/next-extraction-plugin": ["packages/next-extraction-plugin/src/index.ts"],
-      "@griffel/postcss-syntax": ["packages/postcss-syntax/src/index.ts"],
+      "@griffel/postcss-syntax": ["packages/postcss-syntax/src/index.mts"],
       "@griffel/react": ["packages/react/src/index.ts"],
       "@griffel/style-types": ["packages/style-types/src/index.ts"],
       "@griffel/tag-processor": ["packages/tag-processor/src/index.ts"],
@@ -38,8 +36,6 @@
       "@griffel/transform-shaker": ["packages/transform-shaker/src/index.ts"],
       "@griffel/update-shorthands": ["tools/update-shorthands/src/index.ts"],
       "@griffel/vite-plugin": ["packages/vite-plugin/src/index.ts"],
-      "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"],
-      "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"],
       "@griffel/webpack-plugin": ["packages/webpack-plugin/src/index.mts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]

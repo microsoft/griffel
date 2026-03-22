@@ -11,3 +11,4 @@ export { transformSync, type TransformOptions, type TransformResult } from './tr
 export { DEOPT, type Deopt } from './evaluation/astEvaluator.mjs';
 export type { AstEvaluatorPlugin, AstEvaluatorContext, TransformPerfIssue } from './evaluation/types.mjs';
 export { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
+export type { TransformMetadata, SourceLocation, CommentDirective, ModuleConfig } from './types.mjs';

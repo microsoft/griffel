@@ -13,10 +13,9 @@ calls. The parsed postcss AST will include source locations back to the original
 The stringifier only works on a postcss AST that was parsed by this custom syntax since Griffel ahead of time
 compilation lacks the capability to map generated CSS back to the original javascript properties very accurately.
 
-## Configuring @griffel/babel-preset
+## Configuring custom modules
 
-The preprocessor uses transforms in the `@griffel/babel-preset` package. In order to configure the babel transform
-that is used internally, we've created the a factory to return the custom syntax that uses the desired configuration.
+The preprocessor uses `@griffel/transform` internally. You can configure custom module sources using the `createSyntax` factory:
 
 ```ts
 import { createSyntax } from '@griffel/postcss-syntax';
@@ -26,8 +25,5 @@ const syntax = createSyntax({
   ]
 })
 ```
-
-For more information about how to configure the babel Griffel preset 
-[you can check out the docs](https://github.com/microsoft/griffel/blob/main/packages/babel-preset/README.md#usage)
 
 

@@ -10,10 +10,10 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/packages/postcss-syntax"],
       "options": {
-        "jestConfig": "packages/postcss-syntax/jest.config.ts"
+        "config": "packages/postcss-syntax/vitest.config.mts"
       }
     },
     "build": {
@@ -24,7 +24,7 @@
         "tsConfig": "packages/postcss-syntax/tsconfig.lib.json",
         "skipTypeField": true,
         "packageJson": "packages/postcss-syntax/package.json",
-        "main": "packages/postcss-syntax/src/index.ts",
+        "main": "packages/postcss-syntax/src/index.mts",
         "assets": [
           "packages/postcss-syntax/README.md",
           {
@@ -38,7 +38,7 @@
     "type-check": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "packages/babel-preset",
+        "cwd": "packages/postcss-syntax",
         "commands": [
           {
             "command": "tsc -b --pretty"
