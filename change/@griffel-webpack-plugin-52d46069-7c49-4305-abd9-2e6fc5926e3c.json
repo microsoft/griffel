@@ -1,6 +1,6 @@
 {
-  "type": "patch",
-  "comment": "update to use renamed transform options",
+  "type": "major",
+  "comment": "BREAKING: update to use renamed transform options",
   "packageName": "@griffel/webpack-plugin",
   "email": "olfedias@microsoft.com",
   "dependentChangeType": "patch"
