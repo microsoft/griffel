@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: reverse styleCalls iteration to match CSS rule ordering of old plugin",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
