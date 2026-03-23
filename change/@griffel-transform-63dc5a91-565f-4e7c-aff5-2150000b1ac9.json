@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: add zIndex fallback values in fluentTokensPlugin",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

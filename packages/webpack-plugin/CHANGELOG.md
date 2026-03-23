@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-plugin
 
-This log was last generated on Fri, 13 Mar 2026 17:00:45 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Mar 2026 16:50:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 4.0.0
+
+Mon, 23 Mar 2026 16:50:27 GMT
+
+### Major changes
+
+- BREAKING: update to use renamed transform options (olfedias@microsoft.com)
+- Bump @griffel/transform to v3.0.0
 
 ## 3.0.2
 

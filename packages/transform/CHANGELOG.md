@@ -1,8 +1,21 @@
 # Change Log - @griffel/transform
 
-This log was last generated on Fri, 13 Mar 2026 17:00:44 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Mar 2026 16:50:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 3.0.0
+
+Mon, 23 Mar 2026 16:50:27 GMT
+
+### Major changes
+
+- BREAKING: rename modules to importsToTransform, add functionsToTransform option (olfedias@microsoft.com)
+
+### Patches
+
+- fix: reverse styleCalls iteration to match CSS rule ordering of old plugin (olfedias@microsoft.com)
+- fix: add zIndex fallback values in fluentTokensPlugin (olfedias@microsoft.com)
 
 ## 2.0.2
 

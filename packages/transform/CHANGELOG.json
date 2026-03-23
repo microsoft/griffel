@@ -2,6 +2,35 @@
   "name": "@griffel/transform",
   "entries": [
     {
+      "date": "Mon, 23 Mar 2026 16:50:27 GMT",
+      "tag": "@griffel/transform_v3.0.0",
+      "version": "3.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "6dfe649fcc0f7020e44105bee79a35729067d57f",
+            "comment": "BREAKING: rename modules to importsToTransform, add functionsToTransform option"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "81b6321139752afc633d3c8e9962b8dc156971c0",
+            "comment": "fix: reverse styleCalls iteration to match CSS rule ordering of old plugin"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "26382f538c445a01a0f52d93effba603d9f65cd4",
+            "comment": "fix: add zIndex fallback values in fluentTokensPlugin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Mar 2026 17:00:44 GMT",
       "tag": "@griffel/transform_v2.0.2",
       "version": "2.0.2",
