@@ -60,6 +60,31 @@ describe('fluentTokensPlugin', () => {
 
       expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe(DEOPT);
     });
+
+    it('evaluates zIndex tokens with fallback values', () => {
+      const code = 'const x = tokens.zIndexPopup;';
+      const { node, program } = getFirstNodeOfType(code, 'MemberExpression');
+
+      expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe('var(--zIndexPopup, 2000)');
+    });
+
+    it('evaluates all zIndex tokens with correct fallbacks', () => {
+      const cases: [string, string][] = [
+        ['tokens.zIndexBackground', 'var(--zIndexBackground, 0)'],
+        ['tokens.zIndexContent', 'var(--zIndexContent, 1)'],
+        ['tokens.zIndexOverlay', 'var(--zIndexOverlay, 1000)'],
+        ['tokens.zIndexPopup', 'var(--zIndexPopup, 2000)'],
+        ['tokens.zIndexMessages', 'var(--zIndexMessages, 3000)'],
+        ['tokens.zIndexFloating', 'var(--zIndexFloating, 4000)'],
+        ['tokens.zIndexPriority', 'var(--zIndexPriority, 5000)'],
+        ['tokens.zIndexDebug', 'var(--zIndexDebug, 6000)'],
+      ];
+
+      for (const [expr, expected] of cases) {
+        const { node, program } = getFirstNodeOfType(`const x = ${expr};`, 'MemberExpression');
+        expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe(expected);
+      }
+    });
   });
 
   describe('TemplateLiteral', () => {
@@ -84,6 +109,13 @@ describe('fluentTokensPlugin', () => {
       const { node, program } = getFirstNodeOfType(code, 'TemplateLiteral');
 
       expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe(DEOPT);
+    });
+
+    it('evaluates template literal with zIndex token including fallback', () => {
+      const code = 'const x = `${tokens.zIndexOverlay}`;';
+      const { node, program } = getFirstNodeOfType(code, 'TemplateLiteral');
+
+      expect(fluentTokensPlugin.evaluateNode(node, makeContext(program))).toBe('var(--zIndexOverlay, 1000)');
     });
   });
 
