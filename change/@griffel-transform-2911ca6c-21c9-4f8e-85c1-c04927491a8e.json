@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "BREAKING: rename modules to importsToTransform, add functionsToTransform option",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

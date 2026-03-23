@@ -305,7 +305,7 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'import-custom-module', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'import-custom-module', 'output.ts'),
     transformOptions: {
-      modules: ['custom-package'],
+      importsToTransform: ['custom-package'],
     },
   },
 
