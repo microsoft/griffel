@@ -3,6 +3,15 @@
   display: block;
   color: var(--colorNeutralForeground1);
 }
+.f1warjpf {
+  grid-column-end: middle;
+}
+.fwu52yu {
+  grid-column-start: middle;
+}
+.fgcyt7z {
+  --avatar-spacing: var(--spacing-horizontal-s-nudge);
+}
 .f1tll2w5 {
   justify-items: end;
 }
@@ -11,13 +20,4 @@
 }
 .f1hek2iy {
   grid-row-start: span 5;
-}
-.fgcyt7z {
-  --avatar-spacing: var(--spacing-horizontal-s-nudge);
-}
-.f1warjpf {
-  grid-column-end: middle;
-}
-.fwu52yu {
-  grid-column-start: middle;
 }
