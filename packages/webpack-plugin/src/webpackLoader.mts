@@ -29,8 +29,12 @@ function webpackLoader(
   // https://github.com/webpack/webpack/issues/14946
   this.cacheable();
 
+  const { classNameHashSalt, importsToTransform, functionsToTransform, evaluationRules } = this.getOptions();
+
   // Early return to handle cases when there is no Griffel usage in the file
-  if (sourceCode.indexOf('makeStyles') === -1 && sourceCode.indexOf('makeResetStyles') === -1 && sourceCode.indexOf('makeStaticStyles') === -1) {
+  const functionNames = functionsToTransform ?? ['makeStyles', 'makeResetStyles', 'makeStaticStyles'];
+
+  if (functionNames.every(name => sourceCode.indexOf(name) === -1)) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }
@@ -44,8 +48,6 @@ function webpackLoader(
       throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
     }
   }
-
-  const { classNameHashSalt, modules, evaluationRules } = this.getOptions();
 
   this[GriffelCssLoaderContextKey]!.runWithTimer(() => {
     // Clear require cache to allow re-evaluation of modules
@@ -65,7 +67,8 @@ function webpackLoader(
           return resolved;
         },
         classNameHashSalt,
-        modules,
+        importsToTransform,
+        functionsToTransform,
         evaluationRules,
         collectPerfIssues: this[GriffelCssLoaderContextKey]?.collectPerfIssues,
       });

@@ -38,7 +38,10 @@ export type TransformOptions = {
   generateMetadata?: boolean;
 
   /** Defines set of modules and imports handled by a transformPlugin. */
-  modules?: string[];
+  importsToTransform?: string[];
+
+  /** Defines the set of function names that should be treated as Griffel style calls. */
+  functionsToTransform?: FunctionKinds[];
 
   /** The set of rules that defines how the matched files will be transformed during the evaluation. */
   evaluationRules?: EvalRule[];
@@ -178,10 +181,13 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     resolveModule,
     classNameHashSalt = '',
     generateMetadata = false,
-    modules = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
+    importsToTransform = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
+    functionsToTransform = ['makeStyles', 'makeResetStyles', 'makeStaticStyles'],
     evaluationRules = [{ action: perfIssues ? wrapWithPerfIssues(shakerEvaluator, perfIssues) : shakerEvaluator }],
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
+
+  const functionsToTransformSet = new Set<FunctionKinds>(functionsToTransform);
 
   if (!filename) {
     throw new Error('Transform error: "filename" option is required');
@@ -206,8 +212,8 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   // Quick bail-out: if no Griffel imports exist, skip the AST walk entirely
   const hasGriffelImports = parseResult.module.staticImports.some(
     si =>
-      modules.includes(si.moduleRequest.value) &&
-      si.entries.some(e => e.importName.kind === 'Name' && RUNTIME_IDENTIFIERS.has(e.importName.name as FunctionKinds)),
+      importsToTransform.includes(si.moduleRequest.value) &&
+      si.entries.some(e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds)),
   );
 
   if (!hasGriffelImports) {
@@ -238,7 +244,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
         const importSource = declaration.importNode.source.value;
 
-        if (!modules.includes(importSource)) {
+        if (!importsToTransform.includes(importSource)) {
           return;
         }
 
@@ -250,7 +256,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
         const importedName = imported.name;
 
-        if (!RUNTIME_IDENTIFIERS.has(importedName as FunctionKinds)) {
+        if (!functionsToTransformSet.has(importedName as FunctionKinds)) {
           return;
         }
 
