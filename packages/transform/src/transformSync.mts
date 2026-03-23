@@ -187,6 +187,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
+  const importsToTransformSet = new Set(importsToTransform);
   const functionsToTransformSet = new Set<FunctionKinds>(functionsToTransform);
 
   if (!filename) {
@@ -212,7 +213,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   // Quick bail-out: if no Griffel imports exist, skip the AST walk entirely
   const hasGriffelImports = parseResult.module.staticImports.some(
     si =>
-      importsToTransform.includes(si.moduleRequest.value) &&
+      importsToTransformSet.has(si.moduleRequest.value) &&
       si.entries.some(e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds)),
   );
 
@@ -244,7 +245,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
         const importSource = declaration.importNode.source.value;
 
-        if (!importsToTransform.includes(importSource)) {
+        if (!importsToTransformSet.has(importSource)) {
           return;
         }
 

@@ -34,7 +34,7 @@ function webpackLoader(
   // Early return to handle cases when there is no Griffel usage in the file
   const functionNames = functionsToTransform ?? ['makeStyles', 'makeResetStyles', 'makeStaticStyles'];
 
-  if (functionNames.every(name => sourceCode.indexOf(name) === -1)) {
+  if (!functionNames.some(name => sourceCode.includes(name))) {
     this.callback(null, sourceCode, inputSourceMap);
     return;
   }
