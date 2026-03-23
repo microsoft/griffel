@@ -331,7 +331,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     astEvaluationPlugins,
   );
 
-  for (let i = 0; i < styleCalls.length; i++) {
+  for (let i = styleCalls.length - 1; i >= 0; i--) {
     const styleCall = styleCalls[i];
     const evaluationResult = evaluationResults[i];
 
