@@ -350,21 +350,19 @@ export class GriffelPlugin {
             const fileCount = entries.length;
             const avgTime = fileCount > 0 ? totalTime / BigInt(fileCount) : 0n;
 
-            console.log('\nGriffel CSS extraction stats:');
+            const astEntries = entries.filter(s => s[1].evaluationMode === 'ast');
+            const vmEntries = entries.filter(s => s[1].evaluationMode === 'vm');
+            const astTime = astEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
+            const vmTime = vmEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
+            const astHitPct = ((astEntries.length / fileCount) * 100).toFixed(1) + '%';
 
-            console.log('------------------------------------');
-            console.log('Total time spent in Griffel loader:', logTime(totalTime));
-            console.log('Time spent in processAssets (sort):', logTime(this.#processAssetsTime));
-            console.log('Files processed:', fileCount);
-            console.log('Average time per file:', logTime(avgTime));
-            console.log(
-              'AST evaluation hit: ',
-              ((entries.filter(s => s[1].evaluationMode === 'ast').length / fileCount) * 100).toFixed(2) + '%',
-            );
-            console.log('------------------------------------');
+            console.log(`\n[Griffel] ${fileCount} files processed`);
+            console.log(`[Griffel] Loader: ${logTime(totalTime)} (AST ${logTime(astTime)} | VM ${logTime(vmTime)}), avg ${logTime(avgTime)}/file, AST eval hit ${astHitPct}`);
+            console.log(`[Griffel] Plugin: ${logTime(this.#processAssetsTime)}`);
+            console.log('');
 
             for (const [filename, info] of entries) {
-              console.log(`  ${logTime(info.time)} - ${filename} (evaluation mode: ${info.evaluationMode})`);
+              console.log(`  ${logTime(info.time)} ${info.evaluationMode === 'vm' ? 'vm ' : 'ast'} ${filename}`);
             }
 
             console.log();
