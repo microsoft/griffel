@@ -375,16 +375,13 @@ export class GriffelPlugin {
             const cjsCount = issues.filter(i => i.type === 'cjs-module').length;
             const barrelCount = issues.filter(i => i.type === 'barrel-export-star').length;
 
-            console.log('\nGriffel performance issues:');
-            console.log('------------------------------------');
-            console.log(`CJS modules (no tree-shaking): ${cjsCount}`);
-            console.log(`Barrel files with remaining export *: ${barrelCount}`);
-            console.log('------------------------------------');
+            console.log(`[Griffel] Perf issues: ${cjsCount} CJS (no tree-shaking), ${barrelCount} barrel (export *)`);
+            console.log('');
 
             for (const issue of issues) {
-              const tag = issue.type === 'cjs-module' ? 'cjs' : 'barrel';
+              const tag = issue.type === 'cjs-module' ? ' cjs' : 'barrel';
               const sources = Array.from(issue.sourceFilenames).join(', ');
-              console.log(`  [${tag}] ${issue.dependencyFilename} (source: ${sources})`);
+              console.log(`  ${tag} ${issue.dependencyFilename} (from: ${sources})`);
             }
 
             console.log();
