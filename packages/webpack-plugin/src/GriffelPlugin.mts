@@ -362,7 +362,9 @@ export class GriffelPlugin {
             console.log('');
 
             for (const [filename, info] of entries) {
-              console.log(`  ${logTime(info.time)} ${info.evaluationMode === 'vm' ? 'vm ' : 'ast'} ${filename}`);
+              const time = logTime(info.time).padStart(6);
+              const mode = info.evaluationMode === 'vm' ? 'vm ' : 'ast';
+              console.log(`  ${time} ${mode} ${filename}`);
             }
 
             console.log();
