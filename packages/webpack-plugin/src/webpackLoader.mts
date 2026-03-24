@@ -77,13 +77,12 @@ function webpackLoader(
     }
 
     if (result) {
-      const { code, cssRulesByBucket, usedVMForEvaluation, perfIssues, timings } = result;
+      const { code, cssRulesByBucket, usedVMForEvaluation, perfIssues } = result;
       const meta = {
         filename: this.resourcePath,
         step: 'transform' as const,
         evaluationMode: usedVMForEvaluation ? ('vm' as const) : ('ast' as const),
         perfIssues,
-        timings,
       };
 
       if (cssRulesByBucket) {

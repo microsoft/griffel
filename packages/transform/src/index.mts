@@ -1,4 +1,4 @@
-export { default as shakerEvaluator, shakerTimings, enableTimings as enableShakerTimings, resetTimings as resetShakerTimings } from '@griffel/transform-shaker';
+export { default as shakerEvaluator } from '@griffel/transform-shaker';
 export { Module, type TransformResolver } from './evaluation/module.mjs';
 export * as EvalCache from './evaluation/evalCache.mjs';
 export { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from './constants.mjs';
@@ -7,7 +7,7 @@ export type { Evaluator, EvaluatorResult, EvalRule } from './evaluation/types.mj
 
 // Our APIs
 
-export { transformSync, type TransformOptions, type TransformResult, type TransformTimings } from './transformSync.mjs';
+export { transformSync, type TransformOptions, type TransformResult } from './transformSync.mjs';
 export { DEOPT, type Deopt } from './evaluation/astEvaluator.mjs';
 export type { AstEvaluatorPlugin, AstEvaluatorContext, TransformPerfIssue } from './evaluation/types.mjs';
 export { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';

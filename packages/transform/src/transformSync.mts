@@ -56,26 +56,12 @@ export type TransformOptions = {
   collectPerfIssues?: boolean;
 };
 
-export type TransformTimings = {
-  /** Time spent parsing the source code (ns) */
-  parsing: bigint;
-  /** Time spent in AST walking to find style calls (ns) */
-  walking: bigint;
-  /** Time spent evaluating style call arguments (ns) */
-  evaluation: bigint;
-  /** Time spent resolving CSS rules from evaluated styles (ns) */
-  resolving: bigint;
-  /** Time spent in code transformations via magic-string (ns) */
-  codeTransform: bigint;
-};
-
 export type TransformResult = {
   code: string;
   cssRulesByBucket?: CSSRulesByBucket;
   usedProcessing: boolean;
   usedVMForEvaluation: boolean;
   perfIssues?: TransformPerfIssue[];
-  timings?: TransformTimings;
 };
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
@@ -208,22 +194,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     throw new Error('Transform error: "filename" option is required');
   }
 
-  const collectTimings = options.collectPerfIssues ?? false;
-  const timings: TransformTimings = {
-    parsing: 0n,
-    walking: 0n,
-    evaluation: 0n,
-    resolving: 0n,
-    codeTransform: 0n,
-  };
-
-  let t0 = collectTimings ? process.hrtime.bigint() : 0n;
-
   const parseResult = parseSync(filename, sourceCode);
-
-  if (collectTimings) {
-    timings.parsing = process.hrtime.bigint() - t0;
-  }
 
   if (parseResult.errors.length > 0) {
     throw new Error(`Failed to parse "${filename}": ${parseResult.errors.map(e => e.message).join(', ')}`);
@@ -258,10 +229,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
   // -----
   // Walk AST to collect style function calls using ScopeTracker for scope-aware import resolution
-
-  if (collectTimings) {
-    t0 = process.hrtime.bigint();
-  }
 
   const scopeTracker = new ScopeTracker();
   const matchedSpecifiers = new Map<number, { start: number; end: number; functionKind: FunctionKinds }>();
@@ -351,10 +318,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     },
   });
 
-  if (collectTimings) {
-    timings.walking = process.hrtime.bigint() - t0;
-  }
-
   // If no style calls found, return original code
   if (styleCalls.length === 0) {
     return {
@@ -365,10 +328,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   }
 
   // Process style calls - evaluate and transform
-  if (collectTimings) {
-    t0 = process.hrtime.bigint();
-  }
-
   const { evaluationResults, usedVMForEvaluation } = batchEvaluator(
     sourceCode,
     filename,
@@ -378,11 +337,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     programAst,
     astEvaluationPlugins,
   );
-
-  if (collectTimings) {
-    timings.evaluation = process.hrtime.bigint() - t0;
-    t0 = process.hrtime.bigint();
-  }
 
   for (let i = styleCalls.length - 1; i >= 0; i--) {
     const styleCall = styleCalls[i];
@@ -442,11 +396,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     }
   }
 
-  if (collectTimings) {
-    timings.resolving = process.hrtime.bigint() - t0;
-    t0 = process.hrtime.bigint();
-  }
-
   // ---
   // Transform imports and function names
 
@@ -465,16 +414,11 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     );
   }
 
-  if (collectTimings) {
-    timings.codeTransform = process.hrtime.bigint() - t0;
-  }
-
   return {
     code: magicString.toString(),
     cssRulesByBucket,
     usedProcessing: true,
     usedVMForEvaluation,
     perfIssues,
-    timings: collectTimings ? timings : undefined,
   };
 }

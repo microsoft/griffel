@@ -1,5 +1,5 @@
 import type { LoaderContext } from 'webpack';
-import type { TransformResolver, TransformPerfIssue, TransformTimings } from '@griffel/transform';
+import type { TransformResolver, TransformPerfIssue } from '@griffel/transform';
 
 export const PLUGIN_NAME = 'GriffelExtractPlugin';
 export const GriffelCssLoaderContextKey = Symbol.for(`${PLUGIN_NAME}/GriffelCssLoaderContextKey`);
@@ -17,7 +17,6 @@ export interface GriffelLoaderContextSupplement {
         step: 'transform';
         evaluationMode: 'ast' | 'vm';
         perfIssues?: TransformPerfIssue[];
-        timings?: TransformTimings;
       };
     },
   ): T;
