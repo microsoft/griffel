@@ -47,10 +47,10 @@ const sharedSandbox = {
   fetch: NOOP,
   global,
   process: mockProcess,
-  // Per-module bindings (mutated before each run)
-  module: null as Module | null,
-  exports: {} as unknown,
-  require: null as ((id: string) => unknown) | null,
+  // Per-module bindings (mutated before each run, prefixed with __ to avoid
+  // colliding with the function parameter names passed to the wrapper IIFE)
+  __module: null as Module | null,
+  __require: null as ((id: string) => unknown) | null,
   __filename: '',
   __dirname: '',
 };
@@ -270,14 +270,14 @@ export class Module {
       this.debug('evaluate', `${this.filename} (only ${(only || []).join(', ')}):\n${code}`);
     }
 
-    const script = new vm.Script(`(function (exports) { ${code}\n})(exports);`, {
-      filename: this.filename,
-    });
+    const script = new vm.Script(
+      `(function (exports, module, require, __filename, __dirname) { ${code}\n})(__module.exports, __module, __require, __filename, __dirname);`,
+      { filename: this.filename },
+    );
 
     // Swap per-module bindings on the shared context
-    sharedSandbox.module = this;
-    sharedSandbox.exports = this.exports;
-    sharedSandbox.require = this.require;
+    sharedSandbox.__module = this;
+    sharedSandbox.__require = this.require;
     sharedSandbox.__filename = this.filename;
     sharedSandbox.__dirname = path.dirname(this.filename);
 
