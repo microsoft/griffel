@@ -8,6 +8,7 @@ import MagicString from 'magic-string';
 
 import { isNode, getVisitorKeys, debug } from './utils.js';
 import build from './graphBuilder.js';
+import { collectTimings, shakerTimings } from './timings.js';
 
 // Syntactically required children that must not be removed independently —
 // removing them produces invalid code (e.g. `export { X }` without `from "module"`).
@@ -171,6 +172,7 @@ export default function shake(
 ): [string, Map<string, string[]>] {
   debug('evaluator:shaker:shake', () => `source (exports: ${(exports || []).join(', ')}):\n${sourceCode}`);
 
+  const t0 = collectTimings ? process.hrtime.bigint() : 0n;
   const depsGraph = build(rootPath);
   const alive = new Set<Node>();
   const reexports: string[] = [];
@@ -203,9 +205,17 @@ export default function shake(
     deps = depsGraph.getDependencies(deps).filter(d => !alive.has(d));
   }
 
+  if (collectTimings) {
+    shakerTimings.graphBuild += process.hrtime.bigint() - t0;
+  }
+
+  const t1 = collectTimings ? process.hrtime.bigint() : 0n;
   const s = new MagicString(sourceCode);
   removeDeadCode(rootPath, alive, s, sourceCode);
   const shakenCode = s.toString();
+  if (collectTimings) {
+    shakerTimings.shake += process.hrtime.bigint() - t1;
+  }
 
   debug('evaluator:shaker:shake', `shaken ${alive.size} alive nodes`);
 

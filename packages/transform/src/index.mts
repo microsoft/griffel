@@ -1,4 +1,4 @@
-export { default as shakerEvaluator } from '@griffel/transform-shaker';
+export { default as shakerEvaluator, shakerTimings, enableTimings as enableShakerTimings, resetTimings as resetShakerTimings } from '@griffel/transform-shaker';
 export { Module, type TransformResolver } from './evaluation/module.mjs';
 export * as EvalCache from './evaluation/evalCache.mjs';
 export { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from './constants.mjs';

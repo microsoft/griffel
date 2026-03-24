@@ -1,5 +1,5 @@
 import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core';
-import { Module as GriffelModule, type TransformTimings } from '@griffel/transform';
+import { Module as GriffelModule, type TransformTimings, shakerTimings, enableShakerTimings, resetShakerTimings } from '@griffel/transform';
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
 import * as path from 'node:path';
@@ -128,6 +128,8 @@ export class GriffelPlugin {
     if (this.#collectStats) {
       GriffelModule.collectTimings = true;
       GriffelModule.resetTimings();
+      enableShakerTimings(true);
+      resetShakerTimings();
     }
 
     const IS_RSPACK = Object.prototype.hasOwnProperty.call(compiler.webpack, 'rspackVersion');
@@ -394,6 +396,12 @@ export class GriffelPlugin {
             console.log('  ESM→CJS convert: ', logTime(GriffelModule.esmConvertTime));
             console.log('  vm.runInContext:  ', logTime(GriffelModule.vmRunTime));
             console.log('  fs.readFileSync:  ', logTime(GriffelModule.fsReadTime));
+            console.log('------------------------------------');
+            console.log(`Shaker breakdown (${shakerTimings.calls} calls):`);
+            console.log('  oxc-transform:   ', logTime(shakerTimings.oxcTransform));
+            console.log('  oxc-parser:      ', logTime(shakerTimings.oxcParse));
+            console.log('  Graph build:     ', logTime(shakerTimings.graphBuild));
+            console.log('  Dead code removal:', logTime(shakerTimings.shake));
             console.log('------------------------------------');
 
             for (const [filename, info] of entries) {
