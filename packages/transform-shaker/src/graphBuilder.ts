@@ -124,13 +124,14 @@ class GraphBuilder {
    * both of them are required for evaluating the value of the expression
    */
   baseVisit<TNode extends Node>(node: TNode, ignoreDeps = false) {
-    const dependencies: Node[] = [];
-    const isExpr = isExpression(node);
+    const isExpr = !ignoreDeps && isExpression(node);
     const keys = getVisitorKeys(node);
-    keys.forEach(key => {
+
+    for (let ki = 0; ki < keys.length; ki++) {
+      const key = keys[ki];
       // Ignore all types
       if (key === 'typeArguments' || key === 'typeParameters') {
-        return;
+        continue;
       }
 
       const subNode = node[key as keyof TNode];
@@ -138,20 +139,18 @@ class GraphBuilder {
       if (Array.isArray(subNode)) {
         for (let i = 0; i < subNode.length; i++) {
           const child = subNode[i];
-          if (child && this.visit(child, node, key, i) !== 'ignore') {
-            dependencies.push(child);
+          if (child && this.visit(child, node, key, i) !== 'ignore' && isExpr) {
+            this.graph.addEdge(node, child);
           }
         }
-      } else if (isNode(subNode) && this.visit(subNode, node, key) !== 'ignore') {
-        dependencies.push(subNode);
+      } else if (isNode(subNode) && this.visit(subNode, node, key) !== 'ignore' && isExpr) {
+        this.graph.addEdge(node, subNode);
       }
-    });
-
-    if (isExpr && !ignoreDeps) {
-      dependencies.forEach(dep => this.graph.addEdge(node, dep));
     }
 
-    this.callbacks.forEach(callback => callback(node));
+    for (let ci = 0; ci < this.callbacks.length; ci++) {
+      this.callbacks[ci](node);
+    }
   }
 
   visit<TNode extends Node, TParent extends Node>(
@@ -249,10 +248,8 @@ class GraphBuilder {
     const visitors = getVisitors(node);
     let action: VisitorAction = undefined;
     if (visitors.length > 0) {
-      let visitor: Visitor<TNode> | undefined;
-      // eslint-disable-next-line no-cond-assign
-      while (!action && (visitor = visitors.shift())) {
-        const method: Visitor<TNode> = visitor.bind(this);
+      for (let vi = 0; vi < visitors.length && !action; vi++) {
+        const method: Visitor<TNode> = visitors[vi].bind(this);
         action = method(node, parent, parentKey, listIdx);
       }
     } else {

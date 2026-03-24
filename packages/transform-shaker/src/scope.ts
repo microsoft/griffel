@@ -94,12 +94,12 @@ export default class ScopeManager {
     scopeIds.set(scope, scopeId);
     this.map.set(scopeId, scope);
     this.handlers.set(scopeId, []);
-    this.stack.unshift(scope);
+    this.stack.push(scope);
     return scope;
   }
 
   dispose(): Scope | undefined {
-    const disposed = this.stack.shift();
+    const disposed = this.stack.pop();
     if (disposed) {
       this.map.delete(scopeIds.get(disposed)!);
     }
@@ -129,7 +129,15 @@ export default class ScopeManager {
 
     const identifier = identifierOrMemberExpression;
     const idName = identifier.name;
-    const scope = this.stack.slice(stack).find(s => !isHoistable || functionScopes.has(s))!;
+    // Search from innermost (end) towards outermost, skipping `stack` levels from the end
+    let scope: Scope | undefined;
+    for (let i = this.stack.length - 1 - stack; i >= 0; i--) {
+      if (!isHoistable || functionScopes.has(this.stack[i])) {
+        scope = this.stack[i];
+        break;
+      }
+    }
+    scope = scope!;
     if (this.global.has(idName) && !globalIdentifiers.has(idName)) {
       // It's probably a declaration of a previous referenced identifier
       // Let's use naïve implementation of hoisting
@@ -152,7 +160,14 @@ export default class ScopeManager {
     const name = isIdentifier(identifierOrMemberExpression)
       ? identifierOrMemberExpression.name
       : getExportName(identifierOrMemberExpression);
-    const scope = this.stack.find(s => s.has(name)) ?? this.global;
+    let scope: Scope | undefined;
+    for (let i = this.stack.length - 1; i >= 0; i--) {
+      if (this.stack[i].has(name)) {
+        scope = this.stack[i];
+        break;
+      }
+    }
+    if (!scope) scope = this.global;
     const id = getId(scope, name);
     if (scope === this.global && !scope.has(name)) {
       scope.set(name, new Set());
@@ -165,9 +180,11 @@ export default class ScopeManager {
 
   whereIsDeclared(identifier: IdentifierNode): ScopeId | undefined {
     const { name } = identifier;
-    const scope = this.stack.find(s => s.has(name) && s.get(name)!.has(identifier));
-    if (scope) {
-      return scopeIds.get(scope);
+    for (let i = this.stack.length - 1; i >= 0; i--) {
+      const s = this.stack[i];
+      if (s.has(name) && s.get(name)!.has(identifier)) {
+        return scopeIds.get(s);
+      }
     }
 
     if (this.global.has(name)) {
@@ -198,7 +215,7 @@ export default class ScopeManager {
   }
 
   addDeclareHandler(handler: DeclareHandler): () => void {
-    const scopeId = scopeIds.get(this.stack[0])!;
+    const scopeId = scopeIds.get(this.stack[this.stack.length - 1])!;
     this.handlers.get(scopeId)!.push(handler);
     return () => {
       const handlers = this.handlers.get(scopeId)!.filter(h => h !== handler);

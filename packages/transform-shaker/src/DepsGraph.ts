@@ -6,20 +6,16 @@
 import type { Node } from 'oxc-parser';
 
 import type { IdentifierNode, StringLiteralNode } from './ast.js';
-import type { PromisedNode } from './scope.js';
+import { PromisedNode } from './scope.js';
 import type ScopeManager from './scope.js';
 import { resolveNode } from './scope.js';
 
 type Action = (this: DepsGraph, a: Node, b: Node) => void;
 
-function addEdge(this: DepsGraph, a: Node, b: Node) {
-  if (this.dependencies.has(a) && this.dependencies.get(a)!.has(b)) {
-    // edge has been already added
-    return;
-  }
-
-  if (this.dependencies.has(a)) {
-    this.dependencies.get(a)!.add(b);
+function addEdgeResolved(this: DepsGraph, a: Node, b: Node) {
+  let deps = this.dependencies.get(a);
+  if (deps) {
+    deps.add(b);
   } else {
     this.dependencies.set(a, new Set([b]));
   }
@@ -61,7 +57,12 @@ export default class DepsGraph {
   constructor(protected scope: ScopeManager) {}
 
   addEdge(dependent: Node | PromisedNode, dependency: Node | PromisedNode) {
-    this.actionQueue.push([addEdge, dependent, dependency]);
+    // Fast path: if both are already resolved nodes, add edge directly
+    if (!PromisedNode.is(dependent) && !PromisedNode.is(dependency)) {
+      addEdgeResolved.call(this, dependent, dependency);
+      return;
+    }
+    this.actionQueue.push([addEdgeResolved, dependent, dependency]);
   }
 
   addExport(name: string, node: Node) {
