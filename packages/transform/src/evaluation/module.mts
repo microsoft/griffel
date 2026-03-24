@@ -144,7 +144,11 @@ export class Module {
 
         if (Module.extensions.has(ext)) {
           // To evaluate the file, we need to read it first
+          const fsT0 = Module.collectTimings ? process.hrtime.bigint() : 0n;
           const code = fs.readFileSync(filename, 'utf-8');
+          if (Module.collectTimings) {
+            Module.fsReadTime += process.hrtime.bigint() - fsT0;
+          }
 
           if (ext === '.json') {
             // For JSON files, parse it to a JS object similar to Node
@@ -173,8 +177,27 @@ export class Module {
     },
   );
 
+  /** Accumulated timing for transform/shaker actions (ns). Only populated when debug is enabled. */
+  static transformTime: bigint = 0n;
+  /** Accumulated timing for vm.Script execution (ns). Only populated when debug is enabled. */
+  static vmRunTime: bigint = 0n;
+  /** Accumulated timing for fs.readFileSync calls (ns). Only populated when debug is enabled. */
+  static fsReadTime: bigint = 0n;
+  /** Accumulated timing for convertESMtoCJS calls (ns). Only populated when debug is enabled. */
+  static esmConvertTime: bigint = 0n;
+  /** Whether to collect detailed timings. */
+  static collectTimings: boolean = false;
+
+  static resetTimings(): void {
+    Module.transformTime = 0n;
+    Module.vmRunTime = 0n;
+    Module.fsReadTime = 0n;
+    Module.esmConvertTime = 0n;
+  }
+
   evaluate(text: string, only: string[] | null = null, useEvalCache = true): void {
     const { filename } = this;
+    const collectTimings = Module.collectTimings;
     // Find last matching rule (iterate backwards, break on first match)
     let action: EvalRule['action'] = 'ignore';
 
@@ -203,14 +226,24 @@ export class Module {
       // For JavaScript files, we need to transpile it and to get the exports of the module
       this.debug('prepare-evaluation', this.filename, 'using', action.name);
 
+      let t0 = collectTimings ? process.hrtime.bigint() : 0n;
       const result = action(this.filename, text, only);
+      if (collectTimings) {
+        Module.transformTime += process.hrtime.bigint() - t0;
+      }
 
       code = result.code;
       this.imports = result.imports;
 
       // Convert ESM syntax to CJS so it can run inside a function wrapper in vm.Script
       if (result.moduleKind === 'esm') {
+        if (collectTimings) {
+          t0 = process.hrtime.bigint();
+        }
         code = convertESMtoCJS(code, this.filename);
+        if (collectTimings) {
+          Module.esmConvertTime += process.hrtime.bigint() - t0;
+        }
       }
 
       this.debug('evaluate', `${this.filename} (only ${(only || []).join(', ')}):\n${code}`);
@@ -220,6 +253,7 @@ export class Module {
       filename: this.filename,
     });
 
+    let t0 = collectTimings ? process.hrtime.bigint() : 0n;
     try {
       script.runInContext(
         vm.createContext({
@@ -251,6 +285,10 @@ export class Module {
       }
 
       throw hostError;
+    } finally {
+      if (collectTimings) {
+        Module.vmRunTime += process.hrtime.bigint() - t0;
+      }
     }
 
     if (useEvalCache) {

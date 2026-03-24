@@ -1,4 +1,5 @@
 import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core';
+import { Module as GriffelModule, type TransformTimings } from '@griffel/transform';
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
 import * as path from 'node:path';
@@ -109,6 +110,7 @@ export class GriffelPlugin {
     {
       time: bigint;
       evaluationMode: 'ast' | 'vm';
+      timings?: TransformTimings;
     }
   > = {};
   #processAssetsTime: bigint = 0n;
@@ -123,6 +125,11 @@ export class GriffelPlugin {
   }
 
   apply(compiler: Compiler): void {
+    if (this.#collectStats) {
+      GriffelModule.collectTimings = true;
+      GriffelModule.resetTimings();
+    }
+
     const IS_RSPACK = Object.prototype.hasOwnProperty.call(compiler.webpack, 'rspackVersion');
     const { Compilation, NormalModule } = compiler.webpack;
 
@@ -211,6 +218,7 @@ export class GriffelPlugin {
                 this.#stats[meta.filename] = {
                   time: end - start,
                   evaluationMode: meta.evaluationMode,
+                  timings: meta.timings,
                 };
               }
 
@@ -352,6 +360,18 @@ export class GriffelPlugin {
 
             console.log('\nGriffel CSS extraction stats:');
 
+            // Aggregate per-phase timings
+            const totals: TransformTimings = { parsing: 0n, walking: 0n, evaluation: 0n, resolving: 0n, codeTransform: 0n };
+            for (const [, info] of entries) {
+              if (info.timings) {
+                totals.parsing += info.timings.parsing;
+                totals.walking += info.timings.walking;
+                totals.evaluation += info.timings.evaluation;
+                totals.resolving += info.timings.resolving;
+                totals.codeTransform += info.timings.codeTransform;
+              }
+            }
+
             console.log('------------------------------------');
             console.log('Total time spent in Griffel loader:', logTime(totalTime));
             console.log('Time spent in processAssets (sort):', logTime(this.#processAssetsTime));
@@ -361,6 +381,19 @@ export class GriffelPlugin {
               'AST evaluation hit: ',
               ((entries.filter(s => s[1].evaluationMode === 'ast').length / fileCount) * 100).toFixed(2) + '%',
             );
+            console.log('------------------------------------');
+            console.log('Phase breakdown (aggregate):');
+            console.log('  Parsing:        ', logTime(totals.parsing));
+            console.log('  Walking:        ', logTime(totals.walking));
+            console.log('  Evaluation:     ', logTime(totals.evaluation));
+            console.log('  Resolving:      ', logTime(totals.resolving));
+            console.log('  Code transform: ', logTime(totals.codeTransform));
+            console.log('------------------------------------');
+            console.log('VM evaluation breakdown (Module):');
+            console.log('  Transform/shaker:', logTime(GriffelModule.transformTime));
+            console.log('  ESM→CJS convert: ', logTime(GriffelModule.esmConvertTime));
+            console.log('  vm.runInContext:  ', logTime(GriffelModule.vmRunTime));
+            console.log('  fs.readFileSync:  ', logTime(GriffelModule.fsReadTime));
             console.log('------------------------------------');
 
             for (const [filename, info] of entries) {
