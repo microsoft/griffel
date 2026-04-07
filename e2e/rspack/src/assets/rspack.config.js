@@ -1,7 +1,6 @@
 // @ts-check
 
-const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
-const path = require('path');
+const { GriffelPlugin } = require('@griffel/webpack-plugin');
 
 /**
  * @type {import('@rspack/core').Configuration}
@@ -22,17 +21,11 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [{ loader: GriffelCSSExtractionPlugin.loader }, { loader: '@griffel/webpack-loader' }],
+        use: [{ loader: '@griffel/webpack-plugin/loader' }],
       },
     ],
   },
-  plugins: [/** @type {any} */ (new GriffelCSSExtractionPlugin())],
-  resolve: {
-    alias: {
-      'fake-module': path.resolve(__dirname, 'src', 'Component.js'),
-      'fake-colors': path.resolve(__dirname, 'src', 'colors.js'),
-    },
-  },
+  plugins: [/** @type {any} */ (new GriffelPlugin())],
 };
 
 module.exports = config;
