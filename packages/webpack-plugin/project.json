@@ -10,12 +10,27 @@
       "outputs": ["{options.outputFile}"]
     },
     "build": {
-      "executor": "@nx/vite:build",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/webpack-plugin",
-        "compiler": "swc",
-        "format": ["esm"]
+        "tsConfig": "packages/webpack-plugin/tsconfig.lib.json",
+        "skipTypeField": true,
+        "packageJson": "packages/webpack-plugin/package.json",
+        "main": "packages/webpack-plugin/src/index.mts",
+        "assets": [
+          "packages/webpack-plugin/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "*",
+            "input": "packages/webpack-plugin/src/virtual-loader",
+            "output": "src/virtual-loader"
+          }
+        ]
       }
     },
     "type-check": {
