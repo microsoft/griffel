@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "refactor(build): switch to @nx/js:tsc executor",
   "packageName": "@griffel/transform",
   "email": "olfedias@microsoft.com",
