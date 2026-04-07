@@ -35,7 +35,7 @@ function extractDeclaredNames(node: Node): string[] {
  * which cannot contain ESM syntax.
  */
 export function convertESMtoCJS(code: string, filename: string): string {
-  const parseResult = parseSync(filename, code);
+  const parseResult = parseSync(filename, code, { sourceType: 'module' });
 
   if (parseResult.errors.length > 0) {
     throw new Error(
