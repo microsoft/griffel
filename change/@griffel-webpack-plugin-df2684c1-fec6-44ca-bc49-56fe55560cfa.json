@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "perf: optimize isGriffelCSSModule check, add processAssets timing",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

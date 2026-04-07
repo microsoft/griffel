@@ -79,12 +79,23 @@ const visitors = {
 
 const isKeyOfVisitors = (type: string): type is string & keyof Visitors => type in visitors;
 
+const visitorsCache = new Map<string, Visitor<Node>[]>();
+
 export function getVisitors<TNode extends Node>(node: TNode): Visitor<TNode>[] {
-  const aliases = ALIAS_KEYS[node.type] || [];
-  const aliasVisitors = aliases
-    .map(type => (isKeyOfVisitors(type) ? visitors[type] : null))
-    .filter(i => i) as Visitor<TNode>[];
-  return [...aliasVisitors, visitors[node.type] as Visitor<TNode>].filter(v => v);
+  const nodeType = node.type;
+  let cached = visitorsCache.get(nodeType);
+  if (cached) return cached as Visitor<TNode>[];
+
+  const aliases = ALIAS_KEYS[nodeType] || [];
+  const result: Visitor<Node>[] = [];
+  for (let i = 0; i < aliases.length; i++) {
+    const type = aliases[i];
+    if (isKeyOfVisitors(type)) result.push(visitors[type]!);
+  }
+  if (visitors[nodeType]) result.push(visitors[nodeType]!);
+
+  visitorsCache.set(nodeType, result);
+  return result as Visitor<TNode>[];
 }
 
 export default visitors;

@@ -35,6 +35,27 @@ let cache: Record<string, Module> = {};
 
 const NOOP = () => {};
 
+// Reusable VM context — avoids expensive vm.createContext() per evaluate() call.
+// Per-module bindings are swapped before each script.runInContext().
+const sharedSandbox = {
+  clearImmediate: NOOP,
+  clearInterval: NOOP,
+  clearTimeout: NOOP,
+  setImmediate: NOOP,
+  setInterval: NOOP,
+  setTimeout: NOOP,
+  fetch: NOOP,
+  global,
+  process: mockProcess,
+  // Per-module bindings (mutated before each run, prefixed with __ to avoid
+  // colliding with the function parameter names passed to the wrapper IIFE)
+  __module: null as Module | null,
+  __require: null as ((id: string) => unknown) | null,
+  __filename: '',
+  __dirname: '',
+};
+const sharedContext = vm.createContext(sharedSandbox);
+
 /** Checks if a value is an Error-like object (works across VM contexts where `instanceof Error` fails). */
 function isError(e: unknown): e is Error {
   return e != null && typeof e === 'object' && 'message' in e && 'stack' in e;
@@ -216,29 +237,19 @@ export class Module {
       this.debug('evaluate', `${this.filename} (only ${(only || []).join(', ')}):\n${code}`);
     }
 
-    const script = new vm.Script(`(function (exports) { ${code}\n})(exports);`, {
-      filename: this.filename,
-    });
+    const script = new vm.Script(
+      `(function (exports, module, require, __filename, __dirname) { ${code}\n})(__module.exports, __module, __require, __filename, __dirname);`,
+      { filename: this.filename },
+    );
+
+    // Swap per-module bindings on the shared context
+    sharedSandbox.__module = this;
+    sharedSandbox.__require = this.require;
+    sharedSandbox.__filename = this.filename;
+    sharedSandbox.__dirname = path.dirname(this.filename);
 
     try {
-      script.runInContext(
-        vm.createContext({
-          clearImmediate: NOOP,
-          clearInterval: NOOP,
-          clearTimeout: NOOP,
-          setImmediate: NOOP,
-          setInterval: NOOP,
-          setTimeout: NOOP,
-          fetch: NOOP,
-          global,
-          process: mockProcess,
-          module: this,
-          exports: this.exports,
-          require: this.require,
-          __filename: this.filename,
-          __dirname: path.dirname(this.filename),
-        }),
-      );
+      script.runInContext(sharedContext);
     } catch (vmError: unknown) {
       // Errors thrown inside vm.runInContext() use the VM context's Error constructor,
       // so they fail `instanceof Error` in the host context (e.g. webpack wraps them as NonErrorEmittedError).

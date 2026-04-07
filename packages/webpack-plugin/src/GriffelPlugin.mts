@@ -1,6 +1,8 @@
 import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core';
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
+import * as path from 'node:path';
+
 import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
 import { createResolverFactory, type TransformResolverFactory } from './resolver/createResolverFactory.mjs';
 import { parseCSSRules } from './utils/parseCSSRules.mjs';
@@ -56,23 +58,11 @@ function getAssetSourceContents(assetSource: sources.Source): string {
   return source.toString();
 }
 
-// https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L90
-type CSSModule = Module & {
-  content: Buffer;
-};
-
-function isCSSModule(module: Module): module is CSSModule {
-  return module.type === 'css/mini-extract';
-}
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const virtualLoaderPath = path.resolve(__dirname, 'virtual-loader', 'index.cjs');
 
 function isGriffelCSSModule(module: Module): boolean {
-  if (isCSSModule(module)) {
-    if (Buffer.isBuffer(module.content)) {
-      return module.content.indexOf('/** @griffel:css-start') !== -1;
-    }
-  }
-
-  return false;
+  return module.type === 'css/mini-extract' && module.identifier().includes(virtualLoaderPath);
 }
 
 function moveCSSModulesToGriffelChunk(compilation: Compilation) {
@@ -121,6 +111,7 @@ export class GriffelPlugin {
       evaluationMode: 'ast' | 'vm';
     }
   > = {};
+  #processAssetsTime: bigint = 0n;
   readonly #perfIssues: Map<string, { type: 'cjs-module' | 'barrel-export-star'; dependencyFilename: string; sourceFilenames: Set<string> }> = new Map();
 
   constructor(options: GriffelCSSExtractionPluginOptions = {}) {
@@ -297,6 +288,8 @@ export class GriffelPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
+          const start = this.#collectStats ? process.hrtime.bigint() : 0n;
+
           let cssAssetDetails;
 
           // @ Rspack compat
@@ -327,6 +320,10 @@ export class GriffelPlugin {
           const cssSource = sortCSSRules([cssRulesByBucket], this.#compareMediaQueries);
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
+
+          if (this.#collectStats) {
+            this.#processAssetsTime = process.hrtime.bigint() - start;
+          }
         },
       );
 
@@ -353,20 +350,21 @@ export class GriffelPlugin {
             const fileCount = entries.length;
             const avgTime = fileCount > 0 ? totalTime / BigInt(fileCount) : 0n;
 
-            console.log('\nGriffel CSS extraction stats:');
+            const astEntries = entries.filter(s => s[1].evaluationMode === 'ast');
+            const vmEntries = entries.filter(s => s[1].evaluationMode === 'vm');
+            const astTime = astEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
+            const vmTime = vmEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
+            const astHitPct = ((astEntries.length / fileCount) * 100).toFixed(1) + '%';
 
-            console.log('------------------------------------');
-            console.log('Total time spent in Griffel loader:', logTime(totalTime));
-            console.log('Files processed:', fileCount);
-            console.log('Average time per file:', logTime(avgTime));
-            console.log(
-              'AST evaluation hit: ',
-              ((entries.filter(s => s[1].evaluationMode === 'ast').length / fileCount) * 100).toFixed(2) + '%',
-            );
-            console.log('------------------------------------');
+            console.log(`\n[Griffel] ${fileCount} files processed`);
+            console.log(`[Griffel] Loader: ${logTime(totalTime)} (AST ${logTime(astTime)} | VM ${logTime(vmTime)}), avg ${logTime(avgTime)}/file, AST eval hit ${astHitPct}`);
+            console.log(`[Griffel] Plugin: ${logTime(this.#processAssetsTime)}`);
+            console.log('');
 
             for (const [filename, info] of entries) {
-              console.log(`  ${logTime(info.time)} - ${filename} (evaluation mode: ${info.evaluationMode})`);
+              const time = logTime(info.time).padStart(6);
+              const mode = info.evaluationMode === 'vm' ? 'vm ' : 'ast';
+              console.log(`  ${time} ${mode} ${filename}`);
             }
 
             console.log();
@@ -377,16 +375,13 @@ export class GriffelPlugin {
             const cjsCount = issues.filter(i => i.type === 'cjs-module').length;
             const barrelCount = issues.filter(i => i.type === 'barrel-export-star').length;
 
-            console.log('\nGriffel performance issues:');
-            console.log('------------------------------------');
-            console.log(`CJS modules (no tree-shaking): ${cjsCount}`);
-            console.log(`Barrel files with remaining export *: ${barrelCount}`);
-            console.log('------------------------------------');
+            console.log(`[Griffel] Perf issues: ${cjsCount} CJS (no tree-shaking), ${barrelCount} barrel (export *)`);
+            console.log('');
 
             for (const issue of issues) {
-              const tag = issue.type === 'cjs-module' ? 'cjs' : 'barrel';
+              const tag = issue.type === 'cjs-module' ? ' cjs' : 'barrel';
               const sources = Array.from(issue.sourceFilenames).join(', ');
-              console.log(`  [${tag}] ${issue.dependencyFilename} (source: ${sources})`);
+              console.log(`  ${tag} ${issue.dependencyFilename} (from: ${sources})`);
             }
 
             console.log();
