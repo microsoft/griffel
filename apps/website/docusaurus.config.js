@@ -11,6 +11,16 @@ const prismTheme = {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+  future: {
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+      // TODO: enable once compatible with rspackBundler
+      // https://github.com/facebook/docusaurus/issues/10556
+      useCssCascadeLayers: false,
+    },
+    experimental_faster: true,
+  },
+
   organizationName: 'microsoft',
   projectName: 'griffel',
 
@@ -103,7 +113,7 @@ const config = {
             href: 'https://github.com/microsoft/griffel',
             position: 'right',
             className: 'navbar-github-link',
-            html: 'GitHub <span aria-hidden="true" />',
+            html: 'GitHub <span aria-hidden="true"></span>',
           },
         ],
       },
