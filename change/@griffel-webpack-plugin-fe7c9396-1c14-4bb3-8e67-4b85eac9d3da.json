@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "refactor: reduce IS_RSPACK branches in webpack loader",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

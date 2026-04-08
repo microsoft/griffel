@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-plugin
 
-This log was last generated on Mon, 23 Mar 2026 16:50:27 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Apr 2026 09:35:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 4.0.1
+
+Wed, 08 Apr 2026 09:35:41 GMT
+
+### Patches
+
+- refactor(build): switch to @nx/js:tsc executor (olfedias@microsoft.com)
+- Bump @griffel/transform to v3.0.1
 
 ## 4.0.0
 

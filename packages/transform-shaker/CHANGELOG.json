@@ -2,6 +2,21 @@
   "name": "@griffel/transform-shaker",
   "entries": [
     {
+      "date": "Wed, 08 Apr 2026 09:35:41 GMT",
+      "tag": "@griffel/transform-shaker_v1.0.3",
+      "version": "1.0.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "9774fd0de3646b690a08ee544ca0b09363ece43b",
+            "comment": "refactor(build): switch to @nx/js:tsc executor"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Mar 2026 17:00:44 GMT",
       "tag": "@griffel/transform-shaker_v1.0.2",
       "version": "1.0.2",

@@ -1,8 +1,16 @@
 # Change Log - @griffel/transform-shaker
 
-This log was last generated on Fri, 13 Mar 2026 17:00:44 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Apr 2026 09:35:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.3
+
+Wed, 08 Apr 2026 09:35:41 GMT
+
+### Patches
+
+- refactor(build): switch to @nx/js:tsc executor (olfedias@microsoft.com)
 
 ## 1.0.2
 

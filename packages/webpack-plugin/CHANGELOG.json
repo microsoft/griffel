@@ -2,6 +2,35 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Wed, 08 Apr 2026 09:35:41 GMT",
+      "tag": "@griffel/webpack-plugin_v4.0.1",
+      "version": "4.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "d59353cd408c02332192e6157cd125c3e14ce8bc",
+            "comment": "refactor: reduce IS_RSPACK branches in webpack loader"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "9774fd0de3646b690a08ee544ca0b09363ece43b",
+            "comment": "refactor(build): switch to @nx/js:tsc executor"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v3.0.1",
+            "commit": "fc9f55968297f2894a8eafeaf03d9af6860f19f3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Mar 2026 16:50:27 GMT",
       "tag": "@griffel/webpack-plugin_v4.0.0",
       "version": "4.0.0",
