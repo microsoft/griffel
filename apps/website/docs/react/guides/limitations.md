@@ -20,7 +20,7 @@ function App(props) {
 }
 ```
 
-As Griffel performs ahead-of-time [compilation](/react/ahead-of-time-compilation/introduction) values used in CSS rules should be static so that they can be compiled.
+As Griffel performs ahead-of-time [compilation](/react/build-optimization/introduction) values used in CSS rules should be static so that they can be compiled.
 
 ### Workarounds
 
