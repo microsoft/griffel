@@ -144,4 +144,16 @@ describe('convertESMtoCJS', () => {
       exports["ns"] = require("./foo");"
     `);
   });
+
+  it('handles "use strict" directive with ESM exports', () => {
+    const code = '"use strict";\nexport const foo = 1;\nexport class Bar {}';
+    expect(convertESMtoCJS(code, '/test.js')).toMatchInlineSnapshot(`
+      "Object.defineProperty(exports, "__esModule", { value: true });
+      "use strict";
+      const foo = 1;
+      class Bar {}
+      exports.foo = foo;
+      exports.Bar = Bar;"
+    `);
+  });
 });
