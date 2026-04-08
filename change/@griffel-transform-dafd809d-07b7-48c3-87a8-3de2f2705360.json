@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: parse ESM files as modules in convertESMtoCJS",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
