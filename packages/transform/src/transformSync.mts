@@ -347,7 +347,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         {
           const stylesBySlots = evaluationResult as Record<string, GriffelStyle>;
           const [classnamesMapping, resolvedCSSRules] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt);
-          const uniqueCSSRules = dedupeCSSRules(cssRulesByBucket);
+          const uniqueCSSRules = dedupeCSSRules(resolvedCSSRules);
 
           if (generateMetadata) {
             buildCSSEntriesMetadata(cssEntries, classnamesMapping, uniqueCSSRules, styleCall.declaratorId);
@@ -355,7 +355,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
           // Replace the function call arguments
           magicString.overwrite(styleCall.argumentStart, styleCall.argumentEnd, `${JSON.stringify(classnamesMapping)}`);
-          cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, resolvedCSSRules);
+          cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, uniqueCSSRules);
         }
 
         break;
