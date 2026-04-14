@@ -8,6 +8,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
+  "type": "module",
   "main": "./lib/index.js",
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
