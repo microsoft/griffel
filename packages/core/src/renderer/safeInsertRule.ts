@@ -1,7 +1,7 @@
 /**
  * Suffixes to be ignored in case of error
  */
-const ignoreSuffixes = [
+const ignoreSuffixes = /*#__PURE__*/ [
   '-moz-placeholder',
   '-moz-focus-inner',
   '-moz-focusring',
@@ -9,7 +9,7 @@ const ignoreSuffixes = [
   '-moz-read-write',
   '-moz-read-only',
 ].join('|');
-const ignoreSuffixesRegex = new RegExp(`:(${ignoreSuffixes})`);
+const ignoreSuffixesRegex = /*#__PURE__*/ new RegExp(`:(${ignoreSuffixes})`);
 
 /**
  * @internal

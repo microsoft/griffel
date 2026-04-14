@@ -39,7 +39,7 @@ export const styleBucketOrdering: StyleBucketName[] = [
 ];
 
 // avoid repeatedly calling `indexOf` to determine order during new insertions
-const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
+const styleBucketOrderingMap = /*#__PURE__*/ styleBucketOrdering.reduce((acc, cur, j) => {
   acc[cur as StyleBucketName] = j;
   return acc;
 }, {} as Record<StyleBucketName, number>);

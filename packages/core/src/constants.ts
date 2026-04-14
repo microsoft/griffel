@@ -21,10 +21,13 @@ function getGlobalVar<T>(name: string, defaultValue: T): T {
 }
 
 /** @internal */
-export const DEBUG_RESET_CLASSES = getGlobalVar<Record<string, 1>>('DEBUG_RESET_CLASSES', {});
+export const DEBUG_RESET_CLASSES = /*#__PURE__*/ getGlobalVar<Record<string, 1>>('DEBUG_RESET_CLASSES', {});
 
 /** @internal */
-export const DEFINITION_LOOKUP_TABLE = getGlobalVar<Record<SequenceHash, LookupItem>>('DEFINITION_LOOKUP_TABLE', {});
+export const DEFINITION_LOOKUP_TABLE = /*#__PURE__*/ getGlobalVar<Record<SequenceHash, LookupItem>>(
+  'DEFINITION_LOOKUP_TABLE',
+  {},
+);
 
 // ----
 
