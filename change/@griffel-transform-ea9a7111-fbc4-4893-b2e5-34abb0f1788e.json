@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: deduplicate CSS rules from resolveStyleRulesForSlots",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
