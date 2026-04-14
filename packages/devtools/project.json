@@ -37,7 +37,7 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/packages/devtools"
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/devtools"
       }
     },
     "type-check": {

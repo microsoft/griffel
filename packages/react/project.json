@@ -43,7 +43,7 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/packages/react"
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/react"
       }
     },
     "bundle-size": {

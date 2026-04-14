@@ -25,7 +25,7 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/tools/update-shorthands"
+        "reportsDirectory": "{projectRoot}/../../coverage/tools/update-shorthands"
       }
     },
     "type-check": {
