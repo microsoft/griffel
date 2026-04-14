@@ -1,6 +1,6 @@
-import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants';
-import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
-import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
+import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
+import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types.js';
+import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet.js';
 
 /**
  * Ordered style buckets using their short pseudo name.

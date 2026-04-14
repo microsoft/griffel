@@ -1,7 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
 
-import { generateStyles } from './generateStyles';
-import type { PaddingInput } from './types';
+import { generateStyles } from './generateStyles.js';
+import type { PaddingInput } from './types.js';
 
 type PaddingStyle = Pick<GriffelStyle, 'paddingTop' | 'paddingRight' | 'paddingBottom' | 'paddingLeft'>;
 

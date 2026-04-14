@@ -1,9 +1,9 @@
 import { compile, middleware, serialize, stringify } from 'stylis';
 
-import { globalPlugin } from './stylis/globalPlugin';
-import { isAtRuleElement } from './stylis/isAtRuleElement';
-import { prefixerPlugin } from './stylis/prefixerPlugin';
-import { rulesheetPlugin } from './stylis/rulesheetPlugin';
+import { globalPlugin } from './stylis/globalPlugin.js';
+import { isAtRuleElement } from './stylis/isAtRuleElement.js';
+import { prefixerPlugin } from './stylis/prefixerPlugin.js';
+import { rulesheetPlugin } from './stylis/rulesheetPlugin.js';
 
 export function compileResetCSSRules(cssRules: string): [string[], string[]] {
   const rules: string[] = [];

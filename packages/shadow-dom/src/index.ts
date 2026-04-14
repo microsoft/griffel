@@ -1,2 +1,2 @@
-export { createShadowDOMRenderer } from './createShadowDOMRenderer';
-export type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
+export { createShadowDOMRenderer } from './createShadowDOMRenderer.js';
+export type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types.js';

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { textDecoration } from './textDecoration';
+import { textDecoration } from './textDecoration.js';
 
 describe('textDecoration', () => {
   it('for a given style', () => {

@@ -1,9 +1,9 @@
-import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools';
-import { insertionFactory } from './insertionFactory';
-import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
-import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelRenderer, StylesBySlots } from './types';
-import type { GriffelInsertionFactory } from './types';
+import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools/index.js';
+import { insertionFactory } from './insertionFactory.js';
+import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots.js';
+import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots.js';
+import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelRenderer, StylesBySlots } from './types.js';
+import type { GriffelInsertionFactory } from './types.js';
 
 export interface MakeStylesOptions {
   dir: 'ltr' | 'rtl';

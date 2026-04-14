@@ -1,5 +1,5 @@
 import type { Middleware } from 'stylis';
-import { isAtRuleElement } from './isAtRuleElement';
+import { isAtRuleElement } from './isAtRuleElement.js';
 
 export const sortClassesInAtRulesPlugin: Middleware = element => {
   if (isAtRuleElement(element) && Array.isArray(element.children)) {

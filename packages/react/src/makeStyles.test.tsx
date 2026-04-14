@@ -3,7 +3,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 
-import { makeStyles } from './makeStyles';
+import { makeStyles } from './makeStyles.js';
 
 describe('makeStyles', () => {
   it('works outside of React components', () => {

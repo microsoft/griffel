@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { borderStyle } from './borderStyle';
+import { borderStyle } from './borderStyle.js';
 
 describe('borderStyle', () => {
   it('for a given value', () => {

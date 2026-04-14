@@ -4,7 +4,7 @@ import type {
   TextDecorationLineInput,
   TextDecorationStyleInput,
   TextDecorationThicknessInput,
-} from './types';
+} from './types.js';
 
 type TextDecorationStyle = Pick<
   GriffelStyle,
@@ -51,7 +51,9 @@ export function textDecoration(
   ...values: [TextDecorationStyleInput?, TextDecorationColorInput?, TextDecorationThicknessInput?]
 ): TextDecorationStyle {
   if (values.length === 0) {
-    return isTextDecorationStyleInput(value) ? { textDecorationStyle: value } : { textDecorationLine: value };
+    return (
+      isTextDecorationStyleInput(value) ? { textDecorationStyle: value } : { textDecorationLine: value }
+    ) as TextDecorationStyle;
   }
 
   const [textDecorationStyle, textDecorationColor, textDecorationThickness] = values;
@@ -61,7 +63,7 @@ export function textDecoration(
     ...(textDecorationStyle && { textDecorationStyle }),
     ...(textDecorationColor && { textDecorationColor }),
     ...(textDecorationThickness && { textDecorationThickness }),
-  };
+  } as TextDecorationStyle;
 }
 
 const textDecorationStyleInputs: TextDecorationStyleInput[] = ['dashed', 'dotted', 'double', 'solid', 'wavy'];

@@ -1,8 +1,8 @@
-import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools';
-import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
-import type { GriffelRenderer, StyleBucketName } from '../types';
-import { getStyleSheetForBucket } from './getStyleSheetForBucket';
-import { safeInsertRule } from './safeInsertRule';
+import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools/index.js';
+import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry.js';
+import type { GriffelRenderer, StyleBucketName } from '../types.js';
+import { getStyleSheetForBucket } from './getStyleSheetForBucket.js';
+import { safeInsertRule } from './safeInsertRule.js';
 
 let lastIndex = 0;
 

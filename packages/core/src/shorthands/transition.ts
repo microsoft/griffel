@@ -5,7 +5,7 @@ import type {
   TransitionPropertyInput,
   TransitionTimingFunctionInput,
   TransitionGlobalInput,
-} from './types';
+} from './types.js';
 
 type TransitionInputs = [
   TransitionPropertyInput,
@@ -85,7 +85,7 @@ export function transition(
       }
       return acc;
     },
-    {},
+    {} as TransitionStyle,
   );
 }
 

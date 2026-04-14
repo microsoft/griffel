@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { BorderRadiusInput } from './types';
+import type { BorderRadiusInput } from './types.js';
 
 type BorderRadiusStyle = Pick<
   GriffelStyle,

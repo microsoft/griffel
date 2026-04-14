@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeCSSBucketEntry } from './normalizeCSSBucketEntry';
+import { normalizeCSSBucketEntry } from './normalizeCSSBucketEntry.js';
 
 describe('normalizeCSSBucketEntry', () => {
   it('should handle string entry', () => {

@@ -1,9 +1,9 @@
 import type { GriffelStaticStyles } from '@griffel/style-types';
 
-import { insertionFactory } from './insertionFactory';
-import { resolveStaticStyleRules } from './runtime/resolveStaticStyleRules';
-import type { GriffelRenderer } from './types';
-import type { GriffelInsertionFactory } from './types';
+import { insertionFactory } from './insertionFactory.js';
+import { resolveStaticStyleRules } from './runtime/resolveStaticStyleRules.js';
+import type { GriffelRenderer } from './types.js';
+import type { GriffelInsertionFactory } from './types.js';
 
 export interface MakeStaticStylesOptions {
   renderer: GriffelRenderer;

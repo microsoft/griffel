@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { transition } from './transition';
+import { transition } from './transition.js';
 
 describe('transition', () => {
   it('for a global value', () => {

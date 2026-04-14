@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { insertionFactory } from './insertionFactory';
-import type { GriffelRenderer } from './types';
+import { insertionFactory } from './insertionFactory.js';
+import type { GriffelRenderer } from './types.js';
 
 describe('insertionFactory', () => {
   it('should return a function', () => {

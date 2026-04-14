@@ -1,4 +1,4 @@
-import type { CSSRulesByBucket, GriffelInsertionFactory, GriffelRenderer } from './types';
+import type { CSSRulesByBucket, GriffelInsertionFactory, GriffelRenderer } from './types.js';
 
 /**
  * Default implementation of insertion factory. Inserts styles only once per renderer and performs

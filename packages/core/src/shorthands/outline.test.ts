@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { outline } from './outline';
+import { outline } from './outline.js';
 describe('outline', () => {
   it('for a given width', () => {
     expect(outline('2px')).toEqual({

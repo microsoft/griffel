@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { borderTop } from './borderTop';
+import { borderTop } from './borderTop.js';
 
 describe('borderTop', () => {
   it('for a given width', () => {

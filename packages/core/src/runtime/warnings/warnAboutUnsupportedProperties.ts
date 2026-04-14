@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import { logError } from './logError';
+import { logError } from './logError.js';
 
 export function warnAboutUnsupportedProperties(property: string, value: GriffelStyle[keyof GriffelStyle]) {
   const message = /*#__PURE__*/ (() =>

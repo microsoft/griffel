@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getStyleBucketName } from './getStyleBucketName';
+import { getStyleBucketName } from './getStyleBucketName.js';
 
 describe('getStyleBucketName', () => {
   it('returns bucketName based on mapping', () => {

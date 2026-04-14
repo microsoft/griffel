@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { gap } from './gap';
+import { gap } from './gap.js';
 
 describe('gap', () => {
   it('for a given gap', () => {

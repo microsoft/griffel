@@ -1,5 +1,5 @@
-import type { StyleBucketName } from '../types';
-import type { AtRules } from './utils/types';
+import type { StyleBucketName } from '../types.js';
+import type { AtRules } from './utils/types.js';
 
 /**
  * Maps the long pseudo name to the short pseudo name. Pseudos that match here will be ordered, everything else will

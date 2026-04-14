@@ -2,8 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { Mock } from 'vitest';
 import type { GriffelRenderer } from '@griffel/core';
 
-import { insertionFactory } from './insertionFactory';
-import { useInsertionEffect as _useInsertionEffect } from './useInsertionEffect';
+import { insertionFactory } from './insertionFactory.js';
+import { useInsertionEffect as _useInsertionEffect } from './useInsertionEffect.js';
 import type * as React from 'react';
 
 vi.mock('./useInsertionEffect', () => ({

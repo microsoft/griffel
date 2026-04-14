@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
-import type { StylesBySlots } from './types';
+import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots.js';
+import type { StylesBySlots } from './types.js';
 
 describe('resolveStyleRulesForSlots', () => {
   it('returns classnames and CSS rules to apply', () => {

@@ -1,7 +1,7 @@
 import { styleBucketOrdering } from '@griffel/core';
 import type { StyleBucketName } from '@griffel/core';
 
-import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
+import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types.js';
 
 const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
   acc[cur as StyleBucketName] = j;

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { compile } from 'stylis';
-import { isAtRuleElement } from './isAtRuleElement';
+import { isAtRuleElement } from './isAtRuleElement.js';
 
 describe('isAtRuleElement', () => {
   it.each([

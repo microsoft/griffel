@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi } from 'vitest';
-import { logError } from './logError';
+import { logError } from './logError.js';
 
 describe('logError', () => {
   it('does not log in Node', () => {

@@ -1,10 +1,10 @@
 import type { GriffelStyle } from '@griffel/style-types';
 
-import { borderWidth } from './borderWidth';
-import { borderStyle } from './borderStyle';
-import { borderColor } from './borderColor';
-import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
-import { isBorderStyle } from './utils';
+import { borderWidth } from './borderWidth.js';
+import { borderStyle } from './borderStyle.js';
+import { borderColor } from './borderColor.js';
+import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types.js';
+import { isBorderStyle } from './utils.js';
 
 type BorderStyle = Pick<
   GriffelStyle,

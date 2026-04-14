@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants';
-import type { GriffelRenderer } from '../types';
-import { createDOMRenderer } from './createDOMRenderer';
-import { rehydrateRendererCache } from './rehydrateRendererCache';
+import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
+import type { GriffelRenderer } from '../types.js';
+import { createDOMRenderer } from './createDOMRenderer.js';
+import { rehydrateRendererCache } from './rehydrateRendererCache.js';
 
 describe('rehydrateRendererCache', () => {
   let renderer: GriffelRenderer;

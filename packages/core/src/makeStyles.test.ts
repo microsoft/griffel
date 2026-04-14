@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { RESET } from './constants';
-import { createDOMRenderer } from './renderer/createDOMRenderer';
-import { griffelRendererSerializer } from './common/snapshotSerializers';
-import { makeStyles } from './makeStyles';
-import type { GriffelInsertionFactory, GriffelRenderer } from './types';
+import { RESET } from './constants.js';
+import { createDOMRenderer } from './renderer/createDOMRenderer.js';
+import { griffelRendererSerializer } from './common/snapshotSerializers.js';
+import { makeStyles } from './makeStyles.js';
+import type { GriffelInsertionFactory, GriffelRenderer } from './types.js';
 
 expect.addSnapshotSerializer(griffelRendererSerializer);
 

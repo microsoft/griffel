@@ -4,7 +4,7 @@ import { createDOMRenderer, rehydrateRendererCache } from '@griffel/core';
 import type { GriffelRenderer } from '@griffel/core';
 import * as React from 'react';
 
-import { canUseDOM } from './utils/canUseDOM';
+import { canUseDOM } from './utils/canUseDOM.js';
 
 export interface RendererProviderProps {
   /** An instance of Griffel renderer. */

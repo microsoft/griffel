@@ -1,8 +1,8 @@
-import { DEFINITION_LOOKUP_TABLE } from '../constants';
-import type { LookupItem, SequenceHash } from '../types';
-import { debugData } from './store';
-import type { DebugSequence } from './types';
-import { getDebugClassNames } from './utils';
+import { DEFINITION_LOOKUP_TABLE } from '../constants.js';
+import type { LookupItem, SequenceHash } from '../types.js';
+import { debugData } from './store.js';
+import type { DebugSequence } from './types.js';
+import { getDebugClassNames } from './utils.js';
 
 export function getAtomicDebugSequenceTree(debugSequenceHash: SequenceHash, parentNode?: DebugSequence) {
   const lookupItem: LookupItem | undefined = DEFINITION_LOOKUP_TABLE[debugSequenceHash];

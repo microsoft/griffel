@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { GridAreaInput } from './types';
+import type { GridAreaInput } from './types.js';
 
 type GridAreaStyle = Pick<GriffelStyle, 'gridRowStart' | 'gridRowEnd' | 'gridColumnStart' | 'gridColumnEnd'>;
 
@@ -64,7 +64,7 @@ export function gridArea(...values: GridAreaInput[]): GridAreaStyle {
       );
     }
 
-    return {};
+    return {} as GridAreaStyle;
   }
   const gridRowStart = values[0] !== undefined ? values[0] : 'auto';
 

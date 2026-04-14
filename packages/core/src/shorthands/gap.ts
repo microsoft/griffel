@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { GapInput } from './types';
+import type { GapInput } from './types.js';
 
 type GapStyle = Pick<GriffelStyle, 'columnGap' | 'rowGap'>;
 

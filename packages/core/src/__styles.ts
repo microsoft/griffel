@@ -1,8 +1,8 @@
-import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools';
-import { insertionFactory } from './insertionFactory';
-import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelInsertionFactory } from './types';
-import type { MakeStylesOptions } from './makeStyles';
+import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools/index.js';
+import { insertionFactory } from './insertionFactory.js';
+import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots.js';
+import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelInsertionFactory } from './types.js';
+import type { MakeStylesOptions } from './makeStyles.js';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms.

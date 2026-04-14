@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import type { LookupItem } from '../types';
-import type { DebugSequence } from './types';
-import { getDebugClassNames } from './utils';
+import type { LookupItem } from '../types.js';
+import type { DebugSequence } from './types.js';
+import { getDebugClassNames } from './utils.js';
 
 describe('getDebugClassNames', () => {
   it('handles no parent debug node', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { gridArea, isCustomIdent } from './gridArea';
+import { gridArea, isCustomIdent } from './gridArea.js';
 
 it('isCustomIdent', () => {
   expect(isCustomIdent('auto')).toBe(false);

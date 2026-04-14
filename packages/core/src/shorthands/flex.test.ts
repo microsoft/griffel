@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { flex } from './flex';
+import { flex } from './flex.js';
 
 describe('flex', () => {
   it('for a given value auto', () => {

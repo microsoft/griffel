@@ -3,8 +3,8 @@
 import { __staticStyles as vanillaStaticStyles } from '@griffel/core';
 import type { CSSRulesByBucket } from '@griffel/core';
 
-import { insertionFactory } from './insertionFactory';
-import { useRenderer } from './RendererContext';
+import { insertionFactory } from './insertionFactory.js';
+import { useRenderer } from './RendererContext.js';
 
 /**
  * A version of makeStaticStyles() that accepts build output as an input and skips all runtime transforms.

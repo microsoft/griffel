@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { borderWidth } from './borderWidth';
+import { borderWidth } from './borderWidth.js';
 
 describe('borderWidth', () => {
   it('for a given value', () => {

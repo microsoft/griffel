@@ -1,7 +1,7 @@
 import type * as CSS from 'csstype';
 
 import type { GriffelStyle } from '@griffel/style-types';
-import type { FlexInput } from './types';
+import type { FlexInput } from './types.js';
 
 type FlexStyle = Pick<GriffelStyle, 'flexGrow' | 'flexShrink' | 'flexBasis'>;
 

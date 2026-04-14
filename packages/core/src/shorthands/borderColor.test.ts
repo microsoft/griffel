@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { borderColor } from './borderColor';
+import { borderColor } from './borderColor.js';
 
 describe('borderColor', () => {
   it('for a given value', () => {

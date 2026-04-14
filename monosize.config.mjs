@@ -16,16 +16,6 @@ export default {
         '@griffel/react': path.resolve(dirname, './dist/packages/react/src/index.js'),
       },
     },
-    module: {
-      ...config.module,
-      rules: [
-        ...(config.module?.rules || []),
-        {
-          test: /\.js$/,
-          resolve: { fullySpecified: false },
-        },
-      ],
-    },
   })),
   storage: upstashStorage({
     url: 'https://welcome-giraffe-61766.upstash.io',

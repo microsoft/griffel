@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { marginInline } from './marginInline';
+import { marginInline } from './marginInline.js';
 
 describe('marginInline', () => {
   it('for a given value', () => {

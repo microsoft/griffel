@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { inset } from './inset';
+import { inset } from './inset.js';
 
 describe('inset', () => {
   it('for a given value', () => {

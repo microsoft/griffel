@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import type { StyleBucketName } from '@griffel/core';
 
-import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint';
-import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
+import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint.js';
+import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types.js';
 
 function createRendererMock(adoptedStyleSheets: ExtendedCSSStyleSheet[]) {
   const mediaQueryOrder = ['(max-width: 1px)', '(max-width: 2px)', '(max-width: 3px)', '(max-width: 4px)'];

@@ -1,8 +1,8 @@
 import hashString from '@emotion/hash';
 
-import { HASH_PREFIX } from '../../constants';
-import { atRulesToString } from './hashPropertyKey';
-import type { AtRules } from './types';
+import { HASH_PREFIX } from '../../constants.js';
+import { atRulesToString } from './hashPropertyKey.js';
+import type { AtRules } from './types.js';
 
 interface HashedClassNameParts {
   property: string;

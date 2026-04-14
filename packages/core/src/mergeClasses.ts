@@ -6,10 +6,10 @@ import {
   RESET_HASH_PREFIX,
   SEQUENCE_PREFIX,
   SEQUENCE_SIZE,
-} from './constants';
-import { hashSequence } from './runtime/utils/hashSequence';
-import { reduceToClassName } from './runtime/reduceToClassNameForSlots';
-import type { CSSClassesMap, SequenceHash } from './types';
+} from './constants.js';
+import { hashSequence } from './runtime/utils/hashSequence.js';
+import { reduceToClassName } from './runtime/reduceToClassNameForSlots.js';
+import type { CSSClassesMap, SequenceHash } from './types.js';
 
 // Contains a mapping of previously resolved sequences of atomic classnames
 export const mergeClassesCachedResults: Record<string, string> = {};

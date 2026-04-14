@@ -1,4 +1,4 @@
-import { parseStackTraceLine } from './react-render-tracker/stackTrace';
+import { parseStackTraceLine } from './react-render-tracker/stackTrace.js';
 
 export function getSourceURLfromError() {
   const stacks = String(new Error().stack).split('\n');

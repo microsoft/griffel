@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { prefix } from './prefixerPlugin';
+import { prefix } from './prefixerPlugin.js';
 
 const globalCssValues = ['inherit', 'initial', 'unset', 'revert', 'revert-layer'];
 

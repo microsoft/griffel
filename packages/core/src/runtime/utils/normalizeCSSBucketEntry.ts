@@ -1,4 +1,4 @@
-import type { CSSBucketEntry } from '../../types';
+import type { CSSBucketEntry } from '../../types.js';
 
 /**
  * @internal

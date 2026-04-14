@@ -5,7 +5,7 @@
 // 👆 this is intentionally to test in SSR like environment
 
 import { describe, it, expect } from 'vitest';
-import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
+import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet.js';
 
 describe('createIsomorphicStyleElement - node', () => {
   it('should insert css rule', () => {

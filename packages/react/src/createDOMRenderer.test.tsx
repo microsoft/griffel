@@ -5,11 +5,11 @@ import * as React from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { makeStyles } from './makeStyles';
-import { makeResetStyles } from './makeResetStyles';
-import { RendererProvider } from './RendererContext';
-import { renderToStyleElements } from './renderToStyleElements';
-import { useInsertionEffect as _useInsertionEffect } from './useInsertionEffect';
+import { makeStyles } from './makeStyles.js';
+import { makeResetStyles } from './makeResetStyles.js';
+import { RendererProvider } from './RendererContext.js';
+import { renderToStyleElements } from './renderToStyleElements.js';
+import { useInsertionEffect as _useInsertionEffect } from './useInsertionEffect.js';
 
 vi.mock('./useInsertionEffect', () => ({
   useInsertionEffect: vi.fn(),

@@ -1,5 +1,5 @@
-import { SEQUENCE_PREFIX, DEBUG_RESET_CLASSES } from '../constants';
-import { mergeDebugSequence } from './mergeDebugSequence';
+import { SEQUENCE_PREFIX, DEBUG_RESET_CLASSES } from '../constants.js';
+import { mergeDebugSequence } from './mergeDebugSequence.js';
 
 export function injectDevTools(document: Document) {
   const window = document.defaultView;

@@ -1,6 +1,6 @@
-import type { SequenceHash } from '../types';
-import { SEQUENCE_PREFIX, SEQUENCE_SIZE } from '../constants';
-import { mergeClassesCachedResults } from '../mergeClasses';
+import type { SequenceHash } from '../types.js';
+import { SEQUENCE_PREFIX, SEQUENCE_SIZE } from '../constants.js';
+import { mergeClassesCachedResults } from '../mergeClasses.js';
 
 const sequenceDetails: Record<SequenceHash, { slotName: string; sourceURL?: string }> = {};
 

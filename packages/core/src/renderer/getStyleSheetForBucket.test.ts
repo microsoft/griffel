@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { DATA_BUCKET_ATTR } from '../constants';
-import { createDOMRenderer } from './createDOMRenderer';
-import { getStyleSheetForBucket, styleBucketOrdering } from './getStyleSheetForBucket';
+import { DATA_BUCKET_ATTR } from '../constants.js';
+import { createDOMRenderer } from './createDOMRenderer.js';
+import { getStyleSheetForBucket, styleBucketOrdering } from './getStyleSheetForBucket.js';
 
 function createFakeDocument(): Document {
   const doc = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);

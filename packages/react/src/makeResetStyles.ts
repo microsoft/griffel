@@ -3,10 +3,10 @@
 import { makeResetStyles as vanillaMakeResetStyles } from '@griffel/core';
 import type { GriffelResetStyle } from '@griffel/core';
 
-import { insertionFactory } from './insertionFactory';
-import { useRenderer } from './RendererContext';
-import { useTextDirection } from './TextDirectionContext';
-import { isInsideComponent } from './utils/isInsideComponent';
+import { insertionFactory } from './insertionFactory.js';
+import { useRenderer } from './RendererContext.js';
+import { useTextDirection } from './TextDirectionContext.js';
+import { isInsideComponent } from './utils/isInsideComponent.js';
 
 export function makeResetStyles(styles: GriffelResetStyle) {
   const getStyles = vanillaMakeResetStyles(styles, insertionFactory);

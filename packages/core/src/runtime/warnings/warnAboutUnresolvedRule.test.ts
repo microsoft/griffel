@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { warnAboutUnresolvedRule } from './warnAboutUnresolvedRule';
-import { logError } from './logError';
+import { warnAboutUnresolvedRule } from './warnAboutUnresolvedRule.js';
+import { logError } from './logError.js';
 
 vi.mock('./logError', () => ({ logError: vi.fn() }));
 

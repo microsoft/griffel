@@ -3,7 +3,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 
-import { makeResetStyles } from './makeResetStyles';
+import { makeResetStyles } from './makeResetStyles.js';
 
 describe('makeResetStyles', () => {
   it('works outside of React components', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { overflow } from './overflow';
+import { overflow } from './overflow.js';
 
 describe('overflow', () => {
   it('for a given value', () => {
