@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: use fileURLToPath for Windows path compatibility",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "hy.liu@berkeley.edu",
+  "dependentChangeType": "patch"
+}

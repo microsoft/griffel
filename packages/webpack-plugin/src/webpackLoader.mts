@@ -1,6 +1,7 @@
 import { EvalCache, transformSync, type TransformOptions, type TransformResult } from '@griffel/transform';
 import type * as webpack from 'webpack';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
 import { generateCSSRules } from './utils/generateCSSRules.mjs';
@@ -10,7 +11,7 @@ export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generate
 
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // TODO: do something better, define via exports?
 const virtualLoaderPath = path.resolve(__dirname, 'virtual-loader', 'index.cjs');
 const virtualCSSFilePath = path.resolve(__dirname, 'virtual-loader', 'griffel.css');
