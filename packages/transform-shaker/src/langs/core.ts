@@ -232,6 +232,19 @@ export const visitors = {
 
     this.graph.addEdge(node, node.body);
 
+    // PropertyDefinition nodes are not expressions, so baseVisit doesn't add dependency edges
+    // for their children. Without explicit edges, a class field's initializer can be removed
+    // even when the field itself is alive (producing `field = ;` which is invalid syntax).
+    for (const member of node.body.body) {
+      if (member.type === 'PropertyDefinition') {
+        this.graph.addEdge(member, (member as unknown as { key: Node }).key);
+        const value = (member as unknown as { value: Node | null }).value;
+        if (value) {
+          this.graph.addEdge(member, value);
+        }
+      }
+    }
+
     if (node.superClass) {
       this.graph.addEdge(node, node.superClass);
     }

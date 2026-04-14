@@ -462,3 +462,18 @@ it('preserves labeled statement label', () => {
 
   expect(shaken).toMatchSnapshot();
 });
+
+it('preserves class field initializers when class is alive', () => {
+  const [shaken] = _shake(['Foo'])`
+    const DEFAULTS = { color: "red" };
+    export class Foo {
+      field1 = DEFAULTS.color;
+      field2;
+      field3 = "literal";
+    }
+  `;
+
+  expect(shaken).toContain('field1 = DEFAULTS.color');
+  expect(shaken).toContain('field2;');
+  expect(shaken).toContain('field3 = "literal"');
+});
