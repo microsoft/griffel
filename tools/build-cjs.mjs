@@ -1,5 +1,5 @@
 /**
- * Converts ESM .js files to CJS .js files using SWC.
+ * Converts ESM .js files to CJS .cjs files using SWC.
  *
  * Usage: node tools/build-cjs.mjs <esm-dir> <cjs-dir>
  */
@@ -34,7 +34,7 @@ const jsFiles = collectJsFiles(absEsmDir);
 
 for (const absInput of jsFiles) {
   const rel = relative(absEsmDir, absInput);
-  const absOutput = join(absCjsDir, rel);
+  const absOutput = join(absCjsDir, rel.replace(/\.js$/, '.cjs'));
 
   const result = transformFileSync(absInput, {
     module: { type: 'commonjs' },
@@ -45,8 +45,11 @@ for (const absInput of jsFiles) {
     sourceMaps: false,
   });
 
+  // Rewrite .js requires to .cjs
+  const cjsCode = result.code.replace(/(require\(["']\.\.?\/[^"']+)\.js(["']\))/g, '$1.cjs$2');
+
   mkdirSync(dirname(absOutput), { recursive: true });
-  writeFileSync(absOutput, result.code);
+  writeFileSync(absOutput, cjsCode);
 }
 
 console.log(`Converted ${jsFiles.length} ESM → CJS files into ${cjsDir}`);

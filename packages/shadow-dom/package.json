@@ -9,14 +9,14 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "./lib/index.js",
+  "main": "./lib/index.cjs",
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
   "exports": {
     ".": {
       "types": "./src/index.d.ts",
       "import": "./src/index.js",
-      "require": "./lib/index.js"
+      "require": "./lib/index.cjs"
     },
     "./package.json": "./package.json"
   },
