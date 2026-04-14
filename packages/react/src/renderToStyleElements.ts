@@ -1,7 +1,8 @@
 'use client';
 
 import { styleBucketOrdering } from '@griffel/core';
-import * as React from 'react';
+import { createElement } from 'react';
+import type { ReactElement } from 'react';
 import type { GriffelRenderer } from '@griffel/core';
 
 /**
@@ -9,7 +10,7 @@ import type { GriffelRenderer } from '@griffel/core';
  *
  * @public
  */
-export function renderToStyleElements(renderer: GriffelRenderer): React.ReactElement[] {
+export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[] {
   const stylesheets = Object.values(renderer.stylesheets)
     // first sort: bucket by order [data-priority]
     .sort((a, b) => {
@@ -43,7 +44,7 @@ export function renderToStyleElements(renderer: GriffelRenderer): React.ReactEle
         return null;
       }
 
-      return React.createElement('style', {
+      return createElement('style', {
         key: stylesheet.bucketName,
 
         // TODO: support "nonce"
@@ -56,5 +57,5 @@ export function renderToStyleElements(renderer: GriffelRenderer): React.ReactEle
         },
       });
     })
-    .filter(Boolean) as React.ReactElement[];
+    .filter(Boolean) as ReactElement[];
 }

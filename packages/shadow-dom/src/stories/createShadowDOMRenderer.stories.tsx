@@ -4,7 +4,7 @@ import type { default as _root } from 'react-shadow';
 import { createProxy as _createProxy } from 'react-shadow';
 
 import { makeStyles, RendererProvider, shorthands } from '@griffel/react';
-import { createShadowDOMRenderer } from '../../src';
+import { createShadowDOMRenderer } from '../../src/index.js';
 
 type Root = typeof _root;
 

@@ -1,6 +1,6 @@
-import { getAtomicDebugSequenceTree } from './getAtomicDebugSequenceTree';
-import { getResetDebugSequence } from './getResetDebugSequence';
-import type { DebugSequence } from './types';
+import { getAtomicDebugSequenceTree } from './getAtomicDebugSequenceTree.js';
+import { getResetDebugSequence } from './getResetDebugSequence.js';
+import type { DebugSequence } from './types.js';
 
 export function mergeDebugSequence(
   atomicClases: string | undefined,

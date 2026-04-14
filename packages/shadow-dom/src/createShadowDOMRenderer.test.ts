@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createShadowDOMRenderer } from './createShadowDOMRenderer';
-import type { ExtendedCSSStyleSheet } from './types';
+import { createShadowDOMRenderer } from './createShadowDOMRenderer.js';
+import type { ExtendedCSSStyleSheet } from './types.js';
 
 type CSSStyleSheetWithId = CSSStyleSheet & { id: string };
 

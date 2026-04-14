@@ -1,7 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
 
-import { generateStyles } from './generateStyles';
-import type { MarginInput } from './types';
+import { generateStyles } from './generateStyles.js';
+import type { MarginInput } from './types.js';
 
 type MarginStyle = Pick<GriffelStyle, 'marginTop' | 'marginRight' | 'marginBottom' | 'marginLeft'>;
 

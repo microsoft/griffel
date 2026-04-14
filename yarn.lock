@@ -15143,7 +15143,6 @@ __metadata:
     "@nx/js": "npm:22.6.5"
     "@nx/node": "npm:22.6.5"
     "@nx/react": "npm:22.6.5"
-    "@nx/rollup": "npm:22.6.5"
     "@nx/storybook": "npm:22.6.5"
     "@nx/vite": "npm:22.6.5"
     "@nx/vitest": "npm:22.6.5"
@@ -15235,7 +15234,6 @@ __metadata:
     react-dom: "npm:18.3.1"
     react-refresh: "npm:^0.10.0"
     react-shadow: "npm:^20.2.0"
-    rollup-plugin-preserve-directives: "npm:^0.4.0"
     rtl-css-js: "npm:^1.16.1"
     simple-git-hooks: "npm:2.7.0"
     snapshot-diff: "npm:0.10.0"
@@ -23350,18 +23348,6 @@ __metadata:
   version: 3.0.1
   resolution: "robust-predicates@npm:3.0.1"
   checksum: 10/99a3feb54a195f88c8118114cf4a535e915d2eafd259bcb517e161e8d2af4cf84730313c7e70ac98b9a04e23d7e789bfe50a703b2874745ffe1c0e09e4e4f22d
-  languageName: node
-  linkType: hard
-
-"rollup-plugin-preserve-directives@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "rollup-plugin-preserve-directives@npm:0.4.0"
-  dependencies:
-    "@rollup/pluginutils": "npm:^5.1.0"
-    magic-string: "npm:^0.30.5"
-  peerDependencies:
-    rollup: 2.x || 3.x || 4.x
-  checksum: 10/2ed0eeeb342ad87b9ec6c0521279c21b8680709e43da66b956cf111783852c01e167d463860b8e5a5b7385cf4d807d71d448eb9bf8179e1b336d777d6f7fe5b8
   languageName: node
   linkType: hard
 

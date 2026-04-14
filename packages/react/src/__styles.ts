@@ -3,9 +3,9 @@
 import { __styles as vanillaStyles } from '@griffel/core';
 import type { CSSClassesMapBySlot, CSSRulesByBucket } from '@griffel/core';
 
-import { insertionFactory } from './insertionFactory';
-import { useRenderer } from './RendererContext';
-import { useTextDirection } from './TextDirectionContext';
+import { insertionFactory } from './insertionFactory.js';
+import { useRenderer } from './RendererContext.js';
+import { useTextDirection } from './TextDirectionContext.js';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms.

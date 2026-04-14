@@ -1,5 +1,5 @@
-import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants';
-import type { IsomorphicStyleSheet, StyleBucketName } from '../types';
+import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
+import type { IsomorphicStyleSheet, StyleBucketName } from '../types.js';
 
 export function createIsomorphicStyleSheet(
   styleElement: HTMLStyleElement | undefined,

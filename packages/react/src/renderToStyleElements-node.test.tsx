@@ -10,10 +10,10 @@ import * as prettier from 'prettier';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 
-import { makeStyles } from './makeStyles';
-import { makeResetStyles } from './makeResetStyles';
-import { RendererProvider } from './RendererContext';
-import { renderToStyleElements } from './renderToStyleElements';
+import { makeStyles } from './makeStyles.js';
+import { makeResetStyles } from './makeResetStyles.js';
+import { RendererProvider } from './RendererContext.js';
+import { renderToStyleElements } from './renderToStyleElements.js';
 
 expect.addSnapshotSerializer({
   test(value) {

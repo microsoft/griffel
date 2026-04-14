@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { borderRight } from './borderRight';
+import { borderRight } from './borderRight.js';
 
 describe('borderRight', () => {
   it('for a given width', () => {

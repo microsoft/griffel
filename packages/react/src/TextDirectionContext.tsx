@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 
 export interface TextDirectionProviderProps {
   /** Indicates the directionality of the element's text. */
@@ -15,7 +15,7 @@ export interface TextDirectionProviderProps {
 /**
  * @private
  */
-const TextDirectionContext = React.createContext<'ltr' | 'rtl'>('ltr');
+const TextDirectionContext = /*#__PURE__*/ React.createContext<'ltr' | 'rtl'>('ltr');
 
 /**
  * @public

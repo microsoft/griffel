@@ -1,8 +1,8 @@
 import type { GriffelStaticStyles } from '@griffel/style-types';
 
-import type { CSSBucketEntry } from '../types';
-import { compileCSSRules } from './compileCSSRules';
-import { compileStaticCSS } from './compileStaticCSS';
+import type { CSSBucketEntry } from '../types.js';
+import { compileCSSRules } from './compileCSSRules.js';
+import { compileStaticCSS } from './compileStaticCSS.js';
 
 export function resolveStaticStyleRules(stylesSet: GriffelStaticStyles[]): CSSBucketEntry[] {
   return stylesSet.reduce((acc, styles) => {

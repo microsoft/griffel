@@ -1,7 +1,7 @@
 import hash from '@emotion/hash';
 
-import { DEBUG_SEQUENCE_SEPARATOR, SEQUENCE_HASH_LENGTH, SEQUENCE_PREFIX } from '../../constants';
-import type { SequenceHash } from '../../types';
+import { DEBUG_SEQUENCE_SEPARATOR, SEQUENCE_HASH_LENGTH, SEQUENCE_PREFIX } from '../../constants.js';
+import type { SequenceHash } from '../../types.js';
 
 function padEndHash(value: string): string {
   const hashLength = value.length;

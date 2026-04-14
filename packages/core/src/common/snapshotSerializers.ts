@@ -1,11 +1,11 @@
 import type { SnapshotSerializer } from 'vitest';
 import * as prettier from 'prettier';
 
-import { DATA_BUCKET_ATTR } from '../constants';
-import type { resolveStyleRules } from '../runtime/resolveStyleRules';
-import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry';
-import type { CSSRulesByBucket, GriffelRenderer } from '../types';
-import type { resolveResetStyleRules } from '../runtime/resolveResetStyleRules';
+import { DATA_BUCKET_ATTR } from '../constants.js';
+import type { resolveStyleRules } from '../runtime/resolveStyleRules.js';
+import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry.js';
+import type { CSSRulesByBucket, GriffelRenderer } from '../types.js';
+import type { resolveResetStyleRules } from '../runtime/resolveResetStyleRules.js';
 
 // eslint-disable-next-line eqeqeq
 const isObject = (value: unknown) => value != null && !Array.isArray(value) && typeof value === 'object';

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { hashClassName } from './hashClassName';
+import { hashClassName } from './hashClassName.js';
 
 const defaultOptions = {
   property: 'color',

@@ -1,7 +1,7 @@
-import { DEBUG_RESET_CLASSES } from './constants';
-import { insertionFactory } from './insertionFactory';
-import type { MakeResetStylesOptions } from './makeResetStyles';
-import type { CSSRulesByBucket, GriffelInsertionFactory } from './types';
+import { DEBUG_RESET_CLASSES } from './constants.js';
+import { insertionFactory } from './insertionFactory.js';
+import type { MakeResetStylesOptions } from './makeResetStyles.js';
+import type { CSSRulesByBucket, GriffelInsertionFactory } from './types.js';
 
 /**
  * @internal

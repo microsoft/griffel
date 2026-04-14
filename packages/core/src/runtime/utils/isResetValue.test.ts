@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { RESET } from '../../constants';
-import { isResetValue } from './isResetValue';
+import { RESET } from '../../constants.js';
+import { isResetValue } from './isResetValue.js';
 
 describe('isResetValue', () => {
   it('returns "true" for reset style value', () => {

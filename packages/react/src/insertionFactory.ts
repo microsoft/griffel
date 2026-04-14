@@ -2,8 +2,8 @@
 
 import type { CSSRulesByBucket, GriffelInsertionFactory, GriffelRenderer } from '@griffel/core';
 
-import { canUseDOM } from './utils/canUseDOM';
-import { useInsertionEffect } from './useInsertionEffect';
+import { canUseDOM } from './utils/canUseDOM.js';
+import { useInsertionEffect } from './useInsertionEffect.js';
 
 export const insertionFactory: GriffelInsertionFactory = () => {
   const insertionCache: Record<string, boolean> = {};

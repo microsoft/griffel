@@ -6,10 +6,10 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { makeStyles } from './makeStyles';
-import { makeResetStyles } from './makeResetStyles';
-import { RendererProvider } from './RendererContext';
-import { renderToStyleElements } from './renderToStyleElements';
+import { makeStyles } from './makeStyles.js';
+import { makeResetStyles } from './makeResetStyles.js';
+import { RendererProvider } from './RendererContext.js';
+import { renderToStyleElements } from './renderToStyleElements.js';
 
 expect.addSnapshotSerializer({
   test(value) {

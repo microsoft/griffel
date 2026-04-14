@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { compile, middleware, serialize, stringify } from 'stylis';
-import { globalPlugin } from './globalPlugin';
+import { globalPlugin } from './globalPlugin.js';
 
 function compileRule(rule: string) {
   return serialize(compile(rule), middleware([globalPlugin, stringify]));

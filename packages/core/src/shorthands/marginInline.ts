@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { MarginInlineInput } from './types';
+import type { MarginInlineInput } from './types.js';
 
 type MarginInlineStyle = Pick<GriffelStyle, 'marginInlineStart' | 'marginInlineEnd'>;
 

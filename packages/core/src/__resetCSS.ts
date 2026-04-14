@@ -1,5 +1,5 @@
-import { DEBUG_RESET_CLASSES } from './constants';
-import type { MakeResetStylesOptions } from './makeResetStyles';
+import { DEBUG_RESET_CLASSES } from './constants.js';
+import type { MakeResetStylesOptions } from './makeResetStyles.js';
 
 /**
  * @internal

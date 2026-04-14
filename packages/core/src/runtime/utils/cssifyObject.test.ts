@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cssifyObject } from './cssifyObject';
+import { cssifyObject } from './cssifyObject.js';
 
 describe('cssifyObject', () => {
   it('should generate a valid CSS string', () => {

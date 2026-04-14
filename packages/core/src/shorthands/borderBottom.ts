@@ -1,7 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
 
-import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types';
-import { isBorderStyle } from './utils';
+import type { BorderColorInput, BorderStyleInput, BorderWidthInput } from './types.js';
+import { isBorderStyle } from './utils.js';
 
 type BorderBottomStyle = Pick<GriffelStyle, 'borderBottomColor' | 'borderBottomStyle' | 'borderBottomWidth'>;
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { compileCSSRules } from './compileCSSRules';
+import { compileCSSRules } from './compileCSSRules.js';
 
 describe('compileCSSRules', () => {
   it('compiles CSS rules', () => {

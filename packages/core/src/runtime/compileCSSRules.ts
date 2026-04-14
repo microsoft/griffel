@@ -1,8 +1,8 @@
 import { compile, middleware, rulesheet, serialize, stringify } from 'stylis';
 
-import { globalPlugin } from './stylis/globalPlugin';
-import { prefixerPlugin } from './stylis/prefixerPlugin';
-import { sortClassesInAtRulesPlugin } from './stylis/sortClassesInAtRulesPlugin';
+import { globalPlugin } from './stylis/globalPlugin.js';
+import { prefixerPlugin } from './stylis/prefixerPlugin.js';
+import { sortClassesInAtRulesPlugin } from './stylis/sortClassesInAtRulesPlugin.js';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 function noop() {}

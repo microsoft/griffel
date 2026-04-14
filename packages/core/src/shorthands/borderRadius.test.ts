@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { borderRadius } from './borderRadius';
+import { borderRadius } from './borderRadius.js';
 
 describe('borderRadius', () => {
   it('for a given length', () => {

@@ -1,6 +1,6 @@
-import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants';
-import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types';
-import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet';
+import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
+import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types.js';
+import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet.js';
 
 /**
  * Ordered style buckets using their short pseudo name.
@@ -39,7 +39,7 @@ export const styleBucketOrdering: StyleBucketName[] = [
 ];
 
 // avoid repeatedly calling `indexOf` to determine order during new insertions
-const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
+const styleBucketOrderingMap = /*#__PURE__*/ styleBucketOrdering.reduce((acc, cur, j) => {
   acc[cur as StyleBucketName] = j;
   return acc;
 }, {} as Record<StyleBucketName, number>);

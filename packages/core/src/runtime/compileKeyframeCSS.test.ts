@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import type { GriffelAnimation } from '@griffel/style-types';
-import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS';
+import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS.js';
 
 describe('compileKeyframeRule', () => {
   it('stringifies an object with keyframes', () => {

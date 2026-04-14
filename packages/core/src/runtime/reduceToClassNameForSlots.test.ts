@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { reduceToClassName, reduceToClassNameForSlots } from './reduceToClassNameForSlots';
-import type { CSSClassesMap } from '../types';
+import { reduceToClassName, reduceToClassNameForSlots } from './reduceToClassNameForSlots.js';
+import type { CSSClassesMap } from '../types.js';
 
 describe('reduceToClassName', () => {
   it('should compute class string', () => {

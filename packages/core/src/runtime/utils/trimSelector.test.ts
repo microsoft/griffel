@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { trimSelector } from './trimSelector';
+import { trimSelector } from './trimSelector.js';
 
 describe('trimSelector', () => {
   it('trims ">"', () => {

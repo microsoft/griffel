@@ -6,33 +6,30 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shadow-dom",
         "tsConfig": "packages/shadow-dom/tsconfig.lib.json",
         "skipTypeField": true,
-        "skipTypeCheck": true,
-        "project": "packages/shadow-dom/package.json",
-        "entryFile": "packages/shadow-dom/src/index.ts",
-        "compiler": "babel",
-        "sourceMap": true,
-        "useLegacyTypescriptPlugin": true,
-        "rollupConfig": ["@nx/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
-        "external": ["tslib"],
-        "format": ["esm", "cjs"],
+        "packageJson": "packages/shadow-dom/package.json",
+        "main": "packages/shadow-dom/src/index.ts",
         "assets": [
-          {
-            "glob": "packages/shadow-dom/README.md",
-            "input": ".",
-            "output": "."
-          },
+          "packages/shadow-dom/README.md",
           {
             "glob": "LICENSE.md",
             "input": ".",
             "output": "."
           }
         ]
+      }
+    },
+    "build-cjs": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/shadow-dom/lib"],
+      "options": {
+        "command": "node tools/build-cjs.mjs dist/packages/shadow-dom/src dist/packages/shadow-dom/lib"
       }
     },
     "lint": {
@@ -48,11 +45,7 @@
     },
     "bundle-size": {
       "executor": "nx:run-commands",
-      "dependsOn": [
-        {
-          "target": "build"
-        }
-      ],
+      "dependsOn": ["build"],
       "options": {
         "cwd": "packages/shadow-dom",
         "commands": [

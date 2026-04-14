@@ -1,7 +1,7 @@
 import hash from '@emotion/hash';
 
-import type { PropertyHash } from '../../types';
-import type { AtRules } from './types';
+import type { PropertyHash } from '../../types.js';
+import type { AtRules } from './types.js';
 
 function addAtRulePrefix(atRule: string, prefix: string): string {
   return atRule ? prefix + atRule : atRule;

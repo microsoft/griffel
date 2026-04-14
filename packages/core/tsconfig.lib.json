@@ -1,7 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "outDir": "../../dist/out-tsc",
+    "declaration": true,
     "types": ["node", "environment"]
   },
   "exclude": [
@@ -13,7 +16,9 @@
     "**/*.test.js",
     "**/*.spec.jsx",
     "**/*.test.jsx",
-    "jest.config.ts"
+    "jest.config.ts",
+    "vitest.config.ts",
+    "bundle-size/**"
   ],
-  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

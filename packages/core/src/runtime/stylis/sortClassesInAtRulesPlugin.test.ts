@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { SnapshotSerializer } from 'vitest';
 import { compile, middleware, serialize, stringify } from 'stylis';
-import { sortClassesInAtRulesPlugin } from './sortClassesInAtRulesPlugin';
+import { sortClassesInAtRulesPlugin } from './sortClassesInAtRulesPlugin.js';
 import * as prettier from 'prettier';
 
 const cssFormatSerializer: SnapshotSerializer = {

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix: add esModuleInterop for tsc -b compatibility",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

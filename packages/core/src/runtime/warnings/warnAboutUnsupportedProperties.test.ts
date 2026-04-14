@@ -1,8 +1,8 @@
 import { it, expect, vi } from 'vitest';
 import type { Mock } from 'vitest';
 
-import { warnAboutUnsupportedProperties } from './warnAboutUnsupportedProperties';
-import { logError } from './logError';
+import { warnAboutUnsupportedProperties } from './warnAboutUnsupportedProperties.js';
+import { logError } from './logError.js';
 
 vi.mock('./logError', () => ({ logError: vi.fn() }));
 

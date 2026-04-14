@@ -3,8 +3,8 @@
 import { makeStaticStyles as vanillaMakeStaticStyles } from '@griffel/core';
 import type { GriffelStaticStyles, MakeStaticStylesOptions } from '@griffel/core';
 
-import { insertionFactory } from './insertionFactory';
-import { useRenderer } from './RendererContext';
+import { insertionFactory } from './insertionFactory.js';
+import { useRenderer } from './RendererContext.js';
 
 export function makeStaticStyles(styles: GriffelStaticStyles | GriffelStaticStyles[]) {
   const getStyles = vanillaMakeStaticStyles(styles, insertionFactory);

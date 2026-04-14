@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import type { SnapshotSerializer } from 'vitest';
 
-import { mergeClasses } from './mergeClasses';
-import { makeStyles } from './makeStyles';
-import type { MakeStylesOptions } from './makeStyles';
-import { createDOMRenderer } from './renderer/createDOMRenderer';
-import { RESET, SEQUENCE_PREFIX, SEQUENCE_SIZE } from './constants';
-import { makeResetStyles } from './makeResetStyles';
+import { mergeClasses } from './mergeClasses.js';
+import { makeStyles } from './makeStyles.js';
+import type { MakeStylesOptions } from './makeStyles.js';
+import { createDOMRenderer } from './renderer/createDOMRenderer.js';
+import { RESET, SEQUENCE_PREFIX, SEQUENCE_SIZE } from './constants.js';
+import { makeResetStyles } from './makeResetStyles.js';
 
 function removeSequenceHash(classNames: string) {
   const indexOfSequence = classNames.indexOf(SEQUENCE_PREFIX);

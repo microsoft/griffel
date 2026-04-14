@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { InsetInput } from './types';
+import type { InsetInput } from './types.js';
 
 type InsetStyle = Pick<GriffelStyle, 'top' | 'right' | 'bottom' | 'left'>;
 

@@ -6,33 +6,30 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/core",
         "tsConfig": "packages/core/tsconfig.lib.json",
         "skipTypeField": true,
-        "skipTypeCheck": true,
-        "project": "packages/core/package.json",
-        "entryFile": "packages/core/src/index.ts",
-        "useLegacyTypescriptPlugin": true,
-        "rollupConfig": "tools/getRollupOptions.js",
-        "compiler": "babel",
-        "sourceMap": true,
-        "external": ["tslib"],
-        "format": ["esm", "cjs"],
+        "packageJson": "packages/core/package.json",
+        "main": "packages/core/src/index.ts",
         "assets": [
-          {
-            "glob": "packages/core/README.md",
-            "input": ".",
-            "output": "."
-          },
+          "packages/core/README.md",
           {
             "glob": "LICENSE.md",
             "input": ".",
             "output": "."
           }
         ]
+      }
+    },
+    "build-cjs": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/core/lib"],
+      "options": {
+        "command": "node tools/build-cjs.mjs dist/packages/core/src dist/packages/core/lib"
       }
     },
     "lint": {
@@ -48,11 +45,7 @@
     },
     "bundle-size": {
       "executor": "nx:run-commands",
-      "dependsOn": [
-        {
-          "target": "build"
-        }
-      ],
+      "dependsOn": ["build"],
       "options": {
         "cwd": "packages/core",
         "commands": [

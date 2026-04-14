@@ -1,7 +1,7 @@
-import { debugData, isDevToolsEnabled } from './devtools';
-import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-import type { MakeStylesOptions } from './makeStyles';
-import type { CSSClassesMapBySlot } from './types';
+import { debugData, isDevToolsEnabled } from './devtools/index.js';
+import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots.js';
+import type { MakeStylesOptions } from './makeStyles.js';
+import type { CSSClassesMapBySlot } from './types.js';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms & DOM insertion.

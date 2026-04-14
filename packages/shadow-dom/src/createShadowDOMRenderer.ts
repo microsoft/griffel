@@ -1,9 +1,9 @@
 import { getStyleSheetKey, normalizeCSSBucketEntry, safeInsertRule } from '@griffel/core';
 import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
 
-import { createFallbackRenderer } from './createFallbackRenderer';
-import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint';
-import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types';
+import { createFallbackRenderer } from './createFallbackRenderer.js';
+import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint.js';
+import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types.js';
 
 const SUPPORTS_CONSTRUCTABLE_STYLESHEETS: boolean = (() => {
   try {

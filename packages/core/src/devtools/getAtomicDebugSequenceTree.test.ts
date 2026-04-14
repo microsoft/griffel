@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
-import { SEQUENCE_PREFIX } from '../constants';
-import { makeStyles } from '../makeStyles';
-import type { MakeStylesOptions } from '../makeStyles';
-import { mergeClasses } from '../mergeClasses';
-import { createDOMRenderer } from '../renderer/createDOMRenderer';
-import { getAtomicDebugSequenceTree } from './getAtomicDebugSequenceTree';
+import { SEQUENCE_PREFIX } from '../constants.js';
+import { makeStyles } from '../makeStyles.js';
+import type { MakeStylesOptions } from '../makeStyles.js';
+import { mergeClasses } from '../mergeClasses.js';
+import { createDOMRenderer } from '../renderer/createDOMRenderer.js';
+import { getAtomicDebugSequenceTree } from './getAtomicDebugSequenceTree.js';
 
 vi.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,

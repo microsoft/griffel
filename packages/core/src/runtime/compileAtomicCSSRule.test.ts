@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { compileAtomicCSSRule, normalizePseudoSelector } from './compileAtomicCSSRule';
-import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule';
-import type { AtRules } from './utils/types';
+import { compileAtomicCSSRule, normalizePseudoSelector } from './compileAtomicCSSRule.js';
+import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule.js';
+import type { AtRules } from './utils/types.js';
 
 const defaultOptions: Pick<CompileAtomicCSSOptions, 'rtlClassName' | 'className' | 'selectors'> = {
   className: 'foo',

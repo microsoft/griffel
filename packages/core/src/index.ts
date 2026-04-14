@@ -24,7 +24,7 @@ import {
   outline,
   transition,
   textDecoration,
-} from './shorthands';
+} from './shorthands/index.js';
 
 export const shorthands = {
   border,
@@ -52,38 +52,38 @@ export const shorthands = {
   textDecoration,
 };
 
-export { createDOMRenderer } from './renderer/createDOMRenderer';
-export type { CreateDOMRendererOptions } from './renderer/createDOMRenderer';
-export { rehydrateRendererCache } from './renderer/rehydrateRendererCache';
-export { safeInsertRule } from './renderer/safeInsertRule';
+export { createDOMRenderer } from './renderer/createDOMRenderer.js';
+export type { CreateDOMRendererOptions } from './renderer/createDOMRenderer.js';
+export { rehydrateRendererCache } from './renderer/rehydrateRendererCache.js';
+export { safeInsertRule } from './renderer/safeInsertRule.js';
 
-export { mergeClasses } from './mergeClasses';
-export { makeStyles } from './makeStyles';
-export type { MakeStylesOptions } from './makeStyles';
-export { makeStaticStyles } from './makeStaticStyles';
-export type { MakeStaticStylesOptions } from './makeStaticStyles';
-export { makeResetStyles } from './makeResetStyles';
+export { mergeClasses } from './mergeClasses.js';
+export { makeStyles } from './makeStyles.js';
+export type { MakeStylesOptions } from './makeStyles.js';
+export { makeStaticStyles } from './makeStaticStyles.js';
+export type { MakeStaticStylesOptions } from './makeStaticStyles.js';
+export { makeResetStyles } from './makeResetStyles.js';
 
-export { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots';
+export { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots.js';
 
 // Private exports, are used by build time transforms or other tools
-export { __css } from './__css';
-export { __styles } from './__styles';
-export { __resetCSS } from './__resetCSS';
-export { __resetStyles } from './__resetStyles';
-export { __staticCSS } from './__staticCSS';
-export { __staticStyles } from './__staticStyles';
+export { __css } from './__css.js';
+export { __styles } from './__styles.js';
+export { __resetCSS } from './__resetCSS.js';
+export { __resetStyles } from './__resetStyles.js';
+export { __staticCSS } from './__staticCSS.js';
+export { __staticStyles } from './__staticStyles.js';
 
-export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry';
-export { styleBucketOrdering, getStyleSheetKey } from './renderer/getStyleSheetForBucket';
-export { defaultCompareMediaQueries } from './renderer/createDOMRenderer';
-export { getStyleBucketName } from './runtime/getStyleBucketName';
-export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots';
-export { resolveStyleRules } from './runtime/resolveStyleRules';
-export { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
-export { resolveStaticStyleRules } from './runtime/resolveStaticStyleRules';
+export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry.js';
+export { styleBucketOrdering, getStyleSheetKey } from './renderer/getStyleSheetForBucket.js';
+export { defaultCompareMediaQueries } from './renderer/createDOMRenderer.js';
+export { getStyleBucketName } from './runtime/getStyleBucketName.js';
+export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots.js';
+export { resolveStyleRules } from './runtime/resolveStyleRules.js';
+export { resolveResetStyleRules } from './runtime/resolveResetStyleRules.js';
+export { resolveStaticStyleRules } from './runtime/resolveStaticStyleRules.js';
 
-export * from './constants';
+export * from './constants.js';
 
 export type {
   // Static styles
@@ -106,7 +106,7 @@ export type {
   // Util
   GriffelRenderer,
   GriffelInsertionFactory,
-} from './types';
+} from './types.js';
 
 // Private exports, are used by devtools
-export type { DebugCSSRules, DebugSequence, DebugResult } from './devtools';
+export type { DebugCSSRules, DebugSequence, DebugResult } from './devtools/index.js';

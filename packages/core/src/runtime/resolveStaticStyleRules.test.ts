@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resolveStaticStyleRules } from './resolveStaticStyleRules';
+import { resolveStaticStyleRules } from './resolveStaticStyleRules.js';
 
 describe('resolveStaticStyleRules', () => {
   it('handles font-face', () => {

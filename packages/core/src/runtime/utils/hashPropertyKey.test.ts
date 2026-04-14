@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { hashPropertyKey } from './hashPropertyKey';
+import { hashPropertyKey } from './hashPropertyKey.js';
 
 const defaultAtRules = { container: '', media: '', supports: '', layer: '' };
 

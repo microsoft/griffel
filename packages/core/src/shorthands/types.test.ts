@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { type GriffelStyle } from '@griffel/style-types';
-import { borderBottom } from './borderBottom';
+import { borderBottom } from './borderBottom.js';
 
 describe('types tests', () => {
   it('borderBottom', () => {

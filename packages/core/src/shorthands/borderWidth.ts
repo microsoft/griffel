@@ -1,7 +1,7 @@
 import type { GriffelStyle } from '@griffel/style-types';
 
-import { generateStyles } from './generateStyles';
-import type { BorderWidthInput } from './types';
+import { generateStyles } from './generateStyles.js';
+import type { BorderWidthInput } from './types.js';
 
 type BorderWidthStyle = Pick<
   GriffelStyle,

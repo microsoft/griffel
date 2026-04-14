@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { OverflowInput } from './types';
+import type { OverflowInput } from './types.js';
 
 type OverflowStyle = Pick<GriffelStyle, 'overflowX' | 'overflowY'>;
 

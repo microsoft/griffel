@@ -6,33 +6,30 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/react",
         "tsConfig": "packages/react/tsconfig.lib.json",
         "skipTypeField": true,
-        "skipTypeCheck": true,
-        "project": "packages/react/package.json",
-        "entryFile": "packages/react/src/index.ts",
-        "compiler": "babel",
-        "sourceMap": true,
-        "useLegacyTypescriptPlugin": true,
-        "rollupConfig": ["@nx/react/plugins/bundle-rollup", "tools/getRollupOptions.js"],
-        "external": ["tslib"],
-        "format": ["esm", "cjs"],
+        "packageJson": "packages/react/package.json",
+        "main": "packages/react/src/index.ts",
         "assets": [
-          {
-            "glob": "packages/react/README.md",
-            "input": ".",
-            "output": "."
-          },
+          "packages/react/README.md",
           {
             "glob": "LICENSE.md",
             "input": ".",
             "output": "."
           }
         ]
+      }
+    },
+    "build-cjs": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/react/lib"],
+      "options": {
+        "command": "node tools/build-cjs.mjs dist/packages/react/src dist/packages/react/lib"
       }
     },
     "lint": {
@@ -48,11 +45,7 @@
     },
     "bundle-size": {
       "executor": "nx:run-commands",
-      "dependsOn": [
-        {
-          "target": "build"
-        }
-      ],
+      "dependsOn": ["build"],
       "options": {
         "cwd": "packages/react",
         "commands": [

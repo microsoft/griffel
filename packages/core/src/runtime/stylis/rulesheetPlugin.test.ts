@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { compile, middleware, serialize, stringify, RULESET } from 'stylis';
 
-import { rulesheetPlugin } from './rulesheetPlugin';
-import type { RulesheetPluginCallback } from './rulesheetPlugin';
+import { rulesheetPlugin } from './rulesheetPlugin.js';
+import type { RulesheetPluginCallback } from './rulesheetPlugin.js';
 
 function compileRule(rule: string, callback: RulesheetPluginCallback) {
   return serialize(compile(rule), middleware([stringify, rulesheetPlugin(callback)]));

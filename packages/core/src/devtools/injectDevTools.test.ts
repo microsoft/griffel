@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { injectDevTools } from './injectDevTools';
+import { injectDevTools } from './injectDevTools.js';
 
 describe('injectDevTools', () => {
   it('adds __GRIFFEL_DEVTOOLS__ to document.defaultView', () => {

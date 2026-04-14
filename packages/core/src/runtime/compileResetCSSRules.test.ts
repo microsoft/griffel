@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { compileResetCSSRules } from './compileResetCSSRules';
+import { compileResetCSSRules } from './compileResetCSSRules.js';
 
 describe('compileCSSRules', () => {
   it('compiles CSS rules', () => {

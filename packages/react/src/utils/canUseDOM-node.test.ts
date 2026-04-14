@@ -5,7 +5,7 @@
 // 👆 this is intentionally to test in SSR like environment
 
 import { describe, it, expect } from 'vitest';
-import { canUseDOM } from './canUseDOM';
+import { canUseDOM } from './canUseDOM.js';
 
 describe('canUseDOM (node)', () => {
   it('returns "false"', () => {

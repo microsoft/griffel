@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { resolveResetStyleRules } from './resolveResetStyleRules';
-import { griffelResetRulesSerializer } from '../common/snapshotSerializers';
+import { resolveResetStyleRules } from './resolveResetStyleRules.js';
+import { griffelResetRulesSerializer } from '../common/snapshotSerializers.js';
 
 expect.addSnapshotSerializer(griffelResetRulesSerializer);
 

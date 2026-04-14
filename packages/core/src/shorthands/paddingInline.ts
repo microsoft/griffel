@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { PaddingInlineInput } from './types';
+import type { PaddingInlineInput } from './types.js';
 
 type PaddingInlineStyle = Pick<GriffelStyle, 'paddingInlineStart' | 'paddingInlineEnd'>;
 

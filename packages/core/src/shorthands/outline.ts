@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { OutlineColorInput, OutlineStyleInput, OutlineWidthInput } from './types';
+import type { OutlineColorInput, OutlineStyleInput, OutlineWidthInput } from './types.js';
 
 type OutlineStyle = Pick<GriffelStyle, 'outlineColor' | 'outlineStyle' | 'outlineWidth'>;
 

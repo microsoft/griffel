@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
-import { DEFINITION_LOOKUP_TABLE, RESET_HASH_PREFIX, SEQUENCE_PREFIX } from '../constants';
-import { makeResetStyles } from '../makeResetStyles';
-import { makeStyles } from '../makeStyles';
-import type { MakeStylesOptions } from '../makeStyles';
-import { createDOMRenderer } from '../renderer/createDOMRenderer';
-import { mergeDebugSequence } from './mergeDebugSequence';
-import { getDebugClassNames } from './utils';
+import { DEFINITION_LOOKUP_TABLE, RESET_HASH_PREFIX, SEQUENCE_PREFIX } from '../constants.js';
+import { makeResetStyles } from '../makeResetStyles.js';
+import { makeStyles } from '../makeStyles.js';
+import type { MakeStylesOptions } from '../makeStyles.js';
+import { createDOMRenderer } from '../renderer/createDOMRenderer.js';
+import { mergeDebugSequence } from './mergeDebugSequence.js';
+import { getDebugClassNames } from './utils.js';
 
 vi.mock('./isDevToolsEnabled', () => ({
   isDevToolsEnabled: true,

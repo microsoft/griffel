@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { MarginBlockInput } from './types';
+import type { MarginBlockInput } from './types.js';
 
 type MarginBlockStyle = Pick<GriffelStyle, 'marginBlockStart' | 'marginBlockEnd'>;
 

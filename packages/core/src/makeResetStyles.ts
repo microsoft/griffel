@@ -1,9 +1,9 @@
 import type { GriffelResetStyle } from '@griffel/style-types';
 
-import { DEBUG_RESET_CLASSES } from './constants';
-import { insertionFactory } from './insertionFactory';
-import { resolveResetStyleRules } from './runtime/resolveResetStyleRules';
-import type { CSSRulesByBucket, GriffelRenderer, GriffelInsertionFactory } from './types';
+import { DEBUG_RESET_CLASSES } from './constants.js';
+import { insertionFactory } from './insertionFactory.js';
+import { resolveResetStyleRules } from './runtime/resolveResetStyleRules.js';
+import type { CSSRulesByBucket, GriffelRenderer, GriffelInsertionFactory } from './types.js';
 
 export interface MakeResetStylesOptions {
   dir: 'ltr' | 'rtl';

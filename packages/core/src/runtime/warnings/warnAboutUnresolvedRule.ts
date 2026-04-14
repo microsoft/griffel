@@ -1,5 +1,5 @@
 import type { GriffelResetStyle, GriffelStyle } from '@griffel/style-types';
-import { logError } from './logError';
+import { logError } from './logError.js';
 
 export function warnAboutUnresolvedRule(property: string, value: GriffelStyle | GriffelResetStyle) {
   const message: string = /*#__PURE__*/ (() => {

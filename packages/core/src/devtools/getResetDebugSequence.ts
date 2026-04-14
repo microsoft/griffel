@@ -1,7 +1,7 @@
-import { DEBUG_RESET_CLASSES } from '../constants';
-import type { SequenceHash } from '../types';
-import { debugData } from './store';
-import type { DebugSequence } from './types';
+import { DEBUG_RESET_CLASSES } from '../constants.js';
+import type { SequenceHash } from '../types.js';
+import { debugData } from './store.js';
+import type { DebugSequence } from './types.js';
 
 export function getResetDebugSequence(debugSequenceHash: SequenceHash) {
   const resetClass = DEBUG_RESET_CLASSES[debugSequenceHash];

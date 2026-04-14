@@ -3,7 +3,7 @@
 import { __css as vanillaCSS } from '@griffel/core';
 import type { CSSClassesMapBySlot } from '@griffel/core';
 
-import { useTextDirection } from './TextDirectionContext';
+import { useTextDirection } from './TextDirectionContext.js';
 
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms & DOM insertion.

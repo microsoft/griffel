@@ -1,5 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
-import type { PaddingBlockInput } from './types';
+import type { PaddingBlockInput } from './types.js';
 
 type PaddingBlockStyle = Pick<GriffelStyle, 'paddingBlockStart' | 'paddingBlockEnd'>;
 

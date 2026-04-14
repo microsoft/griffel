@@ -16,7 +16,7 @@ vi.mock('react', async importOriginal => {
   return { ...actual, useInsertionEffect };
 });
 
-import { insertionFactory } from './insertionFactory';
+import { insertionFactory } from './insertionFactory.js';
 
 describe('insertionFactory (node)', () => {
   it('does not use insertionEffect', () => {

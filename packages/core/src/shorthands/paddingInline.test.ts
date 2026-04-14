@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { paddingInline } from './paddingInline';
+import { paddingInline } from './paddingInline.js';
 
 describe('paddingInline', () => {
   it('for a given value', () => {

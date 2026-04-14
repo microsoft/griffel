@@ -3,10 +3,10 @@
 import { makeStyles as vanillaMakeStyles } from '@griffel/core';
 import type { GriffelStyle } from '@griffel/core';
 
-import { insertionFactory } from './insertionFactory';
-import { useRenderer } from './RendererContext';
-import { useTextDirection } from './TextDirectionContext';
-import { isInsideComponent } from './utils/isInsideComponent';
+import { insertionFactory } from './insertionFactory.js';
+import { useRenderer } from './RendererContext.js';
+import { useTextDirection } from './TextDirectionContext.js';
+import { isInsideComponent } from './utils/isInsideComponent.js';
 
 export function makeStyles<Slots extends string | number>(stylesBySlots: Record<Slots, GriffelStyle>) {
   const getStyles = vanillaMakeStyles(stylesBySlots, insertionFactory);

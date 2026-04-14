@@ -1,7 +1,7 @@
-import { hyphenateProperty } from './utils/hyphenateProperty';
-import { normalizeNestedProperty } from './utils/normalizeNestedProperty';
-import type { AtRules } from './utils/types';
-import { compileCSSRules } from './compileCSSRules';
+import { hyphenateProperty } from './utils/hyphenateProperty.js';
+import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
+import type { AtRules } from './utils/types.js';
+import { compileCSSRules } from './compileCSSRules.js';
 
 export interface CompileAtomicCSSOptions {
   className: string;

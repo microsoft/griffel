@@ -1,8 +1,8 @@
 import type { GriffelAnimation } from '@griffel/style-types';
 import { compile, middleware, serialize, rulesheet, stringify } from 'stylis';
 
-import { prefixerPlugin } from './stylis/prefixerPlugin';
-import { cssifyObject } from './utils/cssifyObject';
+import { prefixerPlugin } from './stylis/prefixerPlugin.js';
+import { cssifyObject } from './utils/cssifyObject.js';
 
 export function compileKeyframeRule(keyframeObject: GriffelAnimation): string {
   let css = '';

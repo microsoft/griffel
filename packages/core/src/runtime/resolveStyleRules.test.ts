@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
-import { griffelRulesSerializer } from '../common/snapshotSerializers';
-import { resolveStyleRules } from './resolveStyleRules';
-import type { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types';
+import { griffelRulesSerializer } from '../common/snapshotSerializers.js';
+import { resolveStyleRules } from './resolveStyleRules.js';
+import type { CSSClassesMap, CSSClasses, CSSRulesByBucket } from '../types.js';
 import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '..';
 
 expect.addSnapshotSerializer(griffelRulesSerializer);
