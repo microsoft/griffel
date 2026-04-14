@@ -43,7 +43,7 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/packages/shadow-dom"
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/shadow-dom"
       }
     },
     "bundle-size": {
