@@ -8,6 +8,18 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
+  "type": "module",
+  "main": "./lib/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "require": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "dependencies": {
     "@emotion/hash": "^0.9.0",
     "@griffel/style-types": "^1.4.0",
