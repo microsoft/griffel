@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import { createFsFromVolume, Volume } from 'memfs';
-import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as path from 'path';
 import * as prettier from 'prettier';
-import * as webpack from 'webpack';
+import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
 import type { GriffelCSSExtractionPluginOptions } from './GriffelCSSExtractionPlugin';
