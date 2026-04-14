@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "refactor(build): switch from rollup to tsc + SWC",
+  "packageName": "@griffel/shadow-dom",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
