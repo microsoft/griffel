@@ -5,7 +5,7 @@ import logSymbols from 'log-symbols';
 import { sh } from './sh.ts';
 
 export async function installPackages(options: {
-  packages: string[];
+  packages: (string | [name: string, version: string])[];
   resolutions: { file?: string; version?: string; packageName: string }[];
   rootDir: string;
   tempDir: string;
@@ -19,10 +19,21 @@ export async function installPackages(options: {
     throw new Error(`A "package.json" in a temporary directory does not exist`);
   }
 
-  let packagesWithVersions = {};
+  let packagesWithVersions: Record<string, string> = {};
 
-  if (packages.length > 0) {
-    const yarnOutput = await sh(`yarn info ${packages.join(' ')} --json`, rootDir, true);
+  const workspacePackages: string[] = [];
+  const versionedPackages: Record<string, string> = {};
+
+  for (const pkg of packages) {
+    if (Array.isArray(pkg)) {
+      versionedPackages[pkg[0]] = pkg[1];
+    } else {
+      workspacePackages.push(pkg);
+    }
+  }
+
+  if (workspacePackages.length > 0) {
+    const yarnOutput = await sh(`yarn info ${workspacePackages.join(' ')} --json`, rootDir, true);
     const parsedYarnOutput = yarnOutput
       .split('\n')
       .filter(Boolean)
@@ -32,6 +43,8 @@ export async function installPackages(options: {
       parsedYarnOutput.map(info => [info.value.split('@patch')[0].split('@npm')[0], info.children.Version]),
     );
   }
+
+  packagesWithVersions = { ...packagesWithVersions, ...versionedPackages };
 
   const packageJson = JSON.parse(await fs.promises.readFile(tempDir + '/package.json', 'utf8'));
   const newPackageJson = {

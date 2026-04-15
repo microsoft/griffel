@@ -3561,6 +3561,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@griffel/e2e-eslint@workspace:e2e/eslint":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-eslint@workspace:e2e/eslint"
+  languageName: unknown
+  linkType: soft
+
 "@griffel/e2e-rspack@workspace:e2e/rspack":
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
