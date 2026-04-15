@@ -1,14 +1,10 @@
-import { TSESLint } from '@typescript-eslint/utils';
-import * as path from 'path';
+import { RuleTester } from '@typescript-eslint/rule-tester';
+import * as tsParser from '@typescript-eslint/parser';
 
 import { noDeprecatedShorthandsRule, RULE_NAME } from './no-deprecated-shorthands';
 
-const ruleTester = new TSESLint.RuleTester({
-  parser: path.resolve('./node_modules/@typescript-eslint/parser/dist'),
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
+const ruleTester = new RuleTester({
+  languageOptions: { parser: tsParser, ecmaVersion: 2018, sourceType: 'module' },
 });
 
 ruleTester.run(RULE_NAME, noDeprecatedShorthandsRule, {

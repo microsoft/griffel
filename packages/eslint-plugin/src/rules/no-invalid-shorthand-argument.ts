@@ -1,9 +1,9 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { getDocsUrl } from '../utils/getDocsUrl';
-import { getShorthandName } from '../utils/helpers';
-import { getShorthandValue, joinShorthandArguments } from '../utils/getShorthandValue';
-import { shorthandToArguments } from '../utils/shorthandToArguments';
+import { getDocsUrl } from '../utils/getDocsUrl.js';
+import { getShorthandName } from '../utils/helpers.js';
+import { getShorthandValue, joinShorthandArguments } from '../utils/getShorthandValue.js';
+import { shorthandToArguments } from '../utils/shorthandToArguments.js';
 
 export const RULE_NAME = 'no-invalid-shorthand-argument';
 
@@ -13,7 +13,6 @@ export const noInvalidShorthandArgumentRule = ESLintUtils.RuleCreator(getDocsUrl
     type: 'problem',
     docs: {
       description: 'All shorthands must not use space separators, and instead pass in multiple arguments',
-      recommended: 'recommended',
     },
     messages: {
       invalidShorthandArgument:

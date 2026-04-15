@@ -1,4 +1,3 @@
-import { fixupPluginRules } from '@eslint/compat';
 import griffelPlugin from '@griffel/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 
@@ -10,11 +9,6 @@ export default [
       ecmaVersion: 2020,
       sourceType: 'module',
     },
-    plugins: {
-      '@griffel': fixupPluginRules(griffelPlugin),
-    },
-    rules: {
-      '@griffel/hook-naming': 'error',
-    },
+    ...griffelPlugin.configs.recommended,
   },
 ];

@@ -1,5 +1,5 @@
 import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
-import { isLiteral, isTemplateLiteral } from './helpers';
+import { isLiteral, isTemplateLiteral } from './helpers.js';
 
 export function getShorthandValue(node: TSESTree.Node | null | undefined, sourceCode: Readonly<TSESLint.SourceCode>) {
   if (isLiteral(node)) {

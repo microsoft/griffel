@@ -82,10 +82,13 @@ export function isMakeStylesImport(node: TSESTree.ImportDeclaration) {
       }
 
       if ('imported' in specifier) {
+        const importedName =
+          specifier.imported.type === 'Identifier' ? specifier.imported.name : specifier.imported.value;
+
         return (
-          specifier.imported.name === 'makeStyles' || // import { makeStyles } from
-          specifier.imported.name === 'makeStaticStyles' || // import { makeStaticStyles } from
-          specifier.imported.name === 'makeResetStyles' // import { makeResetStyles } from
+          importedName === 'makeStyles' || // import { makeStyles } from
+          importedName === 'makeStaticStyles' || // import { makeStaticStyles } from
+          importedName === 'makeResetStyles' // import { makeResetStyles } from
         );
       }
 

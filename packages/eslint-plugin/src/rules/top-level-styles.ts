@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { getMakeStylesCallExpression, isMakeStylesImport } from '../utils/helpers';
-import { getDocsUrl } from '../utils/getDocsUrl';
+import { getMakeStylesCallExpression, isMakeStylesImport } from '../utils/helpers.js';
+import { getDocsUrl } from '../utils/getDocsUrl.js';
 
 export const RULE_NAME = 'top-level-styles';
 
@@ -11,7 +11,6 @@ export const stylesFileRule = ESLintUtils.RuleCreator(getDocsUrl)({
     docs: {
       description:
         'Ensure makeStyles(), makeResetStyles() and makeStaticStyles() calls are placed in the top level of the file',
-      recommended: 'recommended',
     },
     messages: {
       foundInvalidUsage: '`{{ methodName }}` should be only be called from the top-level of the file',

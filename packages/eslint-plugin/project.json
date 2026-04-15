@@ -10,11 +10,8 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/eslint-plugin"],
-      "options": {
-        "jestConfig": "packages/eslint-plugin/jest.config.ts"
-      }
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/packages/eslint-plugin"]
     },
     "build": {
       "executor": "@nx/js:tsc",
