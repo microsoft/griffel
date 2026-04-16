@@ -15141,9 +15141,9 @@ __metadata:
     memfs: "npm:3.6.0"
     mini-css-extract-plugin: "npm:2.6.0"
     module-alias: "npm:^2.2.3"
-    monosize: "npm:0.8.1"
-    monosize-bundler-webpack: "npm:0.3.2"
-    monosize-storage-upstash: "npm:0.0.24"
+    monosize: "npm:0.8.2"
+    monosize-bundler-webpack: "npm:0.3.3"
+    monosize-storage-upstash: "npm:0.0.25"
     nano-staged: "npm:0.5.0"
     nx: "npm:22.6.5"
     oxc-parser: "npm:^0.116.0"
@@ -19850,33 +19850,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monosize-bundler-webpack@npm:0.3.2":
-  version: 0.3.2
-  resolution: "monosize-bundler-webpack@npm:0.3.2"
+"monosize-bundler-webpack@npm:0.3.3":
+  version: 0.3.3
+  resolution: "monosize-bundler-webpack@npm:0.3.3"
   dependencies:
-    monosize: "npm:^0.8.1"
+    monosize: "npm:^0.8.2"
     terser: "npm:^5.16.0"
     terser-webpack-plugin: "npm:^5.3.17"
     tslib: "npm:^2.4.1"
     webpack: "npm:^5.105.4"
-  checksum: 10/8287b658f9e784c8dab07cf627d60c792685c8f8e399c927f1a84bb2708a88f622e01228216127203a7afb2ec47ebea1b6137d3abe54eb675fbdd97879a2d279
+  checksum: 10/2b3cb83fe8a9439f9caca2955fd676a14a9946c6192b6e915f03236eb070e7c37b689c679999385faa390ab95f2333f71d9da6d5d0c09e2016c31fbc492c3559
   languageName: node
   linkType: hard
 
-"monosize-storage-upstash@npm:0.0.24":
-  version: 0.0.24
-  resolution: "monosize-storage-upstash@npm:0.0.24"
+"monosize-storage-upstash@npm:0.0.25":
+  version: 0.0.25
+  resolution: "monosize-storage-upstash@npm:0.0.25"
   dependencies:
     "@upstash/redis": "npm:^1.34.6"
-    monosize: "npm:^0.8.0"
+    monosize: "npm:^0.8.2"
     tslib: "npm:^2.4.1"
-  checksum: 10/2d991b37331ce661019c0ecde3dcfa9e63141551047fd9b65768d12a0d1a62f795ceb012e1ad4d8d5e6362c0359ee5e13b8da72ed39a83f16c9d3243bf0f51d0
+  checksum: 10/91fc772a0b9c516fdddd797c91d6ab1bbbb9d333b542c91f7dbbe5c3a52d3d7aa90b1d4b8c2b0a731779c12358a21d5477350d05ea80e3893e66fb725ec3884e
   languageName: node
   linkType: hard
 
-"monosize@npm:0.8.1, monosize@npm:^0.8.0, monosize@npm:^0.8.1":
-  version: 0.8.1
-  resolution: "monosize@npm:0.8.1"
+"monosize@npm:0.8.2, monosize@npm:^0.8.2":
+  version: 0.8.2
+  resolution: "monosize@npm:0.8.2"
   dependencies:
     acorn: "npm:^8.14.1"
     ci-info: "npm:^4.2.0"
@@ -19888,7 +19888,7 @@ __metadata:
     yargs: "npm:^17.6.2"
   bin:
     monosize: bin/monosize.mjs
-  checksum: 10/a541beed5a9f685de5937cd2e3066f130e2611f977eb85853646ccf4cf2be05f851eb22821bc7bccf492c4b1a682eba400840361ead8ee73d92d69e6628a96c9
+  checksum: 10/3be4c84f5b979f9900a2b200d1b1fd401b2f673e1d037cd5ccf14e3c04943f7d3310ebb2dad2b56719f33415f571b60a03e737f81c6793776cade0a7c4b3e3a7
   languageName: node
   linkType: hard
 
