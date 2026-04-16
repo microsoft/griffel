@@ -6,6 +6,7 @@ import { noShorthandsRule } from './rules/no-shorthands.js';
 import { pseudoElementNamingRule } from './rules/pseudo-element-naming.js';
 import { stylesFileRule } from './rules/styles-file.js';
 import { noDeprecatedShorthandsRule } from './rules/no-deprecated-shorthands.js';
+import { stylesFileRule as topLevelStylesRule } from './rules/top-level-styles.js';
 
 const rules: Record<string, ESLintUtils.RuleModule<string, unknown[]>> = {
   'hook-naming': hookNamingRule,
@@ -14,6 +15,7 @@ const rules: Record<string, ESLintUtils.RuleModule<string, unknown[]>> = {
   'styles-file': stylesFileRule,
   'pseudo-element-naming': pseudoElementNamingRule,
   'no-deprecated-shorthands': noDeprecatedShorthandsRule,
+  'top-level-styles': topLevelStylesRule,
 };
 
 const plugin = {
@@ -31,6 +33,8 @@ plugin.configs['recommended'] = {
     '@griffel/no-shorthands': 'error',
     '@griffel/pseudo-element-naming': 'error',
     '@griffel/no-deprecated-shorthands': 'error',
+    '@griffel/styles-file': 'error',
+    '@griffel/top-level-styles': 'error',
   },
 };
 
