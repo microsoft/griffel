@@ -20,7 +20,7 @@ async function performTest() {
     ];
 
     await installPackages({
-      packages: [['eslint', '^9'], ['@typescript-eslint/parser', '^8'], 'typescript'],
+      packages: ['eslint', 'typescript-eslint', 'typescript'],
       resolutions,
       tempDir,
       rootDir,

@@ -1,14 +1,8 @@
 import griffelPlugin from '@griffel/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 
-export default [
-  {
-    files: ['**/*.ts'],
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 2020,
-      sourceType: 'module',
-    },
-    ...griffelPlugin.configs.recommended,
-  },
-];
+export default tseslint.config({
+  files: ['**/*.ts'],
+  extends: [tseslint.configs.base],
+  ...griffelPlugin.configs.recommended,
+});
