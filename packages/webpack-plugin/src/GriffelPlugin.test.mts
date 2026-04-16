@@ -201,7 +201,7 @@ function fixLineEndings(value: string) {
  * `f___0`, the second `f___1`, etc.
  */
 function normalizeGriffelHashes(str: string): string {
-  const hashRegex = /(?<=[\.\'\"])([fr][a-z0-9]{4,})(?=[{:\s\'\"\,\[\]])/g;
+  const hashRegex = /(?<=[.'"])([fr][a-z0-9]{4,})(?=[{:\s'",[\]])/g;
   const hashes: string[] = [];
   let match;
 

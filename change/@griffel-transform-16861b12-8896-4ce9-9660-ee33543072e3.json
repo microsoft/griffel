@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: fix lint issues ahead of ESLint 9 migration",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

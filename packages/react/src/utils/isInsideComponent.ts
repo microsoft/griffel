@@ -32,7 +32,7 @@ export function isInsideComponent() {
     // a call on the dispatcher wont
     dispatcher.useContext({});
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

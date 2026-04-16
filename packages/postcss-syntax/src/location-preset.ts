@@ -31,8 +31,7 @@ export interface LocationPluginMetadata {
   resetLocations: ResetLocationsByHookDeclarator;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface LocationPluginOptions extends Pick<BabelPluginOptions, 'modules'> {}
+export type LocationPluginOptions = Pick<BabelPluginOptions, 'modules'>;
 
 /**
  * A plugin that parses Griffel code and returns code locations mapped to respective styles and slots

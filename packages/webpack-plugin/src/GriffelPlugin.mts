@@ -323,7 +323,7 @@ export class GriffelPlugin {
         },
         () => {
           if (this.#collectStats) {
-            function logTime(time: bigint): string {
+            const logTime = (time: bigint): string => {
               if (time > 1_000_000n) {
                 return (time / 1_000_000n).toString() + 'ms';
               }
@@ -333,7 +333,7 @@ export class GriffelPlugin {
               }
 
               return time.toString() + 'ns';
-            }
+            };
 
             const entries = Object.entries(this.#stats).sort(([, a], [, b]) => Number(b.time - a.time));
             const totalTime = entries.reduce((acc, cur) => acc + cur[1].time, 0n);

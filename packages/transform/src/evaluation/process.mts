@@ -19,7 +19,7 @@ export const binding = function binding(): never {
 
 export const cwd = (): string => '/';
 
-const noop = (): void => {};
+const noop = (): void => { /* noop */ };
 
 export const exit = noop;
 export const kill = noop;

@@ -21,7 +21,7 @@ import { ASSET_TAG_OPEN, ASSET_TAG_CLOSE } from '../constants.mjs';
 import { convertESMtoCJS } from '../utils/convertESMtoCJS.mjs';
 import * as EvalCache from './evalCache.mjs';
 import * as mockProcess from './process.mjs';
-import type { Evaluator, EvalRule } from './types.mjs';
+import type { EvalRule } from './types.mjs';
 
 export type TransformResolver = (
   id: string,
@@ -33,7 +33,7 @@ const debug = createDebug('griffel:module');
 // Separate cache for evaluated modules
 let cache: Record<string, Module> = {};
 
-const NOOP = () => {};
+const NOOP = () => { /* noop */ };
 
 /** Checks if a value is an Error-like object (works across VM contexts where `instanceof Error` fails). */
 function isError(e: unknown): e is Error {
