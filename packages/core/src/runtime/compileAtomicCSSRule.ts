@@ -54,7 +54,7 @@ export function compileAtomicCSSRule(
   atRules: AtRules,
 ): [string? /* ltr definition */, string? /* rtl definition */] {
   const { className, selectors, property, rtlClassName, rtlProperty, rtlValue, value } = options;
-  const { container, layer, media, supports } = atRules;
+  const { container, layer, media, supports, scope } = atRules;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
@@ -86,6 +86,15 @@ export function compileAtomicCSSRule(
 
   if (container) {
     cssRule = `@container ${container} { ${cssRule} }`;
+  }
+
+  if (scope) {
+    const resolvedScope = scope.replace(/&/g, classNameSelector);
+
+    // Replace .className with :scope inside the @scope block — within @scope,
+    // :scope refers to the scope root element, not a descendant with that class
+    cssRule = cssRule.split(classNameSelector).join(':scope');
+    cssRule = `@scope ${resolvedScope} { ${cssRule} }`;
   }
 
   return compileCSSRules(cssRule, true) as [string?, string?];

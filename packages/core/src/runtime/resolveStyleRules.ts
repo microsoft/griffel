@@ -2,7 +2,7 @@ import hashString from '@emotion/hash';
 import type { GriffelAnimation, GriffelStyle } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
-import { HASH_PREFIX, RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants.js';
+import { HASH_PREFIX, SCOPE_BOUNDARY_PREFIX, RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants.js';
 import type { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types.js';
 import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule.js';
 import { compileAtomicCSSRule } from './compileAtomicCSSRule.js';
@@ -13,6 +13,7 @@ import { isMediaQuerySelector } from './utils/isMediaQuerySelector.js';
 import { isLayerSelector } from './utils/isLayerSelector.js';
 import { isNestedSelector } from './utils/isNestedSelector.js';
 import { isSupportQuerySelector } from './utils/isSupportQuerySelector.js';
+import { isScopeSelector } from './utils/isScopeSelector.js';
 import { isContainerQuerySelector } from './utils/isContainerQuerySelector.js';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
 import { isObject } from './utils/isObject.js';
@@ -93,6 +94,7 @@ export function resolveStyleRules(
     layer: '',
     media: '',
     supports: '',
+    scope: '',
   },
   cssClassesMap: CSSClassesMap = {},
   cssRulesByBucket: CSSRulesByBucket = {},
@@ -379,6 +381,17 @@ export function resolveStyleRules(
           classNameHashSalt,
           selectors,
           { ...atRules, container: containerQuery },
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      } else if (isScopeSelector(property)) {
+        const scopeQuery = property.slice(6).trim();
+
+        resolveStyleRules(
+          value as GriffelStyle,
+          classNameHashSalt,
+          selectors,
+          { ...atRules, scope: scopeQuery },
           cssClassesMap,
           cssRulesByBucket,
         );

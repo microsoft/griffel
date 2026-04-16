@@ -3,8 +3,8 @@ import hash from '@emotion/hash';
 import type { PropertyHash } from '../../types.js';
 import type { AtRules } from './types.js';
 
-function addAtRulePrefix(atRule: string, prefix: string): string {
-  return atRule ? prefix + atRule : atRule;
+function addAtRulePrefix(atRule: string | undefined, prefix: string): string {
+  return atRule ? prefix + atRule : '';
 }
 
 export function atRulesToString(atRules: AtRules): string {
@@ -12,7 +12,8 @@ export function atRulesToString(atRules: AtRules): string {
     addAtRulePrefix(atRules.container, 'c') +
     addAtRulePrefix(atRules.media, 'm') +
     addAtRulePrefix(atRules.layer, 'l') +
-    addAtRulePrefix(atRules.supports, 's')
+    addAtRulePrefix(atRules.supports, 's') +
+    addAtRulePrefix(atRules.scope, 'o')
   );
 }
 

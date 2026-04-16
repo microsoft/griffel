@@ -3,4 +3,5 @@ export type AtRules = {
   media: string;
   layer: string;
   supports: string;
+  scope: string;
 };

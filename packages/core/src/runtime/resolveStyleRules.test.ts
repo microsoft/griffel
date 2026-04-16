@@ -993,4 +993,55 @@ describe('resolveStyleRules', () => {
       });
     });
   });
+
+  describe('@scope', () => {
+    it('handles @scope with simple root selector', () => {
+      const result = resolveStyleRules({ '@scope (&)': { '& .child': { color: 'red' } } });
+
+      expect(result).toMatchInlineSnapshot(`
+        @scope (.f1ewl1kl) {
+          :scope .child {
+            color: red;
+          }
+        }
+      `);
+    });
+
+    it('handles @scope with literal boundary selector', () => {
+      const result = resolveStyleRules({
+        '@scope (&) to (.scope-boundary)': {
+          '& .child': { color: 'blue' },
+        },
+      });
+
+      // & in root replaced with atomic class, .scope-boundary left as-is
+      expect(result).toMatchInlineSnapshot(`
+        @scope (.f6j7vq4) to (.scope-boundary) {
+          :scope .child {
+            color: blue;
+          }
+        }
+      `);
+    });
+
+    it('scope rules are placed in the "t" bucket', () => {
+      const result = resolveStyleRules({
+        '@scope (&)': { '& p': { color: 'green' } },
+      });
+
+      expect(result[1]).toHaveProperty('t');
+    });
+
+    it("scope queries don't collide with regular properties", () => {
+      const result = resolveStyleRules({
+        color: 'red',
+        '@scope (&)': { '& .child': { color: 'red' } },
+      });
+
+      const classesMap = result[0];
+      const keys = Object.keys(classesMap);
+
+      expect(keys.length).toBe(2);
+    });
+  });
 });
