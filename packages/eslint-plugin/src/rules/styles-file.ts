@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { isMakeStylesCallExpression, isMakeStylesImport } from '../utils/helpers';
-import { getDocsUrl } from '../utils/getDocsUrl';
+import { isMakeStylesCallExpression, isMakeStylesImport } from '../utils/helpers.js';
+import { getDocsUrl } from '../utils/getDocsUrl.js';
 
 const STYLES_FILE_PATTERN = /^.*\.(styles)\.[j|t]s$/;
 
@@ -16,7 +16,6 @@ export const stylesFileRule = ESLintUtils.RuleCreator(getDocsUrl)({
   meta: {
     docs: {
       description: 'Enforce that hooks returned from makeStyles() calls are placed in a .styles.ts file',
-      recommended: 'recommended',
     },
     messages: {
       foundMakeStylesUsage:

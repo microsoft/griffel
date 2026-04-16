@@ -12,28 +12,41 @@ npm install --save-dev @griffel/eslint-plugin
 
 ## Usage
 
-Add `@griffel` to the plugins section and `plugin:@griffel/recommended` to the extends section of your `.eslintrc` configuration file:
+> **Note:** This plugin requires ESLint 9+ and flat config (`eslint.config.mjs`).
 
-```json
-{
-  "plugins": ["@griffel"],
-  "extends": ["plugin:@griffel/recommended"]
-}
+Use the recommended configuration in your `eslint.config.mjs`:
+
+```js
+import griffelPlugin from '@griffel/eslint-plugin';
+
+export default [
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    ...griffelPlugin.configs.recommended,
+  },
+];
 ```
 
 ## Shareable configurations
 
 This plugin exports recommended configuration that enforce good practices, but you can choose to use only the ones that are necessary for your use case:
 
-```json
-{
-  "plugins": ["@griffel"],
-  "rules": {
-    "@griffel/hook-naming": "error",
-    "@griffel/no-shorthands": "error",
-    "@griffel/pseudo-element-naming": "error"
-  }
-}
+```js
+import griffelPlugin from '@griffel/eslint-plugin';
+
+export default [
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    plugins: {
+      '@griffel': griffelPlugin,
+    },
+    rules: {
+      '@griffel/hook-naming': 'error',
+      '@griffel/no-shorthands': 'error',
+      '@griffel/pseudo-element-naming': 'error',
+    },
+  },
+];
 ```
 
 You can find more info about enabled rules in the [Supported Rules section](#supported-rules) below.

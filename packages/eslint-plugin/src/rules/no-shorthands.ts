@@ -1,10 +1,10 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 
-import { isIdentifier, isMakeStylesCallExpression, isObjectExpression, isProperty } from '../utils/helpers';
-import { UNSUPPORTED_CSS_PROPERTIES, shorthandToArguments } from '../utils/shorthandToArguments';
-import { getDocsUrl } from '../utils/getDocsUrl';
-import { getShorthandValue, joinShorthandArguments } from '../utils/getShorthandValue';
+import { isIdentifier, isMakeStylesCallExpression, isObjectExpression, isProperty } from '../utils/helpers.js';
+import { UNSUPPORTED_CSS_PROPERTIES, shorthandToArguments } from '../utils/shorthandToArguments.js';
+import { getDocsUrl } from '../utils/getDocsUrl.js';
+import { getShorthandValue, joinShorthandArguments } from '../utils/getShorthandValue.js';
 
 export const RULE_NAME = 'no-shorthands';
 
@@ -36,7 +36,6 @@ export const noShorthandsRule = ESLintUtils.RuleCreator(getDocsUrl)({
     type: 'problem',
     docs: {
       description: 'Disallow using CSS shorthands in makeStyles() calls',
-      recommended: 'recommended',
     },
     fixable: 'code',
     messages: {

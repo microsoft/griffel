@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { getDocsUrl } from '../utils/getDocsUrl';
-import { isIdentifier, isMakeStylesCallExpression } from '../utils/helpers';
+import { getDocsUrl } from '../utils/getDocsUrl.js';
+import { isIdentifier, isMakeStylesCallExpression } from '../utils/helpers.js';
 
 export const RULE_NAME = 'hook-naming';
 
@@ -11,7 +11,6 @@ export const hookNamingRule = ESLintUtils.RuleCreator(getDocsUrl)({
     type: 'problem',
     docs: {
       description: 'Enforce that hooks returned from makeStyles() calls are named with a "use" prefix',
-      recommended: 'recommended',
     },
     messages: {
       invalidMakeStylesHookNameFound: '`makeStyles` returns a hook. Hooks must start with the prefix `use`',

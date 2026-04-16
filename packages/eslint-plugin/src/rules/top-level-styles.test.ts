@@ -1,15 +1,12 @@
-import { TSESLint } from '@typescript-eslint/utils';
+import { RuleTester } from '@typescript-eslint/rule-tester';
+import * as tsParser from '@typescript-eslint/parser';
+
 import { stylesFileRule, RULE_NAME } from './top-level-styles';
-import * as path from 'path';
 
 const componentFileName = 'packages/components/components-foo/foo.tsx';
 
-const ruleTester = new TSESLint.RuleTester({
-  parser: path.resolve('./node_modules/@typescript-eslint/parser/dist'),
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
+const ruleTester = new RuleTester({
+  languageOptions: { parser: tsParser, ecmaVersion: 2018, sourceType: 'module' },
 });
 
 ruleTester.run(RULE_NAME, stylesFileRule, {

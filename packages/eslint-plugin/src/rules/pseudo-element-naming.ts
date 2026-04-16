@@ -1,8 +1,8 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 import type { TSESTree } from '@typescript-eslint/utils';
 
-import { getDocsUrl } from '../utils/getDocsUrl';
-import { isMakeStylesCallExpression, isObjectExpression, isProperty, isStringLiteral } from '../utils/helpers';
+import { getDocsUrl } from '../utils/getDocsUrl.js';
+import { isMakeStylesCallExpression, isObjectExpression, isProperty, isStringLiteral } from '../utils/helpers.js';
 
 export const RULE_NAME = 'pseudo-element-naming';
 
@@ -37,7 +37,6 @@ export const pseudoElementNamingRule = ESLintUtils.RuleCreator(getDocsUrl)({
     type: 'problem',
     docs: {
       description: 'Enforce that Pseudo elements start with two colons (::) instead of one colon (:)',
-      recommended: 'recommended',
     },
     messages: {
       invalidPseudoElementNameFound: 'Pseudo elements must start with two colons (::)',
