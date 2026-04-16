@@ -101,7 +101,7 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
 
           return getOriginalPosition(sourceMapJSON, sourceLoc);
         }
-      } catch (error) {
+      } catch {
         // We've likely encountered a string in the source code that looks like a source map but isn't.
         // Maybe the source code contains a "sourceMappingURL" comment or something similar.
         // In either case, let's skip this and keep looking.

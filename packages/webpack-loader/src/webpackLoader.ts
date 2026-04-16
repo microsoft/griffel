@@ -49,7 +49,7 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
     }
 
     return inputSourceMap as TransformOptions['inputSourceMap'];
-  } catch (err) {
+  } catch {
     return undefined;
   }
 }

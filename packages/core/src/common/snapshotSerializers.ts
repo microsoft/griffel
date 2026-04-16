@@ -87,7 +87,7 @@ export const griffelResetRulesSerializer: SnapshotSerializer = {
     const cssRulesByBucket: CSSRulesByBucket = Array.isArray(_value[2]) ? { r: _value[2] } : _value[2];
 
     return Object.entries(cssRulesByBucket)
-      .filter(([key, value]) => value.length > 0)
+      .filter(([_key, value]) => value.length > 0)
       .flatMap(([key, value]) => [`/** bucket "${key}" */`, format(value as string[])])
       .join('\n');
   },

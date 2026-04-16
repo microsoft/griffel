@@ -3,7 +3,7 @@ export const isDevToolsEnabled: boolean = (() => {
   // https://stackoverflow.com/questions/30481516/iframe-in-chrome-error-failed-to-read-localstorage-from-window-access-deni
   try {
     return Boolean(typeof window !== 'undefined' && window.sessionStorage?.getItem('__GRIFFEL_DEVTOOLS__'));
-  } catch (e) {
+  } catch {
     return false;
   }
 })();
