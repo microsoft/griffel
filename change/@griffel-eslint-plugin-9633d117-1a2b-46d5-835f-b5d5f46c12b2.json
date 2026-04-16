@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: export top-level-styles rule and add styles-file, top-level-styles to recommended config",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
