@@ -90,3 +90,24 @@ describe('resolveVarsInStyles', () => {
     expect(result['color']).toEqual([`var(${resolvedName})`, 'red']);
   });
 });
+
+describe('resolveVarsInStyles + resolveStyleRules integration', () => {
+  it('resolveStyleRules produces CSS with resolved var names, not placeholders', async () => {
+    const { resolveStyleRules } = await import('./resolveStyleRules.js');
+    const colorVar = createVar();
+    const placeholder = `${colorVar}`;
+
+    const [classes, buckets] = resolveStyleRules({
+      [placeholder]: 'blue',
+      color: `var(${placeholder})`,
+    });
+
+    const allCss = JSON.stringify(buckets);
+    expect(allCss).not.toMatch(/--__g_var_p\d+__/);
+    const resolvedName = __internal_getResolvedName(placeholder);
+    expect(resolvedName).toBeDefined();
+    expect(allCss).toContain(resolvedName!);
+    // classes map should be non-empty
+    expect(Object.keys(classes).length).toBeGreaterThan(0);
+  });
+});
