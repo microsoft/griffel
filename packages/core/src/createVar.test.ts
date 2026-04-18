@@ -7,7 +7,7 @@ describe('createVar', () => {
     const v = createVar();
     const coerced = `${v}`;
     expect(coerced.startsWith(GRIFFEL_VAR_PLACEHOLDER_PREFIX)).toBe(true);
-    expect(GRIFFEL_VAR_PLACEHOLDER_REGEX.test(coerced)).toBe(true);
+    expect(coerced.match(GRIFFEL_VAR_PLACEHOLDER_REGEX)).not.toBeNull();
   });
 
   it('gives each call a distinct placeholder', () => {
