@@ -23,13 +23,14 @@ describe('resolveVarsInStyles', () => {
 
   it('rewrites placeholders inside string values (e.g. var(--placeholder))', () => {
     const colorVar = createVar();
+    const placeholder = `${colorVar}`;
     const styles = {
-      [`${colorVar}`]: 'blue',
-      color: `var(${colorVar})`,
+      [placeholder]: 'blue',
+      color: `var(${placeholder})`,
     };
     const result = resolveVarsInStyles(styles, '');
 
-    const resolvedName = __internal_getResolvedName(`${colorVar}`);
+    const resolvedName = __internal_getResolvedName(placeholder);
     expect(resolvedName).toBeDefined();
     expect(result).toEqual({
       [resolvedName!]: 'blue',
@@ -64,15 +65,28 @@ describe('resolveVarsInStyles', () => {
 
   it('handles placeholders nested inside selector blocks', () => {
     const colorVar = createVar();
+    const placeholder = `${colorVar}`;
     const styles = {
-      color: `var(${colorVar})`,
+      color: `var(${placeholder})`,
       ':hover': {
-        [`${colorVar}`]: 'red',
+        [placeholder]: 'red',
       },
     };
     const result = resolveVarsInStyles(styles, '') as Record<string, unknown>;
-    const resolvedName = __internal_getResolvedName(`${colorVar}`);
+    const resolvedName = __internal_getResolvedName(placeholder);
     expect(result['color']).toEqual(`var(${resolvedName})`);
     expect(result[':hover']).toEqual({ [resolvedName!]: 'red' });
+  });
+
+  it('rewrites placeholders inside array-valued styles (fallback values)', () => {
+    const colorVar = createVar();
+    const placeholder = `${colorVar}`;
+    const styles = {
+      color: [`var(${placeholder})`, 'red'],
+    };
+    const result = resolveVarsInStyles(styles, '') as Record<string, unknown>;
+    const resolvedName = __internal_getResolvedName(placeholder);
+    expect(resolvedName).toBeDefined();
+    expect(result['color']).toEqual([`var(${resolvedName})`, 'red']);
   });
 });

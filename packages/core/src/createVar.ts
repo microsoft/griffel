@@ -43,10 +43,6 @@ export function __internal_resolvePlaceholder(placeholder: string, resolvedName:
   const ref = registry.get(placeholder);
   if (ref && ref._resolved === undefined) {
     ref._resolved = resolvedName;
-    // Dual-index the ref under its resolved name so lookups by the final name
-    // also succeed (e.g. when a var's toString has already flipped to the
-    // resolved name).
-    registry.set(resolvedName, ref);
   }
 }
 

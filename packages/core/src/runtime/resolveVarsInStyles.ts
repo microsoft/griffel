@@ -68,31 +68,37 @@ function collectPlaceholders(styles: object, acc: Set<string> = new Set()): Set<
       acc.add(match[0]);
     }
     const value = (styles as Record<string, unknown>)[key];
-    if (typeof value === 'string') {
-      for (const match of value.matchAll(GRIFFEL_VAR_PLACEHOLDER_REGEX)) {
-        acc.add(match[0]);
-      }
-    } else if (isObject(value)) {
-      collectPlaceholders(value as object, acc);
-    }
+    collectFromValue(value, acc);
   }
   return acc;
+}
+
+function collectFromValue(value: unknown, acc: Set<string>): void {
+  if (typeof value === 'string') {
+    for (const match of value.matchAll(GRIFFEL_VAR_PLACEHOLDER_REGEX)) {
+      acc.add(match[0]);
+    }
+  } else if (Array.isArray(value)) {
+    for (const item of value) collectFromValue(item, acc);
+  } else if (isObject(value)) {
+    collectPlaceholders(value as object, acc);
+  }
 }
 
 function rewriteStyles<T extends object>(styles: T, remap: Map<string, string>): T {
   const out: Record<string, unknown> = {};
   for (const key of Object.keys(styles)) {
     const rewrittenKey = rewriteString(key, remap);
-    const value = (styles as Record<string, unknown>)[key];
-    if (typeof value === 'string') {
-      out[rewrittenKey] = rewriteString(value, remap);
-    } else if (isObject(value)) {
-      out[rewrittenKey] = rewriteStyles(value as object, remap);
-    } else {
-      out[rewrittenKey] = value;
-    }
+    out[rewrittenKey] = rewriteValue((styles as Record<string, unknown>)[key], remap);
   }
   return out as T;
+}
+
+function rewriteValue(value: unknown, remap: Map<string, string>): unknown {
+  if (typeof value === 'string') return rewriteString(value, remap);
+  if (Array.isArray(value)) return value.map(item => rewriteValue(item, remap));
+  if (isObject(value)) return rewriteStyles(value as object, remap);
+  return value;
 }
 
 function rewriteString(input: string, remap: Map<string, string>): string {
