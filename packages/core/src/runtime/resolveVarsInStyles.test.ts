@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { createVar, __internal_getResolvedName } from '../createVar.js';
 import { resolveVarsInStyles } from './resolveVarsInStyles.js';
 import { VAR_HASH_PREFIX } from '../constants.js';
@@ -109,5 +109,26 @@ describe('resolveVarsInStyles + resolveStyleRules integration', () => {
     expect(allCss).toContain(resolvedName!);
     // classes map should be non-empty
     expect(Object.keys(classes).length).toBeGreaterThan(0);
+  });
+});
+
+describe('resolveVarsInStyles SSR equivalence (true module isolation)', () => {
+  it('two independent module loads produce the same final var name', async () => {
+    const runOnce = async () => {
+      vi.resetModules();
+      const mod = await import('../createVar.js');
+      const { resolveVarsInStyles: fresh } = await import('./resolveVarsInStyles.js');
+      const v = mod.createVar();
+      const placeholder = `${v}`;
+      const styles = { [placeholder]: 'blue', color: `var(${placeholder})` };
+      const result = fresh(styles, '') as Record<string, unknown>;
+      return Object.keys(result).find(k => k.startsWith('--fv-'))!;
+    };
+
+    const nameA = await runOnce();
+    const nameB = await runOnce();
+
+    expect(nameA).toEqual(nameB);
+    expect(nameA).toMatch(/^--fv-[\w-]+-0$/);
   });
 });
