@@ -35,11 +35,11 @@ describe('createVar + makeStyles integration', () => {
     const cssStr = cssText.join('\n');
     expect(cssStr).not.toMatch(/--__g_var_p\d+__/);
     expect(cssStr).toMatch(/--fv-/);
-    expect(cssStr).toContain('blue');
+    expect(cssStr).toMatch(/--fv-[\w-]+:\s*blue/);
     expect(cssStr).toContain('color: var(--fv-');
   });
 
-  it('SSR equivalence: two independent renderers produce identical output', () => {
+  it('resolved var name is stable across renderers sharing the same makeStyles closure', () => {
     const colorVar = createVar();
     const placeholder = `${colorVar}`;
     const useStyles = makeStyles({
@@ -55,10 +55,10 @@ describe('createVar + makeStyles integration', () => {
     const classesServer = useStyles({ dir: 'ltr', renderer: rendererServer });
     const classesClient = useStyles({ dir: 'ltr', renderer: rendererClient });
 
-    // Same class names on server and client.
+    // Same class names on both renderers (makeStyles caches the resolution).
     expect(classesClient.root).toEqual(classesServer.root);
 
-    // Coerced var name is the same resolved name after both runs.
+    // After resolution, the var coerces to the stable resolved name.
     expect(`${colorVar}`).toMatch(/^--fv-/);
   });
 
