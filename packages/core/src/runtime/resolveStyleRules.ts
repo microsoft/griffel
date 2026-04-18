@@ -2,7 +2,7 @@ import hashString from '@emotion/hash';
 import type { GriffelAnimation, GriffelStyle } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
-import { HASH_PREFIX, SCOPE_BOUNDARY_PREFIX, RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants.js';
+import { HASH_PREFIX, RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants.js';
 import type { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types.js';
 import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule.js';
 import { compileAtomicCSSRule } from './compileAtomicCSSRule.js';
