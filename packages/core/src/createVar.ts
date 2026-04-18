@@ -18,16 +18,16 @@ const registry = new Map<string, InternalGriffelVar>();
 export function createVar(): GriffelVar {
   const placeholder = GRIFFEL_VAR_PLACEHOLDER_PREFIX + placeholderCounter++ + GRIFFEL_VAR_PLACEHOLDER_SUFFIX;
 
-  const ref: InternalGriffelVar = {
+  const ref = {
     _placeholder: placeholder,
     _resolved: undefined,
-    toString() {
+    toString(this: InternalGriffelVar) {
       return this._resolved ?? this._placeholder;
     },
-    [Symbol.toPrimitive]() {
+    [Symbol.toPrimitive](this: InternalGriffelVar) {
       return this._resolved ?? this._placeholder;
     },
-  } as InternalGriffelVar;
+  } as unknown as InternalGriffelVar;
 
   registry.set(placeholder, ref);
   return ref;
