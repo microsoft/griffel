@@ -24,7 +24,18 @@ import { trimSelector } from './utils/trimSelector.js';
 import type { AtRules } from './utils/types.js';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule.js';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties.js';
-import { resolveVarsInStyles } from './resolveVarsInStyles.js';
+
+type VarResolver = <T extends GriffelStyle>(styles: T, classNameHashSalt: string) => T;
+
+// Null by default; createVar's module-load side effect registers the real
+// resolver. When createVar is never imported by the consumer, the walker and
+// placeholder registry are tree-shaken out and this stays null — cost on the
+// makeStyles hot path is a single null-check per top-level block.
+let varResolver: VarResolver | null = null;
+
+export function __registerVarResolver(resolver: VarResolver): void {
+  varResolver = resolver;
+}
 
 function getShorthandDefinition(property: string): [number, string[]] | undefined {
   return shorthands[property as keyof typeof shorthands];
@@ -102,13 +113,14 @@ export function resolveStyleRules(
   // Top-level calls (no selectors yet and no at-rules) own placeholder resolution
   // for this block. Nested recursive calls operate on already-rewritten styles.
   if (
+    varResolver !== null &&
     selectors.length === 0 &&
     atRules.container === '' &&
     atRules.layer === '' &&
     atRules.media === '' &&
     atRules.supports === ''
   ) {
-    styles = resolveVarsInStyles(styles, classNameHashSalt);
+    styles = varResolver(styles, classNameHashSalt);
   }
 
   // eslint-disable-next-line guard-for-in

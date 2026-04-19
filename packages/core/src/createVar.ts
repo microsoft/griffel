@@ -1,13 +1,23 @@
 import { GRIFFEL_VAR_PLACEHOLDER_PREFIX, GRIFFEL_VAR_PLACEHOLDER_SUFFIX } from './constants.js';
 import type { GriffelVar } from '@griffel/style-types';
+import {
+  type PlaceholderEntry,
+  __internal_registerPlaceholder,
+  __internal_resolvePlaceholder,
+  __internal_getResolvedName,
+  __internal_getPlaceholderEntry,
+} from './runtime/placeholderRegistry.js';
+import { __registerVarResolver } from './runtime/resolveStyleRules.js';
+import { resolveVarsInStyles } from './runtime/resolveVarsInStyles.js';
 
-interface InternalGriffelVar extends GriffelVar {
-  _placeholder: string;
-  _resolved: string | undefined;
-}
+// Loading this module wires the var resolver into the makeStyles engine.
+// Consumers who never import createVar never pay for the walker/registry:
+// resolveStyleRules skips resolution when no resolver is registered.
+__registerVarResolver(resolveVarsInStyles);
+
+interface InternalGriffelVar extends GriffelVar, PlaceholderEntry {}
 
 let placeholderCounter = 0;
-const registry = new Map<string, InternalGriffelVar>();
 
 /**
  * Creates a reference to a unique CSS custom property.
@@ -52,38 +62,17 @@ export function createVar(): GriffelVar {
     },
   } as unknown as InternalGriffelVar;
 
-  registry.set(placeholder, ref);
+  __internal_registerPlaceholder(ref);
   return ref;
 }
 
-/**
- * @internal
- * Resolves a placeholder to its final CSS variable name. First resolution wins;
- * subsequent calls are no-ops. Called by `resolveStyleRules` after it has
- * computed the block's content hash.
- */
-export function __internal_resolvePlaceholder(placeholder: string, resolvedName: string): void {
-  const ref = registry.get(placeholder);
-  if (ref && ref._resolved === undefined) {
-    ref._resolved = resolvedName;
-  }
-}
+export { __internal_resolvePlaceholder, __internal_getResolvedName };
 
 /**
  * @internal
  * Returns the GriffelVar ref associated with a placeholder, or undefined
- * if the placeholder is not registered. Used by tests and by resolveStyleRules
- * to look up an already-resolved name.
+ * if the placeholder is not registered. Used by tests.
  */
 export function __internal_getPlaceholderOwner(placeholder: string): GriffelVar | undefined {
-  return registry.get(placeholder);
-}
-
-/**
- * @internal
- * Returns the already-resolved name for a placeholder, or undefined if not
- * yet resolved. Does not trigger resolution.
- */
-export function __internal_getResolvedName(placeholder: string): string | undefined {
-  return registry.get(placeholder)?._resolved;
+  return __internal_getPlaceholderEntry(placeholder) as GriffelVar | undefined;
 }

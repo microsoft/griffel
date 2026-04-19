@@ -1,6 +1,6 @@
 import hashString from '@emotion/hash';
 import { GRIFFEL_VAR_PLACEHOLDER_PREFIX, GRIFFEL_VAR_PLACEHOLDER_REGEX, VAR_HASH_PREFIX } from '../constants.js';
-import { __internal_getResolvedName, __internal_resolvePlaceholder } from '../createVar.js';
+import { __internal_getResolvedName, __internal_resolvePlaceholder } from './placeholderRegistry.js';
 import { isObject } from './utils/isObject.js';
 
 /**
