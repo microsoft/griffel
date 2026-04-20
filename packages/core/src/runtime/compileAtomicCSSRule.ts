@@ -1,7 +1,7 @@
+import { compileCSSRules } from './compileCSSRules.js';
 import { hyphenateProperty } from './utils/hyphenateProperty.js';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
 import type { AtRules } from './utils/types.js';
-import { compileCSSRules } from './compileCSSRules.js';
 
 export interface CompileAtomicCSSOptions {
   className: string;
@@ -49,19 +49,38 @@ function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudo
   return `${classNameSelector}{${cssRule}}`;
 }
 
+function wrapAtRules(rule: string, atRules: Omit<AtRules, 'scope'>): string {
+  const { container, layer, media, supports } = atRules;
+
+  if (media) {
+    rule = `@media ${media} { ${rule} }`;
+  }
+  if (layer) {
+    rule = `@layer ${layer} { ${rule} }`;
+  }
+  if (supports) {
+    rule = `@supports ${supports} { ${rule} }`;
+  }
+  if (container) {
+    rule = `@container ${container} { ${rule} }`;
+  }
+  return rule;
+}
+
 export function compileAtomicCSSRule(
   options: CompileAtomicCSSOptions,
   atRules: AtRules,
 ): [string? /* ltr definition */, string? /* rtl definition */] {
   const { className, selectors, property, rtlClassName, rtlProperty, rtlValue, value } = options;
-  const { container, layer, media, supports, scope } = atRules;
+  const { scope } = atRules;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
     ? `${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')};`
     : `${hyphenateProperty(property)}: ${value};`;
 
-  let cssRule = createCSSRule(classNameSelector, cssDeclaration, selectors);
+  let ltrRule = createCSSRule(classNameSelector, cssDeclaration, selectors);
+  let rtlRule = '';
 
   if (rtlProperty && rtlClassName) {
     const rtlClassNameSelector = `.${rtlClassName}`;
@@ -69,32 +88,30 @@ export function compileAtomicCSSRule(
       ? `${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')};`
       : `${hyphenateProperty(rtlProperty)}: ${rtlValue};`;
 
-    cssRule += createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
+    rtlRule = createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
   }
 
-  if (media) {
-    cssRule = `@media ${media} { ${cssRule} }`;
-  }
-
-  if (layer) {
-    cssRule = `@layer ${layer} { ${cssRule} }`;
-  }
-
-  if (supports) {
-    cssRule = `@supports ${supports} { ${cssRule} }`;
-  }
-
-  if (container) {
-    cssRule = `@container ${container} { ${cssRule} }`;
-  }
+  let cssRule: string;
 
   if (scope) {
-    const resolvedScope = scope.replace(/&/g, classNameSelector);
+    // @scope needs separate blocks for LTR and RTL because the scope root
+    // selector references the direction-specific atomic class. In RTL context
+    // the element only has the RTL class, so @scope (.ltrClass) won't match.
+    ltrRule = wrapAtRules(ltrRule, atRules);
+    const resolvedLtrScope = scope.replace(/&/g, classNameSelector);
+    ltrRule = ltrRule.split(classNameSelector).join(':scope');
+    ltrRule = `@scope ${resolvedLtrScope} { ${ltrRule} }`;
 
-    // Replace .className with :scope inside the @scope block — within @scope,
-    // :scope refers to the scope root element, not a descendant with that class
-    cssRule = cssRule.split(classNameSelector).join(':scope');
-    cssRule = `@scope ${resolvedScope} { ${cssRule} }`;
+    if (rtlRule) {
+      const rtlClassNameSelector = `.${rtlClassName}`;
+      rtlRule = wrapAtRules(rtlRule, atRules);
+      const resolvedRtlScope = scope.replace(/&/g, rtlClassNameSelector);
+      rtlRule = rtlRule.split(rtlClassNameSelector).join(':scope');
+      rtlRule = `@scope ${resolvedRtlScope} { ${rtlRule} }`;
+    }
+    cssRule = ltrRule + rtlRule;
+  } else {
+    cssRule = wrapAtRules(ltrRule + rtlRule, atRules);
   }
 
   return compileCSSRules(cssRule, true) as [string?, string?];

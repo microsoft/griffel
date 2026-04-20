@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
 import type { GriffelRenderer } from '../types.js';
 import { createDOMRenderer } from './createDOMRenderer.js';
@@ -30,6 +30,42 @@ describe('rehydrateRendererCache', () => {
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
         ".foo { color: red; }": "d",
+      }
+    `);
+  });
+
+  it('should rehydrate @scope rules in the t bucket', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 't');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@scope (.f1ewl1kl) { :scope .child{color:red;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@scope (.f1ewl1kl) { :scope .child{color:red;} }": "t",
+      }
+    `);
+  });
+
+  it('should rehydrate @scope rules with boundary selector', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 't');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "t",
       }
     `);
   });
