@@ -44,6 +44,11 @@
     color: red;
   }
 }
+@scope (.f1ewl1kl) {
+  :scope .child {
+    color: red;
+  }
+}
 @media (forced-colors: active) {
   .color-magenta {
     color: magenta;

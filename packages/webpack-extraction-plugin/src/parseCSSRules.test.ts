@@ -90,4 +90,38 @@ describe('parseCSSRules', () => {
     `);
     expect(result.remainingCSS).toBe('.foo{color:red;}.bar{color:green;}');
   });
+
+  it('handles @scope rules', () => {
+    const cssRulesByBucket: CSSRulesByBucket = {
+      t: ['@scope (.f1ewl1kl){:scope .child{color:red;}}'],
+    };
+    const css = generateCSSRules(cssRulesByBucket);
+    const result = parseCSSRules(css);
+
+    expect(removeEmptyBuckets(result.cssRulesByBucket)).toMatchInlineSnapshot(`
+      Object {
+        "t": Array [
+          "@scope (.f1ewl1kl){:scope .child{color:red;}}",
+        ],
+      }
+    `);
+    expect(result.remainingCSS).toBe('');
+  });
+
+  it('handles @scope rules with boundary selector', () => {
+    const cssRulesByBucket: CSSRulesByBucket = {
+      t: ['@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}'],
+    };
+    const css = generateCSSRules(cssRulesByBucket);
+    const result = parseCSSRules(css);
+
+    expect(removeEmptyBuckets(result.cssRulesByBucket)).toMatchInlineSnapshot(`
+      Object {
+        "t": Array [
+          "@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}",
+        ],
+      }
+    `);
+    expect(result.remainingCSS).toBe('');
+  });
 });
