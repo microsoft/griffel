@@ -7,6 +7,7 @@ import { getStyleSheetKeyFromElement } from './getStyleSheetForBucket.js';
 // https://github.com/styletron/styletron/blob/e0fcae826744eb00ce679ac613a1b10d44256660/packages/styletron-engine-atomic/src/client/client.js#L8
 const KEYFRAMES_HYDRATOR = /@(-webkit-)?keyframes ([^{]+){((?:(?:from|to|(?:\d+\.?\d*%))\{(?:[^}])*})*)}/g;
 const AT_RULES_HYDRATOR = /@(media|supports|layer|scope)[^{]+\{([\s\S]+?})\s*}/g;
+const SCOPE_HYDRATOR = /@scope[^{]+\{([\s\S]+?})\s*}/g;
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
 
 const regexps: Partial<Record<StyleBucketName, RegExp>> = {
@@ -37,17 +38,42 @@ export function rehydrateRendererCache(
         renderer.stylesheets[stylesheetKey] = createIsomorphicStyleSheetFromElement(styleElement);
       }
 
-      const regex = regexps[bucketName] || STYLES_HYDRATOR;
+      const regex = regexps[bucketName];
       let match;
+      let textContent = styleElement.textContent!;
 
-      while ((match = regex.exec(styleElement.textContent!))) {
-        // "cacheKey" is either a class name or an animation name
-        const [cssRule] = match;
+      if (regex) {
+        while ((match = regex.exec(textContent))) {
+          const [cssRule] = match;
 
-        renderer.insertionCache[cssRule] = bucketName;
+          renderer.insertionCache[cssRule] = bucketName;
 
-        if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
-          debugData.addCSSRule(cssRule);
+          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+            debugData.addCSSRule(cssRule);
+          }
+        }
+      } else {
+        // @scope rules can appear in any bucket, so extract them first to prevent
+        // STYLES_HYDRATOR from spuriously matching class selectors inside @scope blocks.
+        while ((match = SCOPE_HYDRATOR.exec(textContent))) {
+          const [cssRule] = match;
+
+          renderer.insertionCache[cssRule] = bucketName;
+          textContent = textContent.replace(cssRule, '');
+
+          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+            debugData.addCSSRule(cssRule);
+          }
+        }
+
+        while ((match = STYLES_HYDRATOR.exec(textContent))) {
+          const [cssRule] = match;
+
+          renderer.insertionCache[cssRule] = bucketName;
+
+          if (process.env.NODE_ENV !== 'production' && isDevToolsEnabled) {
+            debugData.addCSSRule(cssRule);
+          }
         }
       }
     });

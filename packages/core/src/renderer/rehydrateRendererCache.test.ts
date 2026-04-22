@@ -34,28 +34,10 @@ describe('rehydrateRendererCache', () => {
     `);
   });
 
-  it('should rehydrate @scope rules in the t bucket', () => {
+  it('should rehydrate @scope rules in the d bucket', () => {
     const styleElement = document.createElement('style');
 
-    styleElement.setAttribute(DATA_BUCKET_ATTR, 't');
-    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
-
-    document.head.appendChild(styleElement);
-    styleElement.textContent = '@scope (.f1ewl1kl) { :scope .child{color:red;} }';
-
-    rehydrateRendererCache(renderer, document);
-
-    expect(renderer.insertionCache).toMatchInlineSnapshot(`
-      {
-        "@scope (.f1ewl1kl) { :scope .child{color:red;} }": "t",
-      }
-    `);
-  });
-
-  it('should rehydrate @scope rules with boundary selector', () => {
-    const styleElement = document.createElement('style');
-
-    styleElement.setAttribute(DATA_BUCKET_ATTR, 't');
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
     styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
 
     document.head.appendChild(styleElement);
@@ -65,7 +47,43 @@ describe('rehydrateRendererCache', () => {
 
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
-        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "t",
+        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "d",
+      }
+    `);
+  });
+
+  it('should rehydrate @scope rules in the h bucket', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'h');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope:hover{color:cyan;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@scope (.f1ewl1kl) to (.boundary) { :scope:hover{color:cyan;} }": "h",
+      }
+    `);
+  });
+
+  it('should rehydrate @scope rules with boundary selector', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "d",
       }
     `);
   });
