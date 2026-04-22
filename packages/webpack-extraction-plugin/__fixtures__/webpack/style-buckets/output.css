@@ -5,6 +5,11 @@
 .animation-name {
   animation-name: foo;
 }
+@scope (.f1ewl1kl) to (.boundary) {
+  :scope .child {
+    color: red;
+  }
+}
 .color-orange:link {
   color: orange;
 }
@@ -41,11 +46,6 @@
 }
 @layer color {
   .f1hjcal7 {
-    color: red;
-  }
-}
-@scope (.f1ewl1kl) {
-  :scope .child {
     color: red;
   }
 }
