@@ -1,8 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { isScopeSelector } from './isScopeSelector';
 
 describe('isScopeSelector', () => {
   it('returns true for @scope selectors', () => {
+    expect(isScopeSelector('@scope to (.boundary)')).toBe(true);
+    expect(isScopeSelector('@scope to (.boundary > *)')).toBe(true);
+    // isScopeSelector only detects the @scope prefix; resolveStyleRules
+    // validates the full syntax and rejects these unsupported forms
     expect(isScopeSelector('@scope (&)')).toBe(true);
     expect(isScopeSelector('@scope (&) to (&)')).toBe(true);
     expect(isScopeSelector('@scope (.foo)')).toBe(true);

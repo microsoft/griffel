@@ -388,11 +388,11 @@ export function resolveStyleRules(
       } else if (isScopeSelector(property)) {
         const scopeQuery = property.slice(6).trim();
 
-        if (scopeQuery === '') {
+        if (scopeQuery === '' || !scopeQuery.startsWith('to ')) {
           if (process.env.NODE_ENV !== 'production') {
             logError(
-              '@griffel/react: "@scope" was used without a prelude (e.g. "@scope (&)"). ' +
-                'Bare "@scope" is only valid inside inline <style> elements and is not supported by Griffel. ' +
+              `@griffel/react: "${property}" is not a supported @scope syntax. ` +
+                'Use "@scope to (SELECTOR)" to define a scope boundary. ' +
                 'The styles will be skipped.',
             );
           }

@@ -998,38 +998,48 @@ describe('resolveStyleRules', () => {
     it('warns and skips bare @scope without a prelude', () => {
       const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
-      // Bare "@scope" without a prelude — styles are skipped
       const result = resolveStyleRules({ '@scope': { color: 'red' } });
 
-      expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*without a prelude/));
+      expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
 
       // No styles emitted
       expect(result[0]).toEqual({});
       expect(result[1]).toEqual({});
     });
 
-    it('handles @scope with simple root selector', () => {
+    it('warns and skips @scope with explicit root selector', () => {
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
+
       const result = resolveStyleRules({ '@scope (&)': { '& .child': { color: 'red' } } });
 
-      expect(result).toMatchInlineSnapshot(`
-        @scope (.f1ewl1kl) {
-          :scope .child {
-            color: red;
-          }
-        }
-      `);
+      expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
+
+      expect(result[0]).toEqual({});
+      expect(result[1]).toEqual({});
     });
 
-    it('handles @scope with literal boundary selector', () => {
+    it('warns and skips @scope (&) to (.boundary) syntax', () => {
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
+
       const result = resolveStyleRules({
-        '@scope (&) to (.scope-boundary)': {
+        '@scope (&) to (.boundary)': { '& .child': { color: 'red' } },
+      });
+
+      expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
+
+      expect(result[0]).toEqual({});
+      expect(result[1]).toEqual({});
+    });
+
+    it('handles @scope to (.boundary) with child selector', () => {
+      const result = resolveStyleRules({
+        '@scope to (.scope-boundary)': {
           '& .child': { color: 'blue' },
         },
       });
 
-      // & in root replaced with atomic class, .scope-boundary left as-is
       expect(result).toMatchInlineSnapshot(`
-        @scope (.f6j7vq4) to (.scope-boundary) {
+        @scope (.f1me1298) to (.scope-boundary) {
           :scope .child {
             color: blue;
           }
@@ -1037,18 +1047,42 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('scope rules are placed in the "t" bucket', () => {
+    it('scope rules without pseudo go to "d" bucket', () => {
       const result = resolveStyleRules({
-        '@scope (&)': { '& p': { color: 'green' } },
+        '@scope to (.boundary)': { '& p': { color: 'green' } },
       });
 
-      expect(result[1]).toHaveProperty('t');
+      expect(result[1]).toHaveProperty('d');
+    });
+
+    it('scoped :hover goes to "h" bucket', () => {
+      const result = resolveStyleRules({
+        '@scope to (.boundary)': { ':hover': { color: 'cyan' } },
+      });
+
+      expect(result[1]).toHaveProperty('h');
+    });
+
+    it('scoped :focus goes to "f" bucket', () => {
+      const result = resolveStyleRules({
+        '@scope to (.boundary)': { ':focus': { color: 'yellow' } },
+      });
+
+      expect(result[1]).toHaveProperty('f');
+    });
+
+    it('scoped :active goes to "a" bucket', () => {
+      const result = resolveStyleRules({
+        '@scope to (.boundary)': { ':active': { color: 'orange' } },
+      });
+
+      expect(result[1]).toHaveProperty('a');
     });
 
     it("scope queries don't collide with regular properties", () => {
       const result = resolveStyleRules({
         color: 'red',
-        '@scope (&)': { '& .child': { color: 'red' } },
+        '@scope to (.boundary)': { '& .child': { color: 'red' } },
       });
 
       const classesMap = result[0];
@@ -1062,15 +1096,15 @@ describe('resolveStyleRules', () => {
     it('@scope inside @media produces @media wrapping @scope', () => {
       const result = resolveStyleRules({
         '@media (max-width: 600px)': {
-          '@scope (&)': {
+          '@scope to (.boundary)': {
             '& p': { color: 'red' },
           },
         },
       });
 
       expect(result).toMatchInlineSnapshot(`
-        @scope (.fsrixd9) {
-          @media (max-width: 600px) {
+        @media (max-width: 600px) {
+          @scope (.fan1v9k) to (.boundary) {
             :scope p {
               color: red;
             }
@@ -1082,15 +1116,15 @@ describe('resolveStyleRules', () => {
     it('@scope inside @supports produces @supports wrapping @scope', () => {
       const result = resolveStyleRules({
         '@supports (display: grid)': {
-          '@scope (&)': {
+          '@scope to (.boundary)': {
             '& p': { color: 'blue' },
           },
         },
       });
 
       expect(result).toMatchInlineSnapshot(`
-        @scope (.fflvq7j) {
-          @supports (display: grid) {
+        @supports (display: grid) {
+          @scope (.fc037k5) to (.boundary) {
             :scope p {
               color: blue;
             }
@@ -1102,15 +1136,15 @@ describe('resolveStyleRules', () => {
     it('@scope inside @container produces @container wrapping @scope', () => {
       const result = resolveStyleRules({
         '@container (min-width: 400px)': {
-          '@scope (&)': {
+          '@scope to (.boundary)': {
             '& p': { color: 'green' },
           },
         },
       });
 
       expect(result).toMatchInlineSnapshot(`
-        @scope (.f1wui6kw) {
-          @container (min-width: 400px) {
+        @container (min-width: 400px) {
+          @scope (.f1pbgmbw) to (.boundary) {
             :scope p {
               color: green;
             }
@@ -1122,15 +1156,15 @@ describe('resolveStyleRules', () => {
     it('@scope inside @layer produces @layer wrapping @scope', () => {
       const result = resolveStyleRules({
         '@layer utilities': {
-          '@scope (&)': {
+          '@scope to (.boundary)': {
             '& p': { color: 'purple' },
           },
         },
       });
 
       expect(result).toMatchInlineSnapshot(`
-        @scope (.f1itm4s6) {
-          @layer utilities {
+        @layer utilities {
+          @scope (.f1o8gmm1) to (.boundary) {
             :scope p {
               color: purple;
             }
@@ -1143,19 +1177,18 @@ describe('resolveStyleRules', () => {
 
     it('handles RTL-flipped property under @scope', () => {
       const result = resolveStyleRules({
-        '@scope (&)': {
+        '@scope to (.boundary)': {
           '& .child': { paddingLeft: '10px' },
         },
       });
 
-      // Both LTR (padding-left) and RTL (padding-right) wrapped in @scope
       expect(result).toMatchInlineSnapshot(`
-        @scope (.f12lstp7) {
+        @scope (.flgw30a) to (.boundary) {
           :scope .child {
             padding-left: 10px;
           }
         }
-        @scope (.fvmo2bm) {
+        @scope (.f1l5b952) to (.boundary) {
           :scope .child {
             padding-right: 10px;
           }
@@ -1168,63 +1201,41 @@ describe('resolveStyleRules', () => {
     it('same property scoped and non-scoped produce independent classes', () => {
       const result = resolveStyleRules({
         color: 'red',
-        '@scope (&)': { color: 'blue' },
+        '@scope to (.boundary)': { color: 'blue' },
       });
 
       const classesMap = result[0];
       const keys = Object.keys(classesMap);
 
-      // Should have 2 independent entries
       expect(keys.length).toBe(2);
 
-      // Non-scoped goes to 'd', scoped goes to 't'
+      // Both non-scoped and scoped without pseudo go to 'd'
       expect(result[1]).toHaveProperty('d');
-      expect(result[1]).toHaveProperty('t');
     });
 
     it('same property in two different @scope blocks produce independent classes', () => {
       const result = resolveStyleRules({
-        '@scope (&) to (.a)': { '& p': { color: 'red' } },
-        '@scope (&) to (.b)': { '& p': { color: 'blue' } },
+        '@scope to (.a)': { '& p': { color: 'red' } },
+        '@scope to (.b)': { '& p': { color: 'blue' } },
       });
 
       const classesMap = result[0];
       const keys = Object.keys(classesMap);
 
-      // Two different scope queries should produce two independent classes
       expect(keys.length).toBe(2);
     });
 
     // --- Boundary edge cases ---
 
-    it('handles & in boundary — replaces with atomic class', () => {
-      const result = resolveStyleRules({
-        '@scope (&) to (&)': {
-          '& .child': { color: 'red' },
-        },
-      });
-
-      // Both root and boundary & get replaced with the same atomic class
-      // This is a valid Griffel pattern even if semantically unusual
-      expect(result).toMatchInlineSnapshot(`
-        @scope (.f156fw3h) to (.f156fw3h) {
-          :scope .child {
-            color: red;
-          }
-        }
-      `);
-    });
-
     it('handles complex boundary selector', () => {
       const result = resolveStyleRules({
-        '@scope (&) to (.boundary > *)': {
+        '@scope to (.boundary > *)': {
           '& img': { borderRadius: '50%' },
         },
       });
 
-      // Complex boundary selector preserved as-is
       expect(result).toMatchInlineSnapshot(`
-        @scope (.f1d3jqr1) to (.boundary > *) {
+        @scope (.fm436sz) to (.boundary > *) {
           :scope img {
             border-radius: 50%;
           }
@@ -1236,13 +1247,13 @@ describe('resolveStyleRules', () => {
 
     it('handles pseudo-selectors inside @scope', () => {
       const result = resolveStyleRules({
-        '@scope (&)': {
+        '@scope to (.boundary)': {
           '& a:hover': { color: 'blue' },
         },
       });
 
       expect(result).toMatchInlineSnapshot(`
-        @scope (.f1oj0ovv) {
+        @scope (.f12tnm6c) to (.boundary) {
           :scope a:hover {
             color: blue;
           }
@@ -1250,9 +1261,59 @@ describe('resolveStyleRules', () => {
       `);
     });
 
+    it('scoped :hover with boundary goes to "h" bucket', () => {
+      const result = resolveStyleRules({
+        '@scope to (.boundary)': {
+          ':hover': { color: 'cyan' },
+        },
+      });
+
+      expect(result[1]).toHaveProperty('h');
+      expect(result).toMatchInlineSnapshot(`
+        @scope (.f1sje2gt) to (.boundary) {
+          :scope:hover {
+            color: cyan;
+          }
+        }
+      `);
+    });
+
+    it('scoped :focus with boundary goes to "f" bucket', () => {
+      const result = resolveStyleRules({
+        '@scope to (.boundary)': {
+          ':focus': { color: 'yellow' },
+        },
+      });
+
+      expect(result[1]).toHaveProperty('f');
+    });
+
+    it('scoped :active with boundary goes to "a" bucket', () => {
+      const result = resolveStyleRules({
+        '@scope to (.boundary)': {
+          ':active': { color: 'orange' },
+        },
+      });
+
+      expect(result[1]).toHaveProperty('a');
+    });
+
+    it('LVHA ordering preserved: scoped :hover and :focus go to separate buckets', () => {
+      const result = resolveStyleRules({
+        '@scope to (.boundary)': {
+          ':hover': { color: 'cyan' },
+          ':focus': { color: 'yellow' },
+        },
+      });
+
+      // :hover → 'h' bucket, :focus → 'f' bucket — LVHA ordering preserved
+      expect(result[1]).toHaveProperty('h');
+      expect(result[1]).toHaveProperty('f');
+    });
+
     it('handles multiple properties inside @scope', () => {
       const result = resolveStyleRules({
-        '@scope (&) to (.boundary)': {
+        '@scope to (.boundary)': {
           '& p': { color: 'red', fontSize: '14px' },
         },
       });
@@ -1263,20 +1324,19 @@ describe('resolveStyleRules', () => {
       // Two properties = two atomic classes
       expect(keys.length).toBe(2);
 
-      // Both go to 't' bucket
-      expect(result[1].t!.length).toBe(2);
+      // Both go to 'd' bucket (no pseudo selector on '& p')
+      expect(result[1].d!.length).toBe(2);
     });
 
     // --- Direct root styling ---
 
     it('handles direct property inside @scope (styles the scope root)', () => {
       const result = resolveStyleRules({
-        '@scope (&)': { color: 'blue' },
+        '@scope to (.boundary)': { color: 'blue' },
       });
 
-      // Direct property without & selector — targets the scope root itself
       expect(result).toMatchInlineSnapshot(`
-        @scope (.fwlwtdc) {
+        @scope (.f14r3iqv) to (.boundary) {
           :scope {
             color: blue;
           }
@@ -1284,36 +1344,21 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    // --- Specificity caveat ---
-    // NOTE: Griffel uses :scope (0-1-0 specificity) for & inside @scope blocks.
-    // The CSS spec says & inside @scope should behave as :where(:scope) (0-0-0).
-    // This is a known deviation — Griffel's & always has class-level specificity
-    // in all contexts, and we maintain that consistency inside @scope as well.
-    // See docs/architecture/css-scope-message-bubble-isolation.md for details.
-
     // --- Cascade ordering: scoped vs non-scoped same property ---
 
-    it('non-scoped then scoped: produces independent rules in different buckets', () => {
-      // makeStyles({ root: { color: 'red', '@scope (&)': { color: 'blue' } } })
+    it('non-scoped then scoped: produces independent rules in same bucket', () => {
       const result = resolveStyleRules({
         color: 'red',
-        '@scope (&)': { color: 'blue' },
+        '@scope to (.boundary)': { color: 'blue' },
       });
 
-      // Non-scoped rule: .fClass{color:red;} in 'd' bucket
-      // Scoped rule: @scope (.fClass) { :scope{color:blue;} } in 't' bucket
+      // Both non-scoped and scoped (no pseudo) go to 'd' bucket
       expect(result[1]).toHaveProperty('d');
-      expect(result[1]).toHaveProperty('t');
-
-      // The 't' bucket is inserted AFTER 'd' in Griffel's style sheets,
-      // so @scope rules win by source order when specificity is equal.
-      // This means the scoped color (blue) will win regardless of
-      // authored property order within the makeStyles object.
       expect(result).toMatchInlineSnapshot(`
         .fe3e8s9 {
           color: red;
         }
-        @scope (.fwlwtdc) {
+        @scope (.f14r3iqv) to (.boundary) {
           :scope {
             color: blue;
           }
@@ -1321,22 +1366,16 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('scoped then non-scoped: scoped still wins due to bucket ordering', () => {
-      // makeStyles({ root: { '@scope (&)': { color: 'blue' }, color: 'red' } })
+    it('scoped then non-scoped: same bucket, insertion order', () => {
       const result = resolveStyleRules({
-        '@scope (&)': { color: 'blue' },
+        '@scope to (.boundary)': { color: 'blue' },
         color: 'red',
       });
 
-      // Same buckets regardless of authored order
+      // Both non-scoped and scoped (no pseudo) go to 'd' bucket
       expect(result[1]).toHaveProperty('d');
-      expect(result[1]).toHaveProperty('t');
-
-      // Both produce same CSS output — property iteration order in JS objects
-      // is insertion order, but bucket placement is deterministic.
-      // Scoped rule (blue) in 't' still comes after non-scoped (red) in 'd'.
       expect(result).toMatchInlineSnapshot(`
-        @scope (.fwlwtdc) {
+        @scope (.f14r3iqv) to (.boundary) {
           :scope {
             color: blue;
           }
@@ -1349,18 +1388,18 @@ describe('resolveStyleRules', () => {
 
     it('two scoped rules with same property: last one wins (same bucket, source order)', () => {
       const result = resolveStyleRules({
-        '@scope (&) to (.a)': { color: 'red' },
-        '@scope (&) to (.b)': { color: 'blue' },
+        '@scope to (.a)': { color: 'red' },
+        '@scope to (.b)': { color: 'blue' },
       });
 
-      // Both in 't' bucket, blue comes second
+      // Both in 'd' bucket (no pseudo), blue comes second
       expect(result).toMatchInlineSnapshot(`
-        @scope (.fro6jmq) to (.a) {
+        @scope (.f1ppphex) to (.a) {
           :scope {
             color: red;
           }
         }
-        @scope (.f86q1js) to (.b) {
+        @scope (.f11yypxt) to (.b) {
           :scope {
             color: blue;
           }
