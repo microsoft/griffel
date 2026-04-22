@@ -49,7 +49,7 @@ export function getStyleBucketName(selectors: string[], atRules: AtRules): Style
   }
 
   // We are grouping all the at-rules like @supports etc. under `t` bucket.
-  if (atRules.layer || atRules.supports || atRules.scope) {
+  if (atRules.layer || atRules.supports) {
     return 't';
   }
 
