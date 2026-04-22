@@ -49,30 +49,12 @@ function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudo
   return `${classNameSelector}{${cssRule}}`;
 }
 
-function wrapAtRules(rule: string, atRules: Omit<AtRules, 'scope'>): string {
-  const { container, layer, media, supports } = atRules;
-
-  if (media) {
-    rule = `@media ${media} { ${rule} }`;
-  }
-  if (layer) {
-    rule = `@layer ${layer} { ${rule} }`;
-  }
-  if (supports) {
-    rule = `@supports ${supports} { ${rule} }`;
-  }
-  if (container) {
-    rule = `@container ${container} { ${rule} }`;
-  }
-  return rule;
-}
-
 export function compileAtomicCSSRule(
   options: CompileAtomicCSSOptions,
   atRules: AtRules,
 ): [string? /* ltr definition */, string? /* rtl definition */] {
   const { className, selectors, property, rtlClassName, rtlProperty, rtlValue, value } = options;
-  const { scope } = atRules;
+  const { container, layer, media, scope, supports } = atRules;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
@@ -91,27 +73,34 @@ export function compileAtomicCSSRule(
     rtlRule = createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
   }
 
-  let cssRule: string;
-
   if (scope) {
-    // @scope needs separate blocks for LTR and RTL because the scope root
-    // selector references the direction-specific atomic class. In RTL context
-    // the element only has the RTL class, so @scope (.ltrClass) won't match.
-    ltrRule = wrapAtRules(ltrRule, atRules);
-    const resolvedLtrScope = scope.replace(/&/g, classNameSelector);
+    // @scope is applied as the innermost at-rule wrapper, so that outer
+    // at-rules (@media, @supports, etc.) wrap around it naturally.
+    // Separate @scope blocks for LTR and RTL because the scope root
+    // selector references the direction-specific atomic class.
     ltrRule = ltrRule.split(classNameSelector).join(':scope');
-    ltrRule = `@scope ${resolvedLtrScope} { ${ltrRule} }`;
+    ltrRule = `@scope (${classNameSelector}) ${scope} { ${ltrRule} }`;
 
     if (rtlRule) {
       const rtlClassNameSelector = `.${rtlClassName}`;
-      rtlRule = wrapAtRules(rtlRule, atRules);
-      const resolvedRtlScope = scope.replace(/&/g, rtlClassNameSelector);
       rtlRule = rtlRule.split(rtlClassNameSelector).join(':scope');
-      rtlRule = `@scope ${resolvedRtlScope} { ${rtlRule} }`;
+      rtlRule = `@scope (${rtlClassNameSelector}) ${scope} { ${rtlRule} }`;
     }
-    cssRule = ltrRule + rtlRule;
-  } else {
-    cssRule = wrapAtRules(ltrRule + rtlRule, atRules);
+  }
+
+  let cssRule = ltrRule + rtlRule;
+
+  if (media) {
+    cssRule = `@media ${media} { ${cssRule} }`;
+  }
+  if (layer) {
+    cssRule = `@layer ${layer} { ${cssRule} }`;
+  }
+  if (supports) {
+    cssRule = `@supports ${supports} { ${cssRule} }`;
+  }
+  if (container) {
+    cssRule = `@container ${container} { ${cssRule} }`;
   }
 
   return compileCSSRules(cssRule, true) as [string?, string?];
