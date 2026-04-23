@@ -3599,6 +3599,7 @@ __metadata:
   dependencies:
     "@emotion/hash": "npm:^0.9.0"
     "@griffel/style-types": "npm:^1.4.0"
+    "@vitest/browser": "npm:4.0.9"
     "@vitest/browser-playwright": "npm:4.0.9"
     csstype: "npm:^3.1.3"
     rtl-css-js: "npm:^1.16.1"

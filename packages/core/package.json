@@ -29,6 +29,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
+    "@vitest/browser": "4.0.9",
     "@vitest/browser-playwright": "4.0.9"
   }
 }

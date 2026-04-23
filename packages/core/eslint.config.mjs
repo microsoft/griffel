@@ -18,7 +18,7 @@ export default [
     rules: {},
   },
   {
-    files: ['**/common/*'],
+    files: ['**/common/*', '**/testing/*'],
     rules: {
       'import/no-extraneous-dependencies': 'off',
     },
