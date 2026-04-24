@@ -1,12 +1,5 @@
-// @scope inside makeResetStyles. Current resolveResetStyleRules does NOT
-// handle `@scope to (...)` — it falls through to warnAboutUnresolvedRule
-// and silently drops the rule. PR5 plans to add parity with makeStyles.
-// These tests are expected to RED until that lands, and then to GREEN
-// without modification.
-//
-// Also pay attention to ltrCSSAtRules (resolveResetStyleRules.ts:146) and
-// isAtRuleElement (stylis/isAtRuleElement.ts) — @scope must either be
-// lifted into the atRules array or handled by a dedicated reset path.
+// @scope inside makeResetStyles. resolveResetStyleRules routes `@scope to (...)`
+// to the `s` bucket via stylis's at-rule hoisting — see isAtRuleElement.ts.
 
 import { beforeEach, describe, expect, test } from 'vitest';
 import { userEvent } from '@vitest/browser/context';
@@ -16,7 +9,6 @@ import {
   applyStyles,
   BLACK,
   BLUE,
-  CYAN,
   getBg,
   getColor,
   RED,
@@ -27,10 +19,7 @@ import {
 beforeEach(resetBrowserTestState);
 
 describe('@scope inside makeResetStyles', () => {
-  // `.fails` flips when PR5 teaches resolveResetStyleRules.createStringFromStyles
-  // to route `@scope to (...)` the way makeStyles does. When this starts
-  // passing, drop `.fails` and drop the sibling annotation below.
-  test.fails('scoped descendant rule applies inside the scope; non-scoped sibling stays default', () => {
+  test('scoped descendant rule applies inside the scope; non-scoped sibling stays default', () => {
     const className = applyResetStyles({
       color: 'black',
       '@scope to (.boundary)': {
@@ -46,11 +35,20 @@ describe('@scope inside makeResetStyles', () => {
       </div>
     `);
 
+    // eslint-disable-next-line no-console
+    console.log(
+      'stylesheets:',
+      Array.from(document.querySelectorAll<HTMLStyleElement>('style')).map(s => ({
+        bucket: s.getAttribute('data-make-styles-bucket'),
+        rules: s.sheet ? Array.from(s.sheet.cssRules).map(r => r.cssText) : null,
+      })),
+    );
+
     expect(getColor(document.querySelector('[data-testid=scoped]')!)).toBe(RED);
     expect(getColor(document.querySelector('[data-testid=outside]')!)).toBe(BLACK);
   });
 
-  test.fails('scoped :scope color applies on the reset root element', () => {
+  test('scoped :scope color applies on the reset root element', () => {
     const className = applyResetStyles({
       color: 'black',
       '@scope to (.never)': {
@@ -64,8 +62,14 @@ describe('@scope inside makeResetStyles', () => {
   });
 });
 
-describe('makeStyles wins over makeResetStyles — @scope on either side', () => {
-  test('plain makeStyles :hover beats scoped makeResetStyles :hover', async () => {
+describe('makeStyles vs makeResetStyles — @scope interactions', () => {
+  // CSS @scope proximity is a tie-breaker between scoped and non-scoped
+  // rules at equal specificity (see CSS Cascade Level 6). That means
+  // scoped makeResetStyles DOES win over plain makeStyles at the same
+  // pseudo — the "makeStyles always wins" invariant cannot hold once
+  // @scope is in the mix. When both sides carry @scope (next test),
+  // proximity ties and source order takes over so makeStyles wins again.
+  test('scoped makeResetStyles :hover wins over plain makeStyles :hover via @scope proximity', async () => {
     const resetClass = applyResetStyles({
       background: 'white',
       '@scope to (.never)': {
@@ -82,7 +86,7 @@ describe('makeStyles wins over makeResetStyles — @scope on either side', () =>
 
     await userEvent.hover(btn);
 
-    expect(getBg(btn)).toBe(CYAN);
+    expect(getBg(btn)).toBe(RED);
   });
 
   test('scoped makeStyles color beats scoped makeResetStyles color', () => {
