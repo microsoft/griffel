@@ -23,6 +23,16 @@ export type GriffelCSSExtractionPluginOptions = {
 
   /** Specifies if the CSS extracted from Griffel calls should be attached to a specific chunk with an entrypoint. */
   unstable_attachToEntryPoint?: string | ((chunk: EntryPoint) => boolean);
+
+  /**
+   * Emits Griffel CSS in CSS-cascade-layer form so that webpack's default
+   * SplitChunks chunking can split the output into multiple files without
+   * breaking cascade order.
+   *
+   * Mutually exclusive with `unstable_attachToEntryPoint`.
+   * @default false
+   */
+  unstable_layeredOutput?: boolean;
 };
 
 function attachGriffelChunkToAnotherChunk(
@@ -110,6 +120,7 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
 
 export class GriffelPlugin {
   readonly #attachToEntryPoint: GriffelCSSExtractionPluginOptions['unstable_attachToEntryPoint'];
+  readonly #layeredOutput: boolean;
   readonly #collectStats: boolean;
   readonly #collectPerfIssues: boolean;
   readonly #compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
@@ -132,6 +143,13 @@ export class GriffelPlugin {
     this.#collectPerfIssues = options.collectPerfIssues ?? false;
     this.#compareMediaQueries = options.compareMediaQueries ?? defaultCompareMediaQueries;
     this.#resolverFactory = options.resolverFactory ?? createResolverFactory();
+    this.#layeredOutput = options.unstable_layeredOutput ?? false;
+
+    if (this.#layeredOutput && options.unstable_attachToEntryPoint) {
+      throw new Error(
+        '@griffel/webpack-plugin: "unstable_layeredOutput" is incompatible with "unstable_attachToEntryPoint". Use one or the other.',
+      );
+    }
   }
 
   apply(compiler: Compiler): void {
@@ -167,17 +185,19 @@ export class GriffelPlugin {
     // WHY?
     //  We need to sort CSS rules in the same order as it's done via style buckets. It's not possible in multiple
     //  chunks.
-    if (compiler.options.optimization.splitChunks) {
-      compiler.options.optimization.splitChunks.cacheGroups ??= {};
-      compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
-        name: 'griffel',
-        // @ Rspack compat:
-        // Rspack does not support functions in test due performance concerns
-        // https://github.com/web-infra-dev/rspack/issues/3425#issuecomment-1577890202
-        test: IS_RSPACK ? /griffel\.css/ : isGriffelCSSModule,
-        chunks: 'all',
-        enforce: true,
-      };
+    if (!this.#layeredOutput) {
+      if (compiler.options.optimization.splitChunks) {
+        compiler.options.optimization.splitChunks.cacheGroups ??= {};
+        compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
+          name: 'griffel',
+          // @ Rspack compat:
+          // Rspack does not support functions in test due performance concerns
+          // https://github.com/web-infra-dev/rspack/issues/3425#issuecomment-1577890202
+          test: IS_RSPACK ? /griffel\.css/ : isGriffelCSSModule,
+          chunks: 'all',
+          enforce: true,
+        };
+      }
     }
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
@@ -194,6 +214,8 @@ export class GriffelPlugin {
 
         (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
           collectPerfIssues: this.#collectPerfIssues,
+          bucketStrategy: this.#layeredOutput ? 'extended' : 'leading',
+          wrapInLayer: this.#layeredOutput,
           resolveModule,
           registerExtractedCss(css: string) {
             cssByModuleMap.set(resourcePath, css);
@@ -247,21 +269,23 @@ export class GriffelPlugin {
       //   Performs module movements between chunks if SplitChunksPlugin is not enabled.
       // WHY?
       //   The same reason as for SplitChunksPlugin config.
-      if (!compiler.options.optimization.splitChunks) {
-        // @ Rspack compat
-        // Rspack does not support adding chunks in the same as Webpack, we force usage of "optimization.splitChunks"
-        if (IS_RSPACK) {
-          throw new Error(
-            [
-              'You are using Rspack, but don\'t have "optimization.splitChunks" enabled.',
-              '"optimization.splitChunks" should be enabled for "@griffel/webpack-extraction-plugin" to function properly.',
-            ].join(' '),
-          );
-        }
+      if (!this.#layeredOutput) {
+        if (!compiler.options.optimization.splitChunks) {
+          // @ Rspack compat
+          // Rspack does not support adding chunks in the same as Webpack, we force usage of "optimization.splitChunks"
+          if (IS_RSPACK) {
+            throw new Error(
+              [
+                'You are using Rspack, but don\'t have "optimization.splitChunks" enabled.',
+                '"optimization.splitChunks" should be enabled for "@griffel/webpack-extraction-plugin" to function properly.',
+              ].join(' '),
+            );
+          }
 
-        compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
-          moveCSSModulesToGriffelChunk(compilation);
-        });
+          compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
+            moveCSSModulesToGriffelChunk(compilation);
+          });
+        }
       }
 
       // WHAT?
