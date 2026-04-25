@@ -381,6 +381,31 @@ export const useStyles = makeStyles({
     expect(result.code).toContain('__css');
   });
 
+  it("bucketStrategy 'extended' moves nested pseudos into their pseudo bucket", () => {
+    const sourceCode = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  root: { '& .foo:hover': { color: 'red' } },
+});
+`;
+
+    const defaultResult = transformSync(sourceCode, {
+      filename: 'test-bucket-default.ts',
+      resolveModule: nodeResolve,
+    });
+    expect(defaultResult.cssRulesByBucket?.h?.length ?? 0).toBe(0);
+    expect(defaultResult.cssRulesByBucket?.d?.length ?? 0).toBeGreaterThan(0);
+
+    const extendedResult = transformSync(sourceCode, {
+      filename: 'test-bucket-extended.ts',
+      resolveModule: nodeResolve,
+      bucketStrategy: 'extended',
+    });
+    expect(extendedResult.cssRulesByBucket?.h?.length ?? 0).toBeGreaterThan(0);
+    expect(extendedResult.cssRulesByBucket?.d?.length ?? 0).toBe(0);
+  });
+
   for (const testCase of TESTS) {
     const testFn = testCase.only ? it.only : it;
 

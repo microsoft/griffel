@@ -1,0 +1,5 @@
+{
+  "name": "@griffel/chunking-repro",
+  "private": true,
+  "type": "module"
+}

@@ -5,6 +5,12 @@ import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext
 import { createResolverFactory, type TransformResolverFactory } from './resolver/createResolverFactory.mjs';
 import { parseCSSRules } from './utils/parseCSSRules.mjs';
 import { sortCSSRules } from './utils/sortCSSRules.mjs';
+import {
+  GRIFFEL_LAYER_NAMESPACE,
+  MEDIA_PLACEHOLDER_RE,
+  CONTAINER_PLACEHOLDER_RE,
+  hashOfQuery,
+} from './utils/layerNames.mjs';
 
 // Webpack does not export these constants
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
@@ -23,6 +29,16 @@ export type GriffelCSSExtractionPluginOptions = {
 
   /** Specifies if the CSS extracted from Griffel calls should be attached to a specific chunk with an entrypoint. */
   unstable_attachToEntryPoint?: string | ((chunk: EntryPoint) => boolean);
+
+  /**
+   * Emits Griffel CSS in CSS-cascade-layer form so that webpack's default
+   * SplitChunks chunking can split the output into multiple files without
+   * breaking cascade order.
+   *
+   * Mutually exclusive with `unstable_attachToEntryPoint`.
+   * @default false
+   */
+  unstable_layeredOutput?: boolean;
 };
 
 function attachGriffelChunkToAnotherChunk(
@@ -54,6 +70,46 @@ function getAssetSourceContents(assetSource: sources.Source): string {
   }
 
   return source.toString();
+}
+
+const STATIC_BUCKET_LAYERS = [
+  // reset rules: no priority sub-layers (resets don't carry shorthand priority)
+  'r',
+  // selector-driven buckets in styleBucketOrdering order, each with priority
+  // sub-layers (.s-2 / .s-1 first so shorthands lose to longhands within the
+  // bucket's layer chain)
+  'd.s-2', 'd.s-1', 'd',
+  'l.s-2', 'l.s-1', 'l',
+  'v.s-2', 'v.s-1', 'v',
+  'w.s-2', 'w.s-1', 'w',
+  'f.s-2', 'f.s-1', 'f',
+  'i.s-2', 'i.s-1', 'i',
+  'h.s-2', 'h.s-1', 'h',
+  'a.s-2', 'a.s-1', 'a',
+  // at-rule buckets without priority sub-layers in V1
+  's',
+  'k',
+  't',
+];
+
+function isGriffelCssAsset(content: string): boolean {
+  return content.indexOf('/** @griffel:css-start') !== -1;
+}
+
+function buildLayerManifest(
+  mediaQueriesSorted: string[],
+  containerQueriesSorted: string[],
+): string {
+  const parts: string[] = [...STATIC_BUCKET_LAYERS.map(seg => `${GRIFFEL_LAYER_NAMESPACE}.${seg}`)];
+
+  for (let i = 0; i < mediaQueriesSorted.length; i++) {
+    parts.push(`${GRIFFEL_LAYER_NAMESPACE}.m.q${i}`);
+  }
+  for (let i = 0; i < containerQueriesSorted.length; i++) {
+    parts.push(`${GRIFFEL_LAYER_NAMESPACE}.c.q${i}`);
+  }
+
+  return `@layer ${parts.join(', ')};\n`;
 }
 
 // https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L90
@@ -110,6 +166,7 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
 
 export class GriffelPlugin {
   readonly #attachToEntryPoint: GriffelCSSExtractionPluginOptions['unstable_attachToEntryPoint'];
+  readonly #layeredOutput: boolean;
   readonly #collectStats: boolean;
   readonly #collectPerfIssues: boolean;
   readonly #compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
@@ -132,6 +189,13 @@ export class GriffelPlugin {
     this.#collectPerfIssues = options.collectPerfIssues ?? false;
     this.#compareMediaQueries = options.compareMediaQueries ?? defaultCompareMediaQueries;
     this.#resolverFactory = options.resolverFactory ?? createResolverFactory();
+    this.#layeredOutput = options.unstable_layeredOutput ?? false;
+
+    if (this.#layeredOutput && options.unstable_attachToEntryPoint) {
+      throw new Error(
+        '@griffel/webpack-plugin: "unstable_layeredOutput" is incompatible with "unstable_attachToEntryPoint". Use one or the other.',
+      );
+    }
   }
 
   apply(compiler: Compiler): void {
@@ -167,17 +231,19 @@ export class GriffelPlugin {
     // WHY?
     //  We need to sort CSS rules in the same order as it's done via style buckets. It's not possible in multiple
     //  chunks.
-    if (compiler.options.optimization.splitChunks) {
-      compiler.options.optimization.splitChunks.cacheGroups ??= {};
-      compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
-        name: 'griffel',
-        // @ Rspack compat:
-        // Rspack does not support functions in test due performance concerns
-        // https://github.com/web-infra-dev/rspack/issues/3425#issuecomment-1577890202
-        test: IS_RSPACK ? /griffel\.css/ : isGriffelCSSModule,
-        chunks: 'all',
-        enforce: true,
-      };
+    if (!this.#layeredOutput) {
+      if (compiler.options.optimization.splitChunks) {
+        compiler.options.optimization.splitChunks.cacheGroups ??= {};
+        compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
+          name: 'griffel',
+          // @ Rspack compat:
+          // Rspack does not support functions in test due performance concerns
+          // https://github.com/web-infra-dev/rspack/issues/3425#issuecomment-1577890202
+          test: IS_RSPACK ? /griffel\.css/ : isGriffelCSSModule,
+          chunks: 'all',
+          enforce: true,
+        };
+      }
     }
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
@@ -194,6 +260,8 @@ export class GriffelPlugin {
 
         (loaderContext as SupplementedLoaderContext)[GriffelCssLoaderContextKey] = {
           collectPerfIssues: this.#collectPerfIssues,
+          bucketStrategy: this.#layeredOutput ? 'extended' : 'leading',
+          wrapInLayer: this.#layeredOutput,
           resolveModule,
           registerExtractedCss(css: string) {
             cssByModuleMap.set(resourcePath, css);
@@ -247,21 +315,23 @@ export class GriffelPlugin {
       //   Performs module movements between chunks if SplitChunksPlugin is not enabled.
       // WHY?
       //   The same reason as for SplitChunksPlugin config.
-      if (!compiler.options.optimization.splitChunks) {
-        // @ Rspack compat
-        // Rspack does not support adding chunks in the same as Webpack, we force usage of "optimization.splitChunks"
-        if (IS_RSPACK) {
-          throw new Error(
-            [
-              'You are using Rspack, but don\'t have "optimization.splitChunks" enabled.',
-              '"optimization.splitChunks" should be enabled for "@griffel/webpack-extraction-plugin" to function properly.',
-            ].join(' '),
-          );
-        }
+      if (!this.#layeredOutput) {
+        if (!compiler.options.optimization.splitChunks) {
+          // @ Rspack compat
+          // Rspack does not support adding chunks in the same as Webpack, we force usage of "optimization.splitChunks"
+          if (IS_RSPACK) {
+            throw new Error(
+              [
+                'You are using Rspack, but don\'t have "optimization.splitChunks" enabled.',
+                '"optimization.splitChunks" should be enabled for "@griffel/webpack-extraction-plugin" to function properly.',
+              ].join(' '),
+            );
+          }
 
-        compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
-          moveCSSModulesToGriffelChunk(compilation);
-        });
+          compilation.hooks.optimizeChunks.tap({ name: PLUGIN_NAME, stage: OPTIMIZE_CHUNKS_STAGE_ADVANCED }, () => {
+            moveCSSModulesToGriffelChunk(compilation);
+          });
+        }
       }
 
       // WHAT?
@@ -294,26 +364,87 @@ export class GriffelPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
-          const griffelChunk = compilation.namedChunks.get('griffel');
+          if (this.#layeredOutput) {
+            // Multi-chunk layered pass.
+            const griffelAssets: Array<[string, string]> = [];
+            for (const [name, source] of Object.entries(assets)) {
+              if (!name.endsWith('.css')) continue;
+              const content = getAssetSourceContents(source);
+              if (!isGriffelCssAsset(content)) continue;
+              griffelAssets.push([name, content]);
+            }
+            if (griffelAssets.length === 0) {
+              return;
+            }
 
+            // Aggregate the union set of media + container queries across all
+            // griffel-bearing assets.
+            const mediaSet = new Set<string>();
+            const containerSet = new Set<string>();
+            for (const [, content] of griffelAssets) {
+              const { cssRulesByBucket } = parseCSSRules(content);
+              for (const entry of cssRulesByBucket.m ?? []) {
+                const [, meta] = Array.isArray(entry) ? entry : [entry, undefined];
+                const m = meta && typeof meta['m'] === 'string' ? meta['m'] : undefined;
+                if (m) mediaSet.add(m);
+              }
+              for (const entry of cssRulesByBucket.c ?? []) {
+                const [, meta] = Array.isArray(entry) ? entry : [entry, undefined];
+                const c = meta && typeof (meta as Record<string, unknown>)['c'] === 'string'
+                  ? ((meta as Record<string, unknown>)['c'] as string)
+                  : undefined;
+                if (c) containerSet.add(c);
+              }
+            }
+
+            const mediaSorted = Array.from(mediaSet).sort(this.#compareMediaQueries);
+            const containerSorted = Array.from(containerSet).sort(this.#compareMediaQueries);
+
+            const mediaIndexByHash = new Map<string, number>();
+            mediaSorted.forEach((q, i) => mediaIndexByHash.set(hashOfQuery(q), i));
+            const containerIndexByHash = new Map<string, number>();
+            containerSorted.forEach((q, i) => containerIndexByHash.set(hashOfQuery(q), i));
+
+            const manifest = buildLayerManifest(mediaSorted, containerSorted);
+
+            for (const [name, content] of griffelAssets) {
+              let rewritten = content.replace(MEDIA_PLACEHOLDER_RE, (_full, hash) => {
+                const idx = mediaIndexByHash.get(hash);
+                if (idx === undefined) return _full;
+                return `q${idx}`;
+              });
+              rewritten = rewritten.replace(CONTAINER_PLACEHOLDER_RE, (_full, hash) => {
+                const idx = containerIndexByHash.get(hash);
+                if (idx === undefined) return _full;
+                return `q${idx}`;
+              });
+              compilation.updateAsset(
+                name,
+                new compiler.webpack.sources.RawSource(manifest + rewritten),
+              );
+            }
+            return;
+          }
+
+          // Legacy single-chunk pass (unchanged).
+          const griffelChunk = compilation.namedChunks.get('griffel');
           if (typeof griffelChunk === 'undefined') {
             return;
           }
-
-          const cssAssetDetails = Object.entries(assets).find(([assetName]) => griffelChunk.files.has(assetName));
-
+          const cssAssetDetails = Object.entries(assets).find(([assetName]) =>
+            griffelChunk.files.has(assetName),
+          );
           if (typeof cssAssetDetails === 'undefined') {
             return;
           }
-
           const [cssAssetName, cssAssetSource] = cssAssetDetails;
-
           const cssContent = getAssetSourceContents(cssAssetSource);
           const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
-
           const cssSource = sortCSSRules([cssRulesByBucket], this.#compareMediaQueries);
-
-          compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
+          compilation.updateAsset(
+            cssAssetName,
+            new compiler.webpack.sources.RawSource(remainingCSS + cssSource),
+          );
         },
       );
 

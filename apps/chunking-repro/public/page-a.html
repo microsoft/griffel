@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chunking repro - Page A</title>
+  </head>
+  <body>
+    <% for (var f of htmlWebpackPlugin.files.css || []) { %>
+      <link rel="stylesheet" href="<%= f %>" />
+    <% } %>
+    <div id="root"></div>
+    <% for (var f of htmlWebpackPlugin.files.js || []) { %>
+      <script src="<%= f %>"></script>
+    <% } %>
+  </body>
+</html>

@@ -964,6 +964,29 @@ describe('resolveStyleRules', () => {
     });
   });
 
+  it("with bucketStrategy='extended', nested-pseudo rules land in the pseudo bucket", () => {
+    const [, defaultRules] = resolveStyleRules({
+      '& .icon:hover': { color: 'red' },
+    });
+    // Default behavior: nested-pseudo lands in bucket 'd'.
+    expect(Object.keys(defaultRules)).toContain('d');
+    expect(defaultRules.h ?? []).toHaveLength(0);
+
+    const [, extendedRules] = resolveStyleRules(
+      { '& .icon:hover': { color: 'red' } },
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      { bucketStrategy: 'extended' },
+    );
+    // Extended behavior: same rule lands in bucket 'h'.
+    expect(extendedRules.h ?? []).toHaveLength(1);
+    expect(extendedRules.d ?? []).toHaveLength(0);
+  });
+
   describe('metadata', () => {
     it('does not include metadata in the output by default', () => {
       const result = resolveStyleRules({ color: 'red' });

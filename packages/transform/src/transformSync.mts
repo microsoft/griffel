@@ -10,6 +10,7 @@ import {
   resolveResetStyleRules,
   resolveStaticStyleRules,
   normalizeCSSBucketEntry,
+  type BucketStrategy,
   type GriffelStyle,
   type GriffelStaticStyles,
   type CSSRulesByBucket,
@@ -54,6 +55,12 @@ export type TransformOptions = {
    * @default false
    */
   collectPerfIssues?: boolean;
+
+  /**
+   * Controls how rule selectors map to style buckets at extraction time.
+   * See {@link BucketStrategy} for available values.
+   */
+  bucketStrategy?: BucketStrategy;
 };
 
 export type TransformResult = {
@@ -346,7 +353,9 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
       case 'makeStyles':
         {
           const stylesBySlots = evaluationResult as Record<string, GriffelStyle>;
-          const [classnamesMapping, resolvedCSSRules] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt);
+          const [classnamesMapping, resolvedCSSRules] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt, {
+            bucketStrategy: options.bucketStrategy,
+          });
           const uniqueCSSRules = dedupeCSSRules(resolvedCSSRules);
 
           if (generateMetadata) {

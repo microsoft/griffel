@@ -24,6 +24,23 @@ const pseudosMap: Record<string, StyleBucketName | undefined> = {
   ti: 'a',
 };
 
+export type BucketStrategy = 'leading' | 'extended';
+
+// Regex matches `:link`, `:visited`, `:focus`, `:focus-visible`, `:focus-within`,
+// `:hover`, `:active`, irrespective of position. Returned in selector order;
+// the caller picks the last match (LVHA: last hit wins).
+const LVHA_PSEUDO_RE = /:(?:link|visited|focus-visible|focus-within|focus|hover|active)\b/g;
+
+// Called with bare pseudos (`:hover`) AND with multi-pseudo strings (`:focus:hover`) from the
+// leading-strategy path; the slice offsets 3..5 / 4..8 only inspect the leading pseudo characters.
+function lookupPseudoBucket(pseudo: string): StyleBucketName | undefined {
+  // pseudo is e.g. ':hover' or ':focus-visible'.
+  return (
+    // 4..8 disambiguates 'focus-visible' / 'focus-within' / 'focus'.
+    pseudosMap[pseudo.slice(4, 8)] || pseudosMap[pseudo.slice(3, 5)]
+  );
+}
+
 /**
  * Gets the bucket depending on the pseudo.
  *
@@ -41,9 +58,15 @@ const pseudosMap: Record<string, StyleBucketName | undefined> = {
  * "f"
  * ```
  *
+ * @param strategy - `'leading'` (default) classifies by the first pseudo in the selector;
+ *   `'extended'` walks the full selector and classifies by the last LVHA pseudo found.
  * @internal
  */
-export function getStyleBucketName(selectors: string[], atRules: AtRules): StyleBucketName {
+export function getStyleBucketName(
+  selectors: string[],
+  atRules: AtRules,
+  strategy: BucketStrategy = 'leading',
+): StyleBucketName {
   if (atRules.media) {
     return 'm';
   }
@@ -58,20 +81,26 @@ export function getStyleBucketName(selectors: string[], atRules: AtRules): Style
   }
 
   if (selectors.length > 0) {
-    const normalizedPseudo = selectors[0].trim();
+    const normalizedSelector = selectors[0].trim();
 
-    if (normalizedPseudo.charCodeAt(0) === 58 /* ":" */) {
-      // We send through a subset of the string instead of the full pseudo name.
-      // For example:
-      // - `"focus-visible"` name would instead of `"us-v"`.
-      // - `"focus"` name would instead of `"us"`.
-      // Return a mapped pseudo else default bucket.
+    if (strategy === 'extended') {
+      // We don't take the leading-pseudo fast path here because selectors like `:focus:hover`
+      // start with `:` but the LAST LVHA pseudo determines the bucket. We must walk the whole selector.
+      // Extended strategy: walk the full selector for the last LVHA pseudo.
+      let lastMatch: RegExpExecArray | null = null;
+      let match: RegExpExecArray | null;
 
-      return (
-        pseudosMap[normalizedPseudo.slice(4, 8)] /* allows to avoid collisions between "focus-visible" & "focus" */ ||
-        pseudosMap[normalizedPseudo.slice(3, 5)] ||
-        'd'
-      );
+      LVHA_PSEUDO_RE.lastIndex = 0;
+      while ((match = LVHA_PSEUDO_RE.exec(normalizedSelector)) !== null) {
+        lastMatch = match;
+      }
+
+      if (lastMatch) {
+        return lookupPseudoBucket(lastMatch[0]) || 'd';
+      }
+    } else if (normalizedSelector.charCodeAt(0) === 58 /* ":" */) {
+      // Leading-pseudo classification (default behavior).
+      return lookupPseudoBucket(normalizedSelector) || 'd';
     }
   }
 
