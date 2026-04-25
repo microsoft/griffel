@@ -1,0 +1,33 @@
+{
+  "name": "@griffel/chunking-repro",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/chunking-repro/src",
+  "projectType": "application",
+  "implicitDependencies": ["@griffel/webpack-plugin", "@griffel/react"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/chunking-repro",
+        "commands": [{ "command": "node ./build.mjs" }]
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/chunking-repro"]
+    },
+    "build:split": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/chunking-repro",
+        "commands": [{ "command": "node ./build.mjs --split" }]
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/chunking-repro"]
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/chunking-repro",
+        "commands": [{ "command": "node ./serve.mjs" }]
+      }
+    }
+  },
+  "tags": []
+}
