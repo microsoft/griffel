@@ -66,6 +66,7 @@ function webpackLoader(
         functionsToTransform,
         evaluationRules,
         collectPerfIssues: this[GriffelCssLoaderContextKey]?.collectPerfIssues,
+        bucketStrategy: this[GriffelCssLoaderContextKey]?.bucketStrategy,
       });
     } catch (err) {
       error = err as Error;
@@ -82,7 +83,9 @@ function webpackLoader(
 
       if (cssRulesByBucket) {
         const resolvedCssRulesByBucket = resolveAssetPathsInCSSRules(cssRulesByBucket, this.resourcePath);
-        const css = generateCSSRules(resolvedCssRulesByBucket);
+        const css = generateCSSRules(resolvedCssRulesByBucket, {
+          wrapInLayer: this[GriffelCssLoaderContextKey]?.wrapInLayer === true,
+        });
 
         if (css.length === 0) {
           this.callback(null, code);
