@@ -21,6 +21,14 @@
       },
       "outputs": ["{workspaceRoot}/dist/apps/chunking-repro"]
     },
+    "build:layered": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/chunking-repro",
+        "commands": [{ "command": "node ./build.mjs --layered" }]
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/chunking-repro"]
+    },
     "serve": {
       "executor": "nx:run-commands",
       "options": {

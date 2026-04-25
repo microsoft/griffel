@@ -1,13 +1,16 @@
 // Serves the built dist over HTTP so the cascade behavior can be inspected
-// in a browser. Pass --split to serve the split-mode build.
+// in a browser. Pass --split to serve the split-mode build, or --layered
+// to serve the layered-mode build.
 import * as http from 'node:http';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const split = process.argv.includes('--split');
-const root = path.resolve(__dirname, '..', '..', 'dist/apps/chunking-repro', split ? 'split' : 'default');
+const layered = process.argv.includes('--layered');
+const split = !layered && process.argv.includes('--split');
+const mode = layered ? 'layered' : split ? 'split' : 'default';
+const root = path.resolve(__dirname, '..', '..', 'dist/apps/chunking-repro', mode);
 const port = Number(process.env.PORT) || 3000;
 
 const types = {

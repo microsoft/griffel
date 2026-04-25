@@ -1,9 +1,12 @@
-// Builds the repro in either "default" mode (current behavior, single griffel.css)
-// or "split" mode (the broken multi-chunk emission we are diagnosing).
+// Builds the repro in one of three modes:
+//   "default" — current behavior, single griffel.css
+//   "split"   — broken multi-chunk emission (diagnostic)
+//   "layered" — unstable_layeredOutput: true, @layer wrappers + manifest
 //
 // Usage:
 //   node build.mjs            # default mode
 //   node build.mjs --split    # split mode (disable plugin's single-chunk forcing)
+//   node build.mjs --layered  # layered mode (unstable_layeredOutput: true)
 //
 // Outputs to ../../dist/apps/chunking-repro/<mode>/
 import { fileURLToPath } from 'node:url';
@@ -18,8 +21,11 @@ import { GriffelPlugin } from '../../dist/packages/webpack-plugin/src/index.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..', '..');
-const split = process.argv.includes('--split');
-const outDir = path.resolve(rootDir, 'dist/apps/chunking-repro', split ? 'split' : 'default');
+const layered = process.argv.includes('--layered');
+const split = !layered && process.argv.includes('--split');
+
+const mode = layered ? 'layered' : split ? 'split' : 'default';
+const outDir = path.resolve(rootDir, 'dist/apps/chunking-repro', mode);
 
 // Plugin that runs AFTER GriffelPlugin and removes its forced 'griffel'
 // SplitChunks cache group, so griffel CSS modules fall into each chunk
@@ -104,7 +110,7 @@ const config = {
       filename: '[name].css',
       chunkFilename: '[name].chunk.css',
     }),
-    new GriffelPlugin(),
+    new GriffelPlugin({ unstable_layeredOutput: layered }),
     ...(split ? [new DisableGriffelChunkMergePlugin()] : []),
     new HtmlWebpackPlugin({
       filename: 'page-a.html',
@@ -131,7 +137,7 @@ webpack(config, (err, stats) => {
   console.log(stats.toString({ colors: true, chunks: true, chunkModules: false, assets: true }));
   if (stats.hasErrors()) process.exit(1);
 
-  console.log(`\nMode: ${split ? 'SPLIT (broken)' : 'DEFAULT (single griffel.css)'}`);
+  console.log(`\nMode: ${mode.toUpperCase()}`);
   console.log(`Output: ${path.relative(rootDir, outDir)}`);
 
   // List CSS assets
