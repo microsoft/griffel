@@ -73,18 +73,20 @@ function getAssetSourceContents(assetSource: sources.Source): string {
 }
 
 const STATIC_BUCKET_LAYERS = [
+  // reset rules: no priority sub-layers (resets don't carry shorthand priority)
   'r',
-  // d sub-layers in priority order: most-shorthandy first.
-  'd.s-2',
-  'd.s-1',
-  'd',
-  'l',
-  'v',
-  'w',
-  'f',
-  'i',
-  'h',
-  'a',
+  // selector-driven buckets in styleBucketOrdering order, each with priority
+  // sub-layers (.s-2 / .s-1 first so shorthands lose to longhands within the
+  // bucket's layer chain)
+  'd.s-2', 'd.s-1', 'd',
+  'l.s-2', 'l.s-1', 'l',
+  'v.s-2', 'v.s-1', 'v',
+  'w.s-2', 'w.s-1', 'w',
+  'f.s-2', 'f.s-1', 'f',
+  'i.s-2', 'i.s-1', 'i',
+  'h.s-2', 'h.s-1', 'h',
+  'a.s-2', 'a.s-1', 'a',
+  // at-rule buckets without priority sub-layers in V1
   's',
   'k',
   't',

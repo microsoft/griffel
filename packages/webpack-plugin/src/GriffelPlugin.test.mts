@@ -541,6 +541,35 @@ describe('GriffelCSSExtractionPlugin', () => {
       30000,
     );
 
+    it(
+      'emits griffel.h.s-1 layer for a :hover + padding rule and includes it in every asset manifest',
+      async () => {
+        const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'layered-priority-pseudo');
+        const entryPath = path.resolve(fixturePath, 'code.ts');
+
+        const { filesList, readAsset } = await compileSourceWithWebpack(entryPath, {
+          pluginOptions: { unstable_layeredOutput: true },
+        });
+
+        const cssFiles = filesList.filter(f => f.endsWith('.css'));
+        expect(cssFiles.length).toBeGreaterThan(0);
+
+        const allCss = cssFiles.map(f => readAsset(f)).join('\n');
+
+        // 1. The loader emits a priority sub-layer for the :hover+padding rule.
+        expect(allCss).toContain('@layer griffel.h.s-1');
+
+        // 2. Every emitted asset's manifest declares griffel.h.s-1.
+        for (const cssFile of cssFiles) {
+          const css = readAsset(cssFile);
+          // The manifest is the first @layer declaration at the top of the file.
+          const manifestLine = css.split('\n')[0];
+          expect(manifestLine).toContain('griffel.h.s-1');
+        }
+      },
+      15000,
+    );
+
     it('throws when combined with unstable_attachToEntryPoint', () => {
       expect(
         () =>

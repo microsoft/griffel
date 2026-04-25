@@ -176,9 +176,13 @@ The plugin's `processAssets` pass:
 4. Substitutes `__griffelmq_<hash>__` → `q<N>` (and the analogous
    container query mapping) in every asset's CSS source.
 
-Hash collisions are handled by widening the hash window (e.g. fall
-back to 12 hex chars) the first time a collision is detected at build
-time. Collisions on 8 hex chars are negligibly rare in practice.
+8 hex chars provide ~32 bits of entropy. For a typical bundle's small
+set of media queries (~tens), birthday-paradox collisions are
+vanishingly unlikely. The implementation does not check for collisions
+at build time; if a collision occurs, the second query silently picks
+up the first one's index, which would surface as a visible cascade
+bug. If real-world collisions are observed, future work can add
+detection in the asset-time pass and widen the hash window.
 
 ### Bucket `t` (`@layer` / `@supports`) and bucket `r`
 
