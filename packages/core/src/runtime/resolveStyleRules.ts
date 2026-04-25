@@ -17,6 +17,7 @@ import { isContainerQuerySelector } from './utils/isContainerQuerySelector.js';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
 import { isObject } from './utils/isObject.js';
 import { getStyleBucketName } from './getStyleBucketName.js';
+import type { BucketStrategy } from './getStyleBucketName.js';
 import { hashClassName } from './utils/hashClassName.js';
 import { hashPropertyKey } from './utils/hashPropertyKey.js';
 import { isResetValue } from './utils/isResetValue.js';
@@ -24,6 +25,15 @@ import { trimSelector } from './utils/trimSelector.js';
 import type { AtRules } from './utils/types.js';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule.js';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties.js';
+
+export type ResolveStyleRulesOptions = {
+  /**
+   * Controls how rule selectors map to style buckets.
+   * - 'leading' (default): preserves historical behavior (pseudo at start of selector only).
+   * - 'extended': bucketizes by the last LVHA pseudo found anywhere in the selector.
+   */
+  bucketStrategy?: BucketStrategy;
+};
 
 function getShorthandDefinition(property: string): [number, string[]] | undefined {
   return shorthands[property as keyof typeof shorthands];
@@ -97,6 +107,7 @@ export function resolveStyleRules(
   cssClassesMap: CSSClassesMap = {},
   cssRulesByBucket: CSSRulesByBucket = {},
   rtlValue?: string,
+  options: ResolveStyleRulesOptions = {},
 ): [CSSClassesMap, CSSRulesByBucket] {
   // eslint-disable-next-line guard-for-in
   for (const property in styles) {
@@ -130,7 +141,16 @@ export function resolveStyleRules(
         const shorthandProperties = shorthand[1];
         const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
 
-        resolveStyleRules(shorthandResetStyles, classNameHashSalt, selectors, atRules, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          shorthandResetStyles,
+          classNameHashSalt,
+          selectors,
+          atRules,
+          cssClassesMap,
+          cssRulesByBucket,
+          undefined,
+          options,
+        );
       }
 
       // uniq key based on a hash of property & selector, used for merging later
@@ -167,7 +187,7 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(selectors, atRules);
+      const styleBucketName = getStyleBucketName(selectors, atRules, options.bucketStrategy);
       const [ltrCSS, rtlCSS] = compileAtomicCSSRule(
         {
           className,
@@ -237,6 +257,7 @@ export function resolveStyleRules(
         cssClassesMap,
         cssRulesByBucket,
         rtlAnimationNames.join(', '),
+        options,
       );
     } else if (Array.isArray(value)) {
       // not animationName property but array in the value => fallback values
@@ -256,7 +277,16 @@ export function resolveStyleRules(
         const shorthandProperties = shorthand[1];
         const shorthandResetStyles = Object.fromEntries(shorthandProperties.map(property => [property, RESET]));
 
-        resolveStyleRules(shorthandResetStyles, classNameHashSalt, selectors, atRules, cssClassesMap, cssRulesByBucket);
+        resolveStyleRules(
+          shorthandResetStyles,
+          classNameHashSalt,
+          selectors,
+          atRules,
+          cssClassesMap,
+          cssRulesByBucket,
+          undefined,
+          options,
+        );
       }
 
       const key = hashPropertyKey(selector, property, atRules);
@@ -304,7 +334,7 @@ export function resolveStyleRules(
           }
         : undefined;
 
-      const styleBucketName = getStyleBucketName(selectors, atRules);
+      const styleBucketName = getStyleBucketName(selectors, atRules, options.bucketStrategy);
       const [ltrCSS, rtlCSS] = compileAtomicCSSRule(
         {
           className,
@@ -334,6 +364,8 @@ export function resolveStyleRules(
           atRules,
           cssClassesMap,
           cssRulesByBucket,
+          undefined,
+          options,
         );
       } else if (isMediaQuerySelector(property)) {
         const combinedMediaQuery = generateCombinedQuery(atRules.media, property.slice(6).trim());
@@ -345,6 +377,8 @@ export function resolveStyleRules(
           { ...atRules, media: combinedMediaQuery },
           cssClassesMap,
           cssRulesByBucket,
+          undefined,
+          options,
         );
       } else if (isLayerSelector(property)) {
         const combinedLayerQuery = (atRules.layer ? `${atRules.layer}.` : '') + property.slice(6).trim();
@@ -356,6 +390,8 @@ export function resolveStyleRules(
           { ...atRules, layer: combinedLayerQuery },
           cssClassesMap,
           cssRulesByBucket,
+          undefined,
+          options,
         );
       } else if (isSupportQuerySelector(property)) {
         const combinedSupportQuery = generateCombinedQuery(atRules.supports, property.slice(9).trim());
@@ -367,6 +403,8 @@ export function resolveStyleRules(
           { ...atRules, supports: combinedSupportQuery },
           cssClassesMap,
           cssRulesByBucket,
+          undefined,
+          options,
         );
       } else if (isContainerQuerySelector(property)) {
         // TODO implement nested container queries if needed
@@ -381,6 +419,8 @@ export function resolveStyleRules(
           { ...atRules, container: containerQuery },
           cssClassesMap,
           cssRulesByBucket,
+          undefined,
+          options,
         );
       } else {
         warnAboutUnresolvedRule(property, value);
