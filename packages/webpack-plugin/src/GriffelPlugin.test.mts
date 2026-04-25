@@ -39,6 +39,12 @@ type TestOptions = {
   normalizeHashes?: boolean;
   pluginOptions?: GriffelCSSExtractionPluginOptions;
   webpackConfig?: WebpackConfiguration;
+  /**
+   * When provided, replaces the single `entry` with this multi-entry map.
+   * The `entryPath` argument to `compileSourceWithWebpack` is ignored when
+   * this is set (but it still determines the include path for the loader rule).
+   */
+  entryMap?: Record<string, string>;
 };
 
 const prettierConfig = JSON.parse(
@@ -52,6 +58,7 @@ async function compileSourceWithWebpack(
   filesList: string[];
   cssOutput: string;
   moduleSource: string;
+  readAsset: (name: string) => string;
 }> {
   // CJS interop for Vite
   const { default: MiniCssExtractPlugin } = (await import('mini-css-extract-plugin')) as unknown as {
@@ -61,11 +68,20 @@ async function compileSourceWithWebpack(
     default: typeof import('webpack');
   };
 
+  // When entryMap is provided, use it; otherwise use the single entryPath.
+  const entryConfig: WebpackConfiguration['entry'] = options.entryMap
+    ? Object.fromEntries(Object.entries(options.entryMap).map(([name, p]) => [name, p]))
+    : { bundle: entryPath };
+
+  // The loader include path covers the directory of the primary entry (or all
+  // entry dirs when a map is provided so shared modules are also transformed).
+  const includeDir = options.entryMap
+    ? path.dirname(Object.values(options.entryMap)[0])
+    : path.dirname(entryPath);
+
   const defaultConfig: WebpackConfiguration = {
     context: __dirname,
-    entry: {
-      bundle: entryPath,
-    },
+    entry: entryConfig,
 
     mode: 'production',
     devtool: false,
@@ -84,7 +100,7 @@ async function compileSourceWithWebpack(
       rules: [
         {
           test: /\.(ts|tsx)$/,
-          include: path.dirname(entryPath),
+          include: includeDir,
           use: {
             loader: path.resolve(__dirname, './webpackLoader.vitest.cjs'),
             options: options.loaderOptions,
@@ -156,7 +172,12 @@ async function compileSourceWithWebpack(
         return;
       }
 
-      const entryModule = jsonStats.modules.find(module => module.nameForCondition === entryPath);
+      // When entryMap is provided, any of the entry modules can be the primary.
+      const entryModule = options.entryMap
+        ? jsonStats.modules.find(module =>
+            Object.values(options.entryMap!).some(p => module.nameForCondition === p),
+          )
+        : jsonStats.modules.find(module => module.nameForCondition === entryPath);
 
       if (!entryModule) {
         reject(new Error(`Failed to find a fixture in "stats.toJson().modules", this could be a compilation error...`));
@@ -178,10 +199,14 @@ async function compileSourceWithWebpack(
         })
         .join('');
 
+      const readAsset = (name: string): string =>
+        virtualFsVolume.readFileSync(path.resolve(__dirname, name), { encoding: 'utf-8' }) as string;
+
       resolve({
         cssOutput,
         filesList,
         moduleSource: entryModule.source as string,
+        readAsset,
       });
     });
   });
@@ -432,6 +457,99 @@ describe('GriffelCSSExtractionPlugin', () => {
         bundleB: path.resolve(__dirname, '..', '__fixtures__', 'unstable-attach-to-main', 'codeB.ts'),
       },
     },
+  });
+
+  // unstable_layeredOutput
+  // --------------------
+  describe('unstable_layeredOutput', () => {
+    const layeredFixtureDir = path.resolve(__dirname, '..', '__fixtures__', 'layered-multi-entry');
+    const pageAPath = path.resolve(layeredFixtureDir, 'page-a.ts');
+    const pageBPath = path.resolve(layeredFixtureDir, 'page-b.ts');
+
+    it(
+      'emits a layer manifest, wraps rules in @layer, and assigns indexed media-query layers across chunks',
+      async () => {
+        const { filesList, readAsset } = await compileSourceWithWebpack(pageAPath, {
+          entryMap: { 'page-a': pageAPath, 'page-b': pageBPath },
+          pluginOptions: { unstable_layeredOutput: true },
+          webpackConfig: {
+            optimization: {
+              splitChunks: {
+                chunks: 'all',
+                minSize: 0,
+              },
+            },
+          },
+        });
+
+        // 1. More than one .css asset must be emitted (split chunks).
+        const cssFiles = filesList.filter(f => f.endsWith('.css'));
+        expect(cssFiles.length).toBeGreaterThan(1);
+
+        // 2. Every emitted CSS asset starts with the @layer manifest and
+        //    mentions every bucket layer.
+        const manifestRe = /^@layer\s+griffel\.r,/;
+        for (const cssFile of cssFiles) {
+          const css = readAsset(cssFile);
+          expect(css).toMatch(manifestRe);
+          // Check all static buckets plus the media query bucket (fixture has media queries).
+          // The 'c' bucket is omitted here because container query metadata is not
+          // emitted by @griffel/core yet — it would only appear dynamically if 'c'
+          // metadata were set.
+          for (const bucket of ['r', 'd', 'l', 'v', 'w', 'f', 'i', 'h', 'a', 's', 'k', 't', 'm']) {
+            expect(css).toContain(`griffel.${bucket}`);
+          }
+        }
+
+        // 3. No placeholder must remain.
+        for (const cssFile of cssFiles) {
+          const css = readAsset(cssFile);
+          expect(css).not.toMatch(/__griffelmq_/);
+          expect(css).not.toMatch(/__griffelcq_/);
+        }
+
+        // 4. The two media queries must appear as ordered by defaultCompareMediaQueries
+        //    (lexicographic). '(min-width: 1200px)' < '(min-width: 800px)' so 1200px → q0.
+        const allCss = cssFiles.map(f => readAsset(f)).join('\n');
+        expect(allCss).toMatch(/@layer griffel\.m\.q0\s*\{[^}]*@media \(min-width: 1200px\)/s);
+        expect(allCss).toMatch(/@layer griffel\.m\.q1\s*\{[^}]*@media \(min-width: 800px\)/s);
+      },
+      30000,
+    );
+
+    it(
+      'does not emit @layer wrappers when the flag is off (default behavior preserved)',
+      async () => {
+        const { filesList, readAsset } = await compileSourceWithWebpack(pageAPath, {
+          entryMap: { 'page-a': pageAPath, 'page-b': pageBPath },
+          webpackConfig: {
+            optimization: {
+              splitChunks: {
+                chunks: 'all',
+                minSize: 0,
+              },
+            },
+          },
+        });
+
+        // Default mode: a single griffel.css is emitted.
+        const cssFiles = filesList.filter(f => f.endsWith('.css'));
+        expect(cssFiles).toEqual(['griffel.css']);
+        const css = readAsset('griffel.css');
+        expect(css).not.toContain('@layer ');
+      },
+      30000,
+    );
+
+    it('throws when combined with unstable_attachToEntryPoint', () => {
+      expect(
+        () =>
+          new GriffelPlugin({
+            unstable_layeredOutput: true,
+            unstable_attachToEntryPoint: 'main',
+          }),
+      ).toThrow(/unstable_layeredOutput.*unstable_attachToEntryPoint/);
+    });
   });
 
   // Error reporting
