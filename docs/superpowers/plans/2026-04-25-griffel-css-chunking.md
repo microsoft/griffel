@@ -358,13 +358,13 @@ recursive descents into nested selectors and at-rules."
 
 ---
 
-## Task 3: Plumb `bucketStrategy` through `resolveStyleRulesForSlots` and `resolveResetStyleRules`
+## Task 3: Plumb `bucketStrategy` through `resolveStyleRulesForSlots`
 
 **Files:**
 - Modify: `packages/core/src/resolveStyleRulesForSlots.ts`
-- Modify: `packages/core/src/runtime/resolveResetStyleRules.ts`
+- No change: `packages/core/src/runtime/resolveResetStyleRules.ts` (resets don't use `getStyleBucketName`)
 
-These are the two callers used by the build-time transform.
+These are the two callers used by the build-time transform; only `resolveStyleRulesForSlots` needs a strategy plumbed (resets don't use `getStyleBucketName`).
 
 - [ ] **Step 1: Update `resolveStyleRulesForSlots` to accept and forward options**
 
@@ -409,27 +409,15 @@ export function resolveStyleRulesForSlots<Slots extends string | number>(
 }
 ```
 
-- [ ] **Step 2: Update `resolveResetStyleRules` to accept and forward options**
+- [ ] **Step 2: Verify `resolveResetStyleRules` does NOT need the option**
 
-Open `packages/core/src/runtime/resolveResetStyleRules.ts`. Locate the exported function `resolveResetStyleRules`. Add a trailing optional `options` parameter to it and to any internal helpers in the same file that call `resolveStyleRules`. At each `resolveStyleRules(...)` call inside this file, pass `options` as the trailing arg.
+Reset rules emitted by `resolveResetStyleRules` always land in buckets `r` (or `s` for at-rules); the function does not call `getStyleBucketName`. No change is needed in `packages/core/src/runtime/resolveResetStyleRules.ts`. Confirm with:
 
-The exact signature change at the top of the function:
-
-```ts
-import { resolveStyleRules, type ResolveStyleRulesOptions } from './resolveStyleRules.js';
-
-export function resolveResetStyleRules(
-  styles: GriffelStyle,
-  classNameHashSalt: string = '',
-  options: ResolveStyleRulesOptions = {},
-): [string, string | null, CSSRulesByBucket] {
-  // … existing body …
-  // Where it calls resolveStyleRules(styles, classNameHashSalt, …):
-  //   add `, options` as the trailing arg, matching resolveStyleRules' new signature.
-}
+```sh
+grep -n "getStyleBucketName\|resolveStyleRules" packages/core/src/runtime/resolveResetStyleRules.ts
 ```
 
-(Read the current file before editing — the body has multiple branches; only the function's external signature and the `resolveStyleRules(...)` call sites need to change.)
+Expected: no matches inside the function body.
 
 - [ ] **Step 3: Run the affected tests**
 
@@ -442,13 +430,12 @@ Expected: all tests pass; no regression.
 - [ ] **Step 4: Commit**
 
 ```sh
-git add packages/core/src/resolveStyleRulesForSlots.ts \
-        packages/core/src/runtime/resolveResetStyleRules.ts
-git commit -m "feat(core): forward bucketStrategy through slot and reset resolvers
+git add packages/core/src/resolveStyleRulesForSlots.ts
+git commit -m "feat(core): forward bucketStrategy through slot resolver
 
 Threads ResolveStyleRulesOptions through resolveStyleRulesForSlots
-and resolveResetStyleRules so build-time callers can opt into the
-extended bucket strategy."
+so build-time callers can opt into the extended bucket strategy.
+resolveResetStyleRules is unchanged — resets don't use getStyleBucketName."
 ```
 
 ---
@@ -515,25 +502,21 @@ Add to the `TransformOptions` type (around line 26):
   bucketStrategy?: 'leading' | 'extended';
 ```
 
-Inside `transformSync`, locate the two `resolve*` call sites (currently at lines 349 and 366) and forward the option. The existing calls look like:
+Inside `transformSync`, locate the `resolveStyleRulesForSlots` call site and forward the option. The existing call looks like:
 
 ```ts
 const [classnamesMapping, resolvedCSSRules] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt);
-// …
-const [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(styles, classNameHashSalt);
 ```
 
-Update them to:
+Update it to:
 
 ```ts
 const [classnamesMapping, resolvedCSSRules] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt, {
   bucketStrategy: options.bucketStrategy,
 });
-// …
-const [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(styles, classNameHashSalt, {
-  bucketStrategy: options.bucketStrategy,
-});
 ```
+
+Note: `resolveResetStyleRules` does **not** need updating — reset rules always land in buckets `r`/`s` and the function does not call `getStyleBucketName`.
 
 - [ ] **Step 4: Run the test and verify it passes**
 
@@ -551,8 +534,8 @@ git add packages/transform/src/transformSync.mts \
 git commit -m "feat(transform): add bucketStrategy option to transformSync
 
 Forwards a new bucketStrategy option to resolveStyleRulesForSlots
-and resolveResetStyleRules so callers of @griffel/transform can
-extract atomic CSS using the extended bucket assignment."
+so callers of @griffel/transform can extract atomic CSS using the
+extended bucket assignment."
 ```
 
 ---
