@@ -78,6 +78,7 @@ export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry
 export { styleBucketOrdering, getStyleSheetKey } from './renderer/getStyleSheetForBucket.js';
 export { defaultCompareMediaQueries } from './renderer/createDOMRenderer.js';
 export { getStyleBucketName } from './runtime/getStyleBucketName.js';
+export type { BucketStrategy } from './runtime/getStyleBucketName.js';
 export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots.js';
 export { resolveStyleRules } from './runtime/resolveStyleRules.js';
 export { resolveResetStyleRules } from './runtime/resolveResetStyleRules.js';
