@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { getStyleBucketName } from './getStyleBucketName.js';
 
 describe('getStyleBucketName', () => {
@@ -55,5 +55,17 @@ describe('getStyleBucketName', () => {
         scope: '',
       }),
     ).toBe('c');
+    expect(getStyleBucketName([], { container: '', media: '', supports: '', layer: '', scope: 'to (.boundary)' })).toBe(
+      'd',
+    );
+    expect(
+      getStyleBucketName([':hover'], { container: '', media: '', supports: '', layer: '', scope: 'to (.boundary)' }),
+    ).toBe('h');
+    expect(
+      getStyleBucketName([':focus'], { container: '', media: '', supports: '', layer: '', scope: 'to (.boundary)' }),
+    ).toBe('f');
+    expect(
+      getStyleBucketName([':active'], { container: '', media: '', supports: '', layer: '', scope: 'to (.boundary)' }),
+    ).toBe('a');
   });
 });

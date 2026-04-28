@@ -12,7 +12,8 @@ export function atRulesToString(atRules: AtRules): string {
     addAtRulePrefix(atRules.container, 'c') +
     addAtRulePrefix(atRules.media, 'm') +
     addAtRulePrefix(atRules.layer, 'l') +
-    addAtRulePrefix(atRules.supports, 's')
+    addAtRulePrefix(atRules.supports, 's') +
+    addAtRulePrefix(atRules.scope, 'o')
   );
 }
 
