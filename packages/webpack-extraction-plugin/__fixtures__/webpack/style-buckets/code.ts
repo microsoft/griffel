@@ -4,7 +4,11 @@ export const styles = __styles(
   {},
   // Classes in this test are intentionally not realistic to simplify snapshots
   {
-    d: ['.color-red { color: red; }', '.animation-name { animation-name: foo; }'],
+    d: [
+      '.color-red { color: red; }',
+      '.animation-name { animation-name: foo; }',
+      '@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}',
+    ],
     l: ['.color-orange:link { color: orange; }'],
     v: ['.color-purple:visited { color: purple; }'],
     w: ['.color-pink:focus-within { color: pink; }'],
