@@ -362,6 +362,7 @@ describe('GriffelCSSExtractionPlugin', () => {
 
   // Sorting rules by buckets
   testFixture('style-buckets');
+  testFixture('style-buckets-scope');
 
   // Assets
   // --------------------

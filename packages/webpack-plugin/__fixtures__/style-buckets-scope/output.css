@@ -1,0 +1,14 @@
+/** griffel.css **/
+.fe3e8s9 {
+  color: red;
+}
+@scope (.f7t33c5) to (.boundary) {
+  :scope p {
+    color: red;
+  }
+}
+@scope (.f1sje2gt) to (.boundary) {
+  :scope:hover {
+    color: cyan;
+  }
+}
