@@ -18,7 +18,8 @@
     "**/*.test.jsx",
     "jest.config.ts",
     "vitest.config.ts",
-    "bundle-size/**"
+    "bundle-size/**",
+    "src/testing/**"
   ],
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

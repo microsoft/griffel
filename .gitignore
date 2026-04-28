@@ -56,3 +56,6 @@ vite.config.*.timestamp*
 vitest.config.*.timestamp*
 .claude/worktrees
 .claude/settings.local.json
+
+# Vitest browser-mode failure captures
+**/__screenshots__/

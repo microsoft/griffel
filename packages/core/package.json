@@ -27,5 +27,9 @@
     "rtl-css-js": "^1.16.1",
     "stylis": "^4.2.0",
     "tslib": "^2.1.0"
+  },
+  "devDependencies": {
+    "@vitest/browser": "4.0.9",
+    "@vitest/browser-playwright": "4.0.9"
   }
 }
