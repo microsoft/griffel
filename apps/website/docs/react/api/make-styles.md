@@ -196,6 +196,46 @@ const useClasses = makeStyles({
 }
 ```
 
+### `@scope` at-rule
+
+[`@scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/@scope) rules are supported. Each scope-wrapped declaration produces its own atomic class with the class as the scope root:
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    '@scope to (.boundary)': {
+      ':hover': { color: 'cyan' },
+      '& p': { color: 'red' },
+    },
+  },
+});
+```
+
+<OutputTitle>Produces following CSS...</OutputTitle>
+
+```css
+@scope (.f1abc123) to (.boundary) {
+  :scope:hover {
+    color: cyan;
+  }
+}
+@scope (.f1def456) to (.boundary) {
+  :scope p {
+    color: red;
+  }
+}
+```
+
+The atomic class is emitted as the scope-root prelude and `:scope` references it inside the body, mirroring the [`@scope` spec](https://drafts.csswg.org/css-cascade-6/#scope-atrule). Pseudo-classes nested inside `@scope` keep their normal LVFHA bucket so cascade ordering is preserved across scoped and non-scoped rules.
+
+:::caution
+
+Only `@scope to (SELECTOR)` is supported. Bare `@scope` and forms with an explicit prelude root (`@scope (...) to (...)`) are rejected — Griffel needs to control the scope-root selector to keep proximity tie-breaking deterministic across atomic classes.
+
+:::
+
 ### `@keyframes` (animations)
 
 `keyframes` are supported via `animationName` property that can be defined as an object:
