@@ -5899,7 +5899,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.36.0":
+"@playwright/test@npm:^1.59.1":
   version: 1.59.1
   resolution: "@playwright/test@npm:1.59.1"
   dependencies:
@@ -15133,7 +15133,7 @@ __metadata:
     "@nx/vitest": "npm:22.6.5"
     "@nx/web": "npm:22.6.5"
     "@nx/workspace": "npm:22.6.5"
-    "@playwright/test": "npm:^1.36.0"
+    "@playwright/test": "npm:^1.59.1"
     "@rspack/cli": "npm:1.7.11"
     "@rspack/core": "npm:1.7.11"
     "@storybook/addon-webpack5-compiler-babel": "npm:4.0.0"

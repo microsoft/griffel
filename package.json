@@ -55,7 +55,7 @@
     "@nx/vitest": "22.6.5",
     "@nx/web": "22.6.5",
     "@nx/workspace": "22.6.5",
-    "@playwright/test": "^1.36.0",
+    "@playwright/test": "^1.59.1",
     "@rspack/cli": "1.7.11",
     "@rspack/core": "1.7.11",
     "@storybook/addon-webpack5-compiler-babel": "4.0.0",
