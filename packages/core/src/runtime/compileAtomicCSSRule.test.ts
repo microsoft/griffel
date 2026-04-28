@@ -13,6 +13,7 @@ const defaultAtRules: AtRules = {
   layer: '',
   media: '',
   supports: '',
+  scope: '',
 };
 
 describe('compileAtomicCSSRule', () => {

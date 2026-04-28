@@ -1,7 +1,7 @@
+import { compileCSSRules } from './compileCSSRules.js';
 import { hyphenateProperty } from './utils/hyphenateProperty.js';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
 import type { AtRules } from './utils/types.js';
-import { compileCSSRules } from './compileCSSRules.js';
 
 export interface CompileAtomicCSSOptions {
   className: string;
@@ -54,14 +54,15 @@ export function compileAtomicCSSRule(
   atRules: AtRules,
 ): [string? /* ltr definition */, string? /* rtl definition */] {
   const { className, selectors, property, rtlClassName, rtlProperty, rtlValue, value } = options;
-  const { container, layer, media, supports } = atRules;
+  const { container, layer, media, scope, supports } = atRules;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
     ? `${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')};`
     : `${hyphenateProperty(property)}: ${value};`;
 
-  let cssRule = createCSSRule(classNameSelector, cssDeclaration, selectors);
+  let ltrRule = createCSSRule(classNameSelector, cssDeclaration, selectors);
+  let rtlRule = '';
 
   if (rtlProperty && rtlClassName) {
     const rtlClassNameSelector = `.${rtlClassName}`;
@@ -69,21 +70,35 @@ export function compileAtomicCSSRule(
       ? `${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')};`
       : `${hyphenateProperty(rtlProperty)}: ${rtlValue};`;
 
-    cssRule += createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
+    rtlRule = createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
   }
+
+  if (scope) {
+    // @scope is applied as the innermost at-rule wrapper, so that outer
+    // at-rules (@media, @supports, etc.) wrap around it naturally.
+    // Separate @scope blocks for LTR and RTL because the scope root
+    // selector references the direction-specific atomic class.
+    ltrRule = ltrRule.split(classNameSelector).join(':scope');
+    ltrRule = `@scope (${classNameSelector}) ${scope} { ${ltrRule} }`;
+
+    if (rtlRule) {
+      const rtlClassNameSelector = `.${rtlClassName}`;
+      rtlRule = rtlRule.split(rtlClassNameSelector).join(':scope');
+      rtlRule = `@scope (${rtlClassNameSelector}) ${scope} { ${rtlRule} }`;
+    }
+  }
+
+  let cssRule = ltrRule + rtlRule;
 
   if (media) {
     cssRule = `@media ${media} { ${cssRule} }`;
   }
-
   if (layer) {
     cssRule = `@layer ${layer} { ${cssRule} }`;
   }
-
   if (supports) {
     cssRule = `@supports ${supports} { ${cssRule} }`;
   }
-
   if (container) {
     cssRule = `@container ${container} { ${cssRule} }`;
   }
