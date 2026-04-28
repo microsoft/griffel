@@ -21,6 +21,7 @@ export const COLORS = {
   BLUE: 'rgb(0, 0, 255)',
   RED: 'rgb(255, 0, 0)',
   BLACK: 'rgb(0, 0, 0)',
+  LIGHT_GREEN: 'rgb(144, 238, 144)',
 };
 
 export function render(html: string): void {
