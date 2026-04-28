@@ -117,7 +117,7 @@
     "monosize": "0.8.2",
     "monosize-bundler-webpack": "0.3.3",
     "monosize-storage-upstash": "0.0.25",
-    "nano-staged": "0.5.0",
+    "nano-staged": "~1.0.2",
     "nx": "22.6.5",
     "postcss": "8.4.47",
     "prettier": "2.8.2",
