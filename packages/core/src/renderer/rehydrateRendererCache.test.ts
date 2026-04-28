@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
 import type { GriffelRenderer } from '../types.js';
 import { createDOMRenderer } from './createDOMRenderer.js';
@@ -30,6 +30,60 @@ describe('rehydrateRendererCache', () => {
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
         ".foo { color: red; }": "d",
+      }
+    `);
+  });
+
+  it('should rehydrate @scope rules in the d bucket', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "d",
+      }
+    `);
+  });
+
+  it('should rehydrate @scope rules in the h bucket', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'h');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope:hover{color:cyan;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@scope (.f1ewl1kl) to (.boundary) { :scope:hover{color:cyan;} }": "h",
+      }
+    `);
+  });
+
+  it('should rehydrate @scope rules with boundary selector', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "d",
       }
     `);
   });
