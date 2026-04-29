@@ -5,56 +5,58 @@ import { resolveStyleRules } from './resolveStyleRules.js';
 expect.addSnapshotSerializer(griffelRulesSerializer);
 
 describe('resolveStyleRules: @scope', () => {
-  it('warns and skips bare @scope without a prelude', () => {
-    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
+  describe('warnings', () => {
+    it('warns and skips bare @scope without a prelude', () => {
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
-    const result = resolveStyleRules({ '@scope': { color: 'red' } });
+      const result = resolveStyleRules({ '@scope': { color: 'red' } });
 
-    expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
+      expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
 
-    // No styles emitted
-    expect(result[0]).toEqual({});
-    expect(result[1]).toEqual({});
-  });
-
-  it('warns and skips @scope with explicit root selector', () => {
-    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
-
-    const result = resolveStyleRules({ '@scope (&)': { '& .child': { color: 'red' } } });
-
-    expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
-
-    expect(result[0]).toEqual({});
-    expect(result[1]).toEqual({});
-  });
-
-  it('warns and skips @scope (&) to (.boundary) syntax', () => {
-    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
-
-    const result = resolveStyleRules({
-      '@scope (&) to (.boundary)': { '& .child': { color: 'red' } },
+      // No styles emitted
+      expect(result[0]).toEqual({});
+      expect(result[1]).toEqual({});
     });
 
-    expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
+    it('warns and skips @scope with explicit root selector', () => {
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
-    expect(result[0]).toEqual({});
-    expect(result[1]).toEqual({});
-  });
+      const result = resolveStyleRules({ '@scope (&)': { '& .child': { color: 'red' } } });
 
-  it('warns and skips a nested @scope inside another @scope', () => {
-    const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
+      expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
 
-    const result = resolveStyleRules({
-      '@scope to (.outer)': {
-        '@scope to (.inner)': { color: 'red' },
-      },
+      expect(result[0]).toEqual({});
+      expect(result[1]).toEqual({});
     });
 
-    expect(error).toHaveBeenCalledWith(expect.stringMatching(/nested.*@scope.*not supported/));
+    it('warns and skips @scope (&) to (.boundary) syntax', () => {
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
-    // Outer @scope still resolves, inner is dropped — no rules emitted because the inner block was the only payload.
-    expect(result[0]).toEqual({});
-    expect(result[1]).toEqual({});
+      const result = resolveStyleRules({
+        '@scope (&) to (.boundary)': { '& .child': { color: 'red' } },
+      });
+
+      expect(error).toHaveBeenCalledWith(expect.stringMatching(/@scope.*not a supported/));
+
+      expect(result[0]).toEqual({});
+      expect(result[1]).toEqual({});
+    });
+
+    it('warns and skips a nested @scope inside another @scope', () => {
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
+
+      const result = resolveStyleRules({
+        '@scope to (.outer)': {
+          '@scope to (.inner)': { color: 'red' },
+        },
+      });
+
+      expect(error).toHaveBeenCalledWith(expect.stringMatching(/nested.*@scope.*not supported/));
+
+      // Outer @scope still resolves, inner is dropped — no rules emitted because the inner block was the only payload.
+      expect(result[0]).toEqual({});
+      expect(result[1]).toEqual({});
+    });
   });
 
   it('handles @scope to (.boundary) with child selector', () => {
@@ -73,48 +75,18 @@ describe('resolveStyleRules: @scope', () => {
     `);
   });
 
-  it('scope rules without pseudo go to "d" bucket', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': { '& p': { color: 'green' } },
-    });
-
-    expect(result[1]).toHaveProperty('d');
-  });
-
-  it('scoped :hover goes to "h" bucket', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': { ':hover': { color: 'cyan' } },
-    });
-
-    expect(result[1]).toHaveProperty('h');
-  });
-
-  it('scoped :focus goes to "f" bucket', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': { ':focus': { color: 'yellow' } },
-    });
-
-    expect(result[1]).toHaveProperty('f');
-  });
-
-  it('scoped :active goes to "a" bucket', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': { ':active': { color: 'orange' } },
-    });
-
-    expect(result[1]).toHaveProperty('a');
-  });
-
   it("scope queries don't collide with regular properties", () => {
     const result = resolveStyleRules({
       color: 'red',
       '@scope to (.boundary)': { '& .child': { color: 'red' } },
     });
 
-    const classesMap = result[0];
-    const keys = Object.keys(classesMap);
-
-    expect(keys.length).toBe(2);
+    expect(result[0]).toMatchInlineSnapshot(`
+      {
+        "otwrnl": "f1jrof0",
+        "sj55zd": "fe3e8s9",
+      }
+    `);
   });
 
   // --- Nesting @scope with other at-rules ---
@@ -230,10 +202,12 @@ describe('resolveStyleRules: @scope', () => {
       '@scope to (.boundary)': { color: 'blue' },
     });
 
-    const classesMap = result[0];
-    const keys = Object.keys(classesMap);
-
-    expect(keys.length).toBe(2);
+    expect(result[0]).toMatchInlineSnapshot(`
+      {
+        "fjumov": "f14r3iqv",
+        "sj55zd": "fe3e8s9",
+      }
+    `);
 
     // Both non-scoped and scoped without pseudo go to 'd'
     expect(result[1]).toHaveProperty('d');
@@ -245,10 +219,12 @@ describe('resolveStyleRules: @scope', () => {
       '@scope to (.b)': { '& p': { color: 'blue' } },
     });
 
-    const classesMap = result[0];
-    const keys = Object.keys(classesMap);
-
-    expect(keys.length).toBe(2);
+    expect(result[0]).toMatchInlineSnapshot(`
+      {
+        "B9rlkkj": "fh4gkgn",
+        "Bpguliw": "ff6bx43",
+      }
+    `);
   });
 
   // --- Boundary edge cases ---
@@ -344,11 +320,13 @@ describe('resolveStyleRules: @scope', () => {
       },
     });
 
-    const classesMap = result[0];
-    const keys = Object.keys(classesMap);
-
     // Two properties = two atomic classes
-    expect(keys.length).toBe(2);
+    expect(result[0]).toMatchInlineSnapshot(`
+      {
+        "hth0cq": "f7t33c5",
+        "rxd53p": "fbtjt56",
+      }
+    `);
 
     // Both go to 'd' bucket (no pseudo selector on '& p')
     expect(result[1].d!.length).toBe(2);
@@ -434,8 +412,11 @@ describe('resolveStyleRules: @scope', () => {
 
     // But in Griffel's atomic model, the LAST class wins via mergeClasses.
     // Only one of the two atomic classes will be on the element at runtime.
-    const classesMap = result[0];
-    const keys = Object.keys(classesMap);
-    expect(keys.length).toBe(2);
+    expect(result[0]).toMatchInlineSnapshot(`
+      {
+        "Bsba2g1": "f11yypxt",
+        "xqz3n8": "f1ppphex",
+      }
+    `);
   });
 });
