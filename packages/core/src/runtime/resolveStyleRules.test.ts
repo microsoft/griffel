@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
-import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '..';
+import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants.js';
 import { griffelRulesSerializer } from '../common/snapshotSerializers.js';
 import type { CSSClasses, CSSClassesMap, CSSRulesByBucket } from '../types.js';
 import { resolveStyleRules } from './resolveStyleRules.js';
