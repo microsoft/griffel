@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: switch tsconfig to react-jsx",
+  "packageName": "@griffel/devtools",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

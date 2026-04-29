@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: switch tsconfig.storybook to react-jsx",
+  "packageName": "@griffel/shadow-dom",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
