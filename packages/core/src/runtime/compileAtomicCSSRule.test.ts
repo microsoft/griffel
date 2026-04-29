@@ -269,6 +269,134 @@ describe('compileAtomicCSSRule', () => {
       `);
     });
   });
+
+  describe('@scope', () => {
+    it('wraps the rule in @scope and substitutes the class with :scope', () => {
+      expect(
+        compileAtomicCSSRule(
+          {
+            ...defaultOptions,
+            property: 'color',
+            value: 'red',
+          },
+          { ...defaultAtRules, scope: 'to (.boundary)' },
+        ),
+      ).toMatchInlineSnapshot(`
+        [
+          "@scope (.foo) to (.boundary){:scope{color:red;}}",
+        ]
+      `);
+    });
+
+    it('preserves pseudos under @scope', () => {
+      expect(
+        compileAtomicCSSRule(
+          {
+            ...defaultOptions,
+            selectors: [':hover'],
+            property: 'color',
+            value: 'red',
+          },
+          { ...defaultAtRules, scope: 'to (.boundary)' },
+        ),
+      ).toMatchInlineSnapshot(`
+        [
+          "@scope (.foo) to (.boundary){:scope:hover{color:red;}}",
+        ]
+      `);
+    });
+
+    it('emits separate @scope blocks for LTR and RTL with direction-specific roots', () => {
+      expect(
+        compileAtomicCSSRule(
+          {
+            ...defaultOptions,
+            property: 'paddingLeft',
+            value: '10px',
+
+            rtlProperty: 'paddingRight',
+            rtlValue: '10px',
+          },
+          { ...defaultAtRules, scope: 'to (.boundary)' },
+        ),
+      ).toMatchInlineSnapshot(`
+        [
+          "@scope (.foo) to (.boundary){:scope{padding-left:10px;}}",
+          "@scope (.rtl-foo) to (.boundary){:scope{padding-right:10px;}}",
+        ]
+      `);
+    });
+
+    it('places @scope as the innermost wrapper under @media', () => {
+      expect(
+        compileAtomicCSSRule(
+          {
+            ...defaultOptions,
+            property: 'color',
+            value: 'red',
+          },
+          { ...defaultAtRules, media: '(max-width: 100px)', scope: 'to (.boundary)' },
+        ),
+      ).toMatchInlineSnapshot(`
+        [
+          "@media (max-width: 100px){@scope (.foo) to (.boundary){:scope{color:red;}}}",
+        ]
+      `);
+    });
+
+    it('places @scope as the innermost wrapper under @layer', () => {
+      expect(
+        compileAtomicCSSRule(
+          {
+            ...defaultOptions,
+            property: 'color',
+            value: 'red',
+          },
+          { ...defaultAtRules, layer: 'utilities', scope: 'to (.boundary)' },
+        ),
+      ).toMatchInlineSnapshot(`
+        [
+          "@layer utilities{@scope (.foo) to (.boundary){:scope{color:red;}}}",
+        ]
+      `);
+    });
+
+    it('rebases nested descendant selectors onto :scope', () => {
+      expect(
+        compileAtomicCSSRule(
+          {
+            ...defaultOptions,
+            selectors: ['& .baz'],
+            property: 'color',
+            value: 'red',
+          },
+          { ...defaultAtRules, scope: 'to (.boundary)' },
+        ),
+      ).toMatchInlineSnapshot(`
+        [
+          "@scope (.foo) to (.boundary){:scope .baz{color:red;}}",
+        ]
+      `);
+    });
+
+    it('handles :hover with a nested class descendant', () => {
+      expect(
+        compileAtomicCSSRule(
+          {
+            ...defaultOptions,
+            selectors: [':hover .nested'],
+            property: 'color',
+            value: 'red',
+          },
+          { ...defaultAtRules, scope: 'to (.boundary)' },
+        ),
+      ).toMatchInlineSnapshot(`
+        [
+          "@scope (.foo) to (.boundary){:scope:hover .nested{color:red;}}",
+        ]
+      `);
+    });
+  });
 });
 
 describe('normalizePseudoSelector', () => {
