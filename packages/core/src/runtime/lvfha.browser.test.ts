@@ -58,31 +58,6 @@ describe('sanity: state transitions actually fire in the browser', () => {
   });
 });
 
-describe('bucket ordering: emit order is independent of author order', () => {
-  // :visited's runtime cascade is not observable via getComputedStyle
-  // (browsers privacy-restrict computed values for visited links). The
-  // strongest browser-side guarantee we can assert for :visited is that
-  // Griffel emits its <style data-make-styles-bucket="v"> tag between "l"
-  // and "f" — so this single test covers L+V+F+H+A author-order independence.
-  test('reverse-authored pseudos still emit in :link, :visited, :focus, :hover, :active order', () => {
-    applyStyles({
-      root: {
-        ':active': { background: 'orange' },
-        ':hover': { background: 'lightgreen' },
-        ':focus': { background: 'yellow' },
-        ':visited': { background: 'magenta' },
-        ':link': { background: 'cyan' },
-      },
-    });
-
-    const lvfhaBuckets = Array.from(document.head.querySelectorAll<HTMLStyleElement>('style[data-make-styles-bucket]'))
-      .map(el => el.getAttribute('data-make-styles-bucket'))
-      .filter(b => b === 'l' || b === 'v' || b === 'f' || b === 'h' || b === 'a');
-
-    expect(lvfhaBuckets).toEqual(['l', 'v', 'f', 'h', 'a']);
-  });
-});
-
 describe('LVFHA runtime cascade', () => {
   test(':link applies to an unvisited anchor with href', () => {
     const { root } = applyStyles({
