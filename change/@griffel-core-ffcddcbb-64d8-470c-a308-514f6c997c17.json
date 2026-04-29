@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "feat(core): wrap atomic rules in @scope when AtRules.scope is set",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
