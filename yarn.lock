@@ -15200,7 +15200,7 @@ __metadata:
     oxc-transform: "npm:^0.116.0"
     oxc-walker: "npm:^0.7.0"
     playwright: "npm:^1.59.1"
-    postcss: "npm:8.5.10"
+    postcss: "npm:^8.5.10"
     prettier: "npm:2.8.2"
     prism-react-renderer: "npm:2.3.1"
     raw-loader: "npm:4.0.2"
@@ -22189,17 +22189,6 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.31
   checksum: 10/394119e47b0fb098dc53d1bcf71b5500ab29605fe106526b2e81290bff179174ee00a82a4d4be5a42d4ef4138e8a3d6aabeef3b06cf7cb15b851848c8585d53b
-  languageName: node
-  linkType: hard
-
-"postcss@npm:8.5.10":
-  version: 8.5.10
-  resolution: "postcss@npm:8.5.10"
-  dependencies:
-    nanoid: "npm:^3.3.11"
-    picocolors: "npm:^1.1.1"
-    source-map-js: "npm:^1.2.1"
-  checksum: 10/7eac6169e535b63c8412e94d4f6047fc23efa3e9dde804b541940043c831b25f1cd867d83cd2c4371ad2450c8abcb42c208aa25668c1f0f3650d7f72faf711a8
   languageName: node
   linkType: hard
 
