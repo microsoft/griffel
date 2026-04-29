@@ -20,4 +20,15 @@ describe('hashPropertyKey', () => {
     expect(hashB).toMatchInlineSnapshot(`"B3v6anr"`);
     expect(hashA).not.toBe(hashB);
   });
+
+  it('generates distinct hashes for scope vs other at-rules and vs no scope', () => {
+    const hashScope = hashPropertyKey('', 'color', { ...defaultAtRules, scope: 'to (.boundary)' });
+    const hashSupports = hashPropertyKey('', 'color', { ...defaultAtRules, supports: 'to (.boundary)' });
+    const hashPlain = hashPropertyKey('', 'color', defaultAtRules);
+
+    expect(hashScope).toMatchInlineSnapshot(`"fjumov"`);
+    expect(hashSupports).toMatchInlineSnapshot(`"Bnrtfi7"`);
+    expect(hashScope).not.toBe(hashSupports);
+    expect(hashScope).not.toBe(hashPlain);
+  });
 });
