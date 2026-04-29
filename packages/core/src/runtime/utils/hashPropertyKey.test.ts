@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { hashPropertyKey } from './hashPropertyKey.js';
 
-const defaultAtRules = { container: '', media: '', supports: '', layer: '' };
+const defaultAtRules = { container: '', media: '', supports: '', layer: '', scope: '' };
 
 describe('hashPropertyKey', () => {
   it('generates hashes that always start with letters', () => {
