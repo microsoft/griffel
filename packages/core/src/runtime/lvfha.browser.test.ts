@@ -5,15 +5,12 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import { userEvent } from '@vitest/browser/context';
 import {
   applyStyles,
+  COLORS,
   commands,
-  CYAN,
-  getBg,
-  ORANGE,
+  getComputedBackgroundColor,
   render,
   resetBrowserTestState,
-  WHITE,
-  YELLOW,
-} from '../testing/browserHelpers.js';
+} from '../common/browserHelpers.js';
 
 beforeEach(resetBrowserTestState);
 
@@ -33,31 +30,31 @@ describe('sanity: state transitions actually fire in the browser', () => {
     const btn = document.querySelector<HTMLButtonElement>('[data-testid=btn]')!;
 
     // idle
-    expect(getBg(btn)).toBe(WHITE);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.WHITE);
 
     // focus only
     btn.focus();
-    expect(getBg(btn)).toBe(YELLOW);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.YELLOW);
 
     // focus + hover — hover wins over focus
     await userEvent.hover(btn);
-    expect(getBg(btn)).toBe(CYAN);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.CYAN);
 
     // focus + hover + active — active wins over all
     await commands.mouseDown();
-    expect(getBg(btn)).toBe(ORANGE);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.ORANGE);
 
     // release: back to focus + hover — hover wins again
     await commands.mouseUp();
-    expect(getBg(btn)).toBe(CYAN);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.CYAN);
 
     // unhover: focus alone
     await userEvent.unhover(btn);
-    expect(getBg(btn)).toBe(YELLOW);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.YELLOW);
 
     // blur: back to idle
     btn.blur();
-    expect(getBg(btn)).toBe(WHITE);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.WHITE);
   });
 });
 
@@ -75,7 +72,7 @@ describe('LVHA cascade', () => {
     btn.focus();
     await userEvent.hover(btn);
 
-    expect(getBg(btn)).toBe(CYAN);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.CYAN);
   });
 
   test(':hover still wins when authored before :focus', async () => {
@@ -92,7 +89,7 @@ describe('LVHA cascade', () => {
     btn.focus();
     await userEvent.hover(btn);
 
-    expect(getBg(btn)).toBe(CYAN);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.CYAN);
   });
 
   test(':active wins over :hover while mouse held', async () => {
@@ -108,7 +105,7 @@ describe('LVHA cascade', () => {
     await userEvent.hover(btn);
     await commands.mouseDown();
 
-    expect(getBg(btn)).toBe(ORANGE);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.ORANGE);
 
     await commands.mouseUp();
   });
@@ -126,7 +123,7 @@ describe('LVHA cascade', () => {
     await userEvent.hover(btn);
     await commands.mouseDown();
 
-    expect(getBg(btn)).toBe(ORANGE);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.ORANGE);
 
     await commands.mouseUp();
   });
@@ -146,7 +143,7 @@ describe('LVHA cascade', () => {
     await userEvent.hover(btn);
     await commands.mouseDown();
 
-    expect(getBg(btn)).toBe(ORANGE);
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.ORANGE);
 
     await commands.mouseUp();
   });

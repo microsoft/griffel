@@ -3599,8 +3599,6 @@ __metadata:
   dependencies:
     "@emotion/hash": "npm:^0.9.0"
     "@griffel/style-types": "npm:^1.4.0"
-    "@vitest/browser": "npm:4.0.9"
-    "@vitest/browser-playwright": "npm:4.0.9"
     csstype: "npm:^3.1.3"
     rtl-css-js: "npm:^1.16.1"
     stylis: "npm:^4.2.0"
@@ -5896,17 +5894,6 @@ __metadata:
   version: 0.2.9
   resolution: "@pkgr/core@npm:0.2.9"
   checksum: 10/bb2fb86977d63f836f8f5b09015d74e6af6488f7a411dcd2bfdca79d76b5a681a9112f41c45bdf88a9069f049718efc6f3900d7f1de66a2ec966068308ae517f
-  languageName: node
-  linkType: hard
-
-"@playwright/test@npm:^1.59.1":
-  version: 1.59.1
-  resolution: "@playwright/test@npm:1.59.1"
-  dependencies:
-    playwright: "npm:1.59.1"
-  bin:
-    playwright: cli.js
-  checksum: 10/27a894c4d4216b51cddc96e18fd0638a9e2e0a3f0b7ee32a56121fb61df395ec43529f5dcdca32578af8a34a04722ee3767f99f0ae4d39fa8edceda89a96014c
   languageName: node
   linkType: hard
 
@@ -15133,7 +15120,6 @@ __metadata:
     "@nx/vitest": "npm:22.6.5"
     "@nx/web": "npm:22.6.5"
     "@nx/workspace": "npm:22.6.5"
-    "@playwright/test": "npm:^1.59.1"
     "@rspack/cli": "npm:1.7.11"
     "@rspack/core": "npm:1.7.11"
     "@storybook/addon-webpack5-compiler-babel": "npm:4.0.0"
@@ -15162,6 +15148,7 @@ __metadata:
     "@typescript-eslint/rule-tester": "npm:^8.0.0"
     "@typescript-eslint/utils": "npm:^8.0.0"
     "@vitest/browser": "npm:4.0.9"
+    "@vitest/browser-playwright": "npm:4.0.9"
     "@vitest/coverage-v8": "npm:4.0.9"
     "@vitest/ui": "npm:4.0.9"
     "@wyw-in-js/processor-utils": "npm:^0.8.0"
@@ -21304,7 +21291,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.59.1, playwright@npm:^1.59.1":
+"playwright@npm:^1.59.1":
   version: 1.59.1
   resolution: "playwright@npm:1.59.1"
   dependencies:

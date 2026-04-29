@@ -1,5 +1,4 @@
 // Shared helpers and fixtures for Vitest browser-mode tests in @griffel/core.
-// Excluded from the published package via tsconfig.lib.json.
 
 import { commands as rawCommands } from '@vitest/browser/context';
 import { createDOMRenderer, makeStyles, type GriffelStyle } from '../index.js';
@@ -7,23 +6,25 @@ import { createDOMRenderer, makeStyles, type GriffelStyle } from '../index.js';
 // Raw commands is typed as an empty `BrowserCommands` interface. Cast
 // locally to expose the mouse commands we register in vitest.config.ts.
 // Module augmentation against `vitest/internal/browser` cannot resolve
-// under the repo's `moduleResolution: "node"`.
+// under the spec tsconfig's `moduleResolution: "node"`.
 export const commands = rawCommands as typeof rawCommands & {
   mouseDown(): Promise<void>;
   mouseUp(): Promise<void>;
 };
 
 // CSS named colors as rgb() strings for computed-style assertions.
-export const WHITE = 'rgb(255, 255, 255)';
-export const YELLOW = 'rgb(255, 255, 0)';
-export const CYAN = 'rgb(0, 255, 255)';
-export const ORANGE = 'rgb(255, 165, 0)';
+export const COLORS = {
+  WHITE: 'rgb(255, 255, 255)',
+  YELLOW: 'rgb(255, 255, 0)',
+  CYAN: 'rgb(0, 255, 255)',
+  ORANGE: 'rgb(255, 165, 0)',
+};
 
 export function render(html: string): void {
   document.body.innerHTML = html;
 }
 
-export function getBg(el: Element): string {
+export function getComputedBackgroundColor(el: Element): string {
   return getComputedStyle(el).backgroundColor;
 }
 
