@@ -8838,13 +8838,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.3.1":
-  version: 18.3.1
-  resolution: "@types/react@npm:18.3.1"
+"@types/react@npm:19.2.14":
+  version: 19.2.14
+  resolution: "@types/react@npm:19.2.14"
   dependencies:
-    "@types/prop-types": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: 10/baa6b8a75c471c89ebf3477b4feab57102ced25f0c1e553dd04ef6a1f0def28d5e0172fa626a631f22e223f840b5aaa2403b2d4bb671c83c5a9d6c7ae39c7a05
+    csstype: "npm:^3.2.2"
+  checksum: 10/fbff239089ee64b6bd9b00543594db498278b06de527ef1b0f71bb0eb09cc4445a71b5dd3c0d3d0257255c4eed94406be40a74ad4a987ade8a8d5dd65c82bc5f
   languageName: node
   linkType: hard
 
@@ -12210,6 +12209,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csstype@npm:^3.2.2":
+  version: 3.2.3
+  resolution: "csstype@npm:3.2.3"
+  checksum: 10/ad41baf7e2ffac65ab544d79107bf7cd1a4bb9bab9ac3302f59ab4ba655d5e30942a8ae46e10ba160c6f4ecea464cc95b975ca2fefbdeeacd6ac63f12f99fe1f
+  languageName: node
+  linkType: hard
+
 "cytoscape-cose-bilkent@npm:^4.1.0":
   version: 4.1.0
   resolution: "cytoscape-cose-bilkent@npm:4.1.0"
@@ -15369,7 +15375,7 @@ __metadata:
     "@types/mini-css-extract-plugin": "npm:2.5.1"
     "@types/node": "npm:25.6.0"
     "@types/prettier": "npm:2.7.3"
-    "@types/react": "npm:18.3.1"
+    "@types/react": "npm:19.2.14"
     "@types/react-dom": "npm:18.3.0"
     "@types/stylis": "npm:4.2.7"
     "@types/webpack-env": "npm:1.18.4"
@@ -15425,7 +15431,7 @@ __metadata:
     prettier: "npm:2.8.2"
     prism-react-renderer: "npm:2.3.1"
     raw-loader: "npm:4.0.2"
-    react: "npm:18.3.1"
+    react: "npm:19.2.5"
     react-dom: "npm:18.3.1"
     react-refresh: "npm:^0.10.0"
     react-shadow: "npm:^20.2.0"
@@ -22885,12 +22891,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.3.1":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10/261137d3f3993eaa2368a83110466fc0e558bc2c7f7ae7ca52d94f03aac945f45146bd85e5f481044db1758a1dbb57879e2fcdd33924e2dde1bdc550ce73f7bf
+"react@npm:19.2.5":
+  version: 19.2.5
+  resolution: "react@npm:19.2.5"
+  checksum: 10/1c3c7ffecb90b7f89a5c3ef635e6811f3a84600097f203b918150cb7e6b0a52915e858e5b4c82317a520dffccfa46ee4819ccf92c59c5b2d6c25cffe258dd20c
   languageName: node
   linkType: hard
 
