@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "test(core): add Vitest browser-mode infra and LVFHA cascade tests",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

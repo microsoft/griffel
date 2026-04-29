@@ -34,4 +34,6 @@ jobs:
       - run: yarn dedupe --check
       - run: yarn check-dependencies
 
+      - run: yarn playwright install --with-deps chromium
+
       - run: yarn nx affected --target=lint,type-check,build,build-cjs,test --nxBail
