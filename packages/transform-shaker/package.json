@@ -24,7 +24,7 @@
     "oxc-transform": "^0.116.0"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.7",
+    "@types/debug": "^4.1.13",
     "dedent": "^1.5.3"
   }
 }
