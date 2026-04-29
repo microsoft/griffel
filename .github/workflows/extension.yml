@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
 
       - name: Verify extension has changed
-        uses: tj-actions/changed-files@2f7c5bfce28377bc069a65ba478de0a74aa0ca32 # v46.0.1
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         id: verify-extension-changed
         with:
           files: |
