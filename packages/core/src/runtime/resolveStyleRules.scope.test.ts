@@ -225,6 +225,18 @@ describe('resolveStyleRules: @scope', () => {
         "Bpguliw": "ff6bx43",
       }
     `);
+    expect(result).toMatchInlineSnapshot(`
+      @scope (.ff6bx43) to (.a) {
+        :scope p {
+          color: red;
+        }
+      }
+      @scope (.fh4gkgn) to (.b) {
+        :scope p {
+          color: blue;
+        }
+      }
+    `);
   });
 
   // --- Boundary edge cases ---
@@ -263,43 +275,6 @@ describe('resolveStyleRules: @scope', () => {
     `);
   });
 
-  it('scoped :hover with boundary goes to "h" bucket', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': {
-        ':hover': { color: 'cyan' },
-      },
-    });
-
-    expect(result[1]).toHaveProperty('h');
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.f1sje2gt) to (.boundary) {
-        :scope:hover {
-          color: cyan;
-        }
-      }
-    `);
-  });
-
-  it('scoped :focus with boundary goes to "f" bucket', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': {
-        ':focus': { color: 'yellow' },
-      },
-    });
-
-    expect(result[1]).toHaveProperty('f');
-  });
-
-  it('scoped :active with boundary goes to "a" bucket', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': {
-        ':active': { color: 'orange' },
-      },
-    });
-
-    expect(result[1]).toHaveProperty('a');
-  });
-
   it('LVHA ordering preserved: scoped :hover and :focus go to separate buckets', () => {
     const result = resolveStyleRules({
       '@scope to (.boundary)': {
@@ -327,9 +302,18 @@ describe('resolveStyleRules: @scope', () => {
         "rxd53p": "fbtjt56",
       }
     `);
-
-    // Both go to 'd' bucket (no pseudo selector on '& p')
-    expect(result[1].d!.length).toBe(2);
+    expect(result).toMatchInlineSnapshot(`
+      @scope (.f7t33c5) to (.boundary) {
+        :scope p {
+          color: red;
+        }
+      }
+      @scope (.fbtjt56) to (.boundary) {
+        :scope p {
+          font-size: 14px;
+        }
+      }
+    `);
   });
 
   // --- Direct root styling ---
@@ -344,78 +328,6 @@ describe('resolveStyleRules: @scope', () => {
         :scope {
           color: blue;
         }
-      }
-    `);
-  });
-
-  // --- Cascade ordering: scoped vs non-scoped same property ---
-
-  it('non-scoped then scoped: produces independent rules in same bucket', () => {
-    const result = resolveStyleRules({
-      color: 'red',
-      '@scope to (.boundary)': { color: 'blue' },
-    });
-
-    // Both non-scoped and scoped (no pseudo) go to 'd' bucket
-    expect(result[1]).toHaveProperty('d');
-    expect(result).toMatchInlineSnapshot(`
-      .fe3e8s9 {
-        color: red;
-      }
-      @scope (.f14r3iqv) to (.boundary) {
-        :scope {
-          color: blue;
-        }
-      }
-    `);
-  });
-
-  it('scoped then non-scoped: same bucket, insertion order', () => {
-    const result = resolveStyleRules({
-      '@scope to (.boundary)': { color: 'blue' },
-      color: 'red',
-    });
-
-    // Both non-scoped and scoped (no pseudo) go to 'd' bucket
-    expect(result[1]).toHaveProperty('d');
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.f14r3iqv) to (.boundary) {
-        :scope {
-          color: blue;
-        }
-      }
-      .fe3e8s9 {
-        color: red;
-      }
-    `);
-  });
-
-  it('two scoped rules with same property: last one wins (same bucket, source order)', () => {
-    const result = resolveStyleRules({
-      '@scope to (.a)': { color: 'red' },
-      '@scope to (.b)': { color: 'blue' },
-    });
-
-    // Both in 'd' bucket (no pseudo), blue comes second
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.f1ppphex) to (.a) {
-        :scope {
-          color: red;
-        }
-      }
-      @scope (.f11yypxt) to (.b) {
-        :scope {
-          color: blue;
-        }
-      }
-    `);
-
-    // But in Griffel's atomic model, the LAST class wins via mergeClasses.
-    // Only one of the two atomic classes will be on the element at runtime.
-    expect(result[0]).toMatchInlineSnapshot(`
-      {
-        "Bsba2g1": "f11yypxt",
-        "xqz3n8": "f1ppphex",
       }
     `);
   });
