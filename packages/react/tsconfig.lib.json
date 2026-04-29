@@ -5,6 +5,7 @@
     "moduleResolution": "NodeNext",
     "outDir": "../../dist/out-tsc",
     "declaration": true,
+    "stripInternal": true,
     "types": ["node", "environment"]
   },
   "exclude": [

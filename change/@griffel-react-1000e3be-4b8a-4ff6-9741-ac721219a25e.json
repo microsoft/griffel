@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix(react): emit interop-free types so consumers without esModuleInterop can compile",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { createContext, useContext, type FC, type ReactNode } from 'react';
 
 export interface TextDirectionProviderProps {
   /** Indicates the directionality of the element's text. */
@@ -9,18 +9,18 @@ export interface TextDirectionProviderProps {
   /**
    * Content wrapped by the TextDirectionProvider.
    */
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 /**
  * @private
  */
-const TextDirectionContext = /*#__PURE__*/ React.createContext<'ltr' | 'rtl'>('ltr');
+const TextDirectionContext = /*#__PURE__*/ createContext<'ltr' | 'rtl'>('ltr');
 
 /**
  * @public
  */
-export const TextDirectionProvider: React.FC<TextDirectionProviderProps> = ({ children, dir }) => {
+export const TextDirectionProvider: FC<TextDirectionProviderProps> = ({ children, dir }) => {
   return <TextDirectionContext.Provider value={dir}>{children}</TextDirectionContext.Provider>;
 };
 
@@ -30,5 +30,5 @@ export const TextDirectionProvider: React.FC<TextDirectionProviderProps> = ({ ch
  * @private
  */
 export function useTextDirection() {
-  return React.useContext(TextDirectionContext);
+  return useContext(TextDirectionContext);
 }

@@ -1,7 +1,10 @@
 'use client';
 
-import React from 'react';
+import * as React from 'react';
 
+/**
+ * @internal
+ */
 export const useInsertionEffect: typeof React.useInsertionEffect | undefined =
   // @ts-expect-error Hack to make sure that `useInsertionEffect` will not cause bundling issues in older React versions
   // eslint-disable-next-line no-useless-concat

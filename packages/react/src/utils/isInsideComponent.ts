@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import * as React from 'react';
 
 function getDispatcher() {
   try {
@@ -17,6 +17,9 @@ function getDispatcher() {
   }
 }
 
+/**
+ * @internal
+ */
 export function isInsideComponent() {
   // React 18 always logs errors if a dispatcher is not present:
   // https://github.com/facebook/react/blob/42f15b324f50d0fd98322c21646ac3013e30344a/packages/react/src/ReactHooks.js#L26-L36
