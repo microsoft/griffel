@@ -97,9 +97,7 @@ describe('@scope vs non-scoped cascade', () => {
   // Per CSS @scope spec, scoped rules win over non-scoped rules at equal
   // specificity due to scope proximity. Griffel currently emits both into
   // the same bucket (e.g. `d`) and relies on the browser's proximity
-  // tie-breaker for correctness. PR3 plans to place @scope atoms into a
-  // sub-bucket inserted right after the non-scope counterpart so the
-  // outcome is robust even in cascades where proximity does not apply.
+  // tie-breaker for correctness.
   test('@scope color wins over non-scoped color on the same element', () => {
     const { root } = applyStyles({
       root: {
