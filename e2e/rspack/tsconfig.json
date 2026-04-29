@@ -7,7 +7,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "noEmit": true
   },
   "files": [],

@@ -16,10 +16,13 @@ export default {
         '@griffel/react': path.resolve(dirname, './dist/packages/react/src/index.js'),
       },
     },
+    externals: {
+      ...config.externals,
+      'react/jsx-runtime': 'JSX',
+    },
   })),
   storage: upstashStorage({
     url: 'https://welcome-giraffe-61766.upstash.io',
-    readonlyToken:
-      'AvFGAAIgcDHzHKwMeSqS_FCutK3bcM-AI7c7zSKbRYbAM14_ZiwUmg',
+    readonlyToken: 'AvFGAAIgcDHzHKwMeSqS_FCutK3bcM-AI7c7zSKbRYbAM14_ZiwUmg',
   }),
 };

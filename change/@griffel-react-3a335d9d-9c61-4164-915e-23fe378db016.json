@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat(react): switch to modern JSX runtime, bump react peerDep to >=16.14.0",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

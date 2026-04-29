@@ -3677,7 +3677,7 @@ __metadata:
     "@griffel/core": "npm:^1.20.2"
     tslib: "npm:^2.1.0"
   peerDependencies:
-    react: ">=16.8.0 <20.0.0"
+    react: ">=16.14.0 <20.0.0"
   languageName: unknown
   linkType: soft
 
