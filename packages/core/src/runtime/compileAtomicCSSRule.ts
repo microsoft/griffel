@@ -1,7 +1,7 @@
+import { compileCSSRules } from './compileCSSRules.js';
 import { hyphenateProperty } from './utils/hyphenateProperty.js';
 import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
 import type { AtRules } from './utils/types.js';
-import { compileCSSRules } from './compileCSSRules.js';
 
 export interface CompileAtomicCSSOptions {
   className: string;
@@ -37,16 +37,8 @@ export function normalizePseudoSelector(pseudoSelector: string): string {
   );
 }
 
-function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudos: string[]): string {
-  let cssRule = cssDeclaration;
-
-  if (pseudos.length > 0) {
-    cssRule = pseudos.reduceRight((acc, selector) => {
-      return `${normalizePseudoSelector(selector)} { ${acc} }`;
-    }, cssDeclaration);
-  }
-
-  return `${classNameSelector}{${cssRule}}`;
+function createCSSDeclaration(cssDeclaration: string, pseudos: string[]): string {
+  return pseudos.reduceRight((acc, selector) => `${normalizePseudoSelector(selector)} { ${acc} }`, cssDeclaration);
 }
 
 export function compileAtomicCSSRule(
@@ -54,14 +46,22 @@ export function compileAtomicCSSRule(
   atRules: AtRules,
 ): [string? /* ltr definition */, string? /* rtl definition */] {
   const { className, selectors, property, rtlClassName, rtlProperty, rtlValue, value } = options;
-  const { container, layer, media, supports } = atRules;
+  const { container, layer, media, scope, supports } = atRules;
 
   const classNameSelector = `.${className}`;
   const cssDeclaration = Array.isArray(value)
     ? `${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')};`
     : `${hyphenateProperty(property)}: ${value};`;
 
-  let cssRule = createCSSRule(classNameSelector, cssDeclaration, selectors);
+  // Under @scope, the rule body is anchored on :scope (the spec-defined
+  // alias for the scope root set via the (.className) prelude). @scope
+  // wraps innermost so outer at-rules (@media, @supports, etc.) compose
+  // around it. Separate blocks for LTR and RTL because the prelude
+  // references the direction-specific atomic class.
+  const ltrBody = createCSSDeclaration(cssDeclaration, selectors);
+  let cssRule = scope
+    ? `@scope (${classNameSelector}) ${scope} { :scope{${ltrBody}} }`
+    : `${classNameSelector}{${ltrBody}}`;
 
   if (rtlProperty && rtlClassName) {
     const rtlClassNameSelector = `.${rtlClassName}`;
@@ -69,21 +69,21 @@ export function compileAtomicCSSRule(
       ? `${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')};`
       : `${hyphenateProperty(rtlProperty)}: ${rtlValue};`;
 
-    cssRule += createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
+    const rtlBody = createCSSDeclaration(rtlCSSDeclaration, selectors);
+    cssRule += scope
+      ? `@scope (${rtlClassNameSelector}) ${scope} { :scope{${rtlBody}} }`
+      : `${rtlClassNameSelector}{${rtlBody}}`;
   }
 
   if (media) {
     cssRule = `@media ${media} { ${cssRule} }`;
   }
-
   if (layer) {
     cssRule = `@layer ${layer} { ${cssRule} }`;
   }
-
   if (supports) {
     cssRule = `@supports ${supports} { ${cssRule} }`;
   }
-
   if (container) {
     cssRule = `@container ${container} { ${cssRule} }`;
   }

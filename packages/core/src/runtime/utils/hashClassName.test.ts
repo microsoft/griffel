@@ -13,6 +13,7 @@ const defaultAtRules = {
   media: '',
   layer: '',
   supports: '',
+  scope: '',
 };
 
 describe('hashClassName', () => {

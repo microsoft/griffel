@@ -93,6 +93,7 @@ export function resolveStyleRules(
     layer: '',
     media: '',
     supports: '',
+    scope: '',
   },
   cssClassesMap: CSSClassesMap = {},
   cssRulesByBucket: CSSRulesByBucket = {},
