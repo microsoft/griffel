@@ -165,7 +165,7 @@
     "vitest": "4.0.9",
     "webpack": "5.106.2",
     "webpack-merge": "5.10.0",
-    "yargs": "^17.5.1"
+    "yargs": "^18.0.0"
   },
   "resolutions": {
     "beachball@2.31.5": "patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch",
