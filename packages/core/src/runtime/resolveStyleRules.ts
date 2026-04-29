@@ -386,6 +386,16 @@ export function resolveStyleRules(
           cssRulesByBucket,
         );
       } else if (isScopeSelector(property)) {
+        if (atRules.scope) {
+          if (process.env.NODE_ENV !== 'production') {
+            logError(
+              `@griffel/react: nested "${property}" is not supported. ` +
+                'Only one @scope boundary can be applied to a rule; the inner @scope will be skipped.',
+            );
+          }
+          continue;
+        }
+
         const scopeQuery = property.slice(6).trim();
 
         if (scopeQuery === '' || !scopeQuery.startsWith('to ')) {
