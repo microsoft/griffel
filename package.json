@@ -38,7 +38,7 @@
     "@babel/generator": "^7.23.0",
     "@babel/helper-module-imports": "^7.22.15",
     "@babel/helper-plugin-utils": "^7.22.5",
-    "@babel/template": "^7.22.15",
+    "@babel/template": "^7.28.6",
     "@babel/traverse": "^7.23.2",
     "@emotion/hash": "^0.9.0",
     "@linaria/babel-preset": "^3.0.0-beta.24",
