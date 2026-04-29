@@ -122,7 +122,7 @@
     "nano-staged": "~1.0.2",
     "nx": "22.6.5",
     "playwright": "^1.59.1",
-    "postcss": "8.4.47",
+    "postcss": "8.5.10",
     "prettier": "2.8.2",
     "prism-react-renderer": "2.3.1",
     "raw-loader": "4.0.2",

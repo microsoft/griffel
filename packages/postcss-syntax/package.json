@@ -11,7 +11,7 @@
     "@babel/core": "^7.23.2",
     "@babel/helper-plugin-utils": "^7.22.5",
     "@griffel/babel-preset": "^1.8.2",
-    "postcss": "^8.4.29"
+    "postcss": "^8.5.10"
   },
   "main": "./src/index.js"
 }
