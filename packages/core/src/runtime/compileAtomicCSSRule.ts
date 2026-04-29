@@ -37,16 +37,8 @@ export function normalizePseudoSelector(pseudoSelector: string): string {
   );
 }
 
-function createCSSRule(classNameSelector: string, cssDeclaration: string, pseudos: string[]): string {
-  let cssRule = cssDeclaration;
-
-  if (pseudos.length > 0) {
-    cssRule = pseudos.reduceRight((acc, selector) => {
-      return `${normalizePseudoSelector(selector)} { ${acc} }`;
-    }, cssDeclaration);
-  }
-
-  return `${classNameSelector}{${cssRule}}`;
+function createCSSDeclaration(cssDeclaration: string, pseudos: string[]): string {
+  return pseudos.reduceRight((acc, selector) => `${normalizePseudoSelector(selector)} { ${acc} }`, cssDeclaration);
 }
 
 export function compileAtomicCSSRule(
@@ -61,8 +53,15 @@ export function compileAtomicCSSRule(
     ? `${value.map(v => `${hyphenateProperty(property)}: ${v}`).join(';')};`
     : `${hyphenateProperty(property)}: ${value};`;
 
-  let ltrRule = createCSSRule(classNameSelector, cssDeclaration, selectors);
-  let rtlRule = '';
+  // Under @scope, the rule body is anchored on :scope (the spec-defined
+  // alias for the scope root set via the (.className) prelude). @scope
+  // wraps innermost so outer at-rules (@media, @supports, etc.) compose
+  // around it. Separate blocks for LTR and RTL because the prelude
+  // references the direction-specific atomic class.
+  const ltrBody = createCSSDeclaration(cssDeclaration, selectors);
+  let cssRule = scope
+    ? `@scope (${classNameSelector}) ${scope} { :scope{${ltrBody}} }`
+    : `${classNameSelector}{${ltrBody}}`;
 
   if (rtlProperty && rtlClassName) {
     const rtlClassNameSelector = `.${rtlClassName}`;
@@ -70,25 +69,11 @@ export function compileAtomicCSSRule(
       ? `${rtlValue.map(v => `${hyphenateProperty(rtlProperty)}: ${v}`).join(';')};`
       : `${hyphenateProperty(rtlProperty)}: ${rtlValue};`;
 
-    rtlRule = createCSSRule(rtlClassNameSelector, rtlCSSDeclaration, selectors);
+    const rtlBody = createCSSDeclaration(rtlCSSDeclaration, selectors);
+    cssRule += scope
+      ? `@scope (${rtlClassNameSelector}) ${scope} { :scope{${rtlBody}} }`
+      : `${rtlClassNameSelector}{${rtlBody}}`;
   }
-
-  if (scope) {
-    // @scope is applied as the innermost at-rule wrapper, so that outer
-    // at-rules (@media, @supports, etc.) wrap around it naturally.
-    // Separate @scope blocks for LTR and RTL because the scope root
-    // selector references the direction-specific atomic class.
-    ltrRule = ltrRule.split(classNameSelector).join(':scope');
-    ltrRule = `@scope (${classNameSelector}) ${scope} { ${ltrRule} }`;
-
-    if (rtlRule) {
-      const rtlClassNameSelector = `.${rtlClassName}`;
-      rtlRule = rtlRule.split(rtlClassNameSelector).join(':scope');
-      rtlRule = `@scope (${rtlClassNameSelector}) ${scope} { ${rtlRule} }`;
-    }
-  }
-
-  let cssRule = ltrRule + rtlRule;
 
   if (media) {
     cssRule = `@media ${media} { ${cssRule} }`;
