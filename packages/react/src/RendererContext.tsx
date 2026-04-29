@@ -2,7 +2,7 @@
 
 import { createDOMRenderer, rehydrateRendererCache } from '@griffel/core';
 import type { GriffelRenderer } from '@griffel/core';
-import React from 'react';
+import { createContext, useContext, useMemo, type FC, type ReactNode } from 'react';
 
 import { canUseDOM } from './utils/canUseDOM.js';
 
@@ -18,19 +18,19 @@ export interface RendererProviderProps {
   /**
    * Content wrapped by the RendererProvider
    */
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 /**
  * @private
  */
-const RendererContext = /*#__PURE__*/ React.createContext<GriffelRenderer>(/*#__PURE__*/ createDOMRenderer());
+const RendererContext = /*#__PURE__*/ createContext<GriffelRenderer>(/*#__PURE__*/ createDOMRenderer());
 
 /**
  * @public
  */
-export const RendererProvider: React.FC<RendererProviderProps> = ({ children, renderer, targetDocument }) => {
-  React.useMemo(() => {
+export const RendererProvider: FC<RendererProviderProps> = ({ children, renderer, targetDocument }) => {
+  useMemo(() => {
     if (canUseDOM()) {
       // "rehydrateCache()" can't be called in effects as it needs to be called before any component will be rendered to
       // avoid double insertion of classes
@@ -47,5 +47,5 @@ export const RendererProvider: React.FC<RendererProviderProps> = ({ children, re
  * @private Exported as "useRenderer_unstable" use it on own risk. Can be changed or removed without a notice.
  */
 export function useRenderer(): GriffelRenderer {
-  return React.useContext(RendererContext);
+  return useContext(RendererContext);
 }
