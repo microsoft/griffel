@@ -3610,7 +3610,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/devtools@workspace:packages/devtools"
   dependencies:
-    "@griffel/react": "npm:^1.6.2"
+    "@griffel/react": "npm:^1.7.0"
   languageName: unknown
   linkType: soft
 
@@ -3670,7 +3670,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/react@npm:^1.6.2, @griffel/react@workspace:packages/react":
+"@griffel/react@npm:^1.7.0, @griffel/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@griffel/react@workspace:packages/react"
   dependencies:

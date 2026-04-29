@@ -1,8 +1,16 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2026 17:05:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.8
+
+Wed, 29 Apr 2026 17:05:15 GMT
+
+### Patches
+
+- chore(deps): bump postcss from 8.4.47 to 8.5.10 (olfedias@microsoft.com)
 
 ## 1.3.7
 

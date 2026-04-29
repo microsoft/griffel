@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: switch tsconfig.spec to react-jsx",
-  "packageName": "@griffel/babel-preset",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

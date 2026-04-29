@@ -2,6 +2,21 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 17:05:15 GMT",
+      "tag": "@griffel/shadow-dom_v0.2.13",
+      "version": "0.2.13",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "ae63d7f7d40e8e095da26f41908157086d9823af",
+            "comment": "chore: switch tsconfig.storybook to react-jsx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/shadow-dom_v0.2.13",
       "version": "0.2.13",

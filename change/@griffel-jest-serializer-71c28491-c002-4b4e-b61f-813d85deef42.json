@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: switch tsconfig.spec to react-jsx",
-  "packageName": "@griffel/jest-serializer",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

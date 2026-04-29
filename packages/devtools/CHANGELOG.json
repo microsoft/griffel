@@ -2,6 +2,29 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 17:05:15 GMT",
+      "tag": "@griffel/devtools_v0.3.8",
+      "version": "0.3.8",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "ae63d7f7d40e8e095da26f41908157086d9823af",
+            "comment": "chore: switch tsconfig to react-jsx"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.7.0",
+            "commit": "3e7c9ba0dc38935cbbfe6f98d957445a9457a26e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/devtools_v0.3.7",
       "version": "0.3.7",

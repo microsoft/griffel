@@ -1,8 +1,20 @@
 # Change Log - @griffel/react
 
-This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2026 17:05:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.7.0
+
+Wed, 29 Apr 2026 17:05:15 GMT
+
+### Minor changes
+
+- feat(react): switch to modern JSX runtime, bump react peerDep to >=16.14.0 (olfedias@microsoft.com)
+
+### Patches
+
+- fix(react): emit interop-free types so consumers without esModuleInterop can compile (olfedias@microsoft.com)
 
 ## 1.6.2
 

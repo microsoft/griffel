@@ -2,6 +2,27 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 17:05:15 GMT",
+      "tag": "@griffel/core_v1.20.2",
+      "version": "1.20.2",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "e41a5070334bed95640696c88588493e5530aff8",
+            "comment": "test(core): add Vitest browser-mode infra and LVFHA cascade tests"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "7df45e57c3332d0e4ae34d26a81ef7aedee50d44",
+            "comment": "feat(core): wrap atomic rules in @scope when AtRules.scope is set"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/core_v1.20.2",
       "version": "1.20.2",

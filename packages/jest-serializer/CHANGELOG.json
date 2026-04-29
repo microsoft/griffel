@@ -2,6 +2,21 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 17:05:15 GMT",
+      "tag": "@griffel/jest-serializer_v1.1.37",
+      "version": "1.1.37",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "ae63d7f7d40e8e095da26f41908157086d9823af",
+            "comment": "chore: switch tsconfig.spec to react-jsx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/jest-serializer_v1.1.37",
       "version": "1.1.37",

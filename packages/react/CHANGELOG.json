@@ -2,6 +2,29 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 17:05:15 GMT",
+      "tag": "@griffel/react_v1.7.0",
+      "version": "1.7.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "3e7c9ba0dc38935cbbfe6f98d957445a9457a26e",
+            "comment": "fix(react): emit interop-free types so consumers without esModuleInterop can compile"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "ae63d7f7d40e8e095da26f41908157086d9823af",
+            "comment": "feat(react): switch to modern JSX runtime, bump react peerDep to >=16.14.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/react_v1.6.2",
       "version": "1.6.2",
