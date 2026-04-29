@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): bump postcss from 8.4.47 to 8.5.10",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
