@@ -2,6 +2,29 @@
   "name": "@griffel/transform-shaker",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:14 GMT",
+      "tag": "@griffel/transform-shaker_v1.0.4",
+      "version": "1.0.4",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "9d9312c8dac11b20c8173adb4a92db4ad9f582d5",
+            "comment": "fix: preserve class field initializers during tree-shaking"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Apr 2026 09:35:41 GMT",
       "tag": "@griffel/transform-shaker_v1.0.3",
       "version": "1.0.3",

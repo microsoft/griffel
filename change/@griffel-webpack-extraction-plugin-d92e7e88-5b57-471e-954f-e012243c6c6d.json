@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix: update test imports for esModuleInterop",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

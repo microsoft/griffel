@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-plugin
 
-This log was last generated on Wed, 08 Apr 2026 09:35:41 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2026 08:41:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 4.0.2
+
+Wed, 29 Apr 2026 08:41:15 GMT
+
+### Patches
+
+- fix: use fileURLToPath for Windows path compatibility (hy.liu@berkeley.edu)
+- Bump @griffel/core to v1.20.2
+- Bump @griffel/transform to v3.0.2
 
 ## 4.0.1
 

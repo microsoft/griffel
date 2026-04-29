@@ -2,6 +2,35 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:14 GMT",
+      "tag": "@griffel/shadow-dom_v0.2.13",
+      "version": "0.2.13",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "71fed59fe213a5eadafb161aa8848e13c6d707bb",
+            "comment": "refactor(build): switch from rollup to tsc + SWC"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/shadow-dom",
+            "comment": "Bump @griffel/core to v1.20.2",
+            "commit": "776d6d657e411ede5cdb6493bc70e354e78b541c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 13:33:34 GMT",
       "tag": "@griffel/shadow-dom_v0.2.12",
       "version": "0.2.12",

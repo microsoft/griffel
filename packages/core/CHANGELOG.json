@@ -2,6 +2,35 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:14 GMT",
+      "tag": "@griffel/core_v1.20.2",
+      "version": "1.20.2",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "01c98b78b3f36efda818d6f81d0a1c9e5935d773",
+            "comment": "chore: fix lint issues ahead of ESLint 9 migration"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "71fed59fe213a5eadafb161aa8848e13c6d707bb",
+            "comment": "refactor(build): switch from rollup to tsc + SWC"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 13:33:34 GMT",
       "tag": "@griffel/core_v1.20.1",
       "version": "1.20.1",

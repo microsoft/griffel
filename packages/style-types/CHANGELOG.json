@@ -2,6 +2,21 @@
   "name": "@griffel/style-types",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:14 GMT",
+      "tag": "@griffel/style-types_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/style-types_v1.4.0",
       "version": "1.4.0",

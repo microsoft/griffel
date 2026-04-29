@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: migrate to ESLint 9 flat config",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

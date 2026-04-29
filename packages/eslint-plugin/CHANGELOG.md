@@ -1,8 +1,20 @@
 # Change Log - @griffel/eslint-plugin
 
-This log was last generated on Fri, 06 Mar 2026 08:17:05 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 3.0.0
+
+Wed, 29 Apr 2026 08:41:14 GMT
+
+### Major changes
+
+- BREAKING: drop support for ESLint 7/8, require ESLint 9+ (olfedias@microsoft.com)
+
+### Patches
+
+- fix: export top-level-styles rule and add styles-file, top-level-styles to recommended config (olfedias@microsoft.com)
 
 ## 2.0.2
 

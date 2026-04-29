@@ -2,6 +2,41 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:14 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.15",
+      "version": "0.5.15",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "01c98b78b3f36efda818d6f81d0a1c9e5935d773",
+            "comment": "chore: fix lint issues ahead of ESLint 9 migration"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "71fed59fe213a5eadafb161aa8848e13c6d707bb",
+            "comment": "fix: update test imports for esModuleInterop"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.20.2",
+            "commit": "776d6d657e411ede5cdb6493bc70e354e78b541c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.14",
       "version": "0.5.14",

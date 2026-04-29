@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: fix lint issues ahead of ESLint 9 migration",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

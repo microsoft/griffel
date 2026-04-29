@@ -1,8 +1,16 @@
 # Change Log - @griffel/transform-shaker
 
-This log was last generated on Wed, 08 Apr 2026 09:35:41 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.4
+
+Wed, 29 Apr 2026 08:41:14 GMT
+
+### Patches
+
+- fix: preserve class field initializers during tree-shaking (olfedias@microsoft.com)
 
 ## 1.0.3
 

@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "BREAKING: drop support for ESLint 7/8, require ESLint 9+",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix: add esModuleInterop for tsc -b compatibility",
-  "packageName": "@griffel/jest-serializer",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

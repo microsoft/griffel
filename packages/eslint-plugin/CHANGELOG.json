@@ -2,6 +2,37 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:14 GMT",
+      "tag": "@griffel/eslint-plugin_v3.0.0",
+      "version": "3.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "b3bcfe314f4361b6fa2a95b71ca2acd935f2c4bb",
+            "comment": "fix: export top-level-styles rule and add styles-file, top-level-styles to recommended config"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          }
+        ],
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "79838f684c0d15ae6b3560211b71f56f48ad81b5",
+            "comment": "BREAKING: drop support for ESLint 7/8, require ESLint 9+"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/eslint-plugin_v2.0.2",
       "version": "2.0.2",

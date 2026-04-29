@@ -2,6 +2,47 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:15 GMT",
+      "tag": "@griffel/webpack-plugin_v4.0.2",
+      "version": "4.0.2",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "01c98b78b3f36efda818d6f81d0a1c9e5935d773",
+            "comment": "chore: fix lint issues ahead of ESLint 9 migration"
+          }
+        ],
+        "patch": [
+          {
+            "author": "hy.liu@berkeley.edu",
+            "package": "@griffel/webpack-plugin",
+            "commit": "ba0cadf26040015192cfa06401d20aae0930f391",
+            "comment": "fix: use fileURLToPath for Windows path compatibility"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/core to v1.20.2",
+            "commit": "776d6d657e411ede5cdb6493bc70e354e78b541c"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v3.0.2",
+            "commit": "776d6d657e411ede5cdb6493bc70e354e78b541c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Apr 2026 09:35:41 GMT",
       "tag": "@griffel/webpack-plugin_v4.0.1",
       "version": "4.0.1",

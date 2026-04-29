@@ -1,6 +1,6 @@
 {
   "name": "@griffel/eslint-plugin",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "type": "module",
   "description": "ESLint plugin with lint rules for Griffel",
   "license": "MIT",

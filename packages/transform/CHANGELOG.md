@@ -1,8 +1,18 @@
 # Change Log - @griffel/transform
 
-This log was last generated on Wed, 08 Apr 2026 09:35:41 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 3.0.2
+
+Wed, 29 Apr 2026 08:41:14 GMT
+
+### Patches
+
+- fix: deduplicate CSS rules from resolveStyleRulesForSlots (olfedias@microsoft.com)
+- Bump @griffel/core to v1.20.2
+- Bump @griffel/transform-shaker to v1.0.4
 
 ## 3.0.1
 

@@ -2,6 +2,35 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Wed, 29 Apr 2026 08:41:14 GMT",
+      "tag": "@griffel/babel-preset_v1.8.2",
+      "version": "1.8.2",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "e622ba1a5a32b06348274f1e2f214a60c0faab80",
+            "comment": "chore: migrate to ESLint 9 flat config"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "71fed59fe213a5eadafb161aa8848e13c6d707bb",
+            "comment": "fix: add esModuleInterop for tsc -b compatibility"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.20.2",
+            "commit": "776d6d657e411ede5cdb6493bc70e354e78b541c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Mar 2026 15:56:28 GMT",
       "tag": "@griffel/babel-preset_v1.8.1",
       "version": "1.8.1",
