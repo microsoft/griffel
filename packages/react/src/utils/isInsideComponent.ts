@@ -1,6 +1,5 @@
 'use client';
 
-// @ts-ignore — default import is intentional (avoids the webpack namespace helper that `import * as` adds); this file is `@internal` and is stripped from the published `.d.ts`.
 import React from 'react';
 
 function getDispatcher() {
