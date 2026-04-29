@@ -55,6 +55,12 @@ describe('getStyleBucketName', () => {
         scope: '',
       }),
     ).toBe('c');
+  });
+
+  // @scope wraps innermost (per compileAtomicCSSRule), so scoped pseudo-rules must remain in
+  // their pseudo buckets (h/f/a) to preserve LVHA cascade ordering. @scope by itself does not
+  // route into a dedicated bucket — it falls through to the same logic as a non-scoped rule.
+  it('@scope does not affect bucket strategy', () => {
     expect(getStyleBucketName([], { container: '', media: '', supports: '', layer: '', scope: 'to (.boundary)' })).toBe(
       'd',
     );
