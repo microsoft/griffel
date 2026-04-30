@@ -1,7 +1,7 @@
 // Shared helpers and fixtures for Vitest browser-mode tests in @griffel/core.
 // Excluded from the published package via tsconfig.lib.json.
 
-import { commands as rawCommands } from '@vitest/browser/context';
+import { commands as rawCommands } from 'vitest/browser';
 import { createDOMRenderer, makeResetStyles, makeStyles, type GriffelResetStyle, type GriffelStyle } from '../index.js';
 
 // Raw commands is typed as an empty `BrowserCommands` interface. Cast

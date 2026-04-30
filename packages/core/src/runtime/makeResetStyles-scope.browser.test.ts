@@ -2,7 +2,7 @@
 // to the `s` bucket via stylis's at-rule hoisting — see isAtRuleElement.ts.
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 import { mergeClasses } from '../index.js';
 import {
   applyResetStyles,

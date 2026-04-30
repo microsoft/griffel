@@ -1,7 +1,7 @@
 // Exercises Griffel's makeResetStyles pipeline in a real browser.
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 import { mergeClasses } from '../index.js';
 import {
   applyResetStyles,
@@ -339,5 +339,89 @@ describe('makeResetStyles vs makeStyles cascade — :link', () => {
     await userEvent.hover(link);
 
     expect(getColor(link)).toBe(CYAN);
+  });
+});
+
+describe('makeResetStyles wins via bucket order when only its rule is wrapped in an at-rule', () => {
+  // `@media` inside makeResetStyles is hoisted to bucket `s` (at-rules
+  // for reset styles), which comes after every makeStyles pseudo bucket.
+  // So the reset rule lands later in the DOM and wins at tied specificity.
+  test('makeResetStyles @media base wins over makeStyles base', () => {
+    const resetClass = applyResetStyles({
+      '@media': { color: 'red' },
+    });
+    const { root: makeClass } = applyStyles({ root: { color: 'cyan' } });
+    render(`<div class="${mergeClasses(resetClass, makeClass)}" data-testid="el">x</div>`);
+    const el = document.querySelector('[data-testid=el]')!;
+
+    expect(getColor(el)).toBe(RED);
+  });
+});
+
+describe('makeStyles wins via bucket order when both pipelines wrap the rule in the same at-rule', () => {
+  // Once makeStyles also wraps the rule in `@media`/`@layer`, the rule
+  // routes to a bucket that lives AFTER the reset at-rules bucket
+  // (`m`/`t` come after `s`), so the makeStyles rule lands later in the
+  // DOM and wins at tied specificity. Direction-flipping counterpart to
+  // the previous group.
+  test('makeStyles @media wins over makeResetStyles @media at the same selector', () => {
+    // makeStyles routes by `atRules.media` truthiness — needs a non-empty
+    // predicate to land in bucket `m`. `@media all` is the smallest one
+    // that always matches.
+    const resetClass = applyResetStyles({
+      '@media all': { color: 'red' },
+    });
+    const { root: makeClass } = applyStyles({
+      root: { '@media all': { color: 'cyan' } },
+    });
+    render(`<div class="${mergeClasses(resetClass, makeClass)}" data-testid="el">x</div>`);
+    const el = document.querySelector('[data-testid=el]')!;
+
+    expect(getColor(el)).toBe(CYAN);
+  });
+
+  test('makeStyles @layer wins over makeResetStyles @layer at the same selector and layer', () => {
+    const resetClass = applyResetStyles({
+      '@layer base': { color: 'red' },
+    });
+    const { root: makeClass } = applyStyles({
+      root: { '@layer base': { color: 'cyan' } },
+    });
+    render(`<div class="${mergeClasses(resetClass, makeClass)}" data-testid="el">x</div>`);
+    const el = document.querySelector('[data-testid=el]')!;
+
+    expect(getColor(el)).toBe(CYAN);
+  });
+});
+
+describe('combined: reset with base + :hover + @media vs make with base + :hover', () => {
+  // Walks every cascade rule in a single scenario:
+  //   - reset: base (`r`) + `:hover` (still `r`) + `@media` base (hoisted to `s`)
+  //   - make:  base (`d`) + `:hover` (`h`)
+  // Idle: tied specificity (0,1,0) across reset base, make base, and
+  //   reset @media. Source order picks the last bucket = `s`
+  //   (reset @media). → orange wins.
+  // Hover: highest specificity is (0,2,0), tied between reset's :hover
+  //   rule (still in `r`) and make's :hover rule (in `h`). Source order:
+  //   `h` after `r`, so make's :hover wins. → yellow.
+  test('idle picks the @media reset rule; hover picks the makeStyles :hover rule', async () => {
+    const resetClass = applyResetStyles({
+      color: 'red',
+      ':hover': { color: 'blue' },
+      '@media': { color: 'orange' },
+    });
+    const { root: makeClass } = applyStyles({
+      root: {
+        color: 'cyan',
+        ':hover': { color: 'yellow' },
+      },
+    });
+    render(`<button class="${mergeClasses(resetClass, makeClass)}" data-testid="btn">x</button>`);
+    const btn = document.querySelector<HTMLButtonElement>('[data-testid=btn]')!;
+
+    expect(getColor(btn)).toBe(ORANGE);
+
+    await userEvent.hover(btn);
+    expect(getColor(btn)).toBe(YELLOW);
   });
 });

@@ -2,7 +2,7 @@
 // See https://griffel.js.org/react/guides/atomic-css/#lvfha-order-of-pseudo-classes
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 import {
   applyStyles,
   BLUE,
