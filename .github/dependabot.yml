@@ -21,6 +21,9 @@ updates:
         patterns:
           - 'vitest'
           - '@vitest/*'
+      oxc:
+        patterns:
+          - 'oxc-*'
       rspack:
         patterns:
           - '@rspack/*'
