@@ -5,7 +5,7 @@ import { __staticCSS as vanillaStaticCSS } from '@griffel/core';
 /**
  * A version of makeStaticStyles() that accepts build output as an input and skips all runtime transforms & DOM insertion.
  *
- * @internal
+ * @private
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function __staticCSS() {

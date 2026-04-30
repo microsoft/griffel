@@ -8,7 +8,7 @@ import { useTextDirection } from './TextDirectionContext.js';
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms & DOM insertion.
  *
- * @internal
+ * @private
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function __css<Slots extends string>(classesMapBySlot: CSSClassesMapBySlot<Slots>) {

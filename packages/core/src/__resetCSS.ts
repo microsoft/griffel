@@ -2,7 +2,7 @@ import { DEBUG_RESET_CLASSES } from './constants.js';
 import type { MakeResetStylesOptions } from './makeResetStyles.js';
 
 /**
- * @internal
+ * @private
  */
 export function __resetCSS(ltrClassName: string, rtlClassName: string | null) {
   function computeClassName(options: Pick<MakeResetStylesOptions, 'dir'>): string {

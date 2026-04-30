@@ -7,7 +7,7 @@ import type { MakeStylesOptions } from './makeStyles.js';
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms.
  *
- * @internal
+ * @private
  */
 export function __styles<Slots extends string>(
   classesMapBySlot: CSSClassesMapBySlot<Slots>,

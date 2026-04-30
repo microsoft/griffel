@@ -5,7 +5,7 @@ import type { MakeStaticStylesOptions } from './makeStaticStyles.js';
 /**
  * A version of makeStaticStyles() that accepts build output as an input and skips all runtime transforms.
  *
- * @internal
+ * @private
  */
 export function __staticStyles(cssRules: CSSRulesByBucket, factory: GriffelInsertionFactory = insertionFactory) {
   const insertStyles = factory();

@@ -4,7 +4,7 @@ import type { MakeResetStylesOptions } from './makeResetStyles.js';
 import type { CSSRulesByBucket, GriffelInsertionFactory } from './types.js';
 
 /**
- * @internal
+ * @private
  */
 export function __resetStyles(
   ltrClassName: string,
