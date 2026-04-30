@@ -8,7 +8,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@babel/core": "^7.23.2",
+    "@babel/core": "^7.29.0",
     "@babel/generator": "^7.23.0",
     "@babel/helper-plugin-utils": "^7.22.5",
     "@babel/template": "^7.28.6",
