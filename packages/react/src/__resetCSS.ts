@@ -6,7 +6,7 @@ import { useTextDirection } from './TextDirectionContext.js';
 /**
  * A version of makeResetStyles() that accepts build output as an input and skips all runtime transforms & DOM insertion.
  *
- * @internal
+ * @private
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function __resetCSS(ltrClassName: string, rtlClassName: string | null) {

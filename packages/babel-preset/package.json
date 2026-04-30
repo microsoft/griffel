@@ -1,6 +1,6 @@
 {
   "name": "@griffel/babel-preset",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "Babel preset with build time transforms for Griffel",
   "license": "MIT",
   "repository": {
@@ -8,15 +8,15 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@babel/core": "^7.23.2",
+    "@babel/core": "^7.29.0",
     "@babel/generator": "^7.23.0",
     "@babel/helper-plugin-utils": "^7.22.5",
-    "@babel/template": "^7.22.15",
+    "@babel/template": "^7.28.6",
     "@babel/traverse": "^7.29.0",
-    "@griffel/core": "^1.20.2",
+    "@griffel/core": "^1.20.3",
     "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
-    "ajv": "^8.18.0",
+    "ajv": "^8.20.0",
     "stylis": "^4.2.0",
     "tslib": "^2.1.0"
   }

@@ -6,7 +6,7 @@ import type { CSSClassesMapBySlot } from './types.js';
 /**
  * A version of makeStyles() that accepts build output as an input and skips all runtime transforms & DOM insertion.
  *
- * @internal
+ * @private
  */
 export function __css<Slots extends string>(classesMapBySlot: CSSClassesMapBySlot<Slots>) {
   let ltrClassNamesForSlots: Record<Slots, string> | null = null;

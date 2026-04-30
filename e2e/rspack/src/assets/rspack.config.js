@@ -23,6 +23,10 @@ const config = {
         exclude: /node_modules/,
         use: [{ loader: '@griffel/webpack-plugin/loader' }],
       },
+      {
+        test: /\.css$/,
+        type: 'css',
+      },
     ],
   },
   plugins: [/** @type {any} */ (new GriffelPlugin())],

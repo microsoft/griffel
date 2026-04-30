@@ -2,6 +2,35 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 30 Apr 2026 08:33:37 GMT",
+      "tag": "@griffel/core_v1.20.3",
+      "version": "1.20.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "a4d43188447b8f7738ae5a4493c76d8f399e72ca",
+            "comment": "fix: tag babel-emitted helpers as @private not @internal so they survive stripInternal and remain re-exportable from index.d.ts"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "721815d6b641b587ca951e3bed05969b84d94e07",
+            "comment": "feat(core): wire @scope at-rule into resolveStyleRules"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "a0b6bd2c55b678add2ccfdd1419af5bdb8517b92",
+            "comment": "feat(core): rehydrate @scope rules + add makeStyles browser tests"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 17:05:15 GMT",
       "tag": "@griffel/core_v1.20.2",
       "version": "1.20.2",

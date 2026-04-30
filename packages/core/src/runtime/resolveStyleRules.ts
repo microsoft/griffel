@@ -3,25 +3,27 @@ import type { GriffelAnimation, GriffelStyle } from '@griffel/style-types';
 import { convert, convertProperty } from 'rtl-css-js/core';
 
 import { HASH_PREFIX, RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants.js';
-import type { CSSClassesMap, CSSRulesByBucket, StyleBucketName, CSSBucketEntry } from '../types.js';
+import type { CSSBucketEntry, CSSClassesMap, CSSRulesByBucket, StyleBucketName } from '../types.js';
 import type { CompileAtomicCSSOptions } from './compileAtomicCSSRule.js';
 import { compileAtomicCSSRule } from './compileAtomicCSSRule.js';
 import { compileKeyframeRule, compileKeyframesCSS } from './compileKeyframeCSS.js';
+import { getStyleBucketName } from './getStyleBucketName.js';
 import { shorthands } from './shorthands.js';
 import { generateCombinedQuery } from './utils/generateCombinedMediaQuery.js';
-import { isMediaQuerySelector } from './utils/isMediaQuerySelector.js';
-import { isLayerSelector } from './utils/isLayerSelector.js';
-import { isNestedSelector } from './utils/isNestedSelector.js';
-import { isSupportQuerySelector } from './utils/isSupportQuerySelector.js';
-import { isContainerQuerySelector } from './utils/isContainerQuerySelector.js';
-import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
-import { isObject } from './utils/isObject.js';
-import { getStyleBucketName } from './getStyleBucketName.js';
 import { hashClassName } from './utils/hashClassName.js';
 import { hashPropertyKey } from './utils/hashPropertyKey.js';
+import { isContainerQuerySelector } from './utils/isContainerQuerySelector.js';
+import { isLayerSelector } from './utils/isLayerSelector.js';
+import { isMediaQuerySelector } from './utils/isMediaQuerySelector.js';
+import { isNestedSelector } from './utils/isNestedSelector.js';
+import { isObject } from './utils/isObject.js';
 import { isResetValue } from './utils/isResetValue.js';
+import { isScopeSelector } from './utils/isScopeSelector.js';
+import { isSupportQuerySelector } from './utils/isSupportQuerySelector.js';
+import { normalizeNestedProperty } from './utils/normalizeNestedProperty.js';
 import { trimSelector } from './utils/trimSelector.js';
 import type { AtRules } from './utils/types.js';
+import { logError } from './warnings/logError.js';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule.js';
 import { warnAboutUnsupportedProperties } from './warnings/warnAboutUnsupportedProperties.js';
 
@@ -380,6 +382,38 @@ export function resolveStyleRules(
           classNameHashSalt,
           selectors,
           { ...atRules, container: containerQuery },
+          cssClassesMap,
+          cssRulesByBucket,
+        );
+      } else if (isScopeSelector(property)) {
+        if (atRules.scope) {
+          if (process.env.NODE_ENV !== 'production') {
+            logError(
+              `@griffel/react: nested "${property}" is not supported. ` +
+                'Only one @scope boundary can be applied to a rule; the inner @scope will be skipped.',
+            );
+          }
+          continue;
+        }
+
+        const scopeQuery = property.slice(6).trim();
+
+        if (scopeQuery === '' || !scopeQuery.startsWith('to ')) {
+          if (process.env.NODE_ENV !== 'production') {
+            logError(
+              `@griffel/react: "${property}" is not a supported @scope syntax. ` +
+                'Use "@scope to (SELECTOR)" to define a scope boundary. ' +
+                'The styles will be skipped.',
+            );
+          }
+          continue;
+        }
+
+        resolveStyleRules(
+          value as GriffelStyle,
+          classNameHashSalt,
+          selectors,
+          { ...atRules, scope: scopeQuery },
           cssClassesMap,
           cssRulesByBucket,
         );

@@ -1,8 +1,17 @@
 # Change Log - @griffel/webpack-plugin
 
-This log was last generated on Wed, 29 Apr 2026 08:41:15 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Apr 2026 08:33:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 4.0.3
+
+Thu, 30 Apr 2026 08:33:37 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.20.3
+- Bump @griffel/transform to v3.0.3
 
 ## 4.0.2
 
