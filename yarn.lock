@@ -10523,7 +10523,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.0.0, browserslist@npm:^4.23.0, browserslist@npm:^4.24.0, browserslist@npm:^4.24.2, browserslist@npm:^4.24.4, browserslist@npm:^4.26.0, browserslist@npm:^4.28.1, browserslist@npm:^4.28.2":
+"browserslist@npm:^4.0.0, browserslist@npm:^4.23.0, browserslist@npm:^4.24.0, browserslist@npm:^4.24.2, browserslist@npm:^4.24.4, browserslist@npm:^4.26.0, browserslist@npm:^4.28.1":
   version: 4.28.2
   resolution: "browserslist@npm:4.28.2"
   dependencies:
@@ -15110,7 +15110,6 @@ __metadata:
     babel-plugin-tester: "npm:12.0.0"
     beachball: "npm:2.31.5"
     bestzip: "npm:2.2.0"
-    browserslist: "npm:^4.28.2"
     css-loader: "npm:^6.4.0"
     csstype: "npm:^3.1.3"
     debug: "npm:^4.3.0"
