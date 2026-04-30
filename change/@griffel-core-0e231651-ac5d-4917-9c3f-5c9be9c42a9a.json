@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: tag babel-emitted helpers as @private not @internal so they survive stripInternal and remain re-exportable from index.d.ts",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
