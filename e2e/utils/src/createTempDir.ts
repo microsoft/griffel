@@ -9,10 +9,13 @@ export function createTempDir(prefix: string) {
 
   // Mimic `tmp`'s `unsafeCleanup: true` behavior: remove the directory (even if it
   // still has files inside) when the process exits.
-  const cleanup = () => {
-    fs.rmSync(tempDir, { recursive: true, force: true });
-  };
-  process.on('exit', cleanup);
+  process.once('exit', () => {
+    try {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    } catch {
+      // Ignore cleanup errors during process exit.
+    }
+  });
 
   console.log(logSymbols.success, `Temporary directory created under ${tempDir}`);
 
