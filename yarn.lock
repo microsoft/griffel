@@ -3728,7 +3728,7 @@ __metadata:
     dedent: "npm:^1.5.3"
     magic-string: "npm:^0.30.19"
     oxc-parser: "npm:^0.116.0"
-    oxc-transform: "npm:^0.116.0"
+    oxc-transform: "npm:^0.128.0"
   languageName: unknown
   linkType: soft
 
@@ -5126,7 +5126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/wasm-runtime@npm:1.1.4, @napi-rs/wasm-runtime@npm:^1.1.1":
+"@napi-rs/wasm-runtime@npm:1.1.4, @napi-rs/wasm-runtime@npm:^1.1.1, @napi-rs/wasm-runtime@npm:^1.1.4":
   version: 1.1.4
   resolution: "@napi-rs/wasm-runtime@npm:1.1.4"
   dependencies:
@@ -5905,144 +5905,146 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-android-arm-eabi@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-android-arm-eabi@npm:0.116.0"
+"@oxc-transform/binding-android-arm-eabi@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-android-arm-eabi@npm:0.128.0"
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-android-arm64@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-android-arm64@npm:0.116.0"
+"@oxc-transform/binding-android-arm64@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-android-arm64@npm:0.128.0"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-darwin-arm64@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-darwin-arm64@npm:0.116.0"
+"@oxc-transform/binding-darwin-arm64@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-darwin-arm64@npm:0.128.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-darwin-x64@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-darwin-x64@npm:0.116.0"
+"@oxc-transform/binding-darwin-x64@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-darwin-x64@npm:0.128.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-freebsd-x64@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-freebsd-x64@npm:0.116.0"
+"@oxc-transform/binding-freebsd-x64@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-freebsd-x64@npm:0.128.0"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-arm-gnueabihf@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-arm-gnueabihf@npm:0.116.0"
+"@oxc-transform/binding-linux-arm-gnueabihf@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-arm-gnueabihf@npm:0.128.0"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-arm-musleabihf@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-arm-musleabihf@npm:0.116.0"
+"@oxc-transform/binding-linux-arm-musleabihf@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-arm-musleabihf@npm:0.128.0"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-arm64-gnu@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-arm64-gnu@npm:0.116.0"
+"@oxc-transform/binding-linux-arm64-gnu@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-arm64-gnu@npm:0.128.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-arm64-musl@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-arm64-musl@npm:0.116.0"
+"@oxc-transform/binding-linux-arm64-musl@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-arm64-musl@npm:0.128.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-ppc64-gnu@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-ppc64-gnu@npm:0.116.0"
+"@oxc-transform/binding-linux-ppc64-gnu@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-ppc64-gnu@npm:0.128.0"
   conditions: os=linux & cpu=ppc64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-riscv64-gnu@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-riscv64-gnu@npm:0.116.0"
+"@oxc-transform/binding-linux-riscv64-gnu@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-riscv64-gnu@npm:0.128.0"
   conditions: os=linux & cpu=riscv64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-riscv64-musl@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-riscv64-musl@npm:0.116.0"
+"@oxc-transform/binding-linux-riscv64-musl@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-riscv64-musl@npm:0.128.0"
   conditions: os=linux & cpu=riscv64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-s390x-gnu@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-s390x-gnu@npm:0.116.0"
+"@oxc-transform/binding-linux-s390x-gnu@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-s390x-gnu@npm:0.128.0"
   conditions: os=linux & cpu=s390x & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-x64-gnu@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-x64-gnu@npm:0.116.0"
+"@oxc-transform/binding-linux-x64-gnu@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-x64-gnu@npm:0.128.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-linux-x64-musl@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-linux-x64-musl@npm:0.116.0"
+"@oxc-transform/binding-linux-x64-musl@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-linux-x64-musl@npm:0.128.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-openharmony-arm64@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-openharmony-arm64@npm:0.116.0"
+"@oxc-transform/binding-openharmony-arm64@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-openharmony-arm64@npm:0.128.0"
   conditions: os=openharmony & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-wasm32-wasi@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-wasm32-wasi@npm:0.116.0"
+"@oxc-transform/binding-wasm32-wasi@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-wasm32-wasi@npm:0.128.0"
   dependencies:
-    "@napi-rs/wasm-runtime": "npm:^1.1.1"
+    "@emnapi/core": "npm:1.10.0"
+    "@emnapi/runtime": "npm:1.10.0"
+    "@napi-rs/wasm-runtime": "npm:^1.1.4"
   conditions: cpu=wasm32
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-win32-arm64-msvc@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-win32-arm64-msvc@npm:0.116.0"
+"@oxc-transform/binding-win32-arm64-msvc@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-win32-arm64-msvc@npm:0.128.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-win32-ia32-msvc@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-win32-ia32-msvc@npm:0.116.0"
+"@oxc-transform/binding-win32-ia32-msvc@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-win32-ia32-msvc@npm:0.128.0"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@oxc-transform/binding-win32-x64-msvc@npm:0.116.0":
-  version: 0.116.0
-  resolution: "@oxc-transform/binding-win32-x64-msvc@npm:0.116.0"
+"@oxc-transform/binding-win32-x64-msvc@npm:0.128.0":
+  version: 0.128.0
+  resolution: "@oxc-transform/binding-win32-x64-msvc@npm:0.128.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -14001,6 +14003,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"exit-hook@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "exit-hook@npm:4.0.0"
+  checksum: 10/5aa8b4e45fa943e7e174c25329750a0ffefb593ccc2eafd5d67e1d734b114c93cb36b5714548fb1c2a1dd90f3e9cdc606b5e788f428f780708774da444021fdc
+  languageName: node
+  linkType: hard
+
 "exit-x@npm:^0.2.2":
   version: 0.2.2
   resolution: "exit-x@npm:0.2.2"
@@ -15138,7 +15147,7 @@ __metadata:
     nx: "npm:22.6.5"
     oxc-parser: "npm:^0.116.0"
     oxc-resolver: "npm:^11.19.1"
-    oxc-transform: "npm:^0.116.0"
+    oxc-transform: "npm:^0.128.0"
     oxc-walker: "npm:^0.7.0"
     playwright: "npm:^1.59.1"
     postcss: "npm:^8.5.10"
@@ -20583,30 +20592,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oxc-transform@npm:^0.116.0":
-  version: 0.116.0
-  resolution: "oxc-transform@npm:0.116.0"
+"oxc-transform@npm:^0.128.0":
+  version: 0.128.0
+  resolution: "oxc-transform@npm:0.128.0"
   dependencies:
-    "@oxc-transform/binding-android-arm-eabi": "npm:0.116.0"
-    "@oxc-transform/binding-android-arm64": "npm:0.116.0"
-    "@oxc-transform/binding-darwin-arm64": "npm:0.116.0"
-    "@oxc-transform/binding-darwin-x64": "npm:0.116.0"
-    "@oxc-transform/binding-freebsd-x64": "npm:0.116.0"
-    "@oxc-transform/binding-linux-arm-gnueabihf": "npm:0.116.0"
-    "@oxc-transform/binding-linux-arm-musleabihf": "npm:0.116.0"
-    "@oxc-transform/binding-linux-arm64-gnu": "npm:0.116.0"
-    "@oxc-transform/binding-linux-arm64-musl": "npm:0.116.0"
-    "@oxc-transform/binding-linux-ppc64-gnu": "npm:0.116.0"
-    "@oxc-transform/binding-linux-riscv64-gnu": "npm:0.116.0"
-    "@oxc-transform/binding-linux-riscv64-musl": "npm:0.116.0"
-    "@oxc-transform/binding-linux-s390x-gnu": "npm:0.116.0"
-    "@oxc-transform/binding-linux-x64-gnu": "npm:0.116.0"
-    "@oxc-transform/binding-linux-x64-musl": "npm:0.116.0"
-    "@oxc-transform/binding-openharmony-arm64": "npm:0.116.0"
-    "@oxc-transform/binding-wasm32-wasi": "npm:0.116.0"
-    "@oxc-transform/binding-win32-arm64-msvc": "npm:0.116.0"
-    "@oxc-transform/binding-win32-ia32-msvc": "npm:0.116.0"
-    "@oxc-transform/binding-win32-x64-msvc": "npm:0.116.0"
+    "@oxc-transform/binding-android-arm-eabi": "npm:0.128.0"
+    "@oxc-transform/binding-android-arm64": "npm:0.128.0"
+    "@oxc-transform/binding-darwin-arm64": "npm:0.128.0"
+    "@oxc-transform/binding-darwin-x64": "npm:0.128.0"
+    "@oxc-transform/binding-freebsd-x64": "npm:0.128.0"
+    "@oxc-transform/binding-linux-arm-gnueabihf": "npm:0.128.0"
+    "@oxc-transform/binding-linux-arm-musleabihf": "npm:0.128.0"
+    "@oxc-transform/binding-linux-arm64-gnu": "npm:0.128.0"
+    "@oxc-transform/binding-linux-arm64-musl": "npm:0.128.0"
+    "@oxc-transform/binding-linux-ppc64-gnu": "npm:0.128.0"
+    "@oxc-transform/binding-linux-riscv64-gnu": "npm:0.128.0"
+    "@oxc-transform/binding-linux-riscv64-musl": "npm:0.128.0"
+    "@oxc-transform/binding-linux-s390x-gnu": "npm:0.128.0"
+    "@oxc-transform/binding-linux-x64-gnu": "npm:0.128.0"
+    "@oxc-transform/binding-linux-x64-musl": "npm:0.128.0"
+    "@oxc-transform/binding-openharmony-arm64": "npm:0.128.0"
+    "@oxc-transform/binding-wasm32-wasi": "npm:0.128.0"
+    "@oxc-transform/binding-win32-arm64-msvc": "npm:0.128.0"
+    "@oxc-transform/binding-win32-ia32-msvc": "npm:0.128.0"
+    "@oxc-transform/binding-win32-x64-msvc": "npm:0.128.0"
   dependenciesMeta:
     "@oxc-transform/binding-android-arm-eabi":
       optional: true
@@ -20648,7 +20657,7 @@ __metadata:
       optional: true
     "@oxc-transform/binding-win32-x64-msvc":
       optional: true
-  checksum: 10/f9998f3f579e051ff1df25b5a2c0905b09bb4dfa7e7cada29277580ba8d95e32b07e2fe63d3dd46092bbfd9607e1afeb31f71407733bf70134ad32a419e64994
+  checksum: 10/0b2d3613ec06680d5716849d357b09e0727510b6abea17f5d99e540aecaa016e5720bd453d80a934b88d342da3c693e9296bdc1f4b7fcf5ef043ec193eefd159
   languageName: node
   linkType: hard
 
