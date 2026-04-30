@@ -459,8 +459,8 @@ describe('GriffelCSSExtractionPlugin', () => {
       expect(normalize(error!.message)).toMatchInlineSnapshot(`
         "Module build failed (from ./webpackLoader.vitest.cjs):
         <repo>/packages/transform/src/evaluation/module.mts:<line>
-              throw hostError;
-              ^
+        			throw hostError;
+        			^
 
         <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/broken.ts:<line>
         const color = obj.missingProp;

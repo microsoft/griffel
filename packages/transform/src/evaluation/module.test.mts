@@ -61,8 +61,8 @@ describe('Module', () => {
         );
         expect(normalize(err.stack!)).toMatchInlineSnapshot(`
           "<repo>/packages/transform/src/evaluation/module.mts:<line>
-                throw hostError;
-                ^
+          			throw hostError;
+          			^
 
           <tmpDir>/child.js:<line>
           x.foo;
