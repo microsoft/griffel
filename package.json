@@ -104,7 +104,6 @@
     "@types/stylis": "4.2.0",
     "@types/tmp": "0.2.3",
     "@types/webpack-env": "1.18.4",
-    "@types/yargs": "^17.0.10",
     "@typescript-eslint/rule-tester": "^8.0.0",
     "@vitest/browser": "4.0.9",
     "@vitest/browser-playwright": "4.0.9",
@@ -164,8 +163,7 @@
     "vite": "7.3.2",
     "vitest": "4.0.9",
     "webpack": "5.106.2",
-    "webpack-merge": "5.10.0",
-    "yargs": "^17.5.1"
+    "webpack-merge": "5.10.0"
   },
   "resolutions": {
     "beachball@2.31.5": "patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch",
