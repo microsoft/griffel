@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: bump @typescript-eslint stack and migrate to eslint-plugin-import-x",
+  "packageName": "@griffel/transform-shaker",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
