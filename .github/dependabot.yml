@@ -21,6 +21,9 @@ updates:
         patterns:
           - 'vitest'
           - '@vitest/*'
+      rspack:
+        patterns:
+          - '@rspack/*'
       dev-minor-patch:
         dependency-type: development
         update-types:
