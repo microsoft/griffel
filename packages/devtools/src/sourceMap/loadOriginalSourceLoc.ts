@@ -69,7 +69,6 @@ async function extractAndLoadSourceMapJSON(sourceLoc: MappedPosition): Promise<M
   }
 
   while (sourceMappingURLMatch) {
-    // eslint-disable-next-line no-plusplus
     sourceMapNum++;
     const sourceMappingURL = sourceMappingURLMatch[1];
 

@@ -93,7 +93,6 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
         compilation.chunkGraph.disconnectChunkAndModule(chunk, module);
 
         for (const group of chunk.groupsIterable) {
-          // eslint-disable-next-line no-plusplus
           group.setModulePostOrderIndex(module, moduleIndex++);
         }
 
