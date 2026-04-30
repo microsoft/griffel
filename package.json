@@ -165,6 +165,8 @@
   },
   "resolutions": {
     "beachball@2.31.5": "patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch",
-    "source-map-js@1.0.2": "patch:source-map-js@npm:1.0.2#.yarn/patches/source-map-js-npm-1.0.2-ee4f9f9b30.patch"
+    "source-map-js@npm:^1.2.1": "patch:source-map-js@npm%3A1.2.1#~/.yarn/patches/source-map-js-npm-1.2.1-b9a47d7e1a.patch",
+    "source-map-js@npm:^1.0.1": "patch:source-map-js@npm%3A1.2.1#~/.yarn/patches/source-map-js-npm-1.2.1-b9a47d7e1a.patch",
+    "source-map-js@npm:1.2.1": "patch:source-map-js@npm%3A1.2.1#~/.yarn/patches/source-map-js-npm-1.2.1-b9a47d7e1a.patch"
   }
 }
