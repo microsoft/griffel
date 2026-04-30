@@ -1753,7 +1753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:>=7, @babel/traverse@npm:^7.16.0, @babel/traverse@npm:^7.18.9, @babel/traverse@npm:^7.23.2, @babel/traverse@npm:^7.25.9, @babel/traverse@npm:^7.26.5, @babel/traverse@npm:^7.26.8, @babel/traverse@npm:^7.26.9, @babel/traverse@npm:^7.28.0, @babel/traverse@npm:^7.28.6, @babel/traverse@npm:^7.29.0":
+"@babel/traverse@npm:>=7, @babel/traverse@npm:^7.16.0, @babel/traverse@npm:^7.18.9, @babel/traverse@npm:^7.25.9, @babel/traverse@npm:^7.26.5, @babel/traverse@npm:^7.26.8, @babel/traverse@npm:^7.26.9, @babel/traverse@npm:^7.28.0, @babel/traverse@npm:^7.28.6, @babel/traverse@npm:^7.29.0":
   version: 7.29.0
   resolution: "@babel/traverse@npm:7.29.0"
   dependencies:
@@ -3604,7 +3604,7 @@ __metadata:
     "@babel/generator": "npm:^7.23.0"
     "@babel/helper-plugin-utils": "npm:^7.22.5"
     "@babel/template": "npm:^7.28.6"
-    "@babel/traverse": "npm:^7.23.2"
+    "@babel/traverse": "npm:^7.29.0"
     "@griffel/core": "npm:^1.20.3"
     "@linaria/babel-preset": "npm:^3.0.0-beta.24"
     "@linaria/shaker": "npm:^3.0.0-beta.22"
@@ -15046,7 +15046,7 @@ __metadata:
     "@babel/preset-react": "npm:^7.22.15"
     "@babel/preset-typescript": "npm:^7.23.2"
     "@babel/template": "npm:^7.28.6"
-    "@babel/traverse": "npm:^7.23.2"
+    "@babel/traverse": "npm:^7.29.0"
     "@codesandbox/sandpack-react": "npm:2.13.10"
     "@codesandbox/sandpack-themes": "npm:2.0.21"
     "@docusaurus/core": "npm:^3.9.2"
