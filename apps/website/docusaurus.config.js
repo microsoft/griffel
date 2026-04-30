@@ -18,7 +18,7 @@ const config = {
       // https://github.com/facebook/docusaurus/issues/10556
       useCssCascadeLayers: false,
     },
-    experimental_faster: true,
+    faster: true,
   },
 
   organizationName: 'microsoft',
