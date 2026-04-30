@@ -54,6 +54,7 @@ export function replaceAssetsWithImports(
           expressions.push(getAssetIdentifier(pathname));
 
           acc = `${hash ? `#${hash}` : ''})`;
+          // eslint-disable-next-line no-plusplus
           i++;
         }
       }

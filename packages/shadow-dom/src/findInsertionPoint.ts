@@ -74,6 +74,7 @@ export function findShadowRootInsertionPoint(
     let i = styleSheets.indexOf(insertionPoint) + 1;
     let targetSheet = styleSheets[i];
     while (targetSheet && 'bucketName' in targetSheet) {
+      // eslint-disable-next-line no-plusplus
       targetSheet = styleSheets[i++];
     }
 

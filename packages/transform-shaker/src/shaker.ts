@@ -96,13 +96,17 @@ function removeDeadFromCommaSeparatedArray(s: MagicString, elements: Node[], ali
 function removeStatementRange(s: MagicString, sourceCode: string, start: number, end: number): void {
   let extendedEnd = end;
   while (extendedEnd < sourceCode.length && (sourceCode[extendedEnd] === ' ' || sourceCode[extendedEnd] === '\t')) {
+    // eslint-disable-next-line no-plusplus
     extendedEnd++;
   }
   if (extendedEnd < sourceCode.length && sourceCode[extendedEnd] === '\n') {
+    // eslint-disable-next-line no-plusplus
     extendedEnd++;
   } else if (extendedEnd < sourceCode.length && sourceCode[extendedEnd] === '\r') {
+    // eslint-disable-next-line no-plusplus
     extendedEnd++;
     if (extendedEnd < sourceCode.length && sourceCode[extendedEnd] === '\n') {
+      // eslint-disable-next-line no-plusplus
       extendedEnd++;
     }
   }

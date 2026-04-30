@@ -18,7 +18,7 @@ export default [
   {
     files: ['vite.config.*', 'vitest.config.*'],
     rules: {
-      'import/no-extraneous-dependencies': 'off',
+      'import-x/no-extraneous-dependencies': 'off',
     },
   },
 ];

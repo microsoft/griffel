@@ -163,6 +163,7 @@ function findInsertionPoint(
       return styleElement.nextSibling;
     }
 
+    // eslint-disable-next-line no-plusplus
     index--;
   }
 

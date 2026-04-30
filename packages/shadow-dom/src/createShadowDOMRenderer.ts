@@ -75,6 +75,7 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateS
 
   const cssSheetsCache: Record<string, ExtendedCSSStyleSheet> = {};
   const renderer: GriffelShadowDOMRenderer = {
+    // eslint-disable-next-line no-plusplus
     id: `shadow-dom:${rendererId++}`,
 
     adoptedStyleSheets: [],

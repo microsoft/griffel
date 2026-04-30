@@ -71,6 +71,7 @@ export function createDOMRenderer(
     styleElementAttributes: Object.freeze(styleElementAttributes),
     compareMediaQueries,
 
+    // eslint-disable-next-line no-plusplus
     id: `d${lastIndex++}`,
 
     insertCSSRules(cssRules) {

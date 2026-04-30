@@ -1,31 +1,23 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import js from '@eslint/js';
 import nx from '@nx/eslint-plugin';
-import eslintPluginImport from 'eslint-plugin-import';
+import eslintPluginImportX from 'eslint-plugin-import-x';
 import eslintPluginJest from 'eslint-plugin-jest';
-
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  recommendedConfig: js.configs.recommended,
-});
+import storybook from 'eslint-plugin-storybook';
 
 export default [
   {
     ignores: ['**/dist', '**/out-tsc', '**/node_modules', '**/__fixtures__/**', '**/bundle-size/**', '**/vite.config.*.timestamp*', '**/vitest.config.*.timestamp*'],
   },
-  ...compat.extends('plugin:import/typescript', 'plugin:storybook/recommended'),
+  eslintPluginImportX.flatConfigs.typescript,
+  ...storybook.configs['flat/recommended'],
   ...nx.configs['flat/base'],
   {
     plugins: {
-      import: eslintPluginImport,
       jest: eslintPluginJest,
     },
   },
   {
     settings: {
-      'import/resolver': {
+      'import-x/resolver': {
         typescript: {
           alwaysTryTypes: true,
           project: './tsconfig.base.json',
@@ -48,7 +40,7 @@ export default [
         { selector: 'function', format: ['camelCase', 'PascalCase'], leadingUnderscore: 'forbid' },
         { selector: 'objectLiteralMethod', format: ['camelCase'] },
       ],
-      'import/no-extraneous-dependencies': [
+      'import-x/no-extraneous-dependencies': [
         'error',
         {
           devDependencies: false,
@@ -114,7 +106,7 @@ export default [
       '**/eslint.config.mjs',
     ],
     rules: {
-      'import/no-extraneous-dependencies': 'off',
+      'import-x/no-extraneous-dependencies': 'off',
     },
   },
   {
@@ -123,7 +115,7 @@ export default [
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-require-imports': 'off',
-      'import/first': 'off',
+      'import-x/first': 'off',
       'no-console': 'off',
     },
   },

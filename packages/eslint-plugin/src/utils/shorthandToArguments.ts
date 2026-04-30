@@ -56,9 +56,11 @@ export function buildShorthandSplitter(options: ShorthandSplitterOptions = {}) {
           }
           continue;
         case '(':
+          // eslint-disable-next-line no-plusplus
           unclosedParenthesis++;
           break;
         case ')':
+          // eslint-disable-next-line no-plusplus
           unclosedParenthesis--;
           break;
       }
