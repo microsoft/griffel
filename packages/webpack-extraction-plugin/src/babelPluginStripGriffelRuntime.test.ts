@@ -1,4 +1,4 @@
-import pluginTester, { prettierFormatter } from 'babel-plugin-tester';
+import { pluginTester, prettierFormatter } from 'babel-plugin-tester';
 import * as fs from 'fs';
 import * as path from 'path';
 
