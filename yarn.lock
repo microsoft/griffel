@@ -8273,13 +8273,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/tmp@npm:0.2.3":
-  version: 0.2.3
-  resolution: "@types/tmp@npm:0.2.3"
-  checksum: 10/a8ddaa0456d44dc29e310dc663289dfcdf1f029499cbd5343558620178a84b952b169844c5d7710a3d80b717d64e891d9ee585d71f8af4c8685cdb8d85272ca7
-  languageName: node
-  linkType: hard
-
 "@types/tough-cookie@npm:*":
   version: 4.0.2
   resolution: "@types/tough-cookie@npm:4.0.2"
@@ -14747,7 +14740,6 @@ __metadata:
     "@types/react": "npm:18.3.1"
     "@types/react-dom": "npm:18.3.0"
     "@types/stylis": "npm:4.2.0"
-    "@types/tmp": "npm:0.2.3"
     "@types/webpack-env": "npm:1.18.4"
     "@types/yargs": "npm:^17.0.10"
     "@typescript-eslint/rule-tester": "npm:^8.0.0"
@@ -14816,7 +14808,6 @@ __metadata:
     stylelint: "npm:^15.10.3"
     stylis: "npm:^4.2.0"
     syncpack: "npm:14.0.0"
-    tmp: "npm:0.2.4"
     ts-jest: "npm:29.4.0"
     ts-node: "npm:10.9.1"
     tslib: "npm:^2.1.0"
@@ -24704,7 +24695,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tmp@npm:0.2.4, tmp@npm:~0.2.1":
+"tmp@npm:~0.2.1":
   version: 0.2.4
   resolution: "tmp@npm:0.2.4"
   checksum: 10/6fa6c4e6749824e51cb45f0b050090f0fec6b037cfd327d328ebaf3eae80b7e1a53c6651f9bc36f1fa80cf367ec9dc05067fc1a14034fcfbba96d3a2aaa5c732
