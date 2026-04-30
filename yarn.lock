@@ -13340,7 +13340,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0 || ^0.26.0 || ^0.27.0, esbuild@npm:^0.27.0":
+"esbuild@npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0 || ^0.26.0 || ^0.27.0":
   version: 0.27.2
   resolution: "esbuild@npm:0.27.2"
   dependencies:
@@ -15175,7 +15175,7 @@ __metadata:
     tslib: "npm:^2.1.0"
     typescript: "npm:5.9.3"
     typescript-eslint: "npm:^8.58.2"
-    vite: "npm:7.3.2"
+    vite: "npm:8.0.10"
     vitest: "npm:4.1.5"
     webpack: "npm:5.106.2"
     webpack-merge: "npm:5.10.0"
@@ -22042,7 +22042,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.21, postcss@npm:^8.4.24, postcss@npm:^8.4.27, postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.10, postcss@npm:^8.5.4, postcss@npm:^8.5.6":
+"postcss@npm:^8.4.21, postcss@npm:^8.4.24, postcss@npm:^8.4.27, postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.10, postcss@npm:^8.5.4":
   version: 8.5.12
   resolution: "postcss@npm:8.5.12"
   dependencies:
@@ -23289,7 +23289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.14.0, rollup@npm:^4.43.0":
+"rollup@npm:^4.14.0":
   version: 4.59.0
   resolution: "rollup@npm:4.59.0"
   dependencies:
@@ -26034,62 +26034,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:7.3.2":
-  version: 7.3.2
-  resolution: "vite@npm:7.3.2"
-  dependencies:
-    esbuild: "npm:^0.27.0"
-    fdir: "npm:^6.5.0"
-    fsevents: "npm:~2.3.3"
-    picomatch: "npm:^4.0.3"
-    postcss: "npm:^8.5.6"
-    rollup: "npm:^4.43.0"
-    tinyglobby: "npm:^0.2.15"
-  peerDependencies:
-    "@types/node": ^20.19.0 || >=22.12.0
-    jiti: ">=1.21.0"
-    less: ^4.0.0
-    lightningcss: ^1.21.0
-    sass: ^1.70.0
-    sass-embedded: ^1.70.0
-    stylus: ">=0.54.8"
-    sugarss: ^5.0.0
-    terser: ^5.16.0
-    tsx: ^4.8.1
-    yaml: ^2.4.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    jiti:
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    sass-embedded:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-    tsx:
-      optional: true
-    yaml:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: 10/c5f7a9a60011c41c836cedf31c8ee7624102aff9b6a7f3aab2ff47639721bba0916f81994c3a3ea6577a16c4f0dfee1e7dbd244e0da8edd5954e3c6d48daaaa2
-  languageName: node
-  linkType: hard
-
-"vite@npm:^6.0.0 || ^7.0.0 || ^8.0.0":
+"vite@npm:8.0.10, vite@npm:^6.0.0 || ^7.0.0 || ^8.0.0":
   version: 8.0.10
   resolution: "vite@npm:8.0.10"
   dependencies:
