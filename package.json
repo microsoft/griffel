@@ -135,7 +135,7 @@
     "jsdom": "~26.1.0",
     "log-symbols": "4.1.0",
     "lz-string": "1.4.4",
-    "memfs": "3.6.0",
+    "memfs": "4.57.2",
     "mini-css-extract-plugin": "2.6.0",
     "monosize": "0.8.2",
     "monosize-bundler-webpack": "0.3.3",
