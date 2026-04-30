@@ -4,13 +4,17 @@ import { globalPlugin } from './stylis/globalPlugin.js';
 import { isAtRuleElement } from './stylis/isAtRuleElement.js';
 import { prefixerPlugin } from './stylis/prefixerPlugin.js';
 import { rulesheetPlugin } from './stylis/rulesheetPlugin.js';
+import { processScopes } from './stylis/scopePlugin.js';
 
-export function compileResetCSSRules(cssRules: string): [string[], string[]] {
+export function compileResetCSSRules(className: string, body: string): [string[], string[]] {
   const rules: string[] = [];
   const atRules: string[] = [];
 
+  const compiled = compile(`.${className}{${body}}`);
+  processScopes(compiled, `.${className}`);
+
   serialize(
-    compile(cssRules),
+    compiled,
     middleware([
       globalPlugin,
       prefixerPlugin,

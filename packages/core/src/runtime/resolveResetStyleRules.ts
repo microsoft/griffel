@@ -18,17 +18,10 @@ import { isContainerQuerySelector } from './utils/isContainerQuerySelector.js';
 import { logError } from './warnings/logError.js';
 import { warnAboutUnresolvedRule } from './warnings/warnAboutUnresolvedRule.js';
 
-const SCOPE_ROOT_PLACEHOLDER = ':SELF:';
-
-interface ScopeCollector {
-  ltr: string[];
-  rtl: string[];
-}
-
 /**
  * @internal
  */
-function createStringFromStyles(styles: GriffelResetStyle, scopes?: ScopeCollector) {
+function createStringFromStyles(styles: GriffelResetStyle, isInsideScope = false) {
   let ltrCSS = '';
   let rtlCSS = '';
 
@@ -113,7 +106,7 @@ function createStringFromStyles(styles: GriffelResetStyle, scopes?: ScopeCollect
     if (isObject(value)) {
       if (isNestedSelector(property)) {
         const nestedSelector = normalizePseudoSelector(property);
-        const [ltrNested, rtlNested] = createStringFromStyles(value, scopes);
+        const [ltrNested, rtlNested] = createStringFromStyles(value, isInsideScope);
 
         ltrCSS += `${nestedSelector}{${ltrNested}}`;
         rtlCSS += `${nestedSelector}{${rtlNested}}`;
@@ -127,7 +120,7 @@ function createStringFromStyles(styles: GriffelResetStyle, scopes?: ScopeCollect
         isSupportQuerySelector(property) ||
         isContainerQuerySelector(property)
       ) {
-        const [ltrNested, rtlNested] = createStringFromStyles(value, scopes);
+        const [ltrNested, rtlNested] = createStringFromStyles(value, isInsideScope);
 
         ltrCSS += `${property}{${ltrNested}}`;
         rtlCSS += `${property}{${rtlNested}}`;
@@ -135,7 +128,17 @@ function createStringFromStyles(styles: GriffelResetStyle, scopes?: ScopeCollect
         continue;
       }
 
-      if (scopes && isScopeSelector(property)) {
+      if (isScopeSelector(property)) {
+        if (isInsideScope) {
+          if (process.env.NODE_ENV !== 'production') {
+            logError(
+              `@griffel/react: nested "${property}" is not supported. ` +
+                'Only one @scope boundary can be applied to a rule; the inner @scope will be skipped.',
+            );
+          }
+          continue;
+        }
+
         const scopeQuery = property.slice(6).trim();
         if (scopeQuery === '' || !scopeQuery.startsWith('to ')) {
           if (process.env.NODE_ENV !== 'production') {
@@ -148,13 +151,10 @@ function createStringFromStyles(styles: GriffelResetStyle, scopes?: ScopeCollect
           continue;
         }
 
-        // Emit the scope rule into the collector instead of inline. The body
-        // is wrapped in `:scope { … }` so `&` inside resolves to the scope
-        // root via CSS Nesting; `:SELF:` is replaced with the reset class
-        // selector once the class name is known.
-        const [ltrInner, rtlInner] = createStringFromStyles(value, scopes);
-        scopes.ltr.push(`@scope (${SCOPE_ROOT_PLACEHOLDER}) ${scopeQuery}{:scope{${ltrInner}}}`);
-        scopes.rtl.push(`@scope (${SCOPE_ROOT_PLACEHOLDER}) ${scopeQuery}{:scope{${rtlInner}}}`);
+        const [ltrInner, rtlInner] = createStringFromStyles(value, true);
+
+        ltrCSS += `@scope ${scopeQuery}{:scope{${ltrInner}}}`;
+        rtlCSS += `@scope ${scopeQuery}{:scope{${rtlInner}}}`;
 
         continue;
       }
@@ -166,10 +166,6 @@ function createStringFromStyles(styles: GriffelResetStyle, scopes?: ScopeCollect
   return [ltrCSS, rtlCSS];
 }
 
-function substituteScopeRoot(rules: string[], classSelector: string): string {
-  return rules.join('').split(SCOPE_ROOT_PLACEHOLDER).join(classSelector);
-}
-
 /**
  * @internal
  */
@@ -177,27 +173,19 @@ export function resolveResetStyleRules(
   styles: GriffelResetStyle,
   classNameHashSalt: string = '',
 ): [string, string | null, CSSRulesByBucket | string[]] {
-  const scopes: ScopeCollector = { ltr: [], rtl: [] };
-  const [ltrBody, rtlBody] = createStringFromStyles(styles, scopes);
+  const [ltrBody, rtlBody] = createStringFromStyles(styles);
 
-  const ltrRule = ltrBody + scopes.ltr.join('');
-  const rtlRule = rtlBody + scopes.rtl.join('');
-
-  const ltrClassName = RESET_HASH_PREFIX + hashString(classNameHashSalt + ltrRule);
-  const [ltrCSS, ltrCSSAtRules] = compileResetCSSRules(
-    `.${ltrClassName}{${ltrBody}}` + substituteScopeRoot(scopes.ltr, `.${ltrClassName}`),
-  );
+  const ltrClassName = RESET_HASH_PREFIX + hashString(classNameHashSalt + ltrBody);
+  const [ltrCSS, ltrCSSAtRules] = compileResetCSSRules(ltrClassName, ltrBody);
 
   const hasAtRules = ltrCSSAtRules.length > 0;
 
-  if (ltrRule === rtlRule) {
+  if (ltrBody === rtlBody) {
     return [ltrClassName, null, hasAtRules ? { r: ltrCSS, s: ltrCSSAtRules } : ltrCSS];
   }
 
-  const rtlClassName = RESET_HASH_PREFIX + hashString(classNameHashSalt + rtlRule);
-  const [rtlCSS, rtlCSSAtRules] = compileResetCSSRules(
-    `.${rtlClassName}{${rtlBody}}` + substituteScopeRoot(scopes.rtl, `.${rtlClassName}`),
-  );
+  const rtlClassName = RESET_HASH_PREFIX + hashString(classNameHashSalt + rtlBody);
+  const [rtlCSS, rtlCSSAtRules] = compileResetCSSRules(rtlClassName, rtlBody);
 
   return [
     ltrClassName,

@@ -63,10 +63,10 @@ describe('resolveResetStyleRules: @scope', () => {
 
     expect(result).toMatchInlineSnapshot(`
       /** bucket "r" */
-      .rpi6lny {
+      .rq3kw0z {
         color: black;
       }
-      @scope (.rpi6lny) to (.boundary) {
+      @scope (.rq3kw0z) to (.boundary) {
         :scope {
           color: red;
         }
@@ -84,10 +84,10 @@ describe('resolveResetStyleRules: @scope', () => {
 
     expect(result).toMatchInlineSnapshot(`
       /** bucket "r" */
-      .rriligx {
+      .rqgzcu0 {
         color: black;
       }
-      @scope (.rriligx) to (.boundary) {
+      @scope (.rqgzcu0) to (.boundary) {
         :scope p {
           color: red;
         }
@@ -102,7 +102,7 @@ describe('resolveResetStyleRules: @scope', () => {
 
     expect(result).toMatchInlineSnapshot(`
       /** bucket "r" */
-      @scope (.r1he02t7) to (.never) {
+      @scope (.rmr49av) to (.never) {
         :scope {
           color: blue;
         }
@@ -131,11 +131,23 @@ describe('resolveResetStyleRules: @scope', () => {
       },
     });
 
-    expect(resultA).toEqual(resultB);
     expect(resultA).toMatchInlineSnapshot(`
       /** bucket "s" */
       @media (max-width: 600px) {
-        @scope (.rrl1mxq) to (.mobile) {
+        @scope (.r16wv87e) to (.mobile) {
+          :scope {
+            color: red;
+          }
+          :scope .child {
+            color: green;
+          }
+        }
+      }
+    `);
+    expect(resultB).toMatchInlineSnapshot(`
+      /** bucket "s" */
+      @media (max-width: 600px) {
+        @scope (.r1o8vpyb) to (.mobile) {
           :scope {
             color: red;
           }
@@ -157,18 +169,18 @@ describe('resolveResetStyleRules: @scope', () => {
 
     expect(result).toMatchInlineSnapshot(`
       /** bucket "r" */
-      .ryla0gh {
+      .r17n69g3 {
         padding-left: 5px;
       }
-      @scope (.ryla0gh) to (.boundary) {
+      @scope (.r17n69g3) to (.boundary) {
         :scope .child {
           padding-left: 10px;
         }
       }
-      .rprwo7s {
+      .r1nxiddt {
         padding-right: 5px;
       }
-      @scope (.rprwo7s) to (.boundary) {
+      @scope (.r1nxiddt) to (.boundary) {
         :scope .child {
           padding-right: 10px;
         }
@@ -184,12 +196,12 @@ describe('resolveResetStyleRules: @scope', () => {
 
     expect(result).toMatchInlineSnapshot(`
       /** bucket "r" */
-      @scope (.ryjssdl) to (.a) {
+      @scope (.r1uqf53) to (.a) {
         :scope p {
           color: red;
         }
       }
-      @scope (.ryjssdl) to (.b) {
+      @scope (.r1uqf53) to (.b) {
         :scope p {
           color: blue;
         }
