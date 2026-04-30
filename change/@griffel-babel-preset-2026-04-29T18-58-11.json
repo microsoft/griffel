@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(deps): bump ajv from 8.18.0 to 8.20.0",
-  "packageName": "@griffel/babel-preset",
-  "email": "dependabot[bot]@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,27 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 30 Apr 2026 08:33:37 GMT",
+      "tag": "@griffel/react_v1.7.1",
+      "version": "1.7.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "a4d43188447b8f7738ae5a4493c76d8f399e72ca",
+            "comment": "fix: tag babel-emitted helpers as @private not @internal so they survive stripInternal and remain re-exportable from index.d.ts"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/core to v1.20.3",
+            "commit": "a4d43188447b8f7738ae5a4493c76d8f399e72ca"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 17:05:15 GMT",
       "tag": "@griffel/react_v1.7.0",
       "version": "1.7.0",

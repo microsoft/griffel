@@ -1,8 +1,17 @@
 # Change Log - @griffel/babel-preset
 
-This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Apr 2026 08:33:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.8.3
+
+Thu, 30 Apr 2026 08:33:37 GMT
+
+### Patches
+
+- chore(deps): bump ajv from 8.18.0 to 8.20.0 (dependabot[bot]@users.noreply.github.com)
+- Bump @griffel/core to v1.20.3
 
 ## 1.8.2
 

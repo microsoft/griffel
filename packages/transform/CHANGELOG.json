@@ -2,6 +2,21 @@
   "name": "@griffel/transform",
   "entries": [
     {
+      "date": "Thu, 30 Apr 2026 08:33:37 GMT",
+      "tag": "@griffel/transform_v3.0.3",
+      "version": "3.0.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/transform",
+            "comment": "Bump @griffel/core to v1.20.3",
+            "commit": "a4d43188447b8f7738ae5a4493c76d8f399e72ca"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/transform_v3.0.2",
       "version": "3.0.2",

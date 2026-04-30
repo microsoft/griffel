@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "feat(core): wire @scope at-rule into resolveStyleRules",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

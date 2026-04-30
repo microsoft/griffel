@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "feat(core): rehydrate @scope rules + add makeStyles browser tests",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

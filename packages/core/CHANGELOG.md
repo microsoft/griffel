@@ -1,8 +1,16 @@
 # Change Log - @griffel/core
 
-This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Apr 2026 08:33:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.20.3
+
+Thu, 30 Apr 2026 08:33:37 GMT
+
+### Patches
+
+- fix: tag babel-emitted helpers as @private not @internal so they survive stripInternal and remain re-exportable from index.d.ts (olfedias@microsoft.com)
 
 ## 1.20.2
 
