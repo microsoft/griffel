@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): bump enhanced-resolve from 5.20.0 to 5.21.0",
+  "packageName": "@griffel/webpack-loader",
+  "email": "49699333+dependabot[bot]@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
