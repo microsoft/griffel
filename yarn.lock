@@ -9055,7 +9055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/browser-playwright@npm:^4.1.5":
+"@vitest/browser-playwright@npm:4.1.5":
   version: 4.1.5
   resolution: "@vitest/browser-playwright@npm:4.1.5"
   dependencies:
@@ -9072,7 +9072,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/browser@npm:4.1.5, @vitest/browser@npm:^4.1.5":
+"@vitest/browser@npm:4.1.5":
   version: 4.1.5
   resolution: "@vitest/browser@npm:4.1.5"
   dependencies:
@@ -9090,7 +9090,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-v8@npm:^4.1.5":
+"@vitest/coverage-v8@npm:4.1.5":
   version: 4.1.5
   resolution: "@vitest/coverage-v8@npm:4.1.5"
   dependencies:
@@ -9235,7 +9235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^4.1.5":
+"@vitest/ui@npm:4.1.5":
   version: 4.1.5
   resolution: "@vitest/ui@npm:4.1.5"
   dependencies:
@@ -15109,10 +15109,10 @@ __metadata:
     "@types/webpack-env": "npm:1.18.4"
     "@typescript-eslint/rule-tester": "npm:^8.0.0"
     "@typescript-eslint/utils": "npm:^8.0.0"
-    "@vitest/browser": "npm:^4.1.5"
-    "@vitest/browser-playwright": "npm:^4.1.5"
-    "@vitest/coverage-v8": "npm:^4.1.5"
-    "@vitest/ui": "npm:^4.1.5"
+    "@vitest/browser": "npm:4.1.5"
+    "@vitest/browser-playwright": "npm:4.1.5"
+    "@vitest/coverage-v8": "npm:4.1.5"
+    "@vitest/ui": "npm:4.1.5"
     ajv: "npm:^8.20.0"
     babel-jest: "npm:30.0.5"
     babel-plugin-tester: "npm:12.0.0"
@@ -15176,7 +15176,7 @@ __metadata:
     typescript: "npm:5.9.3"
     typescript-eslint: "npm:^8.58.2"
     vite: "npm:7.3.2"
-    vitest: "npm:^4.1.5"
+    vitest: "npm:4.1.5"
     webpack: "npm:5.106.2"
     webpack-merge: "npm:5.10.0"
   languageName: unknown
@@ -26153,7 +26153,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^4.1.5":
+"vitest@npm:4.1.5":
   version: 4.1.5
   resolution: "vitest@npm:4.1.5"
   dependencies:
