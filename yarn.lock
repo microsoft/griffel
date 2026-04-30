@@ -10073,15 +10073,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-annotate-pure-calls@npm:0.4.0":
-  version: 0.4.0
-  resolution: "babel-plugin-annotate-pure-calls@npm:0.4.0"
-  peerDependencies:
-    "@babel/core": ^6.0.0-0 || 7.x
-  checksum: 10/afb08471c46900f470cde9e4c9aeaf4854ecaf5a999a58aede2f336e7b64aecb40713648bfe0065a9b30a7046f715121656e2d508df3f72b40186453ac351880
-  languageName: node
-  linkType: hard
-
 "babel-plugin-const-enum@npm:^1.0.1":
   version: 1.2.0
   resolution: "babel-plugin-const-enum@npm:1.2.0"
@@ -15101,7 +15092,6 @@ __metadata:
     "@vitest/ui": "npm:4.0.9"
     ajv: "npm:^8.20.0"
     babel-jest: "npm:30.0.5"
-    babel-plugin-annotate-pure-calls: "npm:0.4.0"
     babel-plugin-tester: "npm:12.0.0"
     beachball: "npm:2.31.5"
     bestzip: "npm:2.2.0"
