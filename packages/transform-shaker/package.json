@@ -20,7 +20,7 @@
   "dependencies": {
     "debug": "^4.3.0",
     "magic-string": "^0.30.19",
-    "oxc-parser": "^0.116.0",
+    "oxc-parser": "^0.128.0",
     "oxc-transform": "^0.116.0"
   },
   "devDependencies": {
