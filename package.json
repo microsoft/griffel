@@ -82,7 +82,7 @@
     "@nx/vitest": "22.6.5",
     "@nx/web": "22.6.5",
     "@nx/workspace": "22.6.5",
-    "@rspack/cli": "1.7.11",
+    "@rspack/cli": "2.0.1",
     "@rspack/core": "2.0.1",
     "@storybook/addon-webpack5-compiler-babel": "4.0.0",
     "@storybook/react-webpack5": "10.1.11",

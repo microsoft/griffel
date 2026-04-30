@@ -2596,7 +2596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discoveryjs/json-ext@npm:0.5.7, @discoveryjs/json-ext@npm:^0.5.7":
+"@discoveryjs/json-ext@npm:0.5.7":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
   checksum: 10/b95682a852448e8ef50d6f8e3b7ba288aab3fd98a2bafbe46881a3db0c6e7248a2debe9e1ee0d4137c521e4743ca5bbcb1c0765c9d7b3e0ef53231506fec42b4
@@ -6540,19 +6540,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rspack/cli@npm:1.7.11":
-  version: 1.7.11
-  resolution: "@rspack/cli@npm:1.7.11"
-  dependencies:
-    "@discoveryjs/json-ext": "npm:^0.5.7"
-    "@rspack/dev-server": "npm:~1.1.5"
-    exit-hook: "npm:^4.0.0"
-    webpack-bundle-analyzer: "npm:4.10.2"
+"@rspack/cli@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@rspack/cli@npm:2.0.1"
   peerDependencies:
-    "@rspack/core": ^1.0.0-alpha || ^1.x
+    "@rspack/core": ^2.0.0-0
+    "@rspack/dev-server": ^2.0.0-0
+  peerDependenciesMeta:
+    "@rspack/dev-server":
+      optional: true
   bin:
     rspack: bin/rspack.js
-  checksum: 10/1a85c0fa27945d2fb46f8299cb427d5acfc1265fbc6a3494bd0ec83e744dbbdcf91c8402500446c1f46df5fc381845efc2e526727833551c993a267e0b91b862
+  checksum: 10/3c1a245ea7310aa9f8e9489e2c05261a22b60c298483021bca062e4000aa47aaa38a6f9aec8a3a645a0d792c26e406c56524de60f1a13f23966b9f2a47753b74
   languageName: node
   linkType: hard
 
@@ -6602,21 +6601,6 @@ __metadata:
     "@swc/helpers":
       optional: true
   checksum: 10/52a999c6bebe511495b05dbee4bd4400fe5575ed3d417f81b86109d385babebe0f4d80a8498c8ffe4d545dbe7afd2fa92066e1ef38ea75871d5550dbfbf66b73
-  languageName: node
-  linkType: hard
-
-"@rspack/dev-server@npm:~1.1.5":
-  version: 1.1.5
-  resolution: "@rspack/dev-server@npm:1.1.5"
-  dependencies:
-    chokidar: "npm:^3.6.0"
-    http-proxy-middleware: "npm:^2.0.9"
-    p-retry: "npm:^6.2.0"
-    webpack-dev-server: "npm:5.2.2"
-    ws: "npm:^8.18.0"
-  peerDependencies:
-    "@rspack/core": "*"
-  checksum: 10/67a747d998f9a2449cb1c6c5791ffc812c9d99a7219595359ce960063f344fde9f8f2000bbc9633dc490082f69b74a20b8f319697bd19beca65bd108f5dff5e5
   languageName: node
   linkType: hard
 
@@ -13791,13 +13775,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"exit-hook@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "exit-hook@npm:4.0.0"
-  checksum: 10/5aa8b4e45fa943e7e174c25329750a0ffefb593ccc2eafd5d67e1d734b114c93cb36b5714548fb1c2a1dd90f3e9cdc606b5e788f428f780708774da444021fdc
-  languageName: node
-  linkType: hard
-
 "exit-x@npm:^0.2.2":
   version: 0.2.2
   resolution: "exit-x@npm:0.2.2"
@@ -14858,7 +14835,7 @@ __metadata:
     "@nx/vitest": "npm:22.6.5"
     "@nx/web": "npm:22.6.5"
     "@nx/workspace": "npm:22.6.5"
-    "@rspack/cli": "npm:1.7.11"
+    "@rspack/cli": "npm:2.0.1"
     "@rspack/core": "npm:2.0.1"
     "@storybook/addon-webpack5-compiler-babel": "npm:4.0.0"
     "@storybook/react-webpack5": "npm:10.1.11"
@@ -26084,7 +26061,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-bundle-analyzer@npm:4.10.2, webpack-bundle-analyzer@npm:^4.10.2":
+"webpack-bundle-analyzer@npm:^4.10.2":
   version: 4.10.2
   resolution: "webpack-bundle-analyzer@npm:4.10.2"
   dependencies:
@@ -26143,7 +26120,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-dev-server@npm:5.2.2, webpack-dev-server@npm:^5.2.2":
+"webpack-dev-server@npm:^5.2.2":
   version: 5.2.2
   resolution: "webpack-dev-server@npm:5.2.2"
   dependencies:
