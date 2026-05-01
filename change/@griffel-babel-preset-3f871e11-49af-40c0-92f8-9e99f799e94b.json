@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): bump stylis and @types/stylis",
+  "packageName": "@griffel/babel-preset",
+  "email": "49699333+dependabot[bot]@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
