@@ -11,7 +11,7 @@
 // Source-order rules apply at tied specificity. Specificity follows CSS.
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { userEvent } from '@vitest/browser/context';
 import { mergeClasses } from '../index.js';
 import {
   applyResetStyles,
