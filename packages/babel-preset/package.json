@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/core": "^7.29.0",
     "@babel/generator": "^7.23.0",
-    "@babel/helper-plugin-utils": "^7.22.5",
+    "@babel/helper-plugin-utils": "^7.28.6",
     "@babel/template": "^7.28.6",
     "@babel/traverse": "^7.29.0",
     "@griffel/core": "^1.20.3",
