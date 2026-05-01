@@ -3596,7 +3596,7 @@ __metadata:
     "@linaria/babel-preset": "npm:^3.0.0-beta.24"
     "@linaria/shaker": "npm:^3.0.0-beta.22"
     ajv: "npm:^8.20.0"
-    stylis: "npm:^4.2.0"
+    stylis: "npm:^4.4.0"
     tslib: "npm:^2.1.0"
   languageName: unknown
   linkType: soft
@@ -3609,7 +3609,7 @@ __metadata:
     "@griffel/style-types": "npm:^1.4.0"
     csstype: "npm:^3.1.3"
     rtl-css-js: "npm:^1.16.1"
-    stylis: "npm:^4.2.0"
+    stylis: "npm:^4.4.0"
     tslib: "npm:^2.1.0"
   languageName: unknown
   linkType: soft
@@ -3746,7 +3746,7 @@ __metadata:
     "@babel/helper-module-imports": "npm:^7.22.15"
     "@babel/helper-plugin-utils": "npm:^7.22.5"
     "@griffel/core": "npm:^1.20.3"
-    stylis: "npm:^4.2.0"
+    stylis: "npm:^4.4.0"
     tslib: "npm:^2.1.0"
   peerDependencies:
     webpack: ^5
@@ -3773,7 +3773,7 @@ __metadata:
     "@griffel/core": "npm:^1.20.3"
     "@griffel/transform": "npm:^3.0.3"
     oxc-resolver: "npm:^11.19.1"
-    stylis: "npm:^4.2.0"
+    stylis: "npm:^4.4.0"
   peerDependencies:
     webpack: ^5
   languageName: unknown
@@ -8670,10 +8670,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/stylis@npm:4.2.0":
-  version: 4.2.0
-  resolution: "@types/stylis@npm:4.2.0"
-  checksum: 10/02a47584acd2fcb664f7d8270a69686c83752bdfb855f804015d33116a2b09c0b2ac535213a4a7b6d3a78b2915b22b4024cce067ae979beee0e4f8f5fdbc26a9
+"@types/stylis@npm:4.2.7":
+  version: 4.2.7
+  resolution: "@types/stylis@npm:4.2.7"
+  checksum: 10/068c7fd64ee2e1649b06615da57c76dd9f5be1836e310ebf94aa08193c3544d48944079ce6e94ba89b72b716944f217234a86fecc28185246c1787f02ad0eae1
   languageName: node
   linkType: hard
 
@@ -15105,7 +15105,7 @@ __metadata:
     "@types/prettier": "npm:2.7.3"
     "@types/react": "npm:18.3.1"
     "@types/react-dom": "npm:18.3.0"
-    "@types/stylis": "npm:4.2.0"
+    "@types/stylis": "npm:4.2.7"
     "@types/webpack-env": "npm:1.18.4"
     "@typescript-eslint/rule-tester": "npm:^8.0.0"
     "@typescript-eslint/utils": "npm:^8.0.0"
@@ -15169,7 +15169,7 @@ __metadata:
     source-map-js: "npm:1.2.1"
     storybook: "npm:10.2.10"
     stylelint: "npm:^15.10.3"
-    stylis: "npm:^4.2.0"
+    stylis: "npm:^4.4.0"
     syncpack: "npm:14.0.0"
     ts-jest: "npm:29.4.0"
     tslib: "npm:^2.1.0"
@@ -24673,10 +24673,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylis@npm:^4.2.0, stylis@npm:^4.3.6":
+"stylis@npm:^4.3.6":
   version: 4.3.6
   resolution: "stylis@npm:4.3.6"
   checksum: 10/6ebe8a37827124e0caf0704c13d39c121f6e6a8433eb8c67cfce508477b24a4434d1731198ba0b6e453655022bbf5beda93585f38ff420545e5356f925f83761
+  languageName: node
+  linkType: hard
+
+"stylis@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "stylis@npm:4.4.0"
+  checksum: 10/e5a149b571ea88b801b43deb6f6a9f5a5711b7ce501540ac2be18ca63a4cfb3fab86309c661a2f88491a5b98f27f95ef3eb397d412fba532c50f13964d9a1013
   languageName: node
   linkType: hard
 

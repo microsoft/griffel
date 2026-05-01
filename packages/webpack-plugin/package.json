@@ -25,7 +25,7 @@
     "@griffel/core": "^1.20.3",
     "@griffel/transform": "^3.0.3",
     "oxc-resolver": "^11.19.1",
-    "stylis": "^4.2.0"
+    "stylis": "^4.4.0"
   },
   "peerDependencies": {
     "webpack": "^5"
