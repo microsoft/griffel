@@ -88,6 +88,28 @@ describe('makeResetStyles wins over makeStyles via @scope proximity', () => {
   });
 });
 
+describe('@media inside @scope wins over plain @media via @scope proximity', () => {
+  // Two reset classes on the same element:
+  //   - reset1: `@scope to (.never) { @media { … } }` — scoped @media
+  //   - reset2: `@media { … }` — plain @media
+  // Both @media rules apply at equal specificity. Proximity tie-breaks
+  // before source order, so the scoped one wins (L6 cascade rule).
+  test('scoped reset @media wins over non-scoped reset @media', () => {
+    const scoped = applyResetStyles({
+      '@scope to (.never)': {
+        '@media (min-width: 1px)': { color: 'red' },
+      },
+    });
+    const plain = applyResetStyles({
+      '@media (min-width: 1px)': { color: 'cyan' },
+    });
+    render(`<div class="${mergeClasses(scoped, plain)}" data-testid="el">x</div>`);
+    const el = document.querySelector('[data-testid=el]')!;
+
+    expect(getColor(el)).toBe(COLORS.RED);
+  });
+});
+
 describe('makeStyles wins over makeResetStyles when both wrap in @scope', () => {
   // Both rules are scoped → proximity ties → source order resolves it.
   // Reset's @scope rule lands in bucket `r`/`s`, makeStyles' @scope rule
@@ -98,6 +120,29 @@ describe('makeStyles wins over makeResetStyles when both wrap in @scope', () => 
     });
     const { root: make } = applyStyles({
       root: { '@scope to (.never)': { color: 'blue' } },
+    });
+    render(`<div class="${mergeClasses(reset, make)}" data-testid="el">x</div>`);
+    const el = document.querySelector('[data-testid=el]')!;
+
+    expect(getColor(el)).toBe(COLORS.BLUE);
+  });
+
+  // Same as above but with @media inside @scope on both sides. Bucket
+  // order: reset's @scope+@media → bucket `s`, make's @scope+@media →
+  // bucket `m` (after `s`). Specificity ties, proximity ties, source
+  // order picks the later bucket → makeStyles wins.
+  test('scoped @media make wins over scoped @media reset', () => {
+    const reset = applyResetStyles({
+      '@scope to (.never)': {
+        '@media (min-width: 1px)': { color: 'red' },
+      },
+    });
+    const { root: make } = applyStyles({
+      root: {
+        '@scope to (.never)': {
+          '@media (min-width: 1px)': { color: 'blue' },
+        },
+      },
     });
     render(`<div class="${mergeClasses(reset, make)}" data-testid="el">x</div>`);
     const el = document.querySelector('[data-testid=el]')!;
