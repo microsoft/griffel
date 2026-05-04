@@ -76,6 +76,27 @@ To ensure that results are deterministic Griffel performs automatic ordering of 
 
 The last defined pseudo wins.
 
+## `@scope` rules
+
+[CSS `@scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/@scope) rules are supported via the same atomic pipeline as other at-rules. Each scope-wrapped declaration retains its pseudo-class bucket, so LVFHA ordering still applies inside a scope:
+
+```js
+import { makeStyles } from '@griffel/react';
+
+const useClasses = makeStyles({
+  root: {
+    '@scope to (.boundary)': {
+      ':focus': { color: 'yellow' },
+      ':hover': { color: 'cyan' }, // still wins over :focus on focus+hover
+    },
+  },
+});
+```
+
+Scope rules emit with an explicit prelude — `@scope (.atomicClass) to (.boundary)` — so [scope proximity](https://drafts.csswg.org/css-cascade-6/#scope-proximity) tie-breaking applies as authored. Per the spec, a scoped rule wins over a non-scoped rule at equal specificity, which is worth keeping in mind when overriding base styles authored with [`makeResetStyles`](/react/api/make-reset-styles).
+
+Only `@scope to (SELECTOR)` syntax is accepted — see the [`makeStyles` reference](/react/api/make-styles#scope-at-rule) for details.
+
 ## Trade-offs
 
 ### Larger classes

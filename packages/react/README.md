@@ -79,6 +79,10 @@ const useClasses = makeStyles({
     '@container foo (max-width: 992px)': { color: 'orange' },
     '@supports (display: grid)': { color: 'red' },
     '@layer utility': { marginBottom: '1em' },
+    '@scope to (.boundary)': {
+      ':hover': { color: 'cyan' },
+      '& p': { color: 'red' },
+    },
   },
 });
 ```
