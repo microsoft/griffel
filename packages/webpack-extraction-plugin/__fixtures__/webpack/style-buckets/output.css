@@ -5,6 +5,11 @@
 .animation-name {
   animation-name: foo;
 }
+@scope (.f1ewl1kl) to (.boundary) {
+  :scope .child {
+    color: red;
+  }
+}
 .color-orange:link {
   color: orange;
 }
