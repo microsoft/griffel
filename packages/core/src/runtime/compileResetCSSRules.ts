@@ -13,9 +13,9 @@ export function compileResetCSSRules(className: string, body: string): [string[]
   serialize(
     compile(`.${className}{${body}}`),
     middleware([
+      scopePlugin(`.${className}`),
       globalPlugin,
       prefixerPlugin,
-      scopePlugin(`.${className}`),
       stringify,
 
       // 💡 we are using `.insertRule()` API for DOM operations, which does not support
