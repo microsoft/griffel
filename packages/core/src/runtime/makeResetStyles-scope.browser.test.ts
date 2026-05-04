@@ -1,5 +1,13 @@
-// @scope inside makeResetStyles. resolveResetStyleRules routes `@scope to (...)`
-// to the `s` bucket via stylis's at-rule hoisting — see isAtRuleElement.ts.
+// Pins `@scope` semantics inside `makeResetStyles` and against `makeStyles`
+// in a real browser.
+//
+// Quick model (continuing from `makeResetStyles.browser.test.ts`):
+//   - `@scope (root) to (boundary)` rules match only between `root` and
+//     `boundary`. `:scope` selects the root element itself.
+//   - At equal specificity, the CSS @scope spec uses scope proximity as a
+//     tie-breaker BEFORE source order. So a scoped rule can override a
+//     non-scoped rule even when the non-scoped rule appears later in the
+//     stylesheet — this is the one case where bucket-order intuition fails.
 
 import { beforeEach, describe, expect, test } from 'vitest';
 import { userEvent } from '@vitest/browser/context';
@@ -8,16 +16,18 @@ import {
   applyResetStyles,
   applyStyles,
   COLORS,
-  getComputedBackgroundColor,
   getColor,
+  getComputedBackgroundColor,
   render,
   resetBrowserTestState,
 } from '../common/browserHelpers.js';
 
 beforeEach(resetBrowserTestState);
 
-describe('@scope inside makeResetStyles', () => {
-  test('scoped descendant rule applies inside the scope; non-scoped sibling stays default', () => {
+describe('@scope inside makeResetStyles applies the boundary', () => {
+  // Descendants inside the scope (between reset root and `.boundary`) get
+  // the scoped rule; descendants past the boundary fall back to non-scoped.
+  test('scoped descendant rule applies inside the scope; sibling past the boundary stays default', () => {
     const className = applyResetStyles({
       color: 'black',
       '@scope to (.boundary)': {
@@ -33,20 +43,13 @@ describe('@scope inside makeResetStyles', () => {
       </div>
     `);
 
-    // eslint-disable-next-line no-console
-    console.log(
-      'stylesheets:',
-      Array.from(document.querySelectorAll<HTMLStyleElement>('style')).map(s => ({
-        bucket: s.getAttribute('data-make-styles-bucket'),
-        rules: s.sheet ? Array.from(s.sheet.cssRules).map(r => r.cssText) : null,
-      })),
-    );
-
     expect(getColor(document.querySelector('[data-testid=scoped]')!)).toBe(COLORS.RED);
     expect(getColor(document.querySelector('[data-testid=outside]')!)).toBe(COLORS.BLACK);
   });
 
-  test('scoped :scope color applies on the reset root element', () => {
+  // `:scope` selects the scope root — for `makeResetStyles` that's the
+  // element carrying the reset class.
+  test(':scope styles the reset root element', () => {
     const className = applyResetStyles({
       color: 'black',
       '@scope to (.never)': {
@@ -60,47 +63,43 @@ describe('@scope inside makeResetStyles', () => {
   });
 });
 
-describe('makeStyles vs makeResetStyles — @scope interactions', () => {
-  // CSS @scope proximity is a tie-breaker between scoped and non-scoped
-  // rules at equal specificity (see CSS Cascade Level 6). That means
-  // scoped makeResetStyles DOES win over plain makeStyles at the same
-  // pseudo — the "makeStyles always wins" invariant cannot hold once
-  // @scope is in the mix. When both sides carry @scope (next test),
-  // proximity ties and source order takes over so makeStyles wins again.
-  test('scoped makeResetStyles :hover wins over plain makeStyles :hover via @scope proximity', async () => {
-    const resetClass = applyResetStyles({
+describe('makeResetStyles wins over makeStyles via @scope proximity', () => {
+  // Per CSS Cascade L6, scope proximity tie-breaks above source order at
+  // equal specificity. So a scoped reset rule beats a non-scoped makeStyles
+  // rule on the same pseudo, breaking the usual "makeStyles always wins"
+  // intuition. When both sides carry @scope, proximity ties and source
+  // order takes back over (next describe).
+  test('scoped reset :hover wins over non-scoped make :hover', async () => {
+    const reset = applyResetStyles({
       background: 'white',
       '@scope to (.never)': {
         ':hover': { background: 'red' },
       },
     });
-    const { root: makeClass } = applyStyles({
-      root: {
-        ':hover': { background: 'cyan' },
-      },
+    const { root: make } = applyStyles({
+      root: { ':hover': { background: 'cyan' } },
     });
-    render(`<button class="${mergeClasses(resetClass, makeClass)}" data-testid="btn">x</button>`);
+    render(`<button class="${mergeClasses(reset, make)}" data-testid="btn">x</button>`);
     const btn = document.querySelector<HTMLButtonElement>('[data-testid=btn]')!;
 
     await userEvent.hover(btn);
 
     expect(getComputedBackgroundColor(btn)).toBe(COLORS.RED);
   });
+});
 
-  test('scoped makeStyles color beats scoped makeResetStyles color', () => {
-    const resetClass = applyResetStyles({
-      '@scope to (.never)': {
-        color: 'red',
-      },
+describe('makeStyles wins over makeResetStyles when both wrap in @scope', () => {
+  // Both rules are scoped → proximity ties → source order resolves it.
+  // Reset's @scope rule lands in bucket `r`/`s`, makeStyles' @scope rule
+  // lands later, so makeStyles wins as in the non-scoped baseline.
+  test('scoped make color wins over scoped reset color', () => {
+    const reset = applyResetStyles({
+      '@scope to (.never)': { color: 'red' },
     });
-    const { root: makeClass } = applyStyles({
-      root: {
-        '@scope to (.never)': {
-          color: 'blue',
-        },
-      },
+    const { root: make } = applyStyles({
+      root: { '@scope to (.never)': { color: 'blue' } },
     });
-    render(`<div class="${mergeClasses(resetClass, makeClass)}" data-testid="el">x</div>`);
+    render(`<div class="${mergeClasses(reset, make)}" data-testid="el">x</div>`);
     const el = document.querySelector('[data-testid=el]')!;
 
     expect(getColor(el)).toBe(COLORS.BLUE);
