@@ -2,6 +2,29 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/devtools_v0.3.10",
+      "version": "0.3.10",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "d00fc4734318a22c3a55e6339c0ab79959b55ca2",
+            "comment": "chore: bump vitest to 4.1.5 and vite to 8.0.10"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.7.2",
+            "commit": "d83f3c21bd7764c9396d3879c63cb087f3d37ba8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2026 08:33:37 GMT",
       "tag": "@griffel/devtools_v0.3.9",
       "version": "0.3.9",

@@ -1,8 +1,19 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-This log was last generated on Thu, 30 Apr 2026 08:33:37 GMT and should not be manually modified.
+This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.5.17
+
+Mon, 04 May 2026 12:34:39 GMT
+
+### Patches
+
+- chore(deps): bump @babel/helper-plugin-utils (49699333+dependabot[bot]@users.noreply.github.com)
+- chore(deps): bump @babel/core from 7.28.5 to 7.29.0 (49699333+dependabot[bot]@users.noreply.github.com)
+- chore(deps): bump stylis and @types/stylis (49699333+dependabot[bot]@users.noreply.github.com)
+- Bump @griffel/core to v1.21.0
 
 ## 0.5.16
 

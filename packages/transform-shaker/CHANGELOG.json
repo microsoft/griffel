@@ -2,6 +2,21 @@
   "name": "@griffel/transform-shaker",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/transform-shaker_v1.0.5",
+      "version": "1.0.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "df2d0b3f60bbbedacf8065d7352f52d5d7abc520",
+            "comment": "chore(deps): bump oxc-parser and oxc-transform"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/transform-shaker_v1.0.4",
       "version": "1.0.4",

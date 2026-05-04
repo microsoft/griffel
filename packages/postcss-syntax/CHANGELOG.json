@@ -2,6 +2,33 @@
   "name": "@griffel/postcss-syntax",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/postcss-syntax_v1.3.10",
+      "version": "1.3.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "3105ace9593a3afba1f836c3d4b2d81d1505113d",
+            "comment": "chore(deps): bump @babel/helper-plugin-utils"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/postcss-syntax",
+            "commit": "fdcae53145e0592351008065f5f9d1f714c6ddcb",
+            "comment": "chore(deps): bump @babel/core from 7.28.5 to 7.29.0"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/postcss-syntax",
+            "comment": "Bump @griffel/babel-preset to v1.8.4",
+            "commit": "d83f3c21bd7764c9396d3879c63cb087f3d37ba8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2026 08:33:37 GMT",
       "tag": "@griffel/postcss-syntax_v1.3.9",
       "version": "1.3.9",

@@ -2,6 +2,47 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.17",
+      "version": "0.5.17",
+      "comments": {
+        "none": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "d00ec13370bc960497c5070d479e5b08b078ee96",
+            "comment": "chore(deps-dev): bump babel-plugin-tester from 11.0.0 to 12.0.0"
+          }
+        ],
+        "patch": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "3105ace9593a3afba1f836c3d4b2d81d1505113d",
+            "comment": "chore(deps): bump @babel/helper-plugin-utils"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "fdcae53145e0592351008065f5f9d1f714c6ddcb",
+            "comment": "chore(deps): bump @babel/core from 7.28.5 to 7.29.0"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "ae10e9c476ff9476d95179100376f2815fff701d",
+            "comment": "chore(deps): bump stylis and @types/stylis"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.21.0",
+            "commit": "d83f3c21bd7764c9396d3879c63cb087f3d37ba8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2026 08:33:37 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.16",
       "version": "0.5.16",

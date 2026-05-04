@@ -2,6 +2,59 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/babel-preset_v1.8.4",
+      "version": "1.8.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/babel-preset",
+            "commit": "6d118a1dee1e60be976c204347b4b570395b68a4",
+            "comment": "chore(deps): bump @babel/template from 7.27.2 to 7.28.6"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/babel-preset",
+            "commit": "ac640ffae1b976a633bae10e8c92caf9ccc75f83",
+            "comment": "chore(deps): bump @babel/traverse from 7.28.5 to 7.29.0"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/babel-preset",
+            "commit": "ae10e9c476ff9476d95179100376f2815fff701d",
+            "comment": "chore(deps): bump stylis and @types/stylis"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/babel-preset",
+            "commit": "fdcae53145e0592351008065f5f9d1f714c6ddcb",
+            "comment": "chore(deps): bump @babel/core from 7.28.5 to 7.29.0"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/babel-preset",
+            "commit": "3105ace9593a3afba1f836c3d4b2d81d1505113d",
+            "comment": "chore(deps): bump @babel/helper-plugin-utils"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.21.0",
+            "commit": "d83f3c21bd7764c9396d3879c63cb087f3d37ba8"
+          }
+        ],
+        "none": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/babel-preset",
+            "commit": "d00ec13370bc960497c5070d479e5b08b078ee96",
+            "comment": "chore(deps-dev): bump babel-plugin-tester from 11.0.0 to 12.0.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2026 08:33:37 GMT",
       "tag": "@griffel/babel-preset_v1.8.3",
       "version": "1.8.3",

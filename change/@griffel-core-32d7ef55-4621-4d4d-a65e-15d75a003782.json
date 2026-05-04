@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add support for @scope in makeResetStyles()",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

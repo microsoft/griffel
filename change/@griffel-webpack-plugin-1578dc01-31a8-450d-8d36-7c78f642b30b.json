@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "test: add @scope coverage to fixtures and parser tests",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

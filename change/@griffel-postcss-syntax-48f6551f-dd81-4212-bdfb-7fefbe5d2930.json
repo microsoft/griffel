@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(deps): bump @babel/helper-plugin-utils",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "49699333+dependabot[bot]@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

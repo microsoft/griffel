@@ -1,6 +1,6 @@
 {
   "name": "@griffel/webpack-loader",
-  "version": "2.2.25",
+  "version": "2.2.26",
   "description": "Webpack loader that performs build time transforms for Griffel",
   "license": "MIT",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.29.0",
-    "@griffel/babel-preset": "^1.8.3",
+    "@griffel/babel-preset": "^1.8.4",
     "enhanced-resolve": "^5.21.0",
     "tslib": "^2.1.0"
   },

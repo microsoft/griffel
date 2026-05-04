@@ -1,8 +1,18 @@
 # Change Log - @griffel/webpack-loader
 
-This log was last generated on Thu, 30 Apr 2026 08:33:37 GMT and should not be manually modified.
+This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.26
+
+Mon, 04 May 2026 12:34:39 GMT
+
+### Patches
+
+- chore(deps): bump @babel/core from 7.28.5 to 7.29.0 (49699333+dependabot[bot]@users.noreply.github.com)
+- chore(deps): bump enhanced-resolve from 5.20.0 to 5.21.0 (49699333+dependabot[bot]@users.noreply.github.com)
+- Bump @griffel/babel-preset to v1.8.4
 
 ## 2.2.25
 

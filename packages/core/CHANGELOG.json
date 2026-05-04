@@ -2,6 +2,37 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/core_v1.21.0",
+      "version": "1.21.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/core",
+            "commit": "ae10e9c476ff9476d95179100376f2815fff701d",
+            "comment": "chore(deps): bump stylis and @types/stylis"
+          }
+        ],
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "23120f29c1d0d3f7b470fc38e9d2485d4ae670c8",
+            "comment": "feat: add support for @scope in makeResetStyles()"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "87c6cddd1625ad2125e242d439d851ea5db20633",
+            "comment": "test: add helpers for makeResetStyles()"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2026 08:33:37 GMT",
       "tag": "@griffel/core_v1.20.3",
       "version": "1.20.3",

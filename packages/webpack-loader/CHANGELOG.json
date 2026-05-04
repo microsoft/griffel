@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/webpack-loader_v2.2.26",
+      "version": "2.2.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "fdcae53145e0592351008065f5f9d1f714c6ddcb",
+            "comment": "chore(deps): bump @babel/core from 7.28.5 to 7.29.0"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "357bee7341bea5a295751d976e778aff0c13e6ca",
+            "comment": "chore(deps): bump enhanced-resolve from 5.20.0 to 5.21.0"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.8.4",
+            "commit": "d83f3c21bd7764c9396d3879c63cb087f3d37ba8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Apr 2026 08:33:37 GMT",
       "tag": "@griffel/webpack-loader_v2.2.25",
       "version": "2.2.25",

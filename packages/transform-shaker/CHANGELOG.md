@@ -1,8 +1,16 @@
 # Change Log - @griffel/transform-shaker
 
-This log was last generated on Wed, 29 Apr 2026 08:41:14 GMT and should not be manually modified.
+This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.5
+
+Mon, 04 May 2026 12:34:39 GMT
+
+### Patches
+
+- chore(deps): bump oxc-parser and oxc-transform (49699333+dependabot[bot]@users.noreply.github.com)
 
 ## 1.0.4
 

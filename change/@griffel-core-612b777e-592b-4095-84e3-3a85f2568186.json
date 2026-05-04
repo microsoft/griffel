@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "test: add helpers for makeResetStyles()",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

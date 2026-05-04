@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(deps): bump @babel/core from 7.28.5 to 7.29.0",
-  "packageName": "@griffel/webpack-loader",
-  "email": "49699333+dependabot[bot]@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

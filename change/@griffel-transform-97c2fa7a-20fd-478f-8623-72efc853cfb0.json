@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump vitest to 4.1.5 and vite to 8.0.10",
-  "packageName": "@griffel/transform",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

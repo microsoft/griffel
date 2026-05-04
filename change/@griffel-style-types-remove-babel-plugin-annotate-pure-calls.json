@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: remove unused babel-plugin-annotate-pure-calls devDependency and unused .babelrc",
-  "packageName": "@griffel/style-types",
-  "email": "198982749+Copilot@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

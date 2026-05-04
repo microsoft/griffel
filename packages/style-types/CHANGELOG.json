@@ -2,6 +2,21 @@
   "name": "@griffel/style-types",
   "entries": [
     {
+      "date": "Mon, 04 May 2026 12:34:39 GMT",
+      "tag": "@griffel/style-types_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "@griffel/style-types",
+            "commit": "5b5dcece1f44f7da447e47d39560349e6dfa0f3e",
+            "comment": "chore: remove unused babel-plugin-annotate-pure-calls devDependency and unused .babelrc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/style-types_v1.4.0",
       "version": "1.4.0",
