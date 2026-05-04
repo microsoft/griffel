@@ -1,16 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { compileResetCSSRules } from './compileResetCSSRules.js';
 
-describe('compileCSSRules', () => {
+describe('compileResetCSSRules', () => {
   it('compiles CSS rules', () => {
-    const cssRules = `
-      .foo {
-        color: red;
-        @media (min-width: 768px) { color: blue }
-      }
+    const body = `
+      color: red;
+      @media (min-width: 768px) { color: blue }
     `;
 
-    expect(compileResetCSSRules(cssRules)).toMatchInlineSnapshot(`
+    expect(compileResetCSSRules('foo', body)).toMatchInlineSnapshot(`
       [
         [
           ".foo{color:red;}",

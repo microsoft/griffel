@@ -166,3 +166,25 @@ describe('combined: reset with base + :hover + @media vs make with base + :hover
     expect(getColor(btn)).toBe(COLORS.YELLOW);
   });
 });
+
+describe('makeResetStyles — author-order cascade', () => {
+  // Reset emits declarations in author order into one fat class; unlike
+  // makeStyles, there is no per-pseudo bucket re-sort. Authors of reset
+  // styles are expected to write pseudos in LVHA order — this test pins
+  // the documented behavior of out-of-order authoring.
+  test(':focus authored after :hover wins in reset', async () => {
+    const className = applyResetStyles({
+      ':hover': { background: 'cyan' },
+      ':focus': { background: 'yellow' },
+    });
+    render(`<button class="${className}" data-testid="btn">reset hover-first</button>`);
+    const btn = document.querySelector<HTMLButtonElement>('[data-testid=btn]')!;
+
+    btn.focus();
+    await userEvent.hover(btn);
+
+    // Reset emits rules in author order; `:focus` is later so it wins at
+    // tied specificity.
+    expect(getComputedBackgroundColor(btn)).toBe(COLORS.YELLOW);
+  });
+});
