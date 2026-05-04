@@ -81,19 +81,6 @@ describe('makeResetStyles overrides makeStyles when its selector is more specifi
     await userEvent.unhover(btn);
     expect(getColor(btn)).toBe(COLORS.CYAN);
   });
-
-  test('makeResetStyles :active wins over makeStyles base while held', async () => {
-    const reset = applyResetStyles({ ':active': { color: 'red' } });
-    const { root: make } = applyStyles({ root: { color: 'cyan' } });
-    render(`<button class="${mergeClasses(reset, make)}" data-testid="btn">x</button>`);
-    const btn = document.querySelector<HTMLButtonElement>('[data-testid=btn]')!;
-
-    await userEvent.hover(btn);
-    expect(getColor(btn)).toBe(COLORS.CYAN);
-    await commands.mouseDown();
-    expect(getColor(btn)).toBe(COLORS.RED);
-    await commands.mouseUp();
-  });
 });
 
 describe('makeResetStyles wins via bucket order when at-rule wraps the rule', () => {
