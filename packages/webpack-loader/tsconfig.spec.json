@@ -4,7 +4,7 @@
     "jsx": "react-jsx",
     "outDir": "../../dist/out-tsc",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
-    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest", "environment"]
+    "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment"]
   },
   "include": [
     "vitest.config.mts",
