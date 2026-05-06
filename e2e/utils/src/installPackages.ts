@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import logSymbols from 'log-symbols';
 
 import { sh } from './sh.ts';
 
@@ -59,5 +58,5 @@ export async function installPackages(options: {
   await fs.promises.writeFile(packageJsonPath, JSON.stringify(newPackageJson, null, 2));
   await sh('yarn install', tempDir, true);
 
-  console.log(logSymbols.success, 'Packages were installed');
+  console.log('✅', 'Packages were installed');
 }

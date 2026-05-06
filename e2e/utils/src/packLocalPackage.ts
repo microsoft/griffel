@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs';
-import logSymbols from 'log-symbols';
 
 import { sh } from './sh.ts';
 
@@ -16,7 +15,7 @@ export async function packLocalPackage(rootDir: string, tempDir: string, package
   // files to include/exclude are specified by .npmignore rather than package.json `files`.
   // (--quiet outputs only the .tgz filename, not all the included files)
   const packFile = (await sh(`npm pack --quiet ${packagePath}`, tempDir, true)).trim();
-  console.log(logSymbols.success, `Package "${packageName}" was packed`);
+  console.log('✅', `Package "${packageName}" was packed`);
 
   return {
     packageName,

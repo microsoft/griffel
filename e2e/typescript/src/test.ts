@@ -1,5 +1,4 @@
 import { configureYarn, copyAssets, createTempDir, installPackages, packLocalPackage, sh } from '@griffel/e2e-utils';
-import logSymbols from 'log-symbols';
 import path from 'path';
 
 async function performTest(tsVersion: string) {
@@ -33,12 +32,12 @@ async function performTest(tsVersion: string) {
 
     tscBin = path.resolve(tempDir, 'node_modules', 'typescript', 'bin', 'tsc');
     console.log(
-      logSymbols.info,
+      'ℹ️',
       'Using TypeScript',
       (await sh(`node ${tscBin} --version`, tempDir, true)).replace('Version', '').trim(),
     );
   } catch (e) {
-    console.error(logSymbols.error, 'Something went wrong setting up the test:');
+    console.error('❌', 'Something went wrong setting up the test:');
     console.error((e as Error)?.stack ?? e);
     process.exit(1);
   }
@@ -46,10 +45,10 @@ async function performTest(tsVersion: string) {
   try {
     const command = `node ${tscBin} --noEmit --pretty`;
 
-    console.log(logSymbols.info, 'Running', command);
+    console.log('ℹ️', 'Running', command);
     await sh(command, tempDir);
 
-    console.log(logSymbols.success, `Example project was successfully built with typescript@${tsVersion}`);
+    console.log('✅', `Example project was successfully built with typescript@${tsVersion}`);
     console.log('');
     console.log('');
   } catch (e) {
@@ -57,7 +56,7 @@ async function performTest(tsVersion: string) {
 
     console.log('');
     console.error(
-      logSymbols.error,
+      '❌',
       `Building a test project referencing @griffel/style-types using typescript@${tsVersion} failed.`,
     );
     console.error(
