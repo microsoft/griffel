@@ -103,6 +103,7 @@ export default [
       '**/jest.setup.ts',
       '**/vitest.config.ts',
       '**/vitest.config.mts',
+      '**/vitest.setup.ts',
       '**/.storybook/main.js',
       '**/eslint.config.mjs',
     ],

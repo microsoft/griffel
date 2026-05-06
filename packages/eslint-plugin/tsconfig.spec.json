@@ -6,6 +6,7 @@
   },
   "include": [
     "vitest.config.mts",
+    "vitest.setup.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/*.test.tsx",

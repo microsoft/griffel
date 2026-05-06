@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [nxViteTsPaths()],
   test: {
     watch: false,
-    globals: true,
     environment: 'node',
+    setupFiles: ['./vitest.setup.ts'],
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
