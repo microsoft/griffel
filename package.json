@@ -149,7 +149,7 @@
     "simple-git-hooks": "2.13.1",
     "snapshot-diff": "0.10.0",
     "storybook": "10.3.6",
-    "stylelint": "^15.10.3",
+    "stylelint": "^17.11.0",
     "syncpack": "15.0.0",
     "ts-jest": "29.4.9",
     "typescript": "5.9.3",
