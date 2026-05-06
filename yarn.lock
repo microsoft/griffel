@@ -9013,7 +9013,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/rule-tester@npm:^8.59.2":
+"@typescript-eslint/rule-tester@npm:^8.0.0":
   version: 8.59.2
   resolution: "@typescript-eslint/rule-tester@npm:8.59.2"
   dependencies:
@@ -10074,7 +10074,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array-includes@npm:^3.1.6, array-includes@npm:^3.1.8, array-includes@npm:^3.1.9":
+"array-includes@npm:^3.1.6, array-includes@npm:^3.1.8":
   version: 3.1.9
   resolution: "array-includes@npm:3.1.9"
   dependencies:
@@ -10111,7 +10111,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array.prototype.findlastindex@npm:^1.2.6":
+"array.prototype.findlastindex@npm:^1.2.5":
   version: 1.2.6
   resolution: "array.prototype.findlastindex@npm:1.2.6"
   dependencies:
@@ -10126,7 +10126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array.prototype.flat@npm:^1.3.1, array.prototype.flat@npm:^1.3.3":
+"array.prototype.flat@npm:^1.3.1, array.prototype.flat@npm:^1.3.2":
   version: 1.3.3
   resolution: "array.prototype.flat@npm:1.3.3"
   dependencies:
@@ -13720,7 +13720,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-module-utils@npm:^2.12.1":
+"eslint-module-utils@npm:^2.12.0":
   version: 2.12.1
   resolution: "eslint-module-utils@npm:2.12.1"
   dependencies:
@@ -13732,32 +13732,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:2.32.0":
-  version: 2.32.0
-  resolution: "eslint-plugin-import@npm:2.32.0"
+"eslint-plugin-import@npm:2.31.0":
+  version: 2.31.0
+  resolution: "eslint-plugin-import@npm:2.31.0"
   dependencies:
     "@rtsao/scc": "npm:^1.1.0"
-    array-includes: "npm:^3.1.9"
-    array.prototype.findlastindex: "npm:^1.2.6"
-    array.prototype.flat: "npm:^1.3.3"
-    array.prototype.flatmap: "npm:^1.3.3"
+    array-includes: "npm:^3.1.8"
+    array.prototype.findlastindex: "npm:^1.2.5"
+    array.prototype.flat: "npm:^1.3.2"
+    array.prototype.flatmap: "npm:^1.3.2"
     debug: "npm:^3.2.7"
     doctrine: "npm:^2.1.0"
     eslint-import-resolver-node: "npm:^0.3.9"
-    eslint-module-utils: "npm:^2.12.1"
+    eslint-module-utils: "npm:^2.12.0"
     hasown: "npm:^2.0.2"
-    is-core-module: "npm:^2.16.1"
+    is-core-module: "npm:^2.15.1"
     is-glob: "npm:^4.0.3"
     minimatch: "npm:^3.1.2"
     object.fromentries: "npm:^2.0.8"
     object.groupby: "npm:^1.0.3"
-    object.values: "npm:^1.2.1"
+    object.values: "npm:^1.2.0"
     semver: "npm:^6.3.1"
-    string.prototype.trimend: "npm:^1.0.9"
+    string.prototype.trimend: "npm:^1.0.8"
     tsconfig-paths: "npm:^3.15.0"
   peerDependencies:
     eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8 || ^9
-  checksum: 10/1bacf4967e9ebf99e12176a795f0d6d3a87d1c9a030c2207f27b267e10d96a1220be2647504c7fc13ab543cdf13ffef4b8f5620e0447032dba4ff0d3922f7c9e
+  checksum: 10/6b76bd009ac2db0615d9019699d18e2a51a86cb8c1d0855a35fb1b418be23b40239e6debdc6e8c92c59f1468ed0ea8d7b85c817117a113d5cc225be8a02ad31c
   languageName: node
   linkType: hard
 
@@ -15236,7 +15236,7 @@ __metadata:
     "@types/react-dom": "npm:19.2.3"
     "@types/stylis": "npm:4.2.7"
     "@types/webpack-env": "npm:1.18.4"
-    "@typescript-eslint/rule-tester": "npm:^8.59.2"
+    "@typescript-eslint/rule-tester": "npm:^8.0.0"
     "@typescript-eslint/utils": "npm:^8.0.0"
     "@vitejs/plugin-react": "npm:^6.0.1"
     "@vitest/browser": "npm:4.1.5"
@@ -15257,7 +15257,7 @@ __metadata:
     eslint: "npm:9.28.0"
     eslint-config-prettier: "npm:10.1.5"
     eslint-import-resolver-typescript: "npm:4.4.4"
-    eslint-plugin-import: "npm:2.32.0"
+    eslint-plugin-import: "npm:2.31.0"
     eslint-plugin-jest: "npm:29.15.2"
     eslint-plugin-jsx-a11y: "npm:6.10.2"
     eslint-plugin-react: "npm:7.37.5"
@@ -15304,7 +15304,7 @@ __metadata:
     ts-jest: "npm:29.4.9"
     tslib: "npm:^2.1.0"
     typescript: "npm:5.9.3"
-    typescript-eslint: "npm:^8.59.2"
+    typescript-eslint: "npm:^8.58.2"
     vite: "npm:8.0.10"
     vitest: "npm:4.1.5"
     webpack: "npm:5.106.2"
@@ -15422,12 +15422,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hasown@npm:2.0.2, hasown@npm:^2.0.2":
+"hasown@npm:2.0.2":
   version: 2.0.2
   resolution: "hasown@npm:2.0.2"
   dependencies:
     function-bind: "npm:^1.1.2"
   checksum: 10/7898a9c1788b2862cf0f9c345a6bec77ba4a0c0983c7f19d610c382343d4f98fa260686b225dfb1f88393a66679d2ec58ee310c1d6868c081eda7918f32cc70a
+  languageName: node
+  linkType: hard
+
+"hasown@npm:^2.0.2, hasown@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "hasown@npm:2.0.3"
+  dependencies:
+    function-bind: "npm:^1.1.2"
+  checksum: 10/619526379cda755409d856cbf3c65b82ea342151719a0a550920cf7d6a7f58f7cf079e5a78f3acd162324fc784a3d3d6f6f61aff613b47a0163c16fbe09ea89f
   languageName: node
   linkType: hard
 
@@ -16338,12 +16347,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-core-module@npm:^2.13.0, is-core-module@npm:^2.16.0, is-core-module@npm:^2.16.1, is-core-module@npm:^2.5.0":
-  version: 2.16.1
-  resolution: "is-core-module@npm:2.16.1"
+"is-core-module@npm:^2.13.0, is-core-module@npm:^2.15.1, is-core-module@npm:^2.16.0, is-core-module@npm:^2.16.1, is-core-module@npm:^2.5.0":
+  version: 2.16.2
+  resolution: "is-core-module@npm:2.16.2"
   dependencies:
-    hasown: "npm:^2.0.2"
-  checksum: 10/452b2c2fb7f889cbbf7e54609ef92cf6c24637c568acc7e63d166812a0fb365ae8a504c333a29add8bdb1686704068caa7f4e4b639b650dde4f00a038b8941fb
+    hasown: "npm:^2.0.3"
+  checksum: 10/6ee7535d82bbe457685799c5f145daf4b7c6be3afbd8e90788429d557f663d6dee72a8e4b9a45d0d756c243fcb5028095999243df090e5f04c02b153786bc8c6
   languageName: node
   linkType: hard
 
@@ -20468,7 +20477,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object.values@npm:^1.1.6, object.values@npm:^1.2.1":
+"object.values@npm:^1.1.6, object.values@npm:^1.2.0, object.values@npm:^1.2.1":
   version: 1.2.1
   resolution: "object.values@npm:1.2.1"
   dependencies:
@@ -24581,7 +24590,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string.prototype.trimend@npm:^1.0.9":
+"string.prototype.trimend@npm:^1.0.8, string.prototype.trimend@npm:^1.0.9":
   version: 1.0.9
   resolution: "string.prototype.trimend@npm:1.0.9"
   dependencies:
@@ -25572,7 +25581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-eslint@npm:^8.59.2":
+"typescript-eslint@npm:^8.58.2":
   version: 8.59.2
   resolution: "typescript-eslint@npm:8.59.2"
   dependencies:
