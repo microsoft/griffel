@@ -16,6 +16,7 @@ export function print(val: unknown) {
 
   let result: RegExpExecArray | null = null;
 
+  // eslint-disable-next-line no-cond-assign
   while ((result = regex.exec(_val))) {
     const [name] = result;
 

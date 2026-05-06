@@ -78,6 +78,7 @@ const plugin = declare<LocationPluginOptions, PluginObj<LocationPluginState>>((a
         },
       },
 
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       CallExpression(path, state) {
         const callee = path.get('callee');
         const declarator = path.findParent(p => p.isVariableDeclarator());

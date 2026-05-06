@@ -10,6 +10,12 @@ export default [
   ...baseConfig,
   { languageOptions: { globals: { ...globals.webextensions } } },
   {
+    files: ['**/pack-extension.js'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
       'import/no-extraneous-dependencies': [

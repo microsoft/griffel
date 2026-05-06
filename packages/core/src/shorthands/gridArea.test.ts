@@ -208,7 +208,6 @@ describe('gridArea(rowStart, columnStart, rowEnd, columnEnd)', () => {
   });
 
   it('for css var reference', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(gridArea('header', 'header', 'var(--my-var)', 'header')).toEqual({});
@@ -217,7 +216,6 @@ describe('gridArea(rowStart, columnStart, rowEnd, columnEnd)', () => {
   });
 
   it('for css var reference within string', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(gridArea('header', 'header', 'header var(--my-var) header', 'header')).toEqual({});
@@ -226,7 +224,6 @@ describe('gridArea(rowStart, columnStart, rowEnd, columnEnd)', () => {
   });
 
   it('for empty css var reference', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(gridArea('header', 'header', 'var()', 'header')).toEqual({});

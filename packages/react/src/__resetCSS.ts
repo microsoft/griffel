@@ -8,7 +8,6 @@ import { useTextDirection } from './TextDirectionContext.js';
  *
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function __resetCSS(ltrClassName: string, rtlClassName: string | null) {
   const getStyles = vanillaResetCSS(ltrClassName, rtlClassName);
 

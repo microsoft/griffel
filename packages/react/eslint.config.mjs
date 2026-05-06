@@ -10,6 +10,12 @@ export default [
   ...baseConfig,
   { plugins: { 'react-compiler': eslintPluginReactCompiler } },
   {
+    files: ['**/__*.ts', '**/__*.tsx'],
+    rules: {
+      '@typescript-eslint/naming-convention': 'off',
+    },
+  },
+  {
     rules: {
       'react-compiler/react-compiler': 'error',
     },

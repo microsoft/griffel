@@ -114,7 +114,9 @@ function parseGriffelStyles(
 
     return metadata;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('Failed to parse Griffel styles');
+    // eslint-disable-next-line no-console
     console.warn(error);
     if (silenceParseErrors) {
       return null;
@@ -125,12 +127,9 @@ function parseGriffelStyles(
 }
 
 function getIgnoredRulesFromDirectives(commentDirectives: CommentDirective[]) {
-  return (
-    commentDirectives
-      .filter(([directive]) => directive === 'griffel-csslint-disable')
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .map(([_, rulename]) => rulename)
-  );
+  return commentDirectives
+    .filter(([directive]) => directive === 'griffel-csslint-disable')
+    .map(([_, rulename]) => rulename);
 }
 
 const extractGriffelBabelPluginOptions = (opts: ParserOptions = {}) => {

@@ -56,6 +56,7 @@ export function resolveAssetPathsInCSSRules(cssRulesByBucket: CSSRulesByBucket, 
   const sourceDir = path.dirname(sourceFile);
   const resolved: CSSRulesByBucket = {};
 
+  // eslint-disable-next-line guard-for-in
   for (const bucketName in cssRulesByBucket) {
     const entries = cssRulesByBucket[bucketName as StyleBucketName]!;
     resolved[bucketName as StyleBucketName] = entries.map(entry => resolveEntry(entry, sourceDir));

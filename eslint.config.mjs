@@ -13,7 +13,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['**/dist', '**/out-tsc', '**/node_modules', '**/__fixtures__/**', '**/vite.config.*.timestamp*', '**/vitest.config.*.timestamp*'],
+    ignores: ['**/dist', '**/out-tsc', '**/node_modules', '**/__fixtures__/**', '**/bundle-size/**', '**/vite.config.*.timestamp*', '**/vitest.config.*.timestamp*'],
   },
   ...compat.extends('plugin:import/typescript', 'plugin:storybook/recommended'),
   ...nx.configs['flat/base'],
@@ -43,6 +43,11 @@ export default [
           prefer: 'type-imports',
         },
       ],
+      '@typescript-eslint/naming-convention': [
+        'error',
+        { selector: 'function', format: ['camelCase', 'PascalCase'], leadingUnderscore: 'forbid' },
+        { selector: 'objectLiteralMethod', format: ['camelCase'] },
+      ],
       'import/no-extraneous-dependencies': [
         'error',
         {
@@ -50,6 +55,12 @@ export default [
         },
       ],
       'jest/no-focused-tests': 'error',
+      eqeqeq: 'error',
+      'guard-for-in': 'error',
+      'max-classes-per-file': 'error',
+      'no-cond-assign': ['error', 'always'],
+      'no-console': 'error',
+      'no-useless-concat': 'error',
     },
   },
   {
@@ -77,6 +88,7 @@ export default [
     rules: {
       '@typescript-eslint/no-inferrable-types': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-require-imports': 'error',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       'no-redeclare': 'off',
     },
@@ -108,8 +120,17 @@ export default [
   {
     files: ['**/*.test.ts', '**/*.test.tsx', '**/*.test.mts', '**/*.spec.ts', '**/*.spec.tsx'],
     rules: {
+      '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
       'import/first': 'off',
+      'no-console': 'off',
+    },
+  },
+  {
+    files: ['tools/**/*', 'e2e/**/*'],
+    rules: {
+      'no-console': 'off',
     },
   },
   {

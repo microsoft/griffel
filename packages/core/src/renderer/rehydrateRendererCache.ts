@@ -43,6 +43,7 @@ export function rehydrateRendererCache(
       let textContent = styleElement.textContent!;
 
       if (regex) {
+        // eslint-disable-next-line no-cond-assign
         while ((match = regex.exec(textContent))) {
           const [cssRule] = match;
 
@@ -55,6 +56,7 @@ export function rehydrateRendererCache(
       } else {
         // @scope rules can appear in any bucket, so extract them first to prevent
         // STYLES_HYDRATOR from spuriously matching class selectors inside @scope blocks.
+        // eslint-disable-next-line no-cond-assign
         while ((match = SCOPE_HYDRATOR.exec(textContent))) {
           const [cssRule] = match;
 
@@ -66,6 +68,7 @@ export function rehydrateRendererCache(
           }
         }
 
+        // eslint-disable-next-line no-cond-assign
         while ((match = STYLES_HYDRATOR.exec(textContent))) {
           const [cssRule] = match;
 

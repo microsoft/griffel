@@ -11,7 +11,6 @@ import { useRenderer } from './RendererContext.js';
  *
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function __staticStyles(cssRules: CSSRulesByBucket) {
   const getStyles = vanillaStaticStyles(cssRules, insertionFactory);
 

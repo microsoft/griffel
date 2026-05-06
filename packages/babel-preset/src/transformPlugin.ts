@@ -470,21 +470,18 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         },
       },
 
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       ImportDeclaration(path, state) {
         if (hasMakeStylesImport(path, pluginOptions.modules)) {
           state.importDeclarationPaths!.push(path);
         }
       },
 
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       VariableDeclarator(path, state) {
         if (isRequireDeclarator(path, pluginOptions.modules)) {
           state.requireDeclarationPath = path;
         }
       },
 
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       CallExpression(path, state) {
         /**
          * Handles case when `makeStyles()` is `CallExpression`.
@@ -512,7 +509,6 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
         }
       },
 
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       MemberExpression(expressionPath, state) {
         /**
          * Handles case when `makeStyles()` is inside `MemberExpression`.

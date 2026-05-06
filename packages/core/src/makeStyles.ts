@@ -38,6 +38,7 @@ export function makeStyles<Slots extends string | number>(
       if (process.env.NODE_ENV !== 'production') {
         if (renderer.classNameHashSalt) {
           if (classNameHashSalt !== renderer.classNameHashSalt) {
+            // eslint-disable-next-line no-console
             console.error(
               [
                 '@griffel/core:',

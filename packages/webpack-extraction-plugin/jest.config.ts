@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'webpack-extraction-plugin',
   preset: '../../jest.preset.js',

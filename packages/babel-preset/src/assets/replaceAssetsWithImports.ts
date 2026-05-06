@@ -67,6 +67,7 @@ export function replaceAssetsWithImports(
   traverse(
     pathToUpdate.node,
     {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       StringLiteral(literalPath) {
         const value = literalPath.node.value;
 

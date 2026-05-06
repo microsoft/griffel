@@ -63,7 +63,7 @@ export const noShorthandsRule = ESLintUtils.RuleCreator(getDocsUrl)({
               let fix: TSESLint.ReportFixFunction | undefined;
               if (shorthandLiteral) {
                 const autoFixArguments = shorthandToArguments(shorthandProperty.name, shorthandLiteral.value);
-                if (autoFixArguments != null) {
+                if (autoFixArguments !== null && autoFixArguments !== undefined) {
                   fix = fixer => {
                     const args = joinShorthandArguments(autoFixArguments, shorthandLiteral.quote);
                     return fixer.replaceText(propertyNode, `...shorthands.${shorthandProperty.name}(${args})`);

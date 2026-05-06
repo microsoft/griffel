@@ -125,7 +125,7 @@ function removeDeadCode(node: Node, alive: Set<Node>, s: MagicString, sourceCode
     const subNode = (node as any)[key];
 
     if (Array.isArray(subNode)) {
-      const elements = subNode.filter((el: unknown): el is Node => el != null && isNode(el));
+      const elements = subNode.filter((el: unknown): el is Node => el !== null && el !== undefined && isNode(el));
       if (elements.length === 0) continue;
 
       const hasDeadElements = elements.some(el => !alive.has(el));

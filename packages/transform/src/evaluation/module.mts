@@ -37,7 +37,7 @@ const NOOP = () => { /* noop */ };
 
 /** Checks if a value is an Error-like object (works across VM contexts where `instanceof Error` fails). */
 function isError(e: unknown): e is Error {
-  return e != null && typeof e === 'object' && 'message' in e && 'stack' in e;
+  return e !== null && e !== undefined && typeof e === 'object' && 'message' in e && 'stack' in e;
 }
 
 const createCustomDebug =

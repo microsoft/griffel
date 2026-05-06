@@ -117,7 +117,6 @@ describe('mergeClasses', () => {
   });
 
   it('warns if an unregistered sequence was passed', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
     const className = makeStyles({ root: { display: 'block' } })(options).root;
 
@@ -130,7 +129,6 @@ describe('mergeClasses', () => {
   });
 
   it('warns if strings are not properly merged', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
     const className1 = makeStyles({ root: { display: 'block' } })(options).root;
@@ -144,7 +142,6 @@ describe('mergeClasses', () => {
   });
 
   it('warns if classes with different directions are passed', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
     const ltrClassName = makeStyles({ root: { display: 'block' } })(options).root;
@@ -155,7 +152,6 @@ describe('mergeClasses', () => {
   });
 
   it('warns if contains multiple classes from makeResetStyles', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
     const className1 = makeResetStyles({ display: 'block' })(options);

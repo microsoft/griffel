@@ -33,7 +33,7 @@ function parseChrome(line: string): LineParseResult {
   const isEval = loc && loc.indexOf('eval') === 0; // start of line
 
   const submatch = chromeEvalRe.exec(loc);
-  if (isEval && submatch != null) {
+  if (isEval && submatch !== null) {
     // throw out eval line/column and use top-most line/column number
     loc = submatch[1]; // url
   }
@@ -59,7 +59,7 @@ function parseGecko(line: string): LineParseResult {
   const isEval = loc && loc.indexOf(' > eval') > -1;
 
   const submatch = geckoEvalRe.exec(loc);
-  if (isEval && submatch != null) {
+  if (isEval && submatch !== null) {
     // throw out eval line/column and use top-most line number
     loc = submatch[1];
   }

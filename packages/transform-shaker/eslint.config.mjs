@@ -12,6 +12,12 @@ export default [
     },
   },
   {
+    files: ['**/graphBuilder.ts', '**/Visitors.ts', '**/langs/**/*.ts'],
+    rules: {
+      '@typescript-eslint/naming-convention': 'off',
+    },
+  },
+  {
     files: ['**/*.ts', '**/*.tsx'],
     // Override or add rules here
     rules: {},
