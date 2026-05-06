@@ -157,7 +157,7 @@
     "vite": "8.0.10",
     "vitest": "4.1.5",
     "webpack": "5.106.2",
-    "webpack-merge": "5.10.0"
+    "webpack-merge": "6.0.1"
   },
   "resolutions": {
     "beachball@2.31.5": "patch:beachball@npm:2.31.5#.yarn/patches/beachball-npm-2.31.5-0e84ec4233.patch",
