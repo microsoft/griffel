@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { RESET, makeResetStyles, makeStyles, mergeClasses, TextDirectionProvider } from '@griffel/react';
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 import { print, test } from './index';
 
@@ -176,7 +177,7 @@ describe('serializer', () => {
     expect({
       toString: () => 'class="foo"',
     }).toMatchInlineSnapshot(`
-      Object {
+      {
         "toString": [Function],
       }
     `);

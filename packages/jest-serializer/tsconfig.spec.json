@@ -3,10 +3,12 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node", "environment"]
+    "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
+    "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment"]
   },
   "include": [
+    "vitest.config.mts",
+    "vitest.setup.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/*.test.tsx",
@@ -15,8 +17,6 @@
     "**/*.spec.js",
     "**/*.test.jsx",
     "**/*.spec.jsx",
-    "**/*.d.ts",
-    "jest.config.ts",
-    "jest.setup.ts"
+    "**/*.d.ts"
   ]
 }
