@@ -26,7 +26,7 @@
   "scripts": {
     "build": "nx affected --target=build",
     "change": "beachball change",
-    "check-dependencies": "syncpack lint --dependency-types prod,peer",
+    "check-dependencies": "syncpack lint",
     "lint": "nx affected --target=lint",
     "start": "nx run @griffel/website:serve",
     "storybook": "nx run @griffel/react:storybook",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.29.0",
-    "@babel/generator": "^7.23.0",
+    "@babel/generator": "^7.23.1",
     "@babel/helper-module-imports": "^7.22.15",
     "@babel/helper-plugin-utils": "^7.28.6",
     "@babel/template": "^7.28.6",
@@ -60,7 +60,6 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@babel/generator": "^7.23.1",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.2",
     "@codesandbox/sandpack-react": "2.13.10",

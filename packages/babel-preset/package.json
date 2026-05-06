@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.29.0",
-    "@babel/generator": "^7.23.0",
+    "@babel/generator": "^7.23.1",
     "@babel/helper-plugin-utils": "^7.28.6",
     "@babel/template": "^7.28.6",
     "@babel/traverse": "^7.29.0",

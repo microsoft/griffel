@@ -327,7 +327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/generator@npm:>=7, @babel/generator@npm:^7.23.0, @babel/generator@npm:^7.23.1, @babel/generator@npm:^7.25.9, @babel/generator@npm:^7.27.5, @babel/generator@npm:^7.29.0, @babel/generator@npm:^7.7.2":
+"@babel/generator@npm:>=7, @babel/generator@npm:^7.23.1, @babel/generator@npm:^7.25.9, @babel/generator@npm:^7.27.5, @babel/generator@npm:^7.29.0, @babel/generator@npm:^7.7.2":
   version: 7.29.1
   resolution: "@babel/generator@npm:7.29.1"
   dependencies:
@@ -3616,7 +3616,7 @@ __metadata:
   resolution: "@griffel/babel-preset@workspace:packages/babel-preset"
   dependencies:
     "@babel/core": "npm:^7.29.0"
-    "@babel/generator": "npm:^7.23.0"
+    "@babel/generator": "npm:^7.23.1"
     "@babel/helper-plugin-utils": "npm:^7.28.6"
     "@babel/template": "npm:^7.28.6"
     "@babel/traverse": "npm:^7.29.0"

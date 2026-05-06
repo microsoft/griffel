@@ -3,15 +3,20 @@
   "strict": true,
   "versionGroups": [
     {
-      "label": "Local workspace cross-package deps are managed by beachball",
+      "label": "Local @griffel/* cross-package deps must use the same caret range everywhere",
       "dependencies": ["@griffel/*"],
+      "policy": "sameRange"
+    },
+    {
+      "label": "Peer dependency ranges are intentionally permissive and managed per-package",
+      "dependencyTypes": ["peer"],
       "isIgnored": true
     },
     {
-      "label": "All workspace package deps must be pinned at the monorepo root",
+      "label": "All workspace package prod deps must be pinned at the monorepo root",
       "packages": ["**", "!griffel-repository"],
       "dependencies": ["**"],
-      "dependencyTypes": ["prod", "dev"],
+      "dependencyTypes": ["prod"],
       "snapTo": ["griffel-repository"]
     }
   ]
