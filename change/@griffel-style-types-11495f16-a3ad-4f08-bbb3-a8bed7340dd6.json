@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: drop unused jest test target from @griffel/style-types",
+  "packageName": "@griffel/style-types",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
