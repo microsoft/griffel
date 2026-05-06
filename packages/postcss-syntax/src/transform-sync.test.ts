@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import transformSync, { type TransformOptions } from './transform-sync';
 
 describe('transformSync', () => {
@@ -31,9 +33,9 @@ describe('transformSync', () => {
     const result = transformSync(sourceCode, options);
 
     expect(result.metadata.cssEntries).toMatchInlineSnapshot(`
-      Object {
-        "useStyles": Object {
-          "root": Array [
+      {
+        "useStyles": {
+          "root": [
             ".fe3e8s9{color:red;}",
             ".fcnqdeg{background-color:green;}",
             ".fvjh0tl{margin-top:4px;}",
@@ -42,9 +44,9 @@ describe('transformSync', () => {
       }
     `);
     expect(result.metadata.locations).toMatchInlineSnapshot(`
-      Object {
-        "useStyles": Object {
-          "root": Object {
+      {
+        "useStyles": {
+          "root": {
             "end": Position {
               "column": 7,
               "index": 317,
@@ -109,20 +111,20 @@ describe('transformSync', () => {
     const result = transformSync(sourceCode, options);
 
     expect(result.metadata.commentDirectives).toMatchInlineSnapshot(`
-      Object {
-        "useStyles": Object {
-          "foo": Array [
-            Array [
+      {
+        "useStyles": {
+          "foo": [
+            [
               "griffel-csslint-disable",
               "foo",
             ],
           ],
-          "root": Array [
-            Array [
+          "root": [
+            [
               "griffel-csslint-disable",
               "foo",
             ],
-            Array [
+            [
               "griffel-csslint-disable",
               "bar",
             ],
@@ -132,19 +134,19 @@ describe('transformSync', () => {
     `);
 
     expect(result.metadata.resetCommentDirectives).toMatchInlineSnapshot(`
-      Object {
-        "useResetStyles": Array [
-          Array [
+      {
+        "useResetStyles": [
+          [
             "griffel-csslint-disable",
             "foo",
           ],
         ],
-        "useResetStylesExportedLater": Array [
-          Array [
+        "useResetStylesExportedLater": [
+          [
             "griffel-csslint-disable",
             "foo",
           ],
-          Array [
+          [
             "griffel-csslint-disable",
             "bar",
           ],
@@ -186,16 +188,16 @@ describe('transformSync', () => {
     const result = transformSync(sourceCode, options);
 
     expect(result.metadata.cssEntries).toMatchInlineSnapshot(`
-      Object {
-        "useStyles1": Object {
-          "root": Array [
+      {
+        "useStyles1": {
+          "root": [
             ".fe3e8s9{color:red;}",
             ".fcnqdeg{background-color:green;}",
             ".fvjh0tl{margin-top:4px;}",
           ],
         },
-        "useStyles2": Object {
-          "root": Array [
+        "useStyles2": {
+          "root": [
             ".fe3e8s9{color:red;}",
             ".fcnqdeg{background-color:green;}",
             ".fvjh0tl{margin-top:4px;}",
@@ -259,11 +261,11 @@ describe('transformSync', () => {
     const result = transformSync(sourceCode, options);
 
     expect(result.metadata.cssResetEntries).toMatchInlineSnapshot(`
-      Object {
-        "useResetStyles1": Array [
+      {
+        "useResetStyles1": [
           ".rv6h41g{color:red;background-color:green;margin-top:4px;}",
         ],
-        "useResetStyles2": Array [
+        "useResetStyles2": [
           ".rv6h41g{color:red;background-color:green;margin-top:4px;}",
         ],
       }

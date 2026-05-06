@@ -1,4 +1,6 @@
 import type postcss from 'postcss';
+import { describe, expect, it } from 'vitest';
+
 import {
   GRIFFEL_DECLARATOR_LOCATION_RAW,
   GRIFFEL_DECLARATOR_RAW,
