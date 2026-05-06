@@ -1,7 +1,7 @@
 import baseConfig from '../../eslint.config.mjs';
-import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
+import eslintPluginReactX from 'eslint-plugin-react-x';
 
 export default [
   {
@@ -14,11 +14,10 @@ export default [
       '@typescript-eslint/naming-convention': 'off',
     },
   },
-  eslintPluginReact.configs.flat.recommended,
-  eslintPluginReact.configs.flat['jsx-runtime'],
+  eslintPluginReactX.configs['recommended-typescript'],
   eslintPluginReactHooks.configs.flat['recommended-latest'],
+  eslintPluginReactX.configs['disable-conflict-eslint-plugin-react-hooks'],
   eslintPluginReactCompiler.configs.recommended,
-  { settings: { react: { version: '19' } } },
   {
     files: ['**/*.ts', '**/*.tsx'],
     // Override or add rules here

@@ -4,6 +4,8 @@
 // Adopted version of StackTrace-Parser
 // https://github.com/errwischt/stacktrace-parser/blob/master/src/stack-trace-parser.js
 
+/* eslint-disable no-useless-assignment */
+
 const UNKNOWN_FUNCTION = '<unknown>';
 
 type LineParseResult = null | {

@@ -11,7 +11,7 @@ export const insertionFactory: GriffelInsertionFactory = () => {
   return function insert(renderer: GriffelRenderer, cssRules: CSSRulesByBucket) {
     // Even if `useInsertionEffect` is available, we can use it on a client only as it will not be executed in SSR
     if (useInsertionEffect && canUseDOM()) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
+      // eslint-disable-next-line react-x/rules-of-hooks
       useInsertionEffect(() => {
         renderer.insertCSSRules(cssRules!);
       }, [renderer, cssRules]);
