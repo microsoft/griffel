@@ -11,6 +11,7 @@
     },
     "generate": {
       "executor": "nx:run-commands",
+      "dependsOn": ["@griffel/core:build"],
       "options": {
         "cwd": "tools/update-shorthands",
         "commands": [

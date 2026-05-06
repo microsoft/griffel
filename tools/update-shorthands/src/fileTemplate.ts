@@ -5,7 +5,7 @@ import type { CSSShorthands } from './types.ts';
 
 export async function fileTemplate(shorthandProperties: CSSShorthands) {
   const prettierConfig = JSON.parse(
-    await fs.readFile(path.resolve(__dirname, '../../../.prettierrc'), { encoding: 'utf-8' }),
+    await fs.readFile(path.resolve(import.meta.dirname, '../../../.prettierrc'), { encoding: 'utf-8' }),
   );
   const stringifiedOutput = JSON.stringify(shorthandProperties, null, 2);
 

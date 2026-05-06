@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): bump csstype to 3.2.3 and add `positionTry` & `textWrap` shorthands",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
