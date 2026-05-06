@@ -5,6 +5,22 @@ import * as prettier from 'prettier';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
+await vi.hoisted(mock);
+
+async function mock() {
+  const { Module } = await import('module');
+  const path = await import('path');
+
+  const mockedUri = path.resolve(__dirname, './webpackLoader.vitest.cjs');
+  const loader = await import('./index');
+
+  const loadOriginal = (Module as any)._load;
+  (Module as any)._load = (uri: string, parent: string) => {
+    if (uri === mockedUri) return loader.default;
+    return loadOriginal(uri, parent);
+  };
+}
+
 import type { WebpackLoaderOptions } from './webpackLoader';
 import { shouldTransformSourceCode } from './webpackLoader';
 
@@ -38,7 +54,7 @@ async function compileSourceWithWebpack(entryPath: string, options: CompileOptio
           test: /\.(ts|tsx|txt)$/,
           include: path.dirname(entryPath),
           use: {
-            loader: path.resolve(__dirname, './index.ts'),
+            loader: path.resolve(__dirname, './webpackLoader.vitest.cjs'),
             options: options.loaderOptions,
           },
         },
@@ -229,7 +245,7 @@ describe('shouldTransformSourceCode', () => {
 });
 
 describe('webpackLoader', () => {
-  jest.setTimeout(15000);
+  vi.setConfig({ testTimeout: 15000 });
   // Integration fixtures for base functionality, all scenarios are tested in "@griffel/babel-preset"
   testFixture('object');
   testFixture('function');
