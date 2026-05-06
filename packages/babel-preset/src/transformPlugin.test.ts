@@ -2,7 +2,9 @@ import * as Babel from '@babel/core';
 import { pluginTester, prettierFormatter } from 'babel-plugin-tester';
 import * as fs from 'fs';
 import * as path from 'path';
+import { describe, expect, it, vi } from 'vitest';
 
+import sampleEvaluator from '../__fixtures__/config-evaluation-rules/sampleEvaluator.js';
 import { transformPlugin } from './transformPlugin';
 import type { BabelPluginMetadata } from './types';
 
@@ -182,7 +184,7 @@ pluginTester({
       pluginOptions: {
         evaluationRules: [
           {
-            action: 'sampleEvaluator',
+            action: sampleEvaluator,
           },
         ],
       },
@@ -278,7 +280,7 @@ pluginTester({
       fixture: path.resolve(fixturesDir, 'unsupported-css-properties', 'fixture.ts'),
       outputFixture: path.resolve(fixturesDir, 'unsupported-css-properties', 'output.ts'),
       setup() {
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
         return function teardown() {
           consoleSpy.mockRestore();
@@ -326,7 +328,7 @@ describe('babel preset', () => {
       presets: ['@babel/typescript'],
     });
 
-    expect(babelFileResult?.metadata).toMatchInlineSnapshot(`Object {}`);
+    expect(babelFileResult?.metadata).toMatchInlineSnapshot(`{}`);
   });
 
   it('should return empty metadata when file contains no griffel code', () => {
@@ -356,23 +358,23 @@ describe('babel preset', () => {
     });
 
     expect(babelFileResult?.metadata).toMatchInlineSnapshot(`
-      Object {
-        cssEntries: Object {
-          useStyles: Object {
-            icon: Array [
+      {
+        cssEntries: {
+          useStyles: {
+            icon: [
               .fcnqdeg{background-color:green;},
               .fjf1xye{margin-left:4px;},
               .f8zmjen{margin-right:4px;},
             ],
-            root: Array [
+            root: [
               .fe3e8s9{color:red;},
               .fycuoez{padding-left:4px;},
               .f8wuabp{padding-right:4px;},
             ],
           },
         },
-        cssResetEntries: Object {},
-        cssStaticEntries: Object {},
+        cssResetEntries: {},
+        cssStaticEntries: {},
       }
     `);
   });
@@ -390,15 +392,15 @@ describe('babel preset', () => {
     });
 
     expect(babelFileResult?.metadata).toMatchInlineSnapshot(`
-      Object {
-        cssEntries: Object {},
-        cssResetEntries: Object {
-          useStyles: Array [
+      {
+        cssEntries: {},
+        cssResetEntries: {
+          useStyles: [
             .rjefjbm{color:red;padding-left:4px;},
             .r7z97ji{color:red;padding-right:4px;},
           ],
         },
-        cssStaticEntries: Object {},
+        cssStaticEntries: {},
       }
     `);
   });
@@ -424,17 +426,17 @@ export const useStyles = makeStyles({
     });
 
     expect(babelFileResult?.metadata).toMatchInlineSnapshot(`
-      Object {
-        cssEntries: Object {
-          useStyles: Object {
-            root: Array [
+      {
+        cssEntries: {
+          useStyles: {
+            root: [
               .fycuoez{padding-left:4px;},
               .f8wuabp{padding-right:4px;},
             ],
           },
         },
-        cssResetEntries: Object {},
-        cssStaticEntries: Object {},
+        cssResetEntries: {},
+        cssStaticEntries: {},
       }
     `);
   });

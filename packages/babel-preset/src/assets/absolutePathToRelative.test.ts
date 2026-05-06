@@ -1,4 +1,6 @@
 import * as path from 'path';
+import { describe, it, expect } from 'vitest';
+
 import { absolutePathToRelative } from './absolutePathToRelative';
 
 describe('absolutePathToRelative', () => {

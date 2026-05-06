@@ -10,10 +10,10 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/babel-preset"],
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "jestConfig": "packages/babel-preset/jest.config.ts"
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/babel-preset"
       }
     },
     "build": {
