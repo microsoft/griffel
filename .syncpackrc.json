@@ -13,6 +13,12 @@
       "isIgnored": true
     },
     {
+      "label": "devDependencies are not allowed in workspace packages; declare them on the monorepo root",
+      "packages": ["**", "!griffel-repository"],
+      "dependencyTypes": ["dev"],
+      "isBanned": true
+    },
+    {
       "label": "All workspace package prod deps must be pinned at the monorepo root",
       "packages": ["**", "!griffel-repository"],
       "dependencies": ["**"],

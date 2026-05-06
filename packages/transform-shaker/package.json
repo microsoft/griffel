@@ -22,9 +22,5 @@
     "magic-string": "^0.30.19",
     "oxc-parser": "^0.129.0",
     "oxc-transform": "^0.129.0"
-  },
-  "devDependencies": {
-    "@types/debug": "^4.1.7",
-    "dedent": "^1.5.3"
   }
 }
