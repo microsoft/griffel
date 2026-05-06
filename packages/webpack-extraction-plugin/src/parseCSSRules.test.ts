@@ -1,4 +1,5 @@
 import type { CSSRulesByBucket } from '@griffel/core';
+import { describe, expect, it } from 'vitest';
 
 import { generateCSSRules } from './generateCSSRules';
 import { parseCSSRules } from './parseCSSRules';
@@ -33,32 +34,32 @@ describe('parseCSSRules', () => {
     const result = parseCSSRules(css);
 
     expect(removeEmptyBuckets(result.cssRulesByBucket)).toMatchInlineSnapshot(`
-      Object {
-        "d": Array [
+      {
+        "d": [
           ".fe3e8s9{color:red;}",
-          Array [
+          [
             ".f65sxns{background:green;}",
-            Object {
+            {
               "p": -2,
             },
           ],
         ],
-        "m": Array [
-          Array [
+        "m": [
+          [
             "@media screen and (max-width: 100px){.fr5o61b{color:red;}}",
-            Object {
+            {
               "m": "screen and (max-width: 100px)",
             },
           ],
-          Array [
+          [
             "@media screen and (max-width: 100px){.f1j0ers2{display:grid;}}",
-            Object {
+            {
               "m": "screen and (max-width: 100px)",
             },
           ],
-          Array [
+          [
             "@media screen and (max-width: 100px){.fr5o61c{padding:0;}}",
-            Object {
+            {
               "m": "screen and (max-width: 100px)",
               "p": -1,
             },
@@ -82,8 +83,8 @@ describe('parseCSSRules', () => {
     const result = parseCSSRules(css + thirdPartyCSS);
 
     expect(removeEmptyBuckets(result.cssRulesByBucket)).toMatchInlineSnapshot(`
-      Object {
-        "d": Array [
+      {
+        "d": [
           ".fe3e8s9{color:red;}",
         ],
       }
@@ -99,8 +100,8 @@ describe('parseCSSRules', () => {
     const result = parseCSSRules(css);
 
     expect(removeEmptyBuckets(result.cssRulesByBucket)).toMatchInlineSnapshot(`
-      Object {
-        "d": Array [
+      {
+        "d": [
           "@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}",
         ],
       }
@@ -116,8 +117,8 @@ describe('parseCSSRules', () => {
     const result = parseCSSRules(css);
 
     expect(removeEmptyBuckets(result.cssRulesByBucket)).toMatchInlineSnapshot(`
-      Object {
-        "d": Array [
+      {
+        "d": [
           "@scope (.f1ewl1kl) to (.boundary > *){:scope .child{color:red;}}",
         ],
       }

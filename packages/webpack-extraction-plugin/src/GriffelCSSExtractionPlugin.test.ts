@@ -3,8 +3,33 @@ import { createFsFromVolume, Volume } from 'memfs';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as path from 'path';
 import * as prettier from 'prettier';
+import { describe, expect, it, vi } from 'vitest';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
+
+await vi.hoisted(mock);
+
+async function mock() {
+  const { Module } = await import('module');
+  const path = await import('path');
+
+  // Node's default require.resolve extensions are .js/.json/.node — .cjs is not
+  // included. GriffelCSSExtractionPlugin.loader = require.resolve('./webpackLoader')
+  // therefore can't reach the sibling webpackLoader.cjs stub on its own. Register
+  // .cjs so the resolver finds the stub during tests; in production the same call
+  // resolves to the compiled webpackLoader.js (this hoist only runs under vitest).
+  const ext = (Module as any)._extensions;
+  if (!ext['.cjs']) ext['.cjs'] = ext['.js'];
+
+  const loaderUri = path.resolve(__dirname, './webpackLoader.cjs');
+  const loaderModule = await import('./webpackLoader');
+
+  const loadOriginal = (Module as any)._load;
+  (Module as any)._load = (uri: string, parent: string) => {
+    if (uri === loaderUri) return loaderModule.default ?? loaderModule;
+    return loadOriginal(uri, parent);
+  };
+}
 
 import type { GriffelCSSExtractionPluginOptions } from './GriffelCSSExtractionPlugin';
 import { GriffelCSSExtractionPlugin } from './GriffelCSSExtractionPlugin';

@@ -1,4 +1,6 @@
 import type { CSSRulesByBucket } from '@griffel/core';
+import { describe, expect, it } from 'vitest';
+
 import { generateCSSRules } from './generateCSSRules';
 
 describe('generateCSSRules', () => {
@@ -36,17 +38,17 @@ describe('generateCSSRules', () => {
       "/** @griffel:css-start [d] null **/
       .foo { color: orange; }
       /** @griffel:css-end **/
-      /** @griffel:css-start [d] {\\"p\\":-2} **/
+      /** @griffel:css-start [d] {"p":-2} **/
       .bar { color: red; }
       .baz { color: green; }
       /** @griffel:css-end **/
-      /** @griffel:css-start [d] {\\"p\\":-3} **/
+      /** @griffel:css-start [d] {"p":-3} **/
       .qux { color: blue; }
       /** @griffel:css-end **/
       /** @griffel:css-start [f] null **/
       .foo:focus { color: orange; }
       /** @griffel:css-end **/
-      /** @griffel:css-start [f] {\\"p\\":-2} **/
+      /** @griffel:css-start [f] {"p":-2} **/
       .bar:focus { color: red; }
       /** @griffel:css-end **/"
     `);
