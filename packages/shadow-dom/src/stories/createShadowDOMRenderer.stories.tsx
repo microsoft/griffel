@@ -1,17 +1,8 @@
 import * as React from 'react';
-import type { default as _root } from 'react-shadow';
-// @ts-expect-error Typings are missing
-import { createProxy as _createProxy } from 'react-shadow';
+import { createProxy } from 'react-shadow';
 
 import { makeStyles, RendererProvider, shorthands } from '@griffel/react';
 import { createShadowDOMRenderer } from '../../src/index.js';
-
-type Root = typeof _root;
-
-type CreateProxyRenderFn = ({ children }: { children: React.ReactNode; root: ShadowRoot }) => React.ReactNode;
-type CreateProxyFn = (target: unknown, id: string, render: CreateProxyRenderFn) => Root;
-
-const createProxy: CreateProxyFn = _createProxy;
 
 const ReactComponentsWrapper: React.FC<{
   children: React.ReactNode;
