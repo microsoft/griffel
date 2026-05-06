@@ -132,6 +132,7 @@ export const shorthands: Partial<Record<AllowedShorthandProperties, [number, str
   placeContent: [-1, ['alignContent', 'justifyContent']],
   placeItems: [-1, ['alignItems', 'justifyItems']],
   placeSelf: [-1, ['alignSelf', 'justifySelf']],
+  positionTry: [-1, ['positionTryFallbacks', 'positionTryOrder']],
   scrollMargin: [-1, ['scrollMarginBottom', 'scrollMarginLeft', 'scrollMarginRight', 'scrollMarginTop']],
   scrollMarginBlock: [-1, ['scrollMarginBlockEnd', 'scrollMarginBlockStart']],
   scrollMarginInline: [-1, ['scrollMarginInlineEnd', 'scrollMarginInlineStart']],
@@ -141,6 +142,7 @@ export const shorthands: Partial<Record<AllowedShorthandProperties, [number, str
   scrollTimeline: [-1, ['scrollTimelineAxis', 'scrollTimelineName']],
   textDecoration: [-1, ['textDecorationColor', 'textDecorationLine', 'textDecorationStyle', 'textDecorationThickness']],
   textEmphasis: [-1, ['textEmphasisColor', 'textEmphasisStyle']],
+  textWrap: [-1, ['textWrapMode', 'textWrapStyle']],
   transition: [
     -1,
     ['transitionBehavior', 'transitionDelay', 'transitionDuration', 'transitionProperty', 'transitionTimingFunction'],
