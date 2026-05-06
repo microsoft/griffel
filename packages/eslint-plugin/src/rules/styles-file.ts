@@ -26,7 +26,7 @@ export const stylesFileRule = ESLintUtils.RuleCreator(getDocsUrl)({
   },
   defaultOptions: [],
   create(context) {
-    const fileName = context.getFilename();
+    const fileName = context.filename;
 
     let isMakeStylesImported = false;
     const makeStylesDeclarations: string[] = []; // contains constants from makeStyles calls: `const useStyles = makeStyles({})`

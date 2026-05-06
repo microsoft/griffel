@@ -1,16 +1,15 @@
 import baseConfig from '../../eslint.config.mjs';
-import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
+import eslintPluginReactX from 'eslint-plugin-react-x';
 
 export default [
   {
     ignores: ['**/dist', '**/out-tsc'],
   },
   ...baseConfig,
-  eslintPluginReact.configs.flat.recommended,
-  eslintPluginReact.configs.flat['jsx-runtime'],
+  eslintPluginReactX.configs['recommended-typescript'],
   eslintPluginReactHooks.configs.flat['recommended-latest'],
-  { settings: { react: { version: '19' } } },
+  eslintPluginReactX.configs['disable-conflict-eslint-plugin-react-hooks'],
   {
     files: ['**/*.ts', '**/*.tsx'],
     // Override or add rules here

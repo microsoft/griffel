@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import-x/no-extraneous-dependencies
 const zip = require('bestzip');
 
 const DIST_PATH = path.resolve(__dirname, '../../dist/packages/devtools');
