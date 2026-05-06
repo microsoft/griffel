@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: migrate Storybook to @storybook/react-vite",
+  "packageName": "@griffel/react",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

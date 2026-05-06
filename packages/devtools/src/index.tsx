@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { DefaultMessage } from './DefaultMessage';
 import { FlattenView } from './FlattenView';
@@ -31,9 +31,8 @@ const DevTools: React.FC = () => {
   );
 };
 
-ReactDOM.render(
+createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <DevTools />
   </React.StrictMode>,
-  document.getElementById('root'),
 );
