@@ -18,6 +18,7 @@ export function getUniqueRulesFromSets(setOfCSSRules: CSSRulesByBucket[]): RuleE
   const uniqueCSSRules = new Map<string, RuleEntry>();
 
   for (const cssRulesByBucket of setOfCSSRules) {
+    // eslint-disable-next-line guard-for-in
     for (const _styleBucketName in cssRulesByBucket) {
       const styleBucketName = _styleBucketName as StyleBucketName;
 

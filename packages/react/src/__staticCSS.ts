@@ -7,7 +7,6 @@ import { __staticCSS as vanillaStaticCSS } from '@griffel/core';
  *
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function __staticCSS() {
   const getStyles = vanillaStaticCSS();
 

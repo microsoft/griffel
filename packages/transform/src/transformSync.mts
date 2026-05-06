@@ -156,6 +156,7 @@ function buildCSSEntriesMetadata(
 }
 
 function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRulesByBucket) {
+  // eslint-disable-next-line guard-for-in
   for (const cssBucketName in bucketB) {
     const bucketName = cssBucketName as keyof CSSRulesByBucket;
     const bucketBEntries = bucketB[bucketName] ?? [];

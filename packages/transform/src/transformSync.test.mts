@@ -98,6 +98,7 @@ function normalizeAssetOutputs(
   const hashes: string[] = [];
   let match;
 
+  // eslint-disable-next-line no-cond-assign
   while ((match = hashRegex.exec(normalizedMeta)) !== null) {
     if (!hashes.includes(match[1])) {
       hashes.push(match[1]);
@@ -249,7 +250,6 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
     transformOptions: {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       evaluationRules: [{ action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default }],
     },
   },

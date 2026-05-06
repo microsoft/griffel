@@ -340,6 +340,7 @@ export class GriffelPlugin {
             const fileCount = entries.length;
             const avgTime = fileCount > 0 ? totalTime / BigInt(fileCount) : 0n;
 
+            /* eslint-disable no-console */
             console.log('\nGriffel CSS extraction stats:');
 
             console.log('------------------------------------');
@@ -357,6 +358,7 @@ export class GriffelPlugin {
             }
 
             console.log();
+            /* eslint-enable no-console */
           }
 
           if (this.#collectPerfIssues && this.#perfIssues.size > 0) {
@@ -364,6 +366,7 @@ export class GriffelPlugin {
             const cjsCount = issues.filter(i => i.type === 'cjs-module').length;
             const barrelCount = issues.filter(i => i.type === 'barrel-export-star').length;
 
+            /* eslint-disable no-console */
             console.log('\nGriffel performance issues:');
             console.log('------------------------------------');
             console.log(`CJS modules (no tree-shaking): ${cjsCount}`);
@@ -377,6 +380,7 @@ export class GriffelPlugin {
             }
 
             console.log();
+            /* eslint-enable no-console */
           }
         },
       );

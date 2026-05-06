@@ -28,6 +28,7 @@ const CustomRendererProvider: React.FC<{ children: React.ReactNode; filterEnable
 }) => {
   const customDOMRenderer = React.useMemo(() => {
     return createDOMRenderer(undefined, {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       unstable_filterCSSRule: cssRule => {
         // Filter out background-color
         return !filterEnabled || cssRule.indexOf('{background-color:') === -1;

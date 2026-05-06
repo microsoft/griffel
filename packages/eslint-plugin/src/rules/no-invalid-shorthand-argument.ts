@@ -36,7 +36,7 @@ export const noInvalidShorthandArgumentRule = ESLintUtils.RuleCreator(getDocsUrl
           if (shorthandLiteral) {
             const autoFixArguments = shorthandToArguments(shorthandName, shorthandLiteral.value);
 
-            if (autoFixArguments != null && autoFixArguments.length > 1) {
+            if (autoFixArguments !== null && autoFixArguments !== undefined && autoFixArguments.length > 1) {
               context.report({
                 node,
                 messageId: 'invalidShorthandArgument',

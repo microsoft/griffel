@@ -114,6 +114,7 @@ function inlineAssetImports(argumentPath: NodePath<t.ObjectExpression> | NodePat
   const importsToRemove = new Set<NodePath<t.ImportDeclaration>>();
 
   argumentPath.traverse({
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     TemplateLiteral(literalPath) {
       const expressionPaths = literalPath.get('expressions');
 
@@ -226,6 +227,7 @@ export const babelPluginStripGriffelRuntime = declare<
 
         exit(programPath, state) {
           programPath.traverse({
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             ImportSpecifier(path) {
               const importedPath = path.get('imported');
 

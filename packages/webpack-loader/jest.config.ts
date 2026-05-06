@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'webpack-loader',
   preset: '../../jest.preset.js',

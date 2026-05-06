@@ -14,6 +14,7 @@ export function createIsomorphicStyleSheet(
   elementAttributes[DATA_PRIORITY_ATTR] = String(priority);
 
   if (styleElement) {
+    // eslint-disable-next-line guard-for-in
     for (const attrName in elementAttributes) {
       styleElement.setAttribute(attrName, elementAttributes[attrName]);
     }

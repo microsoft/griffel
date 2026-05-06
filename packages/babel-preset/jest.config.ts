@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'babel-preset',
   preset: '../../jest.preset.js',

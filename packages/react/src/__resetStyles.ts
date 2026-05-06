@@ -12,7 +12,6 @@ import { useTextDirection } from './TextDirectionContext.js';
  *
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export function __resetStyles(
   ltrClassName: string,
   rtlClassName: string | null,

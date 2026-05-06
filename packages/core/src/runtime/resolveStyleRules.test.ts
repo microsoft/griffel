@@ -16,7 +16,6 @@ describe('resolveStyleRules', () => {
   describe('unsupported css properties', () => {
     let consoleSpy: ReturnType<typeof vi.spyOn>;
     beforeAll(() => {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -222,7 +221,6 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles empty array of fallback values', () => {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       const warn = vi.spyOn(console, 'warn').mockImplementationOnce(() => {});
 
       const actual = resolveStyleRules({ color: [] });
@@ -378,7 +376,6 @@ describe('resolveStyleRules', () => {
     });
 
     it('errors if fallback values result in multiple properties in RTL, skips the property', () => {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
       expect(

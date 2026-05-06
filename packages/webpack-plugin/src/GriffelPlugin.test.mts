@@ -205,6 +205,7 @@ function normalizeGriffelHashes(str: string): string {
   const hashes: string[] = [];
   let match;
 
+  // eslint-disable-next-line no-cond-assign
   while ((match = hashRegex.exec(str)) !== null) {
     if (!hashes.includes(match[1])) {
       hashes.push(match[1]);

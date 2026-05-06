@@ -84,7 +84,6 @@ export default class ScopeManager {
     this.declare(ScopeManager.globalModuleIdentifier, false);
   }
 
-  // eslint-disable-next-line no-plusplus
   new(isFunction: boolean, scopeId: ScopeId = this.nextId++): Scope {
     const scope: Scope = new Map();
     if (isFunction) {

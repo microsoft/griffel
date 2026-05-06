@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SourceMapConsumer } from 'source-map-js';
 import type { MappedPosition, RawSourceMap } from 'source-map-js';
 

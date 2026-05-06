@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { MappedPosition, RawSourceMap } from 'source-map-js';
 import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer';
 

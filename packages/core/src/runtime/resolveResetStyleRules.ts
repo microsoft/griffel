@@ -76,6 +76,7 @@ function createStringFromStyles(styles: GriffelResetStyle, isInsideScope = false
       // not animationName property but array in the value => fallback values
       if (value.length === 0) {
         if (process.env.NODE_ENV !== 'production') {
+          // eslint-disable-next-line no-console
           console.warn(
             `makeResetStyles(): An empty array was passed as input to "${property}", the property will be omitted in the styles.`,
           );
@@ -88,6 +89,7 @@ function createStringFromStyles(styles: GriffelResetStyle, isInsideScope = false
 
       if (!rtlPropertyConsistent) {
         if (process.env.NODE_ENV !== 'production') {
+          // eslint-disable-next-line no-console
           console.error(
             'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
           );

@@ -28,6 +28,7 @@ export function makeResetStyles(styles: GriffelResetStyle, factory: GriffelInser
       if (process.env.NODE_ENV !== 'production') {
         if (renderer.classNameHashSalt) {
           if (classNameHashSalt !== renderer.classNameHashSalt) {
+            // eslint-disable-next-line no-console
             console.error(
               [
                 '@griffel/core:',
