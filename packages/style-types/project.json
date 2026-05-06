@@ -28,13 +28,6 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/style-types"],
-      "options": {
-        "jestConfig": "packages/style-types/jest.config.ts"
-      }
-    },
     "type-check": {
       "executor": "nx:run-commands",
       "options": {
