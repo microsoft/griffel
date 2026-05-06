@@ -54,10 +54,10 @@ Thumbs.db
 
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
-.claude/worktrees
-.claude/settings.local.json
+.claude/
 
 # Vitest browser-mode failure captures
 **/__screenshots__/
+**/.vitest-attachments/
 .nx/polygraph
 .nx/self-healing
