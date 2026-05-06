@@ -53,7 +53,7 @@
     "oxc-resolver": "^11.19.1",
     "oxc-transform": "^0.129.0",
     "oxc-walker": "^0.7.0",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.14",
     "rtl-css-js": "^1.16.1",
     "source-map-js": "1.2.1",
     "stylis": "^4.4.0",
