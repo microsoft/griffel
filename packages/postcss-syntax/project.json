@@ -10,10 +10,10 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/postcss-syntax"],
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "jestConfig": "packages/postcss-syntax/jest.config.ts"
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/postcss-syntax"
       }
     },
     "build": {
