@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: migrate @griffel/postcss-syntax from jest to vitest",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
