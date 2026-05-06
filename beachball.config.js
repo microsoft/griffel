@@ -10,7 +10,6 @@ module.exports = {
     '**/*.test.{ts,tsx}',
     '**/*.stories.tsx',
     '**/eslint.config.mjs',
-    '**/jest.config.js',
     '**/project.json',
     '**/README.md',
   ],
