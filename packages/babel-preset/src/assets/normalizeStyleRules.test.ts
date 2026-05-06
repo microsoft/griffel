@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { RESET } from '@griffel/core';
+import { describe, it, expect } from 'vitest';
 
 import { normalizeStyleRule, normalizeStyleRules } from './normalizeStyleRules';
 

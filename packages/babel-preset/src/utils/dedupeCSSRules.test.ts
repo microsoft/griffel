@@ -1,4 +1,7 @@
+import { describe, it, expect } from 'vitest';
+
 import type { CSSRulesByBucket } from '@griffel/core';
+
 import { dedupeCSSRules } from './dedupeCSSRules';
 
 describe('dedupeCSSRules', () => {

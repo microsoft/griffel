@@ -3,10 +3,11 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node", "environment", "static-assets"]
+    "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
+    "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment", "static-assets"]
   },
   "include": [
+    "vitest.config.mts",
     "__fixtures__/**/code.ts",
     "__fixtures__/**/fixture.ts",
     "**/*.test.ts",
@@ -17,7 +18,6 @@
     "**/*.spec.js",
     "**/*.test.jsx",
     "**/*.spec.jsx",
-    "**/*.d.ts",
-    "jest.config.ts"
+    "**/*.d.ts"
   ]
 }

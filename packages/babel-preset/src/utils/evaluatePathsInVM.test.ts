@@ -1,5 +1,6 @@
 import * as Babel from '@babel/core';
 import generator from '@babel/generator';
+import { describe, it, expect } from 'vitest';
 
 import { expressionTpl } from './evaluatePathsInVM';
 

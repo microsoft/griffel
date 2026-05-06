@@ -1,4 +1,5 @@
 import type { Evaluator } from '@linaria/babel-preset';
+import { describe, it, expect } from 'vitest';
 
 import { validateOptions } from './validateOptions';
 import type { BabelPluginOptions } from './types';
@@ -18,7 +19,7 @@ describe('validateOptions', () => {
 
       // @ts-expect-error Invalid options are passed for testing purposes
       expect(() => validateOptions(pluginOptions)).toThrowErrorMatchingInlineSnapshot(
-        `"Validation failed for passed config: data/modules must be array"`,
+        `[Error: Validation failed for passed config: data/modules must be array]`,
       );
     });
   });
@@ -40,7 +41,7 @@ describe('validateOptions', () => {
 
       // @ts-expect-error Invalid options are passed for testing purposes
       expect(() => validateOptions(pluginOptions)).toThrowErrorMatchingInlineSnapshot(
-        `"Validation failed for passed config: data/babelOptions must be object"`,
+        `[Error: Validation failed for passed config: data/babelOptions must be object]`,
       );
     });
 
@@ -49,7 +50,7 @@ describe('validateOptions', () => {
 
       // @ts-expect-error Invalid options are passed for testing purposes
       expect(() => validateOptions(pluginOptions)).toThrowErrorMatchingInlineSnapshot(
-        `"Validation failed for passed config: data/generateMetadata must be boolean"`,
+        `[Error: Validation failed for passed config: data/generateMetadata must be boolean]`,
       );
     });
   });
@@ -73,7 +74,7 @@ describe('validateOptions', () => {
 
       // @ts-expect-error Invalid options are passed for testing purposes
       expect(() => validateOptions(pluginOptionsA)).toThrowErrorMatchingInlineSnapshot(
-        `"Validation failed for passed config: data/evaluationRules must be array"`,
+        `[Error: Validation failed for passed config: data/evaluationRules must be array]`,
       );
     });
   });

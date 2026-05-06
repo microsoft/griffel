@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { isAssetUrl } from './isAssetUrl';
 
 describe('isAssetUrl', () => {
