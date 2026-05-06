@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { StoryFn } from '@storybook/react-vite';
 
 import { makeStyles, shorthands, TextDirectionProvider } from '../';
@@ -18,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const FallbackTest = ({ isRtl = false }) => {
+const FallbackTest = ({ isRtl = false }: { isRtl?: boolean }) => {
   const classes = useStyles();
   return (
     <>

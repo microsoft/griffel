@@ -1,7 +1,7 @@
 import { makeStyles, shorthands } from '@griffel/react';
 import { Highlight } from 'prism-react-renderer';
 import type { PrismTheme } from 'prism-react-renderer';
-import * as React from 'react';
+import type * as React from 'react';
 
 import { tokens } from './themes';
 
@@ -69,27 +69,25 @@ export const HighlightedCSS: React.FC<{ code: string }> = ({ code }) => {
     <Highlight code={code} language="css" theme={customTheme}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={{ ...style, display: 'inline-block', textDecorationLine: 'inherit' }}>
-          {tokens.map((line, i) => (
-            <div {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => {
-                const tokenProps = getTokenProps({ token, key });
-                return tokenProps.className.includes('color') && token.content !== 'transparent' ? (
-                  <span
-                    {...tokenProps}
-                    children={
-                      <>
-                        {/* show a square color indicator for colors in css */}
-                        <span className={colorIndicator} style={{ backgroundColor: token.content }} />
-                        <span>{tokenProps.children}</span>
-                      </>
-                    }
-                  />
-                ) : (
-                  <span {...tokenProps} />
-                );
-              })}
-            </div>
-          ))}
+          {tokens.map((line, i) => {
+            const { key: lineKey, ...lineProps } = getLineProps({ line, key: i });
+            return (
+              <div key={lineKey as React.Key} {...lineProps}>
+                {line.map((token, key) => {
+                  const tokenProps = getTokenProps({ token, key });
+                  return tokenProps.className.includes('color') && token.content !== 'transparent' ? (
+                    <span {...tokenProps}>
+                      {/* show a square color indicator for colors in css */}
+                      <span className={colorIndicator} style={{ backgroundColor: token.content }} />
+                      <span>{tokenProps.children}</span>
+                    </span>
+                  ) : (
+                    <span {...tokenProps} />
+                  );
+                })}
+              </div>
+            );
+          })}
         </pre>
       )}
     </Highlight>

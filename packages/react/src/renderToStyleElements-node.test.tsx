@@ -7,7 +7,7 @@
 import { describe, it, expect } from 'vitest';
 import { createDOMRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
-import * as React from 'react';
+import type * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 
 import { makeStyles } from './makeStyles.js';

@@ -1,25 +1,24 @@
 import baseConfig from '../../eslint.config.mjs';
-import nx from '@nx/eslint-plugin';
+import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
+import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
     ignores: ['**/dist', '**/out-tsc'],
   },
-  ...nx.configs['flat/react'],
   ...baseConfig,
-  { plugins: { 'react-compiler': eslintPluginReactCompiler } },
   {
     files: ['**/__*.ts', '**/__*.tsx'],
     rules: {
       '@typescript-eslint/naming-convention': 'off',
     },
   },
-  {
-    rules: {
-      'react-compiler/react-compiler': 'error',
-    },
-  },
+  eslintPluginReact.configs.flat.recommended,
+  eslintPluginReact.configs.flat['jsx-runtime'],
+  eslintPluginReactHooks.configs.flat['recommended-latest'],
+  eslintPluginReactCompiler.configs.recommended,
+  { settings: { react: { version: '19' } } },
   {
     files: ['**/*.ts', '**/*.tsx'],
     // Override or add rules here
