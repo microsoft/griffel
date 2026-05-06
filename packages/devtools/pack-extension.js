@@ -6,7 +6,6 @@ const zip = require('bestzip');
 const DIST_PATH = path.resolve(__dirname, '../../dist/packages/devtools');
 
 if (!fs.existsSync(DIST_PATH)) {
-  // eslint-disable-next-line no-console
   console.error(`"${DIST_PATH}" does not exist, please run "build" command first`);
   process.exit(1);
 }

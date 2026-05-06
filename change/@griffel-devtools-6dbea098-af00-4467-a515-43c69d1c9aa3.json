@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump @typescript-eslint stack and migrate to eslint-plugin-import-x",
-  "packageName": "@griffel/devtools",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}
