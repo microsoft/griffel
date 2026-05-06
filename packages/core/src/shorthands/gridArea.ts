@@ -1,4 +1,5 @@
 import type { GriffelStyle } from '@griffel/style-types';
+import { logError } from '../runtime/warnings/logError.js';
 import type { GridAreaInput } from './types.js';
 
 type GridAreaStyle = Pick<GriffelStyle, 'gridRowStart' | 'gridRowEnd' | 'gridColumnStart' | 'gridColumnEnd'>;
@@ -50,19 +51,16 @@ export function gridArea(
 export function gridArea(...values: GridAreaInput[]): GridAreaStyle {
   // if any value is not valid, then do not apply the CSS.
   if (values.some(value => !isValidGridAreaInput(value))) {
-    if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
-      console.error(
-        `The value passed to shorthands.gridArea() did not match any gridArea property specs. The CSS styles were not generated. Please, check the gridArea documentation.`,
-        [
-          'The value passed to shorthands.gridArea() did not match any gridArea property specs. ',
-          'The CSS styles were not generated.\n',
-          'Please, check the `grid-area` documentation:\n',
-          '- https://developer.mozilla.org/docs/Web/CSS/grid-area',
-          '- https://griffel.js.org/react/api/shorthands#shorthandsgridarea',
-        ].join(''),
-      );
-    }
+    logError(
+      `The value passed to shorthands.gridArea() did not match any gridArea property specs. The CSS styles were not generated. Please, check the gridArea documentation.`,
+      [
+        'The value passed to shorthands.gridArea() did not match any gridArea property specs. ',
+        'The CSS styles were not generated.\n',
+        'Please, check the `grid-area` documentation:\n',
+        '- https://developer.mozilla.org/docs/Web/CSS/grid-area',
+        '- https://griffel.js.org/react/api/shorthands#shorthandsgridarea',
+      ].join(''),
+    );
 
     return {} as GridAreaStyle;
   }

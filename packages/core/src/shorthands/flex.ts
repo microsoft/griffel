@@ -1,6 +1,7 @@
 import type * as CSS from 'csstype';
 
 import type { GriffelStyle } from '@griffel/style-types';
+import { logError } from '../runtime/warnings/logError.js';
 import type { FlexInput } from './types.js';
 
 type FlexStyle = Pick<GriffelStyle, 'flexGrow' | 'flexShrink' | 'flexBasis'>;
@@ -113,11 +114,8 @@ export function flex(...values: FlexInput): FlexStyle {
     }
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
-    console.error(
-      `The value passed to shorthands.flex did not match any flex property specs. The CSS styles were not generated. Please, check the flex documentation.`,
-    );
-  }
+  logError(
+    `The value passed to shorthands.flex did not match any flex property specs. The CSS styles were not generated. Please, check the flex documentation.`,
+  );
   return {} as FlexStyle;
 }

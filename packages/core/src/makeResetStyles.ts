@@ -3,6 +3,7 @@ import type { GriffelResetStyle } from '@griffel/style-types';
 import { DEBUG_RESET_CLASSES } from './constants.js';
 import { insertionFactory } from './insertionFactory.js';
 import { resolveResetStyleRules } from './runtime/resolveResetStyleRules.js';
+import { logError } from './runtime/warnings/logError.js';
 import type { CSSRulesByBucket, GriffelRenderer, GriffelInsertionFactory } from './types.js';
 
 export interface MakeResetStylesOptions {
@@ -28,8 +29,7 @@ export function makeResetStyles(styles: GriffelResetStyle, factory: GriffelInser
       if (process.env.NODE_ENV !== 'production') {
         if (renderer.classNameHashSalt) {
           if (classNameHashSalt !== renderer.classNameHashSalt) {
-            // eslint-disable-next-line no-console
-            console.error(
+            logError(
               [
                 '@griffel/core:',
                 '\n\n',

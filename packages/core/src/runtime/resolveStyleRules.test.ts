@@ -221,12 +221,12 @@ describe('resolveStyleRules', () => {
     });
 
     it('handles empty array of fallback values', () => {
-      const warn = vi.spyOn(console, 'warn').mockImplementationOnce(() => {});
+      const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
       const actual = resolveStyleRules({ color: [] });
       expect(actual).toMatchInlineSnapshot(``); /* empty result */
 
-      expect(warn).toHaveBeenCalledWith(
+      expect(error).toHaveBeenCalledWith(
         expect.stringMatching(
           /makeStyles\(\): An empty array was passed as input to "color", the property will be omitted in the styles./,
         ),

@@ -75,12 +75,9 @@ function createStringFromStyles(styles: GriffelResetStyle, isInsideScope = false
     if (Array.isArray(value)) {
       // not animationName property but array in the value => fallback values
       if (value.length === 0) {
-        if (process.env.NODE_ENV !== 'production') {
-          // eslint-disable-next-line no-console
-          console.warn(
-            `makeResetStyles(): An empty array was passed as input to "${property}", the property will be omitted in the styles.`,
-          );
-        }
+        logError(
+          `makeResetStyles(): An empty array was passed as input to "${property}", the property will be omitted in the styles.`,
+        );
         continue;
       }
 
@@ -88,12 +85,9 @@ function createStringFromStyles(styles: GriffelResetStyle, isInsideScope = false
       const rtlPropertyConsistent = !rtlDefinitions.some(v => v.key !== rtlDefinitions[0].key);
 
       if (!rtlPropertyConsistent) {
-        if (process.env.NODE_ENV !== 'production') {
-          // eslint-disable-next-line no-console
-          console.error(
-            'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
-          );
-        }
+        logError(
+          'makeStyles(): mixing CSS fallback values which result in multiple CSS properties in RTL is not supported.',
+        );
         continue;
       }
 

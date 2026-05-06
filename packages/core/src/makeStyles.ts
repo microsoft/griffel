@@ -2,6 +2,7 @@ import { debugData, isDevToolsEnabled, getSourceURLfromError } from './devtools/
 import { insertionFactory } from './insertionFactory.js';
 import { resolveStyleRulesForSlots } from './resolveStyleRulesForSlots.js';
 import { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots.js';
+import { logError } from './runtime/warnings/logError.js';
 import type { CSSClassesMapBySlot, CSSRulesByBucket, GriffelRenderer, StylesBySlots } from './types.js';
 import type { GriffelInsertionFactory } from './types.js';
 
@@ -38,8 +39,7 @@ export function makeStyles<Slots extends string | number>(
       if (process.env.NODE_ENV !== 'production') {
         if (renderer.classNameHashSalt) {
           if (classNameHashSalt !== renderer.classNameHashSalt) {
-            // eslint-disable-next-line no-console
-            console.error(
+            logError(
               [
                 '@griffel/core:',
                 '\n\n',

@@ -9,6 +9,7 @@ import {
 } from './constants.js';
 import { hashSequence } from './runtime/utils/hashSequence.js';
 import { reduceToClassName } from './runtime/reduceToClassNameForSlots.js';
+import { logError } from './runtime/warnings/logError.js';
 import type { CSSClassesMap, SequenceHash } from './types.js';
 
 // Contains a mapping of previously resolved sequences of atomic classnames
@@ -60,8 +61,7 @@ export function mergeClasses(): string {
           className.split(' ').forEach(entry => {
             if (entry.startsWith(RESET_HASH_PREFIX) && DEBUG_RESET_CLASSES[entry]) {
               if (containsResetClassName) {
-                // eslint-disable-next-line no-console
-                console.error(
+                logError(
                   'mergeClasses(): a passed string contains multiple classes produced by makeResetStyles (' +
                     `${className} & ${resultClassName}, this will lead to non-deterministic behavior. Learn more:` +
                     'https://griffel.js.org/react/api/make-reset-styles#limitations' +
@@ -90,8 +90,7 @@ export function mergeClasses(): string {
 
       if (process.env.NODE_ENV !== 'production') {
         if (className.indexOf(SEQUENCE_PREFIX, sequenceIndex + 1) !== -1) {
-          // eslint-disable-next-line no-console
-          console.error(
+          logError(
             'mergeClasses(): a passed string contains multiple identifiers of atomic classes (classes that start ' +
               `with "${SEQUENCE_PREFIX}"), it's possible that passed classes were concatenated in a wrong way. ` +
               `Source string: ${className}`,
@@ -128,8 +127,7 @@ export function mergeClasses(): string {
 
         if (process.env.NODE_ENV !== 'production') {
           if (dir !== null && dir !== sequenceMapping[LOOKUP_DIR_INDEX]) {
-            // eslint-disable-next-line no-console
-            console.error(
+            logError(
               `mergeClasses(): a passed string contains an identifier (${sequenceId}) that has different direction ` +
                 `(dir="${sequenceMapping[1] ? 'rtl' : 'ltr'}") setting than other classes. This is not supported. ` +
                 `Source string: ${arguments[i]}`,
@@ -139,13 +137,10 @@ export function mergeClasses(): string {
 
         dir = sequenceMapping[LOOKUP_DIR_INDEX];
       } else {
-        if (process.env.NODE_ENV !== 'production') {
-          // eslint-disable-next-line no-console
-          console.error(
-            `mergeClasses(): a passed string contains an identifier (${sequenceId}) that does not match any entry ` +
-              `in cache. Source string: ${arguments[i]}`,
-          );
-        }
+        logError(
+          `mergeClasses(): a passed string contains an identifier (${sequenceId}) that does not match any entry ` +
+            `in cache. Source string: ${arguments[i]}`,
+        );
       }
     }
   }
