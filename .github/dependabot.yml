@@ -9,6 +9,9 @@ updates:
     ignore:
       - dependency-name: 'nx'
       - dependency-name: '@nx/*'
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-patch'
     groups:
       eslint:
         patterns:
@@ -27,19 +30,21 @@ updates:
       rspack:
         patterns:
           - '@rspack/*'
-      dev-minor-patch:
+      dev-minor:
         dependency-type: development
         update-types:
           - minor
-          - patch
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-patch'
     groups:
-      actions-minor-patch:
+      actions-minor:
         update-types:
           - minor
-          - patch

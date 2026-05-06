@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): bump postcss from 8.5.12 to 8.5.14",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "49699333+dependabot[bot]@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
