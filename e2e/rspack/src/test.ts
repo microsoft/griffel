@@ -8,7 +8,6 @@ import {
   sh,
 } from '@griffel/e2e-utils';
 import fs from 'fs';
-import logSymbols from 'log-symbols';
 import path from 'path';
 
 async function performTest() {
@@ -33,8 +32,8 @@ async function performTest() {
 
     const rspackVersion = (await sh(`yarn rspack --version`, rootDir, true)).trim();
 
-    console.log(logSymbols.info, 'Using Rspack', rspackVersion);
-    console.log(logSymbols.info, 'Installing packages...');
+    console.log('ℹ️', 'Using Rspack', rspackVersion);
+    console.log('ℹ️', 'Installing packages...');
 
     await installPackages({
       packages: ['@rspack/cli', '@rspack/core', 'react', 'react-dom'],
@@ -43,7 +42,7 @@ async function performTest() {
       rootDir,
     });
   } catch (e) {
-    console.error(logSymbols.error, 'Something went wrong setting up the test:');
+    console.error('❌', 'Something went wrong setting up the test:');
     console.error((e as Error)?.stack ?? e);
     process.exit(1);
   }
@@ -51,12 +50,12 @@ async function performTest() {
   try {
     await sh(`yarn rspack`, tempDir);
 
-    console.log(logSymbols.success, `Example project was successfully built with Rspack`);
+    console.log('✅', `Example project was successfully built with Rspack`);
   } catch (e) {
     console.error(e);
 
     console.log('');
-    console.error(logSymbols.error, `Building a test project with Rspack failed.`);
+    console.error('❌', `Building a test project with Rspack failed.`);
 
     process.exit(1);
   }
@@ -77,14 +76,14 @@ async function performTest() {
       resultFile: path.resolve(distDir, cssFilename),
     });
 
-    console.log(logSymbols.success, `Example project contains the same CSS as a snapshot`);
+    console.log('✅', `Example project contains the same CSS as a snapshot`);
     console.log('');
     console.log('');
   } catch (e) {
     console.error(e);
 
     console.log('');
-    console.error(logSymbols.error, `Validating CSS produced by Rspack build failed.`);
+    console.error('❌', `Validating CSS produced by Rspack build failed.`);
 
     process.exit(1);
   }

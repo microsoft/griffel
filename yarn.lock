@@ -15269,7 +15269,6 @@ __metadata:
     jest-util: "npm:30.0.5"
     js-beautify: "npm:^1.15.4"
     jsdom: "npm:~26.1.0"
-    log-symbols: "npm:4.1.0"
     lz-string: "npm:1.5.0"
     magic-string: "npm:^0.30.19"
     memfs: "npm:4.57.2"

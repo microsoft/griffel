@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import logSymbols from 'log-symbols';
 
 export async function copyAssets(options: { assetsPath: string; tempDir: string; renames?: Record<string, string> }) {
   const { assetsPath, tempDir, renames } = options;
@@ -15,5 +14,5 @@ export async function copyAssets(options: { assetsPath: string; tempDir: string;
     );
   }
 
-  console.log(logSymbols.success, 'Assets were copied');
+  console.log('✅', 'Assets were copied');
 }

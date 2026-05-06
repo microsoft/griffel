@@ -1,7 +1,6 @@
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
-import logSymbols from 'log-symbols';
 
 export function createTempDir(prefix: string) {
   // `mkdtempSync` appends 6 random characters to the provided prefix path
@@ -17,7 +16,7 @@ export function createTempDir(prefix: string) {
     }
   });
 
-  console.log(logSymbols.success, `Temporary directory created under ${tempDir}`);
+  console.log('✅', `Temporary directory created under ${tempDir}`);
 
   return tempDir;
 }
