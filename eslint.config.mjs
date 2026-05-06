@@ -1,4 +1,5 @@
 import nx from '@nx/eslint-plugin';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginImportX from 'eslint-plugin-import-x';
 import eslintPluginJest from 'eslint-plugin-jest';
 import storybook from 'eslint-plugin-storybook';
@@ -134,4 +135,5 @@ export default [
   {
     ignores: ['packages/*/dist'],
   },
+  eslintConfigPrettier,
 ];
