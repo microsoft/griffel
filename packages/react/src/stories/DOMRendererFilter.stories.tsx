@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { StoryObj } from '@storybook/react-vite';
 
 import { createDOMRenderer } from '@griffel/core';
 import { makeStyles, RendererProvider, shorthands } from '../';

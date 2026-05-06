@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { DebugResult } from '@griffel/core';
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { StoryObj } from '@storybook/react-vite';
 
 import { FlattenView } from '../FlattenView';
 import { darkTheme, lightTheme } from '../themes';
