@@ -9,7 +9,7 @@ module.exports = {
     '**/__fixtures__/**',
     '**/*.test.{ts,tsx}',
     '**/*.stories.tsx',
-    '**/.eslintrc.json',
+    '**/eslint.config.mjs',
     '**/jest.config.js',
     '**/project.json',
     '**/README.md',

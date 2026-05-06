@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { DebugResult } from '@griffel/core';
 import type { StoryObj } from '@storybook/react-vite';
 

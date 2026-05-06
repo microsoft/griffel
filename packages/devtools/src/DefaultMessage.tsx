@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { makeStyles, shorthands } from '@griffel/react';
 
 const useStyles = makeStyles({

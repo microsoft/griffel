@@ -1,5 +1,5 @@
 import beautify from 'js-beautify';
-import * as React from 'react';
+import type * as React from 'react';
 import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 
 import { HighlightedCSS } from './HighlightedCSS';
@@ -30,23 +30,16 @@ const useSingleRuleStyles = makeStyles({
 const SingleRuleView: React.FC<{ rule: RuleDetail; indent?: boolean }> = ({ rule, indent }) => {
   const { highlightedClass, setHighlightedClass } = useViewContext();
 
-  const [selected, setSelected] = React.useState(false);
-
   const handleClick = (e: React.SyntheticEvent) => {
     e.stopPropagation();
     if (rule.overriddenBy) {
-      setSelected(true);
       setHighlightedClass(highlighted => (highlighted === rule.overriddenBy ? '' : rule.overriddenBy!));
     } else {
       setHighlightedClass('');
     }
   };
 
-  React.useEffect(() => {
-    if (!highlightedClass || highlightedClass !== rule.overriddenBy) {
-      setSelected(false);
-    }
-  }, [highlightedClass, rule.overriddenBy]);
+  const selected = Boolean(rule.overriddenBy) && highlightedClass === rule.overriddenBy;
 
   const classes = useSingleRuleStyles();
   const className = mergeClasses(

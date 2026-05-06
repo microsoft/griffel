@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { makeStyles } from '../../src/index.js';
 
 const useStyles = makeStyles({

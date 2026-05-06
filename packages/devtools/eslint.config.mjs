@@ -1,13 +1,17 @@
 import baseConfig from '../../eslint.config.mjs';
-import nx from '@nx/eslint-plugin';
+import eslintPluginReact from 'eslint-plugin-react';
+import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 
 export default [
   {
     ignores: ['**/dist', '**/out-tsc'],
   },
-  ...nx.configs['flat/react'],
   ...baseConfig,
+  eslintPluginReact.configs.flat.recommended,
+  eslintPluginReact.configs.flat['jsx-runtime'],
+  eslintPluginReactHooks.configs.flat['recommended-latest'],
+  { settings: { react: { version: '19' } } },
   { languageOptions: { globals: { ...globals.webextensions } } },
   {
     files: ['**/pack-extension.js'],

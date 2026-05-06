@@ -4,6 +4,13 @@ import { createProxy } from 'react-shadow';
 import { makeStyles, RendererProvider, shorthands } from '@griffel/react';
 import { createShadowDOMRenderer } from '../../src/index.js';
 
+function adoptStyleSheets(target: ShadowRoot, sheets: readonly CSSStyleSheet[]): void {
+  if (sheets.length === 0 || target.adoptedStyleSheets.includes(sheets[0])) {
+    return;
+  }
+  target.adoptedStyleSheets = [...target.adoptedStyleSheets, ...sheets];
+}
+
 const ReactComponentsWrapper: React.FC<{
   children: React.ReactNode;
   root: ShadowRoot;
@@ -11,14 +18,10 @@ const ReactComponentsWrapper: React.FC<{
   const renderer = React.useMemo(() => createShadowDOMRenderer(root), [root]);
 
   React.useLayoutEffect(() => {
-    if (renderer.adoptedStyleSheets && renderer.adoptedStyleSheets.length > 0) {
-      if (root.adoptedStyleSheets.find(styleSheet => styleSheet === renderer.adoptedStyleSheets[0])) {
-        return;
-      }
-
-      root.adoptedStyleSheets = [...root.adoptedStyleSheets, ...renderer.adoptedStyleSheets];
+    if (renderer.adoptedStyleSheets) {
+      adoptStyleSheets(root, renderer.adoptedStyleSheets);
     }
-  }, [renderer.adoptedStyleSheets, root.adoptedStyleSheets]);
+  }, [renderer.adoptedStyleSheets, root]);
 
   return <RendererProvider renderer={renderer}>{children}</RendererProvider>;
 };

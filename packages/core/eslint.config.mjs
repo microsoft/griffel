@@ -1,11 +1,9 @@
 import baseConfig from '../../eslint.config.mjs';
-import nx from '@nx/eslint-plugin';
 
 export default [
   {
     ignores: ['**/dist', '**/out-tsc'],
   },
-  ...nx.configs['flat/react'],
   ...baseConfig,
   {
     files: ['**/__*.ts'],
