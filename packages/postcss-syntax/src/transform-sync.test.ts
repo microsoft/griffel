@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import transformSync, { type TransformOptions } from './transform-sync';
 
 describe('transformSync', () => {
