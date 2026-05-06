@@ -150,7 +150,7 @@
     "snapshot-diff": "0.10.0",
     "storybook": "10.2.10",
     "stylelint": "^15.10.3",
-    "syncpack": "14.0.0",
+    "syncpack": "15.0.0",
     "ts-jest": "29.4.0",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.58.2",
