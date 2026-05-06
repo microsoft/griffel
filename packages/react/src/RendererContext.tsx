@@ -32,7 +32,7 @@ const RendererContext = /*#__PURE__*/ createContext<GriffelRenderer>(/*#__PURE__
 export const RendererProvider: FC<RendererProviderProps> = ({ children, renderer, targetDocument }) => {
   // "rehydrateCache()" can't be called in effects as it needs to be called before any component will be rendered to
   // avoid double insertion of classes — useMemo runs synchronously before render, useEffect would be too late.
-  // eslint-disable-next-line react-hooks/void-use-memo
+  // eslint-disable-next-line react-x/use-memo, react-hooks/void-use-memo
   useMemo(() => {
     if (canUseDOM()) {
       rehydrateRendererCache(renderer, targetDocument);

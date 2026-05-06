@@ -14,7 +14,7 @@ export function print(val: unknown) {
     return _val;
   }
 
-  let result: RegExpExecArray | null = null;
+  let result: RegExpExecArray | null;
 
   // eslint-disable-next-line no-cond-assign
   while ((result = regex.exec(_val))) {
