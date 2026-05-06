@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: drop redundant globals from @griffel/transform-shaker vitest config",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

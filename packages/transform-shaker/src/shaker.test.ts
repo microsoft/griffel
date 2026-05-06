@@ -9,6 +9,7 @@
  */
 
 import dedent from 'dedent';
+import { expect, it } from 'vitest';
 
 import shaker from './index.js';
 
