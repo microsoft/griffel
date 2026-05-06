@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: align @babel/generator with monorepo root via syncpack",
+  "packageName": "@griffel/babel-preset",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: declare @griffel/react in dependencies (used at runtime)",
+  "packageName": "@griffel/devtools",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
