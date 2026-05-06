@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/syncpack/schema.json",
+  "strict": true,
+  "versionGroups": [
+    {
+      "label": "Local @griffel/* cross-package deps must use the same caret range everywhere",
+      "dependencies": ["@griffel/*"],
+      "policy": "sameRange"
+    },
+    {
+      "label": "Peer dependency ranges are intentionally permissive and managed per-package",
+      "dependencyTypes": ["peer"],
+      "isIgnored": true
+    },
+    {
+      "label": "devDependencies are not allowed in workspace packages; declare them on the monorepo root",
+      "packages": ["**", "!griffel-repository"],
+      "dependencyTypes": ["dev"],
+      "isBanned": true
+    },
+    {
+      "label": "All workspace package prod deps must be pinned at the monorepo root",
+      "packages": ["**", "!griffel-repository"],
+      "dependencies": ["**"],
+      "dependencyTypes": ["prod"],
+      "snapTo": ["griffel-repository"]
+    }
+  ]
+}

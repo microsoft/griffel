@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
-  "devDependencies": {
+  "dependencies": {
     "@griffel/react": "^1.7.2"
   }
 }
