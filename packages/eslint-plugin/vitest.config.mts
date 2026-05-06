@@ -7,8 +7,9 @@ export default defineConfig({
   plugins: [nxViteTsPaths()],
   test: {
     watch: false,
+    // @typescript-eslint/rule-tester reads describe/it from globalThis at call time
+    globals: true,
     environment: 'node',
-    setupFiles: ['./vitest.setup.ts'],
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
