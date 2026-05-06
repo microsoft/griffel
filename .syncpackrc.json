@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/syncpack/schema.json",
+  "strict": true,
+  "versionGroups": [
+    {
+      "label": "Local workspace cross-package deps are managed by beachball",
+      "dependencies": ["@griffel/*"],
+      "isIgnored": true
+    },
+    {
+      "label": "All workspace package deps must be pinned at the monorepo root",
+      "packages": ["**", "!griffel-repository"],
+      "dependencies": ["**"],
+      "dependencyTypes": ["prod", "dev"],
+      "snapTo": ["griffel-repository"]
+    }
+  ]
+}
