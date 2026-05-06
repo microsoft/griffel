@@ -128,7 +128,7 @@
     "jest-environment-jsdom": "30.0.5",
     "jest-util": "30.0.5",
     "js-beautify": "^1.15.4",
-    "jsdom": "~26.1.0",
+    "jsdom": "~29.1.1",
     "log-symbols": "4.1.0",
     "lz-string": "1.5.0",
     "memfs": "4.57.2",
