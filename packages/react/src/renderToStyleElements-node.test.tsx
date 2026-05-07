@@ -15,23 +15,13 @@ import { makeResetStyles } from './makeResetStyles.js';
 import { RendererProvider } from './RendererContext.js';
 import { renderToStyleElements } from './renderToStyleElements.js';
 
-expect.addSnapshotSerializer({
-  test(value) {
-    return typeof value === 'string';
-  },
-  print(value) {
-    /**
-     * test function makes sure that value is the guarded type
-     */
-    const _value = value as string;
-
-    return prettier.format(_value, { parser: 'html' }).trim();
-  },
-});
+async function formatHtml(value: string) {
+  return (await prettier.format(value, { parser: 'html' })).trim();
+}
 
 describe('renderToStyleElements (node)', () => {
   describe('makeStyles', () => {
-    it('supports overrides', () => {
+    it('supports overrides', async () => {
       const useExampleStyles = makeStyles({
         root: {
           color: 'red',
@@ -52,8 +42,9 @@ describe('renderToStyleElements (node)', () => {
         </RendererProvider>,
       );
 
-      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+        "<style
           data-make-styles-bucket="d"
           data-priority="0"
           data-make-styles-rehydration="true"
@@ -69,11 +60,11 @@ describe('renderToStyleElements (node)', () => {
           .f14hep94:hover {
             color: pink;
           }
-        </style>
+        </style>"
       `);
     });
 
-    it('supports overrides', () => {
+    it('supports overrides', async () => {
       const useExampleStylesA = makeStyles({
         root: {
           paddingLeft: '10px',
@@ -103,8 +94,9 @@ describe('renderToStyleElements (node)', () => {
         </RendererProvider>,
       );
 
-      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+        "<style
           data-make-styles-bucket="d"
           data-priority="-1"
           data-make-styles-rehydration="true"
@@ -151,11 +143,11 @@ describe('renderToStyleElements (node)', () => {
           .f1mr755h:hover {
             padding-left: 20px;
           }
-        </style>
+        </style>"
       `);
     });
 
-    it('handles @at rules', () => {
+    it('handles @at rules', async () => {
       const useExampleStyles = makeStyles({
         media: {
           '@media screen and (max-width: 992px)': {
@@ -188,8 +180,9 @@ describe('renderToStyleElements (node)', () => {
         </RendererProvider>,
       );
 
-      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+        "<style
           data-make-styles-bucket="t"
           data-priority="0"
           data-make-styles-rehydration="true"
@@ -210,11 +203,11 @@ describe('renderToStyleElements (node)', () => {
               color: blue;
             }
           }
-        </style>
+        </style>"
       `);
     });
 
-    it('handles media query order', () => {
+    it('handles media query order', async () => {
       const useExampleStyles = makeStyles({
         media: {
           color: 'red',
@@ -254,8 +247,9 @@ describe('renderToStyleElements (node)', () => {
         </RendererProvider>,
       );
 
-      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+        "<style
           data-make-styles-bucket="d"
           data-priority="0"
           data-make-styles-rehydration="true"
@@ -317,11 +311,11 @@ describe('renderToStyleElements (node)', () => {
               color: blue;
             }
           }
-        </style>
+        </style>"
       `);
     });
 
-    it('handles keyframes', () => {
+    it('handles keyframes', async () => {
       const useExampleStyles = makeStyles({
         keyframe: {
           animationName: {
@@ -348,8 +342,9 @@ describe('renderToStyleElements (node)', () => {
         </RendererProvider>,
       );
 
-      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+        "<style
           data-make-styles-bucket="d"
           data-priority="0"
           data-make-styles-rehydration="true"
@@ -381,13 +376,13 @@ describe('renderToStyleElements (node)', () => {
               transform: rotate(-360deg);
             }
           }
-        </style>
+        </style>"
       `);
     });
   });
 
   describe('makeResetStyles', () => {
-    it('renders styles', () => {
+    it('renders styles', async () => {
       const useClassName = makeResetStyles({
         color: 'red',
         ':hover': { color: 'pink' },
@@ -403,8 +398,9 @@ describe('renderToStyleElements (node)', () => {
         </RendererProvider>,
       );
 
-      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-        <style
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+        "<style
           data-make-styles-bucket="r"
           data-priority="0"
           data-make-styles-rehydration="true"
@@ -415,7 +411,7 @@ describe('renderToStyleElements (node)', () => {
           .r1tsu58y:hover {
             color: pink;
           }
-        </style>
+        </style>"
       `);
     });
   });

@@ -1,8 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { griffelRulesSerializer } from '../common/snapshotSerializers.js';
+import '../common/snapshotMatchers.js';
 import { resolveStyleRules } from './resolveStyleRules.js';
-
-expect.addSnapshotSerializer(griffelRulesSerializer);
 
 describe('resolveStyleRules: @scope', () => {
   describe('warnings', () => {
@@ -59,19 +57,19 @@ describe('resolveStyleRules: @scope', () => {
     });
   });
 
-  it('handles @scope to (.boundary) with child selector', () => {
+  it('handles @scope to (.boundary) with child selector', async () => {
     const result = resolveStyleRules({
       '@scope to (.scope-boundary)': {
         '& .child': { color: 'blue' },
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.f1me1298) to (.scope-boundary) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@scope (.f1me1298) to (.scope-boundary) {
         :scope .child {
           color: blue;
         }
-      }
+      }"
     `);
   });
 
@@ -91,7 +89,7 @@ describe('resolveStyleRules: @scope', () => {
 
   // --- Nesting @scope with other at-rules ---
 
-  it('@scope inside @media produces @media wrapping @scope', () => {
+  it('@scope inside @media produces @media wrapping @scope', async () => {
     const result = resolveStyleRules({
       '@media (max-width: 600px)': {
         '@scope to (.boundary)': {
@@ -100,18 +98,18 @@ describe('resolveStyleRules: @scope', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @media (max-width: 600px) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@media (max-width: 600px) {
         @scope (.fan1v9k) to (.boundary) {
           :scope p {
             color: red;
           }
         }
-      }
+      }"
     `);
   });
 
-  it('@scope inside @supports produces @supports wrapping @scope', () => {
+  it('@scope inside @supports produces @supports wrapping @scope', async () => {
     const result = resolveStyleRules({
       '@supports (display: grid)': {
         '@scope to (.boundary)': {
@@ -120,18 +118,18 @@ describe('resolveStyleRules: @scope', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @supports (display: grid) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@supports (display: grid) {
         @scope (.fc037k5) to (.boundary) {
           :scope p {
             color: blue;
           }
         }
-      }
+      }"
     `);
   });
 
-  it('@scope inside @container produces @container wrapping @scope', () => {
+  it('@scope inside @container produces @container wrapping @scope', async () => {
     const result = resolveStyleRules({
       '@container (min-width: 400px)': {
         '@scope to (.boundary)': {
@@ -140,18 +138,18 @@ describe('resolveStyleRules: @scope', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @container (min-width: 400px) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@container (min-width: 400px) {
         @scope (.f1pbgmbw) to (.boundary) {
           :scope p {
             color: green;
           }
         }
-      }
+      }"
     `);
   });
 
-  it('@scope inside @layer produces @layer wrapping @scope', () => {
+  it('@scope inside @layer produces @layer wrapping @scope', async () => {
     const result = resolveStyleRules({
       '@layer utilities': {
         '@scope to (.boundary)': {
@@ -160,28 +158,28 @@ describe('resolveStyleRules: @scope', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @layer utilities {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@layer utilities {
         @scope (.f1o8gmm1) to (.boundary) {
           :scope p {
             color: purple;
           }
         }
-      }
+      }"
     `);
   });
 
   // --- RTL ---
 
-  it('handles RTL-flipped property under @scope', () => {
+  it('handles RTL-flipped property under @scope', async () => {
     const result = resolveStyleRules({
       '@scope to (.boundary)': {
         '& .child': { paddingLeft: '10px' },
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.flgw30a) to (.boundary) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@scope (.flgw30a) to (.boundary) {
         :scope .child {
           padding-left: 10px;
         }
@@ -190,7 +188,7 @@ describe('resolveStyleRules: @scope', () => {
         :scope .child {
           padding-right: 10px;
         }
-      }
+      }"
     `);
   });
 
@@ -213,7 +211,7 @@ describe('resolveStyleRules: @scope', () => {
     expect(result[1]).toHaveProperty('d');
   });
 
-  it('same property in two different @scope blocks produce independent classes', () => {
+  it('same property in two different @scope blocks produce independent classes', async () => {
     const result = resolveStyleRules({
       '@scope to (.a)': { '& p': { color: 'red' } },
       '@scope to (.b)': { '& p': { color: 'blue' } },
@@ -225,8 +223,8 @@ describe('resolveStyleRules: @scope', () => {
         "Bpguliw": "ff6bx43",
       }
     `);
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.ff6bx43) to (.a) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@scope (.ff6bx43) to (.a) {
         :scope p {
           color: red;
         }
@@ -235,43 +233,43 @@ describe('resolveStyleRules: @scope', () => {
         :scope p {
           color: blue;
         }
-      }
+      }"
     `);
   });
 
   // --- Boundary edge cases ---
 
-  it('handles complex boundary selector', () => {
+  it('handles complex boundary selector', async () => {
     const result = resolveStyleRules({
       '@scope to (.boundary > *)': {
         '& img': { borderRadius: '50%' },
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.fm436sz) to (.boundary > *) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@scope (.fm436sz) to (.boundary > *) {
         :scope img {
           border-radius: 50%;
         }
-      }
+      }"
     `);
   });
 
   // --- Nested selectors inside @scope ---
 
-  it('handles pseudo-selectors inside @scope', () => {
+  it('handles pseudo-selectors inside @scope', async () => {
     const result = resolveStyleRules({
       '@scope to (.boundary)': {
         '& a:hover': { color: 'blue' },
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.f12tnm6c) to (.boundary) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@scope (.f12tnm6c) to (.boundary) {
         :scope a:hover {
           color: blue;
         }
-      }
+      }"
     `);
   });
 
@@ -288,7 +286,7 @@ describe('resolveStyleRules: @scope', () => {
     expect(result[1]).toHaveProperty('f');
   });
 
-  it('handles multiple properties inside @scope', () => {
+  it('handles multiple properties inside @scope', async () => {
     const result = resolveStyleRules({
       '@scope to (.boundary)': {
         '& p': { color: 'red', fontSize: '14px' },
@@ -302,8 +300,8 @@ describe('resolveStyleRules: @scope', () => {
         "rxd53p": "fbtjt56",
       }
     `);
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.f7t33c5) to (.boundary) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@scope (.f7t33c5) to (.boundary) {
         :scope p {
           color: red;
         }
@@ -312,23 +310,23 @@ describe('resolveStyleRules: @scope', () => {
         :scope p {
           font-size: 14px;
         }
-      }
+      }"
     `);
   });
 
   // --- Direct root styling ---
 
-  it('handles direct property inside @scope (styles the scope root)', () => {
+  it('handles direct property inside @scope (styles the scope root)', async () => {
     const result = resolveStyleRules({
       '@scope to (.boundary)': { color: 'blue' },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      @scope (.f14r3iqv) to (.boundary) {
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "@scope (.f14r3iqv) to (.boundary) {
         :scope {
           color: blue;
         }
-      }
+      }"
     `);
   });
 });

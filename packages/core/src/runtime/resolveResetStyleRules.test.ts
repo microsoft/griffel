@@ -1,135 +1,133 @@
 import { describe, it, expect } from 'vitest';
 import { resolveResetStyleRules } from './resolveResetStyleRules.js';
-import { griffelResetRulesSerializer } from '../common/snapshotSerializers.js';
-
-expect.addSnapshotSerializer(griffelResetRulesSerializer);
+import '../common/snapshotMatchers.js';
 
 describe('resolveResetStyleRules', () => {
-  it('handles base rules', () => {
+  it('handles base rules', async () => {
     const result = resolveResetStyleRules({
       color: 'red',
       overflowX: 'hidden',
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .r11y0rml {
         color: red;
         overflow-x: hidden;
-      }
+      }"
     `);
   });
 
-  it('handles RTL', () => {
+  it('handles RTL', async () => {
     const result = resolveResetStyleRules({ marginLeft: '15px' });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .rovwgyn {
         margin-left: 15px;
       }
       .rj5b9iu {
         margin-right: 15px;
-      }
+      }"
     `);
   });
 
-  it('handles fallback values', () => {
+  it('handles fallback values', async () => {
     const result = resolveResetStyleRules({
       color: ['red', 'blue'],
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .rj1urkn {
         color: red;
         color: blue;
-      }
+      }"
     `);
   });
 
-  it('handles :global() selector', () => {
-    expect(
+  it('handles :global() selector', async () => {
+    await expect(
       resolveResetStyleRules({
         color: 'red',
         ':global(body)': { color: 'magenta' },
       }),
-    ).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    ).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .rzlpwqs {
         color: red;
       }
       body .rzlpwqs {
         color: magenta;
-      }
+      }"
     `);
 
-    expect(
+    await expect(
       resolveResetStyleRules({
         ':global(body)': {
           color: 'magenta',
           ':focus': { color: 'pink' },
         },
       }),
-    ).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    ).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       body .r1i1zh9k {
         color: magenta;
       }
       body .r1i1zh9k:focus {
         color: pink;
-      }
+      }"
     `);
 
-    expect(
+    await expect(
       resolveResetStyleRules({
         ':global(.fui-FluentProvider)': {
           '& .foo': { color: 'orange' },
         },
       }),
-    ).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    ).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .fui-FluentProvider .rmi35r5 .foo {
         color: orange;
-      }
+      }"
     `);
   });
 
-  it('handles named container queries', () => {
+  it('handles named container queries', async () => {
     const result = resolveResetStyleRules({
       '@container foo (max-width: 1px)': {
         color: 'orange',
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "s" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "s" */
       @container foo (max-width: 1px) {
         .rmph5rz {
           color: orange;
         }
-      }
+      }"
     `);
   });
 
-  it('handles unnamed container queries', () => {
+  it('handles unnamed container queries', async () => {
     const result = resolveResetStyleRules({
       '@container (max-width: 1px)': {
         color: 'orange',
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "s" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "s" */
       @container (max-width: 1px) {
         .r1ph1abo {
           color: orange;
         }
-      }
+      }"
     `);
   });
 
-  it('handles media queries', () => {
+  it('handles media queries', async () => {
     const result = resolveResetStyleRules({
       color: 'red',
       '@media (forced-colors: active)': {
@@ -140,8 +138,8 @@ describe('resolveResetStyleRules', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .rpycl1b {
         color: red;
       }
@@ -153,11 +151,11 @@ describe('resolveResetStyleRules', () => {
         .rpycl1b:focus {
           color: yellow;
         }
-      }
+      }"
     `);
   });
 
-  it('handles layer queries', () => {
+  it('handles layer queries', async () => {
     const result = resolveResetStyleRules({
       '@layer utilities': {
         color: 'orange',
@@ -167,8 +165,8 @@ describe('resolveResetStyleRules', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "s" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "s" */
       @layer utilities {
         .rvhnavh {
           color: orange;
@@ -176,11 +174,11 @@ describe('resolveResetStyleRules', () => {
         .rvhnavh:focus {
           color: yellow;
         }
-      }
+      }"
     `);
   });
 
-  it('handles support queries', () => {
+  it('handles support queries', async () => {
     const result = resolveResetStyleRules({
       '@supports (display: flex)': {
         color: 'orange',
@@ -190,8 +188,8 @@ describe('resolveResetStyleRules', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "s" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "s" */
       @supports (display: flex) {
         .rxf8lon {
           color: orange;
@@ -199,11 +197,11 @@ describe('resolveResetStyleRules', () => {
         .rxf8lon:focus {
           color: yellow;
         }
-      }
+      }"
     `);
   });
 
-  it('handles nested queries queries', () => {
+  it('handles nested queries queries', async () => {
     const result = resolveResetStyleRules({
       '@supports (display: flex)': {
         color: 'pink',
@@ -214,8 +212,8 @@ describe('resolveResetStyleRules', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "s" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "s" */
       @supports (display: flex) {
         .rhd25ja {
           color: pink;
@@ -225,19 +223,19 @@ describe('resolveResetStyleRules', () => {
             color: orange;
           }
         }
-      }
+      }"
     `);
   });
 
-  it('handles nested selectors', () => {
+  it('handles nested selectors', async () => {
     const result = resolveResetStyleRules({
       ':hover': { color: 'red' },
       '& :focus': { color: 'red' },
       '&.foo': { color: 'red' },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .r1s1f2pl:hover {
         color: red;
       }
@@ -246,25 +244,25 @@ describe('resolveResetStyleRules', () => {
       }
       .r1s1f2pl.foo {
         color: red;
-      }
+      }"
     `);
   });
 
   describe('animationName', () => {
-    it('supports strings', () => {
+    it('supports strings', async () => {
       const result = resolveResetStyleRules({
         animationName: 'foo',
       });
 
-      expect(result).toMatchInlineSnapshot(`
-        /** bucket "r" */
+      await expect(result).toMatchFormattedInlineSnapshot(`
+        "/** bucket "r" */
         .reh730q {
           animation-name: foo;
-        }
+        }"
       `);
     });
 
-    it('supports objects', () => {
+    it('supports objects', async () => {
       const result = resolveResetStyleRules({
         animationName: {
           from: { height: '10px' },
@@ -272,8 +270,8 @@ describe('resolveResetStyleRules', () => {
         },
       });
 
-      expect(result).toMatchInlineSnapshot(`
-        /** bucket "r" */
+      await expect(result).toMatchFormattedInlineSnapshot(`
+        "/** bucket "r" */
         .rgmpmil {
           animation-name: r1kgwxhb;
         }
@@ -287,11 +285,11 @@ describe('resolveResetStyleRules', () => {
         }
         .r1u04j3e {
           animation-name: r1kgwxhb;
-        }
+        }"
       `);
     });
 
-    it('supports arrays', () => {
+    it('supports arrays', async () => {
       const result = resolveResetStyleRules({
         animationName: [
           {
@@ -305,8 +303,8 @@ describe('resolveResetStyleRules', () => {
         ],
       });
 
-      expect(result).toMatchInlineSnapshot(`
-        /** bucket "r" */
+      await expect(result).toMatchFormattedInlineSnapshot(`
+        "/** bucket "r" */
         .rw8vs22 {
           animation-name: r1sekkel, r5j8bii;
         }
@@ -328,7 +326,7 @@ describe('resolveResetStyleRules', () => {
         }
         .rcoo9tn {
           animation-name: r1sekkel, r5j8bii;
-        }
+        }"
       `);
     });
   });

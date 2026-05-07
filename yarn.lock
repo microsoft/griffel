@@ -8879,13 +8879,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prettier@npm:2.7.3":
-  version: 2.7.3
-  resolution: "@types/prettier@npm:2.7.3"
-  checksum: 10/cda84c19acc3bf327545b1ce71114a7d08efbd67b5030b9e8277b347fa57b05178045f70debe1d363ff7efdae62f237260713aafc2d7217e06fc99b048a88497
-  languageName: node
-  linkType: hard
-
 "@types/prismjs@npm:^1.26.0":
   version: 1.26.3
   resolution: "@types/prismjs@npm:1.26.3"
@@ -14978,7 +14971,6 @@ __metadata:
     "@types/js-beautify": "npm:^1.14.3"
     "@types/mini-css-extract-plugin": "npm:2.5.1"
     "@types/node": "npm:25.6.0"
-    "@types/prettier": "npm:2.7.3"
     "@types/react": "npm:19.2.14"
     "@types/react-dom": "npm:19.2.3"
     "@types/stylis": "npm:4.2.7"
@@ -15032,7 +15024,7 @@ __metadata:
     oxc-walker: "npm:^0.7.0"
     playwright: "npm:^1.59.1"
     postcss: "npm:^8.5.14"
-    prettier: "npm:2.8.2"
+    prettier: "npm:3.8.3"
     prism-react-renderer: "npm:2.4.1"
     raw-loader: "npm:4.0.2"
     react: "npm:19.2.5"
@@ -21599,16 +21591,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.8.2":
-  version: 2.8.2
-  resolution: "prettier@npm:2.8.2"
-  bin:
-    prettier: bin-prettier.js
-  checksum: 10/2362d0902d7c5aa820e3b022ad5d7b0b0dca7beb847aa3f71d2fc53d0a8e412147278950482d3ac733c98718603b4bbd2ca64ad864d2af4fa2fb7d034e786ae7
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^3.5.3":
+"prettier@npm:3.8.3, prettier@npm:^3.5.3":
   version: 3.8.3
   resolution: "prettier@npm:3.8.3"
   bin:

@@ -1,11 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { createDOMRenderer } from './renderer/createDOMRenderer.js';
-import { griffelRendererSerializer } from './common/snapshotSerializers.js';
+import './common/snapshotMatchers.js';
 import { makeStaticStyles } from './makeStaticStyles.js';
 import { makeStyles } from './makeStyles.js';
 import type { GriffelRenderer } from './types.js';
-
-expect.addSnapshotSerializer(griffelRendererSerializer);
 
 describe('makeStaticStyles', () => {
   let renderer: GriffelRenderer;
@@ -14,7 +12,7 @@ describe('makeStaticStyles', () => {
     renderer = createDOMRenderer(document);
   });
 
-  it('handles static styles', () => {
+  it('handles static styles', async () => {
     const useStyles = makeStaticStyles({
       body: {
         background: 'blue',
@@ -28,8 +26,8 @@ describe('makeStaticStyles', () => {
 
     useStyles({ renderer });
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       body {
         background: blue;
         transition: all 4s ease;
@@ -37,11 +35,11 @@ describe('makeStaticStyles', () => {
       .foo {
         background: yellow;
         margin-left: 5px;
-      }
+      }"
     `);
   });
 
-  it('handles styles array', () => {
+  it('handles styles array', async () => {
     const useStyles = makeStaticStyles([
       {
         '@font-face': {
@@ -59,8 +57,8 @@ describe('makeStaticStyles', () => {
 
     useStyles({ renderer });
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       @font-face {
         font-family: Open Sans;
         src: url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
@@ -68,27 +66,27 @@ describe('makeStaticStyles', () => {
       @font-face {
         font-family: My Font;
         src: url(my-font.woff);
-      }
+      }"
     `);
   });
 
-  it('handles css string', () => {
+  it('handles css string', async () => {
     const useStyles = makeStaticStyles('body {background: red;} div {color: green;}');
 
     useStyles({ renderer });
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       body {
         background: red;
       }
       div {
         color: green;
-      }
+      }"
     `);
   });
 
-  it('handles caching to avoid duplicated styles', () => {
+  it('handles caching to avoid duplicated styles', async () => {
     const useStyles = makeStaticStyles({
       body: {
         background: 'blue',
@@ -105,15 +103,15 @@ describe('makeStaticStyles', () => {
     useStyles({ renderer });
     useStyles2({ renderer });
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       body {
         background: blue;
-      }
+      }"
     `);
   });
 
-  it('can be used with makeStyles', () => {
+  it('can be used with makeStyles', async () => {
     const useStaticStyles = makeStaticStyles({
       '@font-face': {
         fontFamily: 'Open Sans',
@@ -128,8 +126,8 @@ describe('makeStaticStyles', () => {
     useStaticStyles({ renderer });
     expect(useStyles({ dir: 'ltr', renderer }).root).toBe('___23yvam0_0000000 fy9yzz7 f4ybsrx');
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       @font-face {
         font-family: Open Sans;
         src: url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
@@ -139,11 +137,11 @@ describe('makeStaticStyles', () => {
       }
       .f4ybsrx {
         font-size: 16px;
-      }
+      }"
     `);
   });
 
-  it('fallback values', () => {
+  it('fallback values', async () => {
     const useStyles = makeStaticStyles({
       body: {
         background: 'blue',
@@ -153,12 +151,12 @@ describe('makeStaticStyles', () => {
 
     useStyles({ renderer });
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       body {
         background: blue;
         overflow-y: hidden;
-      }
+      }"
     `);
   });
 });

@@ -4,21 +4,9 @@ import { describe, expect, it } from 'vitest';
 
 import { getUniqueRulesFromSets, sortCSSRules } from './sortCSSRules.mjs';
 
-export const cssSerializer: Parameters<typeof expect.addSnapshotSerializer>[0] = {
-  test(value) {
-    return typeof value === 'string';
-  },
-  print(value) {
-    /**
-     * test function makes sure that value is the guarded type
-     */
-    const _value = value as string;
-
-    return prettier.format(_value, { parser: 'css' }).trim();
-  },
-};
-
-expect.addSnapshotSerializer(cssSerializer);
+async function formatCss(value: string) {
+  return (await prettier.format(value, { parser: 'css' })).trim();
+}
 
 describe('getUniqueRulesFromSets', () => {
   it('removes duplicate rules', () => {
@@ -51,7 +39,7 @@ describe('getUniqueRulesFromSets', () => {
 });
 
 describe('sortCSSRules', () => {
-  it('removes duplicate rules', () => {
+  it('removes duplicate rules', async () => {
     const setA: CSSRulesByBucket = {
       d: ['.baz { color: orange; }', '.foo { color: red; }'],
       m: [['@media (max-width: 2px) { .foo { color: blue; } }', { m: '(max-width: 2px)' }]],
@@ -61,8 +49,8 @@ describe('sortCSSRules', () => {
       m: [['@media (max-width: 2px) { .yellow { color: blue; } }', { m: '(max-width: 2px)' }]],
     };
 
-    expect(sortCSSRules([setA, setB], () => 0)).toMatchInlineSnapshot(`
-      .baz {
+    expect(await formatCss(sortCSSRules([setA, setB], () => 0))).toMatchInlineSnapshot(`
+      ".baz {
         color: orange;
       }
       .foo {
@@ -77,11 +65,11 @@ describe('sortCSSRules', () => {
         .yellow {
           color: blue;
         }
-      }
+      }"
     `);
   });
 
-  it('sorts rules by buckets order', () => {
+  it('sorts rules by buckets order', async () => {
     const setA: CSSRulesByBucket = {
       d: ['.default { color: orange; }'],
       f: ['.focus:focus { color: pink; }'],
@@ -91,8 +79,8 @@ describe('sortCSSRules', () => {
       h: ['.hover:hover { color: yellow; }'],
     };
 
-    expect(sortCSSRules([setA, setB], () => 0)).toMatchInlineSnapshot(`
-      .default {
+    expect(await formatCss(sortCSSRules([setA, setB], () => 0))).toMatchInlineSnapshot(`
+      ".default {
         color: orange;
       }
       .default {
@@ -103,11 +91,11 @@ describe('sortCSSRules', () => {
       }
       .hover:hover {
         color: yellow;
-      }
+      }"
     `);
   });
 
-  it('sorts rules by buckets & priority', () => {
+  it('sorts rules by buckets & priority', async () => {
     const setA: CSSRulesByBucket = {
       d: ['.prio0 { color: orange; }', ['.prio-1 { margin: 0; }', { p: -1 }]],
       f: ['.prio0:focus { color: pink; }'],
@@ -122,8 +110,8 @@ describe('sortCSSRules', () => {
       f: [['.prio-1:focus { padding: 0; }', { p: -2 }]],
     };
 
-    expect(sortCSSRules([setA, setB], () => 0)).toMatchInlineSnapshot(`
-      .reset {
+    expect(await formatCss(sortCSSRules([setA, setB], () => 0))).toMatchInlineSnapshot(`
+      ".reset {
         margin: 0;
         padding: 0;
       }
@@ -147,12 +135,12 @@ describe('sortCSSRules', () => {
       }
       .prio-1:hover {
         padding: 0;
-      }
+      }"
     `);
   });
 
   describe('media queries', () => {
-    it('sorts media queries', () => {
+    it('sorts media queries', async () => {
       const setA: CSSRulesByBucket = {
         m: [
           ['@media (max-width: 2px) { .mw2 { color: blue; } }', { m: '(max-width: 2px)' }],
@@ -168,8 +156,8 @@ describe('sortCSSRules', () => {
       const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a, b) =>
         mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
 
-      expect(sortCSSRules([setA, setB], compareMediaQueries)).toMatchInlineSnapshot(`
-        .default {
+      expect(await formatCss(sortCSSRules([setA, setB], compareMediaQueries))).toMatchInlineSnapshot(`
+        ".default {
           color: green;
         }
         @media (max-width: 1px) {
@@ -186,11 +174,11 @@ describe('sortCSSRules', () => {
           .mw3 {
             color: red;
           }
-        }
+        }"
       `);
     });
 
-    it('handles priority', () => {
+    it('handles priority', async () => {
       const setA: CSSRulesByBucket = {
         m: [
           ['@media (max-width: 1px) { .mw1-prio0 { display: flex; } }', { m: '(max-width: 1px)' }],
@@ -216,8 +204,8 @@ describe('sortCSSRules', () => {
       const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a, b) =>
         mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
 
-      expect(sortCSSRules([setA, setB, setC], compareMediaQueries)).toMatchInlineSnapshot(`
-        @media (max-width: 1px) {
+      expect(await formatCss(sortCSSRules([setA, setB, setC], compareMediaQueries))).toMatchInlineSnapshot(`
+        "@media (max-width: 1px) {
           .mw1-prio-3 {
             border: 5px;
           }
@@ -256,7 +244,7 @@ describe('sortCSSRules', () => {
           .mw3-prio0 {
             display: table;
           }
-        }
+        }"
       `);
     });
   });
