@@ -10,10 +10,10 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/webpack-extraction-plugin"],
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "jestConfig": "packages/webpack-extraction-plugin/jest.config.ts"
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/webpack-extraction-plugin"
       }
     },
     "build": {

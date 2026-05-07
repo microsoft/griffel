@@ -1,9 +1,10 @@
 import type { CSSRulesByBucket, GriffelRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
+import { describe, expect, it, type SnapshotSerializer } from 'vitest';
 
 import { getUniqueRulesFromSets, sortCSSRules } from './sortCSSRules';
 
-export const cssSerializer: jest.SnapshotSerializerPlugin = {
+export const cssSerializer: SnapshotSerializer = {
   test(value) {
     return typeof value === 'string';
   },

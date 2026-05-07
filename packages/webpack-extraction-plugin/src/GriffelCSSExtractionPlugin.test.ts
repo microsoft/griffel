@@ -3,8 +3,48 @@ import { createFsFromVolume, Volume } from 'memfs';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as path from 'path';
 import * as prettier from 'prettier';
+import { describe, expect, it, vi } from 'vitest';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
+
+await vi.hoisted(mock);
+
+async function mock() {
+  const { Module } = await import('module');
+  const path = await import('path');
+
+  // Two consumers do require()/require.resolve() of TS sources at runtime, which
+  // Node's default resolver can't satisfy under vitest:
+  //   1. GriffelCSSExtractionPlugin.ts: `require.resolve('./webpackLoader')`
+  //   2. virtual-loader/index.js: `require('../src/constants')`
+  //
+  // Redirect those requests to the .cjs stubs under src/common/. The webpack
+  // loader stub is paired with a Module._load redirect to the real loader
+  // module loaded via vite; the constants stub is loaded as-is (Symbol.for
+  // is global, so the symbol matches the one used by GriffelCSSExtractionPlugin).
+  const COMMON_DIR = path.resolve(__dirname, './common');
+  const LOADER_STUB = path.resolve(COMMON_DIR, './webpackLoader.cjs');
+  const CONSTANTS_STUB = path.resolve(COMMON_DIR, './constants.cjs');
+
+  const loaderModule = await import('./webpackLoader');
+
+  const resolveOriginal = (Module as any)._resolveFilename;
+  (Module as any)._resolveFilename = function (request: string, parent: NodeJS.Module | null, ...rest: unknown[]) {
+    if (request === './webpackLoader' && parent?.filename?.endsWith('GriffelCSSExtractionPlugin.ts')) {
+      return LOADER_STUB;
+    }
+    if (request === '../src/constants' && parent?.filename?.endsWith('virtual-loader/index.js')) {
+      return CONSTANTS_STUB;
+    }
+    return resolveOriginal.call(this, request, parent, ...rest);
+  };
+
+  const loadOriginal = (Module as any)._load;
+  (Module as any)._load = (uri: string, parent: NodeJS.Module | null) => {
+    if (uri === LOADER_STUB) return loaderModule.default ?? loaderModule;
+    return loadOriginal(uri, parent);
+  };
+}
 
 import type { GriffelCSSExtractionPluginOptions } from './GriffelCSSExtractionPlugin';
 import { GriffelCSSExtractionPlugin } from './GriffelCSSExtractionPlugin';
