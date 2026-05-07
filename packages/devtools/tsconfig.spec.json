@@ -4,7 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "moduleResolution": "bundler",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
-    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "chrome", "node", "vitest", "environment"]
+    "types": ["vitest/importMeta", "vite/client", "chrome", "node", "vitest", "environment"]
   },
   "include": [
     "vite.config.ts",

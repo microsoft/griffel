@@ -1,5 +1,6 @@
-import { vi } from 'vitest';
 import type { RawSourceMap } from 'source-map-js';
+import { describe, expect, it, vi } from 'vitest';
+
 import { getFilePath, getOriginalPosition, resources } from './sourceMapConsumer';
 
 describe('getOriginalPosition', () => {

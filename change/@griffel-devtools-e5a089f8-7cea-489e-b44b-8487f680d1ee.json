@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: remove jest, ts-jest, @nx/jest, and related dev dependencies",
+  "packageName": "@griffel/devtools",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

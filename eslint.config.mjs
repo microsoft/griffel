@@ -1,7 +1,6 @@
 import nx from '@nx/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginImportX from 'eslint-plugin-import-x';
-import eslintPluginJest from 'eslint-plugin-jest';
 import storybook from 'eslint-plugin-storybook';
 
 export default [
@@ -11,11 +10,6 @@ export default [
   eslintPluginImportX.flatConfigs.typescript,
   ...storybook.configs['flat/recommended'],
   ...nx.configs['flat/base'],
-  {
-    plugins: {
-      jest: eslintPluginJest,
-    },
-  },
   {
     settings: {
       'import-x/resolver': {
@@ -47,7 +41,6 @@ export default [
           devDependencies: false,
         },
       ],
-      'jest/no-focused-tests': 'error',
       eqeqeq: 'error',
       'guard-for-in': 'error',
       'max-classes-per-file': 'error',
@@ -99,8 +92,6 @@ export default [
       '**/*.test.ts',
       '**/*.test.tsx',
       '**/*.test.mts',
-      '**/jest.setup.js',
-      '**/jest.setup.ts',
       '**/vitest.config.ts',
       '**/vitest.config.mts',
       '**/vitest.setup.ts',
