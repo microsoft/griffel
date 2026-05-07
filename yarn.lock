@@ -9311,7 +9311,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@upstash/redis@npm:^1.37.0":
+"@upstash/redis@npm:^1.38.0":
   version: 1.38.0
   resolution: "@upstash/redis@npm:1.38.0"
   dependencies:
@@ -9786,7 +9786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.0, acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.14.1, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.5.0, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.0.0, acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.14.1, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.5.0, acorn@npm:^8.9.0":
   version: 8.16.0
   resolution: "acorn@npm:8.16.0"
   bin:
@@ -9998,10 +9998,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-styles@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "ansi-styles@npm:6.1.0"
-  checksum: 10/eb291cf9de71d1b251c1e870a65733a12d422f61aa605cdb3bd54d2c10c7be88cdf7712185e27c3b6d54b9eb0427cce760a9372a437ed5cbf1cb984b30def7cc
+"ansi-styles@npm:^6.1.0, ansi-styles@npm:^6.2.1":
+  version: 6.2.3
+  resolution: "ansi-styles@npm:6.2.3"
+  checksum: 10/c49dad7639f3e48859bd51824c93b9eb0db628afc243c51c3dd2410c4a15ede1a83881c6c7341aa2b159c4f90c11befb38f2ba848c07c66c9f9de4bcd7cb9f30
   languageName: node
   linkType: hard
 
@@ -11212,6 +11212,17 @@ __metadata:
     strip-ansi: "npm:^6.0.0"
     wrap-ansi: "npm:^7.0.0"
   checksum: 10/db858c49af9d59a32d603987e6fddaca2ce716cd4602ba5a2bb3a5af1351eebe82aba8dff3ef3e1b331f7fa9d40ca66e67bdf8e7c327ce0ea959747ead65c0ef
+  languageName: node
+  linkType: hard
+
+"cliui@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "cliui@npm:9.0.1"
+  dependencies:
+    string-width: "npm:^7.2.0"
+    strip-ansi: "npm:^7.1.0"
+    wrap-ansi: "npm:^9.0.0"
+  checksum: 10/df43d8d1c6e3254cbb64b1905310d5f6672c595496a3cbe76946c6d24777136886470686f2772ac9edfe547a74bb70e8017530b3554715aee119efd7752fc0d9
   languageName: node
   linkType: hard
 
@@ -13018,17 +13029,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"emoji-regex@npm:^10.3.0, emoji-regex@npm:~10.6.0":
+  version: 10.6.0
+  resolution: "emoji-regex@npm:10.6.0"
+  checksum: 10/98cc0b0e1daed1ed25afbf69dcb921fee00f712f51aab93aa1547e4e4e8171725cc4f0098aaa645b4f611a19da11ec9f4623eb6ff2b72314b39a8f2ae7c12bf2
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^9.2.2":
   version: 9.2.2
   resolution: "emoji-regex@npm:9.2.2"
   checksum: 10/915acf859cea7131dac1b2b5c9c8e35c4849e325a1d114c30adb8cd615970f6dca0e27f64f3a4949d7d6ed86ecd79a1c5c63f02e697513cddd7b5835c90948b8
-  languageName: node
-  linkType: hard
-
-"emoji-regex@npm:~10.6.0":
-  version: 10.6.0
-  resolution: "emoji-regex@npm:10.6.0"
-  checksum: 10/98cc0b0e1daed1ed25afbf69dcb921fee00f712f51aab93aa1547e4e4e8171725cc4f0098aaa645b4f611a19da11ec9f4623eb6ff2b72314b39a8f2ae7c12bf2
   languageName: node
   linkType: hard
 
@@ -14440,7 +14451,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-east-asian-width@npm:^1.5.0":
+"get-east-asian-width@npm:^1.0.0, get-east-asian-width@npm:^1.5.0":
   version: 1.5.0
   resolution: "get-east-asian-width@npm:1.5.0"
   checksum: 10/60bc34cd1e975055ab99f0f177e31bed3e516ff7cee9c536474383954a976abaa6b94a51d99ad158ef1e372790fa096cab7d07f166bb0778f6587954c0fbe946
@@ -14876,9 +14887,9 @@ __metadata:
     magic-string: "npm:^0.30.19"
     memfs: "npm:4.57.2"
     mini-css-extract-plugin: "npm:2.10.2"
-    monosize: "npm:0.8.3"
-    monosize-bundler-webpack: "npm:0.3.4"
-    monosize-storage-upstash: "npm:0.0.26"
+    monosize: "npm:0.9.0"
+    monosize-bundler-webpack: "npm:0.4.0"
+    monosize-storage-upstash: "npm:0.0.27"
     nano-staged: "npm:~1.0.2"
     nx: "npm:22.7.1"
     oxc-parser: "npm:^0.129.0"
@@ -19064,45 +19075,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monosize-bundler-webpack@npm:0.3.4":
-  version: 0.3.4
-  resolution: "monosize-bundler-webpack@npm:0.3.4"
+"monosize-bundler-webpack@npm:0.4.0":
+  version: 0.4.0
+  resolution: "monosize-bundler-webpack@npm:0.4.0"
   dependencies:
-    monosize: "npm:^0.8.3"
-    terser: "npm:^5.16.0"
+    monosize: "npm:^0.9.0"
+    terser: "npm:^5.47.0"
     terser-webpack-plugin: "npm:^5.5.0"
     tslib: "npm:^2.4.1"
     webpack: "npm:^5.106.2"
-  checksum: 10/78016e095361321378e672e3b1db340c57a23fce586b1ddf27e6fd2708b3441c1b7ea1a863193dc8e8a08334bbc1956e686e2929cb0dd812c77a3e850e6171d1
+  checksum: 10/81941fa7abd60af2a4da26eff968b1dfaa2437044b77bebcfc52875da384b697b6d10d12c4a26e4afaac971fe7d9550b9d7961311725d6698cd0d7d015e634ba
   languageName: node
   linkType: hard
 
-"monosize-storage-upstash@npm:0.0.26":
-  version: 0.0.26
-  resolution: "monosize-storage-upstash@npm:0.0.26"
+"monosize-storage-upstash@npm:0.0.27":
+  version: 0.0.27
+  resolution: "monosize-storage-upstash@npm:0.0.27"
   dependencies:
-    "@upstash/redis": "npm:^1.37.0"
-    monosize: "npm:^0.8.3"
+    "@upstash/redis": "npm:^1.38.0"
+    monosize: "npm:^0.9.0"
     tslib: "npm:^2.4.1"
-  checksum: 10/ec63ac387fd2741dd0f5db0de1d010a77591c2dddf6d69b65be83fdf01e438fbf29e25e10d03459fc116ffe34245928c17106a4c064995db90508a55d1b73f1b
+  checksum: 10/561db75bffbef62b0ccabc2ed3ea4e3069b6e3755cf00a7010951f4fd0ee02bb809cd20ab5b6c4080e72254686504c28325ca7a9687ce8b39587eec070469323
   languageName: node
   linkType: hard
 
-"monosize@npm:0.8.3, monosize@npm:^0.8.3":
-  version: 0.8.3
-  resolution: "monosize@npm:0.8.3"
+"monosize@npm:0.9.0, monosize@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "monosize@npm:0.9.0"
   dependencies:
     acorn: "npm:^8.14.1"
     ci-info: "npm:^4.2.0"
     cli-table3: "npm:^0.6.5"
     empathic: "npm:^2.0.0"
-    pretty-bytes: "npm:^6.0.0"
+    pretty-bytes: "npm:^7.1.0"
     tinyglobby: "npm:^0.2.13"
     tslib: "npm:^2.4.1"
-    yargs: "npm:^17.6.2"
+    yargs: "npm:^18.0.0"
   bin:
     monosize: bin/monosize.mjs
-  checksum: 10/e19be5f62c105cb138fa057198b2957eb9fc660b6b1ced069575ca3a2cf67a06e65c6bd3212ea1071ae6d8dcda6813ac67a16ef3ebf5187adb5c8baf1e073c10
+  checksum: 10/44c720c4455541eac44b86a04bd81c8cfc745efea3ba48a7d59e9969d5a985c2821cfbd22aa70a3a3333924f9c936c4111454c9fd12044fede745d2bf2f63289
   languageName: node
   linkType: hard
 
@@ -21333,10 +21344,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-bytes@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "pretty-bytes@npm:6.0.0"
-  checksum: 10/0bb9f95e617236404b29a8392c6efd82d65805f622f5e809ecd70068102be857d4e3276c86d2a32fa2ef851cc29472e380945dab7bec83ec79bd57a19a10faf7
+"pretty-bytes@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "pretty-bytes@npm:7.1.0"
+  checksum: 10/75fb34fba44596dc69983039fce9288f3b247b513aba2d6dfe74727505fe43199fcd7a1cee95dbd5be56a431d30fbdb4d24d3a62b9cf22bb63fa706b81c2e540
   languageName: node
   linkType: hard
 
@@ -23409,6 +23420,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-width@npm:^7.0.0, string-width@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "string-width@npm:7.2.0"
+  dependencies:
+    emoji-regex: "npm:^10.3.0"
+    get-east-asian-width: "npm:^1.0.0"
+    strip-ansi: "npm:^7.1.0"
+  checksum: 10/42f9e82f61314904a81393f6ef75b832c39f39761797250de68c041d8ba4df2ef80db49ab6cd3a292923a6f0f409b8c9980d120f7d32c820b4a8a84a2598a295
+  languageName: node
+  linkType: hard
+
 "string-width@npm:^8.2.1":
   version: 8.2.1
   resolution: "string-width@npm:8.2.1"
@@ -23467,7 +23489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-ansi@npm:^7.0.1, strip-ansi@npm:^7.1.2":
+"strip-ansi@npm:^7.0.1, strip-ansi@npm:^7.1.0, strip-ansi@npm:^7.1.2":
   version: 7.2.0
   resolution: "strip-ansi@npm:7.2.0"
   dependencies:
@@ -23918,17 +23940,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:^5.10.0, terser@npm:^5.15.1, terser@npm:^5.16.0, terser@npm:^5.31.1":
-  version: 5.39.0
-  resolution: "terser@npm:5.39.0"
+"terser@npm:^5.10.0, terser@npm:^5.15.1, terser@npm:^5.31.1, terser@npm:^5.47.0":
+  version: 5.47.1
+  resolution: "terser@npm:5.47.1"
   dependencies:
     "@jridgewell/source-map": "npm:^0.3.3"
-    acorn: "npm:^8.8.2"
+    acorn: "npm:^8.15.0"
     commander: "npm:^2.20.0"
     source-map-support: "npm:~0.5.20"
   bin:
     terser: bin/terser
-  checksum: 10/d84aff642398329f7179bbeaca28cac76a86100e2372d98d39d9b86c48023b6b9f797d983d6e7c0610b3f957c53d01ada1befa25d625614cb2ccd20714f1e98b
+  checksum: 10/16c0daea6ae38c4c9831b28d76a1c65475a6cadfbf7b89723e2adf0f9e6af1a58fecd0d541e4693c5ebfc999c188fddb0df7fa6fa4b3bccfd686f0b5c8f576e6
   languageName: node
   linkType: hard
 
@@ -25433,6 +25455,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"wrap-ansi@npm:^9.0.0":
+  version: 9.0.2
+  resolution: "wrap-ansi@npm:9.0.2"
+  dependencies:
+    ansi-styles: "npm:^6.2.1"
+    string-width: "npm:^7.0.0"
+    strip-ansi: "npm:^7.1.0"
+  checksum: 10/f3907e1ea9717404ca53a338fa5a017c2121550c3a5305180e2bc08c03e21aa45068df55b0d7676bf57be1880ba51a84458c17241ebedea485fafa9ef16b4024
+  languageName: node
+  linkType: hard
+
 "wrappy@npm:1, wrappy@npm:1.0.2":
   version: 1.0.2
   resolution: "wrappy@npm:1.0.2"
@@ -25625,7 +25658,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.7.2, yargs@npm:^17.6.2":
+"yargs-parser@npm:^22.0.0":
+  version: 22.0.0
+  resolution: "yargs-parser@npm:22.0.0"
+  checksum: 10/f13c42bad6ebed1a587a72f2db5694f5fa772bcaf409a701691d13cf74eb5adfcf61a2611de08807e319b829d3e5e6e1578b16ebe174cae8e8be3bf7b8e7a19e
+  languageName: node
+  linkType: hard
+
+"yargs@npm:17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
@@ -25652,6 +25692,20 @@ __metadata:
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^20.2.2"
   checksum: 10/807fa21211d2117135d557f95fcd3c3d390530cda2eca0c840f1d95f0f40209dcfeb5ec18c785a1f3425896e623e3b2681e8bb7b6600060eda1c3f4804e7957e
+  languageName: node
+  linkType: hard
+
+"yargs@npm:^18.0.0":
+  version: 18.0.0
+  resolution: "yargs@npm:18.0.0"
+  dependencies:
+    cliui: "npm:^9.0.1"
+    escalade: "npm:^3.1.1"
+    get-caller-file: "npm:^2.0.5"
+    string-width: "npm:^7.2.0"
+    y18n: "npm:^5.0.5"
+    yargs-parser: "npm:^22.0.0"
+  checksum: 10/5af36234871390386b31cac99f00e79fcbc2ead858a61b30a8ca381c5fde5df8af0b407c36b000d3f774bcbe4aec5833f2f1c915f6ddc49ce97b78176b651801
   languageName: node
   linkType: hard
 

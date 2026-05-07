@@ -33,8 +33,9 @@ jobs:
         run: yarn nx affected --target=bundle-size --nxBail
 
       - name: Compare results with "main" branch
-        run: |
-          npx monosize compare-reports --branch main --output markdown --quiet > ./monosize.md
+        id: compare
+        continue-on-error: true
+        run: npx monosize compare-reports --branch main --output markdown --quiet > ./monosize.md
 
       - name: Save PR number
         run: echo ${{ github.event.number }} > pr.txt
@@ -47,3 +48,7 @@ jobs:
           path: |
             monosize.md
             pr.txt
+
+      - name: Fail if threshold exceeded
+        if: steps.compare.outcome == 'failure'
+        run: exit 1
