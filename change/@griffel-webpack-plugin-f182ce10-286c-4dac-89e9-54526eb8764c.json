@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: bump prettier from 2.8.2 to 3.8.3",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
