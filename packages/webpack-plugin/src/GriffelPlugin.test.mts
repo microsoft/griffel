@@ -290,13 +290,13 @@ function testFixture(fixtureName: string, options: TestOptions = {}) {
         const result = await compileSourceWithWebpack(inputPath, options);
 
         resultModule = fixLineEndings(
-          prettier.format(result.moduleSource, {
+          await prettier.format(result.moduleSource, {
             ...prettierConfig,
             parser: 'typescript',
           }),
         );
         resultCSS = fixLineEndings(
-          prettier.format(result.cssOutput, {
+          await prettier.format(result.cssOutput, {
             ...prettierConfig,
             parser: 'css',
           }),

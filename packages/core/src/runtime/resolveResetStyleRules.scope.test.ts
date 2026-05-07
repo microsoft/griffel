@@ -1,8 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { griffelResetRulesSerializer } from '../common/snapshotSerializers.js';
+import '../common/snapshotMatchers.js';
 import { resolveResetStyleRules } from './resolveResetStyleRules.js';
-
-expect.addSnapshotSerializer(griffelResetRulesSerializer);
 
 describe('resolveResetStyleRules: @scope', () => {
   describe('warnings', () => {
@@ -53,7 +51,7 @@ describe('resolveResetStyleRules: @scope', () => {
     });
   });
 
-  it('handles @scope to (.boundary) to a root', () => {
+  it('handles @scope to (.boundary) to a root', async () => {
     const result = resolveResetStyleRules({
       color: 'black',
       '@scope to (.boundary)': {
@@ -61,8 +59,8 @@ describe('resolveResetStyleRules: @scope', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .rq3kw0z {
         color: black;
       }
@@ -70,11 +68,11 @@ describe('resolveResetStyleRules: @scope', () => {
         :scope {
           color: red;
         }
-      }
+      }"
     `);
   });
 
-  it('handles @scope to (.boundary) with descendant selector', () => {
+  it('handles @scope to (.boundary) with descendant selector', async () => {
     const result = resolveResetStyleRules({
       color: 'black',
       '@scope to (.boundary)': {
@@ -82,8 +80,8 @@ describe('resolveResetStyleRules: @scope', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .rqgzcu0 {
         color: black;
       }
@@ -91,26 +89,26 @@ describe('resolveResetStyleRules: @scope', () => {
         :scope p {
           color: red;
         }
-      }
+      }"
     `);
   });
 
-  it('handles direct property inside @scope (styles the reset root)', () => {
+  it('handles direct property inside @scope (styles the reset root)', async () => {
     const result = resolveResetStyleRules({
       '@scope to (.never)': { color: 'blue' },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       @scope (.rmr49av) to (.never) {
         :scope {
           color: blue;
         }
-      }
+      }"
     `);
   });
 
-  it('hoists @media out of @scope so authoring order does not change emitted CSS', () => {
+  it('hoists @media out of @scope so authoring order does not change emitted CSS', async () => {
     // Authored as `@media { @scope { … } }` — naturally inside-out.
     const resultA = resolveResetStyleRules({
       '@media (max-width: 600px)': {
@@ -131,8 +129,8 @@ describe('resolveResetStyleRules: @scope', () => {
       },
     });
 
-    expect(resultA).toMatchInlineSnapshot(`
-      /** bucket "s" */
+    await expect(resultA).toMatchFormattedInlineSnapshot(`
+      "/** bucket "s" */
       @media (max-width: 600px) {
         @scope (.r16wv87e) to (.mobile) {
           :scope {
@@ -142,10 +140,10 @@ describe('resolveResetStyleRules: @scope', () => {
             color: green;
           }
         }
-      }
+      }"
     `);
-    expect(resultB).toMatchInlineSnapshot(`
-      /** bucket "s" */
+    await expect(resultB).toMatchFormattedInlineSnapshot(`
+      "/** bucket "s" */
       @media (max-width: 600px) {
         @scope (.r1o8vpyb) to (.mobile) {
           :scope {
@@ -155,11 +153,11 @@ describe('resolveResetStyleRules: @scope', () => {
             color: green;
           }
         }
-      }
+      }"
     `);
   });
 
-  it('handles RTL-flipped property under @scope', () => {
+  it('handles RTL-flipped property under @scope', async () => {
     const result = resolveResetStyleRules({
       paddingLeft: '5px',
       '@scope to (.boundary)': {
@@ -167,8 +165,8 @@ describe('resolveResetStyleRules: @scope', () => {
       },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       .r17n69g3 {
         padding-left: 5px;
       }
@@ -184,18 +182,18 @@ describe('resolveResetStyleRules: @scope', () => {
         :scope .child {
           padding-right: 10px;
         }
-      }
+      }"
     `);
   });
 
-  it('emits two sibling @scope rules for two top-level @scope blocks', () => {
+  it('emits two sibling @scope rules for two top-level @scope blocks', async () => {
     const result = resolveResetStyleRules({
       '@scope to (.a)': { '& p': { color: 'red' } },
       '@scope to (.b)': { '& p': { color: 'blue' } },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      /** bucket "r" */
+    await expect(result).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" */
       @scope (.r1uqf53) to (.a) {
         :scope p {
           color: red;
@@ -205,7 +203,7 @@ describe('resolveResetStyleRules: @scope', () => {
         :scope p {
           color: blue;
         }
-      }
+      }"
     `);
   });
 });

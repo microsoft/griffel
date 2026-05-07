@@ -1,16 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { griffelRendererSerializer } from '../common/snapshotSerializers.js';
+import '../common/snapshotMatchers.js';
 import type { CSSRulesByBucket } from '../types.js';
 import { createDOMRenderer } from './createDOMRenderer.js';
-
-expect.addSnapshotSerializer(griffelRendererSerializer);
 
 describe('createDOMRenderer', () => {
   beforeEach(() => {
     document.head.innerHTML = '';
   });
 
-  it('should apply filter for css rules for multiple buckets', () => {
+  it('should apply filter for css rules for multiple buckets', async () => {
     const mediaQueryFilter = vi.fn().mockImplementation(cssRule => {
       return !cssRule.startsWith('@media');
     });
@@ -23,15 +21,15 @@ describe('createDOMRenderer', () => {
 
     renderer.insertCSSRules(cssRules);
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .foo {
         background-color: red;
-      }
+      }"
     `);
   });
 
-  it('should apply filter for css rules within single bucket', () => {
+  it('should apply filter for css rules within single bucket', async () => {
     const mediaQueryFilter = vi.fn().mockImplementation(cssRule => {
       return !cssRule.startsWith('@media');
     });
@@ -45,11 +43,11 @@ describe('createDOMRenderer', () => {
     };
 
     renderer.insertCSSRules(cssRules);
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "t" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "t" {"data-priority":"0"} **/
       .foo {
         background-color: red;
-      }
+      }"
     `);
   });
 

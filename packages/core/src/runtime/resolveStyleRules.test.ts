@@ -1,10 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { RESET, UNSUPPORTED_CSS_PROPERTIES } from '../constants.js';
-import { griffelRulesSerializer } from '../common/snapshotSerializers.js';
+import '../common/snapshotMatchers.js';
 import type { CSSClasses, CSSClassesMap, CSSRulesByBucket } from '../types.js';
 import { resolveStyleRules } from './resolveStyleRules.js';
-
-expect.addSnapshotSerializer(griffelRulesSerializer);
 
 function getFirstClassName([resolvedClassesForSlot]: [CSSClassesMap, CSSRulesByBucket]): string {
   const className: CSSClasses = resolvedClassesForSlot[Object.keys(resolvedClassesForSlot)[0]];
@@ -96,34 +94,34 @@ describe('resolveStyleRules', () => {
   });
 
   describe('css', () => {
-    it('resolves a single rule', () => {
-      expect(resolveStyleRules({ color: 'red' })).toMatchInlineSnapshot(`
-        .fe3e8s9 {
+    it('resolves a single rule', async () => {
+      await expect(resolveStyleRules({ color: 'red' })).toMatchFormattedInlineSnapshot(`
+        ".fe3e8s9 {
           color: red;
-        }
+        }"
       `);
     });
 
-    it('resolves multiple rules', () => {
-      expect(resolveStyleRules({ backgroundColor: 'green', color: 'red' })).toMatchInlineSnapshot(`
-        .fcnqdeg {
+    it('resolves multiple rules', async () => {
+      await expect(resolveStyleRules({ backgroundColor: 'green', color: 'red' })).toMatchFormattedInlineSnapshot(`
+        ".fcnqdeg {
           background-color: green;
         }
         .fe3e8s9 {
           color: red;
-        }
+        }"
       `);
     });
 
-    it('trims values to generate the same classes', () => {
-      expect(resolveStyleRules({ color: 'red ' /* ends with a space */ })).toMatchInlineSnapshot(`
-        .fe3e8s9 {
+    it('trims values to generate the same classes', async () => {
+      await expect(resolveStyleRules({ color: 'red ' /* ends with a space */ })).toMatchFormattedInlineSnapshot(`
+        ".fe3e8s9 {
           color: red;
-        }
+        }"
       `);
     });
 
-    it('trims ">" selectors to generate the same classes', () => {
+    it('trims ">" selectors to generate the same classes', async () => {
       const resultA = resolveStyleRules({ '> div': { color: 'blue' } });
       const resultB = resolveStyleRules({ '>div': { color: 'blue' } });
 
@@ -134,20 +132,20 @@ describe('resolveStyleRules', () => {
         }
       `);
 
-      expect(resultA).toMatchInlineSnapshot(`
-        .f1plvi8r > div {
+      await expect(resultA).toMatchFormattedInlineSnapshot(`
+        ".f1plvi8r > div {
           color: blue;
-        }
+        }"
       `);
-      expect(resultB).toMatchInlineSnapshot(`
-        .f1plvi8r > div {
+      await expect(resultB).toMatchFormattedInlineSnapshot(`
+        ".f1plvi8r > div {
           color: blue;
-        }
+        }"
       `);
     });
 
-    it('hyphenates camelcased CSS properties', () => {
-      expect(
+    it('hyphenates camelcased CSS properties', async () => {
+      await expect(
         resolveStyleRules({
           '--foo': 'var(--bar)',
           '--fooBar': 'var(--barBaz)',
@@ -155,8 +153,8 @@ describe('resolveStyleRules', () => {
           backgroundColor: 'red',
           MozBorderLeftColors: 'red',
         }),
-      ).toMatchInlineSnapshot(`
-        .f1qux40 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".f1qux40 {
           --foo: var(--bar);
         }
         .f14u957 {
@@ -167,64 +165,64 @@ describe('resolveStyleRules', () => {
         }
         .f1qq0qht {
           -moz-border-left-colors: red;
-        }
+        }"
       `);
     });
 
-    it('performs vendor prefixing', () => {
-      expect(resolveStyleRules({ colorAdjust: 'initial' })).toMatchInlineSnapshot(`
-        .fhfx5oh {
+    it('performs vendor prefixing', async () => {
+      await expect(resolveStyleRules({ colorAdjust: 'initial' })).toMatchFormattedInlineSnapshot(`
+        ".fhfx5oh {
           -webkit-print-color-adjust: initial;
           color-adjust: initial;
-        }
+        }"
       `);
     });
 
-    it('supports shorthands', () => {
-      expect(
+    it('supports shorthands', async () => {
+      await expect(
         resolveStyleRules({
           padding: '5px',
           margin: '5px',
         }),
-      ).toMatchInlineSnapshot(`
-        .f18ktai2 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".f18ktai2 {
           padding: 5px;
         }
         .f155w6da {
           margin: 5px;
-        }
+        }"
       `);
     });
 
-    it('handles falsy values', () => {
-      expect(
+    it('handles falsy values', async () => {
+      await expect(
         resolveStyleRules({
           zIndex: 1,
           position: null as unknown as undefined,
           top: undefined,
         }),
-      ).toMatchInlineSnapshot(`
-        .f19g0ac {
+      ).toMatchFormattedInlineSnapshot(`
+        ".f19g0ac {
           z-index: 1;
-        }
+        }"
       `);
     });
 
-    it('handles fallback values', () => {
+    it('handles fallback values', async () => {
       const actual = resolveStyleRules({ color: ['red', 'blue'] });
-      expect(actual).toMatchInlineSnapshot(`
-        .f15e90lz {
+      await expect(actual).toMatchFormattedInlineSnapshot(`
+        ".f15e90lz {
           color: red;
           color: blue;
-        }
+        }"
       `);
     });
 
-    it('handles empty array of fallback values', () => {
+    it('handles empty array of fallback values', async () => {
       const warn = vi.spyOn(console, 'warn').mockImplementationOnce(() => {});
 
       const actual = resolveStyleRules({ color: [] });
-      expect(actual).toMatchInlineSnapshot(``); /* empty result */
+      await expect(actual).toMatchFormattedInlineSnapshot(`""`); /* empty result */
 
       expect(warn).toHaveBeenCalledWith(
         expect.stringMatching(
@@ -234,98 +232,100 @@ describe('resolveStyleRules', () => {
     });
 
     describe('handles RTL', () => {
-      it('property flipping', () => {
-        expect(resolveStyleRules({ left: '5px' })).toMatchInlineSnapshot(`
-          .f5b3q4t {
+      it('property flipping', async () => {
+        await expect(resolveStyleRules({ left: '5px' })).toMatchFormattedInlineSnapshot(`
+          ".f5b3q4t {
             left: 5px;
           }
           .flgfsvn {
             right: 5px;
-          }
+          }"
         `);
       });
 
-      it('boxShadow with strings', () => {
-        expect(
+      it('boxShadow with strings', async () => {
+        await expect(
           resolveStyleRules({
             boxShadow: 'inset 2rem 0rem 0.4rem -1rem #eee',
           }),
-        ).toMatchInlineSnapshot(`
-                  .fissx19 {
-                    box-shadow: inset 2rem 0rem 0.4rem -1rem #eee;
-                  }
-                  .f14ydmub {
-                    box-shadow: inset -2rem 0rem 0.4rem -1rem #eee;
-                  }
-              `);
+        ).toMatchFormattedInlineSnapshot(`
+          ".fissx19 {
+            box-shadow: inset 2rem 0rem 0.4rem -1rem #eee;
+          }
+          .f14ydmub {
+            box-shadow: inset -2rem 0rem 0.4rem -1rem #eee;
+          }"
+        `);
       });
 
-      it('boxShadow with CSS variable', () => {
-        expect(
+      it('boxShadow with CSS variable', async () => {
+        await expect(
           resolveStyleRules({
             boxShadow: 'inset 2rem 0rem 0.4rem -1rem var(--colorToken)',
           }),
-        ).toMatchInlineSnapshot(`
-                  .fko8do5 {
-                    box-shadow: inset 2rem 0rem 0.4rem -1rem var(--colorToken);
-                  }
-                  .fvdav93 {
-                    box-shadow: inset -2rem 0rem 0.4rem -1rem var(--colorToken);
-                  }
-              `);
+        ).toMatchFormattedInlineSnapshot(`
+          ".fko8do5 {
+            box-shadow: inset 2rem 0rem 0.4rem -1rem var(--colorToken);
+          }
+          .fvdav93 {
+            box-shadow: inset -2rem 0rem 0.4rem -1rem var(--colorToken);
+          }"
+        `);
       });
 
-      it('boxShadow with multiple values', () => {
-        expect(
+      it('boxShadow with multiple values', async () => {
+        await expect(
           resolveStyleRules({
             boxShadow: 'inset 2rem 0rem 0.4rem -1rem var(--colorToken), 4px 0rem 0.4rem 2rem var(--anotherToken)',
           }),
-        ).toMatchInlineSnapshot(`
-          .frvj0nn {
-            box-shadow: inset 2rem 0rem 0.4rem -1rem var(--colorToken),
+        ).toMatchFormattedInlineSnapshot(`
+          ".frvj0nn {
+            box-shadow:
+              inset 2rem 0rem 0.4rem -1rem var(--colorToken),
               4px 0rem 0.4rem 2rem var(--anotherToken);
           }
           .fzr4yxb {
-            box-shadow: inset -2rem 0rem 0.4rem -1rem var(--colorToken),
+            box-shadow:
+              inset -2rem 0rem 0.4rem -1rem var(--colorToken),
               -4px 0rem 0.4rem 2rem var(--anotherToken);
-          }
+          }"
         `);
       });
     });
 
-    it('handles RTL @noflip', () => {
-      expect(resolveStyleRules({ left: '5px /* @noflip */' })).toMatchInlineSnapshot(`
-        .fm76jd0 {
+    it('handles RTL @noflip', async () => {
+      await expect(resolveStyleRules({ left: '5px /* @noflip */' })).toMatchFormattedInlineSnapshot(`
+        ".fm76jd0 {
           left: 5px;
-        }
+        }"
       `);
-      expect(resolveStyleRules({ borderRight: `5px solid red /* @noflip */`, borderBottom: `3px dotted blue` }))
-        .toMatchInlineSnapshot(`
-        .fq3r367 {
+      await expect(resolveStyleRules({ borderRight: `5px solid red /* @noflip */`, borderBottom: `3px dotted blue` }))
+        .toMatchFormattedInlineSnapshot(`
+        ".fq3r367 {
           border-right: 5px solid red;
         }
         .fmdogq2 {
           border-bottom: 3px dotted blue;
-        }
+        }"
       `);
     });
 
-    it('handles media queries with flipping values', () => {
-      expect(
+    it('handles media queries with flipping values', async () => {
+      await expect(
         resolveStyleRules({
           '@media screen and (max-width: 992px)': {
             textAlign: 'left',
           },
         }),
-      ).toMatchInlineSnapshot(`
-        @media screen and (max-width: 992px) {
+      ).toMatchFormattedInlineSnapshot(`
+        "@media screen and (max-width: 992px) {
           .f1avj2xq {
             text-align: right;
           }
           .f1bxmk0a {
             text-align: left;
           }
-        }
+        }"
       `);
     });
 
@@ -349,14 +349,14 @@ describe('resolveStyleRules', () => {
       expect(result[1]).toEqual({ d: [['.f1nz02y{padding:5px;padding:10px;}', { p: -1 }]] });
     });
 
-    it('handles fallback values in RTL', () => {
-      expect(
+    it('handles fallback values in RTL', async () => {
+      await expect(
         resolveStyleRules({
           left: ['5px', '10px'],
           float: ['initial', 'left'],
         }),
-      ).toMatchInlineSnapshot(`
-        .f14hk0f5 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".f14hk0f5 {
           left: 5px;
           left: 10px;
         }
@@ -371,22 +371,22 @@ describe('resolveStyleRules', () => {
         .fhsnlhg {
           float: initial;
           float: right;
-        }
+        }"
       `);
     });
 
-    it('errors if fallback values result in multiple properties in RTL, skips the property', () => {
+    it('errors if fallback values result in multiple properties in RTL, skips the property', async () => {
       const error = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
 
-      expect(
+      await expect(
         resolveStyleRules({
           left: ['5px /* @noflip */', '10px'],
           color: 'red',
         }),
-      ).toMatchInlineSnapshot(`
-        .fe3e8s9 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fe3e8s9 {
           color: red;
-        }
+        }"
       `); /* only color */
 
       expect(error).toHaveBeenCalledWith(
@@ -396,85 +396,86 @@ describe('resolveStyleRules', () => {
       );
     });
 
-    it('handles nested selectors', () => {
-      expect(resolveStyleRules({ ':hover': { color: 'red' } })).toMatchInlineSnapshot(`
-        .faf35ka:hover {
+    it('handles nested selectors', async () => {
+      await expect(resolveStyleRules({ ':hover': { color: 'red' } })).toMatchFormattedInlineSnapshot(`
+        ".faf35ka:hover {
           color: red;
-        }
+        }"
       `);
-      expect(resolveStyleRules({ '::after': { content: '""' } })).toMatchInlineSnapshot(`
-        .f13zj6fq::after {
+      await expect(resolveStyleRules({ '::after': { content: '""' } })).toMatchFormattedInlineSnapshot(`
+        ".f13zj6fq::after {
           content: "";
-        }
+        }"
       `);
 
-      expect(resolveStyleRules({ '[data-fluent="true"]': { color: 'green' } })).toMatchInlineSnapshot(`
-        .fcopvey[data-fluent="true"] {
+      await expect(resolveStyleRules({ '[data-fluent="true"]': { color: 'green' } })).toMatchFormattedInlineSnapshot(`
+        ".fcopvey[data-fluent="true"] {
           color: green;
-        }
+        }"
       `);
-      expect(resolveStyleRules({ '& [data-fluent="true"]': { color: 'green' } })).toMatchInlineSnapshot(`
-        .f1k5aqsk [data-fluent="true"] {
+      await expect(resolveStyleRules({ '& [data-fluent="true"]': { color: 'green' } })).toMatchFormattedInlineSnapshot(`
+        ".f1k5aqsk [data-fluent="true"] {
           color: green;
-        }
-      `);
-
-      expect(resolveStyleRules({ '> div': { color: 'green' } })).toMatchInlineSnapshot(`
-        .f1fdorc0 > div {
-          color: green;
-        }
+        }"
       `);
 
-      expect(resolveStyleRules({ '& .foo': { color: 'green' } })).toMatchInlineSnapshot(`
-        .f15f830o .foo {
+      await expect(resolveStyleRules({ '> div': { color: 'green' } })).toMatchFormattedInlineSnapshot(`
+        ".f1fdorc0 > div {
           color: green;
-        }
-      `);
-      expect(resolveStyleRules({ '&.foo': { color: 'green' } })).toMatchInlineSnapshot(`
-        .fe1zdmy.foo {
-          color: green;
-        }
+        }"
       `);
 
-      expect(resolveStyleRules({ '& #foo': { color: 'green' } })).toMatchInlineSnapshot(`
-        .fie1itf #foo {
+      await expect(resolveStyleRules({ '& .foo': { color: 'green' } })).toMatchFormattedInlineSnapshot(`
+        ".f15f830o .foo {
           color: green;
-        }
+        }"
       `);
-      expect(resolveStyleRules({ '&#foo': { color: 'green' } })).toMatchInlineSnapshot(`
-        .fwxog6r#foo {
+      await expect(resolveStyleRules({ '&.foo': { color: 'green' } })).toMatchFormattedInlineSnapshot(`
+        ".fe1zdmy.foo {
           color: green;
-        }
+        }"
+      `);
+
+      await expect(resolveStyleRules({ '& #foo': { color: 'green' } })).toMatchFormattedInlineSnapshot(`
+        ".fie1itf #foo {
+          color: green;
+        }"
+      `);
+      await expect(resolveStyleRules({ '&#foo': { color: 'green' } })).toMatchFormattedInlineSnapshot(`
+        ".fwxog6r#foo {
+          color: green;
+        }"
       `);
     });
 
-    it('handles complex nested selectors', () => {
-      expect(resolveStyleRules({ '& > :first-child': { '& svg': { color: 'red' } } })).toMatchInlineSnapshot(`
-        .fkngkdt > :first-child svg {
+    it('handles complex nested selectors', async () => {
+      await expect(resolveStyleRules({ '& > :first-child': { '& svg': { color: 'red' } } }))
+        .toMatchFormattedInlineSnapshot(`
+        ".fkngkdt > :first-child svg {
           color: red;
-        }
+        }"
       `);
     });
 
-    it('handles comma-separated selectors', () => {
-      expect(
+    it('handles comma-separated selectors', async () => {
+      await expect(
         resolveStyleRules({
           ':active,:focus-within': {
             paddingLeft: '10px',
           },
         }),
-      ).toMatchInlineSnapshot(`
-        .f14f5aie:active,
+      ).toMatchFormattedInlineSnapshot(`
+        ".f14f5aie:active,
         .f14f5aie:focus-within {
           padding-left: 10px;
         }
         .f1sheuf0:active,
         .f1sheuf0:focus-within {
           padding-right: 10px;
-        }
+        }"
       `);
 
-      expect(
+      await expect(
         resolveStyleRules({
           ':hover,:focus-within': {
             '::before': {
@@ -482,23 +483,23 @@ describe('resolveStyleRules', () => {
             },
           },
         }),
-      ).toMatchInlineSnapshot(`
-        .fij4gri:hover::before,
+      ).toMatchFormattedInlineSnapshot(`
+        ".fij4gri:hover::before,
         .fij4gri:focus-within::before {
           color: orange;
-        }
+        }"
       `);
     });
 
-    it('handles named container queries', () => {
+    it('handles named container queries', async () => {
       const result = resolveStyleRules({ '@container foo (max-width: 1px)': { color: 'red' } });
 
-      expect(result).toMatchInlineSnapshot(`
-        @container foo (max-width: 1px) {
+      await expect(result).toMatchFormattedInlineSnapshot(`
+        "@container foo (max-width: 1px) {
           .fbmp7kx {
             color: red;
           }
-        }
+        }"
       `);
       expect(result[0]).toMatchInlineSnapshot(`
         {
@@ -507,15 +508,15 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('handles unnamed container queries', () => {
+    it('handles unnamed container queries', async () => {
       const result = resolveStyleRules({ '@container (max-width: 1px)': { color: 'red' } });
 
-      expect(result).toMatchInlineSnapshot(`
-        @container (max-width: 1px) {
+      await expect(result).toMatchFormattedInlineSnapshot(`
+        "@container (max-width: 1px) {
           .f4ivup9 {
             color: red;
           }
-        }
+        }"
       `);
       expect(result[0]).toMatchInlineSnapshot(`
         {
@@ -524,21 +525,21 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it("container queries don't collide with other properties", () => {
+    it("container queries don't collide with other properties", async () => {
       const result = resolveStyleRules({
         color: 'red',
         '@container foo (max-width: 1px)': { color: 'red' },
       });
 
-      expect(result).toMatchInlineSnapshot(`
-        .fe3e8s9 {
+      await expect(result).toMatchFormattedInlineSnapshot(`
+        ".fe3e8s9 {
           color: red;
         }
         @container foo (max-width: 1px) {
           .fbmp7kx {
             color: red;
           }
-        }
+        }"
       `);
       expect(result[0]).toMatchInlineSnapshot(`
         {
@@ -548,26 +549,26 @@ describe('resolveStyleRules', () => {
       `);
     });
 
-    it('handles media queries', () => {
-      expect(
+    it('handles media queries', async () => {
+      await expect(
         resolveStyleRules({
           color: 'green',
           '@media screen and (max-width: 992px)': { color: 'red' },
         }),
-      ).toMatchInlineSnapshot(`
-        .fka9v86 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fka9v86 {
           color: green;
         }
         @media screen and (max-width: 992px) {
           .f15as2e {
             color: red;
           }
-        }
+        }"
       `);
     });
 
-    it('handles media queries with pseudo selectors', () => {
-      expect(
+    it('handles media queries with pseudo selectors', async () => {
+      await expect(
         resolveStyleRules({
           color: 'green',
           '@media screen and (max-width: 992px)': {
@@ -576,20 +577,20 @@ describe('resolveStyleRules', () => {
             },
           },
         }),
-      ).toMatchInlineSnapshot(`
-        .fka9v86 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fka9v86 {
           color: green;
         }
         @media screen and (max-width: 992px) {
           .f1951wvx:hover {
             color: red;
           }
-        }
+        }"
       `);
     });
 
-    it('handles nested media queries', () => {
-      expect(
+    it('handles nested media queries', async () => {
+      await expect(
         resolveStyleRules({
           color: 'red',
           '@media screen and (max-width: 992px)': {
@@ -597,8 +598,8 @@ describe('resolveStyleRules', () => {
             '@media (min-width: 100px)': { color: 'red' },
           },
         }),
-      ).toMatchInlineSnapshot(`
-        .fe3e8s9 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fe3e8s9 {
           color: red;
         }
         @media screen and (max-width: 992px) {
@@ -610,43 +611,43 @@ describe('resolveStyleRules', () => {
           .fnnlhvt {
             color: red;
           }
-        }
+        }"
       `);
     });
 
-    it('handles layer queries', () => {
-      expect(
+    it('handles layer queries', async () => {
+      await expect(
         resolveStyleRules({
           color: 'green',
           '@layer color': { color: 'red' },
         }),
-      ).toMatchInlineSnapshot(`
-        .fka9v86 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fka9v86 {
           color: green;
         }
         @layer color {
           .f1al6es7 {
             color: red;
           }
-        }
+        }"
       `);
     });
 
-    it('handles layer queries with dots', () => {
-      expect(
+    it('handles layer queries with dots', async () => {
+      await expect(
         resolveStyleRules({
           '@layer framework.utilities': { color: 'red' },
         }),
-      ).toMatchInlineSnapshot(`
-        @layer framework.utilities {
+      ).toMatchFormattedInlineSnapshot(`
+        "@layer framework.utilities {
           .f12ei13l {
             color: red;
           }
-        }
+        }"
       `);
     });
-    it('handles layer queries with pseudo selectors', () => {
-      expect(
+    it('handles layer queries with pseudo selectors', async () => {
+      await expect(
         resolveStyleRules({
           color: 'green',
           '@layer color': {
@@ -655,20 +656,20 @@ describe('resolveStyleRules', () => {
             },
           },
         }),
-      ).toMatchInlineSnapshot(`
-        .fka9v86 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fka9v86 {
           color: green;
         }
         @layer color {
           .f1hrbkey:hover {
             color: red;
           }
-        }
+        }"
       `);
     });
 
-    it('handles nested layer queries', () => {
-      expect(
+    it('handles nested layer queries', async () => {
+      await expect(
         resolveStyleRules({
           color: 'red',
           '@layer color': {
@@ -676,8 +677,8 @@ describe('resolveStyleRules', () => {
             '@layer theme': { color: 'red' },
           },
         }),
-      ).toMatchInlineSnapshot(`
-        .fe3e8s9 {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fe3e8s9 {
           color: red;
         }
         @layer color {
@@ -689,26 +690,26 @@ describe('resolveStyleRules', () => {
           .f1mzin3h {
             color: red;
           }
-        }
+        }"
       `);
     });
 
-    it('handles supports queries', () => {
-      expect(
+    it('handles supports queries', async () => {
+      await expect(
         resolveStyleRules({
           '@supports (display:block)': { color: 'green' },
         }),
-      ).toMatchInlineSnapshot(`
-        @supports (display: block) {
+      ).toMatchFormattedInlineSnapshot(`
+        "@supports (display: block) {
           .fp97nsu {
             color: green;
           }
-        }
+        }"
       `);
     });
 
-    it('handles :global selector', () => {
-      expect(
+    it('handles :global selector', async () => {
+      await expect(
         resolveStyleRules({
           ':global(body)': {
             ':focus': {
@@ -718,8 +719,8 @@ describe('resolveStyleRules', () => {
             },
           },
         }),
-      ).toMatchInlineSnapshot(`
-        body .f192vvyd:focus {
+      ).toMatchFormattedInlineSnapshot(`
+        "body .f192vvyd:focus {
           color: green;
         }
         body .f1tz2pjr:focus:hover {
@@ -727,17 +728,17 @@ describe('resolveStyleRules', () => {
         }
         body .f1dl7obt:focus .foo {
           color: yellow;
-        }
+        }"
       `);
-      expect(
+      await expect(
         resolveStyleRules({
           ':global(body):focus': { color: 'pink' },
           ':global(body) :focus': { color: 'green' },
           ':global(body) :focus:hover': { color: 'blue' },
           ':global(body) :focus .foo': { color: 'yellow' },
         }),
-      ).toMatchInlineSnapshot(`
-        body .fug6i29:focus {
+      ).toMatchFormattedInlineSnapshot(`
+        "body .fug6i29:focus {
           color: pink;
         }
         body .frou13r :focus {
@@ -748,33 +749,33 @@ describe('resolveStyleRules', () => {
         }
         body .f1g015sp :focus .foo {
           color: yellow;
-        }
+        }"
       `);
     });
 
-    it('supports :global as a nested selector', () => {
-      expect(
+    it('supports :global as a nested selector', async () => {
+      await expect(
         resolveStyleRules({
           ':focus': { ':global(body)': { color: 'green' } },
         }),
-      ).toMatchInlineSnapshot(`
-        body .fz7er5p:focus {
+      ).toMatchFormattedInlineSnapshot(`
+        "body .fz7er5p:focus {
           color: green;
-        }
+        }"
       `);
     });
   });
 
   describe('keyframes', () => {
-    it('allows to define string as animationName', () => {
-      expect(
+    it('allows to define string as animationName', async () => {
+      await expect(
         resolveStyleRules({
           animationName: 'fade-in slide-out',
           animationIterationCount: 'infinite',
           animationDuration: '5s',
         }),
-      ).toMatchInlineSnapshot(`
-        .fc59ano {
+      ).toMatchFormattedInlineSnapshot(`
+        ".fc59ano {
           animation-name: fade-in slide-out;
         }
         .f1cpbl36 {
@@ -782,12 +783,12 @@ describe('resolveStyleRules', () => {
         }
         .f1t9cprh {
           animation-duration: 5s;
-        }
+        }"
       `);
     });
 
-    it('allows to define object as animationName', () => {
-      expect(
+    it('allows to define object as animationName', async () => {
+      await expect(
         resolveStyleRules({
           animationName: {
             from: {
@@ -800,8 +801,8 @@ describe('resolveStyleRules', () => {
           animationIterationCount: 'infinite',
           animationDuration: '5s',
         }),
-      ).toMatchInlineSnapshot(`
-        @keyframes f1q8eu9e {
+      ).toMatchFormattedInlineSnapshot(`
+        "@keyframes f1q8eu9e {
           from {
             transform: rotate(0deg);
           }
@@ -828,12 +829,12 @@ describe('resolveStyleRules', () => {
         }
         .f1t9cprh {
           animation-duration: 5s;
-        }
+        }"
       `);
     });
 
-    it('allows to define array as animationName', () => {
-      expect(
+    it('allows to define array as animationName', async () => {
+      await expect(
         resolveStyleRules({
           animationName: [
             {
@@ -857,8 +858,8 @@ describe('resolveStyleRules', () => {
           animationIterationCount: 'infinite',
           animationDuration: '5s',
         }),
-      ).toMatchInlineSnapshot(`
-        @keyframes f1q8eu9e {
+      ).toMatchFormattedInlineSnapshot(`
+        "@keyframes f1q8eu9e {
           from {
             transform: rotate(0deg);
           }
@@ -893,7 +894,7 @@ describe('resolveStyleRules', () => {
         }
         .f1t9cprh {
           animation-duration: 5s;
-        }
+        }"
       `);
     });
   });

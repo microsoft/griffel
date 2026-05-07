@@ -11,19 +11,9 @@ import { makeResetStyles } from './makeResetStyles.js';
 import { RendererProvider } from './RendererContext.js';
 import { renderToStyleElements } from './renderToStyleElements.js';
 
-expect.addSnapshotSerializer({
-  test(value) {
-    return typeof value === 'string';
-  },
-  print(value) {
-    /**
-     * test function makes sure that value is the guarded type
-     */
-    const _value = value as string;
-
-    return prettier.format(_value, { parser: 'html' }).trim();
-  },
-});
+async function formatHtml(value: string) {
+  return (await prettier.format(value, { parser: 'html' })).trim();
+}
 
 describe('renderToStyleElements (DOM)', () => {
   let renderer: GriffelRenderer;
@@ -37,7 +27,7 @@ describe('renderToStyleElements (DOM)', () => {
     document.head.innerHTML = '';
   });
 
-  it('makeStyles', () => {
+  it('makeStyles', async () => {
     const useExampleStyles = makeStyles({
       root: { color: 'red', ':hover': { color: 'green' } },
     });
@@ -56,8 +46,8 @@ describe('renderToStyleElements (DOM)', () => {
       );
     });
 
-    expect(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-      <style
+    expect(await formatHtml(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>))).toMatchInlineSnapshot(`
+      "<style
         data-make-styles-bucket="d"
         data-priority="0"
         data-make-styles-rehydration="true"
@@ -73,11 +63,11 @@ describe('renderToStyleElements (DOM)', () => {
         .f1ej289o:hover {
           color: green;
         }
-      </style>
+      </style>"
     `);
   });
 
-  it('makeResetStyles', () => {
+  it('makeResetStyles', async () => {
     const useClassName = makeResetStyles({
       color: 'red',
       ':hover': { color: 'pink' },
@@ -95,8 +85,8 @@ describe('renderToStyleElements (DOM)', () => {
       );
     });
 
-    expect(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)).toMatchInlineSnapshot(`
-      <style
+    expect(await formatHtml(renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>))).toMatchInlineSnapshot(`
+      "<style
         data-make-styles-bucket="r"
         data-priority="0"
         data-make-styles-rehydration="true"
@@ -107,7 +97,7 @@ describe('renderToStyleElements (DOM)', () => {
         .r1tsu58y:hover {
           color: pink;
         }
-      </style>
+      </style>"
     `);
   });
 });

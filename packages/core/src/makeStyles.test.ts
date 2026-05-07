@@ -1,11 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { RESET } from './constants.js';
 import { createDOMRenderer } from './renderer/createDOMRenderer.js';
-import { griffelRendererSerializer } from './common/snapshotSerializers.js';
+import './common/snapshotMatchers.js';
 import { makeStyles } from './makeStyles.js';
 import type { GriffelInsertionFactory, GriffelRenderer } from './types.js';
-
-expect.addSnapshotSerializer(griffelRendererSerializer);
 
 describe('makeStyles', () => {
   let renderer: GriffelRenderer;
@@ -26,7 +24,7 @@ describe('makeStyles', () => {
     expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('');
   });
 
-  it('returns a single classname for a single style', () => {
+  it('returns a single classname for a single style', async () => {
     const computeClasses = makeStyles({
       root: {
         color: 'red',
@@ -34,15 +32,15 @@ describe('makeStyles', () => {
     });
     expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___afhpfp0 fe3e8s9');
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .fe3e8s9 {
         color: red;
-      }
+      }"
     `);
   });
 
-  it('returns multiple classnames for complex rules', () => {
+  it('returns multiple classnames for complex rules', async () => {
     const computeClasses = makeStyles({
       root: {
         color: 'red',
@@ -52,8 +50,8 @@ describe('makeStyles', () => {
     });
 
     expect(computeClasses({ dir: 'ltr', renderer }).root).toEqual('___20fshm0 fe3e8s9 f1euv43f f10q6zxg');
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .fe3e8s9 {
         color: red;
       }
@@ -63,11 +61,11 @@ describe('makeStyles', () => {
       /** bucket "h" {"data-priority":"0"} **/
       .f10q6zxg:hover {
         color: blue;
-      }
+      }"
     `);
   });
 
-  it('works with CSS shorthands', () => {
+  it('works with CSS shorthands', async () => {
     const computeClasses = makeStyles({
       root: {
         backgroundColor: 'red',
@@ -77,8 +75,8 @@ describe('makeStyles', () => {
     });
 
     expect(computeClasses({ dir: 'ltr', renderer }).root).toMatchInlineSnapshot(`"___1vg1v8m f3xbvq9 f4wmytw fbhmu18"`);
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .f3xbvq9 {
         background-color: red;
       }
@@ -89,11 +87,11 @@ describe('makeStyles', () => {
       /** bucket "d" {"data-priority":"-1"} **/
       .fbhmu18 {
         padding: 10px;
-      }
+      }"
     `);
   });
 
-  it('handles RTL for styles', () => {
+  it('handles RTL for styles', async () => {
     const computeClasses = makeStyles({
       root: {
         paddingLeft: '10px',
@@ -107,8 +105,8 @@ describe('makeStyles', () => {
     expect(ltrClasses).toEqual('___a0zqzs0 frdkuqy f1c8chgj');
     expect(rtlClasses).toEqual('___7x57i00 f81rol6 f19krssl');
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .frdkuqy {
         padding-left: 10px;
       }
@@ -120,11 +118,11 @@ describe('makeStyles', () => {
       }
       .f19krssl {
         border-right-width: 10px;
-      }
+      }"
     `);
   });
 
-  it('handles RTL for keyframes', () => {
+  it('handles RTL for keyframes', async () => {
     const computeClasses = makeStyles({
       root: {
         animationName: {
@@ -141,8 +139,8 @@ describe('makeStyles', () => {
     });
     expect(computeClasses({ dir: 'rtl', renderer }).root).toBe('___3kh5ri0 f1fp4ujf f1cpbl36 f1t9cprh');
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "k" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "k" {"data-priority":"0"} **/
       @keyframes f1q8eu9e {
         from {
           transform: rotate(0deg);
@@ -171,11 +169,11 @@ describe('makeStyles', () => {
       }
       .f1t9cprh {
         animation-duration: 5s;
-      }
+      }"
     `);
   });
 
-  it('handles multiple renderers', () => {
+  it('handles multiple renderers', async () => {
     const rendererA = createDOMRenderer();
     const rendererB = createDOMRenderer();
 
@@ -195,8 +193,8 @@ describe('makeStyles', () => {
     expect(Object.keys(rendererA.stylesheets)).toEqual(Object.keys(rendererB.stylesheets));
     expect(rendererA.stylesheets['d0']).not.toBe(rendererB.stylesheets['d0']);
 
-    expect(rendererA).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(rendererA).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .f22iagw {
         display: flex;
       }
@@ -205,10 +203,10 @@ describe('makeStyles', () => {
       }
       .f81rol6 {
         padding-right: 10px;
-      }
+      }"
     `);
-    expect(rendererB).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(rendererB).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .f22iagw {
         display: flex;
       }
@@ -217,7 +215,7 @@ describe('makeStyles', () => {
       }
       .f81rol6 {
         padding-right: 10px;
-      }
+      }"
     `);
   });
 
@@ -245,7 +243,7 @@ describe('makeStyles', () => {
     });
   });
 
-  it('handles numeric slot names', () => {
+  it('handles numeric slot names', async () => {
     const computeClasses = makeStyles({
       42: {
         color: 'red',
@@ -253,15 +251,15 @@ describe('makeStyles', () => {
     });
     expect(computeClasses({ dir: 'ltr', renderer })[42]).toEqual('___afhpfp0 fe3e8s9');
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .fe3e8s9 {
         color: red;
-      }
+      }"
     `);
   });
 
-  it('handles "RESET" for rules removal', () => {
+  it('handles "RESET" for rules removal', async () => {
     const computeClassesA = makeStyles({ root: { color: RESET } });
     const computeClassesB = makeStyles({ root: { backgroundColor: RESET } });
     const computeClassesC = makeStyles({ root: { color: RESET, backgroundColor: '10px' } });
@@ -270,11 +268,11 @@ describe('makeStyles', () => {
     expect(computeClassesB({ dir: 'ltr', renderer }).root).toEqual('___wi64bx0');
     expect(computeClassesC({ dir: 'ltr', renderer }).root).toEqual('___1919hol fihdeyh');
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "d" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "d" {"data-priority":"0"} **/
       .fihdeyh {
         background-color: 10px;
-      }
+      }"
     `);
   });
 

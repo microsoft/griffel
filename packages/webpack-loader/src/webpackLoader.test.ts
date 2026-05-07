@@ -165,7 +165,7 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 
     try {
       result = fixLineEndings(
-        prettier.format(await compileSourceWithWebpack(inputPath, options), {
+        await prettier.format(await compileSourceWithWebpack(inputPath, options), {
           ...prettierConfig,
           parser: 'typescript',
         }),

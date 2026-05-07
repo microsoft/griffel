@@ -1,10 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { griffelRendererSerializer } from './common/snapshotSerializers.js';
+import './common/snapshotMatchers.js';
 import { createDOMRenderer } from './renderer/createDOMRenderer.js';
 import { makeResetStyles } from './makeResetStyles.js';
 import type { GriffelRenderer } from './types.js';
-
-expect.addSnapshotSerializer(griffelRendererSerializer);
 
 describe('makeResetStyles', () => {
   let renderer: GriffelRenderer;
@@ -18,23 +16,23 @@ describe('makeResetStyles', () => {
     document.head.innerHTML = '';
   });
 
-  it('returns a single classname for a single style', () => {
+  it('returns a single classname for a single style', async () => {
     const computeClassName = makeResetStyles({
       color: 'red',
       flexDirection: 'row',
     });
 
     expect(computeClassName({ dir: 'ltr', renderer })).toEqual('r7lmmpp');
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "r" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" {"data-priority":"0"} **/
       .r7lmmpp {
         color: red;
         flex-direction: row;
-      }
+      }"
     `);
   });
 
-  it('handles RTL', () => {
+  it('handles RTL', async () => {
     const computeClassName = makeResetStyles({
       padding: '40px 20px 10px 5px',
     });
@@ -42,26 +40,26 @@ describe('makeResetStyles', () => {
     expect(computeClassName({ dir: 'ltr', renderer })).toEqual('rgb6zd6');
     expect(computeClassName({ dir: 'rtl', renderer })).toEqual('rjhindo');
 
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "r" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" {"data-priority":"0"} **/
       .rgb6zd6 {
         padding: 40px 20px 10px 5px;
       }
       .rjhindo {
         padding: 40px 5px 10px 20px;
-      }
+      }"
     `);
   });
 
-  it('handles at rules', () => {
+  it('handles at rules', async () => {
     const computeClassName = makeResetStyles({
       color: 'red',
       '@media (min-width: 100px)': { color: 'blue' },
     });
 
     expect(computeClassName({ dir: 'ltr', renderer })).toEqual('rbwcbv2');
-    expect(renderer).toMatchInlineSnapshot(`
-      /** bucket "r" {"data-priority":"0"} **/
+    await expect(renderer).toMatchFormattedInlineSnapshot(`
+      "/** bucket "r" {"data-priority":"0"} **/
       .rbwcbv2 {
         color: red;
       }
@@ -70,7 +68,7 @@ describe('makeResetStyles', () => {
         .rbwcbv2 {
           color: blue;
         }
-      }
+      }"
     `);
   });
 
