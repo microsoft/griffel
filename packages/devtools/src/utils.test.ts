@@ -1,6 +1,8 @@
-import { filterSlots, getRulesBySlots } from './utils';
 import type { DebugResult } from '@griffel/core';
+import { describe, expect, it } from 'vitest';
+
 import type { SlotInfo } from './types';
+import { filterSlots, getRulesBySlots } from './utils';
 
 describe('getRulesBySlots', () => {
   it('traverse debug result, gather and return all makeStyles slot name and rules', () => {
