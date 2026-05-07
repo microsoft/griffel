@@ -13,20 +13,35 @@ async function mock() {
   const { Module } = await import('module');
   const path = await import('path');
 
-  // Node's default require.resolve extensions are .js/.json/.node — .cjs is not
-  // included. GriffelCSSExtractionPlugin.loader = require.resolve('./webpackLoader')
-  // therefore can't reach the sibling webpackLoader.cjs stub on its own. Register
-  // .cjs so the resolver finds the stub during tests; in production the same call
-  // resolves to the compiled webpackLoader.js (this hoist only runs under vitest).
-  const ext = (Module as any)._extensions;
-  if (!ext['.cjs']) ext['.cjs'] = ext['.js'];
+  // Two consumers do require()/require.resolve() of TS sources at runtime, which
+  // Node's default resolver can't satisfy under vitest:
+  //   1. GriffelCSSExtractionPlugin.ts: `require.resolve('./webpackLoader')`
+  //   2. virtual-loader/index.js: `require('../src/constants')`
+  //
+  // Redirect those requests to the .cjs stubs under src/common/. The webpack
+  // loader stub is paired with a Module._load redirect to the real loader
+  // module loaded via vite; the constants stub is loaded as-is (Symbol.for
+  // is global, so the symbol matches the one used by GriffelCSSExtractionPlugin).
+  const COMMON_DIR = path.resolve(__dirname, './common');
+  const LOADER_STUB = path.resolve(COMMON_DIR, './webpackLoader.cjs');
+  const CONSTANTS_STUB = path.resolve(COMMON_DIR, './constants.cjs');
 
-  const loaderUri = path.resolve(__dirname, './webpackLoader.cjs');
   const loaderModule = await import('./webpackLoader');
 
+  const resolveOriginal = (Module as any)._resolveFilename;
+  (Module as any)._resolveFilename = function (request: string, parent: NodeJS.Module | null, ...rest: unknown[]) {
+    if (request === './webpackLoader' && parent?.filename?.endsWith('GriffelCSSExtractionPlugin.ts')) {
+      return LOADER_STUB;
+    }
+    if (request === '../src/constants' && parent?.filename?.endsWith('virtual-loader/index.js')) {
+      return CONSTANTS_STUB;
+    }
+    return resolveOriginal.call(this, request, parent, ...rest);
+  };
+
   const loadOriginal = (Module as any)._load;
-  (Module as any)._load = (uri: string, parent: string) => {
-    if (uri === loaderUri) return loaderModule.default ?? loaderModule;
+  (Module as any)._load = (uri: string, parent: NodeJS.Module | null) => {
+    if (uri === LOADER_STUB) return loaderModule.default ?? loaderModule;
     return loadOriginal(uri, parent);
   };
 }
