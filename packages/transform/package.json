@@ -22,7 +22,7 @@
     "@griffel/transform-shaker": "^1.0.5",
     "debug": "^4.3.0",
     "magic-string": "^0.30.19",
-    "oxc-parser": "^0.129.0",
-    "oxc-walker": "^0.7.0"
+    "oxc-parser": "^0.130.0",
+    "oxc-walker": "^1.0.0"
   }
 }
