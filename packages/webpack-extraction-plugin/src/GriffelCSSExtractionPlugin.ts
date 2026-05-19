@@ -150,14 +150,21 @@ export class GriffelCSSExtractionPlugin {
     // WHY?
     //  We need to sort CSS rules in the same order as it's done via style buckets. It's not possible in multiple
     //  chunks.
-    if (compiler.options.optimization.splitChunks) {
+    // @ Rspack compat:
+    //  Tested with rspack 1.7.6 + CssExtractRspackPlugin: when the cacheGroup test matches Griffel CSS modules
+    //  (either via the function form `isGriffelCSSModule` or the regex form `/griffel\.css/`), the resulting
+    //  `griffel` chunk is named with the JS chunk filename template (`griffel-<hash>.js`) and
+    //  CssExtractRspackPlugin does NOT emit a corresponding `griffel-<hash>.css`. Net effect: all matched
+    //  Griffel CSS modules are routed into a chunk whose CSS output is never emitted, dropping ~10 MB of CSS
+    //  silently and leaving the app shell unstyled. Until rspack/CssExtractRspackPlugin handles
+    //  renamed/merged CSS chunks the way webpack/MiniCssExtractPlugin does, the safest behavior on rspack is
+    //  to SKIP registering the cacheGroup entirely — per-source-file CSS files remain intact, and the CSS
+    //  rule sort-order optimization (which only runs against the merged `griffel.css` asset) is forgone.
+    if (!IS_RSPACK && compiler.options.optimization.splitChunks) {
       compiler.options.optimization.splitChunks.cacheGroups ??= {};
       compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
         name: 'griffel',
-        // @ Rspack compat:
-        // Rspack does not support functions in test due performance concerns
-        // https://github.com/web-infra-dev/rspack/issues/3425#issuecomment-1577890202
-        test: IS_RSPACK ? /griffel\.css/ : isGriffelCSSModule,
+        test: isGriffelCSSModule,
         chunks: 'all',
         enforce: true,
       };

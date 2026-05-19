@@ -1,3 +1,6 @@
+import * as crypto from 'crypto';
+import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import type * as webpack from 'webpack';
 
@@ -26,10 +29,44 @@ export type WebpackLoaderOptions = {
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
 const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
-const virtualCSSFilePath = path.resolve(__dirname, '..', 'virtual-loader', 'griffel.css');
 
 const SALT_SEARCH_STRING = '/*@griffel:classNameHashSalt "';
 const SALT_SEARCH_STRING_LENGTH = SALT_SEARCH_STRING.length;
+
+// File-based transport for Griffel-extracted CSS on rspack. Writes the CSS to a content-hashed tempfile and
+// references it via `?file=<encoded path>` on the loader request. Replaces the prior `?style=<url-encoded css>`
+// inline transport, which produced loader request strings that exceeded the Linux PATH_MAX limit (4096 bytes)
+// for large `.styles.ts` files and broke BuildXL pip access tracking on Linux CI.
+//
+// The tempfile is content-addressed (sha1 of CSS payload) so identical CSS from two loader invocations resolves
+// to the same path. Writes go through a staging file + atomic rename to avoid partial reads under concurrent
+// loader invocations.
+const griffelCssTmpDir = path.join(os.tmpdir(), 'griffel-css-cache');
+
+function writeCssToTempFile(css: string): string {
+  if (!fs.existsSync(griffelCssTmpDir)) {
+    fs.mkdirSync(griffelCssTmpDir, { recursive: true });
+  }
+
+  const hash = crypto.createHash('sha1').update(css).digest('hex');
+  const tmpFile = path.join(griffelCssTmpDir, `${hash}.css`);
+
+  if (!fs.existsSync(tmpFile)) {
+    const stagingFile = `${tmpFile}.${process.pid}.${Date.now()}.tmp`;
+    fs.writeFileSync(stagingFile, css);
+    try {
+      fs.renameSync(stagingFile, tmpFile);
+    } catch {
+      try {
+        fs.unlinkSync(stagingFile);
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  return tmpFile;
+}
 
 /**
  * Webpack can also pass sourcemaps as a string or null, Babel accepts only objects, boolean and undefined.
@@ -49,10 +86,6 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
   } catch {
     return undefined;
   }
-}
-
-function toURIComponent(rule: string): string {
-  return encodeURIComponent(rule).replace(/!/g, '%21');
 }
 
 export function validateHashSalt(sourceCode: string, classNameHashSalt: string) {
@@ -141,7 +174,17 @@ function webpackLoader(
       }
 
       if (IS_RSPACK) {
-        const request = `griffel.css!=!${virtualLoaderPath}!${virtualCSSFilePath}?style=${toURIComponent(css)}`;
+        // Use the source file as the loader-request resource (instead of `virtual-loader/griffel.css`) so that
+        // css-loader resolves `url()` references relative to the source file's directory rather than to
+        // `node_modules/@griffel/webpack-extraction-plugin/virtual-loader/`. The virtual loader reads the actual
+        // CSS payload from the file at `?file=<encoded path>` in the query string — keeping the loader
+        // request length bounded and avoiding the Linux PATH_MAX (4096-byte) limit that the previous inline
+        // `?style=<url-encoded css>` transport hit on BuildXL CI for large `.styles.ts` files.
+        const outputFileName = this.resourcePath.replace(/\.[^.]+$/, '.griffel.css');
+        const tmpFile = writeCssToTempFile(css);
+        const request = `${outputFileName}!=!${virtualLoaderPath}!${this.resourcePath}?file=${encodeURIComponent(
+          tmpFile,
+        )}`;
         const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
 
         this.callback(null, `${resultCode}\n\nimport ${stringifiedRequest};`, resultSourceMap);

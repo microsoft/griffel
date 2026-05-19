@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix(webpack-extraction-plugin): rspack support — skip Griffel splitChunks cacheGroup on rspack (CssExtractRspackPlugin does not emit CSS for renamed chunks) and switch the rspack loader's CSS transport from inline ?style= (exceeds Linux PATH_MAX on large styles files) to a content-hashed tempfile via ?file=.",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "brunoru@microsoft.com",
+  "dependentChangeType": "patch"
+}
