@@ -2,5 +2,12 @@
   "name": "@griffel/e2e-rspack",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@griffel/e2e-utils": "*",
+    "@griffel/react": "^1.7.2",
+    "@griffel/webpack-extraction-plugin": "^0.5.17",
+    "@griffel/webpack-loader": "^2.2.26",
+    "@griffel/webpack-plugin": "^4.0.4"
+  }
 }

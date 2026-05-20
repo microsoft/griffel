@@ -10,39 +10,91 @@ import {
 import fs from 'fs';
 import path from 'path';
 
-async function performTest() {
-  const rootDir = path.resolve(import.meta.dirname, '..', '..', '..');
+type Scenario = {
+  name: string;
+  rspackVersion?: string;
+  griffelPackages: string[];
+  snapshotFile: string;
+};
+
+const SCENARIOS: Scenario[] = [
+  {
+    name: 'legacy-rspack-1',
+    rspackVersion: '1.7.11',
+    griffelPackages: [
+      '@griffel/style-types',
+      '@griffel/core',
+      '@griffel/react',
+      '@griffel/babel-preset',
+      '@griffel/webpack-extraction-plugin',
+      '@griffel/webpack-loader',
+    ],
+    snapshotFile: 'legacy-rspack-1.css',
+  },
+  {
+    name: 'legacy-rspack-2',
+    griffelPackages: [
+      '@griffel/style-types',
+      '@griffel/core',
+      '@griffel/react',
+      '@griffel/babel-preset',
+      '@griffel/webpack-extraction-plugin',
+      '@griffel/webpack-loader',
+    ],
+    snapshotFile: 'legacy-rspack-2.css',
+  },
+  {
+    name: 'modern-rspack-2',
+    griffelPackages: [
+      '@griffel/style-types',
+      '@griffel/core',
+      '@griffel/react',
+      '@griffel/transform-shaker',
+      '@griffel/transform',
+      '@griffel/webpack-plugin',
+    ],
+    snapshotFile: 'modern-rspack-2.css',
+  },
+];
+
+async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
+  console.log('');
+  console.log('▶️', `Running scenario "${scenario.name}" (Rspack ${scenario.rspackVersion ?? 'workspace'})`);
 
   let tempDir: string;
 
   try {
-    tempDir = createTempDir('rspack');
+    tempDir = createTempDir(scenario.name);
 
-    await copyAssets({ assetsPath: path.resolve(import.meta.dirname, 'assets'), tempDir });
+    await copyAssets({
+      assetsPath: path.resolve(import.meta.dirname, 'shared'),
+      tempDir,
+    });
+    await copyAssets({
+      assetsPath: path.resolve(import.meta.dirname, 'scenarios', scenario.name),
+      tempDir,
+    });
     await configureYarn({ tempDir, rootDir });
 
-    const resolutions = await Promise.all([
-      packLocalPackage(rootDir, tempDir, '@griffel/style-types'),
-      packLocalPackage(rootDir, tempDir, '@griffel/core'),
-      packLocalPackage(rootDir, tempDir, '@griffel/react'),
-      packLocalPackage(rootDir, tempDir, '@griffel/transform-shaker'),
-      packLocalPackage(rootDir, tempDir, '@griffel/transform'),
-      packLocalPackage(rootDir, tempDir, '@griffel/webpack-plugin'),
-    ]);
+    const resolutions = await Promise.all(scenario.griffelPackages.map(pkg => packLocalPackage(rootDir, tempDir, pkg)));
 
-    const rspackVersion = (await sh(`yarn rspack --version`, rootDir, true)).trim();
+    const rspackPackages: (string | [name: string, version: string])[] = scenario.rspackVersion
+      ? [
+          ['@rspack/cli', scenario.rspackVersion],
+          ['@rspack/core', scenario.rspackVersion],
+        ]
+      : ['@rspack/cli', '@rspack/core'];
 
-    console.log('ℹ️', 'Using Rspack', rspackVersion);
-    console.log('ℹ️', 'Installing packages...');
+    console.log('ℹ️', `[${scenario.name}] Installing packages...`);
 
     await installPackages({
-      packages: ['@rspack/cli', '@rspack/core', 'react', 'react-dom'],
+      packages: [...rspackPackages, 'react', 'react-dom'],
       resolutions,
       tempDir,
       rootDir,
     });
   } catch (e) {
-    console.error('❌', 'Something went wrong setting up the test:');
+    console.error('❌', `[${scenario.name}] Setup failed:`);
     console.error((e as Error)?.stack ?? e);
     process.exit(1);
   }
@@ -50,12 +102,12 @@ async function performTest() {
   try {
     await sh(`yarn rspack`, tempDir);
 
-    console.log('✅', `Example project was successfully built with Rspack`);
+    console.log('✅', `[${scenario.name}] Example project was successfully built with Rspack`);
   } catch (e) {
     console.error(e);
 
     console.log('');
-    console.error('❌', `Building a test project with Rspack failed.`);
+    console.error('❌', `[${scenario.name}] Building a test project with Rspack failed.`);
 
     process.exit(1);
   }
@@ -72,20 +124,27 @@ async function performTest() {
 
     await compareSnapshots({
       type: 'css',
-      snapshotFile: path.resolve(import.meta.dirname, 'snapshots', 'output.css'),
+      snapshotFile: path.resolve(import.meta.dirname, 'snapshots', scenario.snapshotFile),
       resultFile: path.resolve(distDir, cssFilename),
+      update: process.env['UPDATE_SNAPSHOTS'] === '1',
     });
 
-    console.log('✅', `Example project contains the same CSS as a snapshot`);
-    console.log('');
-    console.log('');
+    console.log('✅', `[${scenario.name}] Example project contains the same CSS as a snapshot`);
   } catch (e) {
     console.error(e);
 
     console.log('');
-    console.error('❌', `Validating CSS produced by Rspack build failed.`);
+    console.error('❌', `[${scenario.name}] Validating CSS produced by Rspack build failed.`);
 
     process.exit(1);
+  }
+}
+
+async function performTest() {
+  const rootDir = path.resolve(import.meta.dirname, '..', '..', '..');
+
+  for (const scenario of SCENARIOS) {
+    await runScenario(scenario, rootDir);
   }
 }
 

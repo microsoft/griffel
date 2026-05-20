@@ -6,6 +6,7 @@ type CompareSnapshotsOptions = {
   type: 'css';
   snapshotFile: string;
   resultFile: string;
+  update?: boolean;
 };
 
 async function formatCSS(css: string): Promise<string> {
@@ -13,12 +14,18 @@ async function formatCSS(css: string): Promise<string> {
 }
 
 export async function compareSnapshots(options: CompareSnapshotsOptions): Promise<void> {
-  const { snapshotFile, resultFile } = options;
+  const { snapshotFile, resultFile, update } = options;
 
   const resultContentRaw = await fs.promises.readFile(resultFile, 'utf8');
   // Remove meta info added by Rspack
   const resultContentCleaned = resultContentRaw.replace(/head{--webpack-rspack-(\d+)-(\w+)-(\d+):&_(\d+);}/, '');
   const resultContent = await formatCSS(resultContentCleaned);
+
+  if (update) {
+    await fs.promises.writeFile(snapshotFile, resultContent + '\n');
+    console.log('📝', `Snapshot updated at ${snapshotFile}`);
+    return;
+  }
 
   const snapshotContent = await formatCSS(await fs.promises.readFile(snapshotFile, 'utf8'));
 
