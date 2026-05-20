@@ -26,7 +26,6 @@ export type WebpackLoaderOptions = {
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
 const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.js');
-const virtualCSSFilePath = path.resolve(__dirname, '..', 'virtual-loader', 'griffel.css');
 
 const SALT_SEARCH_STRING = '/*@griffel:classNameHashSalt "';
 const SALT_SEARCH_STRING_LENGTH = SALT_SEARCH_STRING.length;
@@ -49,10 +48,6 @@ function parseSourceMap(inputSourceMap: WebpackLoaderParams[1]): TransformOption
   } catch {
     return undefined;
   }
-}
-
-function toURIComponent(rule: string): string {
-  return encodeURIComponent(rule).replace(/!/g, '%21');
 }
 
 export function validateHashSalt(sourceCode: string, classNameHashSalt: string) {
@@ -96,14 +91,8 @@ function webpackLoader(
     return;
   }
 
-  const IS_RSPACK = !this.webpack;
-
-  // @ Rspack compat:
-  // We don't use the trick with loader context as assets are generated differently
-  if (!IS_RSPACK) {
-    if (!this[GriffelCssLoaderContextKey]) {
-      throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
-    }
+  if (!this[GriffelCssLoaderContextKey]) {
+    throw new Error('GriffelCSSExtractionPlugin is not configured, please check your webpack config');
   }
 
   const { classNameHashSalt = '', unstable_keepOriginalCode } = this.getOptions(configSchema);
@@ -138,14 +127,6 @@ function webpackLoader(
       // Run validation only if any CSS rules were generated, otherwise it might be a false positive
       if (classNameHashSalt.length > 0) {
         validateHashSalt(sourceCode, classNameHashSalt);
-      }
-
-      if (IS_RSPACK) {
-        const request = `griffel.css!=!${virtualLoaderPath}!${virtualCSSFilePath}?style=${toURIComponent(css)}`;
-        const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
-
-        this.callback(null, `${resultCode}\n\nimport ${stringifiedRequest};`, resultSourceMap);
-        return;
       }
 
       this[GriffelCssLoaderContextKey]?.registerExtractedCss(css);

@@ -27,6 +27,10 @@ const config = {
         test: /\.css$/,
         type: 'css',
       },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource',
+      },
     ],
   },
   plugins: [/** @type {any} */ (new GriffelCSSExtractionPlugin())],

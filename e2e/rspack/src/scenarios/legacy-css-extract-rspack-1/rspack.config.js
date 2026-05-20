@@ -1,5 +1,6 @@
 // @ts-check
 
+const { CssExtractRspackPlugin } = require('@rspack/core');
 const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
 
 /**
@@ -7,9 +8,6 @@ const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plug
  */
 const config = {
   mode: 'production',
-  experiments: {
-    css: true,
-  },
   externals: {
     '@griffel/react': 'Griffel',
   },
@@ -25,7 +23,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        type: 'css',
+        use: [CssExtractRspackPlugin.loader, 'css-loader'],
       },
       {
         test: /\.svg$/,
@@ -33,7 +31,7 @@ const config = {
       },
     ],
   },
-  plugins: [/** @type {any} */ (new GriffelCSSExtractionPlugin())],
+  plugins: [/** @type {any} */ (new GriffelCSSExtractionPlugin()), new CssExtractRspackPlugin()],
 };
 
 module.exports = config;

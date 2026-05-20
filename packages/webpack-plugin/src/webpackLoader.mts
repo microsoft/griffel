@@ -14,11 +14,6 @@ type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLo
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // TODO: do something better, define via exports?
 const virtualLoaderPath = path.resolve(__dirname, 'virtual-loader', 'index.cjs');
-const virtualCSSFilePath = path.resolve(__dirname, 'virtual-loader', 'griffel.css');
-
-function toURIComponent(rule: string): string {
-  return encodeURIComponent(rule).replace(/!/g, '%21');
-}
 
 function webpackLoader(
   this: SupplementedLoaderContext<WebpackLoaderOptions>,
@@ -87,16 +82,6 @@ function webpackLoader(
         if (css.length === 0) {
           this.callback(null, code);
 
-          return { result: undefined, meta };
-        }
-
-        // Rspack compat:
-        // Support of CSS extraction is weird in Rspack, revisit later.
-        if (!this.webpack) {
-          const request = `griffel.css!=!${virtualLoaderPath}!${virtualCSSFilePath}?style=${toURIComponent(css)}`;
-          const stringifiedRequest = JSON.stringify(this.utils.contextify(this.context || this.rootContext, request));
-
-          this.callback(null, `${result.code}\n\nimport ${stringifiedRequest};`);
           return { result: undefined, meta };
         }
 

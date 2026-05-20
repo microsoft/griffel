@@ -1,5 +1,6 @@
 import { makeResetStyles, makeStyles } from '@griffel/react';
 import { colors } from './colors.js';
+import lightBackgroundImage from './images/background.svg';
 
 const useClasses = makeStyles({
   root: {
@@ -19,6 +20,9 @@ const useClasses = makeStyles({
     borderRadius: '5px',
     gap: '5px',
     padding: '10px',
+  },
+  lightBackground: {
+    backgroundImage: `url(${lightBackgroundImage})`,
   },
 });
 

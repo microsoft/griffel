@@ -10,10 +10,20 @@ import {
 import fs from 'fs';
 import path from 'path';
 
+// `@griffel/transform` (used by the modern plugin) embeds the absolute path of resolved assets
+// into the CSS rule before the class-name hash is computed, so any rule with a `url()` ends up
+// with a class name that depends on the build's absolute temp directory. The `url()` filename
+// itself is content-hashed by the bundler and remains stable. Redact the unstable class names
+// to a fixed placeholder so the snapshot survives across machines and tempdirs.
+function redactPathDependentClasses(css: string): string {
+  return css.replace(/\.f[a-z0-9]+(?=\s*\{[^}]*\burl\()/g, '.PATH_DEPENDANT_REDACTED');
+}
+
 type Scenario = {
   name: string;
   rspackVersion?: string;
   griffelPackages: string[];
+  npmPackages?: string[];
   snapshotFile: string;
 };
 
@@ -30,6 +40,20 @@ const SCENARIOS: Scenario[] = [
       '@griffel/webpack-loader',
     ],
     snapshotFile: 'legacy-rspack-1.css',
+  },
+  {
+    name: 'legacy-css-extract-rspack-1',
+    rspackVersion: '1.7.11',
+    griffelPackages: [
+      '@griffel/style-types',
+      '@griffel/core',
+      '@griffel/react',
+      '@griffel/babel-preset',
+      '@griffel/webpack-extraction-plugin',
+      '@griffel/webpack-loader',
+    ],
+    npmPackages: ['css-loader'],
+    snapshotFile: 'legacy-css-extract-rspack-1.css',
   },
   {
     name: 'legacy-rspack-2',
@@ -88,7 +112,7 @@ async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
     console.log('ℹ️', `[${scenario.name}] Installing packages...`);
 
     await installPackages({
-      packages: [...rspackPackages, 'react', 'react-dom'],
+      packages: [...rspackPackages, 'react', 'react-dom', ...(scenario.npmPackages ?? [])],
       resolutions,
       tempDir,
       rootDir,
@@ -116,7 +140,7 @@ async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
     const distDir = path.resolve(tempDir, 'dist');
     const distFiles = await fs.promises.readdir(distDir);
 
-    const cssFilename = distFiles.find(filename => filename.endsWith('griffel.css'));
+    const cssFilename = distFiles.find(filename => filename.endsWith('.css') && filename.includes('griffel'));
 
     if (!cssFilename) {
       throw new Error(`Failed to find any matching CSS file in "${distDir}"`);
@@ -127,6 +151,7 @@ async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
       snapshotFile: path.resolve(import.meta.dirname, 'snapshots', scenario.snapshotFile),
       resultFile: path.resolve(distDir, cssFilename),
       update: process.env['UPDATE_SNAPSHOTS'] === '1',
+      normalize: redactPathDependentClasses,
     });
 
     console.log('✅', `[${scenario.name}] Example project contains the same CSS as a snapshot`);
@@ -143,7 +168,23 @@ async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
 async function performTest() {
   const rootDir = path.resolve(import.meta.dirname, '..', '..', '..');
 
-  for (const scenario of SCENARIOS) {
+  const filter = process.env['SCENARIO']
+    ?.split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const scenariosToRun = filter?.length ? SCENARIOS.filter(s => filter.includes(s.name)) : SCENARIOS;
+
+  if (filter?.length) {
+    const missing = filter.filter(name => !SCENARIOS.some(s => s.name === name));
+    if (missing.length) {
+      console.error('❌', `Unknown scenario(s): ${missing.join(', ')}`);
+      console.error('   Known: ' + SCENARIOS.map(s => s.name).join(', '));
+      process.exit(1);
+    }
+  }
+
+  for (const scenario of scenariosToRun) {
     await runScenario(scenario, rootDir);
   }
 }

@@ -1,4 +1,3 @@
-const { URLSearchParams } = require('url');
 const { GriffelCssLoaderContextKey } = require('../src/constants');
 
 /**
@@ -6,14 +5,7 @@ const { GriffelCssLoaderContextKey } = require('../src/constants');
  * @return {String}
  */
 function virtualLoader() {
-  if (this.webpack) {
-    return this[GriffelCssLoaderContextKey]?.getExtractedCss() ?? '';
-  }
-
-  const query = new URLSearchParams(this.resourceQuery);
-  const style = query.get('style');
-
-  return style ?? '';
+  return this[GriffelCssLoaderContextKey]?.getExtractedCss() ?? '';
 }
 
 module.exports = virtualLoader;
