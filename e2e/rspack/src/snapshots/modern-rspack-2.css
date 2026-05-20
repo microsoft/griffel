@@ -1,0 +1,31 @@
+.rddpni4 {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+.frolweh {
+  border: 2px dashed magenta;
+}
+.f4khpsj {
+  border-radius: 5px;
+}
+.f165xgdd {
+  gap: 5px;
+}
+.fbhmu18 {
+  padding: 10px;
+}
+.f1bh81bl {
+  background-color: blue;
+}
+.fe3e8s9 {
+  color: red;
+}
+.f1ir1d6m:focus {
+  outline-offset: 5px;
+}
+@media (min-width: 968px) and (orientation: landscape) {
+  .f1tnsuik {
+    width: 400px;
+  }
+}

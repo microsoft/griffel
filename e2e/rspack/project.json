@@ -3,11 +3,13 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "e2e/rspack/src",
   "projectType": "library",
-  "implicitDependencies": ["@griffel/webpack-plugin"],
   "targets": {
     "test": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "target": "build", "dependencies": true }],
+      "dependsOn": [
+        { "target": "build", "dependencies": true },
+        { "target": "build-cjs", "dependencies": true }
+      ],
       "options": {
         "cwd": "e2e/rspack",
         "commands": [{ "command": "node src/test.ts" }]
@@ -21,6 +23,10 @@
         "commands": [{ "command": "tsc -b --pretty" }],
         "outputPath": []
       }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     }
   },
   "tags": []
