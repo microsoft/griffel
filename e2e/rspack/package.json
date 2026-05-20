@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "dependencies": {
     "@griffel/e2e-utils": "*",
     "@griffel/react": "^1.7.2",

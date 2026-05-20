@@ -65,7 +65,7 @@ function isCSSModule(module: Module): module is CSSModule {
   return module.type === 'css/mini-extract';
 }
 
-function isGriffelCSSModule(module: Module): boolean {
+function isGriffelCSSModuleInWebpack(module: Module): boolean {
   if (isCSSModule(module)) {
     if (Buffer.isBuffer(module.content)) {
       return module.content.indexOf('/** @griffel:css-start') !== -1;
@@ -73,6 +73,26 @@ function isGriffelCSSModule(module: Module): boolean {
   }
 
   return false;
+}
+
+// Separator-agnostic match: on Windows the identifier can carry backslashes (the request is
+// built with `path.resolve`, which uses platform separators). Hoisted to module scope so the
+// pattern is compiled once instead of on every cacheGroup test.
+const RSPACK_GRIFFEL_VIRTUAL_LOADER_PATTERN = /@griffel[\\/]webpack-plugin[\\/].*virtual-loader/;
+
+// Rspack-specific. In Rspack:
+//   • virtual modules produced by `experiments.css: true` have `module.type === 'css'`,
+//   • virtual modules produced by `CssExtractRspackPlugin` have `module.type === 'css/mini-extract'`,
+//   • `module.content` is undefined for both (we can't read the CSS marker the way the webpack
+//     predicate does), so we identify Griffel modules by the `virtual-loader` substring in the
+//     module identifier — every Griffel-emitted virtual import routes through this loader.
+function isGriffelCSSModuleInRspack(module: Module): boolean {
+  if (module.type !== 'css' && module.type !== 'css/mini-extract') {
+    return false;
+  }
+
+  const id = module.identifier?.();
+  return typeof id === 'string' && RSPACK_GRIFFEL_VIRTUAL_LOADER_PATTERN.test(id);
 }
 
 function moveCSSModulesToGriffelChunk(compilation: Compilation) {
@@ -86,7 +106,7 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
   let moduleIndex = 0;
 
   for (const module of compilation.modules) {
-    if (isGriffelCSSModule(module)) {
+    if (isGriffelCSSModuleInWebpack(module)) {
       const moduleChunks = compilation.chunkGraph.getModuleChunksIterable(module);
 
       for (const chunk of moduleChunks) {
@@ -169,15 +189,24 @@ export class GriffelPlugin {
     //  chunks.
     if (compiler.options.optimization.splitChunks) {
       compiler.options.optimization.splitChunks.cacheGroups ??= {};
-      compiler.options.optimization.splitChunks.cacheGroups['griffel'] = {
-        name: 'griffel',
-        // @ Rspack compat:
-        // Rspack does not support functions in test due performance concerns
-        // https://github.com/web-infra-dev/rspack/issues/3425#issuecomment-1577890202
-        test: IS_RSPACK ? /griffel\.css/ : isGriffelCSSModule,
-        chunks: 'all',
-        enforce: true,
-      };
+      compiler.options.optimization.splitChunks.cacheGroups['griffel'] = IS_RSPACK
+        ? {
+            name: 'griffel',
+            // Rspack: `type` filters by module.type in Rust (cheap), narrowing to CSS modules
+            // (covers both native `css` from experiments.css and `css/mini-extract` from
+            // CssExtractRspackPlugin) before `test` runs the function predicate.
+            // https://rspack.rs/plugins/webpack/split-chunks-plugin#splitchunkscachegroupscachegrouptype
+            type: /^css/,
+            test: isGriffelCSSModuleInRspack,
+            chunks: 'all',
+            enforce: true,
+          }
+        : {
+            name: 'griffel',
+            test: isGriffelCSSModuleInWebpack,
+            chunks: 'all',
+            enforce: true,
+          };
     }
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
