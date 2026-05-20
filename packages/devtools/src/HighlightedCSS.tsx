@@ -74,15 +74,15 @@ export const HighlightedCSS: React.FC<{ code: string }> = ({ code }) => {
             return (
               <div key={lineKey as React.Key} {...lineProps}>
                 {line.map((token, key) => {
-                  const tokenProps = getTokenProps({ token, key });
+                  const { key: tokenKey, ...tokenProps } = getTokenProps({ token, key });
                   return tokenProps.className.includes('color') && token.content !== 'transparent' ? (
-                    <span {...tokenProps}>
+                    <span key={tokenKey as React.Key} {...tokenProps}>
                       {/* show a square color indicator for colors in css */}
                       <span className={colorIndicator} style={{ backgroundColor: token.content }} />
                       <span>{tokenProps.children}</span>
                     </span>
                   ) : (
-                    <span {...tokenProps} />
+                    <span key={tokenKey as React.Key} {...tokenProps} />
                   );
                 })}
               </div>
