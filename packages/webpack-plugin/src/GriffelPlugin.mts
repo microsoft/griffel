@@ -182,6 +182,18 @@ export class GriffelPlugin {
       });
     }
 
+    // @ Rspack compat:
+    // Since `createModule` setting mutations are ignored on Rspack, the webpack escape hatch above
+    // is a no-op there. A `module.rules` entry with `sideEffects: true` IS honored, and it pins
+    // the virtual `.griffel.css` modules as side-effectful so Rspack does not tree-shake their
+    // imports out when the consumer's `package.json` declares `"sideEffects": false`.
+    if (IS_RSPACK) {
+      compiler.options.module.rules.push({
+        test: /\.griffel\.css$/,
+        sideEffects: true,
+      });
+    }
+
     // WHAT?
     //  Forces all modules emitted by an extraction loader to be moved in a single chunk by SplitChunksPlugin config.
     // WHY?

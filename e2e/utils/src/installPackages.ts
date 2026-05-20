@@ -48,6 +48,7 @@ export async function installPackages(options: {
   const packageJson = JSON.parse(await fs.promises.readFile(tempDir + '/package.json', 'utf8'));
   const newPackageJson = {
     ...packageJson,
+    sideEffects: false,
     dependencies: {
       ...Object.fromEntries(resolutions.map(pkg => [pkg.packageName, '*'])),
       ...packagesWithVersions,
