@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@griffel/e2e-utils": "workspace:*",
-    "@griffel/eslint-plugin": "workspace:*",
-    "@griffel/react": "workspace:*"
+    "@griffel/e2e-utils": "*",
+    "@griffel/eslint-plugin": "3.0.2",
+    "@griffel/react": "1.7.4"
   }
 }
