@@ -5,7 +5,6 @@
     "allowSyntheticDefaultImports": true,
     "checkJs": true,
     "jsx": "react",
-    "noEmit": true,
     "outDir": "./out-tsc",
     "types": [
       "../../node_modules/@docusaurus/module-type-aliases",
@@ -14,9 +13,10 @@
       "static-assets",
       "webpack-env"
     ],
-    "composite": false
+    "composite": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"],
+  "exclude": ["./src/components/Playground/code/templates/**"],
   "references": [
     {
       "path": "../../packages/core"

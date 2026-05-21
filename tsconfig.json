@@ -58,6 +58,9 @@
     },
     {
       "path": "./tools/update-shorthands"
+    },
+    {
+      "path": "./apps/website"
     }
   ]
 }
