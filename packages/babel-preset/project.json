@@ -17,35 +17,16 @@
       }
     },
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/babel-preset",
-        "tsConfig": "packages/babel-preset/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/babel-preset/package.json",
-        "main": "packages/babel-preset/src/index.ts",
-        "assets": [
-          "packages/babel-preset/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/babel-preset/dist"],
       "options": {
         "cwd": "packages/babel-preset",
         "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+          "tsc --build tsconfig.lib.json --pretty",
+          "node ../../tools/copy-pkg-assets.mjs packages/babel-preset"
+        ],
+        "parallel": false
+      }
     }
   }
 }

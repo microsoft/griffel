@@ -13,5 +13,20 @@
     "@griffel/babel-preset": "^1.8.6",
     "postcss": "^8.5.14"
   },
-  "main": "./src/index.js"
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md"
+  ]
 }

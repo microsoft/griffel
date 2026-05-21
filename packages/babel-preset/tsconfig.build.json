@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "composite": false,
+    "module": "node16",
+    "moduleResolution": "node16",
+    "customConditions": [],
+    "emitDeclarationOnly": false,
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "references": [
+    {
+      "path": "../core/tsconfig.lib.json"
+    },
+    {
+      "path": "../react/tsconfig.lib.json"
+    }
+  ]
+}

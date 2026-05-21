@@ -8,12 +8,13 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "type": "module",
-  "main": "./src/index.mjs",
-  "types": "./src/index.d.mts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": {
-      "types": "./src/index.d.mts",
-      "default": "./src/index.mjs"
+      "@griffel/source": "./src/index.mts",
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
     },
     "./package.json": "./package.json"
   },
@@ -24,5 +25,11 @@
     "magic-string": "^0.30.19",
     "oxc-parser": "^0.132.0",
     "oxc-walker": "^1.0.0"
-  }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md"
+  ]
 }

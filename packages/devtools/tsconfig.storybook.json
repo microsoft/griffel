@@ -4,7 +4,8 @@
     "emitDecoratorMetadata": true,
     "moduleResolution": "bundler",
     "noEmit": true,
-    "outDir": ""
+    "outDir": "./out-tsc/storybook",
+    "composite": false
   },
   "files": [
     "../../node_modules/@nx/react/typings/styled-jsx.d.ts",

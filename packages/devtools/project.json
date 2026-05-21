@@ -40,18 +40,6 @@
         "reportsDirectory": "{projectRoot}/../../coverage/packages/devtools"
       }
     },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/devtools",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
-    },
     "watch": {
       "executor": "nx:run-commands",
       "options": {

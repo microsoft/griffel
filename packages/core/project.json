@@ -6,30 +6,11 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/core",
-        "tsConfig": "packages/core/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/core/package.json",
-        "main": "packages/core/src/index.ts",
-        "assets": [
-          "packages/core/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "build-cjs": {
-      "dependsOn": ["build"],
       "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/packages/core/lib"],
+      "dependsOn": ["_build_tsc"],
+      "outputs": ["{workspaceRoot}/packages/core/dist/cjs"],
       "options": {
-        "command": "node tools/build-cjs.mjs dist/packages/core/src dist/packages/core/lib"
+        "command": "node tools/build-cjs.mjs packages/core/dist packages/core/dist/cjs"
       }
     },
     "lint": {
@@ -55,17 +36,14 @@
         ]
       }
     },
-    "type-check": {
+    "_build_tsc": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/core/dist"],
       "options": {
         "cwd": "packages/core",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+        "commands": ["tsc --build tsconfig.lib.json --pretty", "node ../../tools/copy-pkg-assets.mjs packages/core"],
+        "parallel": false
+      }
     }
   }
 }

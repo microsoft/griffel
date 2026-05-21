@@ -1,8 +1,8 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "outDir": "./out-tsc/spec",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
     "types": ["vitest/importMeta", "vite/client", "chrome", "node", "vitest", "environment"]
   },
@@ -13,10 +13,12 @@
     "src/**/*.spec.ts",
     "src/**/*.test.tsx",
     "src/**/*.spec.tsx",
-    "src/**/*.test.js",
-    "src/**/*.spec.js",
-    "src/**/*.test.jsx",
-    "src/**/*.spec.jsx",
     "src/**/*.d.ts"
-  ]
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ],
+  "exclude": ["out-tsc/**", "dist/**"]
 }

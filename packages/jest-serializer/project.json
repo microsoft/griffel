@@ -17,35 +17,16 @@
       }
     },
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/jest-serializer",
-        "tsConfig": "packages/jest-serializer/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/jest-serializer/package.json",
-        "main": "packages/jest-serializer/src/index.ts",
-        "assets": [
-          "packages/jest-serializer/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/jest-serializer/dist"],
       "options": {
         "cwd": "packages/jest-serializer",
         "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+          "tsc --build tsconfig.lib.json --pretty",
+          "node ../../tools/copy-pkg-assets.mjs packages/jest-serializer"
+        ],
+        "parallel": false
+      }
     }
   }
 }

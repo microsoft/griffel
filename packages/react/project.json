@@ -6,30 +6,11 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/react",
-        "tsConfig": "packages/react/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/react/package.json",
-        "main": "packages/react/src/index.ts",
-        "assets": [
-          "packages/react/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "build-cjs": {
-      "dependsOn": ["build"],
       "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/packages/react/lib"],
+      "dependsOn": ["_build_tsc"],
+      "outputs": ["{workspaceRoot}/packages/react/dist/cjs"],
       "options": {
-        "command": "node tools/build-cjs.mjs dist/packages/react/src dist/packages/react/lib"
+        "command": "node tools/build-cjs.mjs packages/react/dist packages/react/dist/cjs"
       }
     },
     "lint": {
@@ -80,17 +61,14 @@
         }
       }
     },
-    "type-check": {
+    "_build_tsc": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/react/dist"],
       "options": {
         "cwd": "packages/react",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+        "commands": ["tsc --build tsconfig.lib.json --pretty", "node ../../tools/copy-pkg-assets.mjs packages/react"],
+        "parallel": false
+      }
     }
   }
 }

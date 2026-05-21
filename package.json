@@ -8,6 +8,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "workspaces": [
+    "apps/*",
     "e2e/*",
     "packages/*",
     "tools/*"

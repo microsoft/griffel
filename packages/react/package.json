@@ -9,14 +9,18 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "./lib/index.cjs",
-  "module": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "import": "./src/index.js",
-      "require": "./lib/index.cjs"
+      "@griffel/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -32,5 +36,11 @@
   },
   "peerDependencies": {
     "react": ">=16.14.0 <20.0.0"
-  }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md"
+  ]
 }

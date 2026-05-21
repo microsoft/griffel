@@ -17,35 +17,16 @@
       }
     },
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/transform",
-        "tsConfig": "packages/transform/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/transform/package.json",
-        "main": "packages/transform/src/index.mts",
-        "assets": [
-          "packages/transform/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/transform/dist"],
       "options": {
         "cwd": "packages/transform",
         "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+          "tsc --build tsconfig.lib.json --pretty",
+          "node ../../tools/copy-pkg-assets.mjs packages/transform"
+        ],
+        "parallel": false
+      }
     }
   }
 }

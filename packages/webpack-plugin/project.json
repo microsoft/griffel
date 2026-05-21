@@ -10,40 +10,16 @@
       "outputs": ["{options.outputFile}"]
     },
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/webpack-plugin",
-        "tsConfig": "packages/webpack-plugin/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/webpack-plugin/package.json",
-        "main": "packages/webpack-plugin/src/index.mts",
-        "assets": [
-          "packages/webpack-plugin/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "*",
-            "input": "packages/webpack-plugin/src/virtual-loader",
-            "output": "src/virtual-loader"
-          }
-        ]
-      }
-    },
-    "type-check": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/webpack-plugin/dist"],
       "options": {
         "cwd": "packages/webpack-plugin",
         "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+          "tsc --build tsconfig.lib.json --pretty",
+          "node ../../tools/copy-pkg-assets.mjs packages/webpack-plugin"
+        ],
+        "parallel": false
+      }
     },
     "test": {
       "executor": "@nx/vitest:test",

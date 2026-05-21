@@ -4,11 +4,12 @@ import fs from 'fs';
 import { sh } from './sh.ts';
 
 export async function packLocalPackage(rootDir: string, tempDir: string, packageName: string) {
-  const packagePath = path.resolve(rootDir, 'dist', 'packages', packageName.split('/')[1]);
-  const packagePathExists = !!(await fs.promises.stat(packagePath).catch(() => false));
+  const packagePath = path.resolve(rootDir, 'packages', packageName.split('/')[1]);
+  const distPath = path.resolve(packagePath, 'dist');
+  const distExists = !!(await fs.promises.stat(distPath).catch(() => false));
 
-  if (!packagePathExists) {
-    throw new Error(`A directory with artifacts (${packagePath}) does not exist`);
+  if (!distExists) {
+    throw new Error(`Build artifacts not found at "${distPath}" — run "nx run ${packageName}:build" first`);
   }
 
   // Use `npm pack` because `yarn pack` incorrectly calculates the included files when the

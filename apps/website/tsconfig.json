@@ -6,14 +6,20 @@
     "checkJs": true,
     "jsx": "react",
     "noEmit": true,
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./out-tsc",
     "types": [
       "../../node_modules/@docusaurus/module-type-aliases",
       "../../node_modules/@docusaurus/theme-classic",
       "environment",
       "static-assets",
       "webpack-env"
-    ]
+    ],
+    "composite": false
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"],
+  "references": [
+    {
+      "path": "../../packages/core"
+    }
+  ]
 }

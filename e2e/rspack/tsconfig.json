@@ -1,15 +1,5 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
-    "target": "es2020",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true,
-    "jsx": "react-jsx",
-    "noEmit": true
-  },
   "files": [],
   "include": [],
   "references": [

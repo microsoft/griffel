@@ -73,7 +73,7 @@ describe('Module', () => {
               at <tmpDir>/child.js:<line>
               at Script.runInContext (node:vm:<line>)
               at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
-              at require.Object.assign.ensure (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+              at Module.require.Object.assign.ensure (<repo>/packages/transform/src/evaluation/module.mts:<line>)
               at <tmpDir>/entry.js:<line>
               at <tmpDir>/entry.js:<line>
               at Script.runInContext (node:vm:<line>)

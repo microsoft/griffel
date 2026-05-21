@@ -2,5 +2,10 @@
   "name": "@griffel/e2e-eslint",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@griffel/e2e-utils": "workspace:*",
+    "@griffel/eslint-plugin": "workspace:*",
+    "@griffel/react": "workspace:*"
+  }
 }

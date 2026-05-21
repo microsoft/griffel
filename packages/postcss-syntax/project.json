@@ -17,35 +17,16 @@
       }
     },
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/postcss-syntax",
-        "tsConfig": "packages/postcss-syntax/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/postcss-syntax/package.json",
-        "main": "packages/postcss-syntax/src/index.ts",
-        "assets": [
-          "packages/postcss-syntax/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/postcss-syntax/dist"],
       "options": {
-        "cwd": "packages/babel-preset",
+        "cwd": "packages/postcss-syntax",
         "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+          "tsc --build tsconfig.lib.json --pretty",
+          "node ../../tools/copy-pkg-assets.mjs packages/postcss-syntax"
+        ],
+        "parallel": false
+      }
     }
   }
 }

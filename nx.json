@@ -29,12 +29,25 @@
       "inputs": ["default", "^default"]
     }
   },
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "type-check"
+        }
+      }
+    }
+  ],
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": true
     }
   },
-  "useInferencePlugins": false,
+  "useInferencePlugins": true,
+  "sync": {
+    "applyChanges": true
+  },
   "defaultBase": "main",
   "tui": {
     "enabled": false
