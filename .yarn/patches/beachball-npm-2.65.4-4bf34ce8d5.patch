@@ -1,0 +1,34 @@
+diff --git a/lib/packageManager/packagePublish.js b/lib/packageManager/packagePublish.js
+index 8d5ae6204d540df07ee9e019febbc2b04a825d81..f486f46991b732bc1af69a61587117a5b1703899 100644
+--- a/lib/packageManager/packagePublish.js
++++ b/lib/packageManager/packagePublish.js
+@@ -15,11 +15,17 @@ async function packagePublish(packageInfo, options) {
+     const publishArgs = (0, npmArgs_1.getNpmPublishArgs)(packageInfo, options);
+     const authEnv = (0, npmArgs_1.getNpmAuthEnv)(options);
+     const packageRoot = path_1.default.dirname(packageInfo.packageJsonPath);
++    // Griffel: publish from the built artifact directory under the workspace-level
++    // `dist/`, mirroring the source-tree layout. The source package.json's
++    // `main`/`exports`/etc. paths assume the published package root is `dist/<pkgDir>`,
++    // not the source package directory.
++    const packageDir = path_1.default.relative(options.path, packageRoot);
++    const publishCwd = path_1.default.resolve(options.path, 'dist', packageDir);
+     const publishTag = publishArgs[publishArgs.indexOf('--tag') + 1];
+     const packageSpec = `${packageInfo.name}@${packageInfo.version}`;
+     console.log(`Publishing - ${packageSpec} with tag ${publishTag}`);
+     console.log(`  publish command: ${publishArgs.join(' ')}`);
+-    console.log(`  (cwd: ${packageRoot}${authEnv ? `, auth env var: ${Object.keys(authEnv)[0]}=****` : ''})\n`);
++    console.log(`  (cwd: ${publishCwd}${authEnv ? `, auth env var: ${Object.keys(authEnv)[0]}=****` : ''})\n`);
+     let result;
+     // Unclear whether `options.retries` should be interpreted as "X attempts" or "initial attempt + X retries"...
+     // It was previously implemented as the latter, so keep that for now.
+@@ -28,8 +34,8 @@ async function packagePublish(packageInfo, options) {
+             console.log(`Retrying... (${retries}/${options.retries})\n`);
+         }
+         result = await (0, npm_1.npm)(publishArgs, {
+-            // Run npm publish in the package directory
+-            cwd: packageRoot,
++            // Run npm publish in the built artifact directory (see Griffel comment above).
++            cwd: publishCwd,
+             timeout: options.timeout,
+             all: true,
+             preferLocal: false,

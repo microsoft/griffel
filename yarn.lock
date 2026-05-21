@@ -10886,6 +10886,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"beachball@patch:beachball@npm%3A2.65.4#~/.yarn/patches/beachball-npm-2.65.4-4bf34ce8d5.patch":
+  version: 2.65.4
+  resolution: "beachball@patch:beachball@npm%3A2.65.4#~/.yarn/patches/beachball-npm-2.65.4-4bf34ce8d5.patch::version=2.65.4&hash=95942e"
+  dependencies:
+    "@vercel/detect-agent": "npm:^1.2.1"
+    cosmiconfig: "npm:^9.0.1"
+    execa: "npm:^5.1.1"
+    minimatch: "npm:^3.1.5"
+    p-graph: "npm:^1.3.0"
+    p-limit: "npm:^3.1.0"
+    prompts: "npm:^2.4.2"
+    semver: "npm:^7.7.4"
+    workspace-tools: "npm:^0.41.6"
+    yargs-parser: "npm:^21.1.1"
+  bin:
+    beachball: bin/beachball.js
+  checksum: 10/b7e0c08a5eaeed94df8369208bdbdad9ecbdf60e9100b960f1b2f0864f3ba295a9fc30ed274c9ab79a5f8e8ce8c72fe567d7fb5ce1861ce7549d39bebca0bcef
+  languageName: node
+  linkType: hard
+
 "bestzip@npm:2.2.0":
   version: 2.2.0
   resolution: "bestzip@npm:2.2.0"
@@ -15259,7 +15279,7 @@ __metadata:
     "@vitest/ui": "npm:4.1.5"
     ajv: "npm:^8.20.0"
     babel-plugin-tester: "npm:12.0.0"
-    beachball: "npm:2.65.4"
+    beachball: "patch:beachball@npm%3A2.65.4#~/.yarn/patches/beachball-npm-2.65.4-4bf34ce8d5.patch"
     bestzip: "npm:2.2.0"
     css-loader: "npm:^7.1.4"
     csstype: "npm:^3.2.3"
