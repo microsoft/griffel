@@ -16,7 +16,8 @@
         "cwd": "packages/webpack-plugin",
         "commands": [
           "tsc --build tsconfig.lib.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/webpack-plugin"
+          "node ../../tools/copy-pkg-assets.mjs packages/webpack-plugin",
+          "node -e \"require('node:fs').cpSync('src/virtual-loader', 'dist/virtual-loader', { recursive: true })\""
         ],
         "parallel": false
       }
