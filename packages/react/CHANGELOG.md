@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 21 May 2026 09:29:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.7.4
+
+Thu, 21 May 2026 09:29:28 GMT
+
+### Patches
+
+- fix: re-publish to fix the broken artifact in the previous release (olfedias@microsoft.com)
+- Bump @griffel/core to v1.21.2
 
 ## 1.7.3
 

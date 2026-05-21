@@ -1,6 +1,6 @@
 {
   "name": "@griffel/style-types",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Provides types for Griffel style objects",
   "license": "MIT",
   "repository": {

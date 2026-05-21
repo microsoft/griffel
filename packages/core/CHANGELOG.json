@@ -2,6 +2,27 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 09:29:28 GMT",
+      "version": "1.21.2",
+      "tag": "@griffel/core_v1.21.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "8551de03db44f3aaf57b65e16fadf5f5a40550ff",
+            "comment": "fix: re-publish to fix the broken artifact in the previous release"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/core",
+            "comment": "Bump @griffel/style-types to v1.4.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 08:11:21 GMT",
       "version": "1.21.1",
       "tag": "@griffel/core_v1.21.1",

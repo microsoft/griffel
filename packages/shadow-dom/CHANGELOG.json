@@ -2,6 +2,27 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 09:29:28 GMT",
+      "version": "0.2.17",
+      "tag": "@griffel/shadow-dom_v0.2.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "8551de03db44f3aaf57b65e16fadf5f5a40550ff",
+            "comment": "fix: re-publish to fix the broken artifact in the previous release"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/shadow-dom",
+            "comment": "Bump @griffel/core to v1.21.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 08:11:21 GMT",
       "version": "0.2.16",
       "tag": "@griffel/shadow-dom_v0.2.16",

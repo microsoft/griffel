@@ -1,8 +1,17 @@
 # Change Log - @griffel/shadow-dom
 
-<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 21 May 2026 09:29:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.2.17
+
+Thu, 21 May 2026 09:29:28 GMT
+
+### Patches
+
+- fix: re-publish to fix the broken artifact in the previous release (olfedias@microsoft.com)
+- Bump @griffel/core to v1.21.2
 
 ## 0.2.16
 

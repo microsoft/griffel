@@ -2,6 +2,21 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 09:29:28 GMT",
+      "version": "3.0.2",
+      "tag": "@griffel/eslint-plugin_v3.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "8551de03db44f3aaf57b65e16fadf5f5a40550ff",
+            "comment": "fix: re-publish to fix the broken artifact in the previous release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 08:11:21 GMT",
       "version": "3.0.1",
       "tag": "@griffel/eslint-plugin_v3.0.1",

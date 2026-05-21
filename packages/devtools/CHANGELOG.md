@@ -1,8 +1,17 @@
 # Change Log - @griffel/devtools
 
-<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 21 May 2026 09:29:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.3.12
+
+Thu, 21 May 2026 09:29:28 GMT
+
+### Patches
+
+- fix: re-publish to fix the broken artifact in the previous release (olfedias@microsoft.com)
+- Bump @griffel/react to v1.7.4
 
 ## 0.3.11
 

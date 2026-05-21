@@ -1,8 +1,16 @@
 # Change Log - @griffel/transform-shaker
 
-<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 21 May 2026 09:29:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.0.7
+
+Thu, 21 May 2026 09:29:28 GMT
+
+### Patches
+
+- fix: re-publish to fix the broken artifact in the previous release (olfedias@microsoft.com)
 
 ## 1.0.6
 

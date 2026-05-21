@@ -2,6 +2,21 @@
   "name": "@griffel/transform-shaker",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 09:29:28 GMT",
+      "version": "1.0.7",
+      "tag": "@griffel/transform-shaker_v1.0.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "8551de03db44f3aaf57b65e16fadf5f5a40550ff",
+            "comment": "fix: re-publish to fix the broken artifact in the previous release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 08:11:21 GMT",
       "version": "1.0.6",
       "tag": "@griffel/transform-shaker_v1.0.6",

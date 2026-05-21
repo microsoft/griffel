@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: re-publish to fix the broken artifact in the previous release",
-  "packageName": "@griffel/postcss-syntax",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

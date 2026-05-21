@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: re-publish to fix the broken artifact in the previous release",
-  "packageName": "@griffel/webpack-loader",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}
