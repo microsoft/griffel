@@ -4,11 +4,6 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": {
-      "@griffel/source": "./src/index.ts",
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./package.json": "./package.json"
+    ".": "./src/index.ts"
   }
 }

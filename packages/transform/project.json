@@ -15,15 +15,6 @@
       "options": {
         "reportsDirectory": "{projectRoot}/../../coverage/packages/transform"
       }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/packages/transform/dist"],
-      "options": {
-        "cwd": "packages/transform",
-        "commands": ["tsc --build tsconfig.lib.json --pretty"],
-        "parallel": false
-      }
     }
   }
 }
