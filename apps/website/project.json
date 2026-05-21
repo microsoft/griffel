@@ -10,11 +10,11 @@
         "cwd": "apps/website",
         "commands": [
           {
-            "command": "docusaurus build --out-dir ../../dist/apps/website"
+            "command": "docusaurus build --out-dir ./dist"
           }
         ]
       },
-      "outputs": ["{workspaceRoot}/dist/apps/website"]
+      "outputs": ["{workspaceRoot}/apps/website/dist"]
     },
     "serve": {
       "executor": "nx:run-commands",
