@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: migrate from TS path aliases to yarn workspaces + TS project references",
+  "packageName": "@griffel/shadow-dom",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
