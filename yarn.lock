@@ -3773,8 +3773,8 @@ __metadata:
   resolution: "@griffel/e2e-eslint@workspace:e2e/eslint"
   dependencies:
     "@griffel/e2e-utils": "npm:*"
-    "@griffel/eslint-plugin": "npm:3.0.2"
-    "@griffel/react": "npm:1.7.4"
+    "@griffel/eslint-plugin": "npm:^3.0.2"
+    "@griffel/react": "npm:^1.7.4"
   languageName: unknown
   linkType: soft
 
@@ -3805,7 +3805,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/eslint-plugin@npm:3.0.2, @griffel/eslint-plugin@workspace:packages/eslint-plugin":
+"@griffel/eslint-plugin@npm:^3.0.2, @griffel/eslint-plugin@workspace:packages/eslint-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/eslint-plugin@workspace:packages/eslint-plugin"
   dependencies:
@@ -3837,7 +3837,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/react@npm:1.7.4, @griffel/react@npm:^1.7.4, @griffel/react@workspace:packages/react":
+"@griffel/react@npm:^1.7.4, @griffel/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@griffel/react@workspace:packages/react"
   dependencies:

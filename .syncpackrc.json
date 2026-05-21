@@ -1,6 +1,14 @@
 {
   "$schema": "./node_modules/syncpack/schema.json",
   "strict": true,
+  "semverGroups": [
+    {
+      "label": "Internal @griffel/* deps must use a caret range when semver-pinned",
+      "dependencies": ["@griffel/*"],
+      "specifierTypes": ["exact", "range-major", "range-minor", "range"],
+      "range": "^"
+    }
+  ],
   "versionGroups": [
     {
       "label": "Local @griffel/* cross-package deps must use the same caret range everywhere",

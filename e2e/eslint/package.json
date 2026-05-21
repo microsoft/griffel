@@ -5,7 +5,7 @@
   "type": "module",
   "devDependencies": {
     "@griffel/e2e-utils": "*",
-    "@griffel/eslint-plugin": "3.0.2",
-    "@griffel/react": "1.7.4"
+    "@griffel/eslint-plugin": "^3.0.2",
+    "@griffel/react": "^1.7.4"
   }
 }
