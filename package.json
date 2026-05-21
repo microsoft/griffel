@@ -44,7 +44,7 @@
     "@emotion/hash": "^0.9.0",
     "@linaria/babel-preset": "^3.0.0-beta.24",
     "@linaria/shaker": "^3.0.0-beta.22",
-    "@typescript-eslint/utils": "^8.59.1",
+    "@typescript-eslint/utils": "^8.59.3",
     "ajv": "^8.20.0",
     "csstype": "^3.2.3",
     "debug": "^4.3.0",

@@ -3809,7 +3809,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/eslint-plugin@workspace:packages/eslint-plugin"
   dependencies:
-    "@typescript-eslint/utils": "npm:^8.59.1"
+    "@typescript-eslint/utils": "npm:^8.59.3"
     csstype: "npm:^3.2.3"
     tslib: "npm:^2.1.0"
   peerDependencies:
@@ -15252,7 +15252,7 @@ __metadata:
     "@types/stylis": "npm:4.2.7"
     "@types/webpack-env": "npm:1.18.4"
     "@typescript-eslint/rule-tester": "npm:^8.0.0"
-    "@typescript-eslint/utils": "npm:^8.59.1"
+    "@typescript-eslint/utils": "npm:^8.59.3"
     "@vitejs/plugin-react": "npm:^6.0.1"
     "@vitest/browser": "npm:4.1.5"
     "@vitest/browser-playwright": "npm:4.1.5"
