@@ -11,9 +11,9 @@ export default {
     resolve: {
       ...config.resolve,
       alias: {
-        '@griffel/core': path.resolve(dirname, './dist/packages/core/src/index.js'),
-        '@griffel/shadow-dom': path.resolve(dirname, './dist/packages/shadow-dom/src/index.js'),
-        '@griffel/react': path.resolve(dirname, './dist/packages/react/src/index.js'),
+        '@griffel/core': path.resolve(dirname, './packages/core/dist/index.js'),
+        '@griffel/shadow-dom': path.resolve(dirname, './packages/shadow-dom/dist/index.js'),
+        '@griffel/react': path.resolve(dirname, './packages/react/dist/index.js'),
       },
     },
     externals: {
