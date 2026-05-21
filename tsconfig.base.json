@@ -28,7 +28,6 @@
       "@griffel/jest-serializer": ["packages/jest-serializer/src/index.ts"],
       "@griffel/postcss-syntax": ["packages/postcss-syntax/src/index.ts"],
       "@griffel/react": ["packages/react/src/index.ts"],
-      "@griffel/style-types": ["packages/style-types/src/index.ts"],
       "@griffel/transform": ["packages/transform/src/index.mts"],
       "@griffel/transform-shaker": ["packages/transform-shaker/src/index.ts"],
       "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"],

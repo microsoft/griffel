@@ -8,8 +8,23 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE.md",
+    "CHANGELOG.md"
+  ],
   "dependencies": {
     "csstype": "^3.2.3"
-  },
-  "types": "src/index.d.ts"
+  }
 }
