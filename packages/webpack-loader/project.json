@@ -21,10 +21,7 @@
       "outputs": ["{workspaceRoot}/packages/webpack-loader/dist"],
       "options": {
         "cwd": "packages/webpack-loader",
-        "commands": [
-          "tsc --build tsconfig.lib.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/webpack-loader"
-        ],
+        "commands": ["tsc --build tsconfig.lib.json --pretty"],
         "parallel": false
       }
     }

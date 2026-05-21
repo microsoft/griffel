@@ -51,6 +51,9 @@ extends:
               - script: yarn install --frozen-lockfile
                 displayName: Install dependencies
 
+              - script: yarn nx run-many --target=build --all --parallel
+                displayName: Build all packages
+
               - script: |
                   git config user.name "Fluent UI Build"
                   git config user.email "fluentui-internal@service.microsoft.com"

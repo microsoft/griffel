@@ -32,7 +32,6 @@
     "virtual-loader/",
     "dist/",
     "README.md",
-    "LICENSE.md",
-    "CHANGELOG.md"
+    "LICENSE.md"
   ]
 }

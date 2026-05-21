@@ -21,10 +21,7 @@
       "outputs": ["{workspaceRoot}/packages/babel-preset/dist"],
       "options": {
         "cwd": "packages/babel-preset",
-        "commands": [
-          "tsc --build tsconfig.build.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/babel-preset"
-        ],
+        "commands": ["tsc --build tsconfig.build.json --pretty"],
         "parallel": false
       }
     }

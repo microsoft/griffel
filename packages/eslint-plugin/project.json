@@ -18,10 +18,7 @@
       "outputs": ["{workspaceRoot}/packages/eslint-plugin/dist"],
       "options": {
         "cwd": "packages/eslint-plugin",
-        "commands": [
-          "tsc --build tsconfig.lib.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/eslint-plugin"
-        ],
+        "commands": ["tsc --build tsconfig.lib.json --pretty"],
         "parallel": false
       }
     }

@@ -21,10 +21,7 @@
       "outputs": ["{workspaceRoot}/packages/transform-shaker/dist"],
       "options": {
         "cwd": "packages/transform-shaker",
-        "commands": [
-          "tsc --build tsconfig.lib.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/transform-shaker"
-        ],
+        "commands": ["tsc --build tsconfig.lib.json --pretty"],
         "parallel": false
       }
     }

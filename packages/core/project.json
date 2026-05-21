@@ -41,7 +41,7 @@
       "outputs": ["{workspaceRoot}/packages/core/dist"],
       "options": {
         "cwd": "packages/core",
-        "commands": ["tsc --build tsconfig.lib.json --pretty", "node ../../tools/copy-pkg-assets.mjs packages/core"],
+        "commands": ["tsc --build tsconfig.lib.json --pretty"],
         "parallel": false
       }
     }

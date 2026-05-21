@@ -21,10 +21,7 @@
       "outputs": ["{workspaceRoot}/packages/postcss-syntax/dist"],
       "options": {
         "cwd": "packages/postcss-syntax",
-        "commands": [
-          "tsc --build tsconfig.lib.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/postcss-syntax"
-        ],
+        "commands": ["tsc --build tsconfig.lib.json --pretty"],
         "parallel": false
       }
     }

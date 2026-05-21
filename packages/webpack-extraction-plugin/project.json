@@ -21,10 +21,7 @@
       "outputs": ["{workspaceRoot}/packages/webpack-extraction-plugin/dist"],
       "options": {
         "cwd": "packages/webpack-extraction-plugin",
-        "commands": [
-          "tsc --build tsconfig.build.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/webpack-extraction-plugin"
-        ],
+        "commands": ["tsc --build tsconfig.build.json --pretty"],
         "parallel": false
       }
     }

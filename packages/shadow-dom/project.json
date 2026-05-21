@@ -66,10 +66,7 @@
       "outputs": ["{workspaceRoot}/packages/shadow-dom/dist"],
       "options": {
         "cwd": "packages/shadow-dom",
-        "commands": [
-          "tsc --build tsconfig.lib.json --pretty",
-          "node ../../tools/copy-pkg-assets.mjs packages/shadow-dom"
-        ],
+        "commands": ["tsc --build tsconfig.lib.json --pretty"],
         "parallel": false
       }
     }

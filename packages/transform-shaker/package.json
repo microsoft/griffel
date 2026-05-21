@@ -27,7 +27,6 @@
   "files": [
     "dist/",
     "README.md",
-    "LICENSE.md",
-    "CHANGELOG.md"
+    "LICENSE.md"
   ]
 }
