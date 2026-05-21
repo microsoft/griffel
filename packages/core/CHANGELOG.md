@@ -1,8 +1,17 @@
 # Change Log - @griffel/core
 
-This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.21.1
+
+Thu, 21 May 2026 08:11:21 GMT
+
+### Patches
+
+- chore(deps): bump csstype to 3.2.3 and add `positionTry` & `textWrap` shorthands (olfedias@microsoft.com)
+- Bump @griffel/style-types to v1.4.1
 
 ## 1.21.0
 

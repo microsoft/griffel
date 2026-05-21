@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: bump dev dependencies",
-  "packageName": "@griffel/devtools",
-  "email": "copilot-swe-agent[bot]@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

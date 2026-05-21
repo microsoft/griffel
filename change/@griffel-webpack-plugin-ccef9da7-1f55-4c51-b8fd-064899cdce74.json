@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: cacheGroup test now works on Rspack without `experiments.css` (uses `type` + identifier check); unify Rspack/webpack loader paths (route extracted CSS via loader context, drop static virtual-loader/griffel.css placeholder)",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: hoist @types/debug and dedent devDeps to monorepo root",
-  "packageName": "@griffel/transform-shaker",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

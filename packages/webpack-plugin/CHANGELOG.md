@@ -1,8 +1,19 @@
 # Change Log - @griffel/webpack-plugin
 
-This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 21 May 2026 08:11:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 4.0.5
+
+Thu, 21 May 2026 08:11:22 GMT
+
+### Patches
+
+- fix: prevent Griffel CSS from being tree-shaken on Rspack under `sideEffects: false` (olfedias@microsoft.com)
+- fix: cacheGroup test now works on Rspack without `experiments.css` (uses `type` + identifier check); unify Rspack/webpack loader paths (route extracted CSS via loader context, drop static virtual-loader/griffel.css placeholder) (olfedias@microsoft.com)
+- Bump @griffel/core to v1.21.1
+- Bump @griffel/transform to v3.0.5
 
 ## 4.0.4
 

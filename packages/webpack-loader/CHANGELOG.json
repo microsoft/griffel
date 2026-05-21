@@ -2,6 +2,35 @@
   "name": "@griffel/webpack-loader",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:22 GMT",
+      "version": "2.2.27",
+      "tag": "@griffel/webpack-loader_v2.2.27",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-loader",
+            "commit": "aabc3e8b4e78331ff2bd8e10db69d238747b0787",
+            "comment": "chore: migrate @griffel/webpack-loader from jest to vitest"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-loader",
+            "comment": "Bump @griffel/babel-preset to v1.8.5",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/webpack-loader_v2.2.26",
       "version": "2.2.26",

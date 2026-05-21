@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix: bump ESLint to v10 and migrate React lint rules to eslint-plugin-react-x",
-  "packageName": "@griffel/core",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -2,6 +2,29 @@
   "name": "@griffel/shadow-dom",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "0.2.16",
+      "tag": "@griffel/shadow-dom_v0.2.16",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/shadow-dom",
+            "commit": "42e7217508220889bab80c7aae5bbd9c5d6c6fde",
+            "comment": "chore: migrate Storybook to @storybook/react-vite"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/shadow-dom",
+            "comment": "Bump @griffel/core to v1.21.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/shadow-dom_v0.2.15",
       "version": "0.2.15",

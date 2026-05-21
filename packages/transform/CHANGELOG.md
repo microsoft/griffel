@@ -1,8 +1,20 @@
 # Change Log - @griffel/transform
 
-This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 3.0.5
+
+Thu, 21 May 2026 08:11:21 GMT
+
+### Patches
+
+- chore(deps): bump oxc-parser (49699333+dependabot[bot]@users.noreply.github.com)
+- chore(deps): bump oxc-parser and oxc-transform (49699333+dependabot[bot]@users.noreply.github.com)
+- chore(deps): bump oxc-parser (49699333+dependabot[bot]@users.noreply.github.com)
+- Bump @griffel/core to v1.21.1
+- Bump @griffel/transform-shaker to v1.0.6
 
 ## 3.0.4
 

@@ -2,6 +2,41 @@
   "name": "@griffel/eslint-plugin",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "3.0.1",
+      "tag": "@griffel/eslint-plugin_v3.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "1a8f167b8623ebf43c978c89532f094df113eeaf",
+            "comment": "chore: drop redundant globals from @griffel/transform-shaker vitest config"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "36755723e897e973cb36d4196d3d6d34953d3ac1",
+            "comment": "chore: bump @typescript-eslint stack and migrate to eslint-plugin-import-x"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/eslint-plugin",
+            "commit": "424ade36b6876e15c970fe8ec5101bce1ce92c3b",
+            "comment": "chore(deps): bump csstype to 3.2.3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 08:41:14 GMT",
       "tag": "@griffel/eslint-plugin_v3.0.0",
       "version": "3.0.0",

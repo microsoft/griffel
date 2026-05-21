@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: prevent Griffel CSS from being tree-shaken on Rspack under `sideEffects: false`",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

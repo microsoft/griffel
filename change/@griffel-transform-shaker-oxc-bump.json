@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(deps): bump oxc-parser and oxc-transform",
-  "packageName": "@griffel/transform-shaker",
-  "email": "49699333+dependabot[bot]@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

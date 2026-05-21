@@ -1,8 +1,17 @@
 # Change Log - @griffel/postcss-syntax
 
-This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.3.11
+
+Thu, 21 May 2026 08:11:21 GMT
+
+### Patches
+
+- chore(deps): bump postcss from 8.5.12 to 8.5.14 (49699333+dependabot[bot]@users.noreply.github.com)
+- Bump @griffel/babel-preset to v1.8.5
 
 ## 1.3.10
 

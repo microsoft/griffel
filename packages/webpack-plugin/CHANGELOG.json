@@ -2,6 +2,59 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:22 GMT",
+      "version": "4.0.5",
+      "tag": "@griffel/webpack-plugin_v4.0.5",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "1a8f167b8623ebf43c978c89532f094df113eeaf",
+            "comment": "chore: drop redundant globals from @griffel/transform-shaker vitest config"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "4e4bfbfe23d8d59e84d4e0852b1f03cf342ccc89",
+            "comment": "chore: bump prettier from 2.8.2 to 3.8.3"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "f039273e0a00149da1e24aae394952527b42085d",
+            "comment": "fix: prevent Griffel CSS from being tree-shaken on Rspack under `sideEffects: false`"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "88eb13e321f5b6e888d97e529e30ba559d6c515a",
+            "comment": "fix: cacheGroup test now works on Rspack without `experiments.css` (uses `type` + identifier check); unify Rspack/webpack loader paths (route extracted CSS via loader context, drop static virtual-loader/griffel.css placeholder)"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/core to v1.21.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v3.0.5",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/webpack-plugin_v4.0.4",
       "version": "4.0.4",

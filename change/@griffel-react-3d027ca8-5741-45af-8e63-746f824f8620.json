@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix: drop nx flat/react preset and adopt official react/react-hooks/react-compiler flat presets",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

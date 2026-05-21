@@ -2,6 +2,41 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "1.8.5",
+      "tag": "@griffel/babel-preset_v1.8.5",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "4cda40a518dbbe6699602fce49f45fd85ef22a80",
+            "comment": "chore: migrate @griffel/babel-preset from jest to vitest"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "e5fc9253daf148d8d9764cfe402584101a3d228c",
+            "comment": "chore: align @babel/generator with monorepo root via syncpack"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/babel-preset",
+            "comment": "Bump @griffel/core to v1.21.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/babel-preset_v1.8.4",
       "version": "1.8.4",

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: migrate @griffel/webpack-extraction-plugin from jest to vitest",
-  "packageName": "@griffel/webpack-extraction-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

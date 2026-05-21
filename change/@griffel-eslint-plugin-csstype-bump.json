@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(deps): bump csstype to 3.2.3",
-  "packageName": "@griffel/eslint-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,53 @@
   "name": "@griffel/transform-shaker",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "1.0.6",
+      "tag": "@griffel/transform-shaker_v1.0.6",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "1a8f167b8623ebf43c978c89532f094df113eeaf",
+            "comment": "chore: drop redundant globals from @griffel/transform-shaker vitest config"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "e5fc9253daf148d8d9764cfe402584101a3d228c",
+            "comment": "chore: hoist @types/debug and dedent devDeps to monorepo root"
+          }
+        ],
+        "patch": [
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "fc06eafe4ed5609106d761ed271c59475e287d38",
+            "comment": "chore(deps): bump oxc-parser, oxc-transform and oxc-walker"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "3f59653ede24b4af33d1065ff3a88fdf837ab9e0",
+            "comment": "chore(deps): bump oxc-parser and oxc-transform"
+          },
+          {
+            "author": "49699333+dependabot[bot]@users.noreply.github.com",
+            "package": "@griffel/transform-shaker",
+            "commit": "ab6f709edc8cfaad0aa21dafb6148916188ab6df",
+            "comment": "chore(deps): bump oxc-parser and oxc-transform"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/transform-shaker_v1.0.5",
       "version": "1.0.5",

@@ -2,6 +2,47 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "1.21.1",
+      "tag": "@griffel/core_v1.21.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "36755723e897e973cb36d4196d3d6d34953d3ac1",
+            "comment": "fix: bump ESLint to v10 and migrate React lint rules to eslint-plugin-react-x"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "4e4bfbfe23d8d59e84d4e0852b1f03cf342ccc89",
+            "comment": "chore: bump prettier from 2.8.2 to 3.8.3"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "424ade36b6876e15c970fe8ec5101bce1ce92c3b",
+            "comment": "chore(deps): bump csstype to 3.2.3 and add `positionTry` & `textWrap` shorthands"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/core",
+            "comment": "Bump @griffel/style-types to v1.4.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/core_v1.21.0",
       "version": "1.21.0",

@@ -2,6 +2,53 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:22 GMT",
+      "version": "0.5.18",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.18",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "36755723e897e973cb36d4196d3d6d34953d3ac1",
+            "comment": "chore: bump @typescript-eslint stack and migrate to eslint-plugin-import-x"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "94faea42c3162c7df0bba22033887c64037c2842",
+            "comment": "chore: migrate @griffel/webpack-extraction-plugin from jest to vitest"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "f039273e0a00149da1e24aae394952527b42085d",
+            "comment": "fix: prevent Griffel CSS from being tree-shaken on Rspack under `sideEffects: false`"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "88eb13e321f5b6e888d97e529e30ba559d6c515a",
+            "comment": "fix: cacheGroup test now works on Rspack without `experiments.css` (uses `type` + identifier check); unify Rspack/webpack loader paths (route extracted CSS via loader context, drop static virtual-loader/griffel.css placeholder)"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.21.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.17",
       "version": "0.5.17",

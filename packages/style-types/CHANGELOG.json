@@ -2,6 +2,35 @@
   "name": "@griffel/style-types",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "1.4.1",
+      "tag": "@griffel/style-types_v1.4.1",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "db689ab2f57e6c3d7278b569ed7b7a13c3431f72",
+            "comment": "chore: drop unused jest test target from @griffel/style-types"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/style-types",
+            "commit": "424ade36b6876e15c970fe8ec5101bce1ce92c3b",
+            "comment": "chore(deps): bump csstype to 3.2.3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/style-types_v1.4.0",
       "version": "1.4.0",

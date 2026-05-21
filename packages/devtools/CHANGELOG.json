@@ -2,6 +2,65 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "0.3.11",
+      "tag": "@griffel/devtools_v0.3.11",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "36755723e897e973cb36d4196d3d6d34953d3ac1",
+            "comment": "fix: bump ESLint to v10 and migrate React lint rules to eslint-plugin-react-x"
+          },
+          {
+            "author": "copilot-swe-agent[bot]@users.noreply.github.com",
+            "package": "@griffel/devtools",
+            "commit": "61f1087314f7b38d67ea66eb5ed90233421ec247",
+            "comment": "chore: bump dev dependencies"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "45e166b187145ae8ef30200cedbde76b0f9a2af3",
+            "comment": "chore: remove jest, ts-jest, @nx/jest, and related dev dependencies"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "ef37fbef91a9657379baf5c727945046ff1c906a",
+            "comment": "fix: drop nx flat/react preset and adopt official react/react-hooks/react-compiler flat presets"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "42e7217508220889bab80c7aae5bbd9c5d6c6fde",
+            "comment": "chore: migrate Storybook to @storybook/react-vite and React 19 createRoot"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "e5fc9253daf148d8d9764cfe402584101a3d228c",
+            "comment": "chore: declare @griffel/react in dependencies (used at runtime)"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.7.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/devtools_v0.3.10",
       "version": "0.3.10",

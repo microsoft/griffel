@@ -2,6 +2,41 @@
   "name": "@griffel/jest-serializer",
   "entries": [
     {
+      "date": "Thu, 21 May 2026 08:11:21 GMT",
+      "version": "1.1.40",
+      "tag": "@griffel/jest-serializer_v1.1.40",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "f1e532569b99490e9e013ba45da448aef98f2116",
+            "comment": "chore: tighten ESLint rules and clean up redundant directives"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "36755723e897e973cb36d4196d3d6d34953d3ac1",
+            "comment": "fix: bump ESLint to v10 and migrate React lint rules to eslint-plugin-react-x"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/jest-serializer",
+            "commit": "ff38cd1f896b54eed526788d38f55f06ce03036c",
+            "comment": "chore: migrate @griffel/jest-serializer from jest to vitest"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/jest-serializer",
+            "comment": "Bump @griffel/core to v1.21.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 May 2026 12:34:39 GMT",
       "tag": "@griffel/jest-serializer_v1.1.39",
       "version": "1.1.39",

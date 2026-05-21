@@ -1,8 +1,16 @@
 # Change Log - @griffel/react
 
-This log was last generated on Mon, 04 May 2026 12:34:39 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 21 May 2026 08:11:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.7.3
+
+Thu, 21 May 2026 08:11:21 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.21.1
 
 ## 1.7.2
 

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: tighten ESLint rules and clean up redundant directives",
-  "packageName": "@griffel/transform-shaker",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,6 +1,6 @@
 {
   "name": "@griffel/transform",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "A package that performs build time transforms for Griffel",
   "license": "MIT",
   "repository": {
@@ -18,8 +18,8 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@griffel/core": "^1.21.0",
-    "@griffel/transform-shaker": "^1.0.5",
+    "@griffel/core": "^1.21.1",
+    "@griffel/transform-shaker": "^1.0.6",
     "debug": "^4.3.0",
     "magic-string": "^0.30.19",
     "oxc-parser": "^0.132.0",
