@@ -1,7 +1,7 @@
-const { GriffelCssLoaderContextKey } = require('../src/constants');
+const { GriffelCssLoaderContextKey } = require('../dist/constants.js');
 
 /**
- * @this {import("../src/constants").SupplementedLoaderContext}
+ * @this {import("../dist/constants").SupplementedLoaderContext}
  * @return {String}
  */
 function virtualLoader() {

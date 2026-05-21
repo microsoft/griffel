@@ -29,6 +29,7 @@
     "./package.json": "./package.json"
   },
   "files": [
+    "virtual-loader/",
     "dist/",
     "README.md",
     "LICENSE.md",

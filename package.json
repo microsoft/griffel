@@ -106,7 +106,7 @@
     "@vitest/coverage-v8": "4.1.5",
     "@vitest/ui": "4.1.5",
     "babel-plugin-tester": "12.0.0",
-    "beachball": "patch:beachball@npm%3A2.65.4#~/.yarn/patches/beachball-npm-2.65.4-4bf34ce8d5.patch",
+    "beachball": "2.65.4",
     "bestzip": "2.2.0",
     "css-loader": "^7.1.4",
     "dedent": "^1.7.2",
@@ -151,6 +151,7 @@
     "webpack-merge": "6.0.1"
   },
   "resolutions": {
-    "source-map-js@npm:1.2.1": "patch:source-map-js@npm%3A1.2.1#~/.yarn/patches/source-map-js-npm-1.2.1-b9a47d7e1a.patch"
+    "source-map-js@npm:1.2.1": "patch:source-map-js@npm%3A1.2.1#~/.yarn/patches/source-map-js-npm-1.2.1-b9a47d7e1a.patch",
+    "@typescript-eslint/utils": "^8.59.3"
   }
 }

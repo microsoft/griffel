@@ -22,7 +22,7 @@
       "options": {
         "cwd": "packages/babel-preset",
         "commands": [
-          "tsc --build tsconfig.lib.json --pretty",
+          "tsc --build tsconfig.build.json --pretty",
           "node ../../tools/copy-pkg-assets.mjs packages/babel-preset"
         ],
         "parallel": false
