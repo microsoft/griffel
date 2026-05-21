@@ -3771,6 +3771,8 @@ __metadata:
 "@griffel/e2e-eslint@workspace:e2e/eslint":
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-eslint@workspace:e2e/eslint"
+  dependencies:
+    "@griffel/e2e-utils": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -3778,7 +3780,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
   dependencies:
-    "@griffel/e2e-utils": "npm:*"
+    "@griffel/e2e-utils": "workspace:*"
     "@griffel/react": "npm:^1.7.4"
     "@griffel/webpack-extraction-plugin": "npm:^0.5.19"
     "@griffel/webpack-loader": "npm:^2.2.28"
@@ -3789,10 +3791,12 @@ __metadata:
 "@griffel/e2e-typescript@workspace:e2e/typescript":
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-typescript@workspace:e2e/typescript"
+  dependencies:
+    "@griffel/e2e-utils": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@griffel/e2e-utils@npm:*, @griffel/e2e-utils@workspace:e2e/utils":
+"@griffel/e2e-utils@workspace:*, @griffel/e2e-utils@workspace:e2e/utils":
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-utils@workspace:e2e/utils"
   languageName: unknown

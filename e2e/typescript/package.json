@@ -2,5 +2,8 @@
   "name": "@griffel/e2e-typescript",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@griffel/e2e-utils": "workspace:*"
+  }
 }
