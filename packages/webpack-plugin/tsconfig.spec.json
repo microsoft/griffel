@@ -4,9 +4,7 @@
     "outDir": "./out-tsc/spec",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
     "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment"],
-    "jsx": "react-jsx",
-    "target": "es2020",
-    "lib": ["es2020", "dom", "DOM.Iterable"]
+    "jsx": "react-jsx"
   },
   "include": [
     "vitest.config.ts",

@@ -7,17 +7,8 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
-  "dependencies": {
-    "@babel/core": "^7.29.0",
-    "@griffel/babel-preset": "^1.8.6",
-    "enhanced-resolve": "^5.21.0",
-    "tslib": "^2.1.0"
-  },
-  "peerDependencies": {
-    "webpack": "^5"
-  },
-  "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "@griffel/source": "./src/index.ts",
@@ -30,5 +21,14 @@
     "dist/",
     "README.md",
     "LICENSE.md"
-  ]
+  ],
+  "dependencies": {
+    "@babel/core": "^7.29.0",
+    "@griffel/babel-preset": "^1.8.6",
+    "enhanced-resolve": "^5.21.0",
+    "tslib": "^2.1.0"
+  },
+  "peerDependencies": {
+    "webpack": "^5"
+  }
 }

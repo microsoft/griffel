@@ -12,15 +12,6 @@
     "test": {
       "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/packages/eslint-plugin"]
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/packages/eslint-plugin/dist"],
-      "options": {
-        "cwd": "packages/eslint-plugin",
-        "commands": ["tsc --build tsconfig.lib.json --pretty"],
-        "parallel": false
-      }
     }
   }
 }

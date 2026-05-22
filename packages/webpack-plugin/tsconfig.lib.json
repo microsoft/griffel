@@ -3,9 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "types": ["node", "environment"],
     "target": "es2020",
-    "lib": ["es2020", "dom", "DOM.Iterable"]
+    "types": ["node", "environment"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.mts"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/*.spec.tsx", "**/*.test.tsx", "vitest.config.ts"],

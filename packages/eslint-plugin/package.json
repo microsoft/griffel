@@ -8,16 +8,8 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
-  "dependencies": {
-    "@typescript-eslint/utils": "^8.59.3",
-    "csstype": "^3.2.3",
-    "tslib": "^2.1.0"
-  },
-  "peerDependencies": {
-    "eslint": "^9.0.0 || ^10.0.0"
-  },
-  "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "@griffel/source": "./src/index.ts",
@@ -30,5 +22,13 @@
     "dist/",
     "README.md",
     "LICENSE.md"
-  ]
+  ],
+  "dependencies": {
+    "@typescript-eslint/utils": "^8.59.3",
+    "csstype": "^3.2.3",
+    "tslib": "^2.1.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0 || ^10.0.0"
+  }
 }

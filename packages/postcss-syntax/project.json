@@ -15,15 +15,6 @@
       "options": {
         "reportsDirectory": "{projectRoot}/../../coverage/packages/postcss-syntax"
       }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/packages/postcss-syntax/dist"],
-      "options": {
-        "cwd": "packages/postcss-syntax",
-        "commands": ["tsc --build tsconfig.lib.json --pretty"],
-        "parallel": false
-      }
     }
   }
 }
