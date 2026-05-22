@@ -9,7 +9,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/cjs/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "exports": {
     ".": {

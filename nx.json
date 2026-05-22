@@ -3,7 +3,7 @@
   "extends": "nx/presets/core.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^build-cjs"],
       "cache": true
     },
     "test": {
@@ -27,6 +27,10 @@
     "@nx/vitest:test": {
       "cache": true,
       "inputs": ["default", "^default"]
+    },
+    "build-cjs": {
+      "dependsOn": ["build", "^build-cjs"],
+      "cache": true
     }
   },
   "plugins": [
