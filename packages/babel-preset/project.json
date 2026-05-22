@@ -15,15 +15,6 @@
       "options": {
         "reportsDirectory": "{projectRoot}/../../coverage/packages/babel-preset"
       }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/packages/babel-preset/dist"],
-      "options": {
-        "cwd": "packages/babel-preset",
-        "commands": ["tsc --build tsconfig.build.json --pretty"],
-        "parallel": false
-      }
     }
   }
 }
