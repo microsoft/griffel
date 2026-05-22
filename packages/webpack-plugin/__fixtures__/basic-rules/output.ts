@@ -35,4 +35,4 @@ export const useStyles = __css({
   icon: { De3pzq: 'fcnqdeg', mc9l5x: 'f22iagw' },
 });
 
-import './code.griffel.css!=!../../src/virtual-loader/index.cjs!./code.ts';
+import './code.griffel.css!=!../../virtual-loader/index.cjs!./code.ts';

@@ -36,4 +36,4 @@ export const useStylesB = __css({
   },
 });
 
-import './code.griffel.css!=!../../src/virtual-loader/index.cjs!./code.ts';
+import './code.griffel.css!=!../../virtual-loader/index.cjs!./code.ts';

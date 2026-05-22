@@ -23,6 +23,12 @@
     },
     "./package.json": "./package.json"
   },
+  "files": [
+    "virtual-loader/",
+    "dist/",
+    "README.md",
+    "LICENSE.md"
+  ],
   "dependencies": {
     "@griffel/core": "^1.21.2",
     "@griffel/transform": "^3.0.6",
@@ -31,10 +37,5 @@
   },
   "peerDependencies": {
     "webpack": "^5"
-  },
-  "files": [
-    "dist/",
-    "README.md",
-    "LICENSE.md"
-  ]
+  }
 }

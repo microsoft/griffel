@@ -9,18 +9,6 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/packages/webpack-plugin/dist"],
-      "options": {
-        "cwd": "packages/webpack-plugin",
-        "commands": [
-          "tsc --build tsconfig.lib.json --pretty",
-          "node -e \"require('node:fs').cpSync('src/virtual-loader', 'dist/virtual-loader', { recursive: true })\""
-        ],
-        "parallel": false
-      }
-    },
     "test": {
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
