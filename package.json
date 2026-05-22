@@ -12,7 +12,7 @@
     "packages/*",
     "tools/*"
   ],
-  "packageManager": "yarn@4.3.1",
+  "packageManager": "yarn@4.15.0",
   "engines": {
     "node": ">=24"
   },
