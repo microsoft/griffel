@@ -15,15 +15,6 @@
       "options": {
         "reportsDirectory": "{projectRoot}/../../coverage/packages/webpack-extraction-plugin"
       }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/packages/webpack-extraction-plugin/dist"],
-      "options": {
-        "cwd": "packages/webpack-extraction-plugin",
-        "commands": ["tsc --build tsconfig.build.json --pretty"],
-        "parallel": false
-      }
     }
   }
 }

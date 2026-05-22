@@ -1,9 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/lib",
+    "module": "node16",
+    "moduleResolution": "node16",
+    "customConditions": [],
+    "declaration": true,
+    "outDir": "./dist",
     "rootDir": "./src",
-    "emitDeclarationOnly": true,
     "types": ["node", "environment"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
