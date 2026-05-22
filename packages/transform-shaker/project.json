@@ -15,15 +15,6 @@
       "options": {
         "reportsDirectory": "{projectRoot}/../../coverage/packages/transform-shaker"
       }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/packages/transform-shaker/dist"],
-      "options": {
-        "cwd": "packages/transform-shaker",
-        "commands": ["tsc --build tsconfig.lib.json --pretty"],
-        "parallel": false
-      }
     }
   }
 }
