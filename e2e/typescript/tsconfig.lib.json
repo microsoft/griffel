@@ -3,7 +3,6 @@
   "compilerOptions": {
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
     "outDir": "./dist",
     "types": ["node", "environment"]
