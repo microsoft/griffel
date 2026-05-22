@@ -20,6 +20,5 @@
     {
       "path": "./tsconfig.lib.json"
     }
-  ],
-  "exclude": ["out-tsc/**", "dist/**"]
+  ]
 }
