@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "target": "es2020",
+    "target": "esnext",
     "types": ["node", "environment"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.mts"],
