@@ -57,7 +57,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/packages/react/dist/cjs"],
       "options": {
-        "command": "node tools/build-cjs.mjs packages/react/dist packages/react/dist/cjs"
+        "command": "node tools/build-cjs.ts packages/react/dist packages/react/dist/cjs"
       }
     },
     "build": {

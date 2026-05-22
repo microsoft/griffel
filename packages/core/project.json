@@ -32,7 +32,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/packages/core/dist/cjs"],
       "options": {
-        "command": "node tools/build-cjs.mjs packages/core/dist packages/core/dist/cjs"
+        "command": "node tools/build-cjs.ts packages/core/dist packages/core/dist/cjs"
       }
     },
     "build": {

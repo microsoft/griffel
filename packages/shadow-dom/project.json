@@ -57,7 +57,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/packages/shadow-dom/dist/cjs"],
       "options": {
-        "command": "node tools/build-cjs.mjs packages/shadow-dom/dist packages/shadow-dom/dist/cjs"
+        "command": "node tools/build-cjs.ts packages/shadow-dom/dist packages/shadow-dom/dist/cjs"
       }
     },
     "build": {
