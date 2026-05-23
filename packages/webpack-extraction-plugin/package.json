@@ -7,6 +7,22 @@
     "type": "git",
     "url": "https://github.com/microsoft/griffel"
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@griffel/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "virtual-loader/",
+    "dist/",
+    "README.md",
+    "LICENSE.md"
+  ],
   "dependencies": {
     "@babel/core": "^7.29.0",
     "@babel/helper-module-imports": "^7.22.15",

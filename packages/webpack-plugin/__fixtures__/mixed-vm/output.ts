@@ -13,4 +13,4 @@ export const useTextStyles = __css({
   afterAlignToPrimary: { Br312pm: 'fwu52yu' },
 });
 
-import './code.griffel.css!=!../../src/virtual-loader/index.cjs!./code.ts';
+import './code.griffel.css!=!../../virtual-loader/index.cjs!./code.ts';

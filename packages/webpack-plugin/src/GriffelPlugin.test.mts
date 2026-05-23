@@ -473,7 +473,7 @@ describe('GriffelCSSExtractionPlugin', () => {
             at <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/broken.ts:<line>
             at Script.runInContext (node:vm:<line>)
             at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
-            at require.Object.assign.ensure (<repo>/packages/transform/src/evaluation/module.mts:<line>)
+            at Module.require.Object.assign.ensure (<repo>/packages/transform/src/evaluation/module.mts:<line>)
             at <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/code.ts:<line>
             at <repo>/packages/webpack-plugin/__fixtures__/vm-error-trace/code.ts:<line>
             at Script.runInContext (node:vm:<line>)

@@ -2,5 +2,9 @@
   "name": "@griffel/update-shorthands",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@griffel/core": "workspace:*",
+    "@griffel/style-types": "workspace:*"
+  }
 }

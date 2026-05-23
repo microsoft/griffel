@@ -15,37 +15,6 @@
       "options": {
         "reportsDirectory": "{projectRoot}/../../coverage/packages/transform-shaker"
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/transform-shaker",
-        "tsConfig": "packages/transform-shaker/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/transform-shaker/package.json",
-        "main": "packages/transform-shaker/src/index.ts",
-        "assets": [
-          "packages/transform-shaker/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "packages/transform-shaker",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }

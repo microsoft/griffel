@@ -5,33 +5,6 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/shadow-dom",
-        "tsConfig": "packages/shadow-dom/tsconfig.lib.json",
-        "skipTypeField": true,
-        "packageJson": "packages/shadow-dom/package.json",
-        "main": "packages/shadow-dom/src/index.ts",
-        "assets": [
-          "packages/shadow-dom/README.md",
-          {
-            "glob": "LICENSE.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "build-cjs": {
-      "dependsOn": ["build"],
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/packages/shadow-dom/lib"],
-      "options": {
-        "command": "node tools/build-cjs.mjs dist/packages/shadow-dom/src dist/packages/shadow-dom/lib"
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
@@ -80,17 +53,20 @@
         }
       }
     },
-    "type-check": {
+    "build-cjs": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/shadow-dom/dist/cjs"],
+      "options": {
+        "command": "node tools/build-cjs.ts packages/shadow-dom/dist packages/shadow-dom/dist/cjs"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/shadow-dom/dist"],
       "options": {
         "cwd": "packages/shadow-dom",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
+        "command": "tsc --build tsconfig.lib.json --pretty"
+      }
     }
   }
 }

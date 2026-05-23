@@ -28,18 +28,6 @@
       "options": {
         "reportsDirectory": "{projectRoot}/../../coverage/tools/update-shorthands"
       }
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "tools/update-shorthands",
-        "commands": [
-          {
-            "command": "tsc -b --pretty"
-          }
-        ]
-      },
-      "outputs": []
     }
   }
 }

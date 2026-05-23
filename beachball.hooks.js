@@ -1,6 +1,8 @@
 // @ts-check
 
 const childProcess = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 /**
  * @param {String} command
@@ -38,21 +40,34 @@ function sh(command) {
   });
 }
 
-let completedPrepublish = false;
+const REPO_ROOT = __dirname;
+
+/**
+ * Make sure a workspace-rooted asset is present at the package root so `npm pack`
+ * picks it up via the `files` field. Falls back to copying the workspace-root copy
+ * when the package itself doesn't ship one (the LICENSE.md is shared across the
+ * monorepo; some packages also rely on the root README).
+ *
+ * @param {string} packagePath
+ * @param {string} asset
+ */
+function ensurePackageAsset(packagePath, asset) {
+  const target = path.join(packagePath, asset);
+  if (fs.existsSync(target)) return;
+  const source = path.join(REPO_ROOT, asset);
+  if (!fs.existsSync(source)) return;
+  fs.copyFileSync(source, target);
+}
 
 /**
  * @type {import('beachball').BeachballConfig['hooks']}
  */
 module.exports = {
-  // Executed after all package versions were bumped -> run build
-  // If we run build before `beachball publish`, artifacts would have
-  // old (without bump) versions.
-  async prepublish() {
-    // `beachball` runs this hook for every package, we want to run it only once.
-    if (!completedPrepublish) {
-      await sh('yarn nx run-many --target=build,build-cjs --all --parallel --max-parallel=3');
-      completedPrepublish = true;
-    }
+  // Per-package: stage the workspace-root LICENSE/README into the package root so
+  // `npm pack` (which beachball runs from the package root) finds them via `files`.
+  async prepublish(packagePath) {
+    ensurePackageAsset(packagePath, 'LICENSE.md');
+    ensurePackageAsset(packagePath, 'README.md');
   },
   // Runs once after all bumps, before committing — update lockfile so it stays in sync
   async precommit() {

@@ -5,15 +5,21 @@
     "allowSyntheticDefaultImports": true,
     "checkJs": true,
     "jsx": "react",
-    "noEmit": true,
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./out-tsc",
     "types": [
       "../../node_modules/@docusaurus/module-type-aliases",
       "../../node_modules/@docusaurus/theme-classic",
       "environment",
       "static-assets",
       "webpack-env"
-    ]
+    ],
+    "composite": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"],
+  "exclude": ["./src/components/Playground/code/templates/**"],
+  "references": [
+    {
+      "path": "../../packages/core"
+    }
+  ]
 }

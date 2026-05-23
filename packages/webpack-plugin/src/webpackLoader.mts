@@ -12,8 +12,9 @@ export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generate
 type WebpackLoaderParams = Parameters<webpack.LoaderDefinitionFunction<WebpackLoaderOptions>>;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// TODO: do something better, define via exports?
-const virtualLoaderPath = path.resolve(__dirname, 'virtual-loader', 'index.cjs');
+// virtual-loader/ sits one dir above the compiled .mjs (in dist/) at the package
+// root, so `npm pack` ships it via the `files` field without a build-time copy.
+const virtualLoaderPath = path.resolve(__dirname, '..', 'virtual-loader', 'index.cjs');
 
 function webpackLoader(
   this: SupplementedLoaderContext<WebpackLoaderOptions>,

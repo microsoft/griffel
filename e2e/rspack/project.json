@@ -7,22 +7,24 @@
     "test": {
       "executor": "nx:run-commands",
       "dependsOn": [
-        { "target": "build", "dependencies": true },
-        { "target": "build-cjs", "dependencies": true }
+        {
+          "target": "build",
+          "dependencies": true
+        },
+        {
+          "target": "build-cjs",
+          "dependencies": true
+        }
       ],
       "options": {
         "cwd": "e2e/rspack",
-        "commands": [{ "command": "node src/test.ts" }]
+        "commands": [
+          {
+            "command": "node src/test.ts"
+          }
+        ]
       },
       "outputs": []
-    },
-    "type-check": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "e2e/rspack",
-        "commands": [{ "command": "tsc -b --pretty" }],
-        "outputPath": []
-      }
     },
     "lint": {
       "executor": "@nx/eslint:lint",

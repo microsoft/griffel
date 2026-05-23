@@ -1,4 +1,4 @@
-const { GriffelCssLoaderContextKey } = require('../src/constants');
+const GriffelCssLoaderContextKey = Symbol.for(`GriffelExtractPlugin/GriffelCssLoaderContextKey`);
 
 /**
  * @this {import("../src/constants").SupplementedLoaderContext}

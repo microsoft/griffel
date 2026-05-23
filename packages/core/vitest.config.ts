@@ -1,12 +1,12 @@
 import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 import { defineBrowserCommand } from '@vitest/browser-playwright';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
 export default defineConfig({
+  resolve: { conditions: ['@griffel/source'] },
+  ssr: { resolve: { conditions: ['@griffel/source'] } },
   root: __dirname,
   cacheDir: '../../node_modules/.vite/packages/core',
-  plugins: [nxViteTsPaths()],
   test: {
     watch: false,
     reporters: ['default'],
@@ -16,7 +16,7 @@ export default defineConfig({
     },
     projects: [
       {
-        plugins: [nxViteTsPaths()],
+        plugins: [],
         test: {
           name: 'unit',
           environment: 'jsdom',
@@ -25,7 +25,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [nxViteTsPaths()],
+        plugins: [],
         test: {
           name: 'browser',
           include: ['{src,tests}/**/*.browser.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],

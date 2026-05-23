@@ -1,28 +1,24 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "outDir": "../../dist/out-tsc",
-    "declaration": true,
-    "stripInternal": true,
-    "types": ["node", "environment"]
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": ["node", "environment"],
+    "jsx": "react-jsx"
   },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.mts"],
   "exclude": [
     "**/*.spec.ts",
     "**/*.test.ts",
     "**/*.spec.tsx",
     "**/*.test.tsx",
-    "**/*.spec.js",
-    "**/*.test.js",
-    "**/*.spec.jsx",
-    "**/*.test.jsx",
+    "vitest.config.ts",
     "**/*.stories.ts",
-    "**/*.stories.js",
-    "**/*.stories.jsx",
-    "**/*.stories.tsx",
-    "jest.config.ts",
-    "vitest.config.ts"
+    "**/*.stories.tsx"
   ],
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "references": [
+    {
+      "path": "../core/tsconfig.lib.json"
+    }
+  ]
 }

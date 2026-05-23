@@ -1,21 +1,22 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "allowSyntheticDefaultImports": true,
+    "outDir": "./out-tsc/spec",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
-    "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment"]
+    "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment"],
+    "jsx": "react-jsx"
   },
   "include": [
     "vitest.config.ts",
+    "src/common/**/*.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/*.test.tsx",
-    "**/*.spec.tsx",
-    "**/*.test.js",
-    "**/*.spec.js",
-    "**/*.test.jsx",
-    "**/*.spec.jsx",
-    "**/*.d.ts"
+    "**/*.spec.tsx"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
   ]
 }
