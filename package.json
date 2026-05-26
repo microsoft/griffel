@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/core": "^7.29.0",
     "@babel/generator": "^7.23.1",
-    "@babel/helper-module-imports": "^7.22.15",
+    "@babel/helper-module-imports": "^7.29.7",
     "@babel/helper-plugin-utils": "^7.28.6",
     "@babel/template": "^7.28.6",
     "@babel/traverse": "^7.29.0",
@@ -87,7 +87,7 @@
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
-    "@types/babel__helper-module-imports": "7.18.0",
+    "@types/babel__helper-module-imports": "7.18.3",
     "@types/babel__helper-plugin-utils": "7.10.3",
     "@types/chrome": "0.1.40",
     "@types/debug": "^4.1.13",

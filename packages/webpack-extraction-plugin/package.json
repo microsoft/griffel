@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.29.0",
-    "@babel/helper-module-imports": "^7.22.15",
+    "@babel/helper-module-imports": "^7.29.7",
     "@babel/helper-plugin-utils": "^7.28.6",
     "@griffel/core": "^1.21.2",
     "stylis": "^4.4.0",
