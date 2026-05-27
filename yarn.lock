@@ -463,6 +463,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-plugin-utils@npm:^7.29.7":
+  version: 7.29.7
+  resolution: "@babel/helper-plugin-utils@npm:7.29.7"
+  checksum: 10/6d16929fe5c792bbc8e4d67e18d7c1be69d2f18992deaa3d94dc26541fec662e83cbeeaf7553c6867d068eb7aed4e0d5e3e137c1dd4d5bcfa286f8d772f1f457
+  languageName: node
+  linkType: hard
+
 "@babel/helper-remap-async-to-generator@npm:^7.25.9":
   version: 7.25.9
   resolution: "@babel/helper-remap-async-to-generator@npm:7.25.9"
@@ -3735,7 +3742,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.29.0"
     "@babel/generator": "npm:^7.23.1"
-    "@babel/helper-plugin-utils": "npm:^7.28.6"
+    "@babel/helper-plugin-utils": "npm:^7.29.7"
     "@babel/template": "npm:^7.28.6"
     "@babel/traverse": "npm:^7.29.0"
     "@griffel/core": "npm:^1.21.2"
@@ -3824,7 +3831,7 @@ __metadata:
   resolution: "@griffel/postcss-syntax@workspace:packages/postcss-syntax"
   dependencies:
     "@babel/core": "npm:^7.29.0"
-    "@babel/helper-plugin-utils": "npm:^7.28.6"
+    "@babel/helper-plugin-utils": "npm:^7.29.7"
     "@griffel/babel-preset": "npm:^1.9.0"
     postcss: "npm:^8.5.14"
   languageName: unknown
@@ -3894,7 +3901,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.29.0"
     "@babel/helper-module-imports": "npm:^7.22.15"
-    "@babel/helper-plugin-utils": "npm:^7.28.6"
+    "@babel/helper-plugin-utils": "npm:^7.29.7"
     "@griffel/core": "npm:^1.21.2"
     stylis: "npm:^4.4.0"
     tslib: "npm:^2.1.0"
@@ -15226,7 +15233,7 @@ __metadata:
     "@babel/core": "npm:^7.29.0"
     "@babel/generator": "npm:^7.23.1"
     "@babel/helper-module-imports": "npm:^7.22.15"
-    "@babel/helper-plugin-utils": "npm:^7.28.6"
+    "@babel/helper-plugin-utils": "npm:^7.29.7"
     "@babel/preset-react": "npm:^7.28.5"
     "@babel/preset-typescript": "npm:^7.28.5"
     "@babel/template": "npm:^7.28.6"
