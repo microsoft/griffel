@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "feat: pass AOT opt-out config through to @griffel/babel-preset",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

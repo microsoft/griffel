@@ -28,7 +28,13 @@ export function shouldTransformSourceCode(
 ): boolean {
   // Fallback to "makeStyles" if options were not provided
   const imports = modules
-    ? modules.flatMap(module => [module.importName, module.resetImportName || 'makeResetStyles']).join('|')
+    ? modules
+        .flatMap(module => [
+          module.importName,
+          module.resetImportName === null ? null : module.resetImportName || 'makeResetStyles',
+        ])
+        .filter((name): name is string => typeof name === 'string')
+        .join('|')
     : 'makeStyles|makeResetStyles';
 
   return new RegExp(`\\b(${imports}|makeResetStyles)`).test(sourceCode);

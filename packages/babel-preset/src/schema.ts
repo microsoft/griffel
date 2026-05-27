@@ -22,10 +22,13 @@ export const configSchema: JSONSchema7 = {
             type: 'string',
           },
           importName: {
-            type: 'string',
+            type: ['string', 'null'],
+          },
+          resetImportName: {
+            type: ['string', 'null'],
           },
           staticImportName: {
-            type: 'string',
+            type: ['string', 'null'],
           },
         },
       },

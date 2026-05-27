@@ -12,9 +12,9 @@ export type BabelPluginOptions = {
   /** Defines set of modules and imports handled by a transformPlugin. */
   modules?: {
     moduleSource: string;
-    importName: string;
-    resetImportName?: string;
-    staticImportName?: string;
+    importName: string | null;
+    resetImportName?: string | null;
+    staticImportName?: string | null;
   }[];
 
   /**

@@ -73,15 +73,21 @@ function getCalleeFunctionKind(
   modules: NonNullable<BabelPluginOptions['modules']>,
 ): FunctionKinds | null {
   for (const module of modules) {
-    if (path.referencesImport(module.moduleSource, module.importName)) {
+    if (module.importName !== null && path.referencesImport(module.moduleSource, module.importName)) {
       return 'makeStyles';
     }
 
-    if (path.referencesImport(module.moduleSource, module.resetImportName || 'makeResetStyles')) {
+    if (
+      module.resetImportName !== null &&
+      path.referencesImport(module.moduleSource, module.resetImportName || 'makeResetStyles')
+    ) {
       return 'makeResetStyles';
     }
 
-    if (path.referencesImport(module.moduleSource, module.staticImportName || 'makeStaticStyles')) {
+    if (
+      module.staticImportName !== null &&
+      path.referencesImport(module.moduleSource, module.staticImportName || 'makeStaticStyles')
+    ) {
       return 'makeStaticStyles';
     }
   }
@@ -440,11 +446,17 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
                     continue;
                   }
 
-                  if (importedPath.isIdentifier({ name: module.importName })) {
+                  if (module.importName !== null && importedPath.isIdentifier({ name: module.importName })) {
                     specifier.replaceWith(t.identifier('__styles'));
-                  } else if (importedPath.isIdentifier({ name: module.resetImportName || 'makeResetStyles' })) {
+                  } else if (
+                    module.resetImportName !== null &&
+                    importedPath.isIdentifier({ name: module.resetImportName ?? 'makeResetStyles' })
+                  ) {
                     specifier.replaceWith(t.identifier('__resetStyles'));
-                  } else if (importedPath.isIdentifier({ name: module.staticImportName || 'makeStaticStyles' })) {
+                  } else if (
+                    module.staticImportName !== null &&
+                    importedPath.isIdentifier({ name: module.staticImportName ?? 'makeStaticStyles' })
+                  ) {
                     specifier.replaceWith(t.identifier('__staticStyles'));
                   }
                 }

@@ -253,6 +253,21 @@ pluginTester({
       },
     },
     {
+      title: 'imports: opt-out for specific literals',
+      fixture: path.resolve(fixturesDir, 'opt-out', 'code.ts'),
+      outputFixture: path.resolve(fixturesDir, 'opt-out', 'output.ts'),
+      pluginOptions: {
+        modules: [
+          {
+            moduleSource: '@griffel/react',
+            importName: null,
+            resetImportName: null,
+            staticImportName: null,
+          },
+        ],
+      },
+    },
+    {
       title: 'imports: require()',
       fixture: path.resolve(fixturesDir, 'require', 'code.ts'),
       outputFixture: path.resolve(fixturesDir, 'require', 'output.ts'),
