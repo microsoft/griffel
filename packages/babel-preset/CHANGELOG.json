@@ -2,6 +2,21 @@
   "name": "@griffel/babel-preset",
   "entries": [
     {
+      "date": "Wed, 27 May 2026 15:33:58 GMT",
+      "version": "1.9.0",
+      "tag": "@griffel/babel-preset_v1.9.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/babel-preset",
+            "commit": "64db3a26d30b44a8426ebc6e8b7ef81eba8f4744",
+            "comment": "feat: allow opting out of AOT transformation per Griffel literal by setting `importName`, `resetImportName`, or `staticImportName` to `null` on a module entry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 09:29:28 GMT",
       "version": "1.8.6",
       "tag": "@griffel/babel-preset_v1.8.6",

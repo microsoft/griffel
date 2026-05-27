@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-<!-- This log was last generated on Thu, 21 May 2026 09:29:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 27 May 2026 15:33:58 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.9.0
+
+Wed, 27 May 2026 15:33:58 GMT
+
+### Minor changes
+
+- feat: allow opting out of AOT transformation per Griffel literal by setting `importName`, `resetImportName`, or `staticImportName` to `null` on a module entry (olfedias@microsoft.com)
 
 ## 1.8.6
 
