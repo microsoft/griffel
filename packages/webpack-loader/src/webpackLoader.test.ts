@@ -252,6 +252,18 @@ describe('webpackLoader', () => {
   testFixture('function');
   testFixture('reset');
   testFixture('empty');
+  testFixture('opt-out', {
+    loaderOptions: {
+      modules: [
+        {
+          moduleSource: '@griffel/react',
+          importName: null,
+          resetImportName: null,
+          staticImportName: null,
+        },
+      ],
+    },
+  });
 
   const fakeColorModulePath = path.resolve(__dirname, '..', '__fixtures__', 'webpack-resolve-plugins', 'fake-color.ts');
   const colorModulePath = path.resolve(__dirname, '..', '__fixtures__', 'webpack-resolve-plugins', 'color.ts');

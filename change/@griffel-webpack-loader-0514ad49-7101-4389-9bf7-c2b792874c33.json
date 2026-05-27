@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: allow opting out of AOT transformation per Griffel literal by setting `importName`, `resetImportName`, or `staticImportName` to `null` on a module entry",
+  "packageName": "@griffel/webpack-loader",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
