@@ -9,7 +9,7 @@
     "url": "https://github.com/microsoft/griffel"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "^8.59.1",
+    "@typescript-eslint/utils": "^8.60.0",
     "csstype": "^3.2.3",
     "tslib": "^2.1.0"
   },
