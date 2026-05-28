@@ -106,7 +106,7 @@
     "@vitest/ui": "4.1.5",
     "babel-plugin-tester": "12.0.0",
     "beachball": "patch:beachball@npm%3A2.65.4#~/.yarn/patches/beachball-npm-2.65.4-4bf34ce8d5.patch",
-    "bestzip": "2.2.0",
+    "bestzip": "3.0.1",
     "css-loader": "^7.1.4",
     "dedent": "^1.7.2",
     "doctoc": "2.4.1",
