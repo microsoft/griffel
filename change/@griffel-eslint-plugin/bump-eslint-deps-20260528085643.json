@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump @typescript-eslint/utils to 8.60.0 and typescript-eslint to 8.60.0",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
