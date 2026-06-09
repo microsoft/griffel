@@ -140,7 +140,7 @@
     "simple-git-hooks": "2.13.1",
     "snapshot-diff": "0.10.0",
     "storybook": "10.4.0",
-    "stylelint": "^17.12.0",
+    "stylelint": "^17.13.0",
     "syncpack": "15.3.1",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.60.0",
