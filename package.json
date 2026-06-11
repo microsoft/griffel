@@ -47,7 +47,7 @@
     "ajv": "^8.20.0",
     "csstype": "^3.2.3",
     "debug": "^4.3.0",
-    "enhanced-resolve": "^5.22.0",
+    "enhanced-resolve": "^5.23.0",
     "magic-string": "^0.30.19",
     "oxc-parser": "^0.134.0",
     "oxc-resolver": "^11.20.0",
