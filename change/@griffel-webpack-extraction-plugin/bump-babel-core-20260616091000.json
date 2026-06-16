@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump @babel/core from 7.29.0 to 7.29.6",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
