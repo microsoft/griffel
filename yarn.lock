@@ -3937,7 +3937,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.29.6"
     "@griffel/babel-preset": "npm:^1.9.0"
-    enhanced-resolve: "npm:^5.23.0"
+    enhanced-resolve: "npm:^5.24.0"
     tslib: "npm:^2.1.0"
   peerDependencies:
     webpack: ^5
@@ -13531,13 +13531,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.21.4, enhanced-resolve@npm:^5.23.0":
-  version: 5.23.0
-  resolution: "enhanced-resolve@npm:5.23.0"
+"enhanced-resolve@npm:^5.21.4, enhanced-resolve@npm:^5.24.0":
+  version: 5.24.0
+  resolution: "enhanced-resolve@npm:5.24.0"
   dependencies:
     graceful-fs: "npm:^4.2.4"
     tapable: "npm:^2.3.3"
-  checksum: 10/74c5672e85e86ed08f91afbecb0970aa649e2dc6da1bcd0ea0e8699237ee45a7ea0a064e7fc2a64b4a62bea0670912dc729ffb6d7361a2f542961de4118a1721
+  checksum: 10/a804e28990c151523a27750df06b27768e1f3b39a1138ec110d012be22177e647100a3a3345faa5e91951ad7866bfaa03c454fe267e002f361bde3601cb639a8
   languageName: node
   linkType: hard
 
@@ -15324,7 +15324,7 @@ __metadata:
     debug: "npm:^4.3.0"
     dedent: "npm:^1.7.2"
     doctoc: "npm:2.4.1"
-    enhanced-resolve: "npm:^5.23.0"
+    enhanced-resolve: "npm:^5.24.0"
     eslint: "npm:10.5.0"
     eslint-config-prettier: "npm:10.1.8"
     eslint-import-resolver-typescript: "npm:4.4.4"
