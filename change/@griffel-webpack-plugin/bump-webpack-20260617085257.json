@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump webpack to 5.107.2 and remove obsolete ts-expect-error directive",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

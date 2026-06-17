@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update Vitest browser test imports for Nx 23 migration",
+  "packageName": "@griffel/core",
+  "email": "copilot@github.com",
+  "dependentChangeType": "none"
+}
