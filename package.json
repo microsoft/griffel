@@ -47,11 +47,11 @@
     "ajv": "^8.20.0",
     "csstype": "^3.2.3",
     "debug": "^4.3.0",
-    "enhanced-resolve": "^5.23.0",
+    "enhanced-resolve": "^5.24.0",
     "magic-string": "^0.30.19",
-    "oxc-parser": "^0.134.0",
+    "oxc-parser": "^0.136.0",
     "oxc-resolver": "^11.20.0",
-    "oxc-transform": "^0.134.0",
+    "oxc-transform": "^0.136.0",
     "oxc-walker": "^1.0.0",
     "postcss": "^8.5.14",
     "rtl-css-js": "^1.16.1",
@@ -146,7 +146,7 @@
     "typescript-eslint": "^8.60.0",
     "vite": "8.0.16",
     "vitest": "4.1.8",
-    "webpack": "5.107.0",
+    "webpack": "5.107.2",
     "webpack-merge": "6.0.1"
   },
   "resolutions": {

@@ -172,7 +172,6 @@ export class GriffelPlugin {
       compiler.hooks.normalModuleFactory.tap(PLUGIN_NAME, nmf => {
         nmf.hooks.createModule.tap(
           PLUGIN_NAME,
-          // @ts-expect-error CreateData is typed as 'object'...
           (createData: { matchResource?: string; settings: { sideEffects?: boolean } }) => {
             if (createData.matchResource && createData.matchResource.endsWith('.griffel.css')) {
               createData.settings.sideEffects = true;

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump enhanced-resolve from 5.23.0 to 5.24.0",
+  "packageName": "@griffel/webpack-loader",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
