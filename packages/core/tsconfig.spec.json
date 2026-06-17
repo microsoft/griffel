@@ -1,6 +1,8 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "outDir": "../../dist/out-tsc",
     "typeRoots": ["../../node_modules", "../../node_modules/@types", "../../typings"],
     "types": ["vitest/importMeta", "vite/client", "node", "vitest", "environment"]

@@ -10,7 +10,7 @@
 //     stylesheet — this is the one case where bucket-order intuition fails.
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 import { mergeClasses } from '../index.js';
 import {
   applyResetStyles,
