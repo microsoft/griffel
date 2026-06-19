@@ -24,7 +24,16 @@ type Scenario = {
   rspackVersion?: string;
   griffelPackages: string[];
   npmPackages?: string[];
+  npmResolutions?: Record<string, string>;
   snapshotFile: string;
+};
+
+// `@linaria/shaker` (used by `@griffel/babel-preset`) passes the `useESModules` option to
+// `@babel/plugin-transform-runtime`, which was removed in Babel 8. Pin the Babel runtime helpers to
+// v7 in the legacy scenarios so a fresh install doesn't pull in an incompatible Babel 8. See #993.
+const LEGACY_BABEL_RESOLUTIONS: Record<string, string> = {
+  '@babel/plugin-transform-runtime': '^7.0.0',
+  '@babel/runtime': '^7.0.0',
 };
 
 const SCENARIOS: Scenario[] = [
@@ -39,6 +48,7 @@ const SCENARIOS: Scenario[] = [
       '@griffel/webpack-extraction-plugin',
       '@griffel/webpack-loader',
     ],
+    npmResolutions: LEGACY_BABEL_RESOLUTIONS,
     snapshotFile: 'legacy-rspack-1.css',
   },
   {
@@ -53,6 +63,7 @@ const SCENARIOS: Scenario[] = [
       '@griffel/webpack-loader',
     ],
     npmPackages: ['css-loader'],
+    npmResolutions: LEGACY_BABEL_RESOLUTIONS,
     snapshotFile: 'legacy-css-extract-rspack-1.css',
   },
   {
@@ -65,6 +76,7 @@ const SCENARIOS: Scenario[] = [
       '@griffel/webpack-extraction-plugin',
       '@griffel/webpack-loader',
     ],
+    npmResolutions: LEGACY_BABEL_RESOLUTIONS,
     snapshotFile: 'legacy-rspack-2.css',
   },
   {
@@ -114,6 +126,7 @@ async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
     await installPackages({
       packages: [...rspackPackages, 'react', 'react-dom', ...(scenario.npmPackages ?? [])],
       resolutions,
+      npmResolutions: scenario.npmResolutions,
       tempDir,
       rootDir,
     });
