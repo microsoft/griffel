@@ -6,10 +6,11 @@ import { sh } from './sh.ts';
 export async function installPackages(options: {
   packages: (string | [name: string, version: string])[];
   resolutions: { file?: string; version?: string; packageName: string }[];
+  npmResolutions?: Record<string, string>;
   rootDir: string;
   tempDir: string;
 }) {
-  const { tempDir, packages, resolutions, rootDir } = options;
+  const { tempDir, packages, resolutions, npmResolutions, rootDir } = options;
 
   const packageJsonPath = path.resolve(tempDir + '/package.json');
   const packageJsonPathExists = !!(await fs.promises.stat(packageJsonPath).catch(() => false));
@@ -53,7 +54,10 @@ export async function installPackages(options: {
       ...Object.fromEntries(resolutions.map(pkg => [pkg.packageName, '*'])),
       ...packagesWithVersions,
     },
-    resolutions: Object.fromEntries(resolutions.map(pkg => [pkg.packageName, pkg.version || `./${pkg.file}`])),
+    resolutions: {
+      ...Object.fromEntries(resolutions.map(pkg => [pkg.packageName, pkg.version || `./${pkg.file}`])),
+      ...npmResolutions,
+    },
   };
 
   await fs.promises.writeFile(packageJsonPath, JSON.stringify(newPackageJson, null, 2));
