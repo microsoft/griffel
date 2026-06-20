@@ -6,7 +6,7 @@ sidebar_position: 4
 
 Griffel provides first class support for Server-Side Rendering.
 
-## Next.js
+## Next.js (Pages Router)
 
 ### Base setup
 
@@ -99,3 +99,68 @@ export default function Home() {
   return <Button className={classes.button}>Hello world!</Button>;
 }
 ```
+
+## Next.js (App Router)
+
+The App Router streams HTML, so styles are flushed with [`useServerInsertedHTML`](https://nextjs.org/docs/app/api-reference/functions/use-server-inserted-html) instead of a custom `_document`.
+
+### Configuring a project
+
+1. Create a Client Component that owns the renderer and flushes its styles:
+
+```tsx
+'use client';
+
+// highlight-next-line
+import { createDOMRenderer, RendererProvider, renderToStyleElements } from '@griffel/react';
+import { useServerInsertedHTML } from 'next/navigation';
+import { useState } from 'react';
+
+export function GriffelRegistry({ children }: { children: React.ReactNode }) {
+  // 👇 one renderer per request, kept stable across re-renders
+  const [renderer] = useState(() => createDOMRenderer());
+
+  useServerInsertedHTML(() => {
+    const styles = renderToStyleElements(renderer);
+
+    // highlight-start
+    // 👇 Next calls this callback once per streaming flush, and renderToStyleElements()
+    // returns the renderer's ENTIRE accumulated CSS every time. Clear the emitted sheets
+    // so each flush outputs only the delta — see "Clearing the renderer" below.
+    renderer.stylesheets = {};
+    // highlight-end
+
+    return <>{styles}</>;
+  });
+
+  return <RendererProvider renderer={renderer}>{children}</RendererProvider>;
+}
+```
+
+2. Wrap your app with it in `app/layout.tsx`:
+
+```tsx
+import { GriffelRegistry } from './griffel-registry';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <GriffelRegistry>{children}</GriffelRegistry>
+      </body>
+    </html>
+  );
+}
+```
+
+3. You can now server render components with Griffel styles anywhere in the tree (Client Components, since `makeStyles` runs on the client renderer after hydration).
+
+### Clearing the renderer between flushes
+
+`renderToStyleElements` returns **all** the CSS the renderer has collected so far. In the Pages Router it runs once, so this is fine. In the App Router, Next calls `useServerInsertedHTML` **once per streaming flush** — so if the renderer is not cleared, every flush re-emits the full stylesheet and the duplicate copies are streamed into `<body>`.
+
+Those stale `<body>` copies persist across a client-side navigation and, sitting after `<head>` at equal specificity, can override the runtime styles Griffel inserts into `<head>` afterwards — making `makeStyles` overrides lose to their `makeResetStyles` base (controls render at their default size, but only _after_ a soft navigation; a hard reload looks correct).
+
+Resetting `renderer.stylesheets = {}` after each flush emits only the per-flush delta. Clear **only** `stylesheets`, not `insertionCache`, so already-emitted rules are still skipped while genuinely new rules from later-resolving subtrees continue to flush. The callback runs on the server only, so the client renderer is untouched. This mirrors the pattern Next documents for [styled-components](https://nextjs.org/docs/app/guides/css-in-js), which clears its sheet (`clearTag()`) after each flush.
+
+To verify, request a page without JavaScript and confirm the `data-make-styles-rehydration` markers appear only in `<head>`, never in `<body>`.
