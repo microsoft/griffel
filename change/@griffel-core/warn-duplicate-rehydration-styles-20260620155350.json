@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Warn in development when duplicate CSS rules are found during rehydration — a signal that server-rendered styles were flushed into the HTML more than once (e.g. the Next.js App Router calling renderToStyleElements on every flush without clearing the renderer)",
+  "packageName": "@griffel/core",
+  "email": "vaclav.dvorak@ysoft.com",
+  "dependentChangeType": "patch"
+}

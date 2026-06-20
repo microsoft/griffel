@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
 import type { GriffelRenderer } from '../types.js';
 import { createDOMRenderer } from './createDOMRenderer.js';
@@ -104,5 +104,53 @@ describe('rehydrateRendererCache', () => {
         "data-priority": "-1",
       }
     `);
+  });
+
+  it('warns in development when the same rule is rehydrated from multiple <style> elements', () => {
+    process.env.NODE_ENV = 'development';
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    // The same rule emitted into two server-rendered <style> elements is the signature of
+    // styles being flushed into the HTML more than once — e.g. a Next.js App Router setup that
+    // calls renderToStyleElements() on every flush without clearing the renderer in between.
+    for (let i = 0; i < 2; i++) {
+      const styleElement = document.createElement('style');
+      styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+      styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+      styleElement.textContent = '.foo { color: red; }';
+      document.head.appendChild(styleElement);
+    }
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(consoleError).toHaveBeenCalledTimes(1);
+    expect(consoleError.mock.calls[0][0]).toContain('duplicate CSS rule');
+
+    consoleError.mockRestore();
+  });
+
+  it('does not warn when buckets repeat with different rules (correct streamed delta)', () => {
+    process.env.NODE_ENV = 'development';
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    // Same bucket + priority across two elements, but different rules — this is what correct
+    // per-flush delta flushing looks like, and it must NOT warn.
+    const first = document.createElement('style');
+    first.setAttribute(DATA_BUCKET_ATTR, 'd');
+    first.setAttribute(DATA_PRIORITY_ATTR, '0');
+    first.textContent = '.foo { color: red; }';
+    document.head.appendChild(first);
+
+    const second = document.createElement('style');
+    second.setAttribute(DATA_BUCKET_ATTR, 'd');
+    second.setAttribute(DATA_PRIORITY_ATTR, '0');
+    second.textContent = '.bar { color: blue; }';
+    document.head.appendChild(second);
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(consoleError).not.toHaveBeenCalled();
+
+    consoleError.mockRestore();
   });
 });
