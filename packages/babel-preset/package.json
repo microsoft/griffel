@@ -11,7 +11,7 @@
     "@babel/core": "^7.29.6",
     "@babel/generator": "^7.23.1",
     "@babel/helper-plugin-utils": "^7.28.6",
-    "@babel/template": "^7.28.6",
+    "@babel/template": "^8.0.0",
     "@babel/traverse": "^7.29.0",
     "@griffel/core": "^1.21.2",
     "@linaria/babel-preset": "^3.0.0-beta.24",
