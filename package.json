@@ -60,7 +60,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.29.7",
+    "@babel/preset-react": "^8.0.1",
     "@babel/preset-typescript": "^7.29.7",
     "@codesandbox/sandpack-react": "2.20.0",
     "@codesandbox/sandpack-themes": "2.0.21",
