@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.29.6",
-    "@babel/generator": "^7.23.1",
+    "@babel/generator": "^8.0.0",
     "@babel/helper-module-imports": "^7.22.15",
     "@babel/helper-plugin-utils": "^7.28.6",
     "@babel/template": "^7.28.6",
