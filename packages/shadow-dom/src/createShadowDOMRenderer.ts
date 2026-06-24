@@ -34,6 +34,7 @@ function getCSSStyleSheetForBucket(
   const styleSheetKey = getStyleSheetKey(
     bucketName,
     (metadata['m'] as string | undefined) ?? '',
+    (metadata['c'] as string | undefined) ?? '',
     (metadata['p'] as number | undefined) ?? 0,
   );
 
@@ -82,6 +83,8 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateS
     stylesheets: {},
 
     compareMediaQueries: (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0),
+    // For now container queries reuse the same comparator as media queries.
+    compareContainerQueries: (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0),
     insertCSSRules(cssRules) {
       for (const [_styleBucketName, cssBucketEntries] of Object.entries(cssRules)) {
         const styleBucketName = _styleBucketName as StyleBucketName;

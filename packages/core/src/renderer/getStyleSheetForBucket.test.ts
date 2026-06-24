@@ -208,6 +208,52 @@ describe('getStyleSheetForBucket', () => {
     expect(actualMediaQueryOrder).toEqual(mediaQueryOrder);
   });
 
+  it('splits "@container" rules into per-condition sheets ordered by the comparator', () => {
+    const target = createFakeDocument();
+    // The default container comparator is lexicographic (same as media); a custom comparator can be
+    // supplied (e.g. "compareContainerQueries" from "@griffel/utils" for numeric min-width order).
+    const containerQueryOrder = [
+      'slot-container (min-width: 480px)',
+      'slot-container (min-width: 720px)',
+      'slot-container (min-width: 1024px)',
+    ];
+    const renderer = createDOMRenderer(undefined, {
+      compareContainerQueries: (a, b) => containerQueryOrder.indexOf(a) - containerQueryOrder.indexOf(b),
+    });
+
+    getStyleSheetForBucket('d', target, null, renderer);
+
+    // Inserted out of source order; should be ordered ascending by min-width regardless.
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 720px)' });
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 480px)' });
+    // A larger breakpoint that sorts after 720px numerically (would sort before lexicographically).
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 1024px)' });
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-make-styles-bucket="d"
+          data-priority="0"
+        />,
+        <style
+          data-container="slot-container (min-width: 480px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+        <style
+          data-container="slot-container (min-width: 720px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+        <style
+          data-container="slot-container (min-width: 1024px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+      ]
+    `);
+  });
+
   it('handles "insertionPoint"', () => {
     const target = createFakeDocument();
     const renderer = createDOMRenderer();

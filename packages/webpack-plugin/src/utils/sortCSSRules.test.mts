@@ -1,4 +1,5 @@
 import type { CSSRulesByBucket, GriffelRenderer } from '@griffel/core';
+import { compareContainerQueries } from '@griffel/utils';
 import * as prettier from 'prettier';
 import { describe, expect, it } from 'vitest';
 
@@ -20,18 +21,20 @@ describe('getUniqueRulesFromSets', () => {
     };
 
     expect(getUniqueRulesFromSets([setA, setB])).toEqual([
-      { cssRule: '.baz { color: orange; }', priority: 0, media: '', styleBucketName: 'd' },
-      { cssRule: '.foo { color: red; }', priority: 0, media: '', styleBucketName: 'd' },
+      { cssRule: '.baz { color: orange; }', priority: 0, media: '', container: '', styleBucketName: 'd' },
+      { cssRule: '.foo { color: red; }', priority: 0, media: '', container: '', styleBucketName: 'd' },
       {
         cssRule: '@media (max-width: 2px) { .foo { color: blue; } }',
         priority: 0,
         media: '(max-width: 2px)',
+        container: '',
         styleBucketName: 'm',
       },
       {
         cssRule: '@media (max-width: 2px) { .yellow { color: blue; } }',
         priority: 0,
         media: '(max-width: 2px)',
+        container: '',
         styleBucketName: 'm',
       },
     ]);
@@ -49,7 +52,7 @@ describe('sortCSSRules', () => {
       m: [['@media (max-width: 2px) { .yellow { color: blue; } }', { m: '(max-width: 2px)' }]],
     };
 
-    expect(await formatCss(sortCSSRules([setA, setB], () => 0))).toMatchInlineSnapshot(`
+    expect(await formatCss(sortCSSRules([setA, setB], () => 0, compareContainerQueries))).toMatchInlineSnapshot(`
       ".baz {
         color: orange;
       }
@@ -79,7 +82,7 @@ describe('sortCSSRules', () => {
       h: ['.hover:hover { color: yellow; }'],
     };
 
-    expect(await formatCss(sortCSSRules([setA, setB], () => 0))).toMatchInlineSnapshot(`
+    expect(await formatCss(sortCSSRules([setA, setB], () => 0, compareContainerQueries))).toMatchInlineSnapshot(`
       ".default {
         color: orange;
       }
@@ -110,7 +113,7 @@ describe('sortCSSRules', () => {
       f: [['.prio-1:focus { padding: 0; }', { p: -2 }]],
     };
 
-    expect(await formatCss(sortCSSRules([setA, setB], () => 0))).toMatchInlineSnapshot(`
+    expect(await formatCss(sortCSSRules([setA, setB], () => 0, compareContainerQueries))).toMatchInlineSnapshot(`
       ".reset {
         margin: 0;
         padding: 0;
@@ -156,7 +159,7 @@ describe('sortCSSRules', () => {
       const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a, b) =>
         mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
 
-      expect(await formatCss(sortCSSRules([setA, setB], compareMediaQueries))).toMatchInlineSnapshot(`
+      expect(await formatCss(sortCSSRules([setA, setB], compareMediaQueries, compareContainerQueries))).toMatchInlineSnapshot(`
         ".default {
           color: green;
         }
@@ -204,7 +207,7 @@ describe('sortCSSRules', () => {
       const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a, b) =>
         mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
 
-      expect(await formatCss(sortCSSRules([setA, setB, setC], compareMediaQueries))).toMatchInlineSnapshot(`
+      expect(await formatCss(sortCSSRules([setA, setB, setC], compareMediaQueries, compareContainerQueries))).toMatchInlineSnapshot(`
         "@media (max-width: 1px) {
           .mw1-prio-3 {
             border: 5px;

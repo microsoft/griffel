@@ -3916,6 +3916,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@griffel/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@griffel/utils@workspace:packages/utils"
+  dependencies:
+    tslib: "npm:^2.1.0"
+  languageName: unknown
+  linkType: soft
+
 "@griffel/webpack-extraction-plugin@npm:^0.5.19, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin"

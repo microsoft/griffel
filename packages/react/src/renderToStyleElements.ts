@@ -20,17 +20,19 @@ export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[]
     .sort((a, b) => {
       return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
     })
-    // third sort: media queries
+    // third sort: order conditional sheets within their bucket. The bucket sort above already
+    // separates "m" / "c" from each other and from non-conditional buckets, so we only reorder
+    // sheets that share the same conditional bucket (relying on a stable sort to preserve the rest).
     .sort((a, b) => {
-      const mediaA = a.elementAttributes['media'];
-      const mediaB = b.elementAttributes['media'];
-
-      if (mediaA && mediaB) {
-        return renderer.compareMediaQueries(mediaA, mediaB);
+      if (a.bucketName === 'm' && b.bucketName === 'm') {
+        return renderer.compareMediaQueries(a.elementAttributes['media'], b.elementAttributes['media']);
       }
 
-      if (mediaA || mediaB) {
-        return mediaA ? 1 : -1;
+      if (a.bucketName === 'c' && b.bucketName === 'c') {
+        return renderer.compareContainerQueries(
+          a.elementAttributes['data-container'] ?? '',
+          b.elementAttributes['data-container'] ?? '',
+        );
       }
 
       return 0;

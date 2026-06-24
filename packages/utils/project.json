@@ -1,0 +1,51 @@
+{
+  "name": "@griffel/utils",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/utils/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/utils"
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/utils",
+        "tsConfig": "packages/utils/tsconfig.lib.json",
+        "skipTypeField": true,
+        "packageJson": "packages/utils/package.json",
+        "main": "packages/utils/src/index.ts",
+        "assets": [
+          "packages/utils/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/utils",
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
+      },
+      "outputs": []
+    }
+  }
+}
