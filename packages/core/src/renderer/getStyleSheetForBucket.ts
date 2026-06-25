@@ -34,8 +34,10 @@ export const styleBucketOrdering: StyleBucketName[] = [
   't',
   // @media rules
   'm',
-  // @container rules
+  // @container rules (legacy/shared)
   'c',
+  // @container rules (sorted)
+  'x',
 ];
 
 // avoid repeatedly calling `indexOf` to determine order during new insertions
@@ -54,7 +56,7 @@ export function getStyleSheetKey(
     return bucketName + media + priority;
   }
 
-  if (bucketName === 'c') {
+  if (bucketName === 'x') {
     return bucketName + container + priority;
   }
 
@@ -80,10 +82,10 @@ export function getStyleSheetForBucket(
   metadata: Record<string, unknown> = {},
 ): IsomorphicStyleSheet {
   const isMediaBucket = bucketName === 'm';
-  const isContainerBucket = bucketName === 'c';
+  const isContainerBucket = bucketName === 'x';
 
   const media = (metadata['m'] as string | undefined) ?? '0';
-  const container = (metadata['c'] as string | undefined) ?? '0';
+  const container = (metadata['x'] as string | undefined) ?? '0';
   const priority = (metadata['p'] as number | undefined) ?? 0;
 
   const stylesheetKey = getStyleSheetKey(bucketName, media, container, priority);
@@ -119,15 +121,15 @@ function isSameInsertionKey(
   let targetKey: string = bucketName;
   if (bucketName === 'm') {
     targetKey += (metadata['m'] as string | undefined) ?? '';
-  } else if (bucketName === 'c') {
-    targetKey += (metadata['c'] as string | undefined) ?? '';
+  } else if (bucketName === 'x') {
+    targetKey += (metadata['x'] as string | undefined) ?? '';
   }
 
   const elementBucket = element.getAttribute(DATA_BUCKET_ATTR);
   let elementKey = elementBucket ?? '';
   if (elementBucket === 'm') {
     elementKey += element.media;
-  } else if (elementBucket === 'c') {
+  } else if (elementBucket === 'x') {
     elementKey += element.getAttribute(DATA_CONTAINER_ATTR) ?? '';
   }
 
@@ -154,7 +156,7 @@ function findInsertionPoint(
   const targetOrder = styleBucketOrderingMap[targetBucket];
 
   const media = (metadata['m'] as string | undefined) ?? '';
-  const container = (metadata['c'] as string | undefined) ?? '';
+  const container = (metadata['x'] as string | undefined) ?? '';
   const priority = (metadata['p'] as number | undefined) ?? 0;
 
   // Similar to javascript sort comparators where
@@ -166,7 +168,7 @@ function findInsertionPoint(
 
   // "@media" and "@container" rules are split into per-condition sheets that must be ordered by
   // their condition (ascending min-width) rather than plain insertion order.
-  if (targetBucket === 'm' || targetBucket === 'c') {
+  if (targetBucket === 'm' || targetBucket === 'x') {
     const conditionElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(
       `[${DATA_BUCKET_ATTR}="${targetBucket}"]`,
     );

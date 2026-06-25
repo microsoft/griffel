@@ -15,6 +15,7 @@ const regexps: Partial<Record<StyleBucketName, RegExp>> = {
   t: AT_RULES_HYDRATOR,
   m: AT_RULES_HYDRATOR,
   c: AT_RULES_HYDRATOR,
+  x: AT_RULES_HYDRATOR,
 };
 
 /**

@@ -22,7 +22,7 @@ export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[]
     })
     // third sort: conditional sheets within their bucket
     .sort((a, b) => {
-      if (a.bucketName !== b.bucketName || (a.bucketName !== 'm' && a.bucketName !== 'c')) {
+      if (a.bucketName !== b.bucketName || (a.bucketName !== 'm' && a.bucketName !== 'x')) {
         return 0;
       }
 

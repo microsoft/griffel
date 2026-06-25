@@ -15,8 +15,8 @@ function getConditionFromMetadata(sheet: ExtendedCSSStyleSheet): string {
     return (sheet.metadata['m'] as string | undefined) ?? '';
   }
 
-  if (sheet.bucketName === 'c') {
-    return (sheet.metadata['c'] as string | undefined) ?? '';
+  if (sheet.bucketName === 'x') {
+    return (sheet.metadata['x'] as string | undefined) ?? '';
   }
 
   return '';
@@ -40,7 +40,7 @@ export function findInsertionPoint(
 
   let comparer = (sheet: ExtendedCSSStyleSheet): number => targetOrder - styleBucketOrderingMap[sheet.bucketName];
 
-  if ((targetStyleSheet.bucketName === 'm' || targetStyleSheet.bucketName === 'c') && targetStyleSheet.metadata) {
+  if ((targetStyleSheet.bucketName === 'm' || targetStyleSheet.bucketName === 'x') && targetStyleSheet.metadata) {
     const conditionElements = renderer.adoptedStyleSheets.filter(
       styleSheet => styleSheet.bucketName === targetStyleSheet.bucketName,
     );
@@ -53,8 +53,8 @@ export function findInsertionPoint(
               renderer.compareMediaQueries(targetStyleSheet.metadata['m'] as string, sheet.metadata['m'] as string)
           : sheet =>
               renderer.compareContainerQueries(
-                (targetStyleSheet.metadata['c'] as string | undefined) ?? '',
-                (sheet.metadata['c'] as string | undefined) ?? '',
+                (targetStyleSheet.metadata['x'] as string | undefined) ?? '',
+                (sheet.metadata['x'] as string | undefined) ?? '',
               );
     }
   }

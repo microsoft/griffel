@@ -254,14 +254,14 @@ describe('sortCSSRules', () => {
   describe('container queries', () => {
     it('sorts container queries', async () => {
       const setA: CSSRulesByBucket = {
-        c: [
-          ['@container (max-width: 2px) { .cw2 { color: blue; } }', { c: '(max-width: 2px)' }],
-          ['@container (max-width: 3px) { .cw3 { color: red; } }', { c: '(max-width: 3px)' }],
+        x: [
+          ['@container (max-width: 2px) { .cw2 { color: blue; } }', { x: '(max-width: 2px)' }],
+          ['@container (max-width: 3px) { .cw3 { color: red; } }', { x: '(max-width: 3px)' }],
         ],
       };
       const setB: CSSRulesByBucket = {
         d: ['.default { color: green; }'],
-        c: [['@container (max-width: 1px) { .cw1 { color: red; } }', { c: '(max-width: 1px)' }]],
+        x: [['@container (max-width: 1px) { .cw1 { color: red; } }', { x: '(max-width: 1px)' }]],
       };
 
       const containerQueryOrder = ['(max-width: 1px)', '(max-width: 2px)', '(max-width: 3px)', '(max-width: 4px)'];

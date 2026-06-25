@@ -1,5 +1,5 @@
 // Pins the real-browser cascade outcome of "@container" query sorting. Griffel
-// splits each "@container" condition into its own bucket-`c` style sheet and
+// splits each "@container" condition into its own bucket-`x` style sheet and
 // orders them with the renderer's `compareContainerQueries`. Because the sheets
 // share specificity, DOM order decides the winner at a given container size:
 // the later sheet wins. So a mobile-first comparator (ascending min-width) must

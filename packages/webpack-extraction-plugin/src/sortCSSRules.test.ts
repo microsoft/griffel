@@ -146,14 +146,14 @@ describe('sortCSSRules', () => {
       // Source order is reversed (720px before 480px) and a larger 1024px breakpoint is mixed in. The
       // emitted order must follow the comparator, not the source or lexicographic order.
       const setA: CSSRulesByBucket = {
-        c: [
-          ['@container c (min-width: 720px) { .cw720 { margin-left: 40px; } }', { c: 'c (min-width: 720px)' }],
-          ['@container c (min-width: 480px) { .cw480 { margin-left: 24px; } }', { c: 'c (min-width: 480px)' }],
+        x: [
+          ['@container c (min-width: 720px) { .cw720 { margin-left: 40px; } }', { x: 'c (min-width: 720px)' }],
+          ['@container c (min-width: 480px) { .cw480 { margin-left: 24px; } }', { x: 'c (min-width: 480px)' }],
         ],
       };
       const setB: CSSRulesByBucket = {
         d: ['.default { margin-left: 0; }'],
-        c: [['@container c (min-width: 1024px) { .cw1024 { margin-left: 56px; } }', { c: 'c (min-width: 1024px)' }]],
+        x: [['@container c (min-width: 1024px) { .cw1024 { margin-left: 56px; } }', { x: 'c (min-width: 1024px)' }]],
       };
 
       const containerQueryOrder = ['c (min-width: 480px)', 'c (min-width: 720px)', 'c (min-width: 1024px)'];
@@ -188,9 +188,9 @@ describe('sortCSSRules', () => {
           ['@media (min-width: 720px) { .mw720 { color: blue; } }', { m: '(min-width: 720px)' }],
           ['@media (min-width: 480px) { .mw480 { color: red; } }', { m: '(min-width: 480px)' }],
         ],
-        c: [
-          ['@container (min-width: 720px) { .cw720 { color: blue; } }', { c: '(min-width: 720px)' }],
-          ['@container (min-width: 480px) { .cw480 { color: red; } }', { c: '(min-width: 480px)' }],
+        x: [
+          ['@container (min-width: 720px) { .cw720 { color: blue; } }', { x: '(min-width: 720px)' }],
+          ['@container (min-width: 480px) { .cw480 { color: red; } }', { x: '(min-width: 480px)' }],
         ],
       };
 
@@ -226,9 +226,9 @@ describe('sortCSSRules', () => {
 
     it('orders "max-width" container queries by the supplied comparator', async () => {
       const set: CSSRulesByBucket = {
-        c: [
-          ['@container (max-width: 480px) { .cw480 { color: red; } }', { c: '(max-width: 480px)' }],
-          ['@container (max-width: 720px) { .cw720 { color: blue; } }', { c: '(max-width: 720px)' }],
+        x: [
+          ['@container (max-width: 480px) { .cw480 { color: red; } }', { x: '(max-width: 480px)' }],
+          ['@container (max-width: 720px) { .cw720 { color: blue; } }', { x: '(max-width: 720px)' }],
         ],
       };
 

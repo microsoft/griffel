@@ -33,7 +33,7 @@ export function getUniqueRulesFromSets(setOfCSSRules: CSSRulesByBucket[]): RuleE
 
         const priority = (meta?.['p'] as number | undefined) ?? 0;
         const media = (meta?.['m'] as string | undefined) ?? '';
-        const container = (meta?.['c'] as string | undefined) ?? '';
+        const container = (meta?.['x'] as string | undefined) ?? '';
 
         uniqueCSSRules.set(cssRule, {
           styleBucketName: styleBucketName as StyleBucketName,
@@ -67,7 +67,7 @@ function compareCSSRules(
     }
   }
 
-  if (a.styleBucketName === 'c') {
+  if (a.styleBucketName === 'x') {
     const containerDiff = compareContainerQueries(a.container, b.container);
     if (containerDiff !== 0) {
       return containerDiff;

@@ -71,8 +71,8 @@ function pushToCSSRules(
     metadata.push(['m', media]);
   }
 
-  if (styleBucketName === 'c' && container) {
-    metadata.push(['c', container]);
+  if (styleBucketName === 'x' && container) {
+    metadata.push(['x', container]);
   }
 
   cssRulesByBucket[styleBucketName] ??= [];

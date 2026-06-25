@@ -999,18 +999,18 @@ describe('resolveStyleRules', () => {
         },
       });
 
-      // The container condition must be carried as "c" metadata so the renderer & extraction plugin
+      // The container condition must be carried as "x" metadata so the renderer & extraction plugin
       // can split per-condition sheets and order them by ascending min-width (instead of relying on
       // global atomic insertion order).
       expect(result[1]).toEqual({
-        c: [
+        x: [
           [
             '@container slot-container (min-width: 480px){.fgaruy3{color:red;}}',
-            { c: 'slot-container (min-width: 480px)' },
+            { x: 'slot-container (min-width: 480px)' },
           ],
           [
             '@container slot-container (min-width: 480px){.fy3gn3s{padding:10px;}}',
-            { c: 'slot-container (min-width: 480px)', p: -1 },
+            { x: 'slot-container (min-width: 480px)', p: -1 },
           ],
         ],
       });

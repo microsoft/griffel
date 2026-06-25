@@ -93,6 +93,7 @@ describe('getStyleSheetForBucket', () => {
     getStyleSheetForBucket('v', target, null, renderer);
     getStyleSheetForBucket('a', target, null, renderer);
     getStyleSheetForBucket('c', target, null, renderer);
+    getStyleSheetForBucket('x', target, null, renderer);
     getStyleSheetForBucket('i', target, null, renderer);
     getStyleSheetForBucket('h', target, null, renderer);
     getStyleSheetForBucket('m', target, null, renderer);
@@ -141,7 +142,6 @@ describe('getStyleSheetForBucket', () => {
           media="screen and (prefers-reduced-motion: reduce)"
         />,
         <style
-          data-container="0"
           data-make-styles-bucket="c"
           data-priority="0"
         />,
@@ -225,10 +225,10 @@ describe('getStyleSheetForBucket', () => {
     getStyleSheetForBucket('d', target, null, renderer);
 
     // Inserted out of source order; should be ordered ascending by min-width regardless.
-    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 720px)' });
-    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 480px)' });
+    getStyleSheetForBucket('x', target, null, renderer, { x: 'slot-container (min-width: 720px)' });
+    getStyleSheetForBucket('x', target, null, renderer, { x: 'slot-container (min-width: 480px)' });
     // A larger breakpoint that sorts after 720px numerically (would sort before lexicographically).
-    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 1024px)' });
+    getStyleSheetForBucket('x', target, null, renderer, { x: 'slot-container (min-width: 1024px)' });
 
     expect(target.head.children).toMatchInlineSnapshot(`
       HTMLCollection [
@@ -238,17 +238,17 @@ describe('getStyleSheetForBucket', () => {
         />,
         <style
           data-container="slot-container (min-width: 480px)"
-          data-make-styles-bucket="c"
+          data-make-styles-bucket="x"
           data-priority="0"
         />,
         <style
           data-container="slot-container (min-width: 720px)"
-          data-make-styles-bucket="c"
+          data-make-styles-bucket="x"
           data-priority="0"
         />,
         <style
           data-container="slot-container (min-width: 1024px)"
-          data-make-styles-bucket="c"
+          data-make-styles-bucket="x"
           data-priority="0"
         />,
       ]
@@ -265,19 +265,19 @@ describe('getStyleSheetForBucket', () => {
     });
 
     // Inserted out of source order; should follow the media comparator regardless.
-    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 720px)' });
-    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 480px)' });
+    getStyleSheetForBucket('x', target, null, renderer, { x: 'slot-container (min-width: 720px)' });
+    getStyleSheetForBucket('x', target, null, renderer, { x: 'slot-container (min-width: 480px)' });
 
     expect(target.head.children).toMatchInlineSnapshot(`
       HTMLCollection [
         <style
           data-container="slot-container (min-width: 480px)"
-          data-make-styles-bucket="c"
+          data-make-styles-bucket="x"
           data-priority="0"
         />,
         <style
           data-container="slot-container (min-width: 720px)"
-          data-make-styles-bucket="c"
+          data-make-styles-bucket="x"
           data-priority="0"
         />,
       ]

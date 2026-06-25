@@ -38,7 +38,7 @@ function getCSSStyleSheetForBucket(
   const styleSheetKey = getStyleSheetKey(
     bucketName,
     (metadata['m'] as string | undefined) ?? '',
-    (metadata['c'] as string | undefined) ?? '',
+    (metadata['x'] as string | undefined) ?? '',
     (metadata['p'] as number | undefined) ?? 0,
   );
 

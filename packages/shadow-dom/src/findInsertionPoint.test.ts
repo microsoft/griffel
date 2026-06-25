@@ -127,14 +127,14 @@ describe('findInsertionPoint', () => {
   describe('container queries', () => {
     it('finds a position in empty array', () => {
       const renderer = createRendererMock([]);
-      const styleSheet = createStyleSheetMock('c', { c: '(min-width: 3px)' });
+      const styleSheet = createStyleSheetMock('x', { x: '(min-width: 3px)' });
 
       expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
     });
 
     it('finds a position at end (after the "m" bucket)', () => {
       const renderer = createRendererMock([createStyleSheetMock('m', { m: '(max-width: 3px)' })]);
-      const styleSheet = createStyleSheetMock('c', { c: '(min-width: 3px)' });
+      const styleSheet = createStyleSheetMock('x', { x: '(min-width: 3px)' });
 
       expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
     });
@@ -143,16 +143,16 @@ describe('findInsertionPoint', () => {
       const renderer = createRendererMock([
         createStyleSheetMock('d', {}),
         createStyleSheetMock('m', { m: '(max-width: 1px)' }),
-        createStyleSheetMock('c', { c: '(min-width: 1px)' }),
-        createStyleSheetMock('c', { c: '(min-width: 3px)' }),
+        createStyleSheetMock('x', { x: '(min-width: 1px)' }),
+        createStyleSheetMock('x', { x: '(min-width: 3px)' }),
       ]);
 
-      const resultA = findInsertionPoint(renderer, createStyleSheetMock('c', { c: '(min-width: 2px)' }));
+      const resultA = findInsertionPoint(renderer, createStyleSheetMock('x', { x: '(min-width: 2px)' }));
 
-      expect(resultA).toHaveProperty('bucketName', 'c');
-      expect(resultA).toHaveProperty('metadata.c', '(min-width: 3px)');
+      expect(resultA).toHaveProperty('bucketName', 'x');
+      expect(resultA).toHaveProperty('metadata.x', '(min-width: 3px)');
 
-      const resultB = findInsertionPoint(renderer, createStyleSheetMock('c', { c: '(min-width: 4px)' }));
+      const resultB = findInsertionPoint(renderer, createStyleSheetMock('x', { x: '(min-width: 4px)' }));
 
       expect(resultB).toBe(null);
     });

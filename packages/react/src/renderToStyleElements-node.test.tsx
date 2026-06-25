@@ -377,7 +377,7 @@ describe('renderToStyleElements (node)', () => {
             }</style
           ><style
             data-container="(max-width: 1px)"
-            data-make-styles-bucket="c"
+            data-make-styles-bucket="x"
             data-priority="0"
             data-make-styles-rehydration="true"
           >
@@ -388,7 +388,7 @@ describe('renderToStyleElements (node)', () => {
             }</style
           ><style
             data-container="(max-width: 2px)"
-            data-make-styles-bucket="c"
+            data-make-styles-bucket="x"
             data-priority="0"
             data-make-styles-rehydration="true"
           >
@@ -399,7 +399,7 @@ describe('renderToStyleElements (node)', () => {
             }</style
           ><style
             data-container="(max-width: 3px)"
-            data-make-styles-bucket="c"
+            data-make-styles-bucket="x"
             data-priority="0"
             data-make-styles-rehydration="true"
           >
@@ -410,7 +410,7 @@ describe('renderToStyleElements (node)', () => {
             }</style
           ><style
             data-container="(max-width: 4px)"
-            data-make-styles-bucket="c"
+            data-make-styles-bucket="x"
             data-priority="0"
             data-make-styles-rehydration="true"
           >

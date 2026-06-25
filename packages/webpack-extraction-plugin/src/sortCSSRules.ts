@@ -28,7 +28,7 @@ export function getUniqueRulesFromSets(setOfCSSRules: CSSRulesByBucket[]): RuleE
 
         const priority = (meta?.['p'] as number | undefined) ?? 0;
         const media = (meta?.['m'] as string | undefined) ?? '';
-        const container = (meta?.['c'] as string | undefined) ?? '';
+        const container = (meta?.['x'] as string | undefined) ?? '';
 
         uniqueCSSRules.set(cssRule, {
           styleBucketName: styleBucketName as StyleBucketName,
@@ -67,7 +67,7 @@ function compareCSSRules(
   }
 
   // Within the "@container" bucket, order by container condition (ascending min-width).
-  if (entryA.styleBucketName === 'c') {
+  if (entryA.styleBucketName === 'x') {
     const containerDiff = compareContainerQueries(entryA.container, entryB.container);
     if (containerDiff !== 0) {
       return containerDiff;

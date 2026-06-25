@@ -98,8 +98,10 @@ export type CSSRulesByBucket = {
   t?: CSSBucketEntry[];
   // @media rules
   m?: CSSBucketEntry[];
-  // @container rules
+  // @container rules (legacy/shared bucket — other packages built on Griffel may still write here)
   c?: CSSBucketEntry[];
+  // @container rules (sorted, owned by Griffel)
+  x?: CSSBucketEntry[];
 };
 
 export type GriffelInsertionFactory = () => (renderer: GriffelRenderer, cssRules: CSSRulesByBucket) => void;
