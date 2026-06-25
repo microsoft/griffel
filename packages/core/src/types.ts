@@ -49,6 +49,11 @@ export interface GriffelRenderer {
    * @private
    */
   compareMediaQueries(a: string, b: string): number;
+
+  /**
+   * @private
+   */
+  compareContainerQueries(a: string, b: string): number;
 }
 
 /**

@@ -16,6 +16,7 @@ A package with wrappers and APIs to be used with React.js.
 - [`makeResetStyles()`](#makeresetstyles)
 - [`createDOMRenderer()`, `RendererProvider`](#createdomrenderer-rendererprovider)
   - [compareMediaQueries](#comparemediaqueries)
+  - [compareContainerQueries](#comparecontainerqueries)
   - [insertionPoint](#insertionpoint)
   - [styleElementAttributes](#styleelementattributes)
 - [`TextDirectionProvider`](#textdirectionprovider)
@@ -422,6 +423,31 @@ const renderer = createDOMRenderer(document, {
     <style media="only screen and (min-width: 1px)" data-make-styles-bucket="m"></style>
     <style media="only screen and (min-width: 480px)" data-make-styles-bucket="m"></style>
     <style media="only screen and (min-width: 640px)" data-make-styles-bucket="m"></style>
+  </head>
+</html>
+```
+
+### compareContainerQueries
+
+A function with the same signature as `compareMediaQueries`, but for dynamically sorting `@container` query conditions. Maps over an array of container query condition strings (e.g. `(min-width: 480px)` or `foo (min-width: 480px)` when a container name is used).
+
+When omitted, container queries are ordered with the same comparator as `compareMediaQueries`. For numeric ordering by `min-width` / `max-width`, you can pass [`compareCSSQueries`](../utils) from `@griffel/utils`:
+
+```js
+import { createDOMRenderer } from '@griffel/react';
+import { compareCSSQueries } from '@griffel/utils';
+
+const renderer = createDOMRenderer(document, {
+  compareContainerQueries: compareCSSQueries,
+});
+```
+
+```html
+<html>
+  <head>
+    <style data-container="(min-width: 480px)" data-make-styles-bucket="c"></style>
+    <style data-container="(min-width: 720px)" data-make-styles-bucket="c"></style>
+    <style data-container="(min-width: 1024px)" data-make-styles-bucket="c"></style>
   </head>
 </html>
 ```

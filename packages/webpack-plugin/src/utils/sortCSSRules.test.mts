@@ -20,18 +20,20 @@ describe('getUniqueRulesFromSets', () => {
     };
 
     expect(getUniqueRulesFromSets([setA, setB])).toEqual([
-      { cssRule: '.baz { color: orange; }', priority: 0, media: '', styleBucketName: 'd' },
-      { cssRule: '.foo { color: red; }', priority: 0, media: '', styleBucketName: 'd' },
+      { cssRule: '.baz { color: orange; }', priority: 0, media: '', container: '', styleBucketName: 'd' },
+      { cssRule: '.foo { color: red; }', priority: 0, media: '', container: '', styleBucketName: 'd' },
       {
         cssRule: '@media (max-width: 2px) { .foo { color: blue; } }',
         priority: 0,
         media: '(max-width: 2px)',
+        container: '',
         styleBucketName: 'm',
       },
       {
         cssRule: '@media (max-width: 2px) { .yellow { color: blue; } }',
         priority: 0,
         media: '(max-width: 2px)',
+        container: '',
         styleBucketName: 'm',
       },
     ]);
@@ -243,6 +245,46 @@ describe('sortCSSRules', () => {
         @media (max-width: 3px) {
           .mw3-prio0 {
             display: table;
+          }
+        }"
+      `);
+    });
+  });
+
+  describe('container queries', () => {
+    it('sorts container queries', async () => {
+      const setA: CSSRulesByBucket = {
+        c: [
+          ['@container (max-width: 2px) { .cw2 { color: blue; } }', { c: '(max-width: 2px)' }],
+          ['@container (max-width: 3px) { .cw3 { color: red; } }', { c: '(max-width: 3px)' }],
+        ],
+      };
+      const setB: CSSRulesByBucket = {
+        d: ['.default { color: green; }'],
+        c: [['@container (max-width: 1px) { .cw1 { color: red; } }', { c: '(max-width: 1px)' }]],
+      };
+
+      const containerQueryOrder = ['(max-width: 1px)', '(max-width: 2px)', '(max-width: 3px)', '(max-width: 4px)'];
+      const compareContainerQueries: GriffelRenderer['compareContainerQueries'] = (a, b) =>
+        containerQueryOrder.indexOf(a) - containerQueryOrder.indexOf(b);
+
+      expect(await formatCss(sortCSSRules([setA, setB], () => 0, compareContainerQueries))).toMatchInlineSnapshot(`
+        ".default {
+          color: green;
+        }
+        @container (max-width: 1px) {
+          .cw1 {
+            color: red;
+          }
+        }
+        @container (max-width: 2px) {
+          .cw2 {
+            color: blue;
+          }
+        }
+        @container (max-width: 3px) {
+          .cw3 {
+            color: red;
           }
         }"
       `);

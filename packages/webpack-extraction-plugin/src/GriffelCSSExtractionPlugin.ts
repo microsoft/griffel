@@ -16,6 +16,12 @@ type EntryPoint = Compilation['entrypoints'] extends Map<unknown, infer I> ? I :
 export type GriffelCSSExtractionPluginOptions = {
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
 
+  /**
+   * A custom comparator that orders "@container" query conditions, mirroring `compareMediaQueries`.
+   * Defaults to the `compareMediaQueries` comparator.
+   */
+  compareContainerQueries?: GriffelRenderer['compareContainerQueries'];
+
   /** Specifies if the CSS extracted from Griffel calls should be attached to a specific chunk with an entrypoint. */
   unstable_attachToEntryPoint?: string | ((chunk: EntryPoint) => boolean);
 };
@@ -130,10 +136,12 @@ export class GriffelCSSExtractionPlugin {
 
   private readonly attachToEntryPoint: GriffelCSSExtractionPluginOptions['unstable_attachToEntryPoint'];
   private readonly compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
+  private readonly compareContainerQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareContainerQueries']>;
 
   constructor(options?: GriffelCSSExtractionPluginOptions) {
     this.attachToEntryPoint = options?.unstable_attachToEntryPoint;
     this.compareMediaQueries = options?.compareMediaQueries ?? defaultCompareMediaQueries;
+    this.compareContainerQueries = options?.compareContainerQueries ?? this.compareMediaQueries;
   }
 
   apply(compiler: Compiler): void {
@@ -304,7 +312,7 @@ export class GriffelCSSExtractionPlugin {
           const cssContent = getAssetSourceContents(cssAssetSource);
           const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-          const cssSource = sortCSSRules([cssRulesByBucket], this.compareMediaQueries);
+          const cssSource = sortCSSRules([cssRulesByBucket], this.compareMediaQueries, this.compareContainerQueries);
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
         },

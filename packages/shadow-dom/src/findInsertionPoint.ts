@@ -8,9 +8,23 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
   return acc;
 }, {} as Record<StyleBucketName, number>);
 
+// Mirrors `getStyleSheetKey` in "@griffel/core": only the "@media" and "@container" buckets carry a
+// condition, and each reads the metadata field that matches its bucket.
+function getConditionFromMetadata(sheet: ExtendedCSSStyleSheet): string {
+  if (sheet.bucketName === 'm') {
+    return (sheet.metadata['m'] as string | undefined) ?? '';
+  }
+
+  if (sheet.bucketName === 'c') {
+    return (sheet.metadata['c'] as string | undefined) ?? '';
+  }
+
+  return '';
+}
+
 function isSameInsertionKey(sheetA: ExtendedCSSStyleSheet, sheetB: ExtendedCSSStyleSheet): boolean {
-  const targetKey = sheetA.bucketName + ((sheetA.metadata['m'] as string | undefined) ?? '');
-  const elementKey = sheetB.bucketName + ((sheetB.metadata['m'] as string | undefined) ?? '');
+  const targetKey = sheetA.bucketName + getConditionFromMetadata(sheetA);
+  const elementKey = sheetB.bucketName + getConditionFromMetadata(sheetB);
 
   return targetKey === elementKey;
 }
@@ -26,13 +40,22 @@ export function findInsertionPoint(
 
   let comparer = (sheet: ExtendedCSSStyleSheet): number => targetOrder - styleBucketOrderingMap[sheet.bucketName];
 
-  if (targetStyleSheet.bucketName === 'm' && targetStyleSheet.metadata) {
-    const mediaElements = renderer.adoptedStyleSheets.filter(styleSheet => styleSheet.bucketName === 'm');
+  if ((targetStyleSheet.bucketName === 'm' || targetStyleSheet.bucketName === 'c') && targetStyleSheet.metadata) {
+    const conditionElements = renderer.adoptedStyleSheets.filter(
+      styleSheet => styleSheet.bucketName === targetStyleSheet.bucketName,
+    );
 
-    if (mediaElements.length) {
-      styleSheets = mediaElements;
-      comparer = sheet =>
-        renderer.compareMediaQueries(targetStyleSheet.metadata['m'] as string, sheet.metadata['m'] as string);
+    if (conditionElements.length) {
+      styleSheets = conditionElements;
+      comparer =
+        targetStyleSheet.bucketName === 'm'
+          ? sheet =>
+              renderer.compareMediaQueries(targetStyleSheet.metadata['m'] as string, sheet.metadata['m'] as string)
+          : sheet =>
+              renderer.compareContainerQueries(
+                (targetStyleSheet.metadata['c'] as string | undefined) ?? '',
+                (sheet.metadata['c'] as string | undefined) ?? '',
+              );
     }
   }
 

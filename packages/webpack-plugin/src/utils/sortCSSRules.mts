@@ -12,7 +12,13 @@ const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
   return acc;
 }, {} as Record<StyleBucketName, number>);
 
-type RuleEntry = { styleBucketName: StyleBucketName; cssRule: string; priority: number; media: string };
+type RuleEntry = {
+  styleBucketName: StyleBucketName;
+  cssRule: string;
+  priority: number;
+  media: string;
+  container: string;
+};
 
 export function getUniqueRulesFromSets(setOfCSSRules: CSSRulesByBucket[]): RuleEntry[] {
   const uniqueCSSRules = new Map<string, RuleEntry>();
@@ -27,8 +33,15 @@ export function getUniqueRulesFromSets(setOfCSSRules: CSSRulesByBucket[]): RuleE
 
         const priority = (meta?.['p'] as number | undefined) ?? 0;
         const media = (meta?.['m'] as string | undefined) ?? '';
+        const container = (meta?.['c'] as string | undefined) ?? '';
 
-        uniqueCSSRules.set(cssRule, { styleBucketName: styleBucketName as StyleBucketName, cssRule, priority, media });
+        uniqueCSSRules.set(cssRule, {
+          styleBucketName: styleBucketName as StyleBucketName,
+          cssRule,
+          priority,
+          media,
+          container,
+        });
       }
     }
   }
@@ -40,19 +53,38 @@ function compareCSSRules(
   a: RuleEntry,
   b: RuleEntry,
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
+  compareContainerQueries: GriffelRenderer['compareContainerQueries'] = compareMediaQueries,
 ): number {
-  return (
-    compareMediaQueries(a.media, b.media) ||
-    styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName] ||
-    a.priority - b.priority
-  );
+  const bucketDiff = styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName];
+  if (bucketDiff !== 0) {
+    return bucketDiff;
+  }
+
+  if (a.styleBucketName === 'm') {
+    const mediaDiff = compareMediaQueries(a.media, b.media);
+    if (mediaDiff !== 0) {
+      return mediaDiff;
+    }
+  }
+
+  if (a.styleBucketName === 'c') {
+    const containerDiff = compareContainerQueries(a.container, b.container);
+    if (containerDiff !== 0) {
+      return containerDiff;
+    }
+  }
+
+  return a.priority - b.priority;
 }
 
 export function sortCSSRules(
   setOfCSSRules: CSSRulesByBucket[],
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
+  compareContainerQueries: GriffelRenderer['compareContainerQueries'] = compareMediaQueries,
 ): string {
-  const entries = getUniqueRulesFromSets(setOfCSSRules).sort((a, b) => compareCSSRules(a, b, compareMediaQueries));
+  const entries = getUniqueRulesFromSets(setOfCSSRules).sort((a, b) =>
+    compareCSSRules(a, b, compareMediaQueries, compareContainerQueries),
+  );
 
   let result = '';
 

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
+import { DATA_BUCKET_ATTR, DATA_CONTAINER_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
 import type { GriffelRenderer } from '../types.js';
 import { createDOMRenderer } from './createDOMRenderer.js';
 import { rehydrateRendererCache } from './rehydrateRendererCache.js';
@@ -84,6 +84,25 @@ describe('rehydrateRendererCache', () => {
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
         "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "d",
+      }
+    `);
+  });
+
+  it('should rehydrate @container rules in the c bucket', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'c');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+    styleElement.setAttribute(DATA_CONTAINER_ATTR, 'slot-container (min-width: 480px)');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '@container slot-container (min-width: 480px) { .foo{color:red;} }';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(renderer.insertionCache).toMatchInlineSnapshot(`
+      {
+        "@container slot-container (min-width: 480px) { .foo{color:red;} }": "c",
       }
     `);
   });

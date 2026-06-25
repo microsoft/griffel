@@ -141,6 +141,7 @@ describe('getStyleSheetForBucket', () => {
           media="screen and (prefers-reduced-motion: reduce)"
         />,
         <style
+          data-container="0"
           data-make-styles-bucket="c"
           data-priority="0"
         />,
@@ -206,6 +207,81 @@ describe('getStyleSheetForBucket', () => {
       .map(styleElement => styleElement.getAttribute('media'))
       .filter(Boolean);
     expect(actualMediaQueryOrder).toEqual(mediaQueryOrder);
+  });
+
+  it('splits "@container" rules into per-condition sheets ordered by the comparator', () => {
+    const target = createFakeDocument();
+    // The default container comparator is lexicographic (same as media); a custom comparator can be
+    // supplied (e.g. "compareCSSQueries" from "@griffel/utils" for numeric min-width order).
+    const containerQueryOrder = [
+      'slot-container (min-width: 480px)',
+      'slot-container (min-width: 720px)',
+      'slot-container (min-width: 1024px)',
+    ];
+    const renderer = createDOMRenderer(undefined, {
+      compareContainerQueries: (a, b) => containerQueryOrder.indexOf(a) - containerQueryOrder.indexOf(b),
+    });
+
+    getStyleSheetForBucket('d', target, null, renderer);
+
+    // Inserted out of source order; should be ordered ascending by min-width regardless.
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 720px)' });
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 480px)' });
+    // A larger breakpoint that sorts after 720px numerically (would sort before lexicographically).
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 1024px)' });
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-make-styles-bucket="d"
+          data-priority="0"
+        />,
+        <style
+          data-container="slot-container (min-width: 480px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+        <style
+          data-container="slot-container (min-width: 720px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+        <style
+          data-container="slot-container (min-width: 1024px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+      ]
+    `);
+  });
+
+  it('orders "@container" sheets with the media comparator when no container comparator is supplied', () => {
+    const target = createFakeDocument();
+    // "compareContainerQueries" defaults to whatever "compareMediaQueries" resolves to, so a custom
+    // media comparator also drives container ordering unless overridden.
+    const conditionOrder = ['slot-container (min-width: 480px)', 'slot-container (min-width: 720px)'];
+    const renderer = createDOMRenderer(undefined, {
+      compareMediaQueries: (a, b) => conditionOrder.indexOf(a) - conditionOrder.indexOf(b),
+    });
+
+    // Inserted out of source order; should follow the media comparator regardless.
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 720px)' });
+    getStyleSheetForBucket('c', target, null, renderer, { c: 'slot-container (min-width: 480px)' });
+
+    expect(target.head.children).toMatchInlineSnapshot(`
+      HTMLCollection [
+        <style
+          data-container="slot-container (min-width: 480px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+        <style
+          data-container="slot-container (min-width: 720px)"
+          data-make-styles-bucket="c"
+          data-priority="0"
+        />,
+      ]
+    `);
   });
 
   it('handles "insertionPoint"', () => {

@@ -20,17 +20,24 @@ export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[]
     .sort((a, b) => {
       return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
     })
-    // third sort: media queries
+    // third sort: conditional sheets within their bucket
     .sort((a, b) => {
-      const mediaA = a.elementAttributes['media'];
-      const mediaB = b.elementAttributes['media'];
-
-      if (mediaA && mediaB) {
-        return renderer.compareMediaQueries(mediaA, mediaB);
+      if (a.bucketName !== b.bucketName || (a.bucketName !== 'm' && a.bucketName !== 'c')) {
+        return 0;
       }
 
-      if (mediaA || mediaB) {
-        return mediaA ? 1 : -1;
+      const attribute = a.bucketName === 'm' ? 'media' : 'data-container';
+      const compare = a.bucketName === 'm' ? renderer.compareMediaQueries : renderer.compareContainerQueries;
+
+      const conditionA = a.elementAttributes[attribute];
+      const conditionB = b.elementAttributes[attribute];
+
+      if (conditionA && conditionB) {
+        return compare(conditionA, conditionB);
+      }
+
+      if (conditionA || conditionB) {
+        return conditionA ? 1 : -1;
       }
 
       return 0;

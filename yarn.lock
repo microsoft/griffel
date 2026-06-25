@@ -3863,6 +3863,7 @@ __metadata:
   resolution: "@griffel/react@workspace:packages/react"
   dependencies:
     "@griffel/core": "npm:^1.21.2"
+    "@griffel/utils": "npm:^1.0.0"
     tslib: "npm:^2.1.0"
   peerDependencies:
     react: ">=16.14.0 <20.0.0"
@@ -3913,6 +3914,14 @@ __metadata:
 "@griffel/update-shorthands@workspace:tools/update-shorthands":
   version: 0.0.0-use.local
   resolution: "@griffel/update-shorthands@workspace:tools/update-shorthands"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/utils@npm:^1.0.0, @griffel/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@griffel/utils@workspace:packages/utils"
+  dependencies:
+    tslib: "npm:^2.1.0"
   languageName: unknown
   linkType: soft
 

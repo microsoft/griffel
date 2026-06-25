@@ -1,4 +1,4 @@
-import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
+import { DATA_BUCKET_ATTR, DATA_CONTAINER_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
 import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types.js';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet.js';
 
@@ -44,15 +44,29 @@ const styleBucketOrderingMap = /*#__PURE__*/ styleBucketOrdering.reduce((acc, cu
   return acc;
 }, {} as Record<StyleBucketName, number>);
 
-export function getStyleSheetKey(bucketName: StyleBucketName, media: string, priority: number | string): string {
-  return (bucketName === 'm' ? bucketName + media : bucketName) + priority;
+export function getStyleSheetKey(
+  bucketName: StyleBucketName,
+  media: string,
+  container: string,
+  priority: number | string,
+): string {
+  if (bucketName === 'm') {
+    return bucketName + media + priority;
+  }
+
+  if (bucketName === 'c') {
+    return bucketName + container + priority;
+  }
+
+  return bucketName + priority;
 }
 
 export function getStyleSheetKeyFromElement(styleEl: HTMLStyleElement): string {
   const bucketName = styleEl.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName;
   const priority = styleEl.getAttribute(DATA_PRIORITY_ATTR) ?? '0';
+  const container = styleEl.getAttribute(DATA_CONTAINER_ATTR) ?? '0';
 
-  return getStyleSheetKey(bucketName, styleEl.media, priority);
+  return getStyleSheetKey(bucketName, styleEl.media, container, priority);
 }
 
 /**
@@ -66,17 +80,20 @@ export function getStyleSheetForBucket(
   metadata: Record<string, unknown> = {},
 ): IsomorphicStyleSheet {
   const isMediaBucket = bucketName === 'm';
+  const isContainerBucket = bucketName === 'c';
 
   const media = (metadata['m'] as string | undefined) ?? '0';
+  const container = (metadata['c'] as string | undefined) ?? '0';
   const priority = (metadata['p'] as number | undefined) ?? 0;
 
-  const stylesheetKey = getStyleSheetKey(bucketName, media, priority);
+  const stylesheetKey = getStyleSheetKey(bucketName, media, container, priority);
 
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = targetDocument && targetDocument.createElement('style');
     const stylesheet = createIsomorphicStyleSheet(tag, bucketName, priority, {
       ...renderer.styleElementAttributes,
       ...(isMediaBucket && { media }),
+      ...(isContainerBucket && { [DATA_CONTAINER_ATTR]: container }),
     });
 
     renderer.stylesheets[stylesheetKey] = stylesheet;
@@ -97,8 +114,22 @@ function isSameInsertionKey(
   bucketName: StyleBucketName,
   metadata: Record<string, unknown>,
 ): boolean {
-  const targetKey = bucketName + ((metadata['m'] as string | undefined) ?? '');
-  const elementKey = element.getAttribute(DATA_BUCKET_ATTR) + (element.media ?? '');
+  // The bucket name is the key; only "@media" / "@container" buckets append a condition, each from the
+  // field that matches its bucket (mirroring "getStyleSheetKey").
+  let targetKey: string = bucketName;
+  if (bucketName === 'm') {
+    targetKey += (metadata['m'] as string | undefined) ?? '';
+  } else if (bucketName === 'c') {
+    targetKey += (metadata['c'] as string | undefined) ?? '';
+  }
+
+  const elementBucket = element.getAttribute(DATA_BUCKET_ATTR);
+  let elementKey = elementBucket ?? '';
+  if (elementBucket === 'm') {
+    elementKey += element.media;
+  } else if (elementBucket === 'c') {
+    elementKey += element.getAttribute(DATA_CONTAINER_ATTR) ?? '';
+  }
 
   return targetKey === elementKey;
 }
@@ -123,6 +154,7 @@ function findInsertionPoint(
   const targetOrder = styleBucketOrderingMap[targetBucket];
 
   const media = (metadata['m'] as string | undefined) ?? '';
+  const container = (metadata['c'] as string | undefined) ?? '';
   const priority = (metadata['p'] as number | undefined) ?? 0;
 
   // Similar to javascript sort comparators where
@@ -132,16 +164,22 @@ function findInsertionPoint(
     targetOrder - styleBucketOrderingMap[el.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName];
   let styleElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(`[${DATA_BUCKET_ATTR}]`);
 
-  if (targetBucket === 'm') {
-    const mediaElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(
+  // "@media" and "@container" rules are split into per-condition sheets that must be ordered by
+  // their condition (ascending min-width) rather than plain insertion order.
+  if (targetBucket === 'm' || targetBucket === 'c') {
+    const conditionElements = targetDocument.head.querySelectorAll<HTMLStyleElement>(
       `[${DATA_BUCKET_ATTR}="${targetBucket}"]`,
     );
 
     // only reduce the scope of the search and change comparer
-    // if there are other media buckets already on the page
-    if (mediaElements.length) {
-      styleElements = mediaElements;
-      comparer = (el: HTMLStyleElement) => renderer.compareMediaQueries(media, el.media);
+    // if there are other buckets of the same kind already on the page
+    if (conditionElements.length) {
+      styleElements = conditionElements;
+      comparer =
+        targetBucket === 'm'
+          ? (el: HTMLStyleElement) => renderer.compareMediaQueries(media, el.media)
+          : (el: HTMLStyleElement) =>
+              renderer.compareContainerQueries(container, el.getAttribute(DATA_CONTAINER_ATTR) ?? '');
     }
   }
 

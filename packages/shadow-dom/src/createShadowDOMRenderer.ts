@@ -23,6 +23,10 @@ export interface CreateShadowDomRendererOptions {
 
 let rendererId = 0;
 
+// A lexicographic comparator, used as the default for ordering both "@media" and "@container"
+// query conditions.
+const compareQueriesLexicographically = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
+
 function getCSSStyleSheetForBucket(
   cssSheetsCache: Record<string, ExtendedCSSStyleSheet>,
 
@@ -34,6 +38,7 @@ function getCSSStyleSheetForBucket(
   const styleSheetKey = getStyleSheetKey(
     bucketName,
     (metadata['m'] as string | undefined) ?? '',
+    (metadata['c'] as string | undefined) ?? '',
     (metadata['p'] as number | undefined) ?? 0,
   );
 
@@ -81,7 +86,9 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateS
     insertionCache: {},
     stylesheets: {},
 
-    compareMediaQueries: (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0),
+    compareMediaQueries: compareQueriesLexicographically,
+    // Container queries reuse the same comparator as media queries.
+    compareContainerQueries: compareQueriesLexicographically,
     insertCSSRules(cssRules) {
       for (const [_styleBucketName, cssBucketEntries] of Object.entries(cssRules)) {
         const styleBucketName = _styleBucketName as StyleBucketName;

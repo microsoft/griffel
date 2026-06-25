@@ -6,10 +6,14 @@ import type { ExtendedCSSStyleSheet, GriffelShadowDOMRenderer } from './types.js
 
 function createRendererMock(adoptedStyleSheets: ExtendedCSSStyleSheet[]) {
   const mediaQueryOrder = ['(max-width: 1px)', '(max-width: 2px)', '(max-width: 3px)', '(max-width: 4px)'];
+  const containerQueryOrder = ['(min-width: 1px)', '(min-width: 2px)', '(min-width: 3px)', '(min-width: 4px)'];
   const renderer: Partial<GriffelShadowDOMRenderer> = {
     adoptedStyleSheets,
     compareMediaQueries(a, b) {
       return mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
+    },
+    compareContainerQueries(a, b) {
+      return containerQueryOrder.indexOf(a) - containerQueryOrder.indexOf(b);
     },
   };
 
@@ -117,6 +121,40 @@ describe('findInsertionPoint', () => {
 
       expect(resultA).toHaveProperty('bucketName', 'm');
       expect(resultA).toHaveProperty('metadata.m', '(prefers-reduced-motion: reduce)');
+    });
+  });
+
+  describe('container queries', () => {
+    it('finds a position in empty array', () => {
+      const renderer = createRendererMock([]);
+      const styleSheet = createStyleSheetMock('c', { c: '(min-width: 3px)' });
+
+      expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
+    });
+
+    it('finds a position at end (after the "m" bucket)', () => {
+      const renderer = createRendererMock([createStyleSheetMock('m', { m: '(max-width: 3px)' })]);
+      const styleSheet = createStyleSheetMock('c', { c: '(min-width: 3px)' });
+
+      expect(findInsertionPoint(renderer, styleSheet)).toBe(null);
+    });
+
+    it('finds a position in container queries', () => {
+      const renderer = createRendererMock([
+        createStyleSheetMock('d', {}),
+        createStyleSheetMock('m', { m: '(max-width: 1px)' }),
+        createStyleSheetMock('c', { c: '(min-width: 1px)' }),
+        createStyleSheetMock('c', { c: '(min-width: 3px)' }),
+      ]);
+
+      const resultA = findInsertionPoint(renderer, createStyleSheetMock('c', { c: '(min-width: 2px)' }));
+
+      expect(resultA).toHaveProperty('bucketName', 'c');
+      expect(resultA).toHaveProperty('metadata.c', '(min-width: 3px)');
+
+      const resultB = findInsertionPoint(renderer, createStyleSheetMock('c', { c: '(min-width: 4px)' }));
+
+      expect(resultB).toBe(null);
     });
   });
 });
