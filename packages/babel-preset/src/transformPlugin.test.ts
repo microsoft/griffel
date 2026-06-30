@@ -338,7 +338,7 @@ describe('babel preset', () => {
     const babelFileResult = Babel.transformSync(code, {
       babelrc: false,
       configFile: false,
-      plugins: [[transformPlugin]],
+      plugins: [[transformPlugin]] as unknown as Babel.PluginItem[],
       filename: fixture,
       presets: ['@babel/typescript'],
     });

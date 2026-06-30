@@ -7,14 +7,14 @@ import { babelPluginStripGriffelRuntime } from './babelPluginStripGriffelRuntime
 export type TransformOptions = {
   filename: string;
 
-  inputSourceMap: Babel.TransformOptions['inputSourceMap'];
+  inputSourceMap: Babel.InputOptions['inputSourceMap'];
   enableSourceMaps: boolean;
 };
 
 export type TransformResult = {
   code: string;
   cssRulesByBucket: CSSRulesByBucket | undefined;
-  sourceMap: NonNullable<Babel.BabelFileResult['map']> | undefined;
+  sourceMap: NonNullable<Babel.FileResult['map']> | undefined;
 };
 
 /**
@@ -39,7 +39,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     // Ignore all user's configs and apply only our plugin
     babelrc: false,
     configFile: false,
-    plugins: [babelPluginStripGriffelRuntime],
+    plugins: [babelPluginStripGriffelRuntime] as Babel.PluginItem[],
 
     filename: options.filename,
 

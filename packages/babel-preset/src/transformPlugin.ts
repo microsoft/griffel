@@ -1,4 +1,4 @@
-import type { NodePath, PluginObj, PluginPass } from '@babel/core';
+import type { NodePath, PluginPass } from '@babel/core';
 import { types as t } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import { Module } from '@linaria/babel-preset';
@@ -234,8 +234,8 @@ function isRequireDeclarator(
   return false;
 }
 
-export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<BabelPluginState>>((api, options) => {
-  api.assertVersion(7);
+export const transformPlugin = declare<BabelPluginState, Partial<BabelPluginOptions>>((api, options) => {
+  api.assertVersion('^7.0.0 || ^8.0.0');
 
   const pluginOptions: Required<BabelPluginOptions> = {
     babelOptions: {},

@@ -5,7 +5,7 @@ import griffelPreset from '@griffel/babel-preset';
 export type TransformOptions = {
   filename: string;
 
-  inputSourceMap: Babel.TransformOptions['inputSourceMap'];
+  inputSourceMap: Babel.InputOptions['inputSourceMap'];
   enableSourceMaps: boolean;
 
   pluginOptions: BabelPluginOptions;
@@ -13,7 +13,7 @@ export type TransformOptions = {
 
 export type TransformResult = {
   code: string;
-  sourceMap: NonNullable<Babel.BabelFileResult['map']> | undefined;
+  sourceMap: NonNullable<Babel.FileResult['map']> | undefined;
 };
 
 /**

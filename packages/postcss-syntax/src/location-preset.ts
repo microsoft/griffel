@@ -1,4 +1,4 @@
-import type { PluginObj, PluginPass, types as t, ConfigAPI } from '@babel/core';
+import type { PluginPass, types as t, ConfigAPI } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
 import type { BabelPluginOptions } from '@griffel/babel-preset';
 
@@ -36,8 +36,8 @@ export type LocationPluginOptions = Pick<BabelPluginOptions, 'modules'>;
 /**
  * A plugin that parses Griffel code and returns code locations mapped to respective styles and slots
  */
-const plugin = declare<LocationPluginOptions, PluginObj<LocationPluginState>>((api, options) => {
-  api.assertVersion(7);
+const plugin = declare<LocationPluginState, LocationPluginOptions>((api, options) => {
+  api.assertVersion('^7.0.0 || ^8.0.0');
 
   const {
     modules = [

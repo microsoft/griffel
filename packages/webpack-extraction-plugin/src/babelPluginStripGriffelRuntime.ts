@@ -1,5 +1,5 @@
 import { types as t } from '@babel/core';
-import type { NodePath, PluginObj, PluginPass } from '@babel/core';
+import type { NodePath, PluginPass } from '@babel/core';
 import { addNamed } from '@babel/helper-module-imports';
 import { declare } from '@babel/helper-plugin-utils';
 import type { CSSRulesByBucket } from '@griffel/core';
@@ -199,10 +199,10 @@ function updateReferences(
 }
 
 export const babelPluginStripGriffelRuntime = declare<
-  Partial<StripRuntimeBabelPluginOptions>,
-  PluginObj<StripRuntimeBabelPluginState>
+  StripRuntimeBabelPluginState,
+  Partial<StripRuntimeBabelPluginOptions>
 >(api => {
-  api.assertVersion(7);
+  api.assertVersion('^7.0.0 || ^8.0.0');
 
   return {
     name: '@griffel/webpack-extraction-plugin/babel',

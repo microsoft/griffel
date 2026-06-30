@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump @babel/* dependencies to v8",
+  "packageName": "@griffel/webpack-extraction-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

@@ -142,7 +142,11 @@ export function webpackLoader(
   }
 
   if (result) {
-    this.callback(null, result.code, result.sourceMap);
+    this.callback(
+      null,
+      result.code,
+      result.sourceMap as Parameters<webpack.LoaderContext<WebpackLoaderOptions>['callback']>[2],
+    );
     return;
   }
 

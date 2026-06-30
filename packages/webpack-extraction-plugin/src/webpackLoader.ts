@@ -112,7 +112,9 @@ function webpackLoader(
 
   if (result) {
     const resultCode = unstable_keepOriginalCode ? sourceCode : result.code;
-    const resultSourceMap = unstable_keepOriginalCode ? inputSourceMap : result.sourceMap;
+    const resultSourceMap = (unstable_keepOriginalCode ? inputSourceMap : result.sourceMap) as Parameters<
+      SupplementedLoaderContext<WebpackLoaderOptions>['callback']
+    >[2];
     const { cssRulesByBucket } = result;
 
     if (cssRulesByBucket) {
