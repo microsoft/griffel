@@ -93,7 +93,7 @@
     "@types/debug": "^4.1.13",
     "@types/js-beautify": "^1.14.3",
     "@types/mini-css-extract-plugin": "2.5.1",
-    "@types/node": "25.9.1",
+    "@types/node": "26.0.1",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/stylis": "4.2.7",
