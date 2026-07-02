@@ -13,6 +13,7 @@ A plugin for Webpack 5 that performs CSS extraction for [`@griffel/react`](../re
 - [How it works?](#how-it-works)
 - [Usage](#usage)
   - [`ignoreOrder` option](#ignoreorder-option)
+  - [Sorting options](#sorting-options)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -136,4 +137,20 @@ module.exports = {
     }),
   ],
 };
+```
+
+### Sorting options
+
+The plugin sorts extracted CSS rules by specificity buckets, media queries, and container queries. You can override how `@media` and `@container` conditions are ordered:
+
+```js
+const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
+
+new GriffelCSSExtractionPlugin({
+  // Compare function for sorting media queries (default: @griffel/core's defaultCompareMediaQueries)
+  compareMediaQueries: myCompareFunction,
+
+  // Compare function for sorting container queries (default: same comparator as compareMediaQueries)
+  compareContainerQueries: myCompareFunction,
+});
 ```

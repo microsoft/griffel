@@ -37,6 +37,15 @@ export const DATA_BUCKET_ATTR = 'data-make-styles-bucket';
 /** @internal */
 export const DATA_PRIORITY_ATTR = 'data-priority';
 
+/**
+ * Carries the "@container" query condition on the bucket's style element. Unlike "@media",
+ * container queries have no native "<style media>" attribute, so the condition is stored here to
+ * key & order per-condition sheets.
+ *
+ * @internal
+ */
+export const DATA_CONTAINER_ATTR = 'data-container';
+
 /** @internal */
 export const HASH_PREFIX = 'f';
 

@@ -3882,6 +3882,7 @@ __metadata:
   resolution: "@griffel/react@workspace:packages/react"
   dependencies:
     "@griffel/core": "npm:^1.21.2"
+    "@griffel/sort-css-queries": "npm:^1.0.0"
     tslib: "npm:^2.1.0"
   peerDependencies:
     react: ">=16.14.0 <20.0.0"
@@ -3893,6 +3894,14 @@ __metadata:
   resolution: "@griffel/shadow-dom@workspace:packages/shadow-dom"
   dependencies:
     "@griffel/core": "npm:^1.21.2"
+    tslib: "npm:^2.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@griffel/sort-css-queries@npm:^1.0.0, @griffel/sort-css-queries@workspace:packages/sort-css-queries":
+  version: 0.0.0-use.local
+  resolution: "@griffel/sort-css-queries@workspace:packages/sort-css-queries"
+  dependencies:
     tslib: "npm:^2.1.0"
   languageName: unknown
   linkType: soft

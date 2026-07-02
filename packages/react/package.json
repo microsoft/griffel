@@ -30,6 +30,9 @@
     "@griffel/core": "^1.21.2",
     "tslib": "^2.1.0"
   },
+  "devDependencies": {
+    "@griffel/sort-css-queries": "^1.0.0"
+  },
   "peerDependencies": {
     "react": ">=16.14.0 <20.0.0"
   }

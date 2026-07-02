@@ -58,6 +58,7 @@ function pushToCSSRules(
   ltrCSS: string | undefined,
   rtlCSS: string | undefined,
   media: string | undefined,
+  container: string | undefined,
   priority: number,
 ) {
   const metadata: [string, unknown][] = [];
@@ -68,6 +69,10 @@ function pushToCSSRules(
 
   if (styleBucketName === 'm' && media) {
     metadata.push(['m', media]);
+  }
+
+  if (styleBucketName === 'x' && container) {
+    metadata.push(['x', container]);
   }
 
   cssRulesByBucket[styleBucketName] ??= [];
@@ -189,6 +194,7 @@ export function resolveStyleRules(
         ltrCSS,
         rtlCSS,
         atRules.media,
+        atRules.container,
         computePropertyPriority(shorthand),
       );
     } else if (property === 'animationName') {
@@ -223,6 +229,7 @@ export function resolveStyleRules(
             keyframeRules[i],
             rtlKeyframeRules[i],
             atRules.media,
+            atRules.container,
             // keyframes always have default priority
             0,
           );
@@ -328,6 +335,7 @@ export function resolveStyleRules(
         ltrCSS,
         rtlCSS,
         atRules.media,
+        atRules.container,
         computePropertyPriority(shorthand),
       );
     } else if (isObject(value)) {

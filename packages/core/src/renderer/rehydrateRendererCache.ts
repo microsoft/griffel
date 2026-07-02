@@ -6,7 +6,7 @@ import { getStyleSheetKeyFromElement } from './getStyleSheetForBucket.js';
 // Regexps to extract names of classes and animations
 // https://github.com/styletron/styletron/blob/e0fcae826744eb00ce679ac613a1b10d44256660/packages/styletron-engine-atomic/src/client/client.js#L8
 const KEYFRAMES_HYDRATOR = /@(-webkit-)?keyframes ([^{]+){((?:(?:from|to|(?:\d+\.?\d*%))\{(?:[^}])*})*)}/g;
-const AT_RULES_HYDRATOR = /@(media|supports|layer|scope)[^{]+\{([\s\S]+?})\s*}/g;
+const AT_RULES_HYDRATOR = /@(media|supports|layer|scope|container)[^{]+\{([\s\S]+?})\s*}/g;
 const SCOPE_HYDRATOR = /@scope[^{]+\{([\s\S]+?})\s*}/g;
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
 
@@ -14,6 +14,8 @@ const regexps: Partial<Record<StyleBucketName, RegExp>> = {
   k: KEYFRAMES_HYDRATOR,
   t: AT_RULES_HYDRATOR,
   m: AT_RULES_HYDRATOR,
+  c: AT_RULES_HYDRATOR,
+  x: AT_RULES_HYDRATOR,
 };
 
 /**

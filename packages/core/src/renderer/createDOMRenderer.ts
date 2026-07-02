@@ -43,6 +43,17 @@ export interface CreateDOMRendererOptions {
    * @returns positive number if a > b or negative number if a < b
    */
   compareMediaQueries?: (a: string, b: string) => number;
+
+  /**
+   * Orders "@container" query conditions, the same way `compareMediaQueries` orders media queries.
+   * Defaults to the same comparator as `compareMediaQueries`. Pass `compareCSSQueries` from
+   * `@griffel/sort-css-queries` (or a custom comparator) for numeric ordering by min-width / max-width.
+   *
+   * @param a - container query condition
+   * @param b - container query condition
+   * @returns positive number if a > b or negative number if a < b
+   */
+  compareContainerQueries?: (a: string, b: string) => number;
 }
 
 /** @internal */
@@ -63,6 +74,9 @@ export function createDOMRenderer(
     insertionPoint,
     styleElementAttributes,
     compareMediaQueries = defaultCompareMediaQueries,
+    // Container queries default to the same comparator as media queries; pass `compareCSSQueries`
+    // from `@griffel/sort-css-queries` for numeric min-width / max-width ordering.
+    compareContainerQueries = compareMediaQueries,
   } = options;
   const renderer: GriffelRenderer = {
     classNameHashSalt,
@@ -70,6 +84,7 @@ export function createDOMRenderer(
     stylesheets: {},
     styleElementAttributes: Object.freeze(styleElementAttributes),
     compareMediaQueries,
+    compareContainerQueries,
 
     id: `d${lastIndex++}`,
 

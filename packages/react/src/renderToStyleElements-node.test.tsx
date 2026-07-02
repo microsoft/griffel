@@ -315,6 +315,223 @@ describe('renderToStyleElements (node)', () => {
       `);
     });
 
+    it('handles container query order', async () => {
+      const useExampleStyles = makeStyles({
+        container: {
+          color: 'red',
+          '@container (max-width: 4px)': {
+            ':hover': { color: 'blue' },
+          },
+          '@container (max-width: 2px)': {
+            ':hover': { color: 'blue' },
+          },
+          '@supports (display: grid)': {
+            color: 'green',
+          },
+          '@container (max-width: 3px)': {
+            ':hover': { color: 'blue' },
+          },
+          '@container (max-width: 1px)': {
+            ':hover': { color: 'blue' },
+          },
+        },
+      });
+      const ExampleComponent: React.FC = () => {
+        const classes = useExampleStyles();
+
+        return <div className={classes.container} />;
+      };
+
+      const containerQueryOrder = ['(max-width: 1px)', '(max-width: 2px)', '(max-width: 3px)', '(max-width: 4px)'];
+      const renderer = createDOMRenderer(undefined, {
+        compareContainerQueries(a, b) {
+          return containerQueryOrder.indexOf(a) - containerQueryOrder.indexOf(b);
+        },
+      });
+
+      ReactDOM.renderToStaticMarkup(
+        <RendererProvider renderer={renderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+          "<style
+            data-make-styles-bucket="d"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            .fe3e8s9 {
+              color: red;
+            }</style
+          ><style
+            data-make-styles-bucket="t"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @supports (display: grid) {
+              .fui0tgz {
+                color: green;
+              }
+            }</style
+          ><style
+            data-container="(max-width: 1px)"
+            data-make-styles-bucket="x"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @container (max-width: 1px) {
+              .f1hcgzak:hover {
+                color: blue;
+              }
+            }</style
+          ><style
+            data-container="(max-width: 2px)"
+            data-make-styles-bucket="x"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @container (max-width: 2px) {
+              .f91jd4g:hover {
+                color: blue;
+              }
+            }</style
+          ><style
+            data-container="(max-width: 3px)"
+            data-make-styles-bucket="x"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @container (max-width: 3px) {
+              .f1bnta4m:hover {
+                color: blue;
+              }
+            }</style
+          ><style
+            data-container="(max-width: 4px)"
+            data-make-styles-bucket="x"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @container (max-width: 4px) {
+              .f17ei21x:hover {
+                color: blue;
+              }
+            }
+          </style>"
+        `);
+    });
+
+    it('handles combined media and container query order', async () => {
+      const useExampleStyles = makeStyles({
+        combined: {
+          color: 'red',
+          '@media (max-width: 2px)': {
+            ':hover': { color: 'blue' },
+          },
+          '@media (max-width: 1px)': {
+            ':hover': { color: 'blue', paddingLeft: '1px' },
+          },
+          '@container (max-width: 2px)': {
+            ':hover': { color: 'green' },
+          },
+          '@container (max-width: 1px)': {
+            ':hover': { color: 'green' },
+          },
+        },
+      });
+      const ExampleComponent: React.FC = () => {
+        const classes = useExampleStyles();
+
+        return <div className={classes.combined} />;
+      };
+
+      const queryOrder = ['(max-width: 1px)', '(max-width: 2px)'];
+      const renderer = createDOMRenderer(undefined, {
+        compareMediaQueries(a, b) {
+          return queryOrder.indexOf(a) - queryOrder.indexOf(b);
+        },
+        compareContainerQueries(a, b) {
+          return queryOrder.indexOf(a) - queryOrder.indexOf(b);
+        },
+      });
+
+      ReactDOM.renderToStaticMarkup(
+        <RendererProvider renderer={renderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+
+      // "@media" sheets ("m" bucket) must come before "@container" sheets ("x" bucket) and never
+      // interleave, while each condition is ordered by its own comparator.
+      expect(
+        await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)),
+      ).toMatchInlineSnapshot(`
+        "<style
+          data-make-styles-bucket="d"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .fe3e8s9 {
+            color: red;
+          }</style
+        ><style
+          media="(max-width: 1px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 1px) {
+            .f13d6lhy:hover {
+              color: blue;
+            }
+          }
+          @media (max-width: 1px) {
+            .f523lep:hover {
+              padding-right: 1px;
+            }
+            .fy5b5hz:hover {
+              padding-left: 1px;
+            }
+          }</style
+        ><style
+          media="(max-width: 2px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 2px) {
+            .f1b07yzi:hover {
+              color: blue;
+            }
+          }</style
+        ><style
+          data-container="(max-width: 1px)"
+          data-make-styles-bucket="x"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @container (max-width: 1px) {
+            .f1gbmdl9:hover {
+              color: green;
+            }
+          }</style
+        ><style
+          data-container="(max-width: 2px)"
+          data-make-styles-bucket="x"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @container (max-width: 2px) {
+            .f1gqh46w:hover {
+              color: green;
+            }
+          }
+        </style>"
+      `);
+    });
+
     it('handles keyframes', async () => {
       const useExampleStyles = makeStyles({
         keyframe: {

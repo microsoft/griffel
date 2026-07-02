@@ -63,7 +63,7 @@ The plugin automatically:
 
 - Transforms `makeStyles()`, `makeResetStyles()`, and `makeStaticStyles()` calls at build time
 - Extracts CSS into a dedicated chunk (named `griffel`) via `mini-css-extract-plugin`
-- Sorts CSS rules by specificity buckets and media queries
+- Sorts CSS rules by specificity buckets, media queries, and container queries
 
 ## Options
 
@@ -71,6 +71,9 @@ The plugin automatically:
 new GriffelPlugin({
   // Compare function for sorting media queries (default: @griffel/core's defaultCompareMediaQueries)
   compareMediaQueries: myCompareFunction,
+
+  // Compare function for sorting container queries (default: same comparator as compareMediaQueries)
+  compareContainerQueries: myCompareFunction,
 
   // Override the resolver used to resolve imports inside evaluated modules
   resolverFactory: myResolverFactory,
