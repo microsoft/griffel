@@ -431,7 +431,7 @@ describe('renderToStyleElements (node)', () => {
             ':hover': { color: 'blue' },
           },
           '@media (max-width: 1px)': {
-            ':hover': { color: 'blue' },
+            ':hover': { color: 'blue', paddingLeft: '1px' },
           },
           '@container (max-width: 2px)': {
             ':hover': { color: 'green' },
@@ -465,62 +465,71 @@ describe('renderToStyleElements (node)', () => {
 
       // "@media" sheets ("m" bucket) must come before "@container" sheets ("x" bucket) and never
       // interleave, while each condition is ordered by its own comparator.
-      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
-        .toMatchInlineSnapshot(`
-          "<style
-            data-make-styles-bucket="d"
-            data-priority="0"
-            data-make-styles-rehydration="true"
-          >
-            .fe3e8s9 {
-              color: red;
-            }</style
-          ><style
-            media="(max-width: 1px)"
-            data-make-styles-bucket="m"
-            data-priority="0"
-            data-make-styles-rehydration="true"
-          >
-            @media (max-width: 1px) {
-              .f13d6lhy:hover {
-                color: blue;
-              }
-            }</style
-          ><style
-            media="(max-width: 2px)"
-            data-make-styles-bucket="m"
-            data-priority="0"
-            data-make-styles-rehydration="true"
-          >
-            @media (max-width: 2px) {
-              .f1b07yzi:hover {
-                color: blue;
-              }
-            }</style
-          ><style
-            data-container="(max-width: 1px)"
-            data-make-styles-bucket="x"
-            data-priority="0"
-            data-make-styles-rehydration="true"
-          >
-            @container (max-width: 1px) {
-              .f1gbmdl9:hover {
-                color: green;
-              }
-            }</style
-          ><style
-            data-container="(max-width: 2px)"
-            data-make-styles-bucket="x"
-            data-priority="0"
-            data-make-styles-rehydration="true"
-          >
-            @container (max-width: 2px) {
-              .f1gqh46w:hover {
-                color: green;
-              }
+      expect(
+        await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)),
+      ).toMatchInlineSnapshot(`
+        "<style
+          data-make-styles-bucket="d"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          .fe3e8s9 {
+            color: red;
+          }</style
+        ><style
+          media="(max-width: 1px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 1px) {
+            .f13d6lhy:hover {
+              color: blue;
             }
-          </style>"
-        `);
+          }
+          @media (max-width: 1px) {
+            .f523lep:hover {
+              padding-right: 1px;
+            }
+            .fy5b5hz:hover {
+              padding-left: 1px;
+            }
+          }</style
+        ><style
+          media="(max-width: 2px)"
+          data-make-styles-bucket="m"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 2px) {
+            .f1b07yzi:hover {
+              color: blue;
+            }
+          }</style
+        ><style
+          data-container="(max-width: 1px)"
+          data-make-styles-bucket="x"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @container (max-width: 1px) {
+            .f1gbmdl9:hover {
+              color: green;
+            }
+          }</style
+        ><style
+          data-container="(max-width: 2px)"
+          data-make-styles-bucket="x"
+          data-priority="0"
+          data-make-styles-rehydration="true"
+        >
+          @container (max-width: 2px) {
+            .f1gqh46w:hover {
+              color: green;
+            }
+          }
+        </style>"
+      `);
     });
 
     it('handles keyframes', async () => {

@@ -117,11 +117,11 @@ export function isSameInsertionKey(
 
   if (isSameBucket) {
     if (bucketNameB === 'm') {
-      return (metadataB['m'] as string | undefined) === elementA.media;
+      return metadataB['m'] === elementA.media;
     }
 
     if (bucketNameB === 'x') {
-      return (metadataB['x'] as string | undefined) === elementA.getAttribute(DATA_CONTAINER_ATTR);
+      return metadataB['x'] === elementA.getAttribute(DATA_CONTAINER_ATTR);
     }
 
     return true;
