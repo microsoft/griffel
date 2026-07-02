@@ -15,7 +15,7 @@ import { COLORS, getColor, render, resetBrowserTestState } from '../common/brows
 beforeEach(resetBrowserTestState);
 
 // Numeric ordering by min-width — the same behavior `compareCSSQueries` from
-// `@griffel/utils` provides, inlined to keep `@griffel/core` dependency-free.
+// `@griffel/sort-css-queries` provides, inlined to keep `@griffel/core` dependency-free.
 function compareContainerQueriesByMinWidth(a: string, b: string): number {
   const width = (condition: string) => Number(/min-width:\s*([\d.]+)/.exec(condition)?.[1] ?? 0);
   return width(a) - width(b);

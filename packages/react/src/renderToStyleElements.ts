@@ -11,37 +11,17 @@ import type { GriffelRenderer } from '@griffel/core';
  * @public
  */
 export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[] {
-  const stylesheets = Object.values(renderer.stylesheets)
-    // first sort: bucket by order [data-priority]
-    .sort((a, b) => {
-      return Number(a.elementAttributes['data-priority']) - Number(b.elementAttributes['data-priority']);
-    })
-    // second sort: bucket by bucket name
-    .sort((a, b) => {
-      return styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
-    })
-    // third sort: conditional sheets within their bucket
-    .sort((a, b) => {
-      if (a.bucketName !== b.bucketName || (a.bucketName !== 'm' && a.bucketName !== 'x')) {
-        return 0;
-      }
-
-      const attribute = a.bucketName === 'm' ? 'media' : 'data-container';
-      const compare = a.bucketName === 'm' ? renderer.compareMediaQueries : renderer.compareContainerQueries;
-
-      const conditionA = a.elementAttributes[attribute];
-      const conditionB = b.elementAttributes[attribute];
-
-      if (conditionA && conditionB) {
-        return compare(conditionA, conditionB);
-      }
-
-      if (conditionA || conditionB) {
-        return conditionA ? 1 : -1;
-      }
-
-      return 0;
-    });
+  const stylesheets = Object.values(renderer.stylesheets).sort((a, b) => {
+    return (
+      renderer.compareContainerQueries(
+        a.elementAttributes['data-container'] ?? '',
+        b.elementAttributes['data-container'] ?? '',
+      ) ||
+      renderer.compareMediaQueries(a.elementAttributes['media'] ?? '', b.elementAttributes['media'] ?? '') ||
+      styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName) ||
+      Number(a.elementAttributes['data-priority']) - Number(b.elementAttributes['data-priority'])
+    );
+  });
 
   return stylesheets
     .map(stylesheet => {

@@ -31,7 +31,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@griffel/utils": "^1.0.0"
+    "@griffel/sort-css-queries": "^1.0.0"
   },
   "peerDependencies": {
     "react": ">=16.14.0 <20.0.0"

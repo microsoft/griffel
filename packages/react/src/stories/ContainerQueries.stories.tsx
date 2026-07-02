@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { makeStyles, createDOMRenderer, RendererProvider } from '../../src/index.js';
-import { compareCSSQueries } from '@griffel/utils';
+import { compareCSSQueries } from '@griffel/sort-css-queries';
 
 // A resizable container. "container-type: inline-size" + "container-name" make it a query container
 // so the "@container slot-container (...)" rules below resolve against ITS width (drag the corner).
@@ -88,19 +88,19 @@ const ThreeBreakpointBox = () => {
 export const ContainerQueryCascade = () => (
   <div>
     <p>
-      Drag the right edge of the dashed box to resize the query container. The inner box&apos;s{' '}
-      <code>margin-left</code> &amp; color step up at <strong>480 → 720px</strong> and back down — the highest
-      matching breakpoint always wins, no matter the authored order.
+      Drag the right edge of the dashed box to resize the query container. The inner box&apos;s <code>margin-left</code>{' '}
+      &amp; color step up at <strong>480 → 720px</strong> and back down — the highest matching breakpoint always wins,
+      no matter the authored order.
     </p>
     <p>
-      Inspect <code>&lt;head&gt;</code>: the <code>&lt;style data-make-styles-bucket=&quot;c&quot;&gt;</code>{' '}
-      elements carry a <code>data-container</code> attribute and are ordered by their condition.
+      Inspect <code>&lt;head&gt;</code>: the <code>&lt;style data-make-styles-bucket=&quot;c&quot;&gt;</code> elements
+      carry a <code>data-container</code> attribute and are ordered by their condition.
     </p>
     <Box />
   </div>
 );
 
-// Numeric ordering: pass "compareCSSQueries" from "@griffel/utils" so breakpoints across
+// Numeric ordering: pass "compareCSSQueries" from "@griffel/sort-css-queries" so breakpoints across
 // magnitudes (e.g. 1024px vs 720px) order correctly.
 export const NumericOrderingWithUtils = () => {
   const renderer = useMemo(() => createDOMRenderer(document, { compareContainerQueries: compareCSSQueries }), []);
@@ -109,8 +109,8 @@ export const NumericOrderingWithUtils = () => {
     <RendererProvider renderer={renderer}>
       <p>
         Same idea with a third breakpoint at <strong>1024px</strong>. This renderer is created with{' '}
-        <code>compareCSSQueries</code> from <code>@griffel/utils</code>, so the steps order numerically
-        (<strong>480 → 720 → 1024px</strong>) instead of lexicographically.
+        <code>compareCSSQueries</code> from <code>@griffel/sort-css-queries</code>, so the steps order numerically (
+        <strong>480 → 720 → 1024px</strong>) instead of lexicographically.
       </p>
       <ThreeBreakpointBox />
     </RendererProvider>

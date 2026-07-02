@@ -289,5 +289,47 @@ describe('sortCSSRules', () => {
         }"
       `);
     });
+
+    it('orders container and media rules within their own buckets', async () => {
+      const set: CSSRulesByBucket = {
+        m: [
+          ['@media (min-width: 720px) { .mw720 { color: blue; } }', { m: '(min-width: 720px)' }],
+          ['@media (min-width: 480px) { .mw480 { color: red; } }', { m: '(min-width: 480px)' }],
+        ],
+        x: [
+          ['@container (min-width: 720px) { .cw720 { color: blue; } }', { x: '(min-width: 720px)' }],
+          ['@container (min-width: 480px) { .cw480 { color: red; } }', { x: '(min-width: 480px)' }],
+        ],
+      };
+
+      const mediaQueryOrder = ['(min-width: 480px)', '(min-width: 720px)'];
+      const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a, b) =>
+        mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
+
+      // "@media" sorts before "@container" (bucket order), each ordered within its own bucket. Container
+      // queries default to the same comparator as media queries when none is supplied.
+      expect(await formatCss(sortCSSRules([set], compareMediaQueries))).toMatchInlineSnapshot(`
+        "@media (min-width: 480px) {
+          .mw480 {
+            color: red;
+          }
+        }
+        @media (min-width: 720px) {
+          .mw720 {
+            color: blue;
+          }
+        }
+        @container (min-width: 480px) {
+          .cw480 {
+            color: red;
+          }
+        }
+        @container (min-width: 720px) {
+          .cw720 {
+            color: blue;
+          }
+        }"
+      `);
+    });
   });
 });

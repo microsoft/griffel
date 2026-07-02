@@ -7,10 +7,13 @@ import {
 } from '@griffel/core';
 
 // avoid repeatedly calling `indexOf` to determine order during new insertions
-const styleBucketOrderingMap = styleBucketOrdering.reduce((acc, cur, j) => {
-  acc[cur as StyleBucketName] = j;
-  return acc;
-}, {} as Record<StyleBucketName, number>);
+const styleBucketOrderingMap = styleBucketOrdering.reduce(
+  (acc, cur, j) => {
+    acc[cur as StyleBucketName] = j;
+    return acc;
+  },
+  {} as Record<StyleBucketName, number>,
+);
 
 type RuleEntry = {
   styleBucketName: StyleBucketName;
@@ -55,26 +58,12 @@ function compareCSSRules(
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
   compareContainerQueries: GriffelRenderer['compareContainerQueries'] = compareMediaQueries,
 ): number {
-  const bucketDiff = styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName];
-  if (bucketDiff !== 0) {
-    return bucketDiff;
-  }
-
-  if (a.styleBucketName === 'm') {
-    const mediaDiff = compareMediaQueries(a.media, b.media);
-    if (mediaDiff !== 0) {
-      return mediaDiff;
-    }
-  }
-
-  if (a.styleBucketName === 'x') {
-    const containerDiff = compareContainerQueries(a.container, b.container);
-    if (containerDiff !== 0) {
-      return containerDiff;
-    }
-  }
-
-  return a.priority - b.priority;
+  return (
+    compareContainerQueries(a.container, b.container) ||
+    compareMediaQueries(a.media, b.media) ||
+    styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName] ||
+    a.priority - b.priority
+  );
 }
 
 export function sortCSSRules(

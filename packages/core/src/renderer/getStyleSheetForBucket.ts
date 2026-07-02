@@ -41,23 +41,17 @@ export const styleBucketOrdering: StyleBucketName[] = [
 ];
 
 // avoid repeatedly calling `indexOf` to determine order during new insertions
-const styleBucketOrderingMap = /*#__PURE__*/ styleBucketOrdering.reduce((acc, cur, j) => {
-  acc[cur as StyleBucketName] = j;
-  return acc;
-}, {} as Record<StyleBucketName, number>);
+const styleBucketOrderingMap = /*#__PURE__*/ styleBucketOrdering.reduce(
+  (acc, cur, j) => {
+    acc[cur as StyleBucketName] = j;
+    return acc;
+  },
+  {} as Record<StyleBucketName, number>,
+);
 
-export function getStyleSheetKey(
-  bucketName: StyleBucketName,
-  media: string,
-  container: string,
-  priority: number | string,
-): string {
-  if (bucketName === 'm') {
-    return bucketName + media + priority;
-  }
-
-  if (bucketName === 'x') {
-    return bucketName + container + priority;
+export function getStyleSheetKey(bucketName: StyleBucketName, mediaValue: string, priority: number | string): string {
+  if (bucketName === 'm' || bucketName === 'x') {
+    return bucketName + mediaValue + priority;
   }
 
   return bucketName + priority;
@@ -66,9 +60,9 @@ export function getStyleSheetKey(
 export function getStyleSheetKeyFromElement(styleEl: HTMLStyleElement): string {
   const bucketName = styleEl.getAttribute(DATA_BUCKET_ATTR) as StyleBucketName;
   const priority = styleEl.getAttribute(DATA_PRIORITY_ATTR) ?? '0';
-  const container = styleEl.getAttribute(DATA_CONTAINER_ATTR) ?? '0';
+  const container = styleEl.getAttribute(DATA_CONTAINER_ATTR);
 
-  return getStyleSheetKey(bucketName, styleEl.media, container, priority);
+  return getStyleSheetKey(bucketName, container ?? (styleEl.media || '0'), priority);
 }
 
 /**
@@ -84,11 +78,11 @@ export function getStyleSheetForBucket(
   const isMediaBucket = bucketName === 'm';
   const isContainerBucket = bucketName === 'x';
 
-  const media = (metadata['m'] as string | undefined) ?? '0';
-  const container = (metadata['x'] as string | undefined) ?? '0';
+  const media = metadata['m'] as string | undefined;
+  const container = metadata['x'] as string | undefined;
   const priority = (metadata['p'] as number | undefined) ?? 0;
 
-  const stylesheetKey = getStyleSheetKey(bucketName, media, container, priority);
+  const stylesheetKey = getStyleSheetKey(bucketName, container ?? media ?? '0', priority);
 
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = targetDocument && targetDocument.createElement('style');
@@ -111,29 +105,29 @@ export function getStyleSheetForBucket(
   return renderer.stylesheets[stylesheetKey]!;
 }
 
-function isSameInsertionKey(
-  element: HTMLStyleElement,
-  bucketName: StyleBucketName,
-  metadata: Record<string, unknown>,
+export function isSameInsertionKey(
+  elementA: HTMLStyleElement,
+  bucketNameB: StyleBucketName,
+  metadataB: Record<string, unknown>,
 ): boolean {
   // The bucket name is the key; only "@media" / "@container" buckets append a condition, each from the
   // field that matches its bucket (mirroring "getStyleSheetKey").
-  let targetKey: string = bucketName;
-  if (bucketName === 'm') {
-    targetKey += (metadata['m'] as string | undefined) ?? '';
-  } else if (bucketName === 'x') {
-    targetKey += (metadata['x'] as string | undefined) ?? '';
+  const elementBucketA = elementA.getAttribute(DATA_BUCKET_ATTR);
+  const isSameBucket = elementBucketA === bucketNameB;
+
+  if (isSameBucket) {
+    if (bucketNameB === 'm') {
+      return (metadataB['m'] as string | undefined) === elementA.media;
+    }
+
+    if (bucketNameB === 'x') {
+      return (metadataB['x'] as string | undefined) === elementA.getAttribute(DATA_CONTAINER_ATTR);
+    }
+
+    return true;
   }
 
-  const elementBucket = element.getAttribute(DATA_BUCKET_ATTR);
-  let elementKey = elementBucket ?? '';
-  if (elementBucket === 'm') {
-    elementKey += element.media;
-  } else if (elementBucket === 'x') {
-    elementKey += element.getAttribute(DATA_CONTAINER_ATTR) ?? '';
-  }
-
-  return targetKey === elementKey;
+  return false;
 }
 
 /**
@@ -187,7 +181,7 @@ function findInsertionPoint(
 
   const comparerWithPriority: (el: HTMLStyleElement) => number = el => {
     if (isSameInsertionKey(el, targetBucket, metadata)) {
-      return priority - Number(el.getAttribute('data-priority'));
+      return priority - Number(el.getAttribute(DATA_PRIORITY_ATTR));
     }
 
     return comparer(el);

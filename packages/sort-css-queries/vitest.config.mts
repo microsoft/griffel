@@ -3,7 +3,7 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/packages/utils',
+  cacheDir: '../../node_modules/.vite/packages/sort-css-queries',
   plugins: [nxViteTsPaths()],
   test: {
     watch: false,
@@ -11,7 +11,7 @@ export default defineConfig({
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../coverage/packages/utils',
+      reportsDirectory: '../../coverage/packages/sort-css-queries',
       provider: 'v8',
     },
   },

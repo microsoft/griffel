@@ -33,7 +33,7 @@
       "@griffel/transform": ["packages/transform/src/index.mts"],
       "@griffel/transform-shaker": ["packages/transform-shaker/src/index.ts"],
       "@griffel/update-shorthands": ["tools/update-shorthands/src/index.ts"],
-      "@griffel/utils": ["packages/utils/src/index.ts"],
+      "@griffel/sort-css-queries": ["packages/sort-css-queries/src/index.ts"],
       "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"],
       "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"],
       "@griffel/webpack-plugin": ["packages/webpack-plugin/src/index.mts"]

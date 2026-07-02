@@ -28,7 +28,7 @@ A salt that will be added for generated hashed classes. Check [microsoft/griffel
 
 :::caution Use with caution
 
-There cannot be more than **one single** hash salt in the same application (bundle) 
+There cannot be more than **one single** hash salt in the same application (bundle)
 
 :::
 
@@ -66,7 +66,7 @@ const renderer = createDOMRenderer(document, {
 </html>
 ```
 
-For mobile-first methodology, consider using [`sort-css-media-queries`](https://github.com/dutchenkoOleg/sort-css-media-queries):
+For mobile-first methodology, consider using [`sort-css-media-queries`](https://github.com/OlehDutchenko/sort-css-media-queries):
 
 ```js
 import { createDOMRenderer } from '@griffel/react';
@@ -91,11 +91,11 @@ const renderer = createDOMRenderer(document, {
 
 A function with the same signature as `compareMediaQueries`, but for dynamically sorting `@container` query conditions. Maps over an array of container query condition strings (e.g. `(min-width: 480px)` or `foo (min-width: 480px)` when a container name is used).
 
-When omitted, container queries are ordered with the same comparator as `compareMediaQueries`. For numeric ordering by `min-width` / `max-width`, you can pass [`compareCSSQueries`](https://github.com/microsoft/griffel/tree/main/packages/utils) from `@griffel/utils`:
+When omitted, container queries are ordered with the same comparator as `compareMediaQueries`. For numeric ordering by `min-width` / `max-width`, you can pass [`compareCSSQueries`](https://github.com/microsoft/griffel/tree/main/packages/sort-css-queries) from `@griffel/sort-css-queries`:
 
 ```js
 import { createDOMRenderer } from '@griffel/react';
-import { compareCSSQueries } from '@griffel/utils';
+import { compareCSSQueries } from '@griffel/sort-css-queries';
 
 const renderer = createDOMRenderer(document, {
   compareContainerQueries: compareCSSQueries,

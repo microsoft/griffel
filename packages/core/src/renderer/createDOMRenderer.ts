@@ -47,7 +47,7 @@ export interface CreateDOMRendererOptions {
   /**
    * Orders "@container" query conditions, the same way `compareMediaQueries` orders media queries.
    * Defaults to the same comparator as `compareMediaQueries`. Pass `compareCSSQueries` from
-   * `@griffel/utils` (or a custom comparator) for numeric ordering by min-width / max-width.
+   * `@griffel/sort-css-queries` (or a custom comparator) for numeric ordering by min-width / max-width.
    *
    * @param a - container query condition
    * @param b - container query condition
@@ -75,7 +75,7 @@ export function createDOMRenderer(
     styleElementAttributes,
     compareMediaQueries = defaultCompareMediaQueries,
     // Container queries default to the same comparator as media queries; pass `compareCSSQueries`
-    // from `@griffel/utils` for numeric min-width / max-width ordering.
+    // from `@griffel/sort-css-queries` for numeric min-width / max-width ordering.
     compareContainerQueries = compareMediaQueries,
   } = options;
   const renderer: GriffelRenderer = {

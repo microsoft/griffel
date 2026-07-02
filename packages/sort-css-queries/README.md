@@ -1,13 +1,13 @@
-# @griffel/utils
+# @griffel/sort-css-queries
 
 Optional utilities for [Griffel](https://github.com/microsoft/griffel). These are not required to use Griffel — reach for them when you need to customize behavior such as the ordering of at-rules.
 
 ## Install
 
 ```bash
-yarn add @griffel/utils
+yarn add @griffel/sort-css-queries
 # or
-npm install @griffel/utils
+npm install @griffel/sort-css-queries
 ```
 
 ## `compareCSSQueries`
@@ -20,7 +20,7 @@ At runtime, via the renderer:
 
 ```js
 import { createDOMRenderer } from '@griffel/core';
-import { compareCSSQueries } from '@griffel/utils';
+import { compareCSSQueries } from '@griffel/sort-css-queries';
 
 const renderer = createDOMRenderer(document, {
   compareMediaQueries: compareCSSQueries,
@@ -32,7 +32,7 @@ At build time, via the webpack extraction plugin:
 
 ```js
 const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
-const { compareCSSQueries } = require('@griffel/utils');
+const { compareCSSQueries } = require('@griffel/sort-css-queries');
 
 new GriffelCSSExtractionPlugin({
   compareMediaQueries: compareCSSQueries,

@@ -431,11 +431,11 @@ const renderer = createDOMRenderer(document, {
 
 A function with the same signature as `compareMediaQueries`, but for dynamically sorting `@container` query conditions. Maps over an array of container query condition strings (e.g. `(min-width: 480px)` or `foo (min-width: 480px)` when a container name is used).
 
-When omitted, container queries are ordered with the same comparator as `compareMediaQueries`. For numeric ordering by `min-width` / `max-width`, you can pass [`compareCSSQueries`](../utils) from `@griffel/utils`:
+When omitted, container queries are ordered with the same comparator as `compareMediaQueries`. For numeric ordering by `min-width` / `max-width`, you can pass [`compareCSSQueries`](../sort-css-queries) from `@griffel/sort-css-queries`:
 
 ```js
 import { createDOMRenderer } from '@griffel/react';
-import { compareCSSQueries } from '@griffel/utils';
+import { compareCSSQueries } from '@griffel/sort-css-queries';
 
 const renderer = createDOMRenderer(document, {
   compareContainerQueries: compareCSSQueries,

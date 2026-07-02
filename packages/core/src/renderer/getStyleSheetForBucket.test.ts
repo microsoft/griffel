@@ -1,7 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { DATA_BUCKET_ATTR } from '../constants.js';
+import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR, DATA_CONTAINER_ATTR } from '../constants.js';
 import { createDOMRenderer } from './createDOMRenderer.js';
-import { getStyleSheetForBucket, styleBucketOrdering } from './getStyleSheetForBucket.js';
+import {
+  getStyleSheetForBucket,
+  styleBucketOrdering,
+  getStyleSheetKeyFromElement,
+  isSameInsertionKey,
+} from './getStyleSheetForBucket.js';
 
 function createFakeDocument(): Document {
   const doc = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
@@ -212,7 +217,7 @@ describe('getStyleSheetForBucket', () => {
   it('splits "@container" rules into per-condition sheets ordered by the comparator', () => {
     const target = createFakeDocument();
     // The default container comparator is lexicographic (same as media); a custom comparator can be
-    // supplied (e.g. "compareCSSQueries" from "@griffel/utils" for numeric min-width order).
+    // supplied (e.g. "compareCSSQueries" from "@griffel/sort-css-queries" for numeric min-width order).
     const containerQueryOrder = [
       'slot-container (min-width: 480px)',
       'slot-container (min-width: 720px)',
@@ -324,5 +329,84 @@ describe('getStyleSheetForBucket', () => {
         />,
       ]
     `);
+  });
+});
+
+function createStyleElement(attributes: Partial<Record<string, string>> & { media?: string }): HTMLStyleElement {
+  const element = document.createElement('style');
+
+  for (const [name, value] of Object.entries(attributes)) {
+    if (name === 'media') {
+      element.media = value as string;
+    } else {
+      element.setAttribute(name, value as string);
+    }
+  }
+
+  return element;
+}
+
+describe('getStyleSheetKeyFromElement', () => {
+  it('defaults the priority to "0" when the attribute is missing', () => {
+    const element = createStyleElement({ [DATA_BUCKET_ATTR]: 'd' });
+
+    expect(getStyleSheetKeyFromElement(element)).toBe('d0');
+  });
+
+  it('includes the priority for regular buckets', () => {
+    expect(
+      getStyleSheetKeyFromElement(createStyleElement({ [DATA_BUCKET_ATTR]: 'd', [DATA_PRIORITY_ATTR]: '0' })),
+    ).toBe('d0');
+    expect(
+      getStyleSheetKeyFromElement(createStyleElement({ [DATA_BUCKET_ATTR]: 'd', [DATA_PRIORITY_ATTR]: '1' })),
+    ).toBe('d1');
+  });
+
+  it('does not include the condition for non "@media"/"@container" buckets', () => {
+    const element = createStyleElement({ [DATA_BUCKET_ATTR]: 'c' });
+
+    expect(getStyleSheetKeyFromElement(element)).toBe('c0');
+  });
+
+  it('includes the media query for the "m" bucket', () => {
+    const element = createStyleElement({ [DATA_BUCKET_ATTR]: 'm', media: 'min-width: 1px' });
+
+    expect(getStyleSheetKeyFromElement(element)).toBe('mmin-width: 1px0');
+  });
+
+  it('includes the container query for the "x" bucket', () => {
+    const element = createStyleElement({ [DATA_BUCKET_ATTR]: 'x', [DATA_CONTAINER_ATTR]: 'min-width: 1px' });
+
+    expect(getStyleSheetKeyFromElement(element)).toBe('xmin-width: 1px0');
+  });
+});
+
+describe('isSameInsertionKey', () => {
+  it('matches regular buckets by bucket name only', () => {
+    const element = createStyleElement({ [DATA_BUCKET_ATTR]: 'd' });
+
+    expect(isSameInsertionKey(element, 'd', {})).toBe(true);
+  });
+
+  it('matches the "m" bucket by its media query', () => {
+    const element = createStyleElement({ [DATA_BUCKET_ATTR]: 'm', media: 'min-width: 480px' });
+
+    expect(isSameInsertionKey(element, 'm', { m: 'min-width: 480px' })).toBe(true);
+    expect(isSameInsertionKey(element, 'm', { m: 'min-width: 1px' })).toBe(false);
+  });
+
+  it('matches the "x" bucket by its container query', () => {
+    const element = createStyleElement({ [DATA_BUCKET_ATTR]: 'x', [DATA_CONTAINER_ATTR]: 'min-width: 480px' });
+
+    expect(isSameInsertionKey(element, 'x', { x: 'min-width: 480px' })).toBe(true);
+    expect(isSameInsertionKey(element, 'x', { x: 'min-width: 1px' })).toBe(false);
+  });
+
+  it('does not match when the bucket names differ', () => {
+    const dElement = createStyleElement({ [DATA_BUCKET_ATTR]: 'd' });
+    const xElement = createStyleElement({ [DATA_BUCKET_ATTR]: 'x', [DATA_CONTAINER_ATTR]: 'min-width: 480px' });
+
+    expect(isSameInsertionKey(dElement, 'm', { m: 'min-width: 480px' })).toBe(false);
+    expect(isSameInsertionKey(xElement, 'm', { m: 'min-width: 480px' })).toBe(false);
   });
 });
