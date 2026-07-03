@@ -1,0 +1,71 @@
+{
+  "name": "@griffel/sort-css-queries",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/sort-css-queries/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+   "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"], 
+      "options": {
+        "outputPath": "dist/packages/sort-css-queries",
+        "tsConfig": "packages/sort-css-queries/tsconfig.lib.json",
+        "skipTypeField": true,
+        "packageJson": "packages/sort-css-queries/package.json",
+        "main": "packages/sort-css-queries/src/index.ts",
+        "assets": [
+          "packages/sort-css-queries/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "build-cjs": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/sort-css-queries/lib"],
+      "options": {
+        "command": "node tools/build-cjs.mjs dist/packages/sort-css-queries/src dist/packages/sort-css-queries/lib"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/sort-css-queries"
+      }
+    },
+    "bundle-size": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "packages/sort-css-queries",
+        "commands": [
+          {
+            "command": "monosize measure"
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/sort-css-queries",
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
+      },
+      "outputs": []
+    }
+  }
+}

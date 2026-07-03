@@ -51,6 +51,7 @@ export default function App() {
       insertionCache: {},
       stylesheets: {},
       compareMediaQueries: () => 1,
+      compareContainerQueries: () => 1,
     };
 
     styles({

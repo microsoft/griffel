@@ -12,6 +12,7 @@ export default {
       ...config.resolve,
       alias: {
         '@griffel/core': path.resolve(dirname, './dist/packages/core/src/index.js'),
+        '@griffel/sort-css-queries': path.resolve(dirname, './dist/packages/sort-css-queries/src/index.js'),
         '@griffel/shadow-dom': path.resolve(dirname, './dist/packages/shadow-dom/src/index.js'),
         '@griffel/react': path.resolve(dirname, './dist/packages/react/src/index.js'),
       },
@@ -21,6 +22,7 @@ export default {
       'react/jsx-runtime': 'JSX',
     },
   })),
+  threshold: '1kB',
   storage: upstashStorage({
     url: 'https://welcome-giraffe-61766.upstash.io',
     readonlyToken: 'AvFGAAIgcDHzHKwMeSqS_FCutK3bcM-AI7c7zSKbRYbAM14_ZiwUmg',

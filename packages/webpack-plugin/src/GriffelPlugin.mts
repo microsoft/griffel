@@ -18,6 +18,12 @@ export type GriffelCSSExtractionPluginOptions = {
 
   compareMediaQueries?: GriffelRenderer['compareMediaQueries'];
 
+  /**
+   * A custom comparator that orders "@container" query conditions, mirroring `compareMediaQueries`.
+   * Defaults to the `compareMediaQueries` comparator.
+   */
+  compareContainerQueries?: GriffelRenderer['compareContainerQueries'];
+
   /** Allows to override resolver used to resolve imports inside evaluated modules. */
   resolverFactory?: TransformResolverFactory;
 
@@ -133,6 +139,7 @@ export class GriffelPlugin {
   readonly #collectStats: boolean;
   readonly #collectPerfIssues: boolean;
   readonly #compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
+  readonly #compareContainerQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareContainerQueries']>;
   readonly #resolverFactory: TransformResolverFactory;
   readonly #stats: Record<
     string,
@@ -151,6 +158,7 @@ export class GriffelPlugin {
     this.#collectStats = options.collectStats ?? false;
     this.#collectPerfIssues = options.collectPerfIssues ?? false;
     this.#compareMediaQueries = options.compareMediaQueries ?? defaultCompareMediaQueries;
+    this.#compareContainerQueries = options.compareContainerQueries ?? this.#compareMediaQueries;
     this.#resolverFactory = options.resolverFactory ?? createResolverFactory();
   }
 
@@ -351,7 +359,7 @@ export class GriffelPlugin {
           const cssContent = getAssetSourceContents(cssAssetSource);
           const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
-          const cssSource = sortCSSRules([cssRulesByBucket], this.#compareMediaQueries);
+          const cssSource = sortCSSRules([cssRulesByBucket], this.#compareMediaQueries, this.#compareContainerQueries);
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
         },

@@ -20,18 +20,20 @@ describe('getUniqueRulesFromSets', () => {
     };
 
     expect(getUniqueRulesFromSets([setA, setB])).toEqual([
-      { cssRule: '.baz { color: orange; }', priority: 0, media: '', styleBucketName: 'd' },
-      { cssRule: '.foo { color: red; }', priority: 0, media: '', styleBucketName: 'd' },
+      { cssRule: '.baz { color: orange; }', priority: 0, media: '', container: '', styleBucketName: 'd' },
+      { cssRule: '.foo { color: red; }', priority: 0, media: '', container: '', styleBucketName: 'd' },
       {
         cssRule: '@media (max-width: 2px) { .foo { color: blue; } }',
         priority: 0,
         media: '(max-width: 2px)',
+        container: '',
         styleBucketName: 'm',
       },
       {
         cssRule: '@media (max-width: 2px) { .yellow { color: blue; } }',
         priority: 0,
         media: '(max-width: 2px)',
+        container: '',
         styleBucketName: 'm',
       },
     ]);
@@ -137,6 +139,116 @@ describe('sortCSSRules', () => {
         padding: 0;
       }"
     `);
+  });
+
+  describe('container queries', () => {
+    it('sorts container queries by the supplied comparator regardless of source order', async () => {
+      // Source order is reversed (720px before 480px) and a larger 1024px breakpoint is mixed in. The
+      // emitted order must follow the comparator, not the source or lexicographic order.
+      const setA: CSSRulesByBucket = {
+        x: [
+          ['@container c (min-width: 720px) { .cw720 { margin-left: 40px; } }', { x: 'c (min-width: 720px)' }],
+          ['@container c (min-width: 480px) { .cw480 { margin-left: 24px; } }', { x: 'c (min-width: 480px)' }],
+        ],
+      };
+      const setB: CSSRulesByBucket = {
+        d: ['.default { margin-left: 0; }'],
+        x: [['@container c (min-width: 1024px) { .cw1024 { margin-left: 56px; } }', { x: 'c (min-width: 1024px)' }]],
+      };
+
+      const containerQueryOrder = ['c (min-width: 480px)', 'c (min-width: 720px)', 'c (min-width: 1024px)'];
+      const compareContainerQueries: GriffelRenderer['compareContainerQueries'] = (a, b) =>
+        containerQueryOrder.indexOf(a) - containerQueryOrder.indexOf(b);
+
+      expect(await formatCss(sortCSSRules([setA, setB], () => 0, compareContainerQueries))).toMatchInlineSnapshot(`
+        ".default {
+          margin-left: 0;
+        }
+        @container c (min-width: 480px) {
+          .cw480 {
+            margin-left: 24px;
+          }
+        }
+        @container c (min-width: 720px) {
+          .cw720 {
+            margin-left: 40px;
+          }
+        }
+        @container c (min-width: 1024px) {
+          .cw1024 {
+            margin-left: 56px;
+          }
+        }"
+      `);
+    });
+
+    it('orders container and media rules within their own buckets', async () => {
+      const set: CSSRulesByBucket = {
+        m: [
+          ['@media (min-width: 720px) { .mw720 { color: blue; } }', { m: '(min-width: 720px)' }],
+          ['@media (min-width: 480px) { .mw480 { color: red; } }', { m: '(min-width: 480px)' }],
+        ],
+        x: [
+          ['@container (min-width: 720px) { .cw720 { color: blue; } }', { x: '(min-width: 720px)' }],
+          ['@container (min-width: 480px) { .cw480 { color: red; } }', { x: '(min-width: 480px)' }],
+        ],
+      };
+
+      const mediaQueryOrder = ['(min-width: 480px)', '(min-width: 720px)'];
+      const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a, b) =>
+        mediaQueryOrder.indexOf(a) - mediaQueryOrder.indexOf(b);
+
+      // "@media" sorts before "@container" (bucket order), each ordered within its own bucket. Container
+      // queries default to the same comparator as media queries when none is supplied.
+      expect(await formatCss(sortCSSRules([set], compareMediaQueries))).toMatchInlineSnapshot(`
+        "@media (min-width: 480px) {
+          .mw480 {
+            color: red;
+          }
+        }
+        @media (min-width: 720px) {
+          .mw720 {
+            color: blue;
+          }
+        }
+        @container (min-width: 480px) {
+          .cw480 {
+            color: red;
+          }
+        }
+        @container (min-width: 720px) {
+          .cw720 {
+            color: blue;
+          }
+        }"
+      `);
+    });
+
+    it('orders "max-width" container queries by the supplied comparator', async () => {
+      const set: CSSRulesByBucket = {
+        x: [
+          ['@container (max-width: 480px) { .cw480 { color: red; } }', { x: '(max-width: 480px)' }],
+          ['@container (max-width: 720px) { .cw720 { color: blue; } }', { x: '(max-width: 720px)' }],
+        ],
+      };
+
+      const containerQueryOrder = ['(max-width: 720px)', '(max-width: 480px)'];
+      const compareContainerQueries: GriffelRenderer['compareContainerQueries'] = (a, b) =>
+        containerQueryOrder.indexOf(a) - containerQueryOrder.indexOf(b);
+
+      expect(await formatCss(sortCSSRules([set], () => 0, compareContainerQueries))).toMatchInlineSnapshot(`
+        "@container (max-width: 720px) {
+          .cw720 {
+            color: blue;
+          }
+        }
+        @container (max-width: 480px) {
+          .cw480 {
+            color: red;
+          }
+        }"
+      `);
+    });
   });
 
   describe('media queries', () => {

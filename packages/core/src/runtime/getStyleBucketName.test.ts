@@ -54,7 +54,7 @@ describe('getStyleBucketName', () => {
         layer: '',
         scope: '',
       }),
-    ).toBe('c');
+    ).toBe('x');
   });
 
   // @scope wraps innermost (per compileAtomicCSSRule), so scoped pseudo-rules must remain in

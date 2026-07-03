@@ -54,7 +54,7 @@ export function getStyleBucketName(selectors: string[], atRules: AtRules): Style
   }
 
   if (atRules.container) {
-    return 'c';
+    return 'x';
   }
 
   if (selectors.length > 0) {
