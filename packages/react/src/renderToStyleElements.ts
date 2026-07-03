@@ -26,6 +26,7 @@ export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[]
   return stylesheets
     .map(stylesheet => {
       const cssRules = stylesheet.cssRules();
+
       // don't want to create any empty style elements
       if (!cssRules.length) {
         return null;
