@@ -2,6 +2,33 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Fri, 03 Jul 2026 09:13:33 GMT",
+      "version": "4.0.7",
+      "tag": "@griffel/webpack-plugin_v4.0.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "fd8b4efb6b788e7844012740df4fc1227f621305",
+            "comment": "fix snapshots"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/core to v1.21.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v3.0.7",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 09:29:28 GMT",
       "version": "4.0.6",
       "tag": "@griffel/webpack-plugin_v4.0.6",

@@ -3776,7 +3776,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@griffel/babel-preset@npm:^1.9.0, @griffel/babel-preset@workspace:packages/babel-preset":
+"@griffel/babel-preset@npm:^1.9.1, @griffel/babel-preset@workspace:packages/babel-preset":
   version: 0.0.0-use.local
   resolution: "@griffel/babel-preset@workspace:packages/babel-preset"
   dependencies:
@@ -3785,7 +3785,7 @@ __metadata:
     "@babel/helper-plugin-utils": "npm:^7.28.6"
     "@babel/template": "npm:^7.28.6"
     "@babel/traverse": "npm:^7.29.0"
-    "@griffel/core": "npm:^1.21.2"
+    "@griffel/core": "npm:^1.21.3"
     "@linaria/babel-preset": "npm:^3.0.0-beta.24"
     "@linaria/shaker": "npm:^3.0.0-beta.22"
     ajv: "npm:^8.20.0"
@@ -3794,7 +3794,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/core@npm:^1.21.2, @griffel/core@workspace:packages/core":
+"@griffel/core@npm:^1.21.3, @griffel/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@griffel/core@workspace:packages/core"
   dependencies:
@@ -3811,7 +3811,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/devtools@workspace:packages/devtools"
   dependencies:
-    "@griffel/react": "npm:^1.7.4"
+    "@griffel/react": "npm:^1.7.5"
   languageName: unknown
   linkType: soft
 
@@ -3826,10 +3826,10 @@ __metadata:
   resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
   dependencies:
     "@griffel/e2e-utils": "npm:*"
-    "@griffel/react": "npm:^1.7.4"
-    "@griffel/webpack-extraction-plugin": "npm:^0.5.19"
-    "@griffel/webpack-loader": "npm:^2.2.29"
-    "@griffel/webpack-plugin": "npm:^4.0.6"
+    "@griffel/react": "npm:^1.7.5"
+    "@griffel/webpack-extraction-plugin": "npm:^0.5.20"
+    "@griffel/webpack-loader": "npm:^2.2.30"
+    "@griffel/webpack-plugin": "npm:^4.0.7"
   languageName: unknown
   linkType: soft
 
@@ -3861,7 +3861,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/jest-serializer@workspace:packages/jest-serializer"
   dependencies:
-    "@griffel/core": "npm:^1.21.2"
+    "@griffel/core": "npm:^1.21.3"
     tslib: "npm:^2.1.0"
   languageName: unknown
   linkType: soft
@@ -3872,17 +3872,17 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.29.6"
     "@babel/helper-plugin-utils": "npm:^7.28.6"
-    "@griffel/babel-preset": "npm:^1.9.0"
+    "@griffel/babel-preset": "npm:^1.9.1"
     postcss: "npm:^8.5.14"
   languageName: unknown
   linkType: soft
 
-"@griffel/react@npm:^1.7.4, @griffel/react@workspace:packages/react":
+"@griffel/react@npm:^1.7.5, @griffel/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@griffel/react@workspace:packages/react"
   dependencies:
-    "@griffel/core": "npm:^1.21.2"
-    "@griffel/sort-css-queries": "npm:^1.0.0"
+    "@griffel/core": "npm:^1.21.3"
+    "@griffel/sort-css-queries": "npm:^1.0.1"
     tslib: "npm:^2.1.0"
   peerDependencies:
     react: ">=16.14.0 <20.0.0"
@@ -3893,12 +3893,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/shadow-dom@workspace:packages/shadow-dom"
   dependencies:
-    "@griffel/core": "npm:^1.21.2"
+    "@griffel/core": "npm:^1.21.3"
     tslib: "npm:^2.1.0"
   languageName: unknown
   linkType: soft
 
-"@griffel/sort-css-queries@npm:^1.0.0, @griffel/sort-css-queries@workspace:packages/sort-css-queries":
+"@griffel/sort-css-queries@npm:^1.0.1, @griffel/sort-css-queries@workspace:packages/sort-css-queries":
   version: 0.0.0-use.local
   resolution: "@griffel/sort-css-queries@workspace:packages/sort-css-queries"
   dependencies:
@@ -3925,11 +3925,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/transform@npm:^3.0.6, @griffel/transform@workspace:packages/transform":
+"@griffel/transform@npm:^3.0.7, @griffel/transform@workspace:packages/transform":
   version: 0.0.0-use.local
   resolution: "@griffel/transform@workspace:packages/transform"
   dependencies:
-    "@griffel/core": "npm:^1.21.2"
+    "@griffel/core": "npm:^1.21.3"
     "@griffel/transform-shaker": "npm:^1.0.7"
     debug: "npm:^4.3.0"
     magic-string: "npm:^0.30.19"
@@ -3944,14 +3944,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/webpack-extraction-plugin@npm:^0.5.19, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
+"@griffel/webpack-extraction-plugin@npm:^0.5.20, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin"
   dependencies:
     "@babel/core": "npm:^7.29.6"
     "@babel/helper-module-imports": "npm:^7.22.15"
     "@babel/helper-plugin-utils": "npm:^7.28.6"
-    "@griffel/core": "npm:^1.21.2"
+    "@griffel/core": "npm:^1.21.3"
     stylis: "npm:^4.4.0"
     tslib: "npm:^2.1.0"
   peerDependencies:
@@ -3959,12 +3959,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/webpack-loader@npm:^2.2.29, @griffel/webpack-loader@workspace:packages/webpack-loader":
+"@griffel/webpack-loader@npm:^2.2.30, @griffel/webpack-loader@workspace:packages/webpack-loader":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-loader@workspace:packages/webpack-loader"
   dependencies:
     "@babel/core": "npm:^7.29.6"
-    "@griffel/babel-preset": "npm:^1.9.0"
+    "@griffel/babel-preset": "npm:^1.9.1"
     enhanced-resolve: "npm:^5.24.0"
     tslib: "npm:^2.1.0"
   peerDependencies:
@@ -3972,12 +3972,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/webpack-plugin@npm:^4.0.6, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
+"@griffel/webpack-plugin@npm:^4.0.7, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
-    "@griffel/core": "npm:^1.21.2"
-    "@griffel/transform": "npm:^3.0.6"
+    "@griffel/core": "npm:^1.21.3"
+    "@griffel/transform": "npm:^3.0.7"
     oxc-resolver: "npm:^11.21.3"
     stylis: "npm:^4.4.0"
   peerDependencies:

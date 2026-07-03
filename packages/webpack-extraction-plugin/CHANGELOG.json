@@ -2,6 +2,27 @@
   "name": "@griffel/webpack-extraction-plugin",
   "entries": [
     {
+      "date": "Fri, 03 Jul 2026 09:13:33 GMT",
+      "version": "0.5.20",
+      "tag": "@griffel/webpack-extraction-plugin_v0.5.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-extraction-plugin",
+            "commit": "fd8b4efb6b788e7844012740df4fc1227f621305",
+            "comment": "feat: add support for sorting @container queries"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-extraction-plugin",
+            "comment": "Bump @griffel/core to v1.21.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 09:29:28 GMT",
       "version": "0.5.19",
       "tag": "@griffel/webpack-extraction-plugin_v0.5.19",

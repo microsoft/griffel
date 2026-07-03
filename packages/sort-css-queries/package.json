@@ -1,6 +1,6 @@
 {
   "name": "@griffel/sort-css-queries",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Comparator for ordering CSS query conditions (@media / @container) numerically in Griffel",
   "license": "MIT",
   "repository": {

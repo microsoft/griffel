@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/sort-css-queries",
+  "entries": [
+    {
+      "date": "Fri, 03 Jul 2026 09:13:33 GMT",
+      "version": "1.0.1",
+      "tag": "@griffel/sort-css-queries_v1.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/sort-css-queries",
+            "commit": "fd8b4efb6b788e7844012740df4fc1227f621305",
+            "comment": "feat: add support for sorting @container queries"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,8 +1,17 @@
 # Change Log - @griffel/shadow-dom
 
-<!-- This log was last generated on Thu, 21 May 2026 09:29:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 03 Jul 2026 09:13:33 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.2.18
+
+Fri, 03 Jul 2026 09:13:33 GMT
+
+### Patches
+
+- feat: add support for sorting @container queries (olfedias@microsoft.com)
+- Bump @griffel/core to v1.21.3
 
 ## 0.2.17
 

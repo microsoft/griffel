@@ -1,8 +1,16 @@
 # Change Log - @griffel/babel-preset
 
-<!-- This log was last generated on Wed, 27 May 2026 15:33:58 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 03 Jul 2026 09:13:33 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.9.1
+
+Fri, 03 Jul 2026 09:13:33 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.21.3
 
 ## 1.9.0
 

@@ -2,6 +2,21 @@
   "name": "@griffel/core",
   "entries": [
     {
+      "date": "Fri, 03 Jul 2026 09:13:33 GMT",
+      "version": "1.21.3",
+      "tag": "@griffel/core_v1.21.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/core",
+            "commit": "fd8b4efb6b788e7844012740df4fc1227f621305",
+            "comment": "feat: add support for sorting @container queries"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 May 2026 09:29:28 GMT",
       "version": "1.21.2",
       "tag": "@griffel/core_v1.21.2",

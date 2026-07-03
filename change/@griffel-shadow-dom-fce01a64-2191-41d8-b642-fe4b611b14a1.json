@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "feat: add support for sorting @container queries",
-  "packageName": "@griffel/shadow-dom",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

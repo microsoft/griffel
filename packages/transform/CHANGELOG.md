@@ -1,8 +1,16 @@
 # Change Log - @griffel/transform
 
-<!-- This log was last generated on Thu, 21 May 2026 09:29:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 03 Jul 2026 09:13:33 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 3.0.7
+
+Fri, 03 Jul 2026 09:13:33 GMT
+
+### Patches
+
+- Bump @griffel/core to v1.21.3
 
 ## 3.0.6
 
