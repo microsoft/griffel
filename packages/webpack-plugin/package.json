@@ -24,7 +24,7 @@
   "dependencies": {
     "@griffel/core": "^1.21.3",
     "@griffel/transform": "^3.0.7",
-    "oxc-resolver": "^11.21.3",
+    "oxc-resolver": "^11.23.0",
     "stylis": "^4.4.0"
   },
   "peerDependencies": {
