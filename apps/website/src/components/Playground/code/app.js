@@ -62,7 +62,7 @@ export default function App() {
     return () => {
       styleTag.remove();
     };
-  }, []);
+  });
 
   React.useLayoutEffect(() => {
     if (ref.current) {
