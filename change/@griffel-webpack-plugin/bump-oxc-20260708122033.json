@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump oxc-resolver from 11.21.3 to 11.23.0",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
