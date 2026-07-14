@@ -50,7 +50,7 @@
     "enhanced-resolve": "^5.24.0",
     "magic-string": "^0.30.19",
     "oxc-parser": "^0.137.0",
-    "oxc-resolver": "^11.23.0",
+    "oxc-resolver": "^11.24.2",
     "oxc-transform": "^0.137.0",
     "oxc-walker": "^1.0.0",
     "postcss": "^8.5.14",
