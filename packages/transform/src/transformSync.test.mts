@@ -309,12 +309,6 @@ const TESTS: TestCase[] = [
     },
   },
 
-  {
-    title: 'errors: throws on CJS',
-    fixture: path.resolve(fixturesDir, 'error-cjs', 'fixture.js'),
-    error: /is not an ES module/,
-  },
-
   // Exports
   //
 
@@ -325,7 +319,6 @@ const TESTS: TestCase[] = [
   },
 
   // Errors
-  //
   //
 
   {
@@ -343,11 +336,6 @@ const TESTS: TestCase[] = [
     },
   },
   {
-    title: 'errors: throws on invalid argument count',
-    fixture: path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'),
-    error: /function accepts only a single param/,
-  },
-  {
     title: 'errors: throws on undefined',
     fixture: path.resolve(fixturesDir, 'error-on-undefined', 'fixture.ts'),
     error: /Cannot read properties of undefined/,
@@ -355,6 +343,32 @@ const TESTS: TestCase[] = [
 ];
 
 describe('transformSync', () => {
+  it('passthrough: CommonJS files pass through untouched', () => {
+    const sourceCode = fs.readFileSync(path.resolve(fixturesDir, 'error-cjs', 'fixture.js'), { encoding: 'utf-8' });
+    const result = transformSync(sourceCode, {
+      filename: path.resolve(fixturesDir, 'error-cjs', 'fixture.js'),
+      resolveModule: nodeResolve,
+    });
+
+    expect(result.code).toBe(sourceCode);
+    expect(result.usedProcessing).toBe(false);
+    expect(result.usedVMForEvaluation).toBe(false);
+  });
+
+  it('passthrough: multi-argument calls are skipped (runtime form)', () => {
+    const sourceCode = fs.readFileSync(path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'), {
+      encoding: 'utf-8',
+    });
+    const result = transformSync(sourceCode, {
+      filename: path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'),
+      resolveModule: nodeResolve,
+    });
+
+    // Multi-arg call is the runtime form — it is skipped, not processed.
+    expect(result.code).toBe(sourceCode);
+    expect(result.usedProcessing).toBe(false);
+  });
+
   it('astEvaluationPlugins: fluentTokensPlugin is enabled by default', () => {
     const sourceCode = `
 import { makeStyles } from '@griffel/react';

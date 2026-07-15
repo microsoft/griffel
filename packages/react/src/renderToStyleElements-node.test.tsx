@@ -545,6 +545,98 @@ describe('renderToStyleElements (node)', () => {
       `);
     });
 
+    it('keeps container queries after regular styles and media with a "min-width" comparator', async () => {
+      // Regression: a realistic comparator that parses "min-width" (and pushes conditions without one
+      // to the end) must not hoist "@container" sheets above regular styles. Bucket order has to win
+      // over the condition comparator, otherwise container queries get scattered to the top of the
+      // output and are overridden by regular styles.
+      const useExampleStyles = makeStyles({
+        combined: {
+          color: 'black',
+          '@media (min-width: 480px)': {
+            ':hover': { color: 'red' },
+          },
+          '@container (min-width: 720px)': {
+            ':hover': { color: 'blue' },
+          },
+          '@container (min-width: 480px)': {
+            ':hover': { color: 'green' },
+          },
+        },
+      });
+      const ExampleComponent: React.FC = () => {
+        const classes = useExampleStyles();
+
+        return <div className={classes.combined} />;
+      };
+
+      const NO_MIN_WIDTH = Number.MAX_SAFE_INTEGER;
+      const parseMinWidth = (query: string) => {
+        const match = /min-width:\s*(\d+)/.exec(query);
+        return match ? Number(match[1]) : NO_MIN_WIDTH;
+      };
+      const renderer = createDOMRenderer(undefined, {
+        compareMediaQueries(a, b) {
+          return parseMinWidth(a) - parseMinWidth(b);
+        },
+        compareContainerQueries(a, b) {
+          return parseMinWidth(a) - parseMinWidth(b);
+        },
+      });
+
+      ReactDOM.renderToStaticMarkup(
+        <RendererProvider renderer={renderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+
+      expect(await formatHtml(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>)))
+        .toMatchInlineSnapshot(`
+          "<style
+            data-make-styles-bucket="d"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            .f1o4jmwm {
+              color: black;
+            }</style
+          ><style
+            media="(min-width: 480px)"
+            data-make-styles-bucket="m"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @media (min-width: 480px) {
+              .fod6qbx:hover {
+                color: red;
+              }
+            }</style
+          ><style
+            data-container="(min-width: 480px)"
+            data-make-styles-bucket="x"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @container (min-width: 480px) {
+              .fa2bp0w:hover {
+                color: green;
+              }
+            }</style
+          ><style
+            data-container="(min-width: 720px)"
+            data-make-styles-bucket="x"
+            data-priority="0"
+            data-make-styles-rehydration="true"
+          >
+            @container (min-width: 720px) {
+              .f138pnqb:hover {
+                color: blue;
+              }
+            }
+          </style>"
+        `);
+    });
+
     it('handles keyframes', async () => {
       const useExampleStyles = makeStyles({
         keyframe: {

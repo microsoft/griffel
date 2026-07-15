@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: rewrite compareCSSQueries with height/rem/em support, total order, and createCompareCSSQueries factory",
+  "packageName": "@griffel/sort-css-queries",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: sort SSR style elements by bucket order first so @container rules stay after regular styles and @media",
+  "packageName": "@griffel/react",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
