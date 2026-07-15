@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: sort CSS rules by bucket order first so @container rules stay after regular styles and @media",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "jakubmiskech@microsoft.com",
+  "dependentChangeType": "patch"
+}

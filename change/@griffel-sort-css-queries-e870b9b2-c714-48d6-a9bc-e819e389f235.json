@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: restore container/media query comparator sorting logic",
+  "packageName": "@griffel/sort-css-queries",
+  "email": "jakubmiskech@microsoft.com",
+  "dependentChangeType": "patch"
+}

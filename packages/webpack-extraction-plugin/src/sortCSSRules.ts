@@ -54,12 +54,33 @@ function compareCSSRules(
   // Container queries default to the same comparator as media queries.
   compareContainerQueries: GriffelRenderer['compareContainerQueries'] = compareMediaQueries,
 ): number {
-  return (
-    compareContainerQueries(entryA.container, entryB.container) ||
-    compareMediaQueries(entryA.media, entryB.media) ||
-    styleBucketOrderingMap[entryA.styleBucketName] - styleBucketOrderingMap[entryB.styleBucketName] ||
-    entryA.priority - entryB.priority
-  );
+  // Primary: bucket order. This keeps "@media" / "@container" rules grouped, separated from each
+  // other, and always placed after regular styles before ordering within a bucket by its condition.
+  // It must come first: a user-supplied comparator only understands its own condition strings and
+  // can't be trusted to order empty/other-bucket values, so gating by bucket avoids scattering
+  // "@container" rules throughout the output.
+  const bucketDiff = styleBucketOrderingMap[entryA.styleBucketName] - styleBucketOrderingMap[entryB.styleBucketName];
+  if (bucketDiff !== 0) {
+    return bucketDiff;
+  }
+
+  // Within the "@media" bucket, order by media query.
+  if (entryA.styleBucketName === 'm') {
+    const mediaDiff = compareMediaQueries(entryA.media, entryB.media);
+    if (mediaDiff !== 0) {
+      return mediaDiff;
+    }
+  }
+
+  // Within the "@container" bucket, order by container condition.
+  if (entryA.styleBucketName === 'x') {
+    const containerDiff = compareContainerQueries(entryA.container, entryB.container);
+    if (containerDiff !== 0) {
+      return containerDiff;
+    }
+  }
+
+  return entryA.priority - entryB.priority;
 }
 
 export function sortCSSRules(

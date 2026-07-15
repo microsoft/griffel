@@ -224,6 +224,49 @@ describe('sortCSSRules', () => {
       `);
     });
 
+    it('keeps container queries after regular styles and media with a "min-width" comparator', async () => {
+      // Regression: a realistic comparator that parses "min-width" (and pushes conditions without one
+      // to the end) must not hoist "@container" rules above regular styles. Bucket order has to win
+      // over the condition comparator, otherwise container queries get scattered to the top of the
+      // file and are overridden by regular styles.
+      const set: CSSRulesByBucket = {
+        d: ['.default { color: black; }'],
+        m: [['@media (min-width: 480px) { .mw480 { color: red; } }', { m: '(min-width: 480px)' }]],
+        x: [
+          ['@container (min-width: 720px) { .cw720 { color: blue; } }', { x: '(min-width: 720px)' }],
+          ['@container (min-width: 480px) { .cw480 { color: green; } }', { x: '(min-width: 480px)' }],
+        ],
+      };
+
+      const NO_MIN_WIDTH = Number.MAX_SAFE_INTEGER;
+      const parseMinWidth = (query: string) => {
+        const match = /min-width:\s*(\d+)/.exec(query);
+        return match ? Number(match[1]) : NO_MIN_WIDTH;
+      };
+      const compareMinWidth: GriffelRenderer['compareMediaQueries'] = (a, b) => parseMinWidth(a) - parseMinWidth(b);
+
+      expect(await formatCss(sortCSSRules([set], compareMinWidth))).toMatchInlineSnapshot(`
+        ".default {
+          color: black;
+        }
+        @media (min-width: 480px) {
+          .mw480 {
+            color: red;
+          }
+        }
+        @container (min-width: 480px) {
+          .cw480 {
+            color: green;
+          }
+        }
+        @container (min-width: 720px) {
+          .cw720 {
+            color: blue;
+          }
+        }"
+      `);
+    });
+
     it('orders "max-width" container queries by the supplied comparator', async () => {
       const set: CSSRulesByBucket = {
         x: [
