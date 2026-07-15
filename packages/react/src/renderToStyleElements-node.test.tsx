@@ -323,7 +323,7 @@ describe('renderToStyleElements (node)', () => {
             ':hover': { color: 'blue' },
           },
           '@container (max-width: 2px)': {
-            ':hover': { color: 'blue' },
+            ':hover': { color: 'blue', border: '2px solid blue' },
           },
           '@supports (display: grid)': {
             color: 'green',
@@ -389,6 +389,17 @@ describe('renderToStyleElements (node)', () => {
           ><style
             data-container="(max-width: 2px)"
             data-make-styles-bucket="x"
+            data-priority="-2"
+            data-make-styles-rehydration="true"
+          >
+            @container (max-width: 2px) {
+              .f863q4q:hover {
+                border: 2px solid blue;
+              }
+            }</style
+          ><style
+            data-container="(max-width: 2px)"
+            data-make-styles-bucket="x"
             data-priority="0"
             data-make-styles-rehydration="true"
           >
@@ -431,7 +442,7 @@ describe('renderToStyleElements (node)', () => {
             ':hover': { color: 'blue' },
           },
           '@media (max-width: 1px)': {
-            ':hover': { color: 'blue', paddingLeft: '1px' },
+            ':hover': { color: 'blue', border: '1px solid red' },
           },
           '@container (max-width: 2px)': {
             ':hover': { color: 'green' },
@@ -478,20 +489,23 @@ describe('renderToStyleElements (node)', () => {
         ><style
           media="(max-width: 1px)"
           data-make-styles-bucket="m"
+          data-priority="-2"
+          data-make-styles-rehydration="true"
+        >
+          @media (max-width: 1px) {
+            .fq7asn3:hover {
+              border: 1px solid red;
+            }
+          }</style
+        ><style
+          media="(max-width: 1px)"
+          data-make-styles-bucket="m"
           data-priority="0"
           data-make-styles-rehydration="true"
         >
           @media (max-width: 1px) {
             .f13d6lhy:hover {
               color: blue;
-            }
-          }
-          @media (max-width: 1px) {
-            .f523lep:hover {
-              padding-right: 1px;
-            }
-            .fy5b5hz:hover {
-              padding-left: 1px;
             }
           }</style
         ><style
