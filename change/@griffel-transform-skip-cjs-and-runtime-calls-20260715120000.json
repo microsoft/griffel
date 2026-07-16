@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Skip CommonJS files and multi-argument runtime calls gracefully instead of throwing",
-  "packageName": "@griffel/transform",
-  "email": "copilot@github.com",
-  "dependentChangeType": "patch"
-}

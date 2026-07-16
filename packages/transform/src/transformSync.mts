@@ -202,8 +202,10 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   }
 
   if (parseResult.program.body.length > 0 && !parseResult.module.hasModuleSyntax) {
-    // Skip CommonJS files gracefully as they can't contain ESM Griffel imports.
-    return { code: sourceCode, usedProcessing: false, usedVMForEvaluation: false };
+    throw new Error(
+      `Transform error: "${filename}" is not an ES module. ` +
+        `@griffel/transform only supports ES modules (files using import/export syntax).`,
+    );
   }
 
   const magicString = new MagicString(sourceCode);
@@ -213,9 +215,7 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const hasGriffelImports = parseResult.module.staticImports.some(
     si =>
       importsToTransformSet.has(si.moduleRequest.value) &&
-      si.entries.some(
-        e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds),
-      ),
+      si.entries.some(e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds)),
   );
 
   if (!hasGriffelImports) {
@@ -265,7 +265,9 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         const functionKind = importedName as FunctionKinds;
 
         if (node.arguments.length !== 1) {
-          return;
+          throw new Error(
+            `${functionKind}() function accepts only a single param, got ${node.arguments.length} in ${filename}`,
+          );
         }
 
         // Track the import specifier for rewriting (deduped by node start position)
