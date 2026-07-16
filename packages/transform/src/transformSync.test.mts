@@ -23,9 +23,7 @@ const nodeResolve: TransformResolver = (id, opts) => {
     }
 
     return {
-      path: (
-        NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string }
-      )._resolveFilename(id, opts),
+      path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
       builtin: false,
     };
   } finally {
@@ -60,7 +58,11 @@ const fixturesDir = path.join(__dirname, '..', '__fixtures__');
  *
  * Only applied when the meta output contains asset tags; other fixtures pass through unchanged.
  */
-function normalizeAssetOutputs(code: string, meta: string, fixtureDir: string): { code: string; meta: string } {
+function normalizeAssetOutputs(
+  code: string,
+  meta: string,
+  fixtureDir: string,
+): { code: string; meta: string } {
   if (meta.indexOf(ASSET_TAG_OPEN) === -1) {
     return { code, meta };
   }
@@ -248,9 +250,7 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
     transformOptions: {
-      evaluationRules: [
-        { action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default },
-      ],
+      evaluationRules: [{ action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default }],
     },
   },
 
@@ -310,9 +310,9 @@ const TESTS: TestCase[] = [
   },
 
   {
-    title: 'skips: CommonJS files',
+    title: 'errors: throws on CJS',
     fixture: path.resolve(fixturesDir, 'error-cjs', 'fixture.js'),
-    outputFixture: path.resolve(fixturesDir, 'error-cjs', 'output.ts'),
+    error: /is not an ES module/,
   },
 
   // Exports
@@ -343,9 +343,9 @@ const TESTS: TestCase[] = [
     },
   },
   {
-    title: 'skips: multi-argument runtime calls',
+    title: 'errors: throws on invalid argument count',
     fixture: path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'),
-    outputFixture: path.resolve(fixturesDir, 'error-argument-count', 'output.ts'),
+    error: /function accepts only a single param/,
   },
   {
     title: 'errors: throws on undefined',
