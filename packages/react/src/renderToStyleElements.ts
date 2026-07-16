@@ -12,14 +12,9 @@ import type { GriffelRenderer } from '@griffel/core';
  */
 export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[] {
   const stylesheets = Object.values(renderer.stylesheets).sort((a, b) => {
-    // Primary: bucket order. This keeps "@media" / "@container" sheets grouped, separated from each
-    // other, and always placed after regular styles before ordering within a bucket by its condition.
-    // It must come first: a user-supplied comparator only understands its own condition strings and
-    // can't be trusted to order empty/other-bucket values, so gating by bucket avoids scattering
-    // "@container" sheets throughout the output.
-    const bucketDiff = styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
-    if (bucketDiff !== 0) {
-      return bucketDiff;
+    const bucketNameDiff = styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
+    if (bucketNameDiff !== 0) {
+      return bucketNameDiff;
     }
 
     // Within the "@media" bucket, order by media query.
