@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Revert \"fix(transform): skip CommonJS files and multi-arg runtime calls\"",
+  "packageName": "@griffel/transform",
+  "email": "jakubmiskech@microsoft.com",
+  "dependentChangeType": "none"
+}
