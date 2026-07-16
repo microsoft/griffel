@@ -265,9 +265,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         const functionKind = importedName as FunctionKinds;
 
         if (node.arguments.length !== 1) {
-          // Multi-argument calls are the lower-level @griffel/core runtime form
-          // (e.g. makeStyles(styles, insertionFactory)), not the authoring API
-          // this transform rewrites, so skip them.
           return;
         }
 
