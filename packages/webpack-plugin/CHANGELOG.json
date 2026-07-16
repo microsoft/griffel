@@ -2,6 +2,21 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Thu, 16 Jul 2026 13:20:15 GMT",
+      "version": "4.0.8",
+      "tag": "@griffel/webpack-plugin_v4.0.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "jakubmiskech@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "7ca2f24fea3cbda33220c72c2a255cc8d31dfb14",
+            "comment": "fix: sort CSS rules by bucket order first so @container rules stay after regular styles and @media"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Jul 2026 09:13:33 GMT",
       "version": "4.0.7",
       "tag": "@griffel/webpack-plugin_v4.0.7",

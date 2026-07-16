@@ -2,6 +2,27 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Thu, 16 Jul 2026 13:20:15 GMT",
+      "version": "1.7.6",
+      "tag": "@griffel/react_v1.7.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "jakubmiskech@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "7ca2f24fea3cbda33220c72c2a255cc8d31dfb14",
+            "comment": "fix: sort SSR style elements by bucket order first so @container rules stay after regular styles and @media"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/react",
+            "comment": "Bump @griffel/sort-css-queries to v1.0.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Jul 2026 09:13:33 GMT",
       "version": "1.7.5",
       "tag": "@griffel/react_v1.7.5",

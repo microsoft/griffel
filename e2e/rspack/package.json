@@ -6,9 +6,9 @@
   "sideEffects": false,
   "dependencies": {
     "@griffel/e2e-utils": "*",
-    "@griffel/react": "^1.7.5",
-    "@griffel/webpack-extraction-plugin": "^0.5.20",
+    "@griffel/react": "^1.7.6",
+    "@griffel/webpack-extraction-plugin": "^0.5.21",
     "@griffel/webpack-loader": "^2.2.30",
-    "@griffel/webpack-plugin": "^4.0.7"
+    "@griffel/webpack-plugin": "^4.0.8"
   }
 }

@@ -1,8 +1,16 @@
 # Change Log - @griffel/webpack-extraction-plugin
 
-<!-- This log was last generated on Fri, 03 Jul 2026 09:13:33 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 16 Jul 2026 13:20:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.5.21
+
+Thu, 16 Jul 2026 13:20:15 GMT
+
+### Patches
+
+- fix: sort CSS rules by bucket order first so @container rules stay after regular styles and @media (jakubmiskech@microsoft.com)
 
 ## 0.5.20
 

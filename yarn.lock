@@ -3792,7 +3792,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/devtools@workspace:packages/devtools"
   dependencies:
-    "@griffel/react": "npm:^1.7.5"
+    "@griffel/react": "npm:^1.7.6"
   languageName: unknown
   linkType: soft
 
@@ -3807,10 +3807,10 @@ __metadata:
   resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
   dependencies:
     "@griffel/e2e-utils": "npm:*"
-    "@griffel/react": "npm:^1.7.5"
-    "@griffel/webpack-extraction-plugin": "npm:^0.5.20"
+    "@griffel/react": "npm:^1.7.6"
+    "@griffel/webpack-extraction-plugin": "npm:^0.5.21"
     "@griffel/webpack-loader": "npm:^2.2.30"
-    "@griffel/webpack-plugin": "npm:^4.0.7"
+    "@griffel/webpack-plugin": "npm:^4.0.8"
   languageName: unknown
   linkType: soft
 
@@ -3858,12 +3858,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/react@npm:^1.7.5, @griffel/react@workspace:packages/react":
+"@griffel/react@npm:^1.7.6, @griffel/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@griffel/react@workspace:packages/react"
   dependencies:
     "@griffel/core": "npm:^1.21.3"
-    "@griffel/sort-css-queries": "npm:^1.0.1"
+    "@griffel/sort-css-queries": "npm:^1.0.2"
     tslib: "npm:^2.1.0"
   peerDependencies:
     react: ">=16.14.0 <20.0.0"
@@ -3879,7 +3879,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/sort-css-queries@npm:^1.0.1, @griffel/sort-css-queries@workspace:packages/sort-css-queries":
+"@griffel/sort-css-queries@npm:^1.0.2, @griffel/sort-css-queries@workspace:packages/sort-css-queries":
   version: 0.0.0-use.local
   resolution: "@griffel/sort-css-queries@workspace:packages/sort-css-queries"
   dependencies:
@@ -3925,7 +3925,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/webpack-extraction-plugin@npm:^0.5.20, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
+"@griffel/webpack-extraction-plugin@npm:^0.5.21, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin"
   dependencies:
@@ -3953,7 +3953,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/webpack-plugin@npm:^4.0.7, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
+"@griffel/webpack-plugin@npm:^4.0.8, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:

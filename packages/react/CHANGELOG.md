@@ -1,8 +1,17 @@
 # Change Log - @griffel/react
 
-<!-- This log was last generated on Fri, 03 Jul 2026 09:13:33 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 16 Jul 2026 13:20:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.7.6
+
+Thu, 16 Jul 2026 13:20:15 GMT
+
+### Patches
+
+- fix: sort SSR style elements by bucket order first so @container rules stay after regular styles and @media (jakubmiskech@microsoft.com)
+- Bump @griffel/sort-css-queries to v1.0.2
 
 ## 1.7.5
 

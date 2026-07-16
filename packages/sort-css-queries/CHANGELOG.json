@@ -2,6 +2,21 @@
   "name": "@griffel/sort-css-queries",
   "entries": [
     {
+      "date": "Thu, 16 Jul 2026 13:20:15 GMT",
+      "version": "1.0.2",
+      "tag": "@griffel/sort-css-queries_v1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "jakubmiskech@microsoft.com",
+            "package": "@griffel/sort-css-queries",
+            "commit": "7ca2f24fea3cbda33220c72c2a255cc8d31dfb14",
+            "comment": "fix: restore container/media query comparator sorting logic"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Jul 2026 09:13:33 GMT",
       "version": "1.0.1",
       "tag": "@griffel/sort-css-queries_v1.0.1",
