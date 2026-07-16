@@ -58,12 +58,28 @@ function compareCSSRules(
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
   compareContainerQueries: GriffelRenderer['compareContainerQueries'] = compareMediaQueries,
 ): number {
-  return (
-    compareContainerQueries(a.container, b.container) ||
-    compareMediaQueries(a.media, b.media) ||
-    styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName] ||
-    a.priority - b.priority
-  );
+  const bucketNameDiff = styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName];
+  if (bucketNameDiff !== 0) {
+    return bucketNameDiff;
+  }
+
+  // Within the "@media" bucket, order by media query.
+  if (a.styleBucketName === 'm') {
+    const mediaDiff = compareMediaQueries(a.media, b.media);
+    if (mediaDiff !== 0) {
+      return mediaDiff;
+    }
+  }
+
+  // Within the "@container" bucket, order by container condition.
+  if (a.styleBucketName === 'x') {
+    const containerDiff = compareContainerQueries(a.container, b.container);
+    if (containerDiff !== 0) {
+      return containerDiff;
+    }
+  }
+
+  return a.priority - b.priority;
 }
 
 export function sortCSSRules(

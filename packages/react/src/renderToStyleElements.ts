@@ -12,15 +12,34 @@ import type { GriffelRenderer } from '@griffel/core';
  */
 export function renderToStyleElements(renderer: GriffelRenderer): ReactElement[] {
   const stylesheets = Object.values(renderer.stylesheets).sort((a, b) => {
-    return (
-      renderer.compareContainerQueries(
+    const bucketNameDiff = styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName);
+    if (bucketNameDiff !== 0) {
+      return bucketNameDiff;
+    }
+
+    // Within the "@media" bucket, order by media query.
+    if (a.bucketName === 'm') {
+      const mediaDiff = renderer.compareMediaQueries(
+        a.elementAttributes['media'] ?? '',
+        b.elementAttributes['media'] ?? '',
+      );
+      if (mediaDiff !== 0) {
+        return mediaDiff;
+      }
+    }
+
+    // Within the "@container" bucket, order by container condition.
+    if (a.bucketName === 'x') {
+      const containerDiff = renderer.compareContainerQueries(
         a.elementAttributes['data-container'] ?? '',
         b.elementAttributes['data-container'] ?? '',
-      ) ||
-      renderer.compareMediaQueries(a.elementAttributes['media'] ?? '', b.elementAttributes['media'] ?? '') ||
-      styleBucketOrdering.indexOf(a.bucketName) - styleBucketOrdering.indexOf(b.bucketName) ||
-      Number(a.elementAttributes['data-priority']) - Number(b.elementAttributes['data-priority'])
-    );
+      );
+      if (containerDiff !== 0) {
+        return containerDiff;
+      }
+    }
+
+    return Number(a.elementAttributes['data-priority']) - Number(b.elementAttributes['data-priority']);
   });
 
   return stylesheets
