@@ -234,6 +234,12 @@ function isRequireDeclarator(
   return false;
 }
 
+function isTypeScriptSyntaxError(error: any): boolean {
+  if (!error?.message) return false;
+
+  return error.message.includes('Missing initializer') || error.message.includes('Unexpected token');
+}
+
 export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<BabelPluginState>>((api, options) => {
   api.assertVersion(7);
 
@@ -308,12 +314,29 @@ export const transformPlugin = declare<Partial<BabelPluginOptions>, PluginObj<Ba
             }
 
             // Runs Babel AST processing or module evaluation for Node once for all arguments of makeStyles() calls once
-            evaluatePaths(
-              programPath,
-              state.file.opts.filename!,
-              state.definitionPaths.map(p => p.path),
-              pluginOptions,
-            );
+            try {
+              evaluatePaths(
+                programPath,
+                state.file.opts.filename!,
+                state.definitionPaths.map(p => p.path),
+                pluginOptions,
+              );
+            } catch (error: any) {
+              if (isTypeScriptSyntaxError(error)) {
+                throw programPath.buildCodeFrameError(
+                  `[Griffel] Failed to evaluate styles due to TypeScript syntax.
+Griffel's static evaluation received TypeScript code, which is not supported.
+
+Fix:
+- Ensure TypeScript is compiled before Griffel runs
+- Or adjust your Vite/plugin configuration
+
+Original error: ${error.message}`,
+                );
+              }
+
+              throw error;
+            }
 
             state.definitionPaths.forEach(definitionPath => {
               const callExpressionPath = definitionPath.path.findParent(parentPath =>
