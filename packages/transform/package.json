@@ -21,7 +21,7 @@
     "@griffel/core": "^1.21.3",
     "@griffel/transform-shaker": "^1.0.7",
     "debug": "^4.3.0",
-    "magic-string": "^0.30.19",
+    "magic-string": "^1.0.0",
     "oxc-parser": "^0.140.0",
     "oxc-walker": "^1.0.0"
   }

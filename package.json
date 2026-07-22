@@ -48,7 +48,7 @@
     "csstype": "^3.2.3",
     "debug": "^4.3.0",
     "enhanced-resolve": "^5.24.0",
-    "magic-string": "^0.30.19",
+    "magic-string": "^1.0.0",
     "oxc-parser": "^0.140.0",
     "oxc-resolver": "^11.24.2",
     "oxc-transform": "^0.140.0",
