@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump magic-string from 0.30.21 to 1.0.0",
+  "packageName": "@griffel/transform",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
