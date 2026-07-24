@@ -16,5 +16,48 @@
         }
       ]
     ]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "root": [".fq3r367{border-right:5px solid red ;}", ".f171p8tk{border-bottom:5px solid red;}"]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 3,
+          "column": 25,
+          "index": 71
+        },
+        "end": {
+          "line": 8,
+          "column": 2,
+          "index": 184
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "root": {
+          "start": {
+            "line": 4,
+            "column": 2,
+            "index": 86
+          },
+          "end": {
+            "line": 7,
+            "column": 3,
+            "index": 180
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

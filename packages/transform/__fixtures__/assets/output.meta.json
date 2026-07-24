@@ -8,5 +8,87 @@
       ".f___2{background-image:url(<griffel-asset>empty.jpg</griffel-asset>);}",
       ".f___3{filter:url(./a.svg#a);}"
     ]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "rootA": [".f___0{background-image:url(<griffel-asset>blank.jpg</griffel-asset>);}"],
+        "rootB": [".f___1{background-image:url(\"<griffel-asset>blank.jpg</griffel-asset>\");}"],
+        "rootC": [".f___2{background-image:url(<griffel-asset>empty.jpg</griffel-asset>);}"],
+        "assetWithHash": [".f___3{filter:url(./a.svg#a);}"]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 7,
+          "column": 25,
+          "index": 180
+        },
+        "end": {
+          "line": 12,
+          "column": 2,
+          "index": 394
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "rootA": {
+          "start": {
+            "line": 8,
+            "column": 2,
+            "index": 195
+          },
+          "end": {
+            "line": 8,
+            "column": 45,
+            "index": 238
+          }
+        },
+        "rootB": {
+          "start": {
+            "line": 9,
+            "column": 2,
+            "index": 242
+          },
+          "end": {
+            "line": 9,
+            "column": 56,
+            "index": 296
+          }
+        },
+        "rootC": {
+          "start": {
+            "line": 10,
+            "column": 2,
+            "index": 300
+          },
+          "end": {
+            "line": 10,
+            "column": 45,
+            "index": 343
+          }
+        },
+        "assetWithHash": {
+          "start": {
+            "line": 11,
+            "column": 2,
+            "index": 347
+          },
+          "end": {
+            "line": 11,
+            "column": 45,
+            "index": 390
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

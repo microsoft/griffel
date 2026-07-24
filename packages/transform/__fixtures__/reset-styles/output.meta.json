@@ -2,6 +2,74 @@
   "usedProcessing": true,
   "usedVMForEvaluation": false,
   "cssRulesByBucket": {
-    "r": [".rjefjbm{color:red;padding-left:4px;}", ".r7z97ji{color:red;padding-right:4px;}"]
+    "r": [".r14ksm7b{color:blue;}", ".rjefjbm{color:red;padding-left:4px;}", ".r7z97ji{color:red;padding-right:4px;}"]
+  },
+  "metadata": {
+    "cssEntries": {},
+    "cssResetEntries": {
+      "useStyles": [".rjefjbm{color:red;padding-left:4px;}", ".r7z97ji{color:red;padding-right:4px;}"],
+      "useOtherStyles": [".r14ksm7b{color:blue;}"]
+    },
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 4,
+          "column": 25,
+          "index": 115
+        },
+        "end": {
+          "line": 7,
+          "column": 2,
+          "index": 173
+        }
+      },
+      "useOtherStyles": {
+        "start": {
+          "line": 11,
+          "column": 23,
+          "index": 278
+        },
+        "end": {
+          "line": 13,
+          "column": 2,
+          "index": 315
+        }
+      }
+    },
+    "locations": {},
+    "resetLocations": {
+      "useStyles": {
+        "start": {
+          "line": 4,
+          "column": 41,
+          "index": 131
+        },
+        "end": {
+          "line": 7,
+          "column": 1,
+          "index": 172
+        }
+      },
+      "useOtherStyles": {
+        "start": {
+          "line": 11,
+          "column": 39,
+          "index": 294
+        },
+        "end": {
+          "line": 13,
+          "column": 1,
+          "index": 314
+        }
+      }
+    },
+    "commentDirectives": {},
+    "resetCommentDirectives": {
+      "useStyles": [["griffel-csslint-disable", "color-named"]],
+      "useOtherStyles": [
+        ["griffel-csslint-disable", "color-named"],
+        ["griffel-csslint-disable", "color-no-hex"]
+      ]
+    }
   }
 }

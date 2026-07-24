@@ -3,5 +3,48 @@
   "usedVMForEvaluation": false,
   "cssRulesByBucket": {
     "d": [".fe3e8s9{color:red;}"]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "root": [".fe3e8s9{color:red;}"]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 3,
+          "column": 25,
+          "index": 87
+        },
+        "end": {
+          "line": 5,
+          "column": 2,
+          "index": 130
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "root": {
+          "start": {
+            "line": 4,
+            "column": 2,
+            "index": 104
+          },
+          "end": {
+            "line": 4,
+            "column": 24,
+            "index": 126
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

@@ -4,5 +4,46 @@
   "cssRulesByBucket": {
     "r": [".rjrhw4c{color:red;}"],
     "s": ["@supports (display: flex){.rjrhw4c{color:pink;}}", "@media (min-width: 100px){.rjrhw4c{color:blue;}}"]
+  },
+  "metadata": {
+    "cssEntries": {},
+    "cssResetEntries": {
+      "useStyles": [
+        ".rjrhw4c{color:red;}",
+        "@supports (display: flex){.rjrhw4c{color:pink;}}",
+        "@media (min-width: 100px){.rjrhw4c{color:blue;}}"
+      ]
+    },
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 3,
+          "column": 25,
+          "index": 76
+        },
+        "end": {
+          "line": 7,
+          "column": 2,
+          "index": 212
+        }
+      }
+    },
+    "locations": {},
+    "resetLocations": {
+      "useStyles": {
+        "start": {
+          "line": 3,
+          "column": 41,
+          "index": 92
+        },
+        "end": {
+          "line": 7,
+          "column": 1,
+          "index": 211
+        }
+      }
+    },
+    "commentDirectives": {},
+    "resetCommentDirectives": {}
   }
 }
