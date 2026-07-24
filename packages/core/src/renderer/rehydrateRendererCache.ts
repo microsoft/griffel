@@ -35,11 +35,11 @@ export function rehydrateRendererCache(
     // the rules seen while rehydrating, so we can warn if the same rule appears in more than
     // one server-rendered <style> element — a strong signal that styles were flushed into the
     // HTML multiple times (see the warning emitted after the loop).
-    const seenRules: Set<string> | undefined = process.env.NODE_ENV !== 'production' ? new Set() : undefined;
+    const seenRules = new Set<string>();
     let duplicateRuleCount = 0;
 
     const cacheRule = (cssRule: string, bucketName: StyleBucketName) => {
-      if (seenRules) {
+      if (process.env.NODE_ENV !== 'production') {
         if (seenRules.has(cssRule)) {
           duplicateRuleCount++;
         } else {
@@ -107,10 +107,6 @@ export function rehydrateRendererCache(
           'the full stylesheet and the extra copies are streamed into <body>. Those stale copies can',
           'override styles inserted after a client-side navigation, making makeStyles() overrides lose',
           'to their makeResetStyles() base.',
-          '\n\n',
-          'Clear the renderer after each flush:',
-          '\n\n',
-          'useServerInsertedHTML(() => {\n  const styles = renderToStyleElements(renderer);\n  renderer.stylesheets = {};\n  return styles;\n});',
           '\n\n',
           'See https://griffel.js.org/react/guides/ssr-usage for details.',
         ].join(' '),
