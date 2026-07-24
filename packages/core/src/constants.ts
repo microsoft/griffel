@@ -52,6 +52,22 @@ export const HASH_PREFIX = 'f';
 /** @internal */
 export const RESET_HASH_PREFIX = 'r';
 
+/** @internal Prefix for hashed CSS variable names produced by createVar(). */
+export const VAR_HASH_PREFIX = 'fv';
+
+/** @internal Internal placeholder prefix. Must never leak to the DOM. */
+export const GRIFFEL_VAR_PLACEHOLDER_PREFIX = '--__g_var_p';
+
+/** @internal Internal placeholder suffix. */
+export const GRIFFEL_VAR_PLACEHOLDER_SUFFIX = '__';
+
+/**
+ * @internal
+ * Matches placeholder tokens like `--__g_var_p42__` anywhere in a string.
+ * The `g` flag is required because we replace all occurrences in a value.
+ */
+export const GRIFFEL_VAR_PLACEHOLDER_REGEX = /--__g_var_p\d+__/g;
+
 /** @internal */
 export const SEQUENCE_HASH_LENGTH = 7;
 
