@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "feat: add processAssets timing to the CSS extraction stats output",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
