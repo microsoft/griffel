@@ -1,0 +1,6 @@
+{
+  "customSyntax": "@griffel/postcss-syntax",
+  "rules": {
+    "selector-anb-no-unmatchable": true
+  }
+}

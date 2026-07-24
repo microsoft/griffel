@@ -3832,6 +3832,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@griffel/e2e-stylelint@workspace:e2e/stylelint":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-stylelint@workspace:e2e/stylelint"
+  languageName: unknown
+  linkType: soft
+
 "@griffel/e2e-typescript@workspace:e2e/typescript":
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-typescript@workspace:e2e/typescript"
