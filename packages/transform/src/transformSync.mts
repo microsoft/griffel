@@ -9,11 +9,9 @@ import {
   resolveStyleRulesForSlots,
   resolveResetStyleRules,
   resolveStaticStyleRules,
-  normalizeCSSBucketEntry,
   type GriffelStyle,
   type GriffelStaticStyles,
   type CSSRulesByBucket,
-  type CSSClassesMapBySlot,
   type GriffelResetStyle,
 } from '@griffel/core';
 
@@ -21,7 +19,8 @@ import { batchEvaluator } from './evaluation/batchEvaluator.mjs';
 import { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
 import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
-import type { StyleCall } from './types.mjs';
+import { generateMetadata, type ProcessedStyleCall } from './generateMetadata.mjs';
+import type { StyleCall, TransformMetadata } from './types.mjs';
 
 export type TransformOptions = {
   filename: string;
@@ -62,6 +61,7 @@ export type TransformResult = {
   usedProcessing: boolean;
   usedVMForEvaluation: boolean;
   perfIssues?: TransformPerfIssue[];
+  metadata?: TransformMetadata;
 };
 
 type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
@@ -88,73 +88,6 @@ const RUNTIME_IDENTIFIERS = new Map<FunctionKinds, string>([
   ['makeStaticStyles', '__staticCSS'],
 ]);
 
-/**
- * Extracts CSS rules from evaluated reset styles to metadata
- */
-function buildCSSResetEntriesMetadata(
-  cssResetEntries: Record<string, string[]>,
-  cssRules: string[] | CSSRulesByBucket,
-  declaratorId: string,
-) {
-  const cssRulesByBucket: CSSRulesByBucket = Array.isArray(cssRules) ? { d: cssRules } : cssRules;
-  cssResetEntries[declaratorId] ??= [];
-  cssResetEntries[declaratorId] = Object.values(cssRulesByBucket).flatMap(bucketEntries => {
-    return bucketEntries.map(bucketEntry => {
-      if (Array.isArray(bucketEntry)) {
-        throw new Error(
-          `CSS rules in buckets for "makeResetStyles()" should not contain arrays, got: ${JSON.stringify(
-            bucketEntry,
-          )})}`,
-        );
-      }
-
-      return bucketEntry;
-    });
-  });
-}
-
-/**
- * Extracts CSS rules from evaluated styles to metadata
- */
-function buildCSSEntriesMetadata(
-  cssEntries: Record<string, Record<string, string[]>>,
-  classnamesMapping: CSSClassesMapBySlot<string>,
-  cssRulesByBucket: CSSRulesByBucket,
-  declaratorId: string,
-) {
-  const classesBySlot: Record<string, string[]> = Object.fromEntries(
-    Object.entries(classnamesMapping).map(([slot, cssClassesMap]) => {
-      const uniqueClasses = new Set<string>();
-      Object.values(cssClassesMap).forEach(cssClasses => {
-        if (typeof cssClasses === 'string') {
-          uniqueClasses.add(cssClasses);
-        } else if (Array.isArray(cssClasses)) {
-          cssClasses.forEach(cssClass => uniqueClasses.add(cssClass));
-        }
-      });
-      return [slot, Array.from(uniqueClasses)];
-    }),
-  );
-
-  const cssRules: string[] = Object.values(cssRulesByBucket).flatMap(cssRulesByBucket => {
-    return cssRulesByBucket.map(bucketEntry => {
-      const [cssRule] = normalizeCSSBucketEntry(bucketEntry);
-      return cssRule;
-    });
-  });
-
-  cssEntries[declaratorId] = Object.fromEntries(
-    Object.entries(classesBySlot).map(([slot, cssClasses]) => {
-      return [
-        slot,
-        cssClasses.map(cssClass => {
-          return cssRules.find(rule => rule.includes(cssClass))!;
-        }),
-      ];
-    }),
-  );
-}
-
 function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRulesByBucket) {
   // eslint-disable-next-line guard-for-in
   for (const cssBucketName in bucketB) {
@@ -164,7 +97,9 @@ function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRule
     if (bucketA[bucketName]) {
       bucketA[bucketName].push(...bucketBEntries);
     } else {
-      bucketA[bucketName] = bucketBEntries;
+      // Copy instead of borrowing the reference: later calls push into `bucketA[bucketName]`,
+      // which would otherwise mutate the caller's array (and the CSS rules captured for metadata).
+      bucketA[bucketName] = [...bucketBEntries];
     }
   }
 
@@ -181,19 +116,19 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     filename,
     resolveModule,
     classNameHashSalt = '',
-    generateMetadata = false,
+    generateMetadata: shouldGenerateMetadata = false,
     importsToTransform = ['@griffel/core', '@griffel/react', '@fluentui/react-components'],
     functionsToTransform = ['makeStyles', 'makeResetStyles', 'makeStaticStyles'],
     evaluationRules = [{ action: perfIssues ? wrapWithPerfIssues(shakerEvaluator, perfIssues) : shakerEvaluator }],
     astEvaluationPlugins = [fluentTokensPlugin],
   } = options;
 
-  const importsToTransformSet = new Set(importsToTransform);
-  const functionsToTransformSet = new Set<FunctionKinds>(functionsToTransform);
-
   if (!filename) {
     throw new Error('Transform error: "filename" option is required');
   }
+
+  const importsToTransformSet = new Set(importsToTransform);
+  const functionsToTransformSet = new Set<FunctionKinds>(functionsToTransform);
 
   const parseResult = parseSync(filename, sourceCode);
 
@@ -215,7 +150,9 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const hasGriffelImports = parseResult.module.staticImports.some(
     si =>
       importsToTransformSet.has(si.moduleRequest.value) &&
-      si.entries.some(e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds)),
+      si.entries.some(
+        e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds),
+      ),
   );
 
   if (!hasGriffelImports) {
@@ -223,8 +160,10 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   }
 
   const styleCalls: StyleCall[] = [];
-  const cssEntries: Record<string, Record<string, string[]>> = {};
-  const cssResetEntries: Record<string, string[]> = {};
+
+  // Per-call metadata inputs, filled by index during processing to preserve source order and
+  // consumed by generateMetadata(); one entry per style call.
+  const processedStyleCalls: ProcessedStyleCall[] = [];
 
   let cssRulesByBucket: CSSRulesByBucket = {};
 
@@ -350,8 +289,12 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           const [classnamesMapping, resolvedCSSRules] = resolveStyleRulesForSlots(stylesBySlots, classNameHashSalt);
           const uniqueCSSRules = dedupeCSSRules(resolvedCSSRules);
 
-          if (generateMetadata) {
-            buildCSSEntriesMetadata(cssEntries, classnamesMapping, uniqueCSSRules, styleCall.declaratorId);
+          if (shouldGenerateMetadata) {
+            processedStyleCalls[i] = {
+              styleCall,
+              functionKind: 'makeStyles',
+              css: { classnamesMapping, resolvedCSSRules },
+            };
           }
 
           // Replace the function call arguments
@@ -366,8 +309,8 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           const styles = evaluationResult as GriffelResetStyle;
           const [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(styles, classNameHashSalt);
 
-          if (generateMetadata) {
-            buildCSSResetEntriesMetadata(cssResetEntries, cssRules, styleCall.declaratorId);
+          if (shouldGenerateMetadata) {
+            processedStyleCalls[i] = { styleCall, functionKind: 'makeResetStyles', css: cssRules };
           }
 
           // Replace the function call arguments
@@ -388,6 +331,10 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           const styles = evaluationResult as GriffelStaticStyles | GriffelStaticStyles[];
           const stylesSet: GriffelStaticStyles[] = Array.isArray(styles) ? styles : [styles];
           const cssRules = resolveStaticStyleRules(stylesSet);
+
+          if (shouldGenerateMetadata) {
+            processedStyleCalls[i] = { styleCall, functionKind: 'makeStaticStyles' };
+          }
 
           // Replace the function call arguments with the resolved CSS rules bucket
           magicString.overwrite(styleCall.argumentStart, styleCall.argumentEnd, JSON.stringify({ d: cssRules }));
@@ -421,5 +368,13 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
     usedProcessing: true,
     usedVMForEvaluation,
     perfIssues,
+    ...(shouldGenerateMetadata && {
+      metadata: generateMetadata({
+        source: sourceCode,
+        program: programAst,
+        comments: parseResult.comments,
+        processedStyleCalls,
+      }),
+    }),
   };
 }

@@ -23,7 +23,9 @@ const nodeResolve: TransformResolver = (id, opts) => {
     }
 
     return {
-      path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+      path: (
+        NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string }
+      )._resolveFilename(id, opts),
       builtin: false,
     };
   } finally {
@@ -58,11 +60,7 @@ const fixturesDir = path.join(__dirname, '..', '__fixtures__');
  *
  * Only applied when the meta output contains asset tags; other fixtures pass through unchanged.
  */
-function normalizeAssetOutputs(
-  code: string,
-  meta: string,
-  fixtureDir: string,
-): { code: string; meta: string } {
+function normalizeAssetOutputs(code: string, meta: string, fixtureDir: string): { code: string; meta: string } {
   if (meta.indexOf(ASSET_TAG_OPEN) === -1) {
     return { code, meta };
   }
@@ -250,7 +248,9 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
     transformOptions: {
-      evaluationRules: [{ action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default }],
+      evaluationRules: [
+        { action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default },
+      ],
     },
   },
 
@@ -426,4 +426,338 @@ export const useStyles = makeStyles({
       }
     });
   }
+});
+
+describe('transformSync: metadata', () => {
+  const transformWithMetadata = (sourceCode: string, filename = 'metadata.styles.ts') =>
+    transformSync(sourceCode, { filename, resolveModule: nodeResolve, generateMetadata: true });
+
+  it('does not return metadata unless "generateMetadata" is enabled', () => {
+    const sourceCode = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({ root: { color: 'red' } });
+`;
+
+    const result = transformSync(sourceCode, { filename: 'metadata.styles.ts', resolveModule: nodeResolve });
+
+    expect(result.metadata).toBeUndefined();
+  });
+
+  it('returns CSS entries and slot locations for makeStyles', () => {
+    const sourceCode = `
+    import type { GriffelStyle } from '@griffel/react'
+    import { makeStyles } from '@griffel/react';
+
+    const mixin = (): GriffelStyle => ({
+      marginTop: '4px',
+    })
+
+    export const useStyles = makeStyles({
+      root: {
+        color: 'red',
+        backgroundColor: 'green',
+        ...mixin()
+      }
+    })
+    `;
+
+    const result = transformWithMetadata(sourceCode, 'test.styles.ts');
+
+    expect(result.metadata!.cssEntries).toMatchInlineSnapshot(`
+      {
+        "useStyles": {
+          "root": [
+            ".fe3e8s9{color:red;}",
+            ".fcnqdeg{background-color:green;}",
+            ".fvjh0tl{margin-top:4px;}",
+          ],
+        },
+      }
+    `);
+    expect(result.metadata!.locations).toMatchInlineSnapshot(`
+      {
+        "useStyles": {
+          "root": {
+            "end": {
+              "column": 7,
+              "index": 317,
+              "line": 14,
+            },
+            "start": {
+              "column": 6,
+              "index": 227,
+              "line": 10,
+            },
+          },
+        },
+      }
+    `);
+  });
+
+  it('returns the call expression location for each makeStyles declarator', () => {
+    const sourceCode = `
+      import type { GriffelStyle } from "@griffel/react";
+      import { makeStyles } from "@griffel/react";
+
+      const mixin = (): GriffelStyle => ({
+        marginTop: "4px",
+      });
+
+      const styles = {
+        root: {
+          color: "red",
+          backgroundColor: "green",
+          ...mixin(),
+        },
+      };
+
+      export const useStyles1 = makeStyles(styles);
+      export const useStyles2 = makeStyles(styles);
+      `;
+
+    const result = transformWithMetadata(sourceCode, 'test.styles.ts');
+
+    expect(result.metadata!.cssEntries).toMatchInlineSnapshot(`
+      {
+        "useStyles1": {
+          "root": [
+            ".fe3e8s9{color:red;}",
+            ".fcnqdeg{background-color:green;}",
+            ".fvjh0tl{margin-top:4px;}",
+          ],
+        },
+        "useStyles2": {
+          "root": [
+            ".fe3e8s9{color:red;}",
+            ".fcnqdeg{background-color:green;}",
+            ".fvjh0tl{margin-top:4px;}",
+          ],
+        },
+      }
+    `);
+    expect(result.metadata!.callExpressionLocations).toMatchInlineSnapshot(`
+      {
+        "useStyles1": {
+          "end": {
+            "column": 50,
+            "index": 383,
+            "line": 17,
+          },
+          "start": {
+            "column": 32,
+            "index": 365,
+            "line": 17,
+          },
+        },
+        "useStyles2": {
+          "end": {
+            "column": 50,
+            "index": 435,
+            "line": 18,
+          },
+          "start": {
+            "column": 32,
+            "index": 417,
+            "line": 18,
+          },
+        },
+      }
+    `);
+  });
+
+  it('returns CSS reset entries, reset location and call location for makeResetStyles', () => {
+    const sourceCode = `
+      import { makeResetStyles } from "@griffel/react";
+
+      export const useResetStyles1 = makeResetStyles({
+        color: "red",
+        backgroundColor: "green",
+      });
+      export const useResetStyles2 = makeResetStyles({
+        color: "blue",
+      });
+      `;
+
+    const result = transformWithMetadata(sourceCode, 'test.styles.ts');
+
+    expect(result.metadata!.cssResetEntries).toMatchInlineSnapshot(`
+      {
+        "useResetStyles1": [
+          ".rbe9p1m{color:red;background-color:green;}",
+        ],
+        "useResetStyles2": [
+          ".r14ksm7b{color:blue;}",
+        ],
+      }
+    `);
+    expect(result.metadata!.resetLocations).toMatchInlineSnapshot(`
+      {
+        "useResetStyles1": {
+          "end": {
+            "column": 7,
+            "index": 176,
+            "line": 7,
+          },
+          "start": {
+            "column": 53,
+            "index": 111,
+            "line": 4,
+          },
+        },
+        "useResetStyles2": {
+          "end": {
+            "column": 7,
+            "index": 264,
+            "line": 10,
+          },
+          "start": {
+            "column": 53,
+            "index": 232,
+            "line": 8,
+          },
+        },
+      }
+    `);
+    expect(result.metadata!.callExpressionLocations).toMatchInlineSnapshot(`
+      {
+        "useResetStyles1": {
+          "end": {
+            "column": 8,
+            "index": 177,
+            "line": 7,
+          },
+          "start": {
+            "column": 37,
+            "index": 95,
+            "line": 4,
+          },
+        },
+        "useResetStyles2": {
+          "end": {
+            "column": 8,
+            "index": 265,
+            "line": 10,
+          },
+          "start": {
+            "column": 37,
+            "index": 216,
+            "line": 8,
+          },
+        },
+      }
+    `);
+  });
+
+  it('collects "griffel-" comment directives for makeStyles and makeResetStyles', () => {
+    const sourceCode = `
+    import { makeStyles, makeResetStyles } from '@griffel/react';
+
+    export const useStyles = makeStyles({
+      // griffel-csslint-disable foo
+      // griffel-csslint-disable bar
+      root: {
+        color: 'red',
+        backgroundColor: 'green',
+      },
+
+      // griffel-csslint-disable foo
+      foo: {
+        color: 'blue'
+      }
+    })
+
+    // griffel-csslint-disable foo
+    export const useResetStyles = makeResetStyles({
+      color: 'red',
+    })
+
+    // griffel-csslint-disable foo
+    // griffel-csslint-disable bar
+    const useResetStylesExportedLater = makeResetStyles({
+      color: 'red',
+    })
+
+    export { useResetStylesExportedLater };
+    `;
+
+    const result = transformWithMetadata(sourceCode, 'test.styles.ts');
+
+    expect(result.metadata!.commentDirectives).toMatchInlineSnapshot(`
+      {
+        "useStyles": {
+          "foo": [
+            [
+              "griffel-csslint-disable",
+              "foo",
+            ],
+          ],
+          "root": [
+            [
+              "griffel-csslint-disable",
+              "foo",
+            ],
+            [
+              "griffel-csslint-disable",
+              "bar",
+            ],
+          ],
+        },
+      }
+    `);
+    expect(result.metadata!.resetCommentDirectives).toMatchInlineSnapshot(`
+      {
+        "useResetStyles": [
+          [
+            "griffel-csslint-disable",
+            "foo",
+          ],
+        ],
+        "useResetStylesExportedLater": [
+          [
+            "griffel-csslint-disable",
+            "foo",
+          ],
+          [
+            "griffel-csslint-disable",
+            "bar",
+          ],
+        ],
+      }
+    `);
+  });
+
+  it('preserves source order of declarators (entries are not reversed)', () => {
+    const sourceCode = `
+import { makeStyles, makeResetStyles } from '@griffel/react';
+
+export const useFirst = makeStyles({ root: { color: 'red' } });
+export const useSecond = makeStyles({ root: { color: 'green' } });
+
+export const useFirstReset = makeResetStyles({ color: 'red' });
+export const useSecondReset = makeResetStyles({ color: 'green' });
+`;
+
+    const result = transformWithMetadata(sourceCode, 'order.styles.ts');
+
+    expect(Object.keys(result.metadata!.cssEntries)).toEqual(['useFirst', 'useSecond']);
+    expect(Object.keys(result.metadata!.cssResetEntries)).toEqual(['useFirstReset', 'useSecondReset']);
+  });
+
+  it('preserves source order of slots within makeStyles', () => {
+    const sourceCode = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({
+  alpha: { color: 'red' },
+  beta: { color: 'green' },
+  gamma: { color: 'blue' },
+});
+`;
+
+    const result = transformWithMetadata(sourceCode, 'slots.styles.ts');
+
+    expect(Object.keys(result.metadata!.cssEntries['useStyles'])).toEqual(['alpha', 'beta', 'gamma']);
+    expect(Object.keys(result.metadata!.locations['useStyles'])).toEqual(['alpha', 'beta', 'gamma']);
+  });
 });
