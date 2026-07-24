@@ -1,5 +1,7 @@
 import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core';
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
+import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
 import { createResolverFactory, type TransformResolverFactory } from './resolver/createResolverFactory.mjs';
@@ -62,23 +64,16 @@ function getAssetSourceContents(assetSource: sources.Source): string {
   return source.toString();
 }
 
-// https://github.com/webpack-contrib/mini-css-extract-plugin/blob/26334462e419026086856787d672b052cd916c62/src/index.js#L90
-type CSSModule = Module & {
-  content: Buffer;
-};
+// The loader request that produces Griffel CSS modules routes through this virtual loader
+// (see `webpackLoader.mts`), so its absolute path appears in the module identifier. Computed
+// once at module scope to mirror the loader and avoid recomputation on every module check.
+const virtualLoaderPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'virtual-loader', 'index.cjs');
 
-function isCSSModule(module: Module): module is CSSModule {
-  return module.type === 'css/mini-extract';
-}
-
+// Identify Griffel modules by the `virtual-loader` path in the module identifier instead of
+// scanning `module.content` for the `/** @griffel:css-start` marker — this avoids reading the
+// CSS buffer of every `css/mini-extract` module.
 function isGriffelCSSModuleInWebpack(module: Module): boolean {
-  if (isCSSModule(module)) {
-    if (Buffer.isBuffer(module.content)) {
-      return module.content.indexOf('/** @griffel:css-start') !== -1;
-    }
-  }
-
-  return false;
+  return module.type === 'css/mini-extract' && module.identifier().includes(virtualLoaderPath);
 }
 
 // Separator-agnostic match: on Windows the identifier can carry backslashes (the request is

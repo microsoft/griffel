@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "perf: detect Griffel CSS modules via virtual-loader identifier instead of scanning module content",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
