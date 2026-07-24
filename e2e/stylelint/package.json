@@ -1,0 +1,6 @@
+{
+  "name": "@griffel/e2e-stylelint",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module"
+}

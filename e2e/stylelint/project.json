@@ -1,0 +1,27 @@
+{
+  "name": "@griffel/e2e-stylelint",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "e2e/stylelint/src",
+  "projectType": "library",
+  "implicitDependencies": ["@griffel/postcss-syntax", "@griffel/babel-preset"],
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "dependsOn": [{ "target": "build", "dependencies": true }],
+      "options": {
+        "cwd": "e2e/stylelint",
+        "commands": [{ "command": "node src/test.ts" }]
+      },
+      "outputs": []
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "e2e/stylelint",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    }
+  },
+  "tags": []
+}
