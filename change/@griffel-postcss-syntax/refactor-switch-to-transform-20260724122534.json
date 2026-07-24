@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "refactor: switch from @griffel/babel-preset to @griffel/transform",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
