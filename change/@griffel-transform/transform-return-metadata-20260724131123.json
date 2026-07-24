@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: return metadata (CSS entries, source locations, comment directives) from transformSync when generateMetadata is enabled",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
