@@ -152,6 +152,7 @@ export class GriffelPlugin {
     string,
     { type: 'cjs-module' | 'barrel-export-star'; dependencyFilename: string; sourceFilenames: Set<string> }
   > = new Map();
+  #processAssetsTime: bigint = 0n;
 
   constructor(options: GriffelCSSExtractionPluginOptions = {}) {
     this.#attachToEntryPoint = options.unstable_attachToEntryPoint;
@@ -342,6 +343,8 @@ export class GriffelPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
+          const start = this.#collectStats ? process.hrtime.bigint() : 0n;
+
           const griffelChunk = compilation.namedChunks.get('griffel');
 
           if (typeof griffelChunk === 'undefined') {
@@ -362,6 +365,10 @@ export class GriffelPlugin {
           const cssSource = sortCSSRules([cssRulesByBucket], this.#compareMediaQueries, this.#compareContainerQueries);
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
+
+          if (this.#collectStats) {
+            this.#processAssetsTime = process.hrtime.bigint() - start;
+          }
         },
       );
 
@@ -388,21 +395,26 @@ export class GriffelPlugin {
             const fileCount = entries.length;
             const avgTime = fileCount > 0 ? totalTime / BigInt(fileCount) : 0n;
 
-            /* eslint-disable no-console */
-            console.log('\nGriffel CSS extraction stats:');
+            const astEntries = entries.filter(s => s[1].evaluationMode === 'ast');
+            const vmEntries = entries.filter(s => s[1].evaluationMode === 'vm');
+            const astTime = astEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
+            const vmTime = vmEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
+            const astHitPct = fileCount > 0 ? ((astEntries.length / fileCount) * 100).toFixed(1) + '%' : '0.0%';
 
-            console.log('------------------------------------');
-            console.log('Total time spent in Griffel loader:', logTime(totalTime));
-            console.log('Files processed:', fileCount);
-            console.log('Average time per file:', logTime(avgTime));
+            /* eslint-disable no-console */
+            console.log(`\n[Griffel] ${fileCount} files processed`);
             console.log(
-              'AST evaluation hit: ',
-              ((entries.filter(s => s[1].evaluationMode === 'ast').length / fileCount) * 100).toFixed(2) + '%',
+              `[Griffel] Loader: ${logTime(totalTime)} (AST ${logTime(astTime)} | VM ${logTime(vmTime)}), avg ${logTime(
+                avgTime,
+              )}/file, AST eval hit ${astHitPct}`,
             );
-            console.log('------------------------------------');
+            console.log(`[Griffel] Plugin: ${logTime(this.#processAssetsTime)}`);
+            console.log('');
 
             for (const [filename, info] of entries) {
-              console.log(`  ${logTime(info.time)} - ${filename} (evaluation mode: ${info.evaluationMode})`);
+              const time = logTime(info.time).padStart(6);
+              const mode = info.evaluationMode === 'vm' ? 'vm ' : 'ast';
+              console.log(`  ${time} ${mode} ${filename}`);
             }
 
             console.log();
@@ -415,16 +427,13 @@ export class GriffelPlugin {
             const barrelCount = issues.filter(i => i.type === 'barrel-export-star').length;
 
             /* eslint-disable no-console */
-            console.log('\nGriffel performance issues:');
-            console.log('------------------------------------');
-            console.log(`CJS modules (no tree-shaking): ${cjsCount}`);
-            console.log(`Barrel files with remaining export *: ${barrelCount}`);
-            console.log('------------------------------------');
+            console.log(`\n[Griffel] Perf issues: ${cjsCount} CJS (no tree-shaking), ${barrelCount} barrel (export *)`);
+            console.log('');
 
             for (const issue of issues) {
-              const tag = issue.type === 'cjs-module' ? 'cjs' : 'barrel';
+              const tag = issue.type === 'cjs-module' ? ' cjs' : 'barrel';
               const sources = Array.from(issue.sourceFilenames).join(', ');
-              console.log(`  [${tag}] ${issue.dependencyFilename} (source: ${sources})`);
+              console.log(`  ${tag} ${issue.dependencyFilename} (from: ${sources})`);
             }
 
             console.log();
