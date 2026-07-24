@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: add development warnings for hydration issues in `rehydrateRendererCache`",
+  "packageName": "@griffel/core",
+  "email": "vaclav.dvorak@ysoft.com",
+  "dependentChangeType": "patch"
+}
