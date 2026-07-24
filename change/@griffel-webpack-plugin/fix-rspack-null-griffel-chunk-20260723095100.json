@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: handle null \"griffel\" chunk in processAssets hook to avoid crash with Rspack",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
