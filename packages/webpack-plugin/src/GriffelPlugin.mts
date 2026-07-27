@@ -347,7 +347,7 @@ export class GriffelPlugin {
 
           const griffelChunk = compilation.namedChunks.get('griffel');
 
-          if (typeof griffelChunk === 'undefined') {
+          if (!griffelChunk) {
             return;
           }
 
