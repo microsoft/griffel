@@ -13,5 +13,61 @@
       ".f1e467oh{animation-name:f1q8eu9e,f19fnzg9;}",
       ".f1w9bd63{animation-name:f55c0se,f19fnzg9;}"
     ]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "single": [".f1g6ul6r{animation-name:f1q8eu9e;}", ".f1fp4ujf{animation-name:f55c0se;}"],
+        "multiple": [".f1e467oh{animation-name:f1q8eu9e,f19fnzg9;}", ".f1w9bd63{animation-name:f55c0se,f19fnzg9;}"]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 3,
+          "column": 25,
+          "index": 71
+        },
+        "end": {
+          "line": 22,
+          "column": 2,
+          "index": 456
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "single": {
+          "start": {
+            "line": 4,
+            "column": 2,
+            "index": 86
+          },
+          "end": {
+            "line": 9,
+            "column": 3,
+            "index": 213
+          }
+        },
+        "multiple": {
+          "start": {
+            "line": 10,
+            "column": 2,
+            "index": 217
+          },
+          "end": {
+            "line": 21,
+            "column": 3,
+            "index": 452
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

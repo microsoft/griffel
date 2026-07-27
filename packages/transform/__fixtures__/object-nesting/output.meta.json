@@ -5,5 +5,53 @@
     "d": [".f22iagw{display:flex;}", ".fh8e7tb .foo:hover{color:green;}"],
     "h": [".faf35ka:hover{color:red;}"],
     "f": [".f17t1d3d:focus:hover{color:blue;}"]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "root": [
+          ".f22iagw{display:flex;}",
+          ".faf35ka:hover{color:red;}",
+          ".f17t1d3d:focus:hover{color:blue;}",
+          ".fh8e7tb .foo:hover{color:green;}"
+        ]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 4,
+          "column": 25,
+          "index": 109
+        },
+        "end": {
+          "line": 13,
+          "column": 2,
+          "index": 292
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "root": {
+          "start": {
+            "line": 5,
+            "column": 2,
+            "index": 124
+          },
+          "end": {
+            "line": 12,
+            "column": 3,
+            "index": 288
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

@@ -3,5 +3,27 @@
   "usedVMForEvaluation": false,
   "cssRulesByBucket": {
     "d": ["body{background:red;}"]
+  },
+  "metadata": {
+    "cssEntries": {},
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStaticStyles": {
+        "start": {
+          "line": 3,
+          "column": 31,
+          "index": 83
+        },
+        "end": {
+          "line": 3,
+          "column": 76,
+          "index": 128
+        }
+      }
+    },
+    "locations": {},
+    "resetLocations": {},
+    "commentDirectives": {},
+    "resetCommentDirectives": {}
   }
 }

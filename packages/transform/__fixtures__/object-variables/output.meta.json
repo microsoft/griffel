@@ -11,5 +11,66 @@
       ".fjf1xye{margin-left:4px;}",
       ".f8zmjen{margin-right:4px;}"
     ]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "root": [".fe3e8s9{color:red;}", ".fycuoez{padding-left:4px;}", ".f8wuabp{padding-right:4px;}"],
+        "icon": [
+          ".fusgiwz{color:#000;}",
+          ".fcnqdeg{background-color:green;}",
+          ".fjf1xye{margin-left:4px;}",
+          ".f8zmjen{margin-right:4px;}"
+        ]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 6,
+          "column": 25,
+          "index": 140
+        },
+        "end": {
+          "line": 9,
+          "column": 2,
+          "index": 284
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "root": {
+          "start": {
+            "line": 7,
+            "column": 2,
+            "index": 155
+          },
+          "end": {
+            "line": 7,
+            "column": 47,
+            "index": 200
+          }
+        },
+        "icon": {
+          "start": {
+            "line": 8,
+            "column": 2,
+            "index": 204
+          },
+          "end": {
+            "line": 8,
+            "column": 78,
+            "index": 280
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

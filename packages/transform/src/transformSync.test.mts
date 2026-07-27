@@ -23,7 +23,9 @@ const nodeResolve: TransformResolver = (id, opts) => {
     }
 
     return {
-      path: (NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string })._resolveFilename(id, opts),
+      path: (
+        NativeModule as unknown as { _resolveFilename: (id: string, options: unknown) => string }
+      )._resolveFilename(id, opts),
       builtin: false,
     };
   } finally {
@@ -58,11 +60,7 @@ const fixturesDir = path.join(__dirname, '..', '__fixtures__');
  *
  * Only applied when the meta output contains asset tags; other fixtures pass through unchanged.
  */
-function normalizeAssetOutputs(
-  code: string,
-  meta: string,
-  fixtureDir: string,
-): { code: string; meta: string } {
+function normalizeAssetOutputs(code: string, meta: string, fixtureDir: string): { code: string; meta: string } {
   if (meta.indexOf(ASSET_TAG_OPEN) === -1) {
     return { code, meta };
   }
@@ -250,7 +248,9 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'config-evaluation-rules', 'output.ts'),
     transformOptions: {
-      evaluationRules: [{ action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default }],
+      evaluationRules: [
+        { action: require(path.resolve(fixturesDir, 'config-evaluation-rules', 'sampleEvaluator.cjs')).default },
+      ],
     },
   },
 
@@ -401,29 +401,44 @@ export const useStyles = makeStyles({
         return;
       }
 
-      const { code, cssRulesByBucket, usedProcessing, usedVMForEvaluation } = transformSync(sourceCode, {
+      const { code, cssRulesByBucket, metadata, usedProcessing, usedVMForEvaluation } = transformSync(sourceCode, {
         filename: testCase.fixture,
         resolveModule: nodeResolve,
+        generateMetadata: true,
         ...transformOptions,
       });
-      const outputCode = await format(code, { ...prettierConfig, parser: 'typescript' });
-      const outputMeta = await format(
-        JSON.stringify({ usedProcessing, usedVMForEvaluation, cssRulesByBucket }, null, 2),
-        {
-          ...prettierConfig,
-          parser: 'json',
-        },
+      const fixtureDir = path.dirname(testCase.fixture);
+      // Normalization shortens asset paths, so it has to happen before formatting to keep the
+      // committed fixtures stable under Prettier.
+      const normalized = normalizeAssetOutputs(
+        code,
+        JSON.stringify({ usedProcessing, usedVMForEvaluation, cssRulesByBucket, metadata }, null, 2),
+        fixtureDir,
       );
 
-      const fixtureDir = path.dirname(testCase.fixture);
-      const normalized = normalizeAssetOutputs(outputCode, outputMeta, fixtureDir);
+      const outputCode = await format(normalized.code, { ...prettierConfig, parser: 'typescript' });
+      const outputMeta = await format(normalized.meta, { ...prettierConfig, parser: 'json' });
 
-      await expect(normalized.code).toMatchFileSnapshot(testCase.outputFixture!);
-      await expect(normalized.meta).toMatchFileSnapshot(testCase.outputFixture!.replace(/\.ts$/, '.meta.json'));
+      await expect(outputCode).toMatchFileSnapshot(testCase.outputFixture!);
+      await expect(outputMeta).toMatchFileSnapshot(testCase.outputFixture!.replace(/\.ts$/, '.meta.json'));
 
       if (typeof teardown === 'function') {
         teardown?.();
       }
     });
   }
+});
+
+describe('transformSync: metadata', () => {
+  it('does not return metadata unless "generateMetadata" is enabled', () => {
+    const sourceCode = `
+import { makeStyles } from '@griffel/react';
+
+export const useStyles = makeStyles({ root: { color: 'red' } });
+`;
+
+    const result = transformSync(sourceCode, { filename: 'metadata.styles.ts', resolveModule: nodeResolve });
+
+    expect(result.metadata).toBeUndefined();
+  });
 });

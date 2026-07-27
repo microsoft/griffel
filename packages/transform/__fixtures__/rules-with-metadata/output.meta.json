@@ -10,5 +10,48 @@
         }
       ]
     ]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "media": ["@media screen and (max-width: 100px){.ful25cn{color:red;}}"]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 3,
+          "column": 25,
+          "index": 71
+        },
+        "end": {
+          "line": 9,
+          "column": 2,
+          "index": 175
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "media": {
+          "start": {
+            "line": 4,
+            "column": 2,
+            "index": 86
+          },
+          "end": {
+            "line": 8,
+            "column": 3,
+            "index": 171
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

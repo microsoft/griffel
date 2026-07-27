@@ -8,5 +8,65 @@
       ".f22iagw{display:flex;}",
       ".f1817uup{color:var(--colorBrandBackground);}"
     ]
+  },
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "root": [
+          ".f1734hy{background-color:black;}",
+          ".ff34w31{color:var(--colorPaletteBlueBorder2);}",
+          ".f22iagw{display:flex;}"
+        ],
+        "rootPrimary": [".f1817uup{color:var(--colorBrandBackground);}"]
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 4,
+          "column": 25,
+          "index": 112
+        },
+        "end": {
+          "line": 11,
+          "column": 2,
+          "index": 303
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "root": {
+          "start": {
+            "line": 5,
+            "column": 2,
+            "index": 127
+          },
+          "end": {
+            "line": 9,
+            "column": 3,
+            "index": 238
+          }
+        },
+        "rootPrimary": {
+          "start": {
+            "line": 10,
+            "column": 2,
+            "index": 242
+          },
+          "end": {
+            "line": 10,
+            "column": 59,
+            "index": 299
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
   }
 }

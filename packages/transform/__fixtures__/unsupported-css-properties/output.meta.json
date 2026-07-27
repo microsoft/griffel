@@ -1,5 +1,48 @@
 {
   "usedProcessing": true,
   "usedVMForEvaluation": false,
-  "cssRulesByBucket": {}
+  "cssRulesByBucket": {},
+  "metadata": {
+    "cssEntries": {
+      "useStyles": {
+        "root": []
+      }
+    },
+    "cssResetEntries": {},
+    "callExpressionLocations": {
+      "useStyles": {
+        "start": {
+          "line": 3,
+          "column": 25,
+          "index": 71
+        },
+        "end": {
+          "line": 16,
+          "column": 2,
+          "index": 576
+        }
+      }
+    },
+    "locations": {
+      "useStyles": {
+        "root": {
+          "start": {
+            "line": 6,
+            "column": 2,
+            "index": 183
+          },
+          "end": {
+            "line": 15,
+            "column": 3,
+            "index": 572
+          }
+        }
+      }
+    },
+    "resetLocations": {},
+    "commentDirectives": {
+      "useStyles": {}
+    },
+    "resetCommentDirectives": {}
+  }
 }
