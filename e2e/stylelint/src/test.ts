@@ -31,7 +31,8 @@ async function performTest() {
 
     const resolutions = [
       await packLocalPackage(rootDir, tempDir, '@griffel/postcss-syntax'),
-      await packLocalPackage(rootDir, tempDir, '@griffel/babel-preset'),
+      await packLocalPackage(rootDir, tempDir, '@griffel/transform-shaker'),
+      await packLocalPackage(rootDir, tempDir, '@griffel/transform'),
     ];
 
     await installPackages({
