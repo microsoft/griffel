@@ -120,7 +120,7 @@
     "eslint-plugin-storybook": "10.5.5",
     "highlight.js": "11.11.1",
     "js-beautify": "^2.0.3",
-    "jsdom": "~26.1.0",
+    "jsdom": "~30.0.0",
     "lz-string": "1.5.0",
     "memfs": "4.64.0",
     "mini-css-extract-plugin": "2.10.2",
