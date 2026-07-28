@@ -142,18 +142,18 @@ describe('makeStyles', () => {
     await expect(renderer).toMatchFormattedInlineSnapshot(`
       "/** bucket "k" {"data-priority":"0"} **/
       @keyframes f1q8eu9e {
-        from {
+        0% {
           transform: rotate(0deg);
         }
-        to {
+        100% {
           transform: rotate(360deg);
         }
       }
       @keyframes f55c0se {
-        from {
+        0% {
           transform: rotate(0deg);
         }
-        to {
+        100% {
           transform: rotate(-360deg);
         }
       }
@@ -262,16 +262,16 @@ describe('makeStyles', () => {
   it('handles "RESET" for rules removal', async () => {
     const computeClassesA = makeStyles({ root: { color: RESET } });
     const computeClassesB = makeStyles({ root: { backgroundColor: RESET } });
-    const computeClassesC = makeStyles({ root: { color: RESET, backgroundColor: '10px' } });
+    const computeClassesC = makeStyles({ root: { color: RESET, backgroundColor: 'red' } });
 
     expect(computeClassesA({ dir: 'ltr', renderer }).root).toEqual('___1oss4e0');
     expect(computeClassesB({ dir: 'ltr', renderer }).root).toEqual('___wi64bx0');
-    expect(computeClassesC({ dir: 'ltr', renderer }).root).toEqual('___1919hol fihdeyh');
+    expect(computeClassesC({ dir: 'ltr', renderer }).root).toEqual('___1cpd1sq f3xbvq9');
 
     await expect(renderer).toMatchFormattedInlineSnapshot(`
       "/** bucket "d" {"data-priority":"0"} **/
-      .fihdeyh {
-        background-color: 10px;
+      .f3xbvq9 {
+        background-color: red;
       }"
     `);
   });
