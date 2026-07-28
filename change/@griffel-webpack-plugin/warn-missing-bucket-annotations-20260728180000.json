@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "feat: warn when style bucket annotations are stripped from extracted CSS",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

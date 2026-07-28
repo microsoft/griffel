@@ -438,27 +438,76 @@ describe('GriffelCSSExtractionPlugin', () => {
 
   // Error reporting
   // --------------------
-  it(
-    'includes the offending filename in VM evaluation errors',
-    async () => {
-      const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'vm-error-trace');
-      const entryPath = path.resolve(fixturePath, 'code.ts');
+  it('warns when style bucket annotations are stripped from extracted CSS', async () => {
+    const entryPath = path.resolve(__dirname, '..', '__fixtures__', 'style-buckets', 'code.ts');
 
-      // Replace machine-specific paths and line numbers so snapshots are stable across environments
-      const repoRoot = path.resolve(__dirname, '../../..');
-      const normalize = (s: string) =>
-        s.split(repoRoot).join('<repo>').replace(/:\d+(:\d+)?/g, ':<line>');
+    // Emulates tools that remove comments from emitted CSS assets, for example
+    // "builtin:lightningcss-loader" that is enabled by default in Rsbuild
+    class StripCSSCommentsPlugin {
+      apply(compiler: WebpackCompiler) {
+        compiler.hooks.compilation.tap('StripCSSCommentsPlugin', compilation => {
+          compilation.hooks.processAssets.tap(
+            {
+              name: 'StripCSSCommentsPlugin',
+              // Runs before the stage used by GriffelPlugin to sort CSS rules
+              stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
+            },
+            assets => {
+              for (const assetName of Object.keys(assets)) {
+                if (!assetName.endsWith('.css')) {
+                  continue;
+                }
 
-      let error: WebpackStatsError | undefined;
+                const source = assets[assetName]
+                  .source()
+                  .toString()
+                  .replace(/\/\*[\s\S]*?\*\//g, '');
 
-      try {
-        await compileSourceWithWebpack(entryPath, {});
-      } catch (e) {
-        error = e as WebpackStatsError;
+                compilation.updateAsset(assetName, new compiler.webpack.sources.RawSource(source));
+              }
+            },
+          );
+        });
       }
+    }
 
-      expect(error).toBeDefined();
-      expect(normalize(error!.message)).toMatchInlineSnapshot(`
+    let warning: WebpackStatsError | undefined;
+
+    try {
+      // The harness rejects on warnings, so a rejection is the assertion target
+      await compileSourceWithWebpack(entryPath, {
+        webpackConfig: { plugins: [new StripCSSCommentsPlugin()] },
+      });
+    } catch (e) {
+      warning = e as WebpackStatsError;
+    }
+
+    expect(warning).toBeDefined();
+    expect(warning!.message).toContain('has no style bucket annotations');
+  });
+
+  it('includes the offending filename in VM evaluation errors', async () => {
+    const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'vm-error-trace');
+    const entryPath = path.resolve(fixturePath, 'code.ts');
+
+    // Replace machine-specific paths and line numbers so snapshots are stable across environments
+    const repoRoot = path.resolve(__dirname, '../../..');
+    const normalize = (s: string) =>
+      s
+        .split(repoRoot)
+        .join('<repo>')
+        .replace(/:\d+(:\d+)?/g, ':<line>');
+
+    let error: WebpackStatsError | undefined;
+
+    try {
+      await compileSourceWithWebpack(entryPath, {});
+    } catch (e) {
+      error = e as WebpackStatsError;
+    }
+
+    expect(error).toBeDefined();
+    expect(normalize(error!.message)).toMatchInlineSnapshot(`
         "Module build failed (from ./webpackLoader.vitest.cjs):
         <repo>/packages/transform/src/evaluation/module.mts:<line>
         			throw hostError;
@@ -480,7 +529,5 @@ describe('GriffelCSSExtractionPlugin', () => {
             at Module.evaluate (<repo>/packages/transform/src/evaluation/module.mts:<line>)
             at vmEvaluator (<repo>/packages/transform/src/evaluation/vmEvaluator.mts:<line>)"
       `);
-    },
-    15000,
-  );
+  }, 15000);
 });

@@ -362,6 +362,27 @@ export class GriffelPlugin {
           const cssContent = getAssetSourceContents(cssAssetSource);
           const { cssRulesByBucket, remainingCSS } = parseCSSRules(cssContent);
 
+          // WHAT?
+          //  The Griffel chunk contains only CSS produced by Griffel, that CSS is always wrapped with
+          //  "/** @griffel:css-start */" comments. If no rule was assigned to a bucket, these comments were stripped
+          //  by another tool in the CSS pipeline.
+          // WHY?
+          //  Without these comments rules cannot be sorted into style buckets and are emitted in module order, which
+          //  silently breaks precedence e.g. "makeResetStyles()" output ends up after "makeStyles()" output.
+          if (remainingCSS.length > 0 && Object.values(cssRulesByBucket).every(bucket => bucket.length === 0)) {
+            const warning = new compiler.webpack.WebpackError(
+              [
+                `Griffel CSS in "${cssAssetName}" has no style bucket annotations, CSS rules cannot be sorted and will`,
+                'be emitted in module order. This happens when another tool in your CSS pipeline removes comments.',
+                'For example, in Rsbuild set "tools.lightningcssLoader: false" as "builtin:lightningcss-loader"',
+                'strips them.',
+              ].join(' '),
+            );
+
+            warning.name = 'GriffelPluginWarning';
+            compilation.warnings.push(warning);
+          }
+
           const cssSource = sortCSSRules([cssRulesByBucket], this.#compareMediaQueries, this.#compareContainerQueries);
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
