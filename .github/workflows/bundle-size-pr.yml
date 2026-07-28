@@ -36,6 +36,8 @@ jobs:
         id: compare
         continue-on-error: true
         run: npx monosize compare-reports --branch main --output markdown --quiet > ./monosize.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Save PR number
         run: echo ${{ github.event.number }} > pr.txt

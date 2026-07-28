@@ -1,10 +1,11 @@
 import path from 'node:path';
-import upstashStorage from 'monosize-storage-upstash';
+import gitStorage from 'monosize-storage-git';
 import webpackBundler from 'monosize-bundler-webpack';
 
 const dirname = new URL('.', import.meta.url).pathname;
 
-export default {
+/** @type {import('monosize').MonoSizeConfig} */
+const config = {
   repository: 'https://github.com/microsoft/griffel',
   bundler: webpackBundler(config => ({
     ...config,
@@ -23,8 +24,12 @@ export default {
     },
   })),
   threshold: '1.5kB',
-  storage: upstashStorage({
-    url: 'https://welcome-giraffe-61766.upstash.io',
-    readonlyToken: 'AvFGAAIgcDHzHKwMeSqS_FCutK3bcM-AI7c7zSKbRYbAM14_ZiwUmg',
+  storage: gitStorage({
+    owner: 'microsoft',
+    repo: 'griffel',
+    workflowFileName: 'bundle-size-baseline.yml',
+    outputPath: path.resolve(dirname, './dist/monosize-report.json'),
   }),
 };
+
+export default config;
