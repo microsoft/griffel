@@ -4,9 +4,9 @@ End-to-end test that verifies [`@griffel/postcss-syntax`](../../packages/postcss
 wired into [stylelint](https://stylelint.io/) as a
 [custom syntax](https://stylelint.io/developer-guide/syntaxes) to lint Griffel CSS-in-JS files.
 
-The test packs the local `@griffel/postcss-syntax` and `@griffel/babel-preset` packages, installs
-`stylelint` into a temporary project, and runs `stylelint` (configured with the Griffel custom
-syntax) against `*.styles.ts` fixtures:
+The test packs the local `@griffel/postcss-syntax`, `@griffel/transform` and
+`@griffel/transform-shaker` packages, installs `stylelint` into a temporary project, and runs
+`stylelint` (configured with the Griffel custom syntax) against `*.styles.ts` fixtures:
 
 - **`green.styles.ts`** — a valid file, asserts stylelint reports no problems.
 - **`error.styles.ts`** — a `makeStyles` call with an unmatchable `:nth-child(0)` selector, asserts
