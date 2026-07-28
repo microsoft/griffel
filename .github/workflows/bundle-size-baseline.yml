@@ -29,7 +29,13 @@ jobs:
       - name: Measure all packages
         run: yarn nx run-many --all --target=bundle-size --nxBail
 
-      - name: Upload results
+      - name: Prepare report
         run: yarn monosize upload-report --branch main --commit-sha ${{ github.sha }}
-        env:
-          UPSTASH_WRITE_TOKEN: ${{ secrets.UPSTASH_WRITE_TOKEN }}
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: monosize-report
+          retention-days: 30
+          if-no-files-found: error
+          path: dist/monosize-report.json
