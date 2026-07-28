@@ -138,7 +138,6 @@
     "react-refresh": "^0.18.0",
     "react-shadow": "^20.6.0",
     "simple-git-hooks": "2.13.1",
-    "snapshot-diff": "0.10.0",
     "storybook": "10.5.5",
     "stylelint": "^17.14.0",
     "syncpack": "15.3.1",

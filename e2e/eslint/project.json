@@ -6,12 +6,8 @@
   "implicitDependencies": ["@griffel/eslint-plugin"],
   "targets": {
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vitest:test",
       "dependsOn": [{ "target": "build", "dependencies": true }],
-      "options": {
-        "cwd": "e2e/eslint",
-        "commands": [{ "command": "node src/test.ts" }]
-      },
       "outputs": []
     },
     "type-check": {
