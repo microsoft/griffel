@@ -5,15 +5,11 @@
   "projectType": "library",
   "targets": {
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vitest:test",
       "dependsOn": [
         { "target": "build", "dependencies": true },
         { "target": "build-cjs", "dependencies": true }
       ],
-      "options": {
-        "cwd": "e2e/rspack",
-        "commands": [{ "command": "node src/test.ts" }]
-      },
       "outputs": []
     },
     "type-check": {

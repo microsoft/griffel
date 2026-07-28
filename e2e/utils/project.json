@@ -4,6 +4,10 @@
   "sourceRoot": "e2e/utils/src",
   "projectType": "library",
   "targets": {
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": []
+    },
     "type-check": {
       "executor": "nx:run-commands",
       "options": {

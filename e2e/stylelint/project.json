@@ -6,12 +6,8 @@
   "implicitDependencies": ["@griffel/postcss-syntax", "@griffel/transform", "@griffel/transform-shaker"],
   "targets": {
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vitest:test",
       "dependsOn": [{ "target": "build", "dependencies": true }],
-      "options": {
-        "cwd": "e2e/stylelint",
-        "commands": [{ "command": "node src/test.ts" }]
-      },
       "outputs": []
     },
     "type-check": {

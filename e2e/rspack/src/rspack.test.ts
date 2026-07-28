@@ -1,14 +1,19 @@
 import {
-  compareSnapshots,
   configureYarn,
   copyAssets,
   createTempDir,
   installPackages,
   packLocalPackage,
+  removeTempDir,
   sh,
 } from '@griffel/e2e-utils';
 import fs from 'fs';
 import path from 'path';
+import prettier from 'prettier';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+
+const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..', '..');
+const SNAPSHOTS_DIR = path.resolve(import.meta.dirname, 'snapshots');
 
 // `@griffel/transform` (used by the modern plugin) embeds the absolute path of resolved assets
 // into the CSS rule before the class-name hash is computed, so any rule with a `url()` ends up
@@ -17,6 +22,23 @@ import path from 'path';
 // to a fixed placeholder so the snapshot survives across machines and tempdirs.
 function redactPathDependentClasses(css: string): string {
   return css.replace(/\.f[a-z0-9]+(?=\s*\{[^}]*\burl\()/g, '.PATH_DEPENDANT_REDACTED');
+}
+
+async function readEmittedCSS(tempDir: string): Promise<string> {
+  const distDir = path.resolve(tempDir, 'dist');
+  const distFiles = await fs.promises.readdir(distDir);
+  const cssFilename = distFiles.find(filename => filename.endsWith('.css') && filename.includes('griffel'));
+
+  expect(cssFilename, `Failed to find any matching CSS file in "${distDir}"`).toBeDefined();
+
+  const contents = await fs.promises.readFile(path.resolve(distDir, cssFilename as string), 'utf8');
+  // Remove meta info added by Rspack
+  const cleaned = contents.replace(/head{--webpack-rspack-(\d+)-(\w+)-(\d+):&_(\d+);}/, '');
+  const formatted = (await prettier.format(cleaned, { parser: 'css' })).trim();
+
+  // `toMatchFileSnapshot` compares against the raw file contents, so the trailing newline every
+  // text file ends with has to be part of the value being asserted.
+  return redactPathDependentClasses(formatted) + '\n';
 }
 
 type Scenario = {
@@ -93,26 +115,19 @@ const SCENARIOS: Scenario[] = [
   },
 ];
 
-async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
-  console.log('');
-  console.log('▶️', `Running scenario "${scenario.name}" (Rspack ${scenario.rspackVersion ?? 'workspace'})`);
-
+describe.each(SCENARIOS)('$name', scenario => {
   let tempDir: string;
 
-  try {
+  beforeAll(async () => {
     tempDir = createTempDir(scenario.name);
 
-    await copyAssets({
-      assetsPath: path.resolve(import.meta.dirname, 'shared'),
-      tempDir,
-    });
-    await copyAssets({
-      assetsPath: path.resolve(import.meta.dirname, 'scenarios', scenario.name),
-      tempDir,
-    });
-    await configureYarn({ tempDir, rootDir });
+    await copyAssets({ assetsPath: path.resolve(import.meta.dirname, 'shared'), tempDir });
+    await copyAssets({ assetsPath: path.resolve(import.meta.dirname, 'scenarios', scenario.name), tempDir });
+    await configureYarn({ tempDir, rootDir: ROOT_DIR });
 
-    const resolutions = await Promise.all(scenario.griffelPackages.map(pkg => packLocalPackage(rootDir, tempDir, pkg)));
+    const resolutions = await Promise.all(
+      scenario.griffelPackages.map(pkg => packLocalPackage(ROOT_DIR, tempDir, pkg)),
+    );
 
     const rspackPackages: (string | [name: string, version: string])[] = scenario.rspackVersion
       ? [
@@ -121,87 +136,22 @@ async function runScenario(scenario: Scenario, rootDir: string): Promise<void> {
         ]
       : ['@rspack/cli', '@rspack/core'];
 
-    console.log('ℹ️', `[${scenario.name}] Installing packages...`);
-
     await installPackages({
       packages: [...rspackPackages, 'react', 'react-dom', ...(scenario.npmPackages ?? [])],
       resolutions,
       npmResolutions: scenario.npmResolutions,
       tempDir,
-      rootDir,
+      rootDir: ROOT_DIR,
     });
-  } catch (e) {
-    console.error('❌', `[${scenario.name}] Setup failed:`);
-    console.error((e as Error)?.stack ?? e);
-    process.exit(1);
-  }
+  });
 
-  try {
-    await sh(`yarn rspack`, tempDir);
+  afterAll(() => removeTempDir(tempDir));
 
-    console.log('✅', `[${scenario.name}] Example project was successfully built with Rspack`);
-  } catch (e) {
-    console.error(e);
+  it('builds the example project with Rspack', async () => {
+    await expect(sh('yarn rspack', tempDir)).resolves.toBeTypeOf('string');
+  });
 
-    console.log('');
-    console.error('❌', `[${scenario.name}] Building a test project with Rspack failed.`);
-
-    process.exit(1);
-  }
-
-  try {
-    const distDir = path.resolve(tempDir, 'dist');
-    const distFiles = await fs.promises.readdir(distDir);
-
-    const cssFilename = distFiles.find(filename => filename.endsWith('.css') && filename.includes('griffel'));
-
-    if (!cssFilename) {
-      throw new Error(`Failed to find any matching CSS file in "${distDir}"`);
-    }
-
-    await compareSnapshots({
-      type: 'css',
-      snapshotFile: path.resolve(import.meta.dirname, 'snapshots', scenario.snapshotFile),
-      resultFile: path.resolve(distDir, cssFilename),
-      update: process.env['UPDATE_SNAPSHOTS'] === '1',
-      normalize: redactPathDependentClasses,
-    });
-
-    console.log('✅', `[${scenario.name}] Example project contains the same CSS as a snapshot`);
-  } catch (e) {
-    console.error(e);
-
-    console.log('');
-    console.error('❌', `[${scenario.name}] Validating CSS produced by Rspack build failed.`);
-
-    process.exit(1);
-  }
-}
-
-async function performTest() {
-  const rootDir = path.resolve(import.meta.dirname, '..', '..', '..');
-
-  const filter = process.env['SCENARIO']
-    ?.split(',')
-    .map(s => s.trim())
-    .filter(Boolean);
-
-  const scenariosToRun = filter?.length ? SCENARIOS.filter(s => filter.includes(s.name)) : SCENARIOS;
-
-  if (filter?.length) {
-    const missing = filter.filter(name => !SCENARIOS.some(s => s.name === name));
-    if (missing.length) {
-      console.error('❌', `Unknown scenario(s): ${missing.join(', ')}`);
-      console.error('   Known: ' + SCENARIOS.map(s => s.name).join(', '));
-      process.exit(1);
-    }
-  }
-
-  for (const scenario of scenariosToRun) {
-    await runScenario(scenario, rootDir);
-  }
-}
-
-(async () => {
-  await performTest();
-})();
+  it('emits CSS matching the snapshot', async () => {
+    await expect(await readEmittedCSS(tempDir)).toMatchFileSnapshot(path.resolve(SNAPSHOTS_DIR, scenario.snapshotFile));
+  });
+});
