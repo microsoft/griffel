@@ -9770,7 +9770,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.0, acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.14.1, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.5.0, acorn@npm:^8.9.0":
+"acorn@npm:^8.0.0, acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.5.0, acorn@npm:^8.9.0":
   version: 8.16.0
   resolution: "acorn@npm:8.16.0"
   bin:
@@ -13186,6 +13186,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-resolve@npm:^5.24.2":
+  version: 5.24.3
+  resolution: "enhanced-resolve@npm:5.24.3"
+  dependencies:
+    graceful-fs: "npm:^4.2.4"
+    tapable: "npm:^2.3.3"
+  checksum: 10/687023ac3231e9db322ba8064a3d4717d2a03c2238bd55457c491af4ceb5910b7ada809effc9e809bf15ce6752c83226851887d330a5009536575a4d55ec3baf
+  languageName: node
+  linkType: hard
+
 "enquirer@npm:2.3.6, enquirer@npm:~2.3.6":
   version: 2.3.6
   resolution: "enquirer@npm:2.3.6"
@@ -14913,8 +14923,8 @@ __metadata:
     memfs: "npm:4.64.0"
     mini-css-extract-plugin: "npm:2.10.2"
     monosize: "npm:0.10.0"
-    monosize-bundler-webpack: "npm:0.4.0"
-    monosize-storage-upstash: "npm:0.0.27"
+    monosize-bundler-webpack: "npm:0.4.1"
+    monosize-storage-upstash: "npm:0.0.28"
     nano-staged: "npm:~1.0.2"
     nx: "npm:23.0.1"
     oxc-parser: "npm:^0.140.0"
@@ -19028,31 +19038,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monosize-bundler-webpack@npm:0.4.0":
-  version: 0.4.0
-  resolution: "monosize-bundler-webpack@npm:0.4.0"
+"monosize-bundler-webpack@npm:0.4.1":
+  version: 0.4.1
+  resolution: "monosize-bundler-webpack@npm:0.4.1"
   dependencies:
-    monosize: "npm:^0.9.0"
-    terser: "npm:^5.47.0"
-    terser-webpack-plugin: "npm:^5.5.0"
+    monosize: "npm:^0.10.0"
+    terser: "npm:^5.49.0"
+    terser-webpack-plugin: "npm:^5.6.0"
     tslib: "npm:^2.4.1"
-    webpack: "npm:^5.106.2"
-  checksum: 10/81941fa7abd60af2a4da26eff968b1dfaa2437044b77bebcfc52875da384b697b6d10d12c4a26e4afaac971fe7d9550b9d7961311725d6698cd0d7d015e634ba
+    webpack: "npm:^5.108.3"
+  checksum: 10/5ca7d812dbdab81e17b8f583499ed3b5b192a3308469609ebd3479c90a85ee7435aa779627a5734c2dc9996ae4ce0b3aaa5cad2e1e842403cce9dde2996c6e5b
   languageName: node
   linkType: hard
 
-"monosize-storage-upstash@npm:0.0.27":
-  version: 0.0.27
-  resolution: "monosize-storage-upstash@npm:0.0.27"
+"monosize-storage-upstash@npm:0.0.28":
+  version: 0.0.28
+  resolution: "monosize-storage-upstash@npm:0.0.28"
   dependencies:
     "@upstash/redis": "npm:^1.38.0"
-    monosize: "npm:^0.9.0"
+    monosize: "npm:^0.10.0"
     tslib: "npm:^2.4.1"
-  checksum: 10/561db75bffbef62b0ccabc2ed3ea4e3069b6e3755cf00a7010951f4fd0ee02bb809cd20ab5b6c4080e72254686504c28325ca7a9687ce8b39587eec070469323
+  checksum: 10/f702d7b5eecdda2c174948131cf26967aef69cef60bf22e9c90ed7c2042a98ebaa24d33a0a785aa0c20ab47f30e38b18decc06d79e2d28442c3a66cf0e1509b9
   languageName: node
   linkType: hard
 
-"monosize@npm:0.10.0":
+"monosize@npm:0.10.0, monosize@npm:^0.10.0":
   version: 0.10.0
   resolution: "monosize@npm:0.10.0"
   dependencies:
@@ -19067,24 +19077,6 @@ __metadata:
   bin:
     monosize: bin/monosize.mjs
   checksum: 10/192319a74854feb4cb4fca0bd0d0fd49305ca38889b0197c738b89472eb152ba0fad22f85fb346ce8ae2fcdbd86b6da89eba7d06af7b7a0a670003c2c73ea10f
-  languageName: node
-  linkType: hard
-
-"monosize@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "monosize@npm:0.9.0"
-  dependencies:
-    acorn: "npm:^8.14.1"
-    ci-info: "npm:^4.2.0"
-    cli-table3: "npm:^0.6.5"
-    empathic: "npm:^2.0.0"
-    pretty-bytes: "npm:^7.1.0"
-    tinyglobby: "npm:^0.2.13"
-    tslib: "npm:^2.4.1"
-    yargs: "npm:^18.0.0"
-  bin:
-    monosize: bin/monosize.mjs
-  checksum: 10/44c720c4455541eac44b86a04bd81c8cfc745efea3ba48a7d59e9969d5a985c2821cfbd22aa70a3a3333924f9c936c4111454c9fd12044fede745d2bf2f63289
   languageName: node
   linkType: hard
 
@@ -23835,7 +23827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser-webpack-plugin@npm:^5.3.16, terser-webpack-plugin@npm:^5.3.9, terser-webpack-plugin@npm:^5.5.0":
+"terser-webpack-plugin@npm:^5.3.16, terser-webpack-plugin@npm:^5.3.9, terser-webpack-plugin@npm:^5.6.0":
   version: 5.6.1
   resolution: "terser-webpack-plugin@npm:5.6.1"
   dependencies:
@@ -23874,7 +23866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:^5.10.0, terser@npm:^5.15.1, terser@npm:^5.31.1, terser@npm:^5.47.0":
+"terser@npm:^5.10.0, terser@npm:^5.15.1, terser@npm:^5.31.1":
   version: 5.47.1
   resolution: "terser@npm:5.47.1"
   dependencies:
@@ -23885,6 +23877,20 @@ __metadata:
   bin:
     terser: bin/terser
   checksum: 10/16c0daea6ae38c4c9831b28d76a1c65475a6cadfbf7b89723e2adf0f9e6af1a58fecd0d541e4693c5ebfc999c188fddb0df7fa6fa4b3bccfd686f0b5c8f576e6
+  languageName: node
+  linkType: hard
+
+"terser@npm:^5.49.0":
+  version: 5.49.0
+  resolution: "terser@npm:5.49.0"
+  dependencies:
+    "@jridgewell/source-map": "npm:^0.3.3"
+    acorn: "npm:^8.15.0"
+    commander: "npm:^2.20.0"
+    source-map-support: "npm:~0.5.20"
+  bin:
+    terser: bin/terser
+  checksum: 10/f5c4fe514a5d5bbb712f2b9082bce2058c60d5fe06a4e8ba7ca9f223a3bd5e0789a43aafde023443ce6569752adabfc0908fc848c5cb1620007321256411fd30
   languageName: node
   linkType: hard
 
@@ -25123,6 +25129,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"webpack-sources@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "webpack-sources@npm:3.5.1"
+  checksum: 10/50b9699a3ab9a698e117d8a6b816235576f17e60aeca0a44269041773f960c3beb2ad10d07bc5f2ef8eebde3db5275c6a23566dad475db8f840a34a7bfabd2c3
+  languageName: node
+  linkType: hard
+
 "webpack-virtual-modules@npm:^0.6.2":
   version: 0.6.2
   resolution: "webpack-virtual-modules@npm:0.6.2"
@@ -25168,7 +25181,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.108.4, webpack@npm:^5.106.2, webpack@npm:^5.88.1, webpack@npm:^5.95.0":
+"webpack@npm:5.108.4, webpack@npm:^5.88.1, webpack@npm:^5.95.0":
   version: 5.108.4
   resolution: "webpack@npm:5.108.4"
   dependencies:
@@ -25200,6 +25213,39 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: 10/f93cbd33e76a0ba8b708600ca0be66f172dda8f3eff5d201e4a1021af38a5c5d6b57a5d7eaf9a525fbd383907a05d92c2a04b21839e509a03bcbd61f13fa6093
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.108.3":
+  version: 5.109.0
+  resolution: "webpack@npm:5.109.0"
+  dependencies:
+    "@types/estree": "npm:^1.0.8"
+    "@types/json-schema": "npm:^7.0.15"
+    "@webassemblyjs/ast": "npm:^1.14.1"
+    "@webassemblyjs/wasm-edit": "npm:^1.14.1"
+    "@webassemblyjs/wasm-parser": "npm:^1.14.1"
+    acorn: "npm:^8.16.0"
+    browserslist: "npm:^4.28.1"
+    chrome-trace-event: "npm:^1.0.2"
+    enhanced-resolve: "npm:^5.24.2"
+    es-module-lexer: "npm:^2.1.0"
+    eslint-scope: "npm:5.1.1"
+    events: "npm:^3.2.0"
+    graceful-fs: "npm:^4.2.11"
+    mime-db: "npm:^1.54.0"
+    minimizer-webpack-plugin: "npm:^5.6.1"
+    neo-async: "npm:^2.6.2"
+    schema-utils: "npm:^4.3.3"
+    tapable: "npm:^2.3.0"
+    watchpack: "npm:^2.5.2"
+    webpack-sources: "npm:^3.5.1"
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: 10/926e721ba027e62fcb97ef2455fcf9d0a40ac14805d3f6c5367b5e897c63e06fc2f8e2ac69814d192981cd7d72af4a195028cd8d827095ba78c7946195d7a4d2
   languageName: node
   linkType: hard
 
