@@ -116,12 +116,13 @@ module.exports = {
 
 ## Usage with Rspack
 
-`@griffel/webpack-plugin` is compatible with [Rspack](https://rspack.dev/). The same plugin and loader work with Rspack's webpack-compatible API. Note that Rspack has built-in CSS support via `experiments.css`, so `mini-css-extract-plugin` is not needed:
+`@griffel/webpack-plugin` is compatible with [Rspack](https://rspack.rs/). The same plugin and loader work with Rspack's webpack-compatible API. Note that Rspack has built-in CSS support via `experiments.css`, so `mini-css-extract-plugin` is not needed:
 
 ```js
 const { GriffelPlugin } = require('@griffel/webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   experiments: {
     css: true,
   },
@@ -132,11 +133,65 @@ module.exports = {
         exclude: /node_modules/,
         use: [{ loader: '@griffel/webpack-plugin/loader' }],
       },
+      // Required so that CSS assets produced by Griffel are handled by Rspack's native CSS support
+      {
+        test: /\.css$/,
+        type: 'css',
+      },
     ],
   },
   plugins: [new GriffelPlugin()],
 };
 ```
+
+Alternatively, [`CssExtractRspackPlugin`](https://rspack.rs/plugins/rspack/css-extract-rspack-plugin) can be used together with `css-loader` instead of `experiments.css`.
+
+:::caution Rspack limitations
+
+- `optimization.splitChunks` **must be enabled**, the plugin throws otherwise. It is enabled by default in `production` mode.
+- The `unstable_attachToEntryPoint` option is supported only with Webpack and throws with Rspack.
+
+:::
+
+## Usage with Rsbuild
+
+[Rsbuild](https://rsbuild.rs/) is built on top of Rspack, the plugin and the loader are added via [`tools.rspack`](https://rsbuild.rs/config/tools/rspack):
+
+```js
+import { defineConfig } from '@rsbuild/core';
+import { GriffelPlugin } from '@griffel/webpack-plugin';
+
+export default defineConfig({
+  tools: {
+    // 👇 required, see the caution below
+    lightningcssLoader: false,
+    rspack: {
+      module: {
+        rules: [
+          {
+            test: /\.(js|ts|tsx)$/,
+            exclude: /node_modules/,
+            use: [{ loader: '@griffel/webpack-plugin/loader' }],
+          },
+        ],
+      },
+      plugins: [new GriffelPlugin()],
+    },
+  },
+});
+```
+
+Rsbuild already enables Rspack's native CSS support and `optimization.splitChunks`, no extra configuration is required for them.
+
+:::caution `tools.lightningcssLoader` must be disabled
+
+Griffel annotates extracted CSS with `/** @griffel:css-start */` comments and relies on them to sort rules into style buckets. Rsbuild enables [`builtin:lightningcss-loader`](https://rsbuild.rs/config/tools/lightningcss-loader) by default, which strips comments. Without them CSS is emitted in module order, so, for example, `makeResetStyles()` output ends up after `makeStyles()` output and overrides it.
+
+The plugin emits a build warning when it detects this.
+
+:::
+
+Disabling `tools.lightningcssLoader` also disables automatic vendor prefixing, use [`postcss`](https://rsbuild.rs/config/tools/postcss) with `autoprefixer` if you need it. CSS minification is unaffected as it runs after the rules are sorted.
 
 ## Configuration
 
