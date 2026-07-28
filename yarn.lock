@@ -3828,7 +3828,7 @@ __metadata:
     "@griffel/react": "npm:^1.7.6"
     "@griffel/webpack-extraction-plugin": "npm:^0.5.21"
     "@griffel/webpack-loader": "npm:^2.2.30"
-    "@griffel/webpack-plugin": "npm:^4.0.8"
+    "@griffel/webpack-plugin": "npm:^4.0.9"
   languageName: unknown
   linkType: soft
 
@@ -3975,7 +3975,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/webpack-plugin@npm:^4.0.8, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
+"@griffel/webpack-plugin@npm:^4.0.9, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
