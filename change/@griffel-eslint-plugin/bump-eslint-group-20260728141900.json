@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump eslint, @typescript-eslint/utils and typescript-eslint",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
