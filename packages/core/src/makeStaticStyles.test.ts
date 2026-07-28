@@ -57,15 +57,15 @@ describe('makeStaticStyles', () => {
 
     useStyles({ renderer });
 
+    // Note: "src" is omitted from snapshots as JSDOM does not serialize this descriptor,
+    // see "resolveStaticStyleRules" tests for assertions on the produced CSS
     await expect(renderer).toMatchFormattedInlineSnapshot(`
       "/** bucket "d" {"data-priority":"0"} **/
       @font-face {
-        font-family: Open Sans;
-        src: url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
+        font-family: "Open Sans";
       }
       @font-face {
-        font-family: My Font;
-        src: url(my-font.woff);
+        font-family: "My Font";
       }"
     `);
   });
@@ -126,14 +126,15 @@ describe('makeStaticStyles', () => {
     useStaticStyles({ renderer });
     expect(useStyles({ dir: 'ltr', renderer }).root).toBe('___23yvam0_0000000 fy9yzz7 f4ybsrx');
 
+    // Note: "src" is omitted from snapshots as JSDOM does not serialize this descriptor,
+    // see "resolveStaticStyleRules" tests for assertions on the produced CSS
     await expect(renderer).toMatchFormattedInlineSnapshot(`
       "/** bucket "d" {"data-priority":"0"} **/
       @font-face {
-        font-family: Open Sans;
-        src: url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
+        font-family: "Open Sans";
       }
       .fy9yzz7 {
-        font-family: Open Sans;
+        font-family: "Open Sans";
       }
       .f4ybsrx {
         font-size: 16px;
