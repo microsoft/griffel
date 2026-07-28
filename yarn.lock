@@ -3922,7 +3922,7 @@ __metadata:
   resolution: "@griffel/transform-shaker@workspace:packages/transform-shaker"
   dependencies:
     debug: "npm:^4.3.0"
-    magic-string: "npm:^1.0.0"
+    magic-string: "npm:^1.1.0"
     oxc-parser: "npm:^0.140.0"
     oxc-transform: "npm:^0.140.0"
   languageName: unknown
@@ -3935,7 +3935,7 @@ __metadata:
     "@griffel/core": "npm:^1.21.3"
     "@griffel/transform-shaker": "npm:^1.0.7"
     debug: "npm:^4.3.0"
-    magic-string: "npm:^1.0.0"
+    magic-string: "npm:^1.1.0"
     oxc-parser: "npm:^0.140.0"
     oxc-walker: "npm:^1.0.0"
   languageName: unknown
@@ -14780,7 +14780,7 @@ __metadata:
     js-beautify: "npm:^2.0.3"
     jsdom: "npm:~26.1.0"
     lz-string: "npm:1.5.0"
-    magic-string: "npm:^1.0.0"
+    magic-string: "npm:^1.1.0"
     memfs: "npm:4.64.0"
     mini-css-extract-plugin: "npm:2.10.2"
     monosize: "npm:0.9.0"
@@ -17433,12 +17433,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "magic-string@npm:1.0.0"
+"magic-string@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "magic-string@npm:1.1.0"
   dependencies:
     "@jridgewell/sourcemap-codec": "npm:^1.5.5"
-  checksum: 10/5e5e5d7fa4750307c947aef7c715922edc46308d835af31bac6fd0f98b186059e942de6216bcdfbb12dc15a9305be4ba580ba71c97210e238e33d1850d7a8232
+  checksum: 10/01e9b5c05c3bfe219cf6ffe0d0f9158b1c72becfe4bfa8e4896122bcbd44665b10cdfbd2d0b9cd850fa0876a756f80c9cd47b4086a946e3022d73ad467490c8c
   languageName: node
   linkType: hard
 
