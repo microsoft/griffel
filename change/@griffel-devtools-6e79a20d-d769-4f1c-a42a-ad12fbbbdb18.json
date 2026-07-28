@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: drop unused `@nx/react` typings from the Storybook tsconfig",
+  "packageName": "@griffel/devtools",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
