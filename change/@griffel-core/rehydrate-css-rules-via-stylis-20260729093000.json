@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix(core): rehydrate CSS rules via stylis instead of regexps",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
