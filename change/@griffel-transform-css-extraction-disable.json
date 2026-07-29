@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: do not fail on files that cannot be processed and are marked to be skipped",
+  "packageName": "@griffel/transform",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

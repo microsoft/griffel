@@ -1,4 +1,4 @@
-import { parseSync, type Node } from 'oxc-parser';
+import { parseSync, type Node, type ParseResult } from 'oxc-parser';
 import { walk, ScopeTracker, type ScopeTrackerImport } from 'oxc-walker';
 import MagicString from 'magic-string';
 import shakerEvaluator from '@griffel/transform-shaker';
@@ -18,6 +18,7 @@ import {
 import { batchEvaluator } from './evaluation/batchEvaluator.mjs';
 import { fluentTokensPlugin } from './evaluation/fluentTokensPlugin.mjs';
 import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
+import { CSS_EXTRACTION_DISABLE_COMMENT } from './constants.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
 import { generateTransformMetadata, type ProcessedStyleCall } from './generateTransformMetadata.mjs';
 import type { StyleCall, TransformMetadata } from './types.mjs';
@@ -88,6 +89,14 @@ const RUNTIME_IDENTIFIERS = new Map<FunctionKinds, string>([
   ['makeStaticStyles', '__staticCSS'],
 ]);
 
+/**
+ * The marker is only recognized as the first comment of a file to keep it predictable: a mention
+ * of it anywhere else (including in a string) does not silently disable the extraction.
+ */
+function hasCSSExtractionDisableComment(parseResult: ParseResult): boolean {
+  return parseResult.comments[0]?.value.trim() === CSS_EXTRACTION_DISABLE_COMMENT;
+}
+
 function concatCSSRulesByBucket(bucketA: CSSRulesByBucket = {}, bucketB: CSSRulesByBucket) {
   // eslint-disable-next-line guard-for-in
   for (const cssBucketName in bucketB) {
@@ -134,6 +143,10 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
 
   if (parseResult.errors.length > 0) {
     throw new Error(`Failed to parse "${filename}": ${parseResult.errors.map(e => e.message).join(', ')}`);
+  }
+
+  if (hasCSSExtractionDisableComment(parseResult)) {
+    return { code: sourceCode, usedProcessing: false, usedVMForEvaluation: false };
   }
 
   if (parseResult.program.body.length > 0 && !parseResult.module.hasModuleSyntax) {

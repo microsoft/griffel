@@ -1,5 +1,8 @@
 'use client';
 
+// griffel-css-extraction-disable
+// These wrappers forward user styles to @griffel/core, there is nothing to extract ahead of time
+
 import { makeStaticStyles as vanillaMakeStaticStyles } from '@griffel/core';
 import type { GriffelStaticStyles, MakeStaticStylesOptions } from '@griffel/core';
 
