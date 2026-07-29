@@ -8,7 +8,7 @@
 // against rules that were meant to override it.
 //
 // jsdom cannot back these assertions: it neither resolves the cascade nor reports which of two
-// competing rules won, so the effects of a missed rule are only observable in a real browser.
+// competing rules won, so the ordering regression below is only observable in a real browser.
 
 import { beforeEach, describe, expect, test } from 'vitest';
 import { createDOMRenderer, makeStyles } from '../index.js';
@@ -76,7 +76,10 @@ describe('rehydrateRendererCache', () => {
       supports: { '@supports (display: grid)': { color: 'blue' } },
       container: { '@container slot (min-width: 480px)': { color: 'red' } },
       keyframes: { animationName: { from: { opacity: 0 }, to: { opacity: 1 } }, animationDuration: '1s' },
-      scope: { '@scope to (.a)': { color: 'red' } },
+      contentBrace: { ':after': { content: '"}"' } },
+      scopeA: { '@scope to (.a)': { color: 'red' } },
+      scopeB: { '@scope to (.b)': { color: 'blue' } },
+      scopeC: { '@scope to (.c)': { color: 'lime' } },
     };
     const useStyles = makeStyles(styles);
 
@@ -101,6 +104,7 @@ describe('rehydrateRendererCache', () => {
         ':hover': { color: 'blue' },
         '@media (min-width: 100px)': { color: 'lime' },
         '@scope to (.a)': { color: 'red' },
+        '@scope to (.b)': { color: 'blue' },
       },
     });
 
@@ -142,5 +146,57 @@ describe('rehydrateRendererCache', () => {
     expect(getColor(document.querySelector('[data-testid=root]')!)).toBe(COLORS.RED);
     expect(getColor(document.querySelector('[data-testid=scoped]')!)).toBe(COLORS.BLUE);
     expect(getColor(document.querySelector('[data-testid=outside]')!)).toBe(COLORS.BLACK);
+  });
+
+  // 🐛 Consecutive "@scope" rules used to defeat rehydration: a stateful global regex walked text
+  // that was being mutated in the same loop, so every "@scope" rule after the first was cached
+  // under a corrupted key while the real rule stayed unknown to the client.
+  test('does not re-insert consecutive "@scope" rules', () => {
+    const useStyles = makeStyles({
+      a: { '@scope to (.a)': { color: 'red' } },
+      b: { '@scope to (.b)': { color: 'blue' } },
+      c: { '@scope to (.c)': { color: 'lime' } },
+    });
+
+    const serverRenderer = createServerRenderer();
+    useStyles({ ...LTR, renderer: serverRenderer });
+    flushToDocument(serverRenderer);
+
+    const serverRenderedCSSRules = getInsertedCSSRules();
+    expect(serverRenderedCSSRules).toHaveLength(3);
+
+    const clientRenderer = createDOMRenderer(document);
+    rehydrateRendererCache(clientRenderer, document);
+    useStyles({ ...LTR, renderer: clientRenderer });
+
+    expect(getInsertedCSSRules()).toEqual(serverRenderedCSSRules);
+  });
+
+  // A missed rule is not only dead weight: re-inserting it appends it to the end of its bucket,
+  // past rules the client inserted after rehydration. Both rules here match at equal specificity
+  // and equal "@scope" proximity, so source order decides the winner — which makes the duplicate
+  // flip the resolved color.
+  test('a rule inserted after rehydration keeps winning over server-rendered rules', () => {
+    // Rendered first on the server so it is not the leading "@scope" rule of its bucket.
+    const useDecoyStyles = makeStyles({ root: { '@scope to (.decoy)': { color: 'lime' } } });
+    const useServerStyles = makeStyles({ root: { '@scope to (.never)': { color: 'red' } } });
+    const useClientStyles = makeStyles({ root: { '@scope to (.never)': { color: 'blue' } } });
+
+    const serverRenderer = createServerRenderer();
+    useDecoyStyles({ ...LTR, renderer: serverRenderer });
+    const serverClasses = useServerStyles({ ...LTR, renderer: serverRenderer });
+    flushToDocument(serverRenderer);
+
+    const clientRenderer = createDOMRenderer(document);
+    rehydrateRendererCache(clientRenderer, document);
+
+    // Inserted after rehydration, so it lands last in the bucket and must win…
+    const clientClasses = useClientStyles({ ...LTR, renderer: clientRenderer });
+    // …and re-rendering the server's styles must not append anything behind it.
+    useServerStyles({ ...LTR, renderer: clientRenderer });
+
+    render(`<div class="${serverClasses.root} ${clientClasses.root}" data-testid="el">x</div>`);
+
+    expect(getColor(document.querySelector('[data-testid=el]')!)).toBe(COLORS.BLUE);
   });
 });

@@ -23,13 +23,13 @@ describe('rehydrateRendererCache', () => {
     styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
 
     document.head.appendChild(styleElement);
-    styleElement.textContent = '.foo { color: red; }';
+    styleElement.textContent = '.foo{color:red;}';
 
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
-        ".foo { color: red; }": "d",
+        ".foo{color:red;}": "d",
       }
     `);
   });
@@ -41,13 +41,13 @@ describe('rehydrateRendererCache', () => {
     styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
 
     document.head.appendChild(styleElement);
-    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }';
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}';
 
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
-        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "d",
+        "@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}": "d",
       }
     `);
   });
@@ -59,13 +59,13 @@ describe('rehydrateRendererCache', () => {
     styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
 
     document.head.appendChild(styleElement);
-    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope:hover{color:cyan;} }';
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary){:scope:hover{color:cyan;}}';
 
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
-        "@scope (.f1ewl1kl) to (.boundary) { :scope:hover{color:cyan;} }": "h",
+        "@scope (.f1ewl1kl) to (.boundary){:scope:hover{color:cyan;}}": "h",
       }
     `);
   });
@@ -77,15 +77,95 @@ describe('rehydrateRendererCache', () => {
     styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
 
     document.head.appendChild(styleElement);
-    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }';
+    styleElement.textContent = '@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}';
 
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
-        "@scope (.f1ewl1kl) to (.boundary) { :scope .child{color:red;} }": "d",
+        "@scope (.f1ewl1kl) to (.boundary){:scope .child{color:red;}}": "d",
       }
     `);
+  });
+
+  // 🐛 A stateful global regex used to walk text that was being mutated inside the same loop, so
+  // every "@scope" rule after the first was cached under a corrupted key. The real rule stayed
+  // uncached and got inserted a second time on the client.
+  it('should rehydrate consecutive @scope rules in a single element', () => {
+    const cssRules = [
+      '@scope (.fa) to (.boundary){:scope .child{color:red;}}',
+      '@scope (.fb) to (.boundary){:scope .child{color:blue;}}',
+      '@scope (.fc) to (.boundary){:scope .child{color:lime;}}',
+    ];
+
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = cssRules.join('');
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(Object.keys(renderer.insertionCache)).toEqual(cssRules);
+  });
+
+  it('should rehydrate rules containing braces in values', () => {
+    const cssRules = ['.fa{content:"}";}', '.fb{color:red;}'];
+
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = cssRules.join('');
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(Object.keys(renderer.insertionCache)).toEqual(cssRules);
+  });
+
+  it('should rehydrate nested at-rules', () => {
+    const cssRules = ['@supports (display:grid){@media (min-width:100px){.fd{color:red;}}}', '@layer base,utils;'];
+
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 't');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = cssRules.join('');
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(Object.keys(renderer.insertionCache)).toEqual(cssRules);
+  });
+
+  // Rehydration re-parses with the same `compile()` + `stringify()` that produced the rules, so
+  // the recovered keys are the canonical ones the runtime will look up — even if the CSS reached
+  // the browser reformatted (an HTML minifier, a proxy, a prettifier). Matching literal bytes
+  // instead would miss every rule here.
+  it('should rehydrate CSS that was reformatted in transit', () => {
+    const styleElement = document.createElement('style');
+
+    styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
+    styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
+
+    document.head.appendChild(styleElement);
+    styleElement.textContent = '.foo {\n  color: red;\n}\n\n.bar {\n  color: blue;\n}\n';
+
+    rehydrateRendererCache(renderer, document);
+
+    expect(Object.keys(renderer.insertionCache)).toEqual(['.foo{color:red;}', '.bar{color:blue;}']);
+
+    // A cache hit means the client skips insertion, so the sheet does not grow.
+    const cssRuleCount = renderer.stylesheets['d0'].cssRules().length;
+
+    renderer.insertCSSRules({ d: ['.foo{color:red;}'] });
+
+    expect(renderer.stylesheets['d0'].cssRules()).toHaveLength(cssRuleCount);
   });
 
   it('should rehydrate @container rules in the x bucket', () => {
@@ -96,13 +176,13 @@ describe('rehydrateRendererCache', () => {
     styleElement.setAttribute(DATA_CONTAINER_ATTR, 'slot-container (min-width: 480px)');
 
     document.head.appendChild(styleElement);
-    styleElement.textContent = '@container slot-container (min-width: 480px) { .foo{color:red;} }';
+    styleElement.textContent = '@container slot-container (min-width: 480px){.foo{color:red;}}';
 
     rehydrateRendererCache(renderer, document);
 
     expect(renderer.insertionCache).toMatchInlineSnapshot(`
       {
-        "@container slot-container (min-width: 480px) { .foo{color:red;} }": "x",
+        "@container slot-container (min-width: 480px){.foo{color:red;}}": "x",
       }
     `);
   });
@@ -111,7 +191,7 @@ describe('rehydrateRendererCache', () => {
     // Older Griffel versions emitted "@container" rules under bucket "c" (no "data-container"
     // attribute, no sorting metadata). A newer client — which now routes container rules to the "x"
     // bucket — must still recognize that legacy SSR output so it does not insert a duplicate rule.
-    const cssRule = '@container slot-container (min-width: 480px) { .foo{color:red;} }';
+    const cssRule = '@container slot-container (min-width: 480px){.foo{color:red;}}';
 
     const styleElement = document.createElement('style');
     styleElement.setAttribute(DATA_BUCKET_ATTR, 'c');
@@ -162,7 +242,7 @@ describe('rehydrateRendererCache', () => {
       const styleElement = document.createElement('style');
       styleElement.setAttribute(DATA_BUCKET_ATTR, 'd');
       styleElement.setAttribute(DATA_PRIORITY_ATTR, '0');
-      styleElement.textContent = '.foo { color: red; }';
+      styleElement.textContent = '.foo{color:red;}';
       document.head.appendChild(styleElement);
     }
 
@@ -183,13 +263,13 @@ describe('rehydrateRendererCache', () => {
     const first = document.createElement('style');
     first.setAttribute(DATA_BUCKET_ATTR, 'd');
     first.setAttribute(DATA_PRIORITY_ATTR, '0');
-    first.textContent = '.foo { color: red; }';
+    first.textContent = '.foo{color:red;}';
     document.head.appendChild(first);
 
     const second = document.createElement('style');
     second.setAttribute(DATA_BUCKET_ATTR, 'd');
     second.setAttribute(DATA_PRIORITY_ATTR, '0');
-    second.textContent = '.bar { color: blue; }';
+    second.textContent = '.bar{color:blue;}';
     document.head.appendChild(second);
 
     rehydrateRendererCache(renderer, document);
