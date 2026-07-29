@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/vite-plugin",
+  "version": "0.1.16",
+  "description": "Vite plugin that performs CSS extraction for Griffel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "type": "module",
+  "main": "./src/index.mjs",
+  "types": "./src/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.mts",
+      "default": "./src/index.mjs"
+    },
+    "./package.json": "./package.json"
+  }
+}
