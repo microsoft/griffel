@@ -3855,6 +3855,13 @@ __metadata:
 "@griffel/vite-plugin@workspace:packages/vite-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/vite-plugin@workspace:packages/vite-plugin"
+  dependencies:
+    "@griffel/core": "npm:^1.21.3"
+    "@griffel/css-extraction-utils": "npm:^1.0.0"
+    "@griffel/transform": "npm:^3.0.7"
+    oxc-resolver: "npm:^11.24.2"
+  peerDependencies:
+    vite: ^8.0.0
   languageName: unknown
   linkType: soft
 

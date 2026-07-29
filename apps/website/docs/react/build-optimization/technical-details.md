@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Technical details
@@ -32,7 +32,7 @@ You can look at the graph below which describes what work is done during style r
 
 ```mermaid
 stateDiagram-v2
-    
+
 
     INVOKE_USE_STYLES: useStyles() invocation
     COMPUTE_RTL_STYLES: Compute RTL styles

@@ -1,0 +1,7 @@
+{
+  "type": "major",
+  "comment": "feat: reimplement the plugin to perform CSS extraction, the previous implementation based on \"@wyw-in-js/vite\" is gone",
+  "packageName": "@griffel/vite-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

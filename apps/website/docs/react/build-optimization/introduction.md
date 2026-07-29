@@ -18,3 +18,4 @@ It's designed to be used **only** in applications. It is reasonable to introduce
 ## What to use?
 
 - [Webpack / Rspack plugin](/react/build-optimization/with-webpack)
+- [Vite plugin](/react/build-optimization/with-vite)
