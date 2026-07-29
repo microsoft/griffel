@@ -109,6 +109,7 @@ const SCENARIOS: Scenario[] = [
       '@griffel/react',
       '@griffel/transform-shaker',
       '@griffel/transform',
+      '@griffel/css-extraction-utils',
       '@griffel/webpack-plugin',
     ],
     snapshotFile: 'modern-rspack-2.css',

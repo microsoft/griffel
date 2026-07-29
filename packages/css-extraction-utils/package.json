@@ -16,5 +16,10 @@
       "default": "./src/index.mjs"
     },
     "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@griffel/core": "^1.21.3",
+    "@griffel/transform": "^3.0.7",
+    "stylis": "^4.4.0"
   }
 }

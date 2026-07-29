@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@griffel/core": "^1.21.3",
+    "@griffel/css-extraction-utils": "^1.0.0",
     "@griffel/transform": "^3.0.7",
-    "oxc-resolver": "^11.24.2",
-    "stylis": "^4.4.0"
+    "oxc-resolver": "^11.24.2"
   },
   "peerDependencies": {
     "webpack": "^5"

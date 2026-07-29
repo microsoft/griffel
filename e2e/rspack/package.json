@@ -5,6 +5,7 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
+    "@griffel/css-extraction-utils": "^1.0.0",
     "@griffel/e2e-utils": "*",
     "@griffel/react": "^1.7.6",
     "@griffel/webpack-extraction-plugin": "^0.5.21",

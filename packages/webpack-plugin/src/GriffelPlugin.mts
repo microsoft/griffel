@@ -1,10 +1,9 @@
 import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core';
+import { createStatsCollector, parseCSSRules, sortCSSRules } from '@griffel/css-extraction-utils';
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
 import { PLUGIN_NAME, GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
 import { createResolverFactory, type TransformResolverFactory } from './resolver/createResolverFactory.mjs';
-import { parseCSSRules } from './utils/parseCSSRules.mjs';
-import { sortCSSRules } from './utils/sortCSSRules.mjs';
 
 // Webpack does not export these constants
 // https://github.com/webpack/webpack/blob/b67626c7b4ffed8737d195b27c8cea1e68d58134/lib/OptimizationStages.js#L8
@@ -136,31 +135,25 @@ function moveCSSModulesToGriffelChunk(compilation: Compilation) {
 
 export class GriffelPlugin {
   readonly #attachToEntryPoint: GriffelCSSExtractionPluginOptions['unstable_attachToEntryPoint'];
-  readonly #collectStats: boolean;
   readonly #collectPerfIssues: boolean;
   readonly #compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
   readonly #compareContainerQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareContainerQueries']>;
   readonly #resolverFactory: TransformResolverFactory;
-  readonly #stats: Record<
-    string,
-    {
-      time: bigint;
-      evaluationMode: 'ast' | 'vm';
-    }
-  > = {};
-  readonly #perfIssues: Map<
-    string,
-    { type: 'cjs-module' | 'barrel-export-star'; dependencyFilename: string; sourceFilenames: Set<string> }
-  > = new Map();
-  #processAssetsTime: bigint = 0n;
+  readonly #stats: ReturnType<typeof createStatsCollector>;
 
   constructor(options: GriffelCSSExtractionPluginOptions = {}) {
     this.#attachToEntryPoint = options.unstable_attachToEntryPoint;
-    this.#collectStats = options.collectStats ?? false;
     this.#collectPerfIssues = options.collectPerfIssues ?? false;
     this.#compareMediaQueries = options.compareMediaQueries ?? defaultCompareMediaQueries;
     this.#compareContainerQueries = options.compareContainerQueries ?? this.#compareMediaQueries;
     this.#resolverFactory = options.resolverFactory ?? createResolverFactory();
+    this.#stats = createStatsCollector({
+      collectStats: options.collectStats ?? false,
+      collectPerfIssues: this.#collectPerfIssues,
+
+      transformLabel: 'Loader',
+      extractionLabel: 'Plugin',
+    });
   }
 
   apply(compiler: Compiler): void {
@@ -254,38 +247,10 @@ export class GriffelPlugin {
             return css;
           },
           runWithTimer: cb => {
-            if (!this.#collectStats && !this.#collectPerfIssues) {
-              return cb().result;
-            }
-
-            const start = this.#collectStats ? process.hrtime.bigint() : 0n;
+            const startTime = this.#stats.now();
             const { meta, result } = cb();
 
-            if (this.#collectStats) {
-              const end = process.hrtime.bigint();
-
-              this.#stats[meta.filename] = {
-                time: end - start,
-                evaluationMode: meta.evaluationMode,
-              };
-            }
-
-            if (this.#collectPerfIssues && meta.perfIssues) {
-              for (const issue of meta.perfIssues) {
-                const key = `${issue.type}:${issue.dependencyFilename}`;
-                const existing = this.#perfIssues.get(key);
-
-                if (existing) {
-                  existing.sourceFilenames.add(meta.filename);
-                } else {
-                  this.#perfIssues.set(key, {
-                    type: issue.type,
-                    dependencyFilename: issue.dependencyFilename,
-                    sourceFilenames: new Set([meta.filename]),
-                  });
-                }
-              }
-            }
+            this.#stats.register(meta.filename, startTime, meta);
 
             return result;
           },
@@ -343,7 +308,7 @@ export class GriffelPlugin {
           stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
         },
         assets => {
-          const start = this.#collectStats ? process.hrtime.bigint() : 0n;
+          const startTime = this.#stats.now();
 
           const griffelChunk = compilation.namedChunks.get('griffel');
 
@@ -387,9 +352,7 @@ export class GriffelPlugin {
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
 
-          if (this.#collectStats) {
-            this.#processAssetsTime = process.hrtime.bigint() - start;
-          }
+          this.#stats.registerExtraction(startTime);
         },
       );
 
@@ -398,68 +361,7 @@ export class GriffelPlugin {
           name: PLUGIN_NAME,
         },
         () => {
-          if (this.#collectStats) {
-            const logTime = (time: bigint): string => {
-              if (time > 1_000_000n) {
-                return (time / 1_000_000n).toString() + 'ms';
-              }
-
-              if (time > 1_000n) {
-                return (time / 1_000n).toString() + 'μs';
-              }
-
-              return time.toString() + 'ns';
-            };
-
-            const entries = Object.entries(this.#stats).sort(([, a], [, b]) => Number(b.time - a.time));
-            const totalTime = entries.reduce((acc, cur) => acc + cur[1].time, 0n);
-            const fileCount = entries.length;
-            const avgTime = fileCount > 0 ? totalTime / BigInt(fileCount) : 0n;
-
-            const astEntries = entries.filter(s => s[1].evaluationMode === 'ast');
-            const vmEntries = entries.filter(s => s[1].evaluationMode === 'vm');
-            const astTime = astEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
-            const vmTime = vmEntries.reduce((acc, cur) => acc + cur[1].time, 0n);
-            const astHitPct = fileCount > 0 ? ((astEntries.length / fileCount) * 100).toFixed(1) + '%' : '0.0%';
-
-            /* eslint-disable no-console */
-            console.log(`\n[Griffel] ${fileCount} files processed`);
-            console.log(
-              `[Griffel] Loader: ${logTime(totalTime)} (AST ${logTime(astTime)} | VM ${logTime(vmTime)}), avg ${logTime(
-                avgTime,
-              )}/file, AST eval hit ${astHitPct}`,
-            );
-            console.log(`[Griffel] Plugin: ${logTime(this.#processAssetsTime)}`);
-            console.log('');
-
-            for (const [filename, info] of entries) {
-              const time = logTime(info.time).padStart(6);
-              const mode = info.evaluationMode === 'vm' ? 'vm ' : 'ast';
-              console.log(`  ${time} ${mode} ${filename}`);
-            }
-
-            console.log();
-            /* eslint-enable no-console */
-          }
-
-          if (this.#collectPerfIssues && this.#perfIssues.size > 0) {
-            const issues = Array.from(this.#perfIssues.values());
-            const cjsCount = issues.filter(i => i.type === 'cjs-module').length;
-            const barrelCount = issues.filter(i => i.type === 'barrel-export-star').length;
-
-            /* eslint-disable no-console */
-            console.log(`\n[Griffel] Perf issues: ${cjsCount} CJS (no tree-shaking), ${barrelCount} barrel (export *)`);
-            console.log('');
-
-            for (const issue of issues) {
-              const tag = issue.type === 'cjs-module' ? ' cjs' : 'barrel';
-              const sources = Array.from(issue.sourceFilenames).join(', ');
-              console.log(`  ${tag} ${issue.dependencyFilename} (from: ${sources})`);
-            }
-
-            console.log();
-            /* eslint-enable no-console */
-          }
+          this.#stats.print();
         },
       );
     });
