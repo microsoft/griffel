@@ -343,6 +343,11 @@ const TESTS: TestCase[] = [
     },
   },
   {
+    title: 'css extraction disabled by a comment on top of a file',
+    fixture: path.resolve(fixturesDir, 'css-extraction-disabled', 'code.ts'),
+    outputFixture: path.resolve(fixturesDir, 'css-extraction-disabled', 'output.ts'),
+  },
+  {
     title: 'errors: throws on invalid argument count',
     fixture: path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'),
     error: /function accepts only a single param/,

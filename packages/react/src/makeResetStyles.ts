@@ -1,5 +1,8 @@
 'use client';
 
+// griffel-css-extraction-disable
+// These wrappers forward user styles to @griffel/core, there is nothing to extract ahead of time
+
 import { makeResetStyles as vanillaMakeResetStyles } from '@griffel/core';
 import type { GriffelResetStyle } from '@griffel/core';
 
