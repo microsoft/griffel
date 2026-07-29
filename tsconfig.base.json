@@ -36,7 +36,8 @@
       "@griffel/sort-css-queries": ["packages/sort-css-queries/src/index.ts"],
       "@griffel/webpack-extraction-plugin": ["packages/webpack-extraction-plugin/src/index.ts"],
       "@griffel/webpack-loader": ["packages/webpack-loader/src/index.ts"],
-      "@griffel/webpack-plugin": ["packages/webpack-plugin/src/index.mts"]
+      "@griffel/webpack-plugin": ["packages/webpack-plugin/src/index.mts"],
+      "@griffel/vite-plugin": ["packages/vite-plugin/src/index.mts"]
     },
     "typeRoots": ["node_modules/@types", "./typings"]
   },
