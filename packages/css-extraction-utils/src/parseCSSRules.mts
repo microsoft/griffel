@@ -1,6 +1,8 @@
 import { styleBucketOrdering, type CSSBucketEntry, type CSSRulesByBucket, type StyleBucketName } from '@griffel/core';
 import { COMMENT, compile, serialize, stringify } from 'stylis';
 
+import { CSS_START_MARKER } from './constants.mjs';
+
 export function parseCSSRules(css: string) {
   const cssRulesByBucket = styleBucketOrdering.reduce<CSSRulesByBucket>((acc, styleBucketName) => {
     acc[styleBucketName] = [];
@@ -15,7 +17,7 @@ export function parseCSSRules(css: string) {
 
   for (const element of elements) {
     if (element.type === COMMENT) {
-      if (element.value.indexOf('/** @griffel:css-start') === 0) {
+      if (element.value.indexOf(CSS_START_MARKER) === 0) {
         cssBucketName = element.value.charAt(24) as StyleBucketName;
         cssMeta = JSON.parse(element.value.slice(27, -4));
 

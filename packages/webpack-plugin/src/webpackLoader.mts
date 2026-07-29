@@ -1,11 +1,10 @@
+import { generateCSSRules, resolveAssetPathsInCSSRules } from '@griffel/css-extraction-utils';
 import { EvalCache, transformSync, type TransformOptions, type TransformResult } from '@griffel/transform';
 import type * as webpack from 'webpack';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { GriffelCssLoaderContextKey, type SupplementedLoaderContext } from './constants.mjs';
-import { generateCSSRules } from './utils/generateCSSRules.mjs';
-import { resolveAssetPathsInCSSRules } from './utils/resolveAssetPaths.mjs';
 
 export type WebpackLoaderOptions = Omit<TransformOptions, 'filename' | 'generateMetadata' | 'resolveModule'>;
 

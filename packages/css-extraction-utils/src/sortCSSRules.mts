@@ -53,42 +53,49 @@ export function getUniqueRulesFromSets(setOfCSSRules: CSSRulesByBucket[]): RuleE
 }
 
 function compareCSSRules(
-  a: RuleEntry,
-  b: RuleEntry,
+  entryA: RuleEntry,
+  entryB: RuleEntry,
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
+  // Container queries default to the same comparator as media queries.
   compareContainerQueries: GriffelRenderer['compareContainerQueries'] = compareMediaQueries,
 ): number {
-  const bucketNameDiff = styleBucketOrderingMap[a.styleBucketName] - styleBucketOrderingMap[b.styleBucketName];
-  if (bucketNameDiff !== 0) {
-    return bucketNameDiff;
+  // Primary: bucket order. This keeps "@media" / "@container" rules grouped, separated from each
+  // other, and always placed after regular styles before ordering within a bucket by its condition.
+  // It must come first: a user-supplied comparator only understands its own condition strings and
+  // can't be trusted to order empty/other-bucket values, so gating by bucket avoids scattering
+  // "@container" rules throughout the output.
+  const bucketDiff = styleBucketOrderingMap[entryA.styleBucketName] - styleBucketOrderingMap[entryB.styleBucketName];
+  if (bucketDiff !== 0) {
+    return bucketDiff;
   }
 
   // Within the "@media" bucket, order by media query.
-  if (a.styleBucketName === 'm') {
-    const mediaDiff = compareMediaQueries(a.media, b.media);
+  if (entryA.styleBucketName === 'm') {
+    const mediaDiff = compareMediaQueries(entryA.media, entryB.media);
     if (mediaDiff !== 0) {
       return mediaDiff;
     }
   }
 
   // Within the "@container" bucket, order by container condition.
-  if (a.styleBucketName === 'x') {
-    const containerDiff = compareContainerQueries(a.container, b.container);
+  if (entryA.styleBucketName === 'x') {
+    const containerDiff = compareContainerQueries(entryA.container, entryB.container);
     if (containerDiff !== 0) {
       return containerDiff;
     }
   }
 
-  return a.priority - b.priority;
+  return entryA.priority - entryB.priority;
 }
 
 export function sortCSSRules(
   setOfCSSRules: CSSRulesByBucket[],
   compareMediaQueries: GriffelRenderer['compareMediaQueries'],
+  // Container queries default to the same comparator as media queries.
   compareContainerQueries: GriffelRenderer['compareContainerQueries'] = compareMediaQueries,
 ): string {
-  const entries = getUniqueRulesFromSets(setOfCSSRules).sort((a, b) =>
-    compareCSSRules(a, b, compareMediaQueries, compareContainerQueries),
+  const entries = getUniqueRulesFromSets(setOfCSSRules).sort((entryA, entryB) =>
+    compareCSSRules(entryA, entryB, compareMediaQueries, compareContainerQueries),
   );
 
   let result = '';

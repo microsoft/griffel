@@ -1,5 +1,7 @@
 import { type CSSRulesByBucket, normalizeCSSBucketEntry } from '@griffel/core';
 
+import { CSS_START_MARKER } from './constants.mjs';
+
 export function generateCSSRules(cssRulesByBucket: CSSRulesByBucket): string {
   const entries = Object.entries(cssRulesByBucket);
 
@@ -22,7 +24,7 @@ export function generateCSSRules(cssRulesByBucket: CSSRulesByBucket): string {
           cssLines.push('/** @griffel:css-end **/');
         }
 
-        cssLines.push(`/** @griffel:css-start [${cssBucketName}] ${metadataAsJSON} **/`);
+        cssLines.push(`${CSS_START_MARKER} [${cssBucketName}] ${metadataAsJSON} **/`);
         lastEntryKey = entryKey;
       }
 

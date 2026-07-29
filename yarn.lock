@@ -3700,9 +3700,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/css-extraction-utils@workspace:packages/css-extraction-utils":
+"@griffel/css-extraction-utils@npm:^1.0.0, @griffel/css-extraction-utils@workspace:packages/css-extraction-utils":
   version: 0.0.0-use.local
   resolution: "@griffel/css-extraction-utils@workspace:packages/css-extraction-utils"
+  dependencies:
+    "@griffel/core": "npm:^1.21.3"
+    "@griffel/transform": "npm:^3.0.7"
+    stylis: "npm:^4.4.0"
   languageName: unknown
   linkType: soft
 
@@ -3724,6 +3728,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
   dependencies:
+    "@griffel/css-extraction-utils": "npm:^1.0.0"
     "@griffel/e2e-utils": "npm:*"
     "@griffel/react": "npm:^1.7.6"
     "@griffel/webpack-extraction-plugin": "npm:^0.5.21"
@@ -3886,9 +3891,9 @@ __metadata:
   resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@griffel/core": "npm:^1.21.3"
+    "@griffel/css-extraction-utils": "npm:^1.0.0"
     "@griffel/transform": "npm:^3.0.7"
     oxc-resolver: "npm:^11.24.2"
-    stylis: "npm:^4.4.0"
   peerDependencies:
     webpack: ^5
   languageName: unknown

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: consume shared utils from @griffel/css-extraction-utils",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
