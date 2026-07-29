@@ -1,0 +1,20 @@
+{
+  "name": "@griffel/css-extraction-utils",
+  "version": "1.0.0",
+  "description": "Shared utils to perform CSS extraction in Griffel bundler integrations",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/griffel"
+  },
+  "type": "module",
+  "main": "./src/index.mjs",
+  "types": "./src/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.mts",
+      "default": "./src/index.mjs"
+    },
+    "./package.json": "./package.json"
+  }
+}

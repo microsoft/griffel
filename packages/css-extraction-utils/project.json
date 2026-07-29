@@ -1,0 +1,51 @@
+{
+  "name": "@griffel/css-extraction-utils",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/css-extraction-utils/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/css-extraction-utils",
+        "tsConfig": "packages/css-extraction-utils/tsconfig.lib.json",
+        "skipTypeField": true,
+        "packageJson": "packages/css-extraction-utils/package.json",
+        "main": "packages/css-extraction-utils/src/index.mts",
+        "assets": [
+          "packages/css-extraction-utils/README.md",
+          {
+            "glob": "LICENSE.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/css-extraction-utils",
+        "commands": [
+          {
+            "command": "tsc -b --pretty"
+          }
+        ]
+      },
+      "outputs": []
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "{projectRoot}/../../coverage/packages/css-extraction-utils"
+      }
+    }
+  }
+}

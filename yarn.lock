@@ -3700,6 +3700,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@griffel/css-extraction-utils@workspace:packages/css-extraction-utils":
+  version: 0.0.0-use.local
+  resolution: "@griffel/css-extraction-utils@workspace:packages/css-extraction-utils"
+  languageName: unknown
+  linkType: soft
+
 "@griffel/devtools@workspace:packages/devtools":
   version: 0.0.0-use.local
   resolution: "@griffel/devtools@workspace:packages/devtools"
