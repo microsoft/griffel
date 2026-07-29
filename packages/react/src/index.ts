@@ -1,7 +1,13 @@
 'use client';
 
-export { RESET, shorthands, mergeClasses, createDOMRenderer } from '@griffel/core';
-export type { GriffelStyle, GriffelResetStyle, CreateDOMRendererOptions, GriffelRenderer } from '@griffel/core';
+export { RESET, shorthands, mergeClasses, createDOMRenderer, createVar } from '@griffel/core';
+export type {
+  GriffelStyle,
+  GriffelResetStyle,
+  GriffelVar,
+  CreateDOMRendererOptions,
+  GriffelRenderer,
+} from '@griffel/core';
 
 export { makeStyles } from './makeStyles.js';
 export { makeResetStyles } from './makeResetStyles.js';

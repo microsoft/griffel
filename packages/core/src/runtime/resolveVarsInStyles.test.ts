@@ -1,0 +1,134 @@
+import { describe, it, expect, vi } from 'vitest';
+import { createVar, __internal_getResolvedName } from '../createVar.js';
+import { resolveVarsInStyles } from './resolveVarsInStyles.js';
+import { VAR_HASH_PREFIX } from '../constants.js';
+
+describe('resolveVarsInStyles', () => {
+  it('returns the input unchanged when no placeholders are present', () => {
+    const styles = { color: 'red' };
+    const result = resolveVarsInStyles(styles, '');
+    expect(result).toBe(styles); // same ref — fast path
+  });
+
+  it('rewrites a placeholder key to a --fv-* name', () => {
+    const colorVar = createVar();
+    const styles = { [`${colorVar}`]: 'blue' };
+    const result = resolveVarsInStyles(styles, '');
+
+    const keys = Object.keys(result);
+    expect(keys).toHaveLength(1);
+    expect(keys[0].startsWith(`--${VAR_HASH_PREFIX}-`)).toBe(true);
+    expect(result[keys[0]]).toEqual('blue');
+  });
+
+  it('rewrites placeholders inside string values (e.g. var(--placeholder))', () => {
+    const colorVar = createVar();
+    const placeholder = `${colorVar}`;
+    const styles = {
+      [placeholder]: 'blue',
+      color: `var(${placeholder})`,
+    };
+    const result = resolveVarsInStyles(styles, '');
+
+    const resolvedName = __internal_getResolvedName(placeholder);
+    expect(resolvedName).toBeDefined();
+    expect(result).toEqual({
+      [resolvedName!]: 'blue',
+      color: `var(${resolvedName})`,
+    });
+  });
+
+  it('produces the same final output for two identical runs (SSR-equivalence)', () => {
+    const v1 = createVar();
+    const v2 = createVar();
+
+    const run = (placeholderA: string, placeholderB: string) =>
+      resolveVarsInStyles({ [placeholderA]: 'blue', color: `var(${placeholderA})`, [placeholderB]: '10px' }, '');
+
+    const first = run(`${v1}`, `${v2}`);
+    const second = run(`${v1}`, `${v2}`);
+    expect(Object.keys(second)).toEqual(Object.keys(first));
+    expect(second).toEqual(first);
+  });
+
+  it('reuses an already-resolved var across blocks (first-definer-wins)', () => {
+    const shared = createVar();
+    const blockA = { [`${shared}`]: 'red' };
+    const blockB = { color: `var(${shared})` };
+
+    const resolvedA = resolveVarsInStyles(blockA, '');
+    const resolvedName = Object.keys(resolvedA)[0];
+
+    const resolvedB = resolveVarsInStyles(blockB, '');
+    expect(resolvedB.color).toEqual(`var(${resolvedName})`);
+  });
+
+  it('handles placeholders nested inside selector blocks', () => {
+    const colorVar = createVar();
+    const placeholder = `${colorVar}`;
+    const styles = {
+      color: `var(${placeholder})`,
+      ':hover': {
+        [placeholder]: 'red',
+      },
+    };
+    const result = resolveVarsInStyles(styles, '') as Record<string, unknown>;
+    const resolvedName = __internal_getResolvedName(placeholder);
+    expect(result['color']).toEqual(`var(${resolvedName})`);
+    expect(result[':hover']).toEqual({ [resolvedName!]: 'red' });
+  });
+
+  it('rewrites placeholders inside array-valued styles (fallback values)', () => {
+    const colorVar = createVar();
+    const placeholder = `${colorVar}`;
+    const styles = {
+      color: [`var(${placeholder})`, 'red'],
+    };
+    const result = resolveVarsInStyles(styles, '') as Record<string, unknown>;
+    const resolvedName = __internal_getResolvedName(placeholder);
+    expect(resolvedName).toBeDefined();
+    expect(result['color']).toEqual([`var(${resolvedName})`, 'red']);
+  });
+});
+
+describe('resolveVarsInStyles + resolveStyleRules integration', () => {
+  it('resolveStyleRules produces CSS with resolved var names, not placeholders', async () => {
+    const { resolveStyleRules } = await import('./resolveStyleRules.js');
+    const colorVar = createVar();
+    const placeholder = `${colorVar}`;
+
+    const [classes, buckets] = resolveStyleRules({
+      [placeholder]: 'blue',
+      color: `var(${placeholder})`,
+    });
+
+    const allCss = JSON.stringify(buckets);
+    expect(allCss).not.toMatch(/--__g_var_p\d+__/);
+    const resolvedName = __internal_getResolvedName(placeholder);
+    expect(resolvedName).toBeDefined();
+    expect(allCss).toContain(resolvedName!);
+    // classes map should be non-empty
+    expect(Object.keys(classes).length).toBeGreaterThan(0);
+  });
+});
+
+describe('resolveVarsInStyles SSR equivalence (true module isolation)', () => {
+  it('two independent module loads produce the same final var name', async () => {
+    const runOnce = async () => {
+      vi.resetModules();
+      const mod = await import('../createVar.js');
+      const { resolveVarsInStyles: fresh } = await import('./resolveVarsInStyles.js');
+      const v = mod.createVar();
+      const placeholder = `${v}`;
+      const styles = { [placeholder]: 'blue', color: `var(${placeholder})` };
+      const result = fresh(styles, '') as Record<string, unknown>;
+      return Object.keys(result).find(k => k.startsWith('--fv-'))!;
+    };
+
+    const nameA = await runOnce();
+    const nameB = await runOnce();
+
+    expect(nameA).toEqual(nameB);
+    expect(nameA).toMatch(/^--fv-[\w-]+-0$/);
+  });
+});

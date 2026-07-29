@@ -60,6 +60,7 @@ export { safeInsertRule } from './renderer/safeInsertRule.js';
 export { mergeClasses } from './mergeClasses.js';
 export { makeStyles } from './makeStyles.js';
 export type { MakeStylesOptions } from './makeStyles.js';
+export { createVar } from './createVar.js';
 export { makeStaticStyles } from './makeStaticStyles.js';
 export type { MakeStaticStylesOptions } from './makeStaticStyles.js';
 export { makeResetStyles } from './makeResetStyles.js';
@@ -94,6 +95,8 @@ export type {
   GriffelStyle,
   // Reset styles
   GriffelResetStyle,
+  // Variables
+  GriffelVar,
   // Internal types
 } from '@griffel/style-types';
 
