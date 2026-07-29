@@ -2,11 +2,14 @@ import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 
+import { logStep } from './step.ts';
+
 export function createTempDir(prefix: string) {
+  const startedAt = Date.now();
   // `mkdtempSync` appends 6 random characters to the provided prefix path
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), `${prefix}-`));
 
-  console.log('✅', `Temporary directory created under ${tempDir}`);
+  logStep(`Temporary directory created under ${tempDir}`, startedAt);
 
   return tempDir;
 }

@@ -13,6 +13,9 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..', '..');
 const RULE = 'selector-anb-no-unmatchable';
 
+/** Linting a single fixture file measures well under a second. */
+const STYLELINT_TIMEOUT = 15_000;
+
 describe('stylelint with @griffel/postcss-syntax', () => {
   let tempDir: string;
 
@@ -22,7 +25,10 @@ describe('stylelint with @griffel/postcss-syntax', () => {
    */
   async function lint(file: string): Promise<{ passed: boolean; output: string }> {
     try {
-      return { passed: true, output: await sh(`npx stylelint ${file}`, tempDir, true) };
+      return {
+        passed: true,
+        output: await sh(`npx stylelint ${file}`, tempDir, { pipeOutputToResult: true, timeout: STYLELINT_TIMEOUT }),
+      };
     } catch (e) {
       return { passed: false, output: (e as Error).message };
     }
