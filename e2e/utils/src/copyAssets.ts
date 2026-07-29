@@ -1,18 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 
+import { step } from './step.ts';
+
 export async function copyAssets(options: { assetsPath: string; tempDir: string; renames?: Record<string, string> }) {
   const { assetsPath, tempDir, renames } = options;
 
-  await fs.promises.cp(assetsPath, tempDir, { recursive: true });
+  await step('Assets were copied', async () => {
+    await fs.promises.cp(assetsPath, tempDir, { recursive: true });
 
-  if (renames) {
-    await Promise.all(
-      Object.entries(renames).map(([source, target]) =>
-        fs.promises.rename(path.resolve(tempDir, source), path.resolve(tempDir, target)),
-      ),
-    );
-  }
-
-  console.log('✅', 'Assets were copied');
+    if (renames) {
+      await Promise.all(
+        Object.entries(renames).map(([source, target]) =>
+          fs.promises.rename(path.resolve(tempDir, source), path.resolve(tempDir, target)),
+        ),
+      );
+    }
+  });
 }

@@ -13,7 +13,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..', '..');
 
 /** Linting a single fixture file measures well under a second. */
-const ESLINT_TIMEOUT = 60_000;
+const ESLINT_TIMEOUT = 15_000;
 
 describe('@griffel/eslint-plugin with a flat config', () => {
   let tempDir: string;

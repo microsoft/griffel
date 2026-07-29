@@ -4,3 +4,4 @@ export { createTempDir, removeTempDir } from './createTempDir.ts';
 export { packLocalPackage } from './packLocalPackage.ts';
 export { installPackages } from './installPackages.ts';
 export { sh } from './sh.ts';
+export { logStep, step } from './step.ts';

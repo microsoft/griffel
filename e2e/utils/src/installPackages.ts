@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { sh } from './sh.ts';
+import { step } from './step.ts';
 
 /**
  * Registry metadata for a handful of packages, resolved against the repository's own lockfile.
@@ -82,7 +83,7 @@ export async function installPackages(options: {
   };
 
   await fs.promises.writeFile(packageJsonPath, JSON.stringify(newPackageJson, null, 2));
-  await sh('yarn install', tempDir, { pipeOutputToResult: true, timeout: YARN_INSTALL_TIMEOUT });
-
-  console.log('✅', 'Packages were installed');
+  await step('Packages were installed', () =>
+    sh('yarn install', tempDir, { pipeOutputToResult: true, timeout: YARN_INSTALL_TIMEOUT }),
+  );
 }

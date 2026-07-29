@@ -14,7 +14,7 @@ const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..', '..');
 const RULE = 'selector-anb-no-unmatchable';
 
 /** Linting a single fixture file measures well under a second. */
-const STYLELINT_TIMEOUT = 60_000;
+const STYLELINT_TIMEOUT = 15_000;
 
 describe('stylelint with @griffel/postcss-syntax', () => {
   let tempDir: string;

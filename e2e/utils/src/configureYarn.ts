@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { sh } from './sh.ts';
+import { step } from './step.ts';
 
 /**
  * Reading a config value and scaffolding an empty project are local, offline operations — measured
@@ -18,13 +19,13 @@ export async function configureYarn(options: { tempDir: string; rootDir: string 
     await sh('yarn config get yarnPath', rootDir, { pipeOutputToResult: true, timeout: YARN_CONFIG_TIMEOUT })
   ).trim();
 
-  await fs.promises.writeFile(
-    path.resolve(tempDir, '.yarnrc.yml'),
-    ['enableImmutableInstalls: false', 'nodeLinker: node-modules', `yarnPath: ${yarnPath}`].join('\n'),
-  );
-  await sh('yarn init -p', tempDir, { pipeOutputToResult: true, timeout: YARN_CONFIG_TIMEOUT });
-
-  console.log('✅', 'A config for Yarn was created');
+  await step('A config for Yarn was created', async () => {
+    await fs.promises.writeFile(
+      path.resolve(tempDir, '.yarnrc.yml'),
+      ['enableImmutableInstalls: false', 'nodeLinker: node-modules', `yarnPath: ${yarnPath}`].join('\n'),
+    );
+    await sh('yarn init -p', tempDir, { pipeOutputToResult: true, timeout: YARN_CONFIG_TIMEOUT });
+  });
   console.log(
     'ℹ️',
     'Using Yarn',
