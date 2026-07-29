@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "test(core): cover rehydrateRendererCache with a browser test and a bundle-size fixture",
+  "packageName": "@griffel/core",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
