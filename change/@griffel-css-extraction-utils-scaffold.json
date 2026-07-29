@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: scaffold the package, the implementation follows",
+  "packageName": "@griffel/css-extraction-utils",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
