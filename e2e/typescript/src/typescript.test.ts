@@ -12,6 +12,9 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..', '..');
 
+/** Type-checking a single fixture file measures a few seconds, even on the oldest compiler. */
+const TSC_TIMEOUT = 60_000;
+
 // The oldest TypeScript versions `@griffel/style-types` is expected to keep working with.
 const TYPESCRIPT_VERSIONS = ['4.4', '4.9', '5.0'];
 
@@ -45,14 +48,16 @@ describe.each(TYPESCRIPT_VERSIONS)('typescript@%s', version => {
   afterAll(() => removeTempDir(tempDir));
 
   it('installs the requested TypeScript version', async () => {
-    const reported = (await sh(`node ${tscBin} --version`, tempDir, true)).replace('Version', '').trim();
+    const reported = (await sh(`node ${tscBin} --version`, tempDir, { pipeOutputToResult: true, timeout: TSC_TIMEOUT }))
+      .replace('Version', '')
+      .trim();
 
     expect(reported).toMatch(new RegExp(`^${version.replace('.', '\\.')}\\.`));
   });
 
   it('type-checks a project referencing @griffel/style-types', async () => {
     try {
-      await sh(`node ${tscBin} --noEmit --pretty`, tempDir, true);
+      await sh(`node ${tscBin} --noEmit --pretty`, tempDir, { pipeOutputToResult: true, timeout: TSC_TIMEOUT });
     } catch (e) {
       throw new Error(
         `Building a test project referencing @griffel/style-types using typescript@${version} failed.\n` +

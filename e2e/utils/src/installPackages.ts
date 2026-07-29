@@ -3,6 +3,24 @@ import path from 'path';
 
 import { sh } from './sh.ts';
 
+/**
+ * Registry metadata for a handful of packages, resolved against the repository's own lockfile.
+ */
+const YARN_INFO_TIMEOUT = 60_000;
+
+/**
+ * The only genuinely slow command in a scenario's setup: a full resolution and download of React,
+ * a bundler and the Babel toolchain with no lockfile to short-circuit it.
+ *
+ * It takes seconds with a warm Yarn cache, but CI runs several of these suites concurrently
+ * (`NX_PARALLEL`) against a cache that starts empty, and installs then contend for the runner's
+ * network, disk and CPU — a scenario measured at ~4s locally has taken over 120s there. The budget
+ * is deliberately far above the worst observed run: it is here to catch an install that is *stuck*,
+ * not one that is merely slow, because being killed early is what turned a slow install into a
+ * failed suite.
+ */
+const YARN_INSTALL_TIMEOUT = 300_000;
+
 export async function installPackages(options: {
   packages: (string | [name: string, version: string])[];
   resolutions: { file?: string; version?: string; packageName: string }[];
@@ -33,7 +51,10 @@ export async function installPackages(options: {
   }
 
   if (workspacePackages.length > 0) {
-    const yarnOutput = await sh(`yarn info ${workspacePackages.join(' ')} --json`, rootDir, true);
+    const yarnOutput = await sh(`yarn info ${workspacePackages.join(' ')} --json`, rootDir, {
+      pipeOutputToResult: true,
+      timeout: YARN_INFO_TIMEOUT,
+    });
     const parsedYarnOutput = yarnOutput
       .split('\n')
       .filter(Boolean)
@@ -61,7 +82,7 @@ export async function installPackages(options: {
   };
 
   await fs.promises.writeFile(packageJsonPath, JSON.stringify(newPackageJson, null, 2));
-  await sh('yarn install', tempDir, true);
+  await sh('yarn install', tempDir, { pipeOutputToResult: true, timeout: YARN_INSTALL_TIMEOUT });
 
   console.log('✅', 'Packages were installed');
 }

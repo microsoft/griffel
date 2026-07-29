@@ -15,6 +15,9 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..', '..');
 const SNAPSHOTS_DIR = path.resolve(import.meta.dirname, 'snapshots');
 
+/** A build of the example project measures ~1s; anything near a minute is a hung bundler. */
+const RSPACK_BUILD_TIMEOUT = 60_000;
+
 // `@griffel/transform` (used by the modern plugin) embeds the absolute path of resolved assets
 // into the CSS rule before the class-name hash is computed, so any rule with a `url()` ends up
 // with a class name that depends on the build's absolute temp directory. The `url()` filename
@@ -148,7 +151,7 @@ describe.each(SCENARIOS)('$name', scenario => {
   afterAll(() => removeTempDir(tempDir));
 
   it('builds the example project with Rspack', async () => {
-    await expect(sh('yarn rspack', tempDir)).resolves.toBeTypeOf('string');
+    await expect(sh('yarn rspack', tempDir, { timeout: RSPACK_BUILD_TIMEOUT })).resolves.toBeTypeOf('string');
   });
 
   it('emits CSS matching the snapshot', async () => {
