@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "test: cover CSS extraction with fixture based tests",
+  "packageName": "@griffel/vite-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}
