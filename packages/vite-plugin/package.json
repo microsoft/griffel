@@ -20,8 +20,7 @@
   "dependencies": {
     "@griffel/core": "^1.21.3",
     "@griffel/css-extraction-utils": "^1.0.0",
-    "@griffel/transform": "^3.0.7",
-    "oxc-resolver": "^11.24.2"
+    "@griffel/transform": "^3.0.7"
   },
   "peerDependencies": {
     "vite": "^8.0.0"

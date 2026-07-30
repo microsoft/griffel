@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore: use the resolver shared via \"@griffel/css-extraction-utils\"",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

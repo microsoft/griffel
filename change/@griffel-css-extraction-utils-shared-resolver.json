@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add \"createTransformResolver()\" shared by bundler integrations",
+  "packageName": "@griffel/css-extraction-utils",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}

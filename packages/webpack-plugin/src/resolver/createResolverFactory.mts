@@ -1,16 +1,6 @@
-import { ResolverFactory, type NapiResolveOptions } from 'oxc-resolver';
+import { createTransformResolver } from '@griffel/css-extraction-utils';
 import type { TransformResolver } from '@griffel/transform';
 import type { Compilation } from 'webpack';
-import * as path from 'node:path';
-
-function isCJSOnlyPackage(id: string): boolean {
-  return id === 'tslib' || id.startsWith('@babel/runtime') || id.startsWith('@swc/helpers');
-}
-
-const RESOLVE_OPTIONS_DEFAULTS: NapiResolveOptions = {
-  conditionNames: ['require'],
-  extensions: ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.tsx', '.json'],
-};
 
 export type TransformResolverFactory = (compilation: Compilation) => TransformResolver;
 
@@ -22,33 +12,6 @@ export function createResolverFactory(): TransformResolverFactory {
     // for programmatic usage. This API is used by many loaders/plugins, so hope we're safe for a while
     // const resolveOptionsFromWebpackConfig = (compilation?.options.resolve ?? {}) as NapiResolveOptions;
 
-    const cjsResolver = new ResolverFactory({
-      ...RESOLVE_OPTIONS_DEFAULTS,
-      // ...resolveOptionsFromWebpackConfig,
-    });
-
-    // Clone shares the underlying cache; extensions must be re-specified as cloneWithOptions does not persist them
-    const esmResolver = cjsResolver.cloneWithOptions({
-      ...RESOLVE_OPTIONS_DEFAULTS,
-      conditionNames: ['import'],
-      mainFields: ['module', 'main'],
-    });
-
-    return function resolveModule(id, { filename }) {
-      const resolver = isCJSOnlyPackage(id) ? cjsResolver : esmResolver;
-      const resolved = resolver.sync(path.dirname(filename), id);
-
-      if (resolved.error) {
-        throw resolved.error;
-      }
-      if (!resolved.path) {
-        throw new Error(`oxc-resolver: Failed to resolve module "${id}"`);
-      }
-
-      return {
-        path: resolved.path,
-        builtin: !!resolved.builtin,
-      };
-    };
+    return createTransformResolver();
   };
 }

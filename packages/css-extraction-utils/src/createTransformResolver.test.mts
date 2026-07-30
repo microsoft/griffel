@@ -2,11 +2,8 @@ import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import type { Compilation } from 'webpack';
 
-import { createResolverFactory } from './createResolverFactory.mjs';
-
-const compilationStub = {} as Compilation;
+import { createTransformResolver } from './createTransformResolver.mjs';
 
 /**
  * Creates a temporary directory with a fake node_modules structure.
@@ -106,8 +103,14 @@ beforeAll(() => {
   );
 
   // @babel/runtime — CJS-only exception
-  writeFile(path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'helpers', 'interopRequireDefault.js'), 'module.exports = {};');
-  writeFile(path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'helpers', 'esm', 'interopRequireDefault.js'), 'export {};');
+  writeFile(
+    path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'helpers', 'interopRequireDefault.js'),
+    'module.exports = {};',
+  );
+  writeFile(
+    path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'helpers', 'esm', 'interopRequireDefault.js'),
+    'export {};',
+  );
   writeFile(
     path.join(tmpDir, 'node_modules', '@babel', 'runtime', 'package.json'),
     JSON.stringify({
@@ -148,21 +151,20 @@ function makeContext(id: string) {
   return { id, filename: path.join(tmpDir, 'src', 'app.js'), paths: [] };
 }
 
-describe('createResolverFactory', () => {
-  it('returns a factory function', () => {
-    const factory = createResolverFactory();
-    expect(typeof factory).toBe('function');
+describe('createTransformResolver', () => {
+  it('returns a resolver function', () => {
+    expect(typeof createTransformResolver()).toBe('function');
   });
 
   it('throws for unresolvable modules', () => {
-    const resolve = createResolverFactory()(compilationStub);
+    const resolve = createTransformResolver();
     expect(() => resolve('__nonexistent_package__', makeContext('__nonexistent_package__'))).toThrow();
   });
 });
 
 describe('resolver selection', () => {
   it('resolves packages with ESM conditions by default', () => {
-    const resolve = createResolverFactory()(compilationStub);
+    const resolve = createTransformResolver();
     const resolved = resolve('@fluentui/react-button', makeContext('@fluentui/react-button'));
 
     expect(resolved.path).toContain(path.join('lib-esm', 'index.js'));
@@ -171,7 +173,7 @@ describe('resolver selection', () => {
 
 describe('CJS-only exceptions', () => {
   it('resolves tslib with CJS conditions', () => {
-    const resolve = createResolverFactory()(compilationStub);
+    const resolve = createTransformResolver();
     const resolved = resolve('tslib', makeContext('tslib'));
 
     expect(resolved.path).toContain('tslib.js');
@@ -179,17 +181,40 @@ describe('CJS-only exceptions', () => {
   });
 
   it('resolves @babel/runtime with CJS conditions', () => {
-    const resolve = createResolverFactory()(compilationStub);
-    const resolved = resolve('@babel/runtime/helpers/interopRequireDefault', makeContext('@babel/runtime/helpers/interopRequireDefault'));
+    const resolve = createTransformResolver();
+    const resolved = resolve(
+      '@babel/runtime/helpers/interopRequireDefault',
+      makeContext('@babel/runtime/helpers/interopRequireDefault'),
+    );
 
     expect(resolved.path).toContain(path.join('helpers', 'interopRequireDefault.js'));
     expect(resolved.path).not.toContain('esm');
   });
 
   it('resolves @swc/helpers with CJS conditions', () => {
-    const resolve = createResolverFactory()(compilationStub);
+    const resolve = createTransformResolver();
     const resolved = resolve('@swc/helpers', makeContext('@swc/helpers'));
 
     expect(resolved.path).toContain(path.join('cjs', 'index.cjs'));
+  });
+});
+
+describe('alias', () => {
+  it('resolves an aliased module', () => {
+    const resolve = createTransformResolver({
+      alias: { '#alias': [path.join(tmpDir, 'node_modules', 'some-lib')] },
+    });
+    const resolved = resolve('#alias', makeContext('#alias'));
+
+    expect(resolved.path).toContain(path.join('some-lib', 'index.js'));
+  });
+
+  it('does not affect modules that are not aliased', () => {
+    const resolve = createTransformResolver({
+      alias: { '#alias': [path.join(tmpDir, 'node_modules', 'some-lib')] },
+    });
+    const resolved = resolve('tslib', makeContext('tslib'));
+
+    expect(resolved.path).toContain('tslib.js');
   });
 });
