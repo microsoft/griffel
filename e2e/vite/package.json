@@ -1,0 +1,13 @@
+{
+  "name": "@griffel/e2e-vite",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@griffel/css-extraction-utils": "^1.0.0",
+    "@griffel/e2e-utils": "*",
+    "@griffel/react": "^1.7.6",
+    "@griffel/vite-plugin": "^0.1.16"
+  }
+}

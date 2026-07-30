@@ -3755,6 +3755,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@griffel/e2e-vite@workspace:e2e/vite":
+  version: 0.0.0-use.local
+  resolution: "@griffel/e2e-vite@workspace:e2e/vite"
+  dependencies:
+    "@griffel/css-extraction-utils": "npm:^1.0.0"
+    "@griffel/e2e-utils": "npm:*"
+    "@griffel/react": "npm:^1.7.6"
+    "@griffel/vite-plugin": "npm:^0.1.16"
+  languageName: unknown
+  linkType: soft
+
 "@griffel/eslint-plugin@workspace:packages/eslint-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/eslint-plugin@workspace:packages/eslint-plugin"
@@ -3852,7 +3863,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/vite-plugin@workspace:packages/vite-plugin":
+"@griffel/vite-plugin@npm:^0.1.16, @griffel/vite-plugin@workspace:packages/vite-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/vite-plugin@workspace:packages/vite-plugin"
   dependencies:

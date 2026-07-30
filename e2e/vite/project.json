@@ -1,0 +1,29 @@
+{
+  "name": "@griffel/e2e-vite",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "e2e/vite/src",
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/vitest:test",
+      "dependsOn": [
+        { "target": "build", "dependencies": true },
+        { "target": "build-cjs", "dependencies": true }
+      ],
+      "outputs": []
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "e2e/vite",
+        "commands": [{ "command": "tsc -b --pretty" }],
+        "outputPath": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
