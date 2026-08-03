@@ -5,9 +5,9 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@griffel/css-extraction-utils": "^1.0.0",
+    "@griffel/css-extraction-utils": "^1.1.0",
     "@griffel/e2e-utils": "*",
-    "@griffel/react": "^1.7.6",
-    "@griffel/vite-plugin": "^0.1.16"
+    "@griffel/react": "^1.7.7",
+    "@griffel/vite-plugin": "^1.0.0"
   }
 }

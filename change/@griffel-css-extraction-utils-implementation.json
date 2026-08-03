@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add utils shared by bundler integrations, extracted from @griffel/webpack-plugin",
-  "packageName": "@griffel/css-extraction-utils",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

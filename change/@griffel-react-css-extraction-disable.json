@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: opt style function wrappers out of CSS extraction to avoid a build time error",
-  "packageName": "@griffel/react",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "patch"
-}

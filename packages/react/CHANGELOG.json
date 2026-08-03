@@ -2,6 +2,21 @@
   "name": "@griffel/react",
   "entries": [
     {
+      "date": "Mon, 03 Aug 2026 08:57:47 GMT",
+      "version": "1.7.7",
+      "tag": "@griffel/react_v1.7.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/react",
+            "commit": "827df123059926fe06ca78a8f3fb9561a7b183e7",
+            "comment": "fix: opt style function wrappers out of CSS extraction to avoid a build time error"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jul 2026 13:20:15 GMT",
       "version": "1.7.6",
       "tag": "@griffel/react_v1.7.6",

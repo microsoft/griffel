@@ -1,0 +1,46 @@
+{
+  "name": "@griffel/vite-plugin",
+  "entries": [
+    {
+      "date": "Mon, 03 Aug 2026 08:57:47 GMT",
+      "version": "1.0.0",
+      "tag": "@griffel/vite-plugin_v1.0.0",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "95fcdf76bfb12e1f21b74ca54e706e07f1cb7c24",
+            "comment": "test: cover CSS extraction with fixture based tests"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "a2687d4e595340dabb49af0c919315f29d89e7e9",
+            "comment": "chore: scaffold the package, the implementation follows"
+          }
+        ],
+        "major": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/vite-plugin",
+            "commit": "556a34c56b7251e0ec6fa1d8cef245387275c712",
+            "comment": "feat: reimplement the plugin to perform CSS extraction, the previous implementation based on \"@wyw-in-js/vite\" is gone"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/vite-plugin",
+            "comment": "Bump @griffel/css-extraction-utils to v1.1.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/vite-plugin",
+            "comment": "Bump @griffel/transform to v3.0.8",
+            "commit": "not available"
+          }
+        ]
+      }
+    }
+  ]
+}

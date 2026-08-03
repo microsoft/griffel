@@ -5,11 +5,11 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@griffel/css-extraction-utils": "^1.0.0",
+    "@griffel/css-extraction-utils": "^1.1.0",
     "@griffel/e2e-utils": "*",
-    "@griffel/react": "^1.7.6",
+    "@griffel/react": "^1.7.7",
     "@griffel/webpack-extraction-plugin": "^0.5.21",
     "@griffel/webpack-loader": "^2.2.30",
-    "@griffel/webpack-plugin": "^4.0.9"
+    "@griffel/webpack-plugin": "^4.0.10"
   }
 }

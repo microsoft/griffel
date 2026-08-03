@@ -2,6 +2,21 @@
   "name": "@griffel/transform",
   "entries": [
     {
+      "date": "Mon, 03 Aug 2026 08:57:47 GMT",
+      "version": "3.0.8",
+      "tag": "@griffel/transform_v3.0.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/transform",
+            "commit": "827df123059926fe06ca78a8f3fb9561a7b183e7",
+            "comment": "fix: do not fail on files that cannot be processed and are marked to be skipped"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jul 2026 13:20:15 GMT",
       "version": "3.0.7",
       "tag": "@griffel/transform_v3.0.7",

@@ -2,6 +2,29 @@
   "name": "@griffel/devtools",
   "entries": [
     {
+      "date": "Mon, 03 Aug 2026 08:57:47 GMT",
+      "version": "0.3.15",
+      "tag": "@griffel/devtools_v0.3.15",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/devtools",
+            "commit": "695a1ce573759efe7b88ba68960f2fd9fd4eb3e5",
+            "comment": "chore: drop unused `@nx/react` typings from the Storybook tsconfig"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@griffel/devtools",
+            "comment": "Bump @griffel/react to v1.7.7",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jul 2026 13:20:15 GMT",
       "version": "0.3.14",
       "tag": "@griffel/devtools_v0.3.14",

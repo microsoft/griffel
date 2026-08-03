@@ -1,8 +1,17 @@
 # Change Log - @griffel/postcss-syntax
 
-<!-- This log was last generated on Fri, 03 Jul 2026 09:13:33 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Aug 2026 08:57:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.3.15
+
+Mon, 03 Aug 2026 08:57:47 GMT
+
+### Patches
+
+- chore: bump postcss from 8.5.16 to 8.5.18 (49699333+dependabot[bot]@users.noreply.github.com)
+- Bump @griffel/transform to v3.0.8
 
 ## 1.3.14
 

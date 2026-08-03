@@ -1,8 +1,19 @@
 # Change Log - @griffel/webpack-plugin
 
-<!-- This log was last generated on Thu, 16 Jul 2026 13:20:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Aug 2026 08:57:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 4.0.10
+
+Mon, 03 Aug 2026 08:57:47 GMT
+
+### Patches
+
+- feat: add processAssets timing to the CSS extraction stats output (olfedias@microsoft.com)
+- chore: consume shared utils from @griffel/css-extraction-utils (olfedias@microsoft.com)
+- Bump @griffel/css-extraction-utils to v1.1.0
+- Bump @griffel/transform to v3.0.8
 
 ## 4.0.8
 

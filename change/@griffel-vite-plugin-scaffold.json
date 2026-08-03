@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: scaffold the package, the implementation follows",
-  "packageName": "@griffel/vite-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

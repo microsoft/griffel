@@ -1,8 +1,16 @@
 # Change Log - @griffel/react
 
-<!-- This log was last generated on Thu, 16 Jul 2026 13:20:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Aug 2026 08:57:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.7.7
+
+Mon, 03 Aug 2026 08:57:47 GMT
+
+### Patches
+
+- fix: opt style function wrappers out of CSS extraction to avoid a build time error (olfedias@microsoft.com)
 
 ## 1.7.6
 

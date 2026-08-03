@@ -1,0 +1,34 @@
+{
+  "name": "@griffel/css-extraction-utils",
+  "entries": [
+    {
+      "date": "Mon, 03 Aug 2026 08:57:47 GMT",
+      "version": "1.1.0",
+      "tag": "@griffel/css-extraction-utils_v1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/css-extraction-utils",
+            "commit": "5c6acdd43cd9ced5dc8a725ed2ab10607bde52e0",
+            "comment": "feat: add utils shared by bundler integrations, extracted from @griffel/webpack-plugin"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/css-extraction-utils",
+            "comment": "Bump @griffel/transform to v3.0.8",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/css-extraction-utils",
+            "commit": "c3fd46f40da6fb6958426418d2d4610bef9dec2c",
+            "comment": "chore: scaffold the package, the implementation follows"
+          }
+        ]
+      }
+    }
+  ]
+}

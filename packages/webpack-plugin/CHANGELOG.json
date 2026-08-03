@@ -2,6 +2,47 @@
   "name": "@griffel/webpack-plugin",
   "entries": [
     {
+      "date": "Mon, 03 Aug 2026 08:57:47 GMT",
+      "version": "4.0.10",
+      "tag": "@griffel/webpack-plugin_v4.0.10",
+      "comments": {
+        "none": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "2ffd442b6432f7c83f1473ab38e99b5a04f5525c",
+            "comment": "chore: sync versions after broken publish"
+          }
+        ],
+        "patch": [
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "95a940485e79bbd8c92c81a869cb451b5f5e0fa1",
+            "comment": "feat: add processAssets timing to the CSS extraction stats output"
+          },
+          {
+            "author": "olfedias@microsoft.com",
+            "package": "@griffel/webpack-plugin",
+            "commit": "5c6acdd43cd9ced5dc8a725ed2ab10607bde52e0",
+            "comment": "chore: consume shared utils from @griffel/css-extraction-utils"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/css-extraction-utils to v1.1.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@griffel/webpack-plugin",
+            "comment": "Bump @griffel/transform to v3.0.8",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jul 2026 13:20:15 GMT",
       "version": "4.0.8",
       "tag": "@griffel/webpack-plugin_v4.0.8",

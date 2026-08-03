@@ -3700,12 +3700,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/css-extraction-utils@npm:^1.0.0, @griffel/css-extraction-utils@workspace:packages/css-extraction-utils":
+"@griffel/css-extraction-utils@npm:^1.1.0, @griffel/css-extraction-utils@workspace:packages/css-extraction-utils":
   version: 0.0.0-use.local
   resolution: "@griffel/css-extraction-utils@workspace:packages/css-extraction-utils"
   dependencies:
     "@griffel/core": "npm:^1.21.3"
-    "@griffel/transform": "npm:^3.0.7"
+    "@griffel/transform": "npm:^3.0.8"
     stylis: "npm:^4.4.0"
   languageName: unknown
   linkType: soft
@@ -3714,7 +3714,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/devtools@workspace:packages/devtools"
   dependencies:
-    "@griffel/react": "npm:^1.7.6"
+    "@griffel/react": "npm:^1.7.7"
   languageName: unknown
   linkType: soft
 
@@ -3728,12 +3728,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-rspack@workspace:e2e/rspack"
   dependencies:
-    "@griffel/css-extraction-utils": "npm:^1.0.0"
+    "@griffel/css-extraction-utils": "npm:^1.1.0"
     "@griffel/e2e-utils": "npm:*"
-    "@griffel/react": "npm:^1.7.6"
+    "@griffel/react": "npm:^1.7.7"
     "@griffel/webpack-extraction-plugin": "npm:^0.5.21"
     "@griffel/webpack-loader": "npm:^2.2.30"
-    "@griffel/webpack-plugin": "npm:^4.0.9"
+    "@griffel/webpack-plugin": "npm:^4.0.10"
   languageName: unknown
   linkType: soft
 
@@ -3759,10 +3759,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/e2e-vite@workspace:e2e/vite"
   dependencies:
-    "@griffel/css-extraction-utils": "npm:^1.0.0"
+    "@griffel/css-extraction-utils": "npm:^1.1.0"
     "@griffel/e2e-utils": "npm:*"
-    "@griffel/react": "npm:^1.7.6"
-    "@griffel/vite-plugin": "npm:^0.1.16"
+    "@griffel/react": "npm:^1.7.7"
+    "@griffel/vite-plugin": "npm:^1.0.0"
   languageName: unknown
   linkType: soft
 
@@ -3791,12 +3791,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@griffel/postcss-syntax@workspace:packages/postcss-syntax"
   dependencies:
-    "@griffel/transform": "npm:^3.0.7"
+    "@griffel/transform": "npm:^3.0.8"
     postcss: "npm:^8.5.18"
   languageName: unknown
   linkType: soft
 
-"@griffel/react@npm:^1.7.6, @griffel/react@workspace:packages/react":
+"@griffel/react@npm:^1.7.7, @griffel/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@griffel/react@workspace:packages/react"
   dependencies:
@@ -3844,7 +3844,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/transform@npm:^3.0.7, @griffel/transform@workspace:packages/transform":
+"@griffel/transform@npm:^3.0.8, @griffel/transform@workspace:packages/transform":
   version: 0.0.0-use.local
   resolution: "@griffel/transform@workspace:packages/transform"
   dependencies:
@@ -3863,13 +3863,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/vite-plugin@npm:^0.1.16, @griffel/vite-plugin@workspace:packages/vite-plugin":
+"@griffel/vite-plugin@npm:^1.0.0, @griffel/vite-plugin@workspace:packages/vite-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/vite-plugin@workspace:packages/vite-plugin"
   dependencies:
     "@griffel/core": "npm:^1.21.3"
-    "@griffel/css-extraction-utils": "npm:^1.0.0"
-    "@griffel/transform": "npm:^3.0.7"
+    "@griffel/css-extraction-utils": "npm:^1.1.0"
+    "@griffel/transform": "npm:^3.0.8"
     oxc-resolver: "npm:^11.24.2"
   peerDependencies:
     vite: ^8.0.0
@@ -3904,13 +3904,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@griffel/webpack-plugin@npm:^4.0.9, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
+"@griffel/webpack-plugin@npm:^4.0.10, @griffel/webpack-plugin@workspace:packages/webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@griffel/webpack-plugin@workspace:packages/webpack-plugin"
   dependencies:
     "@griffel/core": "npm:^1.21.3"
-    "@griffel/css-extraction-utils": "npm:^1.0.0"
-    "@griffel/transform": "npm:^3.0.7"
+    "@griffel/css-extraction-utils": "npm:^1.1.0"
+    "@griffel/transform": "npm:^3.0.8"
     oxc-resolver: "npm:^11.24.2"
   peerDependencies:
     webpack: ^5

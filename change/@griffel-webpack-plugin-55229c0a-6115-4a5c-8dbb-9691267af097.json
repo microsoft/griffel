@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore: sync versions after broken publish",
-  "packageName": "@griffel/webpack-plugin",
-  "email": "olfedias@microsoft.com",
-  "dependentChangeType": "none"
-}

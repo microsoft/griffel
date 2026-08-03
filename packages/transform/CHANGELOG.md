@@ -1,8 +1,16 @@
 # Change Log - @griffel/transform
 
-<!-- This log was last generated on Fri, 03 Jul 2026 09:13:33 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Aug 2026 08:57:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 3.0.8
+
+Mon, 03 Aug 2026 08:57:47 GMT
+
+### Patches
+
+- fix: do not fail on files that cannot be processed and are marked to be skipped (olfedias@microsoft.com)
 
 ## 3.0.7
 

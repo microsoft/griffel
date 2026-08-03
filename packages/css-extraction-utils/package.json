@@ -1,6 +1,6 @@
 {
   "name": "@griffel/css-extraction-utils",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Shared utils to perform CSS extraction in Griffel bundler integrations",
   "license": "MIT",
   "repository": {
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@griffel/core": "^1.21.3",
-    "@griffel/transform": "^3.0.7",
+    "@griffel/transform": "^3.0.8",
     "stylis": "^4.4.0"
   }
 }
