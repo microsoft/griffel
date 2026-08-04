@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump postcss from 8.5.18 to 8.5.23",
+  "packageName": "@griffel/postcss-syntax",
+  "email": "copilot@github.com",
+  "dependentChangeType": "none"
+}
