@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: bump Nx to 23.1.1 and TypeScript to 6.0.3",
+  "packageName": "@griffel/devtools",
+  "email": "copilot@github.com",
+  "dependentChangeType": "none"
+}

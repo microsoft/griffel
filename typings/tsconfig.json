@@ -5,7 +5,8 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": false,
     "noEmit": true,
-    "types": []
+    "types": [],
+    "ignoreDeprecations": "6.0"
   },
   "include": [],
   "files": [],

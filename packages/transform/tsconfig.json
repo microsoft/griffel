@@ -4,7 +4,8 @@
     "allowJs": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "target": "ES2022"
+    "target": "ES2022",
+    "ignoreDeprecations": "6.0"
   },
   "files": [],
   "include": [],
