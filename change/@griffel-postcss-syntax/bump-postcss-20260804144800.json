@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "chore: bump Nx to 23.1.1 and TypeScript to 6.0.3",
+  "comment": "Bump postcss from 8.5.18 to 8.5.23",
   "packageName": "@griffel/postcss-syntax",
   "email": "copilot@github.com",
   "dependentChangeType": "none"

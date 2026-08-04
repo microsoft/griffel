@@ -1,7 +1,7 @@
 {
-  "type": "patch",
+  "type": "none",
   "comment": "chore: bump Nx to 23.1.1 and TypeScript to 6.0.3",
   "packageName": "@griffel/sort-css-queries",
   "email": "copilot@github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
