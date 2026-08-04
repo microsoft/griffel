@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { buildShorthandSplitter } from './shorthandToArguments';
+import { buildShorthandSplitter } from './shorthandToArguments.js';
 
 describe('buildShorthandSplitter', () => {
   test('should convert numbers to px', () => {

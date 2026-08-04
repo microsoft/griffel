@@ -1,7 +1,7 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
 import * as tsParser from '@typescript-eslint/parser';
 
-import { hookNamingRule, RULE_NAME } from './hook-naming';
+import { hookNamingRule, RULE_NAME } from './hook-naming.js';
 
 const ruleTester = new RuleTester({
   languageOptions: { parser: tsParser, ecmaVersion: 2018, sourceType: 'module' },

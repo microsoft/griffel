@@ -1,7 +1,7 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
 import * as tsParser from '@typescript-eslint/parser';
 
-import { noDeprecatedShorthandsRule, RULE_NAME } from './no-deprecated-shorthands';
+import { noDeprecatedShorthandsRule, RULE_NAME } from './no-deprecated-shorthands.js';
 
 const ruleTester = new RuleTester({
   languageOptions: { parser: tsParser, ecmaVersion: 2018, sourceType: 'module' },

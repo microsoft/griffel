@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "chore: point the \"type-check\" target at the package itself and drop an unused Babel config",
+  "packageName": "@griffel/eslint-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "none"
+}

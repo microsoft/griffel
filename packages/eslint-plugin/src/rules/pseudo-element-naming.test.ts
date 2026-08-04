@@ -1,7 +1,7 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
 import * as tsParser from '@typescript-eslint/parser';
 
-import { pseudoElementNamingRule, RULE_NAME } from './pseudo-element-naming';
+import { pseudoElementNamingRule, RULE_NAME } from './pseudo-element-naming.js';
 
 const ruleTester = new RuleTester({
   languageOptions: { parser: tsParser, ecmaVersion: 2018, sourceType: 'module' },
