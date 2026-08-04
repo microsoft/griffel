@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump oxc-parser and oxc-transform to 0.142.0",
+  "packageName": "@griffel/transform",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

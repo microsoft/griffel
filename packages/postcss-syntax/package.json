@@ -19,6 +19,6 @@
   },
   "dependencies": {
     "@griffel/transform": "^3.0.8",
-    "postcss": "^8.5.18"
+    "postcss": "^8.5.23"
   }
 }
