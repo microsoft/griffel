@@ -13,7 +13,8 @@
       "environment",
       "static-assets",
       "webpack-env"
-    ]
+    ],
+    "ignoreDeprecations": "6.0"
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js"]
 }

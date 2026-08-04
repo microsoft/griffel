@@ -3,7 +3,8 @@
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
-    "checkJs": true
+    "checkJs": true,
+    "ignoreDeprecations": "6.0"
   },
   "files": [],
   "include": [],

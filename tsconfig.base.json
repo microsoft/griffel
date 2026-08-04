@@ -40,7 +40,11 @@
       "@griffel/webpack-plugin": ["packages/webpack-plugin/src/index.mts"],
       "@griffel/vite-plugin": ["packages/vite-plugin/src/index.mts"]
     },
-    "typeRoots": ["node_modules/@types", "./typings"]
+    "typeRoots": ["node_modules/@types", "./typings"],
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": false,
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "tmp"]
 }
