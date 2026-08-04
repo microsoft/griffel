@@ -301,7 +301,7 @@ _If `test` is omitted, the rule is applicable for all the files._
 The last matched rule is used for transformation. If the last matched action for a file is `"ignore"` the file will be evaluated as is, so that file must not contain any code that cannot be executed in a Node.js environment.
 
 ```js
-const { shakerEvaluator } = require('@griffel/babel-preset');
+const { shakerEvaluator } = require('@griffel/transform');
 
 module.exports = {
   module: {

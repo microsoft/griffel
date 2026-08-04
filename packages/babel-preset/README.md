@@ -19,7 +19,8 @@ A Babel preset that performs build time transforms for [`@griffel/react`](../rea
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 > [!CAUTION]
-> We don't recommend to use this preset directly, it's intended to be used by other tools like [webpack plugin](../webpack-plugin).
+> We don't recommend to use this preset directly, it's intended to be used by build tooling. If you are looking for
+> Griffel's build time transforms, use a bundler integration like [webpack plugin](../webpack-plugin) instead.
 
 ## Install
 
