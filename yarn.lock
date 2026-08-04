@@ -3631,7 +3631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@griffel/babel-preset@npm:^1.9.1, @griffel/babel-preset@workspace:packages/babel-preset":
+"@griffel/babel-preset@workspace:packages/babel-preset":
   version: 0.0.0-use.local
   resolution: "@griffel/babel-preset@workspace:packages/babel-preset"
   dependencies:
@@ -3693,8 +3693,6 @@ __metadata:
     "@griffel/css-extraction-utils": "npm:^1.1.0"
     "@griffel/e2e-utils": "npm:*"
     "@griffel/react": "npm:^1.7.7"
-    "@griffel/webpack-extraction-plugin": "npm:^0.5.21"
-    "@griffel/webpack-loader": "npm:^2.2.30"
     "@griffel/webpack-plugin": "npm:^4.0.10"
   languageName: unknown
   linkType: soft
@@ -3835,34 +3833,6 @@ __metadata:
     oxc-resolver: "npm:^11.24.2"
   peerDependencies:
     vite: ^8.0.0
-  languageName: unknown
-  linkType: soft
-
-"@griffel/webpack-extraction-plugin@npm:^0.5.21, @griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin":
-  version: 0.0.0-use.local
-  resolution: "@griffel/webpack-extraction-plugin@workspace:packages/webpack-extraction-plugin"
-  dependencies:
-    "@babel/core": "npm:^7.29.6"
-    "@babel/helper-module-imports": "npm:^7.22.15"
-    "@babel/helper-plugin-utils": "npm:^7.28.6"
-    "@griffel/core": "npm:^1.21.3"
-    stylis: "npm:^4.4.0"
-    tslib: "npm:^2.1.0"
-  peerDependencies:
-    webpack: ^5
-  languageName: unknown
-  linkType: soft
-
-"@griffel/webpack-loader@npm:^2.2.30, @griffel/webpack-loader@workspace:packages/webpack-loader":
-  version: 0.0.0-use.local
-  resolution: "@griffel/webpack-loader@workspace:packages/webpack-loader"
-  dependencies:
-    "@babel/core": "npm:^7.29.6"
-    "@griffel/babel-preset": "npm:^1.9.1"
-    enhanced-resolve: "npm:^5.24.0"
-    tslib: "npm:^2.1.0"
-  peerDependencies:
-    webpack: ^5
   languageName: unknown
   linkType: soft
 

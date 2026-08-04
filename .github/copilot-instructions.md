@@ -124,7 +124,7 @@ yarn nx run-many --target=type-check --all
 
 - `@griffel/core` - Core runtime and compilation logic
 - `@griffel/react` - React bindings and hooks
-- `@griffel/webpack-loader` - Webpack build-time transforms
+- `@griffel/webpack-plugin` - Webpack build-time transforms & CSS extraction
 - `@griffel/devtools` - Browser extension for debugging
 - `@griffel/eslint-plugin` - ESLint rules for Griffel usage
 
