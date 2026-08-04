@@ -1,6 +1,0 @@
-// This file is .txt intentionally to avoid Prettier formatting
-import { makeStyles } from '@griffel/react';
-
-const styles = makeStyles({
-  root: { color: 'red' },
-}

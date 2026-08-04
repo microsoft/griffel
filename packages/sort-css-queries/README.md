@@ -28,13 +28,13 @@ const renderer = createDOMRenderer(document, {
 });
 ```
 
-At build time, via the webpack extraction plugin:
+At build time, via the webpack plugin:
 
 ```js
-const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
+const { GriffelPlugin } = require('@griffel/webpack-plugin');
 const { compareCSSQueries } = require('@griffel/sort-css-queries');
 
-new GriffelCSSExtractionPlugin({
+new GriffelPlugin({
   compareMediaQueries: compareCSSQueries,
   compareContainerQueries: compareCSSQueries,
 });
@@ -69,12 +69,12 @@ const renderer = createDOMRenderer(document, {
 And the matching build-time configuration:
 
 ```js
-const { GriffelCSSExtractionPlugin } = require('@griffel/webpack-extraction-plugin');
+const { GriffelPlugin } = require('@griffel/webpack-plugin');
 const { createCompareCSSQueries } = require('@griffel/sort-css-queries');
 
 const compareCSSQueries = createCompareCSSQueries({ rootFontSize: 10 });
 
-new GriffelCSSExtractionPlugin({
+new GriffelPlugin({
   compareMediaQueries: compareCSSQueries,
   compareContainerQueries: compareCSSQueries,
 });

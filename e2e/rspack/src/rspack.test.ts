@@ -49,72 +49,36 @@ type Scenario = {
   rspackVersion?: string;
   griffelPackages: string[];
   npmPackages?: string[];
-  npmResolutions?: Record<string, string>;
   snapshotFile: string;
 };
 
-// `@linaria/shaker` (used by `@griffel/babel-preset`) passes the `useESModules` option to
-// `@babel/plugin-transform-runtime`, which was removed in Babel 8. Pin the Babel runtime helpers to
-// v7 in the legacy scenarios so a fresh install doesn't pull in an incompatible Babel 8. See #993.
-const LEGACY_BABEL_RESOLUTIONS: Record<string, string> = {
-  '@babel/plugin-transform-runtime': '^7.0.0',
-  '@babel/runtime': '^7.0.0',
-};
+const GRIFFEL_PACKAGES = [
+  '@griffel/style-types',
+  '@griffel/core',
+  '@griffel/react',
+  '@griffel/transform-shaker',
+  '@griffel/transform',
+  '@griffel/css-extraction-utils',
+  '@griffel/webpack-plugin',
+];
 
 const SCENARIOS: Scenario[] = [
   {
-    name: 'legacy-rspack-1',
+    name: 'modern-rspack-1',
     rspackVersion: '1.7.11',
-    griffelPackages: [
-      '@griffel/style-types',
-      '@griffel/core',
-      '@griffel/react',
-      '@griffel/babel-preset',
-      '@griffel/webpack-extraction-plugin',
-      '@griffel/webpack-loader',
-    ],
-    npmResolutions: LEGACY_BABEL_RESOLUTIONS,
-    snapshotFile: 'legacy-rspack-1.css',
+    griffelPackages: GRIFFEL_PACKAGES,
+    snapshotFile: 'modern-rspack-1.css',
   },
   {
-    name: 'legacy-css-extract-rspack-1',
+    name: 'modern-css-extract-rspack-1',
     rspackVersion: '1.7.11',
-    griffelPackages: [
-      '@griffel/style-types',
-      '@griffel/core',
-      '@griffel/react',
-      '@griffel/babel-preset',
-      '@griffel/webpack-extraction-plugin',
-      '@griffel/webpack-loader',
-    ],
+    griffelPackages: GRIFFEL_PACKAGES,
     npmPackages: ['css-loader'],
-    npmResolutions: LEGACY_BABEL_RESOLUTIONS,
-    snapshotFile: 'legacy-css-extract-rspack-1.css',
-  },
-  {
-    name: 'legacy-rspack-2',
-    griffelPackages: [
-      '@griffel/style-types',
-      '@griffel/core',
-      '@griffel/react',
-      '@griffel/babel-preset',
-      '@griffel/webpack-extraction-plugin',
-      '@griffel/webpack-loader',
-    ],
-    npmResolutions: LEGACY_BABEL_RESOLUTIONS,
-    snapshotFile: 'legacy-rspack-2.css',
+    snapshotFile: 'modern-css-extract-rspack-1.css',
   },
   {
     name: 'modern-rspack-2',
-    griffelPackages: [
-      '@griffel/style-types',
-      '@griffel/core',
-      '@griffel/react',
-      '@griffel/transform-shaker',
-      '@griffel/transform',
-      '@griffel/css-extraction-utils',
-      '@griffel/webpack-plugin',
-    ],
+    griffelPackages: GRIFFEL_PACKAGES,
     snapshotFile: 'modern-rspack-2.css',
   },
 ];
@@ -143,7 +107,6 @@ describe.each(SCENARIOS)('$name', scenario => {
     await installPackages({
       packages: [...rspackPackages, 'react', 'react-dom', ...(scenario.npmPackages ?? [])],
       resolutions,
-      npmResolutions: scenario.npmResolutions,
       tempDir,
       rootDir: ROOT_DIR,
     });

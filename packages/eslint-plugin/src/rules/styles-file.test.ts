@@ -1,7 +1,7 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
 import * as tsParser from '@typescript-eslint/parser';
 
-import { stylesFileRule, RULE_NAME } from './styles-file';
+import { stylesFileRule, RULE_NAME } from './styles-file.js';
 
 const componentFileName = 'packages/components/components-foo/foo.tsx';
 const stylesFileName = 'packages/components/components-foo/foo.styles.ts';

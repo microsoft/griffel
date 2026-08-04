@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Reference \"@griffel/webpack-plugin\" instead of the removed \"@griffel/webpack-extraction-plugin\" in an error message",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "olfedias@microsoft.com",
+  "dependentChangeType": "patch"
+}
