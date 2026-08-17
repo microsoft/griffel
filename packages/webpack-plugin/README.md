@@ -72,8 +72,11 @@ export default {
 The plugin automatically:
 
 - Transforms `makeStyles()`, `makeResetStyles()`, and `makeStaticStyles()` calls at build time
+- Extracts CSS from precompiled dependencies i.e. packages that were built with [`@griffel/babel-preset`](../babel-preset) and ship `__styles()`, `__resetStyles()` & `__staticStyles()` calls
 - Extracts CSS into a dedicated chunk (named `griffel`) via `mini-css-extract-plugin`
 - Sorts CSS rules by specificity buckets, media queries, and container queries
+
+> ⚠️ **Precompiled dependencies have to be processed by the loader.** Don't use `exclude: /node_modules/` if your dependencies use Griffel, use `include` instead to narrow down the set of processed files, see [Performance](#performance).
 
 > ⚠️ **`style-loader` is not supported.** It does not produce the assets that the plugin needs to order CSS rules, using it would result in partially broken styling in your app.
 

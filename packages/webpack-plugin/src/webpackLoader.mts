@@ -1,5 +1,11 @@
 import { generateCSSRules, resolveAssetPathsInCSSRules } from '@griffel/css-extraction-utils';
-import { EvalCache, transformSync, type TransformOptions, type TransformResult } from '@griffel/transform';
+import {
+  EvalCache,
+  PRECOMPILED_FUNCTION_NAMES,
+  transformSync,
+  type TransformOptions,
+  type TransformResult,
+} from '@griffel/transform';
 import type * as webpack from 'webpack';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,7 +33,11 @@ function webpackLoader(
   const { classNameHashSalt, importsToTransform, functionsToTransform, evaluationRules } = this.getOptions();
 
   // Early return to handle cases when there is no Griffel usage in the file
-  const functionNames = functionsToTransform ?? ['makeStyles', 'makeResetStyles', 'makeStaticStyles'];
+  // "PRECOMPILED_FUNCTION_NAMES" are always included as precompiled dependencies contain them regardless of options
+  const functionNames = [
+    ...(functionsToTransform ?? ['makeStyles', 'makeResetStyles', 'makeStaticStyles']),
+    ...PRECOMPILED_FUNCTION_NAMES,
+  ];
 
   if (!functionNames.some(name => sourceCode.includes(name))) {
     this.callback(null, sourceCode, inputSourceMap);

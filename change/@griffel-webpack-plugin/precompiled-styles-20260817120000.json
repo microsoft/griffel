@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: perform CSS extraction for precompiled styles in dependencies",
+  "packageName": "@griffel/webpack-plugin",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

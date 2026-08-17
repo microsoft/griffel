@@ -21,7 +21,13 @@ import type { AstEvaluatorPlugin } from './evaluation/types.mjs';
 import { CSS_EXTRACTION_DISABLE_COMMENT } from './constants.mjs';
 import { dedupeCSSRules } from './utils/dedupeCSSRules.mjs';
 import { generateTransformMetadata, type ProcessedStyleCall } from './generateTransformMetadata.mjs';
-import type { StyleCall, TransformMetadata } from './types.mjs';
+import type {
+  PrecompiledFunctionKind,
+  SourceFunctionKind,
+  StyleCall,
+  StyleCallKind,
+  TransformMetadata,
+} from './types.mjs';
 
 export type TransformOptions = {
   filename: string;
@@ -65,7 +71,7 @@ export type TransformResult = {
   metadata?: TransformMetadata;
 };
 
-type FunctionKinds = 'makeStyles' | 'makeResetStyles' | 'makeStaticStyles';
+type FunctionKinds = SourceFunctionKind;
 
 const EXPORT_STAR_RE = /export\s+\*\s+from\s/;
 
@@ -83,11 +89,30 @@ function wrapWithPerfIssues(evaluator: Evaluator, perfIssues: TransformPerfIssue
   };
 }
 
-const RUNTIME_IDENTIFIERS = new Map<FunctionKinds, string>([
+const RUNTIME_IDENTIFIERS = new Map<StyleCallKind, string>([
   ['makeStyles', '__css'],
   ['makeResetStyles', '__resetCSS'],
   ['makeStaticStyles', '__staticCSS'],
+
+  ['__styles', '__css'],
+  ['__resetStyles', '__resetCSS'],
+  ['__staticStyles', '__staticCSS'],
 ]);
+
+/**
+ * Positions of an argument containing CSS rules in precompiled calls, it's always the last argument:
+ *   __styles(classNamesMapping, cssRules)
+ *   __resetStyles(ltrClassName, rtlClassName, cssRules)
+ *   __staticStyles(cssRules)
+ */
+const PRECOMPILED_ARGUMENT_INDEX = new Map<PrecompiledFunctionKind, number>([
+  ['__styles', 1],
+  ['__resetStyles', 2],
+  ['__staticStyles', 0],
+]);
+
+/** Names of functions in precompiled code, they are always handled by `transformSync()`. */
+export const PRECOMPILED_FUNCTION_NAMES = Array.from(PRECOMPILED_ARGUMENT_INDEX.keys());
 
 /**
  * The marker is only recognized as the first comment of a file to keep it predictable: a mention
@@ -160,12 +185,22 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   const programAst = parseResult.program;
 
   // Quick bail-out: if no Griffel imports exist, skip the AST walk entirely
-  const hasGriffelImports = parseResult.module.staticImports.some(
-    si =>
-      importsToTransformSet.has(si.moduleRequest.value) &&
-      si.entries.some(
-        e => e.importName.kind === 'Name' && functionsToTransformSet.has(e.importName.name as FunctionKinds),
-      ),
+  const hasGriffelImports = parseResult.module.staticImports.some(si =>
+    si.entries.some(e => {
+      if (e.importName.kind !== 'Name') {
+        return false;
+      }
+
+      // Precompiled calls are matched regardless of "importsToTransform", see the comment in the walk below
+      if (PRECOMPILED_ARGUMENT_INDEX.has(e.importName.name as PrecompiledFunctionKind)) {
+        return true;
+      }
+
+      return (
+        importsToTransformSet.has(si.moduleRequest.value) &&
+        functionsToTransformSet.has(e.importName.name as FunctionKinds)
+      );
+    }),
   );
 
   if (!hasGriffelImports) {
@@ -184,7 +219,10 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
   // Walk AST to collect style function calls using ScopeTracker for scope-aware import resolution
 
   const scopeTracker = new ScopeTracker();
-  const matchedSpecifiers = new Map<number, { start: number; end: number; functionKind: FunctionKinds }>();
+  const matchedSpecifiers = new Map<
+    number,
+    { start: number; end: number; importStart: number; functionKind: StyleCallKind }
+  >();
 
   walk(programAst, {
     scopeTracker,
@@ -196,12 +234,6 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           return;
         }
 
-        const importSource = declaration.importNode.source.value;
-
-        if (!importsToTransformSet.has(importSource)) {
-          return;
-        }
-
         const imported = declaration.node.imported;
 
         if (imported.type !== 'Identifier') {
@@ -209,23 +241,63 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         }
 
         const importedName = imported.name;
+        const precompiledArgumentIndex = PRECOMPILED_ARGUMENT_INDEX.get(importedName as PrecompiledFunctionKind);
 
-        if (!functionsToTransformSet.has(importedName as FunctionKinds)) {
-          return;
+        // Precompiled calls are matched regardless of "importsToTransform" as these identifiers are internal to
+        // Griffel: a package can be precompiled with any set of "importsToTransform" and consumers of that package
+        // don't know about it.
+        if (precompiledArgumentIndex === undefined) {
+          const importSource = declaration.importNode.source.value;
+
+          if (!importsToTransformSet.has(importSource)) {
+            return;
+          }
+
+          if (!functionsToTransformSet.has(importedName as FunctionKinds)) {
+            return;
+          }
         }
 
-        const functionKind = importedName as FunctionKinds;
+        const functionKind = importedName as StyleCallKind;
 
-        if (node.arguments.length !== 1) {
-          throw new Error(
-            `${functionKind}() function accepts only a single param, got ${node.arguments.length} in ${filename}`,
-          );
+        let argument: Node;
+        let argumentStart: number;
+        let argumentEnd: number;
+
+        if (precompiledArgumentIndex === undefined) {
+          if (node.arguments.length !== 1) {
+            throw new Error(
+              `${functionKind}() function accepts only a single param, got ${node.arguments.length} in ${filename}`,
+            );
+          }
+
+          argument = node.arguments[0];
+          argumentStart = argument.start;
+          argumentEnd = argument.end;
+        } else {
+          // A call that does not match the shape produced by "@griffel/babel-preset" is left untouched
+          if (node.arguments.length !== precompiledArgumentIndex + 1) {
+            return;
+          }
+
+          argument = node.arguments[precompiledArgumentIndex];
+
+          if (argument.type !== 'ObjectExpression' && argument.type !== 'ArrayExpression') {
+            return;
+          }
+
+          // The argument is removed, not replaced: the range is extended to the preceding comma and to the closing
+          // parenthesis of a call to also drop a trailing comma
+          argumentStart =
+            precompiledArgumentIndex > 0 ? node.arguments[precompiledArgumentIndex - 1].end : argument.start;
+          argumentEnd = node.end - 1;
         }
 
         // Track the import specifier for rewriting (deduped by node start position)
         matchedSpecifiers.set(declaration.node.start, {
           start: declaration.node.start,
           end: declaration.node.end,
+          importStart: declaration.importNode.start,
           functionKind,
         });
 
@@ -251,14 +323,12 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           break;
         }
 
-        const argument = node.arguments[0];
-
         styleCalls.push({
           declaratorId,
           functionKind,
 
-          argumentStart: argument.start,
-          argumentEnd: argument.end,
+          argumentStart,
+          argumentEnd,
           argumentCode: sourceCode.slice(argument.start, argument.end),
           argumentNode: argument,
 
@@ -354,14 +424,50 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
           cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, { d: cssRules });
         }
         break;
+
+      // Precompiled calls already contain resolved CSS rules, they are only collected & stripped
+      case '__styles':
+      case '__staticStyles':
+        {
+          const cssRules = evaluationResult as CSSRulesByBucket;
+
+          magicString.remove(styleCall.argumentStart, styleCall.argumentEnd);
+          cssRulesByBucket = concatCSSRulesByBucket(cssRulesByBucket, cssRules);
+        }
+        break;
+
+      case '__resetStyles':
+        {
+          const cssRules = evaluationResult as CSSRulesByBucket | string[];
+
+          magicString.remove(styleCall.argumentStart, styleCall.argumentEnd);
+          cssRulesByBucket = concatCSSRulesByBucket(
+            cssRulesByBucket,
+            Array.isArray(cssRules) ? { r: cssRules } : cssRules,
+          );
+        }
+        break;
     }
   }
 
   // ---
   // Transform imports and function names
 
+  const rewrittenSpecifiers = new Set<string>();
+
   for (const specifier of matchedSpecifiers.values()) {
-    magicString.overwrite(specifier.start, specifier.end, RUNTIME_IDENTIFIERS.get(specifier.functionKind)!);
+    const runtimeIdentifier = RUNTIME_IDENTIFIERS.get(specifier.functionKind)!;
+
+    // Multiple functions map to the same runtime identifier ("makeStyles" & "__styles"), rewriting both specifiers
+    // in the same import declaration would produce a duplicate binding
+    const rewriteKey = `${specifier.importStart}:${runtimeIdentifier}`;
+
+    if (rewrittenSpecifiers.has(rewriteKey)) {
+      continue;
+    }
+
+    rewrittenSpecifiers.add(rewriteKey);
+    magicString.overwrite(specifier.start, specifier.end, runtimeIdentifier);
   }
 
   // ---
@@ -386,7 +492,8 @@ export function transformSync(sourceCode: string, options: TransformOptions): Tr
         source: sourceCode,
         program: programAst,
         comments: parseResult.comments,
-        processedStyleCalls,
+        // Precompiled calls produce no metadata, they leave holes in the array
+        processedStyleCalls: processedStyleCalls.filter(Boolean),
       }),
     }),
   };

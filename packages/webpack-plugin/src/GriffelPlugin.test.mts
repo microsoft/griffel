@@ -355,6 +355,10 @@ describe('GriffelCSSExtractionPlugin', () => {
   // Ensures that a file without makeStyles() calls remains unprocessed
   testFixture('missing-calls');
 
+  // Precompiled styles i.e. code produced by "@griffel/babel-preset"
+  testFixture('precompiled');
+  testFixture('precompiled-assets');
+
   // Multiple calls of __styles
   testFixture('multiple');
 

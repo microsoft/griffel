@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: handle precompiled styles (__styles, __resetStyles, __staticStyles) during transforms",
+  "packageName": "@griffel/transform",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

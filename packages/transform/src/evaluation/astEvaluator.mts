@@ -1,4 +1,4 @@
-import type { Node, ObjectExpression, Program, TemplateLiteral } from 'oxc-parser';
+import type { ArrayExpression, Node, ObjectExpression, Program, TemplateLiteral } from 'oxc-parser';
 import type { EvaluationResult, AstEvaluatorContext, AstEvaluatorPlugin } from './types.mjs';
 
 /**
@@ -33,6 +33,9 @@ export function astEvaluator(node: Node, programAst: Program, plugins: AstEvalua
 
       case 'ObjectExpression':
         return evaluateObjectExpression(node);
+
+      case 'ArrayExpression':
+        return evaluateArrayExpression(node);
 
       case 'TemplateLiteral':
         if ((node as TemplateLiteral).expressions.length === 0) {
@@ -91,6 +94,27 @@ export function astEvaluator(node: Node, programAst: Program, plugins: AstEvalua
     }
 
     return obj;
+  }
+
+  function evaluateArrayExpression(node: ArrayExpression): unknown {
+    const arr: unknown[] = [];
+
+    for (const element of node.elements) {
+      // Holes ("[a, , b]") and spreads cannot be evaluated statically
+      if (element === null || element.type === 'SpreadElement') {
+        return DEOPT;
+      }
+
+      const value = evaluateNode(element);
+
+      if (value === DEOPT) {
+        return DEOPT;
+      }
+
+      arr.push(value);
+    }
+
+    return arr;
   }
 
   const result = evaluateNode(node);

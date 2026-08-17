@@ -347,6 +347,25 @@ const TESTS: TestCase[] = [
     fixture: path.resolve(fixturesDir, 'css-extraction-disabled', 'code.ts'),
     outputFixture: path.resolve(fixturesDir, 'css-extraction-disabled', 'output.ts'),
   },
+
+  // Precompiled styles i.e. code produced by "@griffel/babel-preset"
+  //
+  {
+    title: 'precompiled styles',
+    fixture: path.resolve(fixturesDir, 'precompiled', 'code.ts'),
+    outputFixture: path.resolve(fixturesDir, 'precompiled', 'output.ts'),
+  },
+  {
+    title: 'precompiled styles with media queries',
+    fixture: path.resolve(fixturesDir, 'precompiled-media', 'code.ts'),
+    outputFixture: path.resolve(fixturesDir, 'precompiled-media', 'output.ts'),
+  },
+  {
+    title: 'precompiled styles with assets',
+    fixture: path.resolve(fixturesDir, 'precompiled-assets', 'code.ts'),
+    outputFixture: path.resolve(fixturesDir, 'precompiled-assets', 'output.ts'),
+  },
+
   {
     title: 'errors: throws on invalid argument count',
     fixture: path.resolve(fixturesDir, 'error-argument-count', 'fixture.js'),
