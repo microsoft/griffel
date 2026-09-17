@@ -10,8 +10,8 @@ export interface MakeStylesOptions {
   renderer: GriffelRenderer;
 }
 
-export function makeStyles<Slots extends string | number>(
-  stylesBySlots: StylesBySlots<Slots>,
+export function makeStyles<Slots extends string | number, Styles extends StylesBySlots<Slots> = StylesBySlots<Slots>>(
+  stylesBySlots: Styles,
   factory: GriffelInsertionFactory = insertionFactory,
 ) {
   const insertStyles = factory();
@@ -29,7 +29,7 @@ export function makeStyles<Slots extends string | number>(
 
   let classNameHashSalt: string;
 
-  function computeClasses(options: MakeStylesOptions): Record<Slots, string> {
+  function computeClasses(options: MakeStylesOptions): { [Slot in keyof Styles]: string } {
     const { dir, renderer } = options;
 
     if (classesMapBySlot === null) {
@@ -77,7 +77,7 @@ export function makeStyles<Slots extends string | number>(
       debugData.addSequenceDetails(classNamesForSlots!, sourceURL);
     }
 
-    return classNamesForSlots;
+    return classNamesForSlots as { [Slot in keyof Styles]: string };
   }
 
   return computeClasses;

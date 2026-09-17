@@ -11,7 +11,10 @@ import { useRenderer } from './RendererContext.js';
 import { useTextDirection } from './TextDirectionContext.js';
 import { isInsideComponent } from './utils/isInsideComponent.js';
 
-export function makeStyles<Slots extends string | number>(stylesBySlots: Record<Slots, GriffelStyle>) {
+export function makeStyles<
+  Slots extends string | number,
+  Styles extends Record<Slots, GriffelStyle> = Record<Slots, GriffelStyle>,
+>(stylesBySlots: Styles) {
   const getStyles = vanillaMakeStyles(stylesBySlots, insertionFactory);
 
   if (process.env.NODE_ENV !== 'production') {
@@ -25,7 +28,7 @@ export function makeStyles<Slots extends string | number>(stylesBySlots: Record<
     }
   }
 
-  return function useClasses(): Record<Slots, string> {
+  return function useClasses(): { [Slot in keyof Styles]: string } {
     const dir = useTextDirection();
     const renderer = useRenderer();
 
