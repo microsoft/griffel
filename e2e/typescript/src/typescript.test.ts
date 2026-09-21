@@ -67,4 +67,20 @@ describe.each(TYPESCRIPT_VERSIONS)('typescript@%s', version => {
       );
     }
   });
+
+  if (version !== '4.4') {
+    it(`type-checks a NodeNext project referencing @griffel/style-types with typescript@${version}`, async () => {
+      try {
+        await sh(`node ${tscBin} --project tsconfig.nodenext.json --pretty`, tempDir, {
+          pipeOutputToResult: true,
+          timeout: TSC_TIMEOUT,
+        });
+      } catch (e) {
+        throw new Error(
+          `Building a NodeNext project referencing @griffel/style-types using typescript@${version} failed.\n\n` +
+            (e as Error).message,
+        );
+      }
+    });
+  }
 });

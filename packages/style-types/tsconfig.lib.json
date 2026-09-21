@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "declaration": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "types": ["node", "environment"]
   },
   "exclude": [
