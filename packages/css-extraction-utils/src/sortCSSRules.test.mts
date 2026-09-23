@@ -1,4 +1,4 @@
-import type { CSSRulesByBucket, GriffelRenderer } from '@griffel/core';
+import { resolveStyleRules, type CSSRulesByBucket, type GriffelRenderer } from '@griffel/core';
 import * as prettier from 'prettier';
 import { describe, expect, it } from 'vitest';
 
@@ -41,6 +41,38 @@ describe('getUniqueRulesFromSets', () => {
 });
 
 describe('sortCSSRules', () => {
+  it.each([
+    {
+      paddingRight: '2px',
+      paddingInline: '3px',
+    },
+    {
+      paddingInline: '3px',
+      paddingRight: '2px',
+    },
+  ])('orders physical padding before logical padding', styles => {
+    const extractedCSS = sortCSSRules([resolveStyleRules(styles)[1]], () => 0);
+    const declarations = Array.from(extractedCSS.matchAll(/\{([^}]+)\}/g), match => match[1]);
+
+    expect(declarations).toEqual(['padding-right:2px;', 'padding-left:2px;', 'padding-inline:3px;']);
+  });
+
+  it.each([
+    {
+      marginRight: '2px',
+      marginInline: '3px',
+    },
+    {
+      marginInline: '3px',
+      marginRight: '2px',
+    },
+  ])('orders physical margin before logical margin', styles => {
+    const extractedCSS = sortCSSRules([resolveStyleRules(styles)[1]], () => 0);
+    const declarations = Array.from(extractedCSS.matchAll(/\{([^}]+)\}/g), match => match[1]);
+
+    expect(declarations).toEqual(['margin-right:2px;', 'margin-left:2px;', 'margin-inline:3px;']);
+  });
+
   it('removes duplicate rules', async () => {
     const setA: CSSRulesByBucket = {
       d: ['.baz { color: orange; }', '.foo { color: red; }'],

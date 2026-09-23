@@ -975,6 +975,50 @@ describe('resolveStyleRules', () => {
       expect(result[1]).toEqual({ d: [['.fbhmu18{padding:10px;}', { p: -1 }]] });
     });
 
+    it('assigns padding priorities from broad physical to specific logical', () => {
+      const styles = {
+        padding: '1px',
+        paddingRight: '2px',
+        paddingInline: '3px',
+        paddingInlineEnd: '4px',
+      };
+      const rules = resolveStyleRules(styles)[1].d!;
+      const priorities = rules.map(entry => (typeof entry === 'string' ? 0 : (entry[1]?.p ?? 0)));
+
+      expect(priorities).toEqual([-1, 0, 0, 1, 2]);
+    });
+
+    it('assigns margin priorities from broad physical to specific logical', () => {
+      const styles = {
+        margin: '1px',
+        marginRight: '2px',
+        marginInline: '3px',
+        marginInlineEnd: '4px',
+      };
+      const rules = resolveStyleRules(styles)[1].d!;
+      const priorities = rules.map(entry => (typeof entry === 'string' ? 0 : (entry[1]?.p ?? 0)));
+
+      expect(priorities).toEqual([-1, 0, 0, 1, 2]);
+    });
+
+    it('assigns a higher priority to logical size than physical size', () => {
+      const styles = {
+        width: '100px',
+        inlineSize: '200px',
+      };
+      const rules = resolveStyleRules(styles)[1].d!;
+      const priorities = rules.map(entry => (typeof entry === 'string' ? 0 : (entry[1]?.p ?? 0)));
+
+      expect(priorities).toEqual([0, 2]);
+    });
+
+    it('assigns a shorthand priority to logical border shorthands', () => {
+      const rules = resolveStyleRules({ borderBlockColor: 'red' })[1].d!;
+      const priorities = rules.map(entry => (typeof entry === 'string' ? 0 : (entry[1]?.p ?? 0)));
+
+      expect(priorities).toEqual([1]);
+    });
+
     it('includes metadata for media queries', () => {
       const result = resolveStyleRules({
         '@media screen': {
