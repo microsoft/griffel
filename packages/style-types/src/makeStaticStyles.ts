@@ -1,5 +1,5 @@
 import type * as CSS from 'csstype';
-import type { GriffelStylesCSSValue, Fallback } from './shared';
+import type { GriffelStylesCSSValue, Fallback } from './shared.js';
 
 //
 // Types for makeStaticStyles()
