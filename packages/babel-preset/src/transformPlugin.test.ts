@@ -322,6 +322,13 @@ pluginTester({
       },
       error: /Validation failed for passed config/,
     },
+
+    // Fix for https://github.com/microsoft/griffel/issues/627
+    {
+      title: 'errors: shows clear message for TypeScript syntax during evaluation',
+      fixture: path.resolve(fixturesDir, 'error-typescript-evaluation', 'fixture.ts'),
+      error: /\[Griffel\].*TypeScript/,
+    },
   ],
 
   plugin: transformPlugin,
