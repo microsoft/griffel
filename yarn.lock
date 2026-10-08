@@ -13522,7 +13522,7 @@ __metadata:
     react-shadow: "npm:^20.6.0"
     rtl-css-js: "npm:^1.16.1"
     simple-git-hooks: "npm:2.13.1"
-    source-map-js: "npm:1.2.1"
+    source-map-js: "npm:1.2.2"
     storybook: "npm:10.5.5"
     stylelint: "npm:^17.14.0"
     stylis: "npm:^4.4.0"
@@ -20715,17 +20715,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:1.2.1, source-map-js@npm:^1.0.1, source-map-js@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "source-map-js@npm:1.2.1"
-  checksum: 10/ff9d8c8bf096d534a5b7707e0382ef827b4dd360a577d3f34d2b9f48e12c9d230b5747974ee7c607f0df65113732711bb701fe9ece3c7edbd43cb2294d707df3
+"source-map-js@npm:1.2.2":
+  version: 1.2.2
+  resolution: "source-map-js@npm:1.2.2"
+  checksum: 10/4807c894bb6280c8b84886159b96080e3996f42c6e8015e647881edfd4f955f6024ceebb8bb40d33ce8b106e24b2e29c133575e1c60c01c8aae57a05fdf17761
   languageName: node
   linkType: hard
 
-"source-map-js@patch:source-map-js@npm%3A1.2.1#~/.yarn/patches/source-map-js-npm-1.2.1-b9a47d7e1a.patch":
+"source-map-js@npm:^1.0.1, source-map-js@npm:^1.2.1":
   version: 1.2.1
-  resolution: "source-map-js@patch:source-map-js@npm%3A1.2.1#~/.yarn/patches/source-map-js-npm-1.2.1-b9a47d7e1a.patch::version=1.2.1&hash=092cb6"
-  checksum: 10/6224b18bade476b494a622317cec9c433b6cb67098dd9d1f8b6101a937dc0ffe699a61813557e887fcc67de87312e3ed4b147131d0dfabf2e5336faab53073e9
+  resolution: "source-map-js@npm:1.2.1"
+  checksum: 10/ff9d8c8bf096d534a5b7707e0382ef827b4dd360a577d3f34d2b9f48e12c9d230b5747974ee7c607f0df65113732711bb701fe9ece3c7edbd43cb2294d707df3
   languageName: node
   linkType: hard
 
