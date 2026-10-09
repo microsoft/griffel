@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: preserve style slot definitions in makeStyles return types",
+  "packageName": "@griffel/core",
+  "email": "11584315+mathis-m@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
