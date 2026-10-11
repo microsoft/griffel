@@ -26,4 +26,29 @@ describe('canUseDOM', () => {
     expect(useInsertionEffect).toHaveBeenCalledTimes(1);
     expect(renderer.insertCSSRules).toHaveBeenCalledTimes(1);
   });
+
+  it('inserts the same rules once per renderer across mounts', () => {
+    const rendererA: Partial<GriffelRenderer> = { id: 'a', insertCSSRules: vi.fn() };
+    const rendererB: Partial<GriffelRenderer> = { id: 'b', insertCSSRules: vi.fn() };
+    const insertStyles = insertionFactory();
+    const cssRules = { d: ['a'] };
+
+    insertStyles(rendererA as GriffelRenderer, cssRules);
+    insertStyles(rendererA as GriffelRenderer, cssRules);
+    insertStyles(rendererB as GriffelRenderer, cssRules);
+
+    expect(useInsertionEffect).toHaveBeenCalledTimes(3);
+    expect(rendererA.insertCSSRules).toHaveBeenCalledTimes(1);
+    expect(rendererB.insertCSSRules).toHaveBeenCalledTimes(1);
+  });
+
+  it('inserts different rules for the same renderer', () => {
+    const renderer: Partial<GriffelRenderer> = { id: 'a', insertCSSRules: vi.fn() };
+    const insertStyles = insertionFactory();
+
+    insertStyles(renderer as GriffelRenderer, { d: ['a'] });
+    insertStyles(renderer as GriffelRenderer, { d: ['b'] });
+
+    expect(renderer.insertCSSRules).toHaveBeenCalledTimes(2);
+  });
 });
