@@ -12,7 +12,11 @@ import {
 } from '@griffel/css-extraction-utils';
 
 import { GRIFFEL_CSS_SUFFIX, PLUGIN_NAME } from './constants.mjs';
-import { createResolverFactory, type TransformResolverFactory } from './resolver/createResolverFactory.mjs';
+import {
+  createResolverFactory,
+  type ResolverFactoryOptions,
+  type TransformResolverFactory,
+} from './resolver/createResolverFactory.mjs';
 
 type OutputBundle = Rollup.OutputBundle;
 
@@ -75,6 +79,27 @@ function splitQuery(id: string): [path: string, query: string] {
  */
 function isNonESMError(error: unknown): boolean {
   return error instanceof Error && error.message.includes('is not an ES module');
+}
+
+/**
+ * Converts `resolve.alias` of a resolved Vite config to the format of "oxc-resolver". Vite normalizes aliases to an
+ * array of `{ find, replacement }` (both array & object forms), "oxc-resolver" expects an object with an array of
+ * replacements per alias.
+ *
+ * Only aliases with a string `find` are supported, aliases with a RegExp (Vite always adds them for "@vite/client" &
+ * "@vite/env") are skipped.
+ */
+function toResolverAlias(viteAlias: ResolvedConfig['resolve']['alias'] | undefined): ResolverFactoryOptions['alias'] {
+  const alias = new Map<string, string[]>();
+
+  for (const { find, replacement } of viteAlias ?? []) {
+    // In Vite the first matching alias wins, the same priority is kept for duplicates
+    if (typeof find === 'string' && !alias.has(find)) {
+      alias.set(find, [replacement]);
+    }
+  }
+
+  return alias.size > 0 ? Object.fromEntries(alias) : undefined;
 }
 
 /**
@@ -212,9 +237,7 @@ export function griffel(options: GriffelPluginOptions = {}): Plugin[] {
     apply: 'build',
 
     configResolved(config: ResolvedConfig) {
-      const alias = Array.isArray(config.resolve?.alias) ? undefined : config.resolve?.alias;
-
-      resolveModule = resolverFactory({ alias });
+      resolveModule = resolverFactory({ alias: toResolverAlias(config.resolve?.alias) });
     },
 
     buildStart() {
