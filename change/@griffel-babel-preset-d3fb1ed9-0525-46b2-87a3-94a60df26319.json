@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix(babel-plugin): catch TS syntax errors from evaluatePaths and surface Griffel error message",
+  "packageName": "@griffel/babel-preset",
+  "email": "shashikant1989yadav@gmail.com",
+  "dependentChangeType": "patch"
+}
