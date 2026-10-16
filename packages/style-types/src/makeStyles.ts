@@ -1,7 +1,7 @@
 import type * as CSS from 'csstype';
 
-import type { Fallback, GriffelStylesCSSValue } from './shared';
-import type { GriffelStylesUnsupportedCSSProperties } from './unsupported-properties';
+import type { Fallback, GriffelStylesCSSValue } from './shared.js';
+import type { GriffelStylesUnsupportedCSSProperties } from './unsupported-properties.js';
 
 //
 // Types for makeStyles()

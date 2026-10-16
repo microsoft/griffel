@@ -1,5 +1,5 @@
 import type * as CSS from 'csstype';
-import type { GriffelStylesCSSValue } from './shared';
+import type { GriffelStylesCSSValue } from './shared.js';
 
 //
 // Types for makeResetStyles()
