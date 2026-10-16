@@ -1,5 +1,11 @@
 import type { CSSShorthands } from './types.ts';
 
+// Logical inline/block shorthands (e.g. `paddingInline`, `insetBlock`) must win over their physical
+// counterparts regardless of authoring order, so they get a positive priority and their longhands an
+// even higher one. Deeper logical families whose longhands are themselves shorthands (e.g. logical
+// borders) are left untouched.
+const LOGICAL_SHORTHAND = /(?:Inline|Block)$/;
+
 function updatePriorities(propertiesWithPriority: CSSShorthands, targetPriority: number = -1) {
   const effectiveProperties: CSSShorthands = {};
 
@@ -39,6 +45,25 @@ export function assignShorthandPriority(preparedProperties: Record<string, strin
   }
 
   updatePriorities(propertiesWithPriority);
+
+  const logicalShorthands = Object.keys(preparedProperties)
+    .filter(
+      property =>
+        LOGICAL_SHORTHAND.test(property) &&
+        preparedProperties[property].every(longhand => !preparedProperties[longhand]),
+    )
+    .sort();
+
+  // Logical longhands (2) beat logical shorthands (1), which beat physical properties (default 0).
+  for (const shorthand of logicalShorthands) {
+    const longhands = propertiesWithPriority[shorthand][1];
+
+    for (const longhand of longhands) {
+      propertiesWithPriority[longhand] = [2, []];
+    }
+
+    propertiesWithPriority[shorthand] = [1, longhands];
+  }
 
   return propertiesWithPriority;
 }
