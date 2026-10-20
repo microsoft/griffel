@@ -16,14 +16,17 @@ export function makeResetStyles(styles: GriffelResetStyle, factory: GriffelInser
   let ltrClassName: string | null = null;
   let rtlClassName: string | null = null;
 
-  let cssRules: CSSRulesByBucket | string[] | null = null;
+  // Wrapped once on resolve: a new object per call would defeat insertion caching and re-run insertion effects on every render
+  let insertionRules: CSSRulesByBucket | null = null;
   let classNameHashSalt: string;
 
   function computeClassName(options: MakeResetStylesOptions): string {
     const { dir, renderer } = options;
 
     if (ltrClassName === null) {
+      let cssRules: CSSRulesByBucket | string[];
       [ltrClassName, rtlClassName, cssRules] = resolveResetStyleRules(styles, renderer.classNameHashSalt);
+      insertionRules = Array.isArray(cssRules) ? { r: cssRules } : cssRules;
 
       if (process.env.NODE_ENV !== 'production') {
         if (renderer.classNameHashSalt) {
@@ -45,7 +48,7 @@ export function makeResetStyles(styles: GriffelResetStyle, factory: GriffelInser
       }
     }
 
-    insertStyles(renderer, Array.isArray(cssRules) ? { r: cssRules! } : cssRules!);
+    insertStyles(renderer, insertionRules!);
 
     const className = dir === 'ltr' ? ltrClassName : rtlClassName || ltrClassName;
 

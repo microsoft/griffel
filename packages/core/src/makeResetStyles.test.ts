@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './common/snapshotMatchers.js';
 import { createDOMRenderer } from './renderer/createDOMRenderer.js';
 import { makeResetStyles } from './makeResetStyles.js';
-import type { GriffelRenderer } from './types.js';
+import { __resetStyles } from './__resetStyles.js';
+import type { CSSRulesByBucket, GriffelInsertionFactory, GriffelRenderer } from './types.js';
 
 describe('makeResetStyles', () => {
   let renderer: GriffelRenderer;
@@ -84,5 +85,38 @@ describe('makeResetStyles', () => {
 
       expect(resultWithSalt).not.toBe(resultWithoutSalt);
     });
+  });
+
+  it('passes the same rules object to insertion on every call', () => {
+    const insertedRules: CSSRulesByBucket[] = [];
+    const factory: GriffelInsertionFactory = () => (_renderer, cssRules) => {
+      insertedRules.push(cssRules);
+    };
+
+    // Plain rules resolve to an array, which gets wrapped into a bucket object
+    const computeClassName = makeResetStyles({ color: 'red' }, factory);
+    computeClassName({ dir: 'ltr', renderer });
+    computeClassName({ dir: 'ltr', renderer });
+    computeClassName({ dir: 'rtl', renderer });
+
+    expect(insertedRules).toHaveLength(3);
+    expect(insertedRules[0]).toEqual({ r: [expect.stringMatching(/\{color:red;\}$/)] });
+    expect(insertedRules[1]).toBe(insertedRules[0]);
+    expect(insertedRules[2]).toBe(insertedRules[0]);
+  });
+
+  it('passes the same rules object to insertion on every call (__resetStyles)', () => {
+    const insertedRules: CSSRulesByBucket[] = [];
+    const factory: GriffelInsertionFactory = () => (_renderer, cssRules) => {
+      insertedRules.push(cssRules);
+    };
+
+    const computeClassName = __resetStyles('r7lmmpp', null, ['.r7lmmpp{color:red;}'], factory);
+    computeClassName({ dir: 'ltr', renderer });
+    computeClassName({ dir: 'ltr', renderer });
+
+    expect(insertedRules).toHaveLength(2);
+    expect(insertedRules[0]).toEqual({ r: ['.r7lmmpp{color:red;}'] });
+    expect(insertedRules[1]).toBe(insertedRules[0]);
   });
 });

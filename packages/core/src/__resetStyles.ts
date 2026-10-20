@@ -13,12 +13,14 @@ export function __resetStyles(
   factory: GriffelInsertionFactory = insertionFactory,
 ) {
   const insertStyles = factory();
+  // Wrap once: a new object per call would defeat insertion caching and re-run insertion effects on every render
+  const insertionRules: CSSRulesByBucket = Array.isArray(cssRules) ? { r: cssRules } : cssRules;
 
   function computeClassName(options: MakeResetStylesOptions): string {
     const { dir, renderer } = options;
     const className = dir === 'ltr' ? ltrClassName : rtlClassName || ltrClassName;
 
-    insertStyles(renderer, Array.isArray(cssRules) ? { r: cssRules! } : cssRules!);
+    insertStyles(renderer, insertionRules);
 
     if (process.env.NODE_ENV !== 'production') {
       DEBUG_RESET_CLASSES[className] = 1;
