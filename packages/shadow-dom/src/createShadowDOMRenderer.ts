@@ -1,5 +1,11 @@
-import { getStyleSheetKey, normalizeCSSBucketEntry, safeInsertRule } from '@griffel/core';
-import type { GriffelRenderer, StyleBucketName } from '@griffel/core';
+import {
+  getStyleSheetKey,
+  insertRuleInCascadeLayer,
+  normalizeCSSBucketEntry,
+  resolveCascadeLayer,
+  safeInsertRule,
+} from '@griffel/core';
+import type { GriffelCascadeLayerFn, GriffelRenderer, StyleBucketName } from '@griffel/core';
 
 import { createFallbackRenderer } from './createFallbackRenderer.js';
 import { findInsertionPoint, findShadowRootInsertionPoint } from './findInsertionPoint.js';
@@ -19,6 +25,12 @@ export interface CreateShadowDomRendererOptions {
    * If specified, a renderer will insert created CSSStyleSheets after this CSSStyleSheet.
    */
   insertionPoint?: CSSStyleSheet;
+
+  /**
+   * Puts rules of every style bucket into a cascade layer, see `CreateDOMRendererOptions.cascadeLayer` in
+   * `@griffel/core`.
+   */
+  cascadeLayer?: GriffelCascadeLayerFn;
 }
 
 let rendererId = 0;
@@ -32,6 +44,7 @@ function getCSSStyleSheetForBucket(
 
   bucketName: StyleBucketName,
   metadata: Record<string, unknown> = {},
+  cascadeLayer: GriffelCascadeLayerFn | undefined,
 
   onStyleSheetInsert: (stylesheet: ExtendedCSSStyleSheet) => void,
 ): ExtendedCSSStyleSheet {
@@ -46,6 +59,7 @@ function getCSSStyleSheetForBucket(
 
     styleSheet.bucketName = bucketName;
     styleSheet.metadata = metadata;
+    styleSheet.layer = resolveCascadeLayer(cascadeLayer, bucketName, metadata);
 
     cssSheetsCache[styleSheetKey] = styleSheet;
     onStyleSheetInsert(styleSheet);
@@ -70,12 +84,12 @@ function insertBefore<T extends CSSStyleSheet | ExtendedCSSStyleSheet>(
 
 export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateShadowDomRendererOptions = {}) {
   if (!SUPPORTS_CONSTRUCTABLE_STYLESHEETS) {
-    return createFallbackRenderer(shadowRoot) as GriffelRenderer & {
+    return createFallbackRenderer(shadowRoot, options.cascadeLayer) as GriffelRenderer & {
       adoptedStyleSheets?: never;
     };
   }
 
-  const { insertionPoint } = options;
+  const { insertionPoint, cascadeLayer } = options;
 
   const cssSheetsCache: Record<string, ExtendedCSSStyleSheet> = {};
   const renderer: GriffelShadowDOMRenderer = {
@@ -88,6 +102,7 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateS
     compareMediaQueries: compareQueriesLexicographically,
     // Container queries reuse the same comparator as media queries.
     compareContainerQueries: compareQueriesLexicographically,
+    ...(cascadeLayer && { cascadeLayer }),
     insertCSSRules(cssRules) {
       for (const [_styleBucketName, cssBucketEntries] of Object.entries(cssRules)) {
         const styleBucketName = _styleBucketName as StyleBucketName;
@@ -99,6 +114,7 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateS
 
             styleBucketName,
             metadata,
+            cascadeLayer,
 
             styleSheet => {
               const targetStyleSheet = findInsertionPoint(renderer, styleSheet);
@@ -118,7 +134,13 @@ export function createShadowDOMRenderer(shadowRoot: ShadowRoot, options: CreateS
           }
 
           renderer.insertionCache[ruleCSS] = styleBucketName;
-          safeInsertRule(sheet, ruleCSS);
+
+          if (sheet.layer) {
+            const layer = sheet.layer;
+            safeInsertRule({ insertRule: rule => insertRuleInCascadeLayer(sheet, layer, rule) }, ruleCSS);
+          } else {
+            safeInsertRule(sheet, ruleCSS);
+          }
         }
       }
     },

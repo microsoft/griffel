@@ -11,6 +11,10 @@ export interface IsomorphicStyleSheet {
   element: HTMLStyleElement | undefined;
   bucketName: StyleBucketName;
   /**
+   * A cascade layer that rules of this stylesheet are inserted into, see `CreateDOMRendererOptions.cascadeLayer`.
+   */
+  layer?: string;
+  /**
    * Returns all CSS rules on the stylesheet
    */
   cssRules(): string[];
@@ -54,7 +58,33 @@ export interface GriffelRenderer {
    * @private
    */
   compareContainerQueries(a: string, b: string): number;
+
+  /**
+   * @private
+   */
+  cascadeLayer?: GriffelCascadeLayerFn;
 }
+
+/**
+ * Metadata of a CSS bucket entry that identifies a style sheet: a priority (`p`, omitted for `0`), a media query
+ * (`m`, only for the `m` bucket) and a container query (`x`, only for the `x` bucket).
+ */
+export type CSSBucketEntryMetadata = {
+  p?: number;
+  m?: string;
+  x?: string;
+};
+
+/**
+ * Returns a cascade layer name for rules of a style bucket or `undefined` to keep rules unlayered.
+ *
+ * ⚠️ The callback is called once per style sheet (bucket + media/container query + priority) and should be pure: the
+ * same name must be returned on a server, on a client and in build-time CSS extraction.
+ */
+export type GriffelCascadeLayerFn = (
+  bucketName: StyleBucketName,
+  metadata: CSSBucketEntryMetadata,
+) => string | undefined | null;
 
 /**
  * Buckets under which we will group our stylesheets.

@@ -1,6 +1,6 @@
 import { injectDevTools, isDevToolsEnabled, debugData } from '../devtools/index.js';
 import { normalizeCSSBucketEntry } from '../runtime/utils/normalizeCSSBucketEntry.js';
-import type { GriffelRenderer, StyleBucketName } from '../types.js';
+import type { GriffelCascadeLayerFn, GriffelRenderer, StyleBucketName } from '../types.js';
 import { getStyleSheetForBucket } from './getStyleSheetForBucket.js';
 import { safeInsertRule } from './safeInsertRule.js';
 
@@ -54,6 +54,26 @@ export interface CreateDOMRendererOptions {
    * @returns positive number if a > b or negative number if a < b
    */
   compareContainerQueries?: (a: string, b: string) => number;
+
+  /**
+   * Puts rules of every style bucket into a cascade layer returned by this function, i.e. emits
+   * `@layer <name> { ... }` blocks. Layer names are owned by an application; Griffel only maps buckets to them. Use
+   * `getCascadeLayerOrder()` to declare the layers in the bucket order.
+   *
+   * A layer is resolved once per style sheet (bucket + media/container query + priority), so the callback receives
+   * only these fields in `metadata`. Rules that already use `@layer` are kept as is, they are not nested.
+   *
+   * The same function should be passed to the bundler plugins (CSS extraction) and used on a server, otherwise the
+   * output will diverge. Rehydration (`rehydrateRendererCache()`) relies on it to unwrap server-rendered layers.
+   *
+   * @example
+   * ```ts
+   * createDOMRenderer(document, {
+   *   cascadeLayer: bucketName => `app.${bucketName}`,
+   * });
+   * ```
+   */
+  cascadeLayer?: GriffelCascadeLayerFn;
 }
 
 /** @internal */
@@ -77,6 +97,7 @@ export function createDOMRenderer(
     // Container queries default to the same comparator as media queries; pass `compareCSSQueries`
     // from `@griffel/sort-css-queries` for numeric min-width / max-width ordering.
     compareContainerQueries = compareMediaQueries,
+    cascadeLayer,
   } = options;
   const renderer: GriffelRenderer = {
     classNameHashSalt,
@@ -85,6 +106,7 @@ export function createDOMRenderer(
     styleElementAttributes: Object.freeze(styleElementAttributes),
     compareMediaQueries,
     compareContainerQueries,
+    ...(cascadeLayer && { cascadeLayer }),
 
     id: `d${lastIndex++}`,
 
