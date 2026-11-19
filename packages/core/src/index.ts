@@ -55,6 +55,8 @@ export const shorthands = {
 export { createDOMRenderer } from './renderer/createDOMRenderer.js';
 export type { CreateDOMRendererOptions } from './renderer/createDOMRenderer.js';
 export { rehydrateRendererCache } from './renderer/rehydrateRendererCache.js';
+export { getCascadeLayerOrder } from './renderer/getCascadeLayerOrder.js';
+export type { GetCascadeLayerOrderOptions } from './renderer/getCascadeLayerOrder.js';
 export { safeInsertRule } from './renderer/safeInsertRule.js';
 
 export { mergeClasses } from './mergeClasses.js';
@@ -76,6 +78,11 @@ export { __staticStyles } from './__staticStyles.js';
 
 export { normalizeCSSBucketEntry } from './runtime/utils/normalizeCSSBucketEntry.js';
 export { styleBucketOrdering, getStyleSheetKey } from './renderer/getStyleSheetForBucket.js';
+export {
+  insertRuleInCascadeLayer,
+  resolveCascadeLayer,
+  serializeRulesInCascadeLayer,
+} from './renderer/cascadeLayers.js';
 export { defaultCompareMediaQueries } from './renderer/createDOMRenderer.js';
 export { getStyleBucketName } from './runtime/getStyleBucketName.js';
 export { reduceToClassNameForSlots } from './runtime/reduceToClassNameForSlots.js';
@@ -101,7 +108,9 @@ export type {
   CSSClasses,
   CSSClassesMapBySlot,
   CSSBucketEntry,
+  CSSBucketEntryMetadata,
   CSSRulesByBucket,
+  GriffelCascadeLayerFn,
   StyleBucketName,
   // Util
   GriffelRenderer,

@@ -1,5 +1,6 @@
 import { DATA_BUCKET_ATTR, DATA_CONTAINER_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
 import type { GriffelRenderer, IsomorphicStyleSheet, StyleBucketName } from '../types.js';
+import { resolveCascadeLayer } from './cascadeLayers.js';
 import { createIsomorphicStyleSheet } from './createIsomorphicStyleSheet.js';
 
 /**
@@ -66,6 +67,29 @@ export function getStyleSheetKeyFromElement(styleEl: HTMLStyleElement): string {
 }
 
 /**
+ * Restores metadata of a style sheet (see `getStyleSheetKey()`) from attributes of a server-rendered element.
+ */
+export function getStyleSheetMetadataFromElement(styleEl: HTMLStyleElement): Record<string, unknown> {
+  const metadata: Record<string, unknown> = {};
+  const priority = Number(styleEl.getAttribute(DATA_PRIORITY_ATTR) ?? '0');
+  const container = styleEl.getAttribute(DATA_CONTAINER_ATTR);
+
+  if (priority) {
+    metadata['p'] = priority;
+  }
+
+  if (styleEl.media) {
+    metadata['m'] = styleEl.media;
+  }
+
+  if (container !== null) {
+    metadata['x'] = container;
+  }
+
+  return metadata;
+}
+
+/**
  * Lazily adds a `<style>` bucket to the `<head>`. This will ensure that the style buckets are ordered.
  */
 export function getStyleSheetForBucket(
@@ -86,11 +110,17 @@ export function getStyleSheetForBucket(
 
   if (!renderer.stylesheets[stylesheetKey]) {
     const tag: HTMLStyleElement | undefined = targetDocument && targetDocument.createElement('style');
-    const stylesheet = createIsomorphicStyleSheet(tag, bucketName, priority, {
-      ...renderer.styleElementAttributes,
-      ...(isMediaBucket && { media }),
-      ...(isContainerBucket && { [DATA_CONTAINER_ATTR]: container }),
-    });
+    const stylesheet = createIsomorphicStyleSheet(
+      tag,
+      bucketName,
+      priority,
+      {
+        ...renderer.styleElementAttributes,
+        ...(isMediaBucket && { media }),
+        ...(isContainerBucket && { [DATA_CONTAINER_ATTR]: container }),
+      },
+      resolveCascadeLayer(renderer.cascadeLayer, bucketName, metadata),
+    );
 
     renderer.stylesheets[stylesheetKey] = stylesheet;
 

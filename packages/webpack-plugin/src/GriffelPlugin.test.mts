@@ -187,6 +187,34 @@ async function compileSourceWithWebpack(
   });
 }
 
+/** Removes `@layer <prefix>…{…}` wrappers emitted by the "cascadeLayer" option, keeps their contents. */
+function unwrapCascadeLayers(css: string, prefix: string): string {
+  let result = '';
+  let index = 0;
+
+  while (index < css.length) {
+    const start = css.indexOf(`@layer ${prefix}`, index);
+
+    if (start === -1) {
+      return result + css.slice(index);
+    }
+
+    const open = css.indexOf('{', start);
+    let depth = 1;
+    let end = open + 1;
+
+    while (depth > 0) {
+      depth += css[end] === '{' ? 1 : css[end] === '}' ? -1 : 0;
+      end++;
+    }
+
+    result += css.slice(index, start) + css.slice(open + 1, end - 1);
+    index = end;
+  }
+
+  return result;
+}
+
 function fixLineEndings(value: string) {
   return String(value).replace(/\r?\n/g, '\n').trim();
 }
@@ -434,6 +462,23 @@ describe('GriffelCSSExtractionPlugin', () => {
         bundleB: path.resolve(__dirname, '..', '__fixtures__', 'unstable-attach-to-main', 'codeB.ts'),
       },
     },
+  });
+
+  // Cascade layers
+  // --------------------
+  it('respects "cascadeLayer"', async () => {
+    const entryPath = path.resolve(__dirname, '..', '__fixtures__', 'style-buckets', 'code.ts');
+    const defaultResult = await compileSourceWithWebpack(entryPath, {});
+    const layeredResult = await compileSourceWithWebpack(entryPath, {
+      pluginOptions: { cascadeLayer: bucketName => `app.${bucketName}` },
+    });
+
+    expect(defaultResult.cssOutput).not.toContain('@layer app.');
+    expect(layeredResult.cssOutput).toContain('@layer app.d{');
+    expect(layeredResult.cssOutput).toContain('@layer app.h{');
+    expect(layeredResult.cssOutput).toContain('@layer app.m{');
+    // 👇 the same rules in the same order, only wrapped into layers
+    expect(unwrapCascadeLayers(layeredResult.cssOutput, 'app.')).toBe(defaultResult.cssOutput);
   });
 
   // Error reporting

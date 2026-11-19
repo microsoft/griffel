@@ -1,4 +1,4 @@
-import { defaultCompareMediaQueries, type GriffelRenderer } from '@griffel/core';
+import { defaultCompareMediaQueries, type GriffelCascadeLayerFn, type GriffelRenderer } from '@griffel/core';
 import { createStatsCollector, parseCSSRules, sortCSSRules } from '@griffel/css-extraction-utils';
 import type { Compilation, Chunk, Compiler, Module, sources } from 'webpack';
 
@@ -22,6 +22,12 @@ export type GriffelCSSExtractionPluginOptions = {
    * Defaults to the `compareMediaQueries` comparator.
    */
   compareContainerQueries?: GriffelRenderer['compareContainerQueries'];
+
+  /**
+   * Puts extracted rules of every style bucket into a cascade layer. Should be the same function that is passed to
+   * `createDOMRenderer()` so extracted & runtime CSS end up in the same layers.
+   */
+  cascadeLayer?: GriffelCascadeLayerFn;
 
   /** Allows to override resolver used to resolve imports inside evaluated modules. */
   resolverFactory?: TransformResolverFactory;
@@ -138,6 +144,7 @@ export class GriffelPlugin {
   readonly #collectPerfIssues: boolean;
   readonly #compareMediaQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareMediaQueries']>;
   readonly #compareContainerQueries: NonNullable<GriffelCSSExtractionPluginOptions['compareContainerQueries']>;
+  readonly #cascadeLayer: GriffelCSSExtractionPluginOptions['cascadeLayer'];
   readonly #resolverFactory: TransformResolverFactory;
   readonly #stats: ReturnType<typeof createStatsCollector>;
 
@@ -146,6 +153,7 @@ export class GriffelPlugin {
     this.#collectPerfIssues = options.collectPerfIssues ?? false;
     this.#compareMediaQueries = options.compareMediaQueries ?? defaultCompareMediaQueries;
     this.#compareContainerQueries = options.compareContainerQueries ?? this.#compareMediaQueries;
+    this.#cascadeLayer = options.cascadeLayer;
     this.#resolverFactory = options.resolverFactory ?? createResolverFactory();
     this.#stats = createStatsCollector({
       collectStats: options.collectStats ?? false,
@@ -348,7 +356,12 @@ export class GriffelPlugin {
             compilation.warnings.push(warning);
           }
 
-          const cssSource = sortCSSRules([cssRulesByBucket], this.#compareMediaQueries, this.#compareContainerQueries);
+          const cssSource = sortCSSRules(
+            [cssRulesByBucket],
+            this.#compareMediaQueries,
+            this.#compareContainerQueries,
+            this.#cascadeLayer,
+          );
 
           compilation.updateAsset(cssAssetName, new compiler.webpack.sources.RawSource(remainingCSS + cssSource));
 

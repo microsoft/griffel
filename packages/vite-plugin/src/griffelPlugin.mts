@@ -1,4 +1,9 @@
-import { defaultCompareMediaQueries, type CSSRulesByBucket, type GriffelRenderer } from '@griffel/core';
+import {
+  defaultCompareMediaQueries,
+  type CSSRulesByBucket,
+  type GriffelCascadeLayerFn,
+  type GriffelRenderer,
+} from '@griffel/core';
 import { EvalCache, transformSync, type TransformOptions } from '@griffel/transform';
 import { createFilter, type FilterPattern, type Plugin, type ResolvedConfig, type Rollup } from 'vite';
 
@@ -45,6 +50,12 @@ export type GriffelPluginOptions = Omit<TransformOptions, 'filename' | 'generate
    * Defaults to the `compareMediaQueries` comparator.
    */
   compareContainerQueries?: GriffelRenderer['compareContainerQueries'];
+
+  /**
+   * Puts extracted rules of every style bucket into a cascade layer. Should be the same function that is passed to
+   * `createDOMRenderer()` so extracted & runtime CSS end up in the same layers.
+   */
+  cascadeLayer?: GriffelCascadeLayerFn;
 
   /** Allows to override resolver used to resolve imports inside evaluated modules. */
   resolverFactory?: TransformResolverFactory;
@@ -131,6 +142,7 @@ export function griffel(options: GriffelPluginOptions = {}): Plugin[] {
 
     compareMediaQueries = defaultCompareMediaQueries,
     compareContainerQueries = compareMediaQueries,
+    cascadeLayer,
 
     resolverFactory = createResolverFactory(),
 
@@ -325,7 +337,7 @@ export function griffel(options: GriffelPluginOptions = {}): Plugin[] {
       // WHY?
       //   CSS rules should be sorted in the same order as it's done via style buckets by the Griffel runtime, it's
       //   not possible to do it in multiple assets as they can be loaded in an arbitrary order.
-      const sortedCSS = sortCSSRules(cssRules, compareMediaQueries, compareContainerQueries);
+      const sortedCSS = sortCSSRules(cssRules, compareMediaQueries, compareContainerQueries, cascadeLayer);
 
       // Library & SSR builds may have no entry chunks with CSS attached, in this case the CSS stays where it was found
       const targetAssets = entryAssets.size > 0 ? entryAssets : new Set([assetsWithGriffelCSS[0]]);

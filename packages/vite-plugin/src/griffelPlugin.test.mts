@@ -98,6 +98,34 @@ async function compileFixtureWithVite(fixturePath: string, options: TestOptions)
   return { cssOutput, filesList };
 }
 
+/** Removes `@layer <prefix>…{…}` wrappers emitted by the "cascadeLayer" option, keeps their contents. */
+function unwrapCascadeLayers(css: string, prefix: string): string {
+  let result = '';
+  let index = 0;
+
+  while (index < css.length) {
+    const start = css.indexOf(`@layer ${prefix}`, index);
+
+    if (start === -1) {
+      return result + css.slice(index);
+    }
+
+    const open = css.indexOf('{', start);
+    let depth = 1;
+    let end = open + 1;
+
+    while (depth > 0) {
+      depth += css[end] === '{' ? 1 : css[end] === '}' ? -1 : 0;
+      end++;
+    }
+
+    result += css.slice(index, start) + css.slice(open + 1, end - 1);
+    index = end;
+  }
+
+  return result;
+}
+
 function fixLineEndings(value: string): string {
   return String(value).replace(/\r?\n/g, '\n').trim();
 }
@@ -224,6 +252,31 @@ describe('griffel() [build]', () => {
     expect(reversedResult.cssOutput.indexOf('min-width: 900px')).toBeLessThan(
       reversedResult.cssOutput.indexOf('min-width: 100px'),
     );
+  }, 30000);
+
+  it('respects "cascadeLayer"', async () => {
+    const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'style-buckets');
+    const defaultResult = await compileFixtureWithVite(fixturePath, {});
+    const layeredResult = await compileFixtureWithVite(fixturePath, {
+      pluginOptions: { cascadeLayer: bucketName => `app.${bucketName}` },
+    });
+
+    expect(defaultResult.cssOutput).not.toContain('@layer app.');
+    expect(layeredResult.cssOutput.match(/@layer app\.\w+/g)).toEqual([
+      '@layer app.d',
+      '@layer app.l',
+      '@layer app.v',
+      '@layer app.w',
+      '@layer app.f',
+      '@layer app.i',
+      '@layer app.h',
+      '@layer app.a',
+      '@layer app.k',
+      '@layer app.t',
+      '@layer app.m',
+    ]);
+    // 👇 the same rules in the same order, only wrapped into layers
+    expect(unwrapCascadeLayers(layeredResult.cssOutput, 'app.')).toBe(defaultResult.cssOutput);
   }, 30000);
 
   it('deduplicates rules that are used in multiple files', async () => {

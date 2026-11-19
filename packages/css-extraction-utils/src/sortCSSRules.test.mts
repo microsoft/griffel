@@ -376,3 +376,63 @@ describe('sortCSSRules', () => {
     });
   });
 });
+
+describe('sortCSSRules (cascadeLayer)', () => {
+  const setOfCSSRules: CSSRulesByBucket[] = [
+    {
+      d: ['.a{color:red;}', ['.b{padding:0;}', { p: -1 }], '@layer author{.c{color:teal;}}'],
+      h: ['.d:hover{color:blue;}'],
+      m: [
+        ['@media (min-width: 2px){.e{color:red;}}', { m: '(min-width: 2px)' }],
+        ['@media (min-width: 1px){.f{color:red;}}', { m: '(min-width: 1px)' }],
+      ],
+    },
+    { d: ['.g{color:lime;}'], r: ['.h{display:flex;}'] },
+  ];
+  const compareMediaQueries: GriffelRenderer['compareMediaQueries'] = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+
+  it('wraps sorted rules into layers per bucket', () => {
+    expect(
+      sortCSSRules(setOfCSSRules, compareMediaQueries, undefined, bucketName => `fluentui.${bucketName}.griffel`),
+    ).toBe(
+      [
+        '@layer fluentui.r.griffel{.h{display:flex;}}',
+        '@layer fluentui.d.griffel{.b{padding:0;}.a{color:red;}}',
+        // 👇 rules that name a layer are not nested
+        '@layer author{.c{color:teal;}}',
+        '@layer fluentui.d.griffel{.g{color:lime;}}',
+        '@layer fluentui.h.griffel{.d:hover{color:blue;}}',
+        '@layer fluentui.m.griffel{@media (min-width: 1px){.f{color:red;}}@media (min-width: 2px){.e{color:red;}}}',
+      ].join(''),
+    );
+  });
+
+  it('supports layers per priority & media query, keeps unlayered buckets as is', () => {
+    expect(
+      sortCSSRules(setOfCSSRules, compareMediaQueries, undefined, (bucketName, { p, m }) => {
+        if (bucketName === 'd') {
+          return `d.p${p ?? 0}`;
+        }
+
+        return m ? `m.${m === '(min-width: 1px)' ? 'sm' : 'md'}` : undefined;
+      }),
+    ).toBe(
+      [
+        '.h{display:flex;}',
+        '@layer d.p-1{.b{padding:0;}}',
+        '@layer d.p0{.a{color:red;}}',
+        '@layer author{.c{color:teal;}}',
+        '@layer d.p0{.g{color:lime;}}',
+        '.d:hover{color:blue;}',
+        '@layer m.sm{@media (min-width: 1px){.f{color:red;}}}',
+        '@layer m.md{@media (min-width: 2px){.e{color:red;}}}',
+      ].join(''),
+    );
+  });
+
+  it('is byte-identical when the option is not set', () => {
+    expect(sortCSSRules(setOfCSSRules, compareMediaQueries, undefined, undefined)).toBe(
+      sortCSSRules(setOfCSSRules, compareMediaQueries),
+    );
+  });
+});
