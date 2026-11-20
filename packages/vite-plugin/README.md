@@ -109,3 +109,5 @@ stylesheet to extract rules into, and Griffel handles styles in runtime there as
 
 - Files that are not ES modules are skipped, Griffel calls in them will be handled by the runtime.
 - If a project has multiple entrypoints, each of them gets a copy of all extracted Griffel CSS.
+- Imports in evaluated modules are resolved with aliases from `resolve.alias` of the Vite config, but only aliases with
+  a string `find` are supported. Use a custom `resolverFactory` if you need aliases with a `RegExp`.
