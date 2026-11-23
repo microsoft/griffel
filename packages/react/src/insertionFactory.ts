@@ -6,7 +6,9 @@ import { canUseDOM } from './utils/canUseDOM.js';
 import { useInsertionEffect } from './useInsertionEffect.js';
 
 export const insertionFactory: GriffelInsertionFactory = () => {
-  const insertionCache: Record<string, boolean> = {};
+  // Keyed by renderer instance (not by `renderer.id`) so that entries are released together with renderers, e.g. when
+  // a new renderer is created for every SSR request.
+  const insertionCache = new WeakSet<GriffelRenderer>();
 
   return function insert(renderer: GriffelRenderer, cssRules: CSSRulesByBucket) {
     // Even if `useInsertionEffect` is available, we can use it on a client only as it will not be executed in SSR
@@ -19,9 +21,9 @@ export const insertionFactory: GriffelInsertionFactory = () => {
       return;
     }
 
-    if (insertionCache[renderer.id] === undefined) {
+    if (!insertionCache.has(renderer)) {
       renderer.insertCSSRules(cssRules!);
-      insertionCache[renderer.id] = true;
+      insertionCache.add(renderer);
     }
   };
 };

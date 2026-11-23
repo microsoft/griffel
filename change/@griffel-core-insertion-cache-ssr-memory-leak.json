@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: release insertion cache entries together with renderers to avoid a memory leak when a renderer is created per SSR request",
+  "packageName": "@griffel/core",
+  "email": "gil.hanan@gmail.com",
+  "dependentChangeType": "patch"
+}
