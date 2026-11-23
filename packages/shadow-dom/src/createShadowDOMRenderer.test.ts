@@ -243,4 +243,36 @@ describe('createShadowDOMRenderer', () => {
       `);
     });
   });
+
+  describe('cascadeLayer', () => {
+    it('inserts rules into cascade layers, keeps cache keys unwrapped', () => {
+      renderer = createShadowDOMRenderer(shadowRoot, { cascadeLayer: bucketName => `app.${bucketName}` });
+
+      renderer.insertCSSRules({
+        d: ['.a{color:red;}', '@layer author{.b{color:blue;}}'],
+        m: [['@media (min-width: 1px){.c{color:red;}}', { m: '(min-width: 1px)' }]],
+      });
+      // 👇 a duplicate is not inserted again
+      renderer.insertCSSRules({ d: ['.a{color:red;}'] });
+
+      const sheets = renderer.adoptedStyleSheets!.map(sheet => ({
+        layer: sheet.layer,
+        cssText: Array.from(sheet.cssRules)
+          .map(rule => rule.cssText.replace(/\s+/g, ''))
+          .join(''),
+      }));
+
+      expect(sheets).toEqual([
+        { layer: 'app.d', cssText: expect.stringContaining('.a{color:red;}') },
+        { layer: 'app.m', cssText: expect.stringContaining('@media(min-width:1px){.c{color:red;}}') },
+      ]);
+      expect(sheets[0].cssText).toContain('@layerauthor{.b{color:blue;}}');
+      expect(sheets[0].cssText.match(/\.a\{/g)).toHaveLength(1);
+      expect(Object.keys(renderer.insertionCache)).toEqual([
+        '.a{color:red;}',
+        '@layer author{.b{color:blue;}}',
+        '@media (min-width: 1px){.c{color:red;}}',
+      ]);
+    });
+  });
 });

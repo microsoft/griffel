@@ -2,7 +2,8 @@ import { debugData, isDevToolsEnabled } from '../devtools/index.js';
 import type { GriffelRenderer, StyleBucketName } from '../types.js';
 import { createIsomorphicStyleSheetFromElement } from './createIsomorphicStyleSheet.js';
 import { forEachCSSRule } from './forEachCSSRule.js';
-import { getStyleSheetKeyFromElement } from './getStyleSheetForBucket.js';
+import { resolveCascadeLayer, unwrapCascadeLayer } from './cascadeLayers.js';
+import { getStyleSheetKeyFromElement, getStyleSheetMetadataFromElement } from './getStyleSheetForBucket.js';
 
 /**
  * Should be called in a case of Server-Side rendering. Rehydrates cache from for a renderer to avoid double insertion
@@ -43,16 +44,31 @@ export function rehydrateRendererCache(
     styleElements.forEach(styleElement => {
       const bucketName = styleElement.dataset['makeStylesBucket'] as StyleBucketName;
       const stylesheetKey = getStyleSheetKeyFromElement(styleElement);
+      const layer = resolveCascadeLayer(
+        renderer.cascadeLayer,
+        bucketName,
+        getStyleSheetMetadataFromElement(styleElement),
+      );
 
       // 👇 If some elements are not created yet, we will register them in renderer
       if (!renderer.stylesheets[stylesheetKey]) {
-        renderer.stylesheets[stylesheetKey] = createIsomorphicStyleSheetFromElement(styleElement);
+        renderer.stylesheets[stylesheetKey] = createIsomorphicStyleSheetFromElement(styleElement, layer);
       }
 
       // A bucket's text content is exactly its rules concatenated (`cssRules.join('')`), so
       // splitting it back apart structurally recovers the same strings `insertCSSRules()` uses as
       // cache keys — for every at-rule, including ones added to CSS after this code was written.
-      forEachCSSRule(styleElement.textContent!, cssRule => cacheRule(cssRule, bucketName));
+      forEachCSSRule(styleElement.textContent!, cssRule => {
+        // 👇 with cascade layers, rules are wrapped only when written to a sheet: cache keys are unwrapped rules
+        const layeredCSS = layer ? unwrapCascadeLayer(layer, cssRule) : undefined;
+
+        if (layeredCSS === undefined) {
+          cacheRule(cssRule, bucketName);
+          return;
+        }
+
+        forEachCSSRule(layeredCSS, layeredCSSRule => cacheRule(layeredCSSRule, bucketName));
+      });
     });
 
     if (process.env.NODE_ENV !== 'production' && duplicateRuleCount > 0) {

@@ -1,11 +1,13 @@
 import { DATA_BUCKET_ATTR, DATA_PRIORITY_ATTR } from '../constants.js';
 import type { IsomorphicStyleSheet, StyleBucketName } from '../types.js';
+import { insertRuleInCascadeLayer, serializeRulesInCascadeLayer } from './cascadeLayers.js';
 
 export function createIsomorphicStyleSheet(
   styleElement: HTMLStyleElement | undefined,
   bucketName: StyleBucketName,
   priority: number,
   elementAttributes: Record<string, string>,
+  layer?: string,
 ): IsomorphicStyleSheet {
   // no CSSStyleSheet in SSR, just append rules here for server render
   const __cssRulesForSSR: string[] = [];
@@ -22,6 +24,10 @@ export function createIsomorphicStyleSheet(
 
   function insertRule(rule: string) {
     if (styleElement?.sheet) {
+      if (layer) {
+        return insertRuleInCascadeLayer(styleElement.sheet, layer, rule);
+      }
+
       return styleElement.sheet.insertRule(rule, styleElement.sheet.cssRules.length);
     }
 
@@ -33,9 +39,15 @@ export function createIsomorphicStyleSheet(
     insertRule,
     element: styleElement,
     bucketName,
+    layer,
     cssRules() {
       if (styleElement?.sheet) {
         return Array.from(styleElement.sheet.cssRules).map(cssRule => cssRule.cssText);
+      }
+
+      // 👇 in SSR rules are wrapped only on serialization, so the stored rules match insertion cache keys
+      if (layer) {
+        return serializeRulesInCascadeLayer(layer, __cssRulesForSSR);
       }
 
       return __cssRulesForSSR;
@@ -43,7 +55,7 @@ export function createIsomorphicStyleSheet(
   };
 }
 
-export function createIsomorphicStyleSheetFromElement(element: HTMLStyleElement) {
+export function createIsomorphicStyleSheetFromElement(element: HTMLStyleElement, layer?: string) {
   const elementAttributes = Array.from(element.attributes).reduce((acc, attr) => {
     acc[attr.name] = attr.value;
     return acc;
@@ -53,6 +65,7 @@ export function createIsomorphicStyleSheetFromElement(element: HTMLStyleElement)
     elementAttributes[DATA_BUCKET_ATTR] as StyleBucketName,
     Number(elementAttributes[DATA_PRIORITY_ATTR]),
     elementAttributes,
+    layer,
   );
   return stylesheet;
 }

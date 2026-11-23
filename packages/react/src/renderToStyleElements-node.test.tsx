@@ -737,4 +737,40 @@ describe('renderToStyleElements (node)', () => {
       `);
     });
   });
+
+  describe('cascadeLayer', () => {
+    it('emits rules wrapped into cascade layers', () => {
+      const useExampleStyles = makeStyles({
+        root: {
+          color: 'red',
+          ':hover': { color: 'pink' },
+          '@media (min-width: 100px)': { color: 'blue' },
+        },
+      });
+      const ExampleComponent: React.FC = () => {
+        const classes = useExampleStyles();
+
+        return <div className={classes.root} />;
+      };
+
+      const renderer = createDOMRenderer(undefined, { cascadeLayer: bucketName => `fluentui.${bucketName}.griffel` });
+
+      ReactDOM.renderToStaticMarkup(
+        <RendererProvider renderer={renderer}>
+          <ExampleComponent />
+        </RendererProvider>,
+      );
+
+      // 👇 not formatted with prettier to show the exact text that rehydration parses
+      expect(ReactDOM.renderToStaticMarkup(<>{renderToStyleElements(renderer)}</>).split('</style>'))
+        .toMatchInlineSnapshot(`
+          [
+            "<style data-make-styles-bucket="d" data-priority="0" data-make-styles-rehydration="true">@layer fluentui.d.griffel{.fe3e8s9{color:red;}}",
+            "<style data-make-styles-bucket="h" data-priority="0" data-make-styles-rehydration="true">@layer fluentui.h.griffel{.f14hep94:hover{color:pink;}}",
+            "<style media="(min-width: 100px)" data-make-styles-bucket="m" data-priority="0" data-make-styles-rehydration="true">@layer fluentui.m.griffel{@media (min-width: 100px){.f143jos6{color:blue;}}}",
+            "",
+          ]
+        `);
+    });
+  });
 });
