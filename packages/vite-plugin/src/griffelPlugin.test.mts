@@ -180,6 +180,28 @@ describe('griffel() [build]', () => {
   // With existing CSS
   testFixture('with-css');
 
+  // Aliases from the Vite config are used to resolve imports in evaluated modules
+  testFixture('with-aliases', {
+    buildConfig: {
+      resolve: {
+        alias: [{ find: '@', replacement: path.resolve(__dirname, '..', '__fixtures__', 'with-aliases', 'src') }],
+      },
+    },
+  });
+
+  it('resolves aliases defined as an object in the Vite config', async () => {
+    const fixturePath = path.resolve(__dirname, '..', '__fixtures__', 'with-aliases');
+    const result = await compileFixtureWithVite(fixturePath, {
+      buildConfig: {
+        resolve: {
+          alias: { '@': path.resolve(fixturePath, 'src') },
+        },
+      },
+    });
+
+    expect(result.cssOutput).toMatch(/\.\w+\{color:\s?blue;\}/);
+  }, 30000);
+
   // Chunks
   // --------------------
   testFixture('with-chunks');
